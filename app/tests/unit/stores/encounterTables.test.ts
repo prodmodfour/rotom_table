@@ -32,7 +32,6 @@ const createMockModification = (overrides: Partial<TableModification> = {}): Tab
   description: 'Pokemon found at night',
   parentTableId: 'table-123',
   levelRange: undefined,
-  densityMultiplier: 1.0,
   entries: [],
   createdAt: new Date(),
   updatedAt: new Date(),

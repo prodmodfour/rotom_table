@@ -1,10 +1,10 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import {
-  calculateSpawnCount,
   generateEncounterPokemon
 } from '~/server/services/encounter-generation.service'
-import type { PoolEntry, GenerateEncounterInput } from '~/server/services/encounter-generation.service'
-import { DENSITY_RANGES, MAX_SPAWN_COUNT } from '~/types'
+import type { PoolEntry } from '~/server/services/encounter-generation.service'
+import { DENSITY_SUGGESTIONS, MAX_SPAWN_COUNT } from '~/types'
+import type { DensityTier } from '~/types'
 
 // --- Helpers ---
 
@@ -41,92 +41,32 @@ function constantRng(value: number): () => number {
 // --- Tests ---
 
 describe('encounter-generation.service', () => {
-  describe('calculateSpawnCount', () => {
-    it('returns count override when provided, clamped to valid range', () => {
-      expect(calculateSpawnCount({ density: 'moderate', densityMultiplier: 1, countOverride: 5 })).toBe(5)
+  describe('DENSITY_SUGGESTIONS constant', () => {
+    it('has entries for all DensityTier values', () => {
+      const tiers: DensityTier[] = ['sparse', 'moderate', 'dense', 'abundant']
+      for (const tier of tiers) {
+        expect(DENSITY_SUGGESTIONS[tier]).toBeDefined()
+        expect(DENSITY_SUGGESTIONS[tier].suggested).toBeGreaterThanOrEqual(1)
+        expect(DENSITY_SUGGESTIONS[tier].description).toBeTruthy()
+      }
     })
 
-    it('clamps count override to minimum of 1', () => {
-      expect(calculateSpawnCount({ density: 'moderate', densityMultiplier: 1, countOverride: 0 })).toBe(1)
-      expect(calculateSpawnCount({ density: 'moderate', densityMultiplier: 1, countOverride: -5 })).toBe(1)
+    it('suggestions are ordered by increasing count', () => {
+      expect(DENSITY_SUGGESTIONS.sparse.suggested).toBeLessThan(DENSITY_SUGGESTIONS.moderate.suggested)
+      expect(DENSITY_SUGGESTIONS.moderate.suggested).toBeLessThan(DENSITY_SUGGESTIONS.dense.suggested)
+      expect(DENSITY_SUGGESTIONS.dense.suggested).toBeLessThan(DENSITY_SUGGESTIONS.abundant.suggested)
     })
 
-    it('clamps count override to MAX_SPAWN_COUNT', () => {
-      expect(calculateSpawnCount({ density: 'moderate', densityMultiplier: 1, countOverride: 999 })).toBe(MAX_SPAWN_COUNT)
+    it('all suggestions are within MAX_SPAWN_COUNT', () => {
+      for (const info of Object.values(DENSITY_SUGGESTIONS)) {
+        expect(info.suggested).toBeLessThanOrEqual(MAX_SPAWN_COUNT)
+      }
     })
+  })
 
-    it('returns minimum of range when randomFn returns 0', () => {
-      const count = calculateSpawnCount({
-        density: 'moderate',
-        densityMultiplier: 1,
-        randomFn: constantRng(0)
-      })
-      expect(count).toBe(DENSITY_RANGES.moderate.min)
-    })
-
-    it('returns maximum of range when randomFn returns just under 1', () => {
-      const count = calculateSpawnCount({
-        density: 'moderate',
-        densityMultiplier: 1,
-        randomFn: constantRng(0.999)
-      })
-      expect(count).toBe(DENSITY_RANGES.moderate.max)
-    })
-
-    it('sparse density produces smaller range than abundant', () => {
-      const rng = constantRng(0.5)
-      const sparseCount = calculateSpawnCount({ density: 'sparse', densityMultiplier: 1, randomFn: rng })
-      const abundantCount = calculateSpawnCount({ density: 'abundant', densityMultiplier: 1, randomFn: rng })
-      expect(sparseCount).toBeLessThan(abundantCount)
-    })
-
-    it('density multiplier scales the range', () => {
-      // With multiplier 2.0, moderate (4-8) becomes (8-16) clamped to MAX_SPAWN_COUNT
-      const count = calculateSpawnCount({
-        density: 'moderate',
-        densityMultiplier: 2.0,
-        randomFn: constantRng(0)
-      })
-      expect(count).toBe(Math.max(1, Math.round(DENSITY_RANGES.moderate.min * 2.0)))
-    })
-
-    it('density multiplier below 1 shrinks the range', () => {
-      const count = calculateSpawnCount({
-        density: 'dense',
-        densityMultiplier: 0.5,
-        randomFn: constantRng(0)
-      })
-      // dense min is 8, * 0.5 = 4
-      expect(count).toBe(Math.max(1, Math.round(DENSITY_RANGES.dense.min * 0.5)))
-    })
-
-    it('caps scaled max at MAX_SPAWN_COUNT', () => {
-      const count = calculateSpawnCount({
-        density: 'abundant',
-        densityMultiplier: 10,
-        randomFn: constantRng(0.999)
-      })
-      expect(count).toBeLessThanOrEqual(MAX_SPAWN_COUNT)
-    })
-
-    it('ensures scaledMin does not exceed scaledMax', () => {
-      // If multiplier makes min > max after capping, min is reduced to max
-      const count = calculateSpawnCount({
-        density: 'abundant',
-        densityMultiplier: 100,
-        randomFn: constantRng(0)
-      })
-      expect(count).toBeLessThanOrEqual(MAX_SPAWN_COUNT)
-      expect(count).toBeGreaterThanOrEqual(1)
-    })
-
-    it('defaults to moderate when density is falsy', () => {
-      const count = calculateSpawnCount({
-        density: '' as any,
-        densityMultiplier: 1,
-        randomFn: constantRng(0)
-      })
-      expect(count).toBe(DENSITY_RANGES.moderate.min)
+  describe('MAX_SPAWN_COUNT', () => {
+    it('is set to 20', () => {
+      expect(MAX_SPAWN_COUNT).toBe(20)
     })
   })
 
