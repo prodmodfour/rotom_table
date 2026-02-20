@@ -301,7 +301,6 @@ export const useEncounterTablesStore = defineStore('encounterTables', {
       name: string
       description?: string
       levelRange?: LevelRange
-      densityMultiplier?: number
     }): Promise<TableModification> {
       try {
         const response = await $fetch<{ data: TableModification }>(`/api/encounter-tables/${tableId}/modifications`, {
@@ -325,7 +324,6 @@ export const useEncounterTablesStore = defineStore('encounterTables', {
       name?: string
       description?: string
       levelRange?: LevelRange
-      densityMultiplier?: number
     }): Promise<TableModification> {
       try {
         const response = await $fetch<{ data: TableModification }>(`/api/encounter-tables/${tableId}/modifications/${modId}`, {
@@ -406,8 +404,8 @@ export const useEncounterTablesStore = defineStore('encounterTables', {
     },
 
     // Generate wild Pokemon from table
-    async generateFromTable(tableId: string, options?: {
-      count?: number
+    async generateFromTable(tableId: string, options: {
+      count: number
       modificationId?: string
       levelRange?: LevelRange
     }): Promise<{
@@ -424,7 +422,6 @@ export const useEncounterTablesStore = defineStore('encounterTables', {
         modificationId: string | null
         levelRange: LevelRange
         density: DensityTier
-        densityMultiplier: number
         spawnCount: number
         totalPoolSize: number
         totalWeight: number
@@ -446,7 +443,6 @@ export const useEncounterTablesStore = defineStore('encounterTables', {
               modificationId: string | null
               levelRange: LevelRange
               density: DensityTier
-              densityMultiplier: number
               spawnCount: number
               totalPoolSize: number
               totalWeight: number
@@ -455,9 +451,9 @@ export const useEncounterTablesStore = defineStore('encounterTables', {
         }>(`/api/encounter-tables/${tableId}/generate`, {
           method: 'POST',
           body: {
-            count: options?.count,
-            modificationId: options?.modificationId,
-            levelRange: options?.levelRange
+            count: options.count,
+            modificationId: options.modificationId,
+            levelRange: options.levelRange
           }
         })
         return response.data
