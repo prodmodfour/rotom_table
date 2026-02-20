@@ -99,6 +99,8 @@ CRUD + extensive combat actions.
 - `GET/PUT /api/encounters/:id/terrain` — terrain state
 - `POST /api/encounters/:id/breather` — mid-combat rest
 - `POST /api/encounters/:id/wild-spawn` — spawn wild Pokemon
+- `POST /api/encounters/:id/xp-calculate` — preview XP calculation (read-only breakdown + participating Pokemon)
+- `POST /api/encounters/:id/xp-distribute` — apply XP to Pokemon (updates experience, level, tutorPoints)
 
 ### Encounter Templates (`/api/encounter-templates`)
 Full CRUD + save-from/load-to encounter.
