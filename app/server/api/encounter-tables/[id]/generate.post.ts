@@ -1,7 +1,7 @@
 import { prisma } from '~/server/utils/prisma'
 import type { DensityTier } from '~/types'
+import { MAX_SPAWN_COUNT } from '~/types'
 import {
-  calculateSpawnCount,
   generateEncounterPokemon
 } from '~/server/services/encounter-generation.service'
 import type { PoolEntry } from '~/server/services/encounter-generation.service'
@@ -19,7 +19,13 @@ export default defineEventHandler(async (event) => {
 
   const modificationId = body.modificationId as string | undefined
   const levelOverride = body.levelRange as { min: number; max: number } | undefined
-  const countOverride = body.count as number | undefined // Optional manual override
+
+  // Spawn count -- provided directly by client, capped at MAX_SPAWN_COUNT
+  // Default to 4 if not provided for backward compatibility
+  const count = Math.min(
+    Math.max(1, typeof body.count === 'number' ? body.count : 4),
+    MAX_SPAWN_COUNT
+  )
 
   try {
     // Fetch table with entries and species data
@@ -61,8 +67,7 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    // Apply modification if specified
-    let densityMultiplier = 1.0
+    // Apply modification if specified (species pool changes only, no density scaling)
     if (modificationId) {
       const modification = table.modifications.find(m => m.id === modificationId)
       if (!modification) {
@@ -71,9 +76,6 @@ export default defineEventHandler(async (event) => {
           message: 'Modification not found'
         })
       }
-
-      // Get density multiplier from modification
-      densityMultiplier = modification.densityMultiplier
 
       for (const modEntry of modification.entries) {
         if (modEntry.remove) {
@@ -93,13 +95,6 @@ export default defineEventHandler(async (event) => {
         }
       }
     }
-
-    // Calculate spawn count from density
-    const count = calculateSpawnCount({
-      density: (table.density as DensityTier) || 'moderate',
-      densityMultiplier,
-      countOverride
-    })
 
     // Convert to array
     const entries = Array.from(entryPool.values())
@@ -134,7 +129,6 @@ export default defineEventHandler(async (event) => {
           modificationId: modificationId ?? null,
           levelRange: { min: levelMin, max: levelMax },
           density: table.density as DensityTier,
-          densityMultiplier,
           spawnCount: count,
           totalPoolSize: entries.length,
           totalWeight
