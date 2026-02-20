@@ -11,7 +11,7 @@
  * pure functions, zero side effects.
  */
 
-import { checkLevelUp, summarizeLevelUps } from '~/utils/levelUpCheck'
+import { checkLevelUp } from '~/utils/levelUpCheck'
 import type { LearnsetEntry } from '~/utils/levelUpCheck'
 
 // ============================================
