@@ -77,11 +77,11 @@ export function useCharacterCreation() {
     form.level * 2 + computedStats.value.hp * 3 + 10
   )
 
-  /** Combat evasions derived from stats: floor(stat / 5) */
+  /** Combat evasions derived from stats: floor(stat / 5), capped at +6 (PTU Core p. 16) */
   const evasions = computed(() => ({
-    physical: Math.floor(computedStats.value.defense / 5),
-    special: Math.floor(computedStats.value.specialDefense / 5),
-    speed: Math.floor(computedStats.value.speed / 5)
+    physical: Math.min(6, Math.floor(computedStats.value.defense / 5)),
+    special: Math.min(6, Math.floor(computedStats.value.specialDefense / 5)),
+    speed: Math.min(6, Math.floor(computedStats.value.speed / 5))
   }))
 
   // --- Stat Modification ---
