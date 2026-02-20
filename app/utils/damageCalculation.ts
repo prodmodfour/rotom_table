@@ -167,6 +167,10 @@ export interface DamageCalcInput {
   isCritical?: boolean
   /** Flat damage reduction from abilities/items */
   damageReduction?: number
+  /** Post-stage flat bonus to attack stat (e.g., Focus +5) — PTU p.295 */
+  attackBonus?: number
+  /** Post-stage flat bonus to defense stat (e.g., Focus +5) — PTU p.295 */
+  defenseBonus?: number
 }
 
 export interface DamageCalcResult {
@@ -215,6 +219,18 @@ export function applyStageModifier(baseStat: number, stage: number): number {
 }
 
 /**
+ * Apply stage modifier and then add a post-stage flat bonus (e.g., Focus +5).
+ * PTU p.295: "This Bonus is applied AFTER Combat Stages."
+ */
+export function applyStageModifierWithBonus(
+  baseStat: number,
+  stage: number,
+  postStageBonus: number = 0
+): number {
+  return applyStageModifier(baseStat, stage) + postStageBonus
+}
+
+/**
  * Check if attacker gets STAB (Same Type Attack Bonus).
  * PTU 07-combat.md:790-793
  */
@@ -254,14 +270,14 @@ export function calculateDamage(input: DamageCalcInput): DamageCalcResult {
   const critDamageBonus = criticalApplied ? getSetDamage(effectiveDB) : 0
   const baseDamage = setDamage + critDamageBonus
 
-  // Step 6: Add attack stat (stage-modified)
+  // Step 6: Add attack stat (stage-modified + post-stage bonus from Focus items)
   const attackStageMultiplier = STAGE_MULTIPLIERS[Math.max(-6, Math.min(6, input.attackStage))]
-  const effectiveAttack = applyStageModifier(input.attackStat, input.attackStage)
+  const effectiveAttack = applyStageModifierWithBonus(input.attackStat, input.attackStage, input.attackBonus ?? 0)
   const subtotalBeforeDefense = baseDamage + effectiveAttack
 
-  // Step 7: Subtract defense stat (stage-modified) + damage reduction
+  // Step 7: Subtract defense stat (stage-modified + post-stage bonus from Focus items) + damage reduction
   const defenseStageMultiplier = STAGE_MULTIPLIERS[Math.max(-6, Math.min(6, input.defenseStage))]
-  const effectiveDefense = applyStageModifier(input.defenseStat, input.defenseStage)
+  const effectiveDefense = applyStageModifierWithBonus(input.defenseStat, input.defenseStage, input.defenseBonus ?? 0)
   const dr = input.damageReduction ?? 0
   const afterDefense = Math.max(1, subtotalBeforeDefense - effectiveDefense - dr)
 

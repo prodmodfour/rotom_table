@@ -6,6 +6,7 @@
  */
 import { loadEncounter, findCombatant } from '~/server/services/encounter.service'
 import { calculateDamage, calculateEvasion, calculateAccuracyThreshold } from '~/utils/damageCalculation'
+import { computeEquipmentBonuses } from '~/utils/equipmentBonuses'
 import type { AccuracyCalcResult } from '~/utils/damageCalculation'
 import type { Pokemon, HumanCharacter, Move } from '~/types'
 
@@ -169,6 +170,38 @@ export default defineEventHandler(async (event) => {
     // Extract target stats based on damage class
     const targetData = getEntityStats(target, move.damageClass)
 
+    // Auto-compute equipment DR for human targets (PTU p.293-294)
+    // Caller-provided DR overrides equipment DR (for manual GM adjustments)
+    let effectiveDR = body.damageReduction
+    let targetEquipBonuses = target.type === 'human'
+      ? computeEquipmentBonuses((target.entity as HumanCharacter).equipment ?? {})
+      : null
+    if (effectiveDR === undefined && targetEquipBonuses) {
+      effectiveDR = targetEquipBonuses.damageReduction
+      // Helmet: +15 DR on critical hits only (PTU p.293)
+      if (body.isCritical) {
+        for (const cdr of targetEquipBonuses.conditionalDR) {
+          if (cdr.condition === 'Critical Hits only') {
+            effectiveDR += cdr.amount
+          }
+        }
+      }
+    }
+
+    // Focus stat bonuses: +5 to attack/defense AFTER combat stages (PTU p.295)
+    const isPhysical = move.damageClass === 'Physical'
+    let attackBonus = 0
+    let defenseBonus = 0
+    if (attacker.type === 'human') {
+      const attackerEquipBonuses = computeEquipmentBonuses(
+        (attacker.entity as HumanCharacter).equipment ?? {}
+      )
+      attackBonus = attackerEquipBonuses.statBonuses[isPhysical ? 'attack' : 'specialAttack'] ?? 0
+    }
+    if (targetEquipBonuses) {
+      defenseBonus = targetEquipBonuses.statBonuses[isPhysical ? 'defense' : 'specialDefense'] ?? 0
+    }
+
     const result = calculateDamage({
       attackerTypes: attackerData.types,
       attackStat: attackerData.attackStat,
@@ -180,15 +213,22 @@ export default defineEventHandler(async (event) => {
       defenseStat: targetData.defenseStat,
       defenseStage: targetData.defenseStage,
       isCritical: body.isCritical,
-      damageReduction: body.damageReduction,
+      damageReduction: effectiveDR,
+      attackBonus,
+      defenseBonus,
     })
 
     // Compute dynamic evasion from target's stage-modified stats (PTU p.234)
     // Part 1: Stat-derived evasion uses combat stage MULTIPLIER on the stat (floor(modified/5))
     // Part 2: Evasion bonus from moves/effects is ADDITIVE, stacking on top
+    // Part 3: Equipment evasion bonus (shields) stacks additively with move/effect evasion (PTU p.294)
     const targetEvasion = getEntityEvasionStats(target)
     const targetStages = target.entity.stageModifiers
-    const evasionBonus = targetStages?.evasion ?? 0
+    let evasionBonus = targetStages?.evasion ?? 0
+    // Add equipment evasion bonus for human targets (shields — PTU p.294)
+    if (targetEquipBonuses) {
+      evasionBonus += targetEquipBonuses.evasionBonus
+    }
     const physicalEvasion = calculateEvasion(targetEvasion.defenseBase, targetEvasion.defenseStage, evasionBonus)
     const specialEvasion = calculateEvasion(targetEvasion.spDefBase, targetEvasion.spDefStage, evasionBonus)
     const speedEvasion = calculateEvasion(targetEvasion.speedBase, targetEvasion.speedStage, evasionBonus)
