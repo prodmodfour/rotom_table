@@ -173,7 +173,7 @@ export default defineEventHandler(async (event) => {
     // Auto-compute equipment DR for human targets (PTU p.293-294)
     // Caller-provided DR overrides equipment DR (for manual GM adjustments)
     let effectiveDR = body.damageReduction
-    let targetEquipBonuses = target.type === 'human'
+    const targetEquipBonuses = target.type === 'human'
       ? computeEquipmentBonuses((target.entity as HumanCharacter).equipment ?? {})
       : null
     if (effectiveDR === undefined && targetEquipBonuses) {
