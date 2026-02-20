@@ -1,14 +1,10 @@
 import { prisma } from '~/server/utils/prisma'
 import type { DensityTier } from '~/types'
-import { DENSITY_RANGES, MAX_SPAWN_COUNT } from '~/types'
-
-interface GeneratedPokemon {
-  speciesId: string
-  speciesName: string
-  level: number
-  weight: number
-  source: 'parent' | 'modification'
-}
+import {
+  calculateSpawnCount,
+  generateEncounterPokemon
+} from '~/server/services/encounter-generation.service'
+import type { PoolEntry } from '~/server/services/encounter-generation.service'
 
 export default defineEventHandler(async (event) => {
   const tableId = getRouterParam(event, 'id')
@@ -51,7 +47,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // Build resolved entry pool
-    const entryPool: Map<string, { speciesId: string; speciesName: string; weight: number; levelMin: number | null; levelMax: number | null; source: 'parent' | 'modification' }> = new Map()
+    const entryPool: Map<string, PoolEntry> = new Map()
 
     // Add parent entries
     for (const entry of table.entries) {
@@ -99,25 +95,13 @@ export default defineEventHandler(async (event) => {
     }
 
     // Calculate spawn count from density
-    let count: number
-    if (countOverride !== undefined) {
-      // Manual override provided — cap at the highest density tier max
-      count = Math.min(Math.max(countOverride, 1), MAX_SPAWN_COUNT)
-    } else {
-      // Use density-based calculation
-      const baseDensity = (table.density as DensityTier) || 'moderate'
-      const densityRange = DENSITY_RANGES[baseDensity] || DENSITY_RANGES.moderate
+    const count = calculateSpawnCount({
+      density: (table.density as DensityTier) || 'moderate',
+      densityMultiplier,
+      countOverride
+    })
 
-      // Apply modification multiplier — cap at the highest density tier max
-      const rawMin = Math.max(1, Math.round(densityRange.min * densityMultiplier))
-      const scaledMax = Math.min(MAX_SPAWN_COUNT, Math.round(densityRange.max * densityMultiplier))
-      const scaledMin = Math.min(rawMin, scaledMax)
-
-      // Random count within scaled range
-      count = Math.floor(Math.random() * (scaledMax - scaledMin + 1)) + scaledMin
-    }
-
-    // Convert to array and calculate total weight
+    // Convert to array
     const entries = Array.from(entryPool.values())
     const totalWeight = entries.reduce((sum, e) => sum + e.weight, 0)
 
@@ -132,75 +116,13 @@ export default defineEventHandler(async (event) => {
     const levelMin = levelOverride?.min ?? table.levelMin
     const levelMax = levelOverride?.max ?? table.levelMax
 
-    // Generate Pokemon using weighted random selection with diversity enforcement.
-    // Each time a species is selected, its effective weight is halved for subsequent
-    // draws (exponential decay). This preserves the weighted distribution while
-    // naturally reducing single-species dominance at higher spawn counts.
-    // A per-species cap of ceil(count / 2) prevents any species from exceeding
-    // half the encounter. When only 1 species exists in the pool, diversity
-    // logic is skipped since there is nothing to diversify.
-    const generated: GeneratedPokemon[] = []
-    const selectionCounts: Map<string, number> = new Map()
-    const maxPerSpecies = Math.ceil(count / 2)
-    const applyDiversity = entries.length > 1
-
-    for (let i = 0; i < count; i++) {
-      // Build effective weights with diversity decay
-      const effectiveEntries = entries.map(entry => {
-        const timesSelected = selectionCounts.get(entry.speciesName) ?? 0
-
-        // Skip species that hit the per-species cap
-        if (applyDiversity && timesSelected >= maxPerSpecies) {
-          return { entry, effectiveWeight: 0 }
-        }
-
-        // Halve weight for each prior selection of this species
-        const effectiveWeight = applyDiversity
-          ? entry.weight * Math.pow(0.5, timesSelected)
-          : entry.weight
-
-        return { entry, effectiveWeight }
-      })
-
-      const effectiveTotalWeight = effectiveEntries.reduce(
-        (sum, e) => sum + e.effectiveWeight, 0
-      )
-
-      // Fallback: if all effective weights are 0 (all species capped), use original weights
-      const useOriginal = effectiveTotalWeight === 0
-      const drawWeight = useOriginal ? totalWeight : effectiveTotalWeight
-
-      let random = Math.random() * drawWeight
-      let selected = entries[0]
-
-      for (const { entry, effectiveWeight } of effectiveEntries) {
-        const w = useOriginal ? entry.weight : effectiveWeight
-        random -= w
-        if (random <= 0) {
-          selected = entry
-          break
-        }
-      }
-
-      // Track selection count for diversity
-      selectionCounts.set(
-        selected.speciesName,
-        (selectionCounts.get(selected.speciesName) ?? 0) + 1
-      )
-
-      // Calculate level within range (entry-specific or table default)
-      const entryLevelMin = selected.levelMin ?? levelMin
-      const entryLevelMax = selected.levelMax ?? levelMax
-      const level = Math.floor(Math.random() * (entryLevelMax - entryLevelMin + 1)) + entryLevelMin
-
-      generated.push({
-        speciesId: selected.speciesId,
-        speciesName: selected.speciesName,
-        level,
-        weight: selected.weight,
-        source: selected.source
-      })
-    }
+    // Generate Pokemon using diversity-enforced weighted random selection
+    const generated = generateEncounterPokemon({
+      entries,
+      count,
+      levelMin,
+      levelMax
+    })
 
     return {
       success: true,
