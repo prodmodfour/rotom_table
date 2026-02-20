@@ -4,7 +4,7 @@ ticket_id: ptu-rule-056
 category: FEATURE_GAP
 scope: FULL
 domain: character-lifecycle
-status: draft
+status: p0-complete
 affected_files:
   - app/pages/gm/create.vue
   - app/server/api/characters/index.post.ts
@@ -849,3 +849,37 @@ pages/gm/create.vue
    - `app/components/create/BiographySection.vue`
    - Quick/Full mode toggle in create page
    - Full E2E creation flow test
+
+---
+
+## Implementation Log
+
+### P0 Implementation (2026-02-20)
+
+**Status:** Complete
+
+**Files created:**
+- `app/constants/trainerSkills.ts` -- 17 PTU skills by category, rank progression, level prereqs, `getDefaultSkills()`
+- `app/constants/trainerBackgrounds.ts` -- 11 sample backgrounds with Adept/Novice/Pathetic assignments
+- `app/utils/characterCreationValidation.ts` -- Pure validation: stat allocation, skill background, edge/feature counts
+- `app/composables/useCharacterCreation.ts` -- Form state, stat tracking, background logic, payload builder
+- `app/components/create/StatAllocationSection.vue` -- +/- stat buttons, 10-point pool, derived stats display
+- `app/components/create/SkillBackgroundSection.vue` -- Preset dropdown, custom mode, categorized skill grid
+
+**Files modified:**
+- `app/pages/gm/create.vue` -- Replaced raw stat inputs with section components, uses composable
+
+**Design decisions:**
+- Composable returns computed refs; template accesses `.value` for prop bindings since the return is a plain object
+- Background presets encode a single default for backgrounds with choice options (flagged for P1 enhancement)
+- Custom background mode provides Adept/Novice dropdowns and Pathetic checkboxes (max 3)
+- Validation is soft warnings only -- shown in summary section but never blocks form submission
+- Hermit background encodes `Perception` Adept / `Survival` Novice as default (PTU variant noted in comment)
+
+**Commits:**
+1. `feat: add PTU trainer skill constants and background presets`
+2. `feat: add character creation validation utility`
+3. `feat: add useCharacterCreation composable`
+4. `feat: add StatAllocationSection component for character creation`
+5. `feat: add SkillBackgroundSection component for character creation`
+6. `feat: integrate stat allocation and skill background into create page`
