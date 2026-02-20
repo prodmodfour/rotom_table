@@ -394,16 +394,14 @@ describe('encounter-generation.service', () => {
           makeEntry({ speciesName: 'B', weight: 1 })
         ]
 
-        // Use a small rng value (not 0) to favor A heavily.
-        // rng=0 is a degenerate case where random=0*weight=0 and 0<=0 is always true,
-        // bypassing weighted selection. rng=0.01 correctly exercises the weight logic.
-        // Cap is ceil(10/2)=5, so A cannot exceed 5 out of 10.
+        // rng=0 strongly favors the first entry. Cap is ceil(10/2)=5,
+        // so A cannot exceed 5 out of 10.
         const result = generateEncounterPokemon({
           entries,
           count: 10,
           levelMin: 5,
           levelMax: 5,
-          randomFn: constantRng(0.01)
+          randomFn: constantRng(0)
         })
 
         const aCount = result.filter(p => p.speciesName === 'A').length
@@ -449,6 +447,32 @@ describe('encounter-generation.service', () => {
         })
 
         expect(result).toHaveLength(1)
+      })
+
+      it('rng=0 does not select capped (zero-weight) entries', () => {
+        // Regression: rng=0 previously selected the first entry even when capped
+        // because 0 * totalWeight = 0, 0 - 0 = 0, 0 <= 0 was true.
+        const entries = [
+          makeEntry({ speciesName: 'A', weight: 100 }),
+          makeEntry({ speciesName: 'B', weight: 1 })
+        ]
+
+        // count=4, cap=ceil(4/2)=2. After 2 draws of A (capped), A's effective weight
+        // becomes 0. With rng=0, the selection must skip A and pick B.
+        const result = generateEncounterPokemon({
+          entries,
+          count: 4,
+          levelMin: 5,
+          levelMax: 5,
+          randomFn: constantRng(0)
+        })
+
+        const aCount = result.filter(p => p.speciesName === 'A').length
+        const bCount = result.filter(p => p.speciesName === 'B').length
+
+        expect(aCount).toBeLessThanOrEqual(2)
+        expect(bCount).toBeGreaterThanOrEqual(2)
+        expect(aCount + bCount).toBe(4)
       })
 
       it('three-species pool distributes under cap', () => {

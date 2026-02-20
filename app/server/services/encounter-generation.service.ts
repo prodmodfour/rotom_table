@@ -124,6 +124,7 @@ export function generateEncounterPokemon(input: GenerateEncounterInput): Generat
 
     for (const { entry, effectiveWeight } of effectiveEntries) {
       const w = useOriginal ? entry.weight : effectiveWeight
+      if (w === 0) continue  // Skip capped entries
       random -= w
       if (random <= 0) {
         selected = entry
