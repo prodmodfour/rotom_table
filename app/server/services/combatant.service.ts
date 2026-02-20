@@ -8,6 +8,8 @@ import { prisma } from '~/server/utils/prisma'
 import { ALL_STATUS_CONDITIONS, PERSISTENT_CONDITIONS, VOLATILE_CONDITIONS } from '~/constants/statusConditions'
 import { getEffectiveMaxHp } from '~/utils/restHealing'
 import { v4 as uuidv4 } from 'uuid'
+import { computeEquipmentBonuses } from '~/utils/equipmentBonuses'
+import { applyStageModifier } from '~/utils/damageCalculation'
 import type {
   StatusCondition, StageModifiers, Combatant,
   Pokemon, HumanCharacter, CombatSide, GridPosition
@@ -553,6 +555,9 @@ export interface BuildCombatantOptions {
 /**
  * Build a full Combatant wrapper from a typed entity.
  * Calculates initiative and evasions (PTU: floor(stat / 5)) from entity stats.
+ * For human combatants:
+ * - Equipment evasion bonus (shields) added to initial evasion values (PTU p.294)
+ * - Heavy Armor speed default CS applied to initiative (PTU p.293)
  */
 export function buildCombatantFromEntity(options: BuildCombatantOptions): Combatant {
   const { entityType, entityId, entity, side, position, tokenSize = 1 } = options
@@ -562,7 +567,27 @@ export function buildCombatantFromEntity(options: BuildCombatantOptions): Combat
     ? (entity as Pokemon).currentStats
     : (entity as HumanCharacter).stats
 
-  const initiative = stats.speed + initiativeBonus
+  // Equipment bonuses for human combatants (shields for evasion, heavy armor for speed)
+  let equipmentEvasionBonus = 0
+  let equipmentSpeedDefaultCS = 0
+  if (entityType === 'human') {
+    const equipBonuses = computeEquipmentBonuses((entity as HumanCharacter).equipment ?? {})
+    equipmentEvasionBonus = equipBonuses.evasionBonus
+    equipmentSpeedDefaultCS = equipBonuses.speedDefaultCS
+  }
+
+  // Heavy Armor sets speed default CS to -1 (PTU p.293), affecting initiative
+  const effectiveSpeed = equipmentSpeedDefaultCS !== 0
+    ? applyStageModifier(stats.speed, equipmentSpeedDefaultCS)
+    : stats.speed
+  const initiative = effectiveSpeed + initiativeBonus
+
+  // Set initial speed CS to equipment default for Heavy Armor wearers (PTU p.293)
+  // Must be done before returning so the combatant entity reflects the penalty
+  if (equipmentSpeedDefaultCS !== 0) {
+    const currentStages = entity.stageModifiers ?? createDefaultStageModifiers()
+    entity.stageModifiers = { ...currentStages, speed: equipmentSpeedDefaultCS }
+  }
 
   return {
     id: uuidv4(),
@@ -583,9 +608,9 @@ export function buildCombatantFromEntity(options: BuildCombatantOptions): Combat
       isHolding: false
     },
     injuries: { count: 0, sources: [] },
-    physicalEvasion: initialEvasion(stats.defense || 0),
-    specialEvasion: initialEvasion(stats.specialDefense || 0),
-    speedEvasion: initialEvasion(stats.speed || 0),
+    physicalEvasion: initialEvasion(stats.defense || 0) + equipmentEvasionBonus,
+    specialEvasion: initialEvasion(stats.specialDefense || 0) + equipmentEvasionBonus,
+    speedEvasion: initialEvasion(stats.speed || 0) + equipmentEvasionBonus,
     position,
     tokenSize,
     entity
