@@ -13,8 +13,14 @@ import type { TrainerBackground } from '~/constants/trainerBackgrounds'
 import type { PtuSkillName } from '~/constants/trainerSkills'
 import { getDefaultSkills } from '~/constants/trainerSkills'
 import { BASE_HP, BASE_OTHER, TOTAL_STAT_POINTS, MAX_POINTS_PER_STAT } from '~/constants/trainerStats'
+import { MAX_TRAINER_CLASSES } from '~/constants/trainerClasses'
 import { validateStatAllocation, validateSkillBackground, validateEdgesAndFeatures } from '~/utils/characterCreationValidation'
 import type { CreationWarning } from '~/utils/characterCreationValidation'
+
+/** Maximum features at level 1: 4 class features + 1 Training Feature */
+const MAX_FEATURES = 4
+/** Starting edges at level 1 */
+const STARTING_EDGES = 4
 
 export interface StatPoints {
   hp: number
@@ -47,6 +53,11 @@ export function useCharacterCreation() {
       specialDefense: 0,
       speed: 0
     } as StatPoints,
+    // Classes/Features/Edges (P1)
+    trainerClasses: [] as string[],
+    features: [] as string[],
+    trainingFeature: '',
+    edges: [] as string[],
     // Notes
     notes: ''
   })
@@ -134,6 +145,79 @@ export function useCharacterCreation() {
     }
   }
 
+  // --- Trainer Classes ---
+  function addClass(className: string): void {
+    if (form.trainerClasses.length >= MAX_TRAINER_CLASSES) return
+    if (form.trainerClasses.includes(className)) return
+    form.trainerClasses = [...form.trainerClasses, className]
+  }
+
+  function removeClass(className: string): void {
+    form.trainerClasses = form.trainerClasses.filter(c => c !== className)
+  }
+
+  // --- Features ---
+  /** All features combined: class features + training feature */
+  const allFeatures = computed((): string[] =>
+    form.trainingFeature
+      ? [...form.features, form.trainingFeature]
+      : [...form.features]
+  )
+
+  function addFeature(featureName: string): void {
+    if (form.features.length >= MAX_FEATURES) return
+    form.features = [...form.features, featureName]
+  }
+
+  function removeFeature(index: number): void {
+    form.features = form.features.filter((_, i) => i !== index)
+  }
+
+  function setTrainingFeature(featureName: string): void {
+    form.trainingFeature = featureName
+  }
+
+  // --- Edges ---
+  function addEdge(edgeName: string): void {
+    form.edges = [...form.edges, edgeName]
+  }
+
+  function removeEdge(index: number): void {
+    form.edges = form.edges.filter((_, i) => i !== index)
+  }
+
+  /**
+   * Add a Skill Edge that raises a skill rank.
+   * Adds "Skill Edge: [Skill Name]" to edges and bumps the skill rank by one step.
+   * Cannot raise Pathetic skills (PTU p. 14) or exceed Novice at level 1 (PTU p. 13).
+   */
+  function addSkillEdge(skill: PtuSkillName): string | null {
+    const currentRank = form.skills[skill]
+    if (currentRank === 'Pathetic') {
+      return 'Cannot raise Pathetic skills with Skill Edges (PTU p. 14)'
+    }
+
+    const rankProgression: SkillRank[] = ['Pathetic', 'Untrained', 'Novice', 'Adept', 'Expert', 'Master']
+    const currentIndex = rankProgression.indexOf(currentRank)
+    const nextRank = rankProgression[currentIndex + 1]
+
+    if (!nextRank) {
+      return `${skill} is already at Master rank`
+    }
+
+    // Level 1 cap: cannot exceed Novice via Skill Edges during creation
+    if (form.level === 1 && (nextRank === 'Adept' || nextRank === 'Expert' || nextRank === 'Master')) {
+      return `Cannot raise ${skill} above Novice at level 1 (PTU p. 13)`
+    }
+
+    form.skills = {
+      ...form.skills,
+      [skill]: nextRank
+    }
+    form.edges = [...form.edges, `Skill Edge: ${skill}`]
+    return null
+  }
+
   // --- Validation (soft warnings) ---
   const statWarnings = computed((): CreationWarning[] =>
     validateStatAllocation(form.statPoints, form.level)
@@ -143,9 +227,14 @@ export function useCharacterCreation() {
     validateSkillBackground(form.skills, form.level)
   )
 
+  const classFeatureEdgeWarnings = computed((): CreationWarning[] =>
+    validateEdgesAndFeatures(form.edges, allFeatures.value, form.trainerClasses, form.level)
+  )
+
   const allWarnings = computed((): CreationWarning[] => [
     ...statWarnings.value,
-    ...skillWarnings.value
+    ...skillWarnings.value,
+    ...classFeatureEdgeWarnings.value
   ])
 
   // --- API Payload ---
@@ -159,6 +248,9 @@ export function useCharacterCreation() {
       maxHp: maxHp.value,
       currentHp: maxHp.value,
       skills: form.skills,
+      trainerClasses: form.trainerClasses.length > 0 ? form.trainerClasses : undefined,
+      features: allFeatures.value.length > 0 ? allFeatures.value : undefined,
+      edges: form.edges.length > 0 ? form.edges : undefined,
       background: form.backgroundName || undefined,
       notes: form.notes || undefined
     }
@@ -180,9 +272,22 @@ export function useCharacterCreation() {
     clearBackground,
     enableCustomBackground,
     setSkillRank,
+    // Classes
+    addClass,
+    removeClass,
+    // Features
+    allFeatures,
+    addFeature,
+    removeFeature,
+    setTrainingFeature,
+    // Edges
+    addEdge,
+    removeEdge,
+    addSkillEdge,
     // Validation
     statWarnings,
     skillWarnings,
+    classFeatureEdgeWarnings,
     allWarnings,
     // API
     buildCreatePayload,
@@ -190,6 +295,9 @@ export function useCharacterCreation() {
     BASE_HP,
     BASE_OTHER,
     TOTAL_STAT_POINTS,
-    MAX_POINTS_PER_STAT
+    MAX_POINTS_PER_STAT,
+    MAX_FEATURES,
+    STARTING_EDGES,
+    MAX_TRAINER_CLASSES
   }
 }
