@@ -1,6 +1,6 @@
 import type { Ref } from 'vue'
 import type { EncounterTable, EncounterTableEntry, TableModification, RarityPreset, LevelRange, DensityTier } from '~/types'
-import { RARITY_WEIGHTS, DENSITY_RANGES } from '~/types'
+import { RARITY_WEIGHTS, DENSITY_SUGGESTIONS } from '~/types'
 
 interface NewEntryForm {
   speciesId: string
@@ -100,9 +100,9 @@ export function useTableEditor(tableId: Ref<string>) {
     return density.charAt(0).toUpperCase() + density.slice(1)
   }
 
-  const getSpawnRange = (density: DensityTier): string => {
-    const range = DENSITY_RANGES[density]
-    return `${range.min}-${range.max}`
+  const getDensityDescription = (density: DensityTier): string => {
+    const info = DENSITY_SUGGESTIONS[density]
+    return info?.description ?? ''
   }
 
   // Internal
@@ -296,7 +296,7 @@ export function useTableEditor(tableId: Ref<string>) {
 
     // Helpers
     getDensityLabel,
-    getSpawnRange,
+    getDensityDescription,
 
     // Methods
     refreshTable,

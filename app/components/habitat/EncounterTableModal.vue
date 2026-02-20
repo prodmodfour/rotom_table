@@ -74,7 +74,7 @@
                 {{ opt.label }}
               </option>
             </select>
-            <p class="form-hint">Controls how many Pokemon spawn when generating encounters</p>
+            <p class="form-hint">Describes the habitat's population density (informational -- does not control spawn count)</p>
           </div>
 
           <div class="form-group">
@@ -222,7 +222,7 @@
 </template>
 
 <script setup lang="ts">
-import { DENSITY_RANGES, type EncounterTable, type EncounterTableEntry, type DensityTier } from '~/types'
+import { DENSITY_SUGGESTIONS, type EncounterTable, type EncounterTableEntry, type DensityTier } from '~/types'
 
 const props = defineProps<{
   table?: EncounterTable | null
@@ -235,9 +235,9 @@ const emit = defineEmits<{
 
 const encounterTablesStore = useEncounterTablesStore()
 
-const densityOptions = Object.entries(DENSITY_RANGES).map(([tier, range]) => ({
+const densityOptions = Object.entries(DENSITY_SUGGESTIONS).map(([tier, info]) => ({
   value: tier as DensityTier,
-  label: `${tier.charAt(0).toUpperCase() + tier.slice(1)} (${range.min}-${range.max} Pokemon)`,
+  label: `${tier.charAt(0).toUpperCase() + tier.slice(1)} -- ${info.description}`,
 }))
 
 // Form state

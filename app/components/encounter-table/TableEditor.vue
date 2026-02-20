@@ -42,7 +42,7 @@
             <span class="density-badge" :class="`density--${editor.table.density}`">
               {{ editor.getDensityLabel(editor.table.density) }}
             </span>
-            <span class="spawn-preview">Spawns {{ editor.getSpawnRange(editor.table.density) }} Pokemon</span>
+            <span class="spawn-preview">{{ editor.getDensityDescription(editor.table.density) }}</span>
           </span>
         </div>
         <div class="info-row">
@@ -112,7 +112,6 @@
               :modification="mod"
               :parent-entries="editor.table.entries"
               :table-id="editor.table.id"
-              :parent-density="editor.table.density"
               @edit="editor.editModification"
               @delete="editor.deleteModification"
             />
@@ -375,7 +374,7 @@
                 </option>
               </select>
               <p class="form-hint">
-                Controls how many Pokemon spawn when generating encounters
+                Describes the habitat's population density (informational -- does not control spawn count)
               </p>
             </div>
           </div>
@@ -397,7 +396,7 @@
 </template>
 
 <script setup lang="ts">
-import { DENSITY_RANGES, type DensityTier } from '~/types'
+import { DENSITY_SUGGESTIONS, type DensityTier } from '~/types'
 
 const props = defineProps<{
   tableId: string
@@ -407,9 +406,9 @@ const props = defineProps<{
 
 const editor = reactive(useTableEditor(computed(() => props.tableId)))
 
-const densityOptions = Object.entries(DENSITY_RANGES).map(([tier, range]) => ({
+const densityOptions = Object.entries(DENSITY_SUGGESTIONS).map(([tier, info]) => ({
   value: tier as DensityTier,
-  label: `${tier.charAt(0).toUpperCase() + tier.slice(1)} (${range.min}-${range.max} Pokemon)`,
+  label: `${tier.charAt(0).toUpperCase() + tier.slice(1)} -- ${info.description}`,
 }))
 </script>
 

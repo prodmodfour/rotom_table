@@ -61,7 +61,6 @@
 
 <script setup lang="ts">
 import type { EncounterTable, DensityTier } from '~/types'
-import { DENSITY_RANGES } from '~/types'
 
 const props = defineProps<{
   table: EncounterTable
@@ -78,10 +77,9 @@ const previewEntries = computed(() => {
     .slice(0, maxPreview)
 })
 
-// Get density label for display
+// Get density label for display (capitalized tier name)
 const getDensityLabel = (density: DensityTier): string => {
-  const range = DENSITY_RANGES[density]
-  return `${range.min}-${range.max}`
+  return density.charAt(0).toUpperCase() + density.slice(1)
 }
 
 const handleSpriteError = (event: Event) => {
