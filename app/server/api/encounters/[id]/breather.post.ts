@@ -9,8 +9,9 @@ import { prisma } from '~/server/utils/prisma'
 import { loadEncounter, findCombatant, buildEncounterResponse, getEntityName } from '~/server/services/encounter.service'
 import { syncEntityToDatabase } from '~/server/services/entity-update.service'
 import { createDefaultStageModifiers } from '~/server/services/combatant.service'
+import { computeEquipmentBonuses } from '~/utils/equipmentBonuses'
 import { VOLATILE_CONDITIONS } from '~/constants/statusConditions'
-import type { StatusCondition } from '~/types'
+import type { StatusCondition, HumanCharacter } from '~/types'
 
 // Take a Breather cures all volatile conditions + Slowed and Stuck (PTU 1.05 p.245)
 // Exception: Cursed requires the curse source to be KO'd or >12m away (p.245).
@@ -53,11 +54,22 @@ export default defineEventHandler(async (event) => {
       vulnerableApplied: false
     }
 
-    // Reset combat stages to 0
+    // Reset combat stages to defaults
+    // Heavy Armor: speed CS resets to -1 instead of 0 (PTU p.293)
+    const defaultStages = createDefaultStageModifiers()
+    if (combatant.type === 'human') {
+      const human = entity as HumanCharacter
+      const equipBonuses = computeEquipmentBonuses(human.equipment ?? {})
+      if (equipBonuses.speedDefaultCS !== 0) {
+        defaultStages.speed = equipBonuses.speedDefaultCS
+      }
+    }
     const stages = entity.stageModifiers || createDefaultStageModifiers()
-    const hadStages = Object.values(stages).some(v => v !== 0)
+    const hadStages = Object.entries(stages).some(
+      ([key, val]) => val !== (defaultStages[key as keyof typeof defaultStages] ?? 0)
+    )
     if (hadStages) {
-      entity.stageModifiers = createDefaultStageModifiers()
+      entity.stageModifiers = defaultStages
       result.stagesReset = true
     }
 
