@@ -55,6 +55,19 @@ export default defineEventHandler(async (event) => {
     })
   }
 
+  // Reject duplicate pokemonIds — concurrent updates to the same record via
+  // Promise.all would race and silently lose XP (H1, code-review-117).
+  const seenPokemonIds = new Set<string>()
+  for (const entry of body.distribution) {
+    if (seenPokemonIds.has(entry.pokemonId)) {
+      throw createError({
+        statusCode: 400,
+        message: `Duplicate pokemonId in distribution: ${entry.pokemonId}. Merge XP amounts into a single entry.`
+      })
+    }
+    seenPokemonIds.add(entry.pokemonId)
+  }
+
   // Validate each distribution entry
   for (const entry of body.distribution) {
     if (!entry.pokemonId || typeof entry.pokemonId !== 'string') {
