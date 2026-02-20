@@ -88,6 +88,8 @@ export function serializeCharacter(character: CharacterWithPokemon) {
     skills: JSON.parse(character.skills),
     features: JSON.parse(character.features),
     edges: JSON.parse(character.edges),
+    // Equipment
+    equipment: JSON.parse(character.equipment || '{}'),
     // Inventory
     inventory: JSON.parse(character.inventory),
     money: character.money,
@@ -152,6 +154,8 @@ export function serializeCharacterSummary(character: CharacterWithPokemonSummary
     skills: JSON.parse(character.skills),
     features: JSON.parse(character.features),
     edges: JSON.parse(character.edges),
+    // Equipment
+    equipment: JSON.parse(character.equipment || '{}'),
     // Inventory
     inventory: JSON.parse(character.inventory),
     money: character.money,
