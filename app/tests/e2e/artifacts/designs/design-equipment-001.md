@@ -715,3 +715,20 @@ Equipment changes emit a `character_update` WebSocket event (existing event type
 4. **Shield readied state deferred**: Readied shields grant enhanced bonuses but also apply Slowed. This is a combat action with duration tracking. P0/P1 only handle passive (non-readied) shield bonuses. Readied state can be a P2+ enhancement.
 
 5. **Pokemon equipment excluded**: PTU Pokemon use "Held Items" which are a separate system (single item, different mechanics). The equipment slot system is trainer-only. Pokemon held items remain the existing `heldItem` string field.
+
+---
+
+## Implementation Log
+
+### P0 — Data Model, Constants, CRUD, Bonus Utility (2026-02-20)
+
+| Commit | Description | Files |
+|--------|-------------|-------|
+| `8adf752` | Equipment slot types (EquipmentSlot, EquippedItem, EquipmentSlots) | `app/types/character.ts` |
+| `36d09fa` | Prisma schema: equipment JSON field on HumanCharacter | `app/prisma/schema.prisma` |
+| `246ce03` | Equipment constants catalog (15 PTU items, 6 slot types) | `app/constants/equipment.ts` (new) |
+| `d92c9da` | computeEquipmentBonuses() pure utility | `app/utils/equipmentBonuses.ts` (new) |
+| `9626886` | Serializer + PUT endpoint equipment support | `app/server/utils/serializers.ts`, `app/server/api/characters/[id].put.ts` |
+| `a120134` | Equipment CRUD API (GET + PUT) | `app/server/api/characters/[id]/equipment.get.ts` (new), `app/server/api/characters/[id]/equipment.put.ts` (new) |
+
+**P0 Status:** All 4 items implemented (A: data model, B: constants, C: CRUD API, D: bonuses utility). P1/P2 remain.
