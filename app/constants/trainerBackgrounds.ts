@@ -31,8 +31,8 @@ export const SAMPLE_BACKGROUNDS: TrainerBackground[] = [
   {
     name: 'Hermit',
     description: 'You don\'t like people, and they tend to not like you.',
-    adeptSkill: 'Perception',
-    noviceSkill: 'Survival', // see note: PTU lists "Adept Education, Novice Perception" variant
+    adeptSkill: 'Occult Ed', // PTU: "Adept Education Skill" — player's choice; Occult Ed as default
+    noviceSkill: 'Perception',
     patheticSkills: ['Charm', 'Guile', 'Intuition']
   },
   {
