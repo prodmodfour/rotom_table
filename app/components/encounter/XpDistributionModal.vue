@@ -461,8 +461,12 @@ const formatPresetLabel = (key: string): string => {
   return key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
 }
 
+// Stale response protection: only the latest request applies its result
+let requestVersion = 0
+
 // Recalculate XP from the server
 const recalculate = async () => {
+  const thisRequest = ++requestVersion
   isCalculating.value = true
   calculationError.value = null
 
@@ -472,6 +476,9 @@ const recalculate = async () => {
       playerCount: playerCount.value,
       isBossEncounter: isBossEncounter.value
     })
+
+    // Only apply if this is still the latest request
+    if (thisRequest !== requestVersion) return
 
     calculationResult.value = result
 
@@ -484,10 +491,13 @@ const recalculate = async () => {
     }
     xpAllocations.value = newMap
   } catch (e: unknown) {
+    if (thisRequest !== requestVersion) return
     const message = e instanceof Error ? e.message : 'Failed to calculate XP'
     calculationError.value = message
   } finally {
-    isCalculating.value = false
+    if (thisRequest === requestVersion) {
+      isCalculating.value = false
+    }
   }
 }
 
