@@ -77,11 +77,7 @@
 import type { Stats } from '~/types/character'
 import type { StatPoints } from '~/composables/useCharacterCreation'
 import type { CreationWarning } from '~/utils/characterCreationValidation'
-
-const BASE_HP = 10
-const BASE_OTHER = 5
-const TOTAL_STAT_POINTS = 10
-const MAX_POINTS_PER_STAT = 5
+import { BASE_HP, BASE_OTHER, TOTAL_STAT_POINTS, MAX_POINTS_PER_STAT } from '~/constants/trainerStats'
 
 interface Props {
   statPoints: StatPoints

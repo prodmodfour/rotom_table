@@ -12,7 +12,8 @@ import type { Stats, SkillRank, CharacterType } from '~/types/character'
 import type { TrainerBackground } from '~/constants/trainerBackgrounds'
 import type { PtuSkillName } from '~/constants/trainerSkills'
 import { getDefaultSkills } from '~/constants/trainerSkills'
-import { validateStatAllocation, validateSkillBackground } from '~/utils/characterCreationValidation'
+import { BASE_HP, BASE_OTHER, TOTAL_STAT_POINTS, MAX_POINTS_PER_STAT } from '~/constants/trainerStats'
+import { validateStatAllocation, validateSkillBackground, validateEdgesAndFeatures } from '~/utils/characterCreationValidation'
 import type { CreationWarning } from '~/utils/characterCreationValidation'
 
 export interface StatPoints {
@@ -23,12 +24,6 @@ export interface StatPoints {
   specialDefense: number
   speed: number
 }
-
-/** Base stats for a new trainer (PTU Core p. 15) */
-const BASE_HP = 10
-const BASE_OTHER = 5
-const TOTAL_STAT_POINTS = 10
-const MAX_POINTS_PER_STAT = 5
 
 export function useCharacterCreation() {
   const form = reactive({
@@ -104,11 +99,12 @@ export function useCharacterCreation() {
 
   // --- Background Application ---
   function applyBackground(bg: TrainerBackground): void {
-    const skills = getDefaultSkills()
-    skills[bg.adeptSkill] = 'Adept'
-    skills[bg.noviceSkill] = 'Novice'
-    for (const s of bg.patheticSkills) {
-      skills[s] = 'Pathetic'
+    const defaults = getDefaultSkills()
+    const skills: Record<PtuSkillName, SkillRank> = {
+      ...defaults,
+      [bg.adeptSkill]: 'Adept' as SkillRank,
+      [bg.noviceSkill]: 'Novice' as SkillRank,
+      ...Object.fromEntries(bg.patheticSkills.map(s => [s, 'Pathetic' as SkillRank]))
     }
     form.skills = skills
     form.backgroundPreset = bg
