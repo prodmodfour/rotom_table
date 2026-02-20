@@ -183,6 +183,22 @@ export function useCharacterCreation() {
   }
 
   function removeEdge(index: number): void {
+    const edge = form.edges[index]
+
+    // If removing a Skill Edge, revert the skill rank it granted
+    const skillEdgeMatch = edge?.match(/^Skill Edge: (.+)$/)
+    if (skillEdgeMatch) {
+      const skill = skillEdgeMatch[1] as PtuSkillName
+      const rankProgression: SkillRank[] = ['Pathetic', 'Untrained', 'Novice', 'Adept', 'Expert', 'Master']
+      const currentIndex = rankProgression.indexOf(form.skills[skill])
+      if (currentIndex > 0) {
+        form.skills = {
+          ...form.skills,
+          [skill]: rankProgression[currentIndex - 1]
+        }
+      }
+    }
+
     form.edges = form.edges.filter((_, i) => i !== index)
   }
 
