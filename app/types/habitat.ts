@@ -11,21 +11,20 @@ export const RARITY_WEIGHTS: Record<RarityPreset, number> = {
   'legendary': 0.1,
 };
 
-// Population density tiers for encounter tables
+// Population density tiers -- DESCRIPTIVE ONLY, no mechanical effect on spawn count
 export type DensityTier = 'sparse' | 'moderate' | 'dense' | 'abundant';
 
-export const DENSITY_RANGES: Record<DensityTier, { min: number; max: number }> = {
-  sparse: { min: 2, max: 4 },
-  moderate: { min: 4, max: 8 },
-  dense: { min: 8, max: 12 },
-  abundant: { min: 12, max: 16 },
+// Suggested spawn ranges per density tier (GM reference, not enforced)
+// These are hints shown in the UI to help the GM pick a spawn count
+export const DENSITY_SUGGESTIONS: Record<DensityTier, { suggested: number; description: string }> = {
+  sparse: { suggested: 2, description: 'Few Pokemon -- isolated individuals or a mated pair' },
+  moderate: { suggested: 4, description: 'Small group -- a pack or family unit' },
+  dense: { suggested: 6, description: 'Large group -- multiple packs or a colony' },
+  abundant: { suggested: 8, description: 'Swarm territory -- many overlapping groups' },
 };
 
-// Derived max spawn count from the highest density tier range
-// Used as the safety cap for both manual override and density-based generation
-export const MAX_SPAWN_COUNT = Math.max(
-  ...Object.values(DENSITY_RANGES).map(r => r.max)
-);
+// Hard cap on spawn count for safety (prevents accidental massive generation)
+export const MAX_SPAWN_COUNT = 20;
 
 // Level range for encounter generation
 export interface LevelRange {
@@ -58,7 +57,7 @@ export interface TableModification {
   description?: string;
   parentTableId: string;
   levelRange?: LevelRange; // Override parent if set
-  densityMultiplier: number; // Scales parent density (0.5 = half, 2.0 = double)
+  // densityMultiplier removed -- density is now informational only, spawn count is an explicit parameter
   entries: ModificationEntry[];
   createdAt: Date;
   updatedAt: Date;
