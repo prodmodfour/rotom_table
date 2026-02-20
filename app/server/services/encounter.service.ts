@@ -27,6 +27,7 @@ interface EncounterRecord {
   isServed: boolean
   moveLog: string
   defeatedEnemies: string
+  xpDistributed: boolean
   gridEnabled: boolean
   gridWidth: number
   gridHeight: number
@@ -57,6 +58,7 @@ export interface ParsedEncounter {
   isServed: boolean
   moveLog: unknown[]
   defeatedEnemies: { species: string; level: number; type?: 'pokemon' | 'human' }[]
+  xpDistributed: boolean
   sceneNumber: number // Derived from currentRound for now
   gridConfig: GridConfig | null
   trainerTurnOrder: string[]
@@ -216,6 +218,7 @@ export function buildEncounterResponse(
     isServed: record.isServed,
     moveLog,
     defeatedEnemies,
+    xpDistributed: record.xpDistributed ?? false,
     sceneNumber: 1, // Scene number not stored in DB, default to 1
     gridConfig,
     trainerTurnOrder: options?.trainerTurnOrder ?? JSON.parse(record.trainerTurnOrder || '[]'),

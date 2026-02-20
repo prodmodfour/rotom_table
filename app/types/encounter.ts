@@ -131,6 +131,9 @@ export interface Encounter {
 
   // XP tracking (type field added for trainer 2x XP rule; older entries may lack it)
   defeatedEnemies: { species: string; level: number; type?: 'pokemon' | 'human' }[];
+
+  // Safety flag: true after XP has been distributed for this encounter
+  xpDistributed?: boolean;
 }
 
 // Movement preview for broadcasting to group view

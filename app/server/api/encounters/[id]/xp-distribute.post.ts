@@ -209,6 +209,12 @@ export default defineEventHandler(async (event) => {
     // Execute all DB updates
     await Promise.all(updatePromises)
 
+    // Mark encounter as having distributed XP (safety flag)
+    await prisma.encounter.update({
+      where: { id },
+      data: { xpDistributed: true }
+    })
+
     return {
       success: true,
       data: {

@@ -214,6 +214,7 @@ model Encounter {
 
   // XP tracking
   defeatedEnemies String @default("[]") // JSON array
+  xpDistributed   Boolean @default(false) // Safety flag: true after XP has been distributed
 
   // Timestamps
   createdAt     DateTime @default(now())
