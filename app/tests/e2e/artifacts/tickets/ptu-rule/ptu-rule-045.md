@@ -47,3 +47,10 @@ P1 tier implemented: combat integration for DR, evasion, Focus bonuses, and Heav
 - **H: Heavy Armor Speed Penalty** — `buildCombatantFromEntity()` applies speed default CS (-1) to initiative and initial stage modifiers. `breather.post.ts` resets speed CS to equipment default instead of 0.
 
 P2 (UI: equipment tab, catalog browser) remains for future implementation.
+
+### P1 Follow-up Fixes (2026-02-20, code-review-120)
+
+Two HIGH issues from code-review-120 resolved:
+
+- **H1: Immutability fix** — `buildCombatantFromEntity()` in `combatant.service.ts` was mutating the input `entity` parameter's `stageModifiers` to apply Heavy Armor speed default CS. Replaced with a shallow copy pattern: a new `combatantEntity` is created with the adjusted stageModifiers and passed into the returned combatant, leaving the caller's entity reference untouched.
+- **H2: `let` to `const`** — `targetEquipBonuses` in `calculate-damage.post.ts` was declared with `let` but never reassigned. Changed to `const`.
