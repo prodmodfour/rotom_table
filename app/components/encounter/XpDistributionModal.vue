@@ -312,6 +312,9 @@ const encounterStore = useEncounterStore()
 // Phase: 'configure' or 'results'
 const phase = ref<'configure' | 'results'>('configure')
 
+// Guard flag: suppress watcher-triggered recalculations during initialization
+const initialized = ref(false)
+
 // Configuration state
 const selectedPreset = ref<SignificancePreset | 'custom'>('average')
 const customMultiplier = ref(2)
@@ -537,12 +540,12 @@ const handleClose = () => {
   }
 }
 
-// Watch multiplier/playerCount/boss and recalculate
-watch(effectiveMultiplier, () => recalculate())
-watch(playerCount, () => recalculate())
-watch(isBossEncounter, () => recalculate())
+// Watch multiplier/playerCount/boss and recalculate (guarded by initialized flag)
+watch(effectiveMultiplier, () => { if (initialized.value) recalculate() })
+watch(playerCount, () => { if (initialized.value) recalculate() })
+watch(isBossEncounter, () => { if (initialized.value) recalculate() })
 watch(customMultiplier, () => {
-  if (selectedPreset.value === 'custom') recalculate()
+  if (initialized.value && selectedPreset.value === 'custom') recalculate()
 })
 
 // Initial calculation on mount
@@ -550,6 +553,7 @@ onMounted(async () => {
   // Set detected player count before first API call to avoid double-fetch
   playerCount.value = detectedPlayerCount.value
   await recalculate()
+  initialized.value = true
 })
 </script>
 
