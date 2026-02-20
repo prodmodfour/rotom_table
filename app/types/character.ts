@@ -94,6 +94,50 @@ export interface InventoryItem {
   effect?: string;
 }
 
+// PTU Equipment Slots (09-gear-and-items.md p.286)
+export type EquipmentSlot = 'head' | 'body' | 'mainHand' | 'offHand' | 'feet' | 'accessory';
+
+// A single equipped item
+export interface EquippedItem {
+  name: string;
+  slot: EquipmentSlot;
+  // Passive combat bonuses
+  damageReduction?: number;        // Flat DR (e.g., Light Armor = 5, Heavy Armor = 10)
+  evasionBonus?: number;           // Flat evasion bonus (e.g., Light Shield = +2)
+  statBonus?: {                    // Focus-style stat bonus (applied after combat stages)
+    stat: keyof Stats | 'accuracy' | 'evasion';
+    value: number;
+  };
+  // Conditional bonuses (not auto-applied; tracked for GM reference)
+  conditionalDR?: {                // e.g., Helmet: 15 DR vs critical hits only
+    amount: number;
+    condition: string;             // Human-readable: "Critical Hits only"
+  };
+  // Speed penalty (Heavy Armor sets default Speed CS to -1)
+  speedDefaultCS?: number;         // -1 for Heavy Armor, undefined for others
+  // Readied state (shields can be readied for enhanced bonuses)
+  canReady?: boolean;              // True for shields
+  readiedBonuses?: {               // Bonuses when readied (replaces base bonuses)
+    evasionBonus: number;
+    damageReduction: number;
+    appliesSlowed: boolean;
+  };
+  // General
+  description?: string;
+  cost?: number;
+  twoHanded?: boolean;             // Takes up both Main Hand and Off-Hand
+}
+
+// All equipment slots for a character
+export interface EquipmentSlots {
+  head?: EquippedItem;
+  body?: EquippedItem;
+  mainHand?: EquippedItem;
+  offHand?: EquippedItem;
+  feet?: EquippedItem;
+  accessory?: EquippedItem;
+}
+
 // Pokemon data
 export interface Pokemon {
   id: string;
@@ -195,6 +239,9 @@ export interface HumanCharacter {
   drainedAp: number;
   boundAp: number;
   currentAp: number;
+
+  // Equipment (PTU armor, shields, accessories)
+  equipment: EquipmentSlots;
 
   // Inventory
   inventory: InventoryItem[];
