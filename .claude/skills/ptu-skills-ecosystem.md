@@ -1,6 +1,6 @@
 # PTU Skills Ecosystem
 
-Master reference for the 10-skill ecosystem that validates the PTU Session Helper through direct PTU rule-to-code coverage analysis. The ecosystem is organized into two logically separate halves — Dev and Matrix — coordinated by ephemeral orchestrators.
+Master reference for the 10-skill ecosystem that validates the PTU Session Helper through direct PTU rule-to-code coverage analysis. The ecosystem is organized into two logically separate halves — Dev and Matrix — coordinated by a master/slave orchestration system.
 
 ## Core Principle
 
@@ -8,9 +8,14 @@ The Feature Matrix drives the dev loop. Every PTU rule is extracted, every app c
 
 ## Architecture
 
-**Ephemeral orchestrators.** Each orchestrator handles exactly one unit of work (1 Dev ticket or 2 reviewers), then dies. Multiple orchestrators run in parallel via separate terminals. They coordinate through filesystem primitives (lock files, agent JSON, git worktrees).
+**Master/slave orchestration.** The master planner analyzes all pending work, assigns it to N slaves for parallel execution, and the collector merges results. This replaces the old single-unit ephemeral orchestrator — one plan covers all work items instead of running `/orchestrate` N times.
 
-**Git worktrees.** Each orchestrator creates a dedicated worktree on a named branch (`agent/<type>-<target>-<timestamp>`). Agents work in isolation — no file conflicts. Results merge to master via rebase + fast-forward.
+**Three-phase workflow:**
+1. **Plan** (`/create_slave_plan`) — Master reads state, builds full work queue, assigns to N slaves, writes plan + launch script
+2. **Execute** (`/slave N`) — Each slave creates a worktree, launches agents, commits to its branch, writes status, dies
+3. **Collect** (`/collect_slaves`) — Collector merges all completed branches to master, updates state files, cleans up
+
+**Git worktrees.** Each slave creates a dedicated worktree on a named branch (`slave/<N>-<type>-<target>-<timestamp>`). Agents work in isolation — no file conflicts. Results merge to master via rebase + fast-forward during collection.
 
 **Template-based context injection.** Agent prompts use focused templates (~60-100 lines) from `.claude/skills/templates/` with `{{PLACEHOLDER}}` tokens replaced by dynamic data. Original skill files remain as reference documentation.
 
@@ -21,55 +26,75 @@ The Feature Matrix drives the dev loop. Every PTU rule is extracted, every app c
 ## Architecture Diagram
 
 ```
-    User launches N orchestrators (separate terminals / tmux panes)
+    User runs /create_slave_plan
+    │
+    Master Planner
+    ├ reads dev-state.md + test-state.md + all artifacts
+    ├ builds full work queue (D1-D9 + M1-M7)
+    ├ analyzes parallelism + dependencies
+    ├ assigns N slaves
+    ├ gathers template data for each
+    ├ writes .worktrees/slave-plan.json
+    ├ writes scripts/launch-slaves.sh
+    └ dies
+    │
+    User runs launch-slaves.sh (or /slave N manually)
     │
     ┌───────────────┬───────────────┬───────────────┐
     │               │               │               │
-    Orch A          Orch B          Orch C          ...
-    (Dev: bug-042)  (Review: 057)   (Matrix: heal)
+    Slave 1         Slave 2         Slave 3         ...
+    (Dev: bug-042)  (Dev: ptu-079)  (Review: 058)
     │               │               │
-    ├ claim lock    ├ claim lock    ├ claim lock
+    ├ read plan     ├ read plan     ├ read plan
+    ├ check deps    ├ check deps    ├ check deps
     ├ worktree      ├ worktree      ├ worktree
-    ├ inject ctx    ├ inject ctx    ├ inject ctx
-    ├ launch agent  ├ launch 2      ├ launch agent
-    ├ merge master  ├ merge master  ├ merge master
+    ├ launch agent  ├ launch agent  ├ launch 2
+    ├ write status  ├ write status  ├ write status
     └ die           └ die           └ die
+    │
+    User runs /collect_slaves
+    │
+    Collector
+    ├ reads plan + all status files
+    ├ proposes merge order to user
+    ├ merges branches sequentially (rebase + ff)
+    ├ updates state files (single commit)
+    ├ cleans up worktrees + branches
+    └ dies
 ```
 
 ### Coordination Layer
 
 ```
 .worktrees/
-├── agents/              # JSON per active orchestrator (PID, branch, status)
-│   └── orch-<ts>.json
-└── claims/              # Lock file per claimed work item
-    └── <target>.lock
+├── slave-plan.json          # Master writes, slaves + collector read
+├── slave-status/            # One JSON per slave
+│   ├── slave-1.json
+│   ├── slave-2.json
+│   └── ...
+├── agents/                  # Legacy — from old orchestrator (unused)
+└── claims/                  # Legacy — from old orchestrator (unused)
 ```
-
-- **Claiming:** `touch .worktrees/claims/<target>.lock` (atomic on POSIX)
-- **Stale detection:** PID check (`kill -0`) + 3-hour timeout
-- **Cleanup:** Remove lock + agent JSON + worktree on completion or staleness
 
 ### Two-Ecosystem Diagram
 
 ```
-                         ORCHESTRATORS
-                    (ephemeral, N in parallel)
-                    read state → claim → worktree
-                    → inject context → launch agent
-                    → merge → cleanup → die
-                               │
-            ┌──────────────────┼──────────────────────┐
-            │                  │                       │
-       DEV ECOSYSTEM     TICKET BOUNDARY      MATRIX ECOSYSTEM
-            │                  │                       │
-       Developer          ← bug tickets ←       Rule Extractor ──┐
-       Senior Reviewer    ← feature tickets ←                    ├→ Coverage Analyzer
-       Game Logic Rev     ← ptu-rule tickets ←  Capability Mapper┘        │
-       Code Health Aud    ← ux tickets ←                         Implementation Auditor
-       Retrospective*                                                     │
-                                                              Orchestrator reads matrix,
-                                                              creates tickets
+                      MASTER PLANNER
+                 (plans all work at once)
+                 read state → build queue
+                 → assign slaves → write plan
+                            │
+         ┌─────────────────┼──────────────────────┐
+         │                 │                       │
+    DEV ECOSYSTEM     TICKET BOUNDARY      MATRIX ECOSYSTEM
+         │                 │                       │
+    Developer          ← bug tickets ←       Rule Extractor ──┐
+    Senior Reviewer    ← feature tickets ←                    ├→ Coverage Analyzer
+    Game Logic Rev     ← ptu-rule tickets ←  Capability Mapper┘        │
+    Code Health Aud    ← ux tickets ←                         Implementation Auditor
+    Retrospective*                                                     │
+                                                           Master reads matrix,
+                                                           creates tickets (M2)
 ```
 
 * Retrospective Analyst reads both ecosystems
@@ -87,18 +112,18 @@ The Feature Matrix drives the dev loop. Every PTU rule is extracted, every app c
 ### Cross-Ecosystem Flow
 
 ```
-Orchestrator ──── reads matrix + audit ────→ creates bug/feature/ptu-rule tickets
-                                                      ↓
-                                                Dev Developer
-                                                      ↓
-                                                Senior Reviewer ∥ Game Logic Reviewer
-                                                      ↓
-                                                Orchestrator updates state
+Master Planner ── reads matrix + audit ──→ creates bug/feature/ptu-rule tickets
+                                                   ↓
+                                             Dev Developer (slave)
+                                                   ↓
+                                             Senior Reviewer ∥ Game Logic Reviewer (slave)
+                                                   ↓
+                                             Collector merges + updates state
 ```
 
 ## Skills Summary
 
-Skills are loaded by the orchestrator via templates. Original skill files serve as reference documentation.
+Skills are loaded by slaves via templates. Original skill files serve as reference documentation.
 
 ### Dev Ecosystem
 
@@ -122,7 +147,9 @@ Skills are loaded by the orchestrator via templates. Original skill files serve 
 
 | # | Skill | Skill File | Invoked By | Output |
 |---|-------|-----------|------------|--------|
-| 9 | Orchestrator | `orchestrator.md` | user (`/orchestrate`) | state files, tickets, worktree coordination |
+| 9 | Master Planner | `master-planner.md` | user (`/create_slave_plan`) | `slave-plan.json`, `launch-slaves.sh`, tickets (M2) |
+| — | Slave Executor | `slave-executor.md` | user (`/slave N`) | branch commits, status file |
+| — | Slave Collector | `slave-collector.md` | user (`/collect_slaves`) | state files, `alive-agents.md`, cleanup |
 | 10 | Retrospective Analyst | `retrospective-analyst.md` | after cycles complete | `lessons/*.md` |
 
 ## Skill Files
@@ -132,7 +159,9 @@ Skills are loaded by the orchestrator via templates. Original skill files serve 
 ├── ptu-skills-ecosystem.md              ← you are here
 ├── specification.md                      (full contracts and formats)
 ├── USAGE.md                              (workflow guide)
-├── orchestrator.md                       (ephemeral orchestrator lifecycle)
+├── master-planner.md                     (master planning + slave assignment)
+├── slave-executor.md                     (per-slave execution lifecycle)
+├── slave-collector.md                    (merge + state update + cleanup)
 ├── templates/                            (agent context injection templates)
 │   ├── agent-dev.md
 │   ├── agent-senior-reviewer.md
@@ -165,22 +194,22 @@ Skills are loaded by the orchestrator via templates. Original skill files serve 
 ```
 artifacts/
 ├── tickets/               Cross-ecosystem communication
-│   ├── bug/               Orchestrator writes (from audit) → Developer reads
-│   ├── ptu-rule/          Orchestrator/Game Logic Reviewer writes → Developer reads
-│   ├── feature/           Orchestrator writes (from matrix) → Developer reads
-│   └── ux/                Orchestrator writes (from matrix) → Developer reads
+│   ├── bug/               Master writes (from audit) → Developer reads
+│   ├── ptu-rule/          Master/Game Logic Reviewer writes → Developer reads
+│   ├── feature/           Master writes (from matrix) → Developer reads
+│   └── ux/                Master writes (from matrix) → Developer reads
 ├── matrix/                Feature Matrix workflow artifacts
 │   ├── <domain>-rules.md          Rule Extractor writes → Coverage Analyzer reads
 │   ├── <domain>-capabilities.md   Capability Mapper writes → Coverage Analyzer reads
-│   ├── <domain>-matrix.md         Coverage Analyzer writes → Auditor reads, Orchestrator reads
-│   └── <domain>-audit.md          Implementation Auditor writes → Orchestrator reads
+│   ├── <domain>-matrix.md         Coverage Analyzer writes → Auditor reads, Master reads
+│   └── <domain>-audit.md          Implementation Auditor writes → Master reads
 ├── designs/               Developer writes (when feature ticket needs design) → shared read zone
 ├── lessons/               Retrospective Analyst writes → all skills read
 ├── refactoring/           Code Health Auditor writes → Developer/Reviewer reads
-├── reviews/               Senior Reviewer + Game Logic Reviewer write → Orchestrator/Developer reads
-├── alive-agents.md        Completed orchestrator session log
-├── dev-state.md           Orchestrator writes → Dev skills read
-└── test-state.md          Orchestrator writes → Matrix skills read
+├── reviews/               Senior Reviewer + Game Logic Reviewer write → Collector/Developer reads
+├── alive-agents.md        Completed slave session log (collector writes)
+├── dev-state.md           Collector writes → Dev skills read
+└── test-state.md          Collector writes → Matrix skills read
 ```
 
 ## Authority Hierarchy
@@ -189,38 +218,40 @@ artifacts/
 |--------|----------------|
 | PTU game logic, formulas, rule interpretation | Game Logic Reviewer |
 | Code quality, architecture, patterns | Senior Reviewer |
-| Pipeline sequencing, what to analyze next | Orchestrator |
+| Pipeline sequencing, what to work on next | Master Planner |
 | Rule extraction completeness | PTU Rule Extractor |
 | Capability mapping completeness | App Capability Mapper |
 | Coverage classification accuracy | Coverage Analyzer |
 | Implementation correctness verification | Implementation Auditor |
-| Gap detection and ticket creation | Orchestrator (from matrix data) |
+| Gap detection and ticket creation | Master Planner (from matrix data) |
 | Pattern identification and lesson accuracy | Retrospective Analyst |
 | Structural code health issues and refactoring priority | Code Health Auditor |
 
 ## Orchestration Patterns
 
 ### Full Loop (new domain)
-1. `/orchestrate` → "Rule Extractor for domain X" (Terminal 1)
-2. `/orchestrate` → "Capability Mapper for domain X" (Terminal 2, parallel)
-3. Both complete → `/orchestrate` → "Coverage Analyzer for domain X"
-4. Complete → `/orchestrate` → "Implementation Auditor for domain X"
-5. Complete → `/orchestrate` → "Creating tickets" → orchestrator creates bug/feature/ptu-rule tickets
-6. `/orchestrate` → "Developer for bug-001" (highest priority ticket)
+1. `/create_slave_plan` → plan includes Rule Extractor + Capability Mapper (parallel) for domain X
+2. `bash scripts/launch-slaves.sh` → slaves execute in parallel
+3. `/collect_slaves` → merge both to master
+4. `/create_slave_plan` → plan includes Coverage Analyzer for domain X
+5. Execute + collect
+6. `/create_slave_plan` → plan includes Implementation Auditor for domain X
+7. Execute + collect → Master creates tickets (M2) in next plan
+8. `/create_slave_plan` → plan includes Developer slaves for highest-priority tickets
 
 ### Bug Fix Cycle (cross-ecosystem)
-1. `/orchestrate` → Developer fixes ticket → commits on worktree branch → merges to master → dies
-2. `/orchestrate` → Senior Reviewer + Game Logic Reviewer (both launched in parallel) → merge reviews → die
-3. `/orchestrate` → next priority ticket (or CHANGES_REQUIRED re-work)
+1. `/create_slave_plan` → slave-1: Developer fixes ticket, slave-2: Developer fixes another ticket (parallel)
+2. Execute + collect
+3. `/create_slave_plan` → slave-1: Reviewers for ticket A, slave-2: Reviewers for ticket B (parallel)
+4. Execute + collect
+5. `/create_slave_plan` → next priority tickets (or CHANGES_REQUIRED re-work)
 
-### Parallel Work
-Multiple orchestrators running simultaneously:
-- Orch A: Developer fixing bug-001
-- Orch B: Rule Extractor for healing domain
-- Orch C: Capability Mapper for healing domain (parallel with B)
+### Mixed Ecosystem Work
+1. `/create_slave_plan` → slave-1: Dev fixing bug-001, slave-2: Rule Extractor for healing, slave-3: Capability Mapper for healing (all parallel)
+2. Execute + collect → all three merge to master in one pass
 
 ### Stale Artifact Detection
-Each orchestrator checks timestamps on startup:
+Master planner checks timestamps on startup:
 - App code changed after capability mapping → re-map, re-analyze, re-audit
 - Developer commit after latest approved review → re-review needed
 

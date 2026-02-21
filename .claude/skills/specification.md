@@ -8,31 +8,37 @@ The PTU Session Helper app must accurately replicate PTU 1.05 gameplay. Code cor
 
 ## 2. Architecture
 
-### 2.1 Two Ecosystems, One Orchestrator
+### 2.1 Two Ecosystems, Master/Slave Orchestration
 
 The ecosystem is split into two logically separate halves:
 
 - **Dev Ecosystem:** Developer, Senior Reviewer, Game Logic Reviewer, Code Health Auditor
 - **Matrix Ecosystem:** PTU Rule Extractor, App Capability Mapper, Coverage Analyzer, Implementation Auditor
 
-The Retrospective Analyst serves both. A single Orchestrator reads both state files and gives parallel recommendations. The Orchestrator also creates tickets from completed matrix analyses.
+The Retrospective Analyst serves both. The Master Planner reads both state files and plans all work at once. It also creates tickets from completed matrix analyses.
 
 **Playtesting is external.** The ecosystem produces coverage matrices and correctness audits. Running Playwright tests against the app happens outside these two ecosystems.
 
-### 2.2 Ephemeral Orchestrators with Git Worktrees
+### 2.2 Master/Slave Orchestration with Git Worktrees
 
-Each orchestrator is a short-lived Claude Code session that handles exactly one unit of work (1 Dev ticket, 2 parallel reviewers, or 1 matrix skill), then dies. Multiple orchestrators run in parallel via separate terminals.
+The orchestration system has three phases:
 
-**Why ephemeral orchestrators:**
-- No single bottleneck — N orchestrators can run concurrently
-- Each agent gets focused context via templates (~60-100 lines) instead of full skill files (~200-300 lines)
+1. **Master Planner** (`/create_slave_plan`) — analyzes ALL pending work, assigns to N slaves, writes plan file + launch script
+2. **Slave Executors** (`/slave N`) — each slave creates a worktree, launches agents, commits to its branch, writes status, dies
+3. **Slave Collector** (`/collect_slaves`) — merges all completed branches to master, updates state files, cleans up
+
+**Why master/slave:**
+- One plan covers all work items — no need to run `/orchestrate` N times
+- Parallelization analysis happens once, centrally, with full visibility
+- Each slave gets pre-gathered context — no duplicate state reading
+- Merge order and conflict zones are planned in advance
 - Git worktrees isolate file operations — no conflicts between parallel agents
-- Crash recovery is automatic — stale agents detected via PID check
-- Linear git history maintained via rebase + fast-forward merge
+- Crash recovery is simple — failed slaves are skipped during collection
+- Linear git history maintained via rebase + fast-forward merge during collection
 
-**Coordination:** File-based via `.worktrees/agents/` (agent registry) and `.worktrees/claims/` (lock files). No shared memory or persistent state beyond the filesystem.
+**Coordination:** File-based via `.worktrees/slave-plan.json` (plan) and `.worktrees/slave-status/` (per-slave status JSONs). No shared memory or persistent state beyond the filesystem.
 
-**Agent context:** Templates in `.claude/skills/templates/` provide static rules distilled from source skill files. The orchestrator replaces `{{PLACEHOLDER}}` tokens with dynamic data (ticket content, relevant files, lessons, git log) before launching the agent.
+**Agent context:** Templates in `.claude/skills/templates/` provide static rules distilled from source skill files. The master planner gathers all dynamic data (ticket content, relevant files, lessons, git log) during planning and stores it in the plan file. Slaves replace `{{PLACEHOLDER}}` tokens at launch time.
 
 ### 2.3 Artifact-Based Communication
 
@@ -97,55 +103,102 @@ Skills report completions via their artifacts; orchestrators read artifacts and 
 
 ```
                     ┌──────────────────────┐
-                    │     Orchestrator     │ ← reads both state files
-                    │  (advises + creates  │   + all ticket dirs + matrix/
-                    │   tickets from matrix)│
+                    │   Master Planner     │ ← reads both state files
+                    │  (plans all work,    │   + all ticket dirs + matrix/
+                    │   creates tickets)   │
                     └──────────┬───────────┘
+                               │
+                        slave-plan.json
                                │
             ┌──────────────────┼──────────────────────┐
             │                  │                       │
        DEV ECOSYSTEM     TICKET BOUNDARY      MATRIX ECOSYSTEM
+       (via slaves)            │               (via slaves)
             │                  │                       │
        Developer          ← bug tickets ←       Rule Extractor ──┐
        Senior Reviewer    ← feature tickets ←                    ├→ Coverage Analyzer
        Game Logic Rev     ← ptu-rule tickets ←  Capability Mapper┘        │
        Code Health Aud    ← ux tickets ←                         Implementation Auditor
                                                                           │
-                                                              Orchestrator reads,
-                                                              creates tickets
+                    ┌──────────────────────┐              Master reads matrix,
+                    │   Slave Collector    │              creates tickets (M2)
+                    │  (merges branches,   │
+                    │   updates state)     │
+                    └──────────────────────┘
 ```
 
 ## 3. Skills
 
-### 3.1 Orchestrator
+### 3.1 Master/Slave Orchestration System
+
+The orchestration system is split into three phases, each with its own skill:
+
+#### 3.1a Master Planner
 
 | Field | Value |
 |-------|-------|
-| **File** | `.claude/skills/orchestrator.md` |
+| **File** | `.claude/skills/master-planner.md` |
 | **Templates** | `.claude/skills/templates/agent-*.md` |
-| **Trigger** | `/orchestrate` |
-| **Input** | `dev-state.md`, `test-state.md`, all ticket/matrix dirs, `.worktrees/agents/`, `.worktrees/claims/` |
-| **Output** | `dev-state.md`, `test-state.md`, tickets, `alive-agents.md`, worktree coordination files |
-| **Lifecycle** | Ephemeral — one unit of work per session, then dies |
+| **Trigger** | `/create_slave_plan` |
+| **Input** | `dev-state.md`, `test-state.md`, all ticket/matrix dirs, `.worktrees/slave-status/` |
+| **Output** | `.worktrees/slave-plan.json`, `scripts/launch-slaves.sh`, tickets (M2) |
+| **Lifecycle** | Ephemeral — one plan per session, then dies |
 
-**Lifecycle (10 steps):**
-1. Read coordination state (active agents, claims, pipeline state)
-2. Determine next work (D1-D9 / M1-M7 priorities, filtered by claims)
-3. Propose to user and wait for confirmation
-4. Claim work (atomic lock file)
+**Lifecycle (8 steps):**
+1. Read coordination state (existing plan, active slaves, pipeline state)
+2. Build full work queue (ALL actionable items from D1-D9 + M1-M7)
+3. Parallelization analysis (classify every pair of items)
+4. Assign to N slaves (group items, build dependency DAG, compute merge order)
+5. Gather template data (full context injection pass for each slave)
+6. Write plan file (`.worktrees/slave-plan.json`)
+7. Generate launch script (`scripts/launch-slaves.sh`)
+8. Present plan (summary table, wait for user "go")
+
+#### 3.1b Slave Executor
+
+| Field | Value |
+|-------|-------|
+| **File** | `.claude/skills/slave-executor.md` |
+| **Trigger** | `/slave N` |
+| **Input** | `.worktrees/slave-plan.json`, `.worktrees/slave-status/` |
+| **Output** | Branch commits, `.worktrees/slave-status/slave-<N>.json` |
+| **Lifecycle** | Ephemeral — one assignment per session, then dies |
+
+**Lifecycle (8 steps):**
+1. Parse argument (extract slave number X)
+2. Read plan (find slave_id == X)
+3. Check dependencies (read status files for depends_on)
+4. Write initial status (`initializing`)
 5. Create git worktree on named branch
-6. Prepare context injection (read template, gather dynamic data, replace placeholders, validate)
-7. Launch agent(s) via Task tool
-8. Post-process (merge to master, write tickets, update state, push)
-9. Cleanup (remove worktree, branch, lock, agent JSON)
-10. Death report (summarize results, suggest next launch)
+6. Prepare & launch agent(s) (replace placeholders, validate, launch via Task tool)
+7. Post-process (collect commits, artifacts, verdict — NO merge, NO state update)
+8. Report and die
 
-**Does NOT:**
+#### 3.1c Slave Collector
+
+| Field | Value |
+|-------|-------|
+| **File** | `.claude/skills/slave-collector.md` |
+| **Trigger** | `/collect_slaves` |
+| **Input** | `.worktrees/slave-plan.json`, `.worktrees/slave-status/`, all branch worktrees |
+| **Output** | `dev-state.md`, `test-state.md`, `alive-agents.md`, cleanup |
+| **Lifecycle** | Ephemeral — one collection per session, then dies |
+
+**Lifecycle (8 steps):**
+1. Read plan + all status files (build summary table)
+2. Determine merge set (completed slaves only, respect merge_order)
+3. Propose to user (show merge plan with conflict risk)
+4. Merge branches sequentially (rebase + fast-forward, retry up to 3x)
+5. Update state files (single atomic commit after all merges)
+6. Write follow-up tickets (CHANGES_REQUIRED re-work, M2 conditions)
+7. Cleanup (remove worktrees, branches, status files for merged slaves)
+8. Final report (merged count, skipped count, suggested next plan)
+
+**None of the three phases:**
 - Write code
 - Make PTU rule judgments
 - Approve code or plans
-- Auto-spawn other orchestrators (suggests in death report only)
-- Persist across multiple work units
+- Auto-spawn other orchestration phases (suggest in reports only)
 
 ### 3.2 PTU Rule Extractor
 
@@ -489,6 +542,85 @@ updated_by: orchestrator
 
 The original `pipeline-state.md` has been archived as `pipeline-state.legacy.md`. It contains the full historical record from the combat and capture domain cycles. New state tracking uses the two state files above.
 
+### 4.6c Slave Plan
+
+**Written by:** Master Planner
+**Read by:** Slave Executor, Slave Collector
+**Location:** `.worktrees/slave-plan.json`
+
+```json
+{
+  "plan_id": "plan-<unix-timestamp>",
+  "created_at": "<ISO>",
+  "created_from_commit": "<master HEAD SHA>",
+  "total_slaves": 4,
+  "slaves": [
+    {
+      "slave_id": 1,
+      "task_type": "developer",
+      "target": "ptu-rule-079",
+      "description": "Fix capture rate modifier for ultra balls",
+      "agent_types": ["developer"],
+      "launch_mode": "single",
+      "depends_on": [],
+      "branch_name": "slave/1-dev-ptu-rule-079-1740200000",
+      "worktree_path": ".worktrees/slave-1-dev-ptu-rule-079",
+      "template_data": {
+        "TASK_DESCRIPTION": "...",
+        "TICKET_CONTENT": "...",
+        "RELEVANT_FILES": "...",
+        "PTU_RULES": "...",
+        "GIT_LOG": "...",
+        "RELEVANT_LESSONS": "...",
+        "REVIEW_FEEDBACK": "...",
+        "DESIGN_SPEC": "...",
+        "PREVIOUS_REVIEW": "...",
+        "WORKTREE_PATH": "{{RESOLVED_AT_SLAVE_TIME}}",
+        "BRANCH_NAME": "{{RESOLVED_AT_SLAVE_TIME}}"
+      },
+      "output_expectations": {
+        "artifact_type": "code",
+        "artifact_paths": [],
+        "modifies_domains": ["capture"]
+      }
+    }
+  ],
+  "merge_order": [1, 3, 2, 4],
+  "conflict_zones": {
+    "high_risk": [{"slaves": [1, 2], "files": ["app/utils/captureRate.ts"], "resolution": "merge 1 first, rebase 2"}],
+    "no_conflict": [{"slaves": [1, 3], "reason": "different domains (capture vs healing)"}]
+  }
+}
+```
+
+### 4.6d Slave Status
+
+**Written by:** Slave Executor
+**Read by:** Slave Executor (dependency check), Slave Collector
+**Location:** `.worktrees/slave-status/slave-<N>.json`
+
+```json
+{
+  "slave_id": 1,
+  "status": "completed",
+  "started_at": "2026-02-21T10:00:00Z",
+  "completed_at": "2026-02-21T10:15:00Z",
+  "pid": 12345,
+  "plan_id": "plan-1740200000",
+  "task_type": "developer",
+  "target": "ptu-rule-079",
+  "description": "Fix capture rate modifier for ultra balls",
+  "branch": "slave/1-dev-ptu-rule-079-1740200000",
+  "worktree": ".worktrees/slave-1-dev-ptu-rule-079",
+  "commits": ["abc1234 fix: correct ultra ball modifier", "def5678 test: add ultra ball capture test"],
+  "artifacts_produced": ["app/utils/captureRate.ts"],
+  "review_verdict": null,
+  "error": null
+}
+```
+
+Valid `status` values: `"initializing"`, `"running"`, `"completed"`, `"failed"`
+
 ### 4.7 Lesson File
 
 ```markdown
@@ -714,41 +846,45 @@ Reference files live in `.claude/skills/references/`.
 
 ### 7.1 Full Loop (new domain)
 
-Each step is a separate ephemeral orchestrator session:
+Each round is: plan → execute → collect.
 
-1. `/orchestrate` → launches Rule Extractor agent (worktree, merge, die)
-2. `/orchestrate` → launches Capability Mapper agent (parallel with #1 in another terminal)
-3. Both complete → `/orchestrate` → launches Coverage Analyzer agent
-4. Complete → `/orchestrate` → launches Implementation Auditor agent
-5. Complete → `/orchestrate` → orchestrator creates tickets from matrix + audit (M2 process)
-6. `/orchestrate` → launches Developer agent for highest-priority ticket
+1. `/create_slave_plan` → plan includes Rule Extractor + Capability Mapper (parallel slaves) for domain X
+2. `bash scripts/launch-slaves.sh` → slaves execute in parallel
+3. `/collect_slaves` → merge both to master
+4. `/create_slave_plan` → plan includes Coverage Analyzer for domain X
+5. Execute + collect
+6. `/create_slave_plan` → plan includes Implementation Auditor for domain X
+7. Execute + collect → Master creates tickets (M2) in next plan
+8. `/create_slave_plan` → plan includes Developer slaves for highest-priority tickets
 
 ### 7.2 Bug Fix Cycle (Cross-Ecosystem)
 
-1. `/orchestrate` → Developer agent fixes ticket in worktree → commits → orchestrator merges to master → dies
-2. `/orchestrate` → launches Senior Reviewer + Game Logic Reviewer (both in parallel, same worktree) → merge reviews → die
-3. Both APPROVED → `/orchestrate` → next priority ticket
-4. CHANGES_REQUIRED → `/orchestrate` → Developer agent re-works in new worktree
+1. `/create_slave_plan` → slave-1: Developer fixes ticket A, slave-2: Developer fixes ticket B (parallel)
+2. Execute + collect
+3. `/create_slave_plan` → slave-1: Reviewers for ticket A, slave-2: Reviewers for ticket B (parallel)
+4. Execute + collect
+5. Both APPROVED → `/create_slave_plan` → next priority tickets
+6. CHANGES_REQUIRED → included as highest priority in next plan
 
 ### 7.3 Stale Artifact Detection
 
-Each orchestrator checks timestamps on startup:
+The master planner checks timestamps during planning:
 - App code changed after capability mapping → capabilities stale, re-map needed
 - Re-mapped capabilities → matrix stale, re-analyze needed
 - Re-analyzed matrix → audit stale, re-audit needed
 - Developer commit after latest approved review for same target → review stale, re-review needed
 
-### 7.4 Ticket Creation Process (Orchestrator M2)
+### 7.4 Ticket Creation Process (Master Planner M2)
 
 When a domain's matrix and audit are both complete:
 
-1. Orchestrator reads `matrix/<domain>-matrix.md` and `matrix/<domain>-audit.md`
+1. Master planner reads `matrix/<domain>-matrix.md` and `matrix/<domain>-audit.md`
 2. For each `Incorrect` audit item → creates bug ticket in `tickets/bug/`
 3. For each `Missing` matrix item → creates feature ticket in `tickets/feature/`
 4. For each `Approximation` audit item → creates ptu-rule ticket in `tickets/ptu-rule/`
 5. Skips `Correct`, `Out of Scope`, and `Ambiguous` items
 6. All tickets include `matrix_source` frontmatter linking back to rule_id/domain
-7. Updates `test-state.md` with ticket creation summary
+7. Commits tickets to master immediately, then includes them in the slave plan
 
 ### 7.5 Ambiguous Item Resolution
 
@@ -762,28 +898,34 @@ When the Implementation Auditor flags ambiguous items:
 
 ### 7.6 Git Worktree Lifecycle
 
-Each orchestrator creates and manages one worktree:
+Each slave creates and manages one worktree. The collector merges and cleans up:
 
-1. **Create:** `git worktree add -b agent/<type>-<target>-<ts> .worktrees/<name> master`
-2. **Symlink:** `ln -s $(pwd)/app/node_modules .worktrees/<name>/app/node_modules`
-3. **Agent works:** reads/writes files, commits on branch
-4. **Merge:** rebase onto master, fast-forward merge (retry up to 3x on race)
-5. **Cleanup:** `git worktree remove --force`, `git branch -d`
+1. **Create (slave):** `git worktree add -b slave/<N>-<type>-<target>-<ts> .worktrees/slave-<N>-<type>-<target> master`
+2. **Symlink (slave):** `ln -s $(pwd)/app/node_modules .worktrees/<name>/app/node_modules`
+3. **Agent works (slave):** reads/writes files, commits on branch
+4. **Status (slave):** writes status JSON to `.worktrees/slave-status/slave-<N>.json`
+5. **Merge (collector):** rebase onto master, fast-forward merge (retry up to 3x per branch)
+6. **Cleanup (collector):** `git worktree remove --force`, `git branch -d`, remove status file
 
-Branch naming: `agent/<type>-<target>-<unix-timestamp>`
-Examples: `agent/dev-ptu-rule-058-1740200000`, `agent/reviewers-ptu-rule-058-1740200100`
+Branch naming: `slave/<N>-<type>-<target>-<unix-timestamp>`
+Examples: `slave/1-dev-ptu-rule-079-1740200000`, `slave/2-reviewers-ptu-rule-058-1740200100`
 
 ### 7.7 Coordination Protocol
 
-**Claiming work:**
-- Touch `.worktrees/claims/<target>.lock` (atomic on POSIX)
-- If file exists → claimed by another orchestrator, pick different target
+**Slave plan:**
+- Master planner writes `.worktrees/slave-plan.json` with all slave assignments
+- Slaves read their assignment from the plan by `slave_id`
+- Collector reads the plan for merge order and conflict zones
 
-**Agent registry:**
-- Write JSON to `.worktrees/agents/orch-<ts>.json` with PID, branch, status
-- Other orchestrators read this to see what's active
+**Slave status:**
+- Each slave writes JSON to `.worktrees/slave-status/slave-<N>.json` with status, PID, commits, artifacts
+- Slaves check dependency status files before starting
+- Collector reads all status files to determine merge set
 
-**Stale agent cleanup:**
-- PID check: `kill -0 <pid>` — if dead, agent is stale
-- Time check: if `started` >3 hours ago, agent is stale (context exhaustion)
-- Stale agents: remove lock + JSON, optionally remove worktree if clean
+**Dependency checking:**
+- Slaves check `depends_on` by reading status files of dependency slaves
+- If dependency is missing/running/failed, slave warns user and asks proceed/abort
+
+**Stale slave detection:**
+- PID check: `kill -0 <pid>` — if dead and status is "running", slave is stale
+- Collector treats stale slaves as failed
