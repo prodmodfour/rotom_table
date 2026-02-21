@@ -24,12 +24,13 @@
             class="significance-selector__select"
             @change="handlePresetChange"
           >
-            <option value="insignificant">Insignificant - x1.0</option>
-            <option value="below_average">Minor - x1.5</option>
-            <option value="average">Everyday - x2.0</option>
-            <option value="above_average">Notable - x3.0</option>
-            <option value="significant">Significant - x4.0</option>
-            <option value="major">Climactic - x5.0</option>
+            <option
+              v-for="(value, key) in SIGNIFICANCE_PRESETS"
+              :key="key"
+              :value="key"
+            >
+              {{ SIGNIFICANCE_PRESET_LABELS[key] }} - x{{ value }}
+            </option>
             <option value="custom">Custom</option>
           </select>
           <input
@@ -153,7 +154,9 @@
 
 <script setup lang="ts">
 import {
-  SIGNIFICANCE_PRESETS
+  SIGNIFICANCE_PRESETS,
+  SIGNIFICANCE_PRESET_LABELS,
+  resolvePresetFromMultiplier
 } from '~/utils/experienceCalculation'
 import type {
   SignificancePreset,
@@ -186,14 +189,6 @@ const detectedPlayerCount = computed(() => {
   )
   return Math.max(1, ownerIds.size)
 })
-
-// Determine initial preset from persisted significance
-const resolvePresetFromMultiplier = (multiplier: number): SignificancePreset | 'custom' => {
-  for (const [key, value] of Object.entries(SIGNIFICANCE_PRESETS)) {
-    if (value === multiplier) return key as SignificancePreset
-  }
-  return 'custom'
-}
 
 // State
 const selectedPreset = ref<SignificancePreset | 'custom'>(

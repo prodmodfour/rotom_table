@@ -67,6 +67,30 @@ export const SIGNIFICANCE_PRESETS = {
 
 export type SignificancePreset = keyof typeof SIGNIFICANCE_PRESETS
 
+/**
+ * Canonical friendly labels for significance presets.
+ * Used in both SignificancePanel and XpDistributionModal for consistent display.
+ */
+export const SIGNIFICANCE_PRESET_LABELS: Record<SignificancePreset, string> = {
+  insignificant: 'Insignificant',
+  below_average: 'Minor',
+  average: 'Everyday',
+  above_average: 'Notable',
+  significant: 'Significant',
+  major: 'Climactic',
+}
+
+/**
+ * Resolve a significance preset key from a multiplier value.
+ * Returns 'custom' if no preset matches.
+ */
+export function resolvePresetFromMultiplier(multiplier: number): SignificancePreset | 'custom' {
+  for (const [key, value] of Object.entries(SIGNIFICANCE_PRESETS)) {
+    if (value === multiplier) return key as SignificancePreset
+  }
+  return 'custom'
+}
+
 // ============================================
 // TYPES
 // ============================================

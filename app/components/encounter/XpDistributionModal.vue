@@ -50,7 +50,7 @@
                   class="form-select"
                 >
                   <option v-for="(value, key) in SIGNIFICANCE_PRESETS" :key="key" :value="key">
-                    {{ formatPresetLabel(key) }} (x{{ value }})
+                    {{ SIGNIFICANCE_PRESET_LABELS[key] }} (x{{ value }})
                   </option>
                   <option value="custom">Custom</option>
                 </select>
@@ -272,6 +272,8 @@
 <script setup lang="ts">
 import {
   SIGNIFICANCE_PRESETS,
+  SIGNIFICANCE_PRESET_LABELS,
+  resolvePresetFromMultiplier,
   getLevelForXp
 } from '~/utils/experienceCalculation'
 import type {
@@ -314,14 +316,6 @@ const phase = ref<'configure' | 'results'>('configure')
 
 // Guard flag: suppress watcher-triggered recalculations during initialization
 const initialized = ref(false)
-
-// Resolve the initial preset from the encounter's persisted significance
-const resolvePresetFromMultiplier = (multiplier: number): SignificancePreset | 'custom' => {
-  for (const [key, value] of Object.entries(SIGNIFICANCE_PRESETS)) {
-    if (value === multiplier) return key as SignificancePreset
-  }
-  return 'custom'
-}
 
 // Configuration state — default from the encounter's persisted significance
 const persistedSignificance = props.encounter.significanceMultiplier ?? 2
@@ -465,11 +459,6 @@ const splitEvenly = (group: PlayerGroup) => {
     newMap.set(pokemon.id, index === 0 ? perPokemon + remainder : perPokemon)
   })
   xpAllocations.value = newMap
-}
-
-// Format preset label for display
-const formatPresetLabel = (key: string): string => {
-  return key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
 }
 
 // Stale response protection: only the latest request applies its result
