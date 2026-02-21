@@ -173,6 +173,7 @@ const emit = defineEmits<{
 }>()
 
 const encounterStore = useEncounterStore()
+const { send } = useWebSocket()
 
 // Guard: suppress watcher-triggered recalculations during init
 const initialized = ref(false)
@@ -267,13 +268,20 @@ const recalculate = async () => {
   }
 }
 
-// Persist significance to the encounter record
+// Persist significance to the encounter record and broadcast via WebSocket
 const persistSignificance = async () => {
   try {
     await encounterStore.setSignificance(
       props.encounter.id,
       finalSignificance.value
     )
+    // Broadcast updated encounter to group views
+    if (encounterStore.encounter) {
+      send({
+        type: 'encounter_update',
+        data: encounterStore.encounter
+      })
+    }
   } catch {
     // setSignificance already sets the store error
   }
