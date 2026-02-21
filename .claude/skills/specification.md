@@ -19,15 +19,20 @@ The Retrospective Analyst serves both. A single Orchestrator reads both state fi
 
 **Playtesting is external.** The ecosystem produces coverage matrices and correctness audits. Running Playwright tests against the app happens outside these two ecosystems.
 
-### 2.2 Separate Terminals
+### 2.2 Ephemeral Orchestrators with Git Worktrees
 
-Each skill runs in its own Claude Code terminal (session). Skills never share context windows. The user acts as liaison between terminals, copy-pasting context summaries and following the Orchestrator's guidance on which terminal to use next.
+Each orchestrator is a short-lived Claude Code session that handles exactly one unit of work (1 Dev ticket, 2 parallel reviewers, or 1 matrix skill), then dies. Multiple orchestrators run in parallel via separate terminals.
 
-**Why separate terminals:**
-- Each skill has a distinct role and knowledge set — mixing them bloats context
-- Terminal crashes or context clears don't cascade
-- Skills can run concurrently (e.g., Dev fixing bug A while Rule Extractor extracts rules for domain B)
-- Matches the real-world model: QA team members don't share a single brain
+**Why ephemeral orchestrators:**
+- No single bottleneck — N orchestrators can run concurrently
+- Each agent gets focused context via templates (~60-100 lines) instead of full skill files (~200-300 lines)
+- Git worktrees isolate file operations — no conflicts between parallel agents
+- Crash recovery is automatic — stale agents detected via PID check
+- Linear git history maintained via rebase + fast-forward merge
+
+**Coordination:** File-based via `.worktrees/agents/` (agent registry) and `.worktrees/claims/` (lock files). No shared memory or persistent state beyond the filesystem.
+
+**Agent context:** Templates in `.claude/skills/templates/` provide static rules distilled from source skill files. The orchestrator replaces `{{PLACEHOLDER}}` tokens with dynamic data (ticket content, relevant files, lessons, git log) before launching the agent.
 
 ### 2.3 Artifact-Based Communication
 
@@ -77,11 +82,16 @@ Tickets are the **sole cross-ecosystem communication mechanism**. Matrix artifac
 
 ### 2.5 State Files
 
-The Orchestrator is the **sole writer** of both state files:
+Each orchestrator updates state files as part of its post-processing step (Step 8c). Updates are conflict-safe:
+- Only modify rows for the specific ticket the orchestrator worked on
+- Append to session summaries (never overwrite)
+- If push fails, pull-rebase and resolve (other orchestrator's changes win for untouched rows)
+
+State files:
 - `dev-state.md` — tracks open tickets, active Developer work, review status, refactoring queue
 - `test-state.md` — tracks domain matrix progress, coverage scores, active work, ambiguous items
 
-No other skill writes to state files. Skills report completions via their artifacts; the Orchestrator reads artifacts and updates state.
+Skills report completions via their artifacts; orchestrators read artifacts and update state.
 
 ### 2.6 Pipeline Flow
 
@@ -112,25 +122,30 @@ No other skill writes to state files. Skills report completions via their artifa
 | Field | Value |
 |-------|-------|
 | **File** | `.claude/skills/orchestrator.md` |
-| **Trigger** | Ask Claude to load the orchestrator skill |
-| **Input** | `dev-state.md`, `test-state.md`, all ticket directories, matrix artifacts |
-| **Output** | `dev-state.md`, `test-state.md`, tickets (from completed matrix data) |
-| **Terminal** | Persistent — keep open throughout a testing session |
+| **Templates** | `.claude/skills/templates/agent-*.md` |
+| **Trigger** | `/orchestrate` |
+| **Input** | `dev-state.md`, `test-state.md`, all ticket/matrix dirs, `.worktrees/agents/`, `.worktrees/claims/` |
+| **Output** | `dev-state.md`, `test-state.md`, tickets, `alive-agents.md`, worktree coordination files |
+| **Lifecycle** | Ephemeral — one unit of work per session, then dies |
 
-**Responsibilities:**
-- Scan both ecosystems to determine pipeline position
-- Apply D1-D9 priority tree to Dev Ecosystem
-- Apply M1-M7 priority tree to Matrix Ecosystem
-- Give parallel recommendations when both ecosystems have work
-- Create tickets from completed matrix + audit data (M2 process)
-- Sole writer of both state files
-- Detect stale artifacts and open tickets
+**Lifecycle (10 steps):**
+1. Read coordination state (active agents, claims, pipeline state)
+2. Determine next work (D1-D9 / M1-M7 priorities, filtered by claims)
+3. Propose to user and wait for confirmation
+4. Claim work (atomic lock file)
+5. Create git worktree on named branch
+6. Prepare context injection (read template, gather dynamic data, replace placeholders, validate)
+7. Launch agent(s) via Task tool
+8. Post-process (merge to master, write tickets, update state, push)
+9. Cleanup (remove worktree, branch, lock, agent JSON)
+10. Death report (summarize results, suggest next launch)
 
 **Does NOT:**
 - Write code
-- Write artifacts other than state files and tickets
 - Make PTU rule judgments
 - Approve code or plans
+- Auto-spawn other orchestrators (suggests in death report only)
+- Persist across multiple work units
 
 ### 3.2 PTU Rule Extractor
 
@@ -699,26 +714,25 @@ Reference files live in `.claude/skills/references/`.
 
 ### 7.1 Full Loop (new domain)
 
-1. Orchestrator: "No matrix for domain X. Go to Rule Extractor terminal AND Capability Mapper terminal (parallel)"
-2. Rule Extractor produces rule catalog → writes to `matrix/<domain>-rules.md`
-3. Capability Mapper produces capability catalog → writes to `matrix/<domain>-capabilities.md`
-4. Orchestrator: "Both catalogs ready. Go to Coverage Analyzer terminal"
-5. Coverage Analyzer produces matrix → writes to `matrix/<domain>-matrix.md`
-6. Orchestrator: "Matrix ready. Go to Implementation Auditor terminal"
-7. Implementation Auditor produces audit → writes to `matrix/<domain>-audit.md`
-8. Orchestrator: "Audit complete. Creating tickets..." → creates bug/feature/ptu-rule tickets from matrix + audit data
-9. Orchestrator: "bug-001 ticket created. Go to Dev terminal, start with bug-001"
+Each step is a separate ephemeral orchestrator session:
+
+1. `/orchestrate` → launches Rule Extractor agent (worktree, merge, die)
+2. `/orchestrate` → launches Capability Mapper agent (parallel with #1 in another terminal)
+3. Both complete → `/orchestrate` → launches Coverage Analyzer agent
+4. Complete → `/orchestrate` → launches Implementation Auditor agent
+5. Complete → `/orchestrate` → orchestrator creates tickets from matrix + audit (M2 process)
+6. `/orchestrate` → launches Developer agent for highest-priority ticket
 
 ### 7.2 Bug Fix Cycle (Cross-Ecosystem)
 
-1. Dev reads bug ticket + source info → implements fix → commits
-2. Senior Reviewer reviews code → writes `reviews/code-review-<NNN>.md` with verdict
-3. Game Logic Reviewer confirms PTU correctness → writes `reviews/rules-review-<NNN>.md` with verdict
-4. Orchestrator detects both reviews APPROVED → updates state
+1. `/orchestrate` → Developer agent fixes ticket in worktree → commits → orchestrator merges to master → dies
+2. `/orchestrate` → launches Senior Reviewer + Game Logic Reviewer (both in parallel, same worktree) → merge reviews → die
+3. Both APPROVED → `/orchestrate` → next priority ticket
+4. CHANGES_REQUIRED → `/orchestrate` → Developer agent re-works in new worktree
 
 ### 7.3 Stale Artifact Detection
 
-The Orchestrator detects staleness by comparing timestamps:
+Each orchestrator checks timestamps on startup:
 - App code changed after capability mapping → capabilities stale, re-map needed
 - Re-mapped capabilities → matrix stale, re-analyze needed
 - Re-analyzed matrix → audit stale, re-audit needed
@@ -745,3 +759,31 @@ When the Implementation Auditor flags ambiguous items:
 3. Game Logic Reviewer reads the ambiguous items and PTU rulebook
 4. Produces ruling in `reviews/rules-review-<NNN>.md`
 5. Orchestrator may request re-audit of affected items with the ruling applied
+
+### 7.6 Git Worktree Lifecycle
+
+Each orchestrator creates and manages one worktree:
+
+1. **Create:** `git worktree add -b agent/<type>-<target>-<ts> .worktrees/<name> master`
+2. **Symlink:** `ln -s $(pwd)/app/node_modules .worktrees/<name>/app/node_modules`
+3. **Agent works:** reads/writes files, commits on branch
+4. **Merge:** rebase onto master, fast-forward merge (retry up to 3x on race)
+5. **Cleanup:** `git worktree remove --force`, `git branch -d`
+
+Branch naming: `agent/<type>-<target>-<unix-timestamp>`
+Examples: `agent/dev-ptu-rule-058-1740200000`, `agent/reviewers-ptu-rule-058-1740200100`
+
+### 7.7 Coordination Protocol
+
+**Claiming work:**
+- Touch `.worktrees/claims/<target>.lock` (atomic on POSIX)
+- If file exists → claimed by another orchestrator, pick different target
+
+**Agent registry:**
+- Write JSON to `.worktrees/agents/orch-<ts>.json` with PID, branch, status
+- Other orchestrators read this to see what's active
+
+**Stale agent cleanup:**
+- PID check: `kill -0 <pid>` — if dead, agent is stale
+- Time check: if `started` >3 hours ago, agent is stale (context exhaustion)
+- Stale agents: remove lock + JSON, optionally remove worktree if clean
