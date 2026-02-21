@@ -21,6 +21,8 @@ import type { CreationWarning } from '~/utils/characterCreationValidation'
 const MAX_FEATURES = 4
 /** Starting edges at level 1 */
 const STARTING_EDGES = 4
+/** Default starting money for level 1 trainers (PTU Core p. 17) */
+const DEFAULT_STARTING_MONEY = 5000
 
 export interface StatPoints {
   hp: number
@@ -58,6 +60,15 @@ export function useCharacterCreation() {
     features: [] as string[],
     trainingFeature: '',
     edges: [] as string[],
+    // Biography (P2)
+    age: null as number | null,
+    gender: '',
+    height: null as number | null,
+    weight: null as number | null,
+    backgroundStory: '',
+    personality: '',
+    goals: '',
+    money: DEFAULT_STARTING_MONEY,
     // Notes
     notes: ''
   })
@@ -255,6 +266,9 @@ export function useCharacterCreation() {
 
   // --- API Payload ---
   function buildCreatePayload() {
+    // Background story takes precedence over preset name for the DB field
+    const backgroundValue = form.backgroundStory || form.backgroundName || undefined
+
     return {
       name: form.name,
       characterType: form.characterType,
@@ -267,8 +281,16 @@ export function useCharacterCreation() {
       trainerClasses: form.trainerClasses.length > 0 ? form.trainerClasses : undefined,
       features: allFeatures.value.length > 0 ? allFeatures.value : undefined,
       edges: form.edges.length > 0 ? form.edges : undefined,
-      background: form.backgroundName || undefined,
-      notes: form.notes || undefined
+      background: backgroundValue,
+      notes: form.notes || undefined,
+      // Biography fields
+      age: form.age ?? undefined,
+      gender: form.gender || undefined,
+      height: form.height ?? undefined,
+      weight: form.weight ?? undefined,
+      personality: form.personality || undefined,
+      goals: form.goals || undefined,
+      money: form.money
     }
   }
 
@@ -314,6 +336,7 @@ export function useCharacterCreation() {
     MAX_POINTS_PER_STAT,
     MAX_FEATURES,
     STARTING_EDGES,
-    MAX_TRAINER_CLASSES
+    MAX_TRAINER_CLASSES,
+    DEFAULT_STARTING_MONEY
   }
 }
