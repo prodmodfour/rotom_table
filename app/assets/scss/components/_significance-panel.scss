@@ -1,0 +1,301 @@
+// SignificancePanel — GM-facing XP significance & breakdown panel
+// Sits in the encounter sidebar alongside CombatLogPanel
+
+.significance-panel {
+  background: $glass-bg;
+  backdrop-filter: $glass-blur;
+  border: 1px solid $glass-border;
+  border-radius: $border-radius-md;
+  padding: $spacing-md;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-md;
+  }
+
+  &__title {
+    font-size: $font-size-sm;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: $color-text-muted;
+  }
+
+  &__badge {
+    font-size: $font-size-xs;
+    font-weight: 700;
+    padding: 2px $spacing-sm;
+    border-radius: $border-radius-full;
+    background: rgba($color-accent-teal, 0.15);
+    color: $color-accent-teal;
+  }
+}
+
+// Significance selector dropdown
+.significance-selector {
+  margin-bottom: $spacing-md;
+
+  &__label {
+    display: block;
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+    font-weight: 500;
+    margin-bottom: $spacing-xs;
+  }
+
+  &__row {
+    display: flex;
+    gap: $spacing-sm;
+    align-items: center;
+  }
+
+  &__select {
+    flex: 1;
+    padding: $spacing-xs $spacing-sm;
+    background: $color-bg-tertiary;
+    border: 1px solid $border-color-default;
+    border-radius: $border-radius-sm;
+    color: $color-text;
+    font-size: $font-size-sm;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+      border-color: $color-accent-teal;
+    }
+  }
+
+  &__custom-input {
+    width: 72px;
+    padding: $spacing-xs $spacing-sm;
+    background: $color-bg-tertiary;
+    border: 1px solid $border-color-default;
+    border-radius: $border-radius-sm;
+    color: $color-text;
+    font-size: $font-size-sm;
+    text-align: center;
+
+    &:focus {
+      outline: none;
+      border-color: $color-accent-teal;
+    }
+  }
+}
+
+// Difficulty adjustment slider
+.difficulty-adjust {
+  margin-bottom: $spacing-md;
+
+  &__label {
+    display: flex;
+    justify-content: space-between;
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+    font-weight: 500;
+    margin-bottom: $spacing-xs;
+  }
+
+  &__value {
+    color: $color-text;
+    font-weight: 600;
+  }
+
+  &__slider {
+    width: 100%;
+    accent-color: $color-accent-teal;
+    cursor: pointer;
+  }
+
+  &__range {
+    display: flex;
+    justify-content: space-between;
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+    margin-top: 2px;
+  }
+}
+
+// Final multiplier display
+.final-multiplier {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-sm $spacing-md;
+  margin-bottom: $spacing-md;
+  background: rgba($color-accent-teal, 0.08);
+  border: 1px solid rgba($color-accent-teal, 0.2);
+  border-radius: $border-radius-sm;
+
+  &__label {
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+    font-weight: 500;
+  }
+
+  &__value {
+    font-size: $font-size-lg;
+    font-weight: 700;
+    color: $color-accent-teal;
+  }
+}
+
+// XP breakdown section
+.xp-breakdown {
+  margin-bottom: $spacing-md;
+
+  &__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing-xs 0;
+    font-size: $font-size-sm;
+
+    &--total {
+      border-top: 1px solid $border-color-default;
+      margin-top: $spacing-xs;
+      padding-top: $spacing-sm;
+    }
+  }
+
+  &__label {
+    color: $color-text-muted;
+  }
+
+  &__value {
+    font-weight: 600;
+    color: $color-text;
+
+    &--highlight {
+      font-size: $font-size-md;
+      color: $color-accent-teal;
+    }
+  }
+}
+
+// Player count input
+.player-count {
+  margin-bottom: $spacing-md;
+
+  &__label {
+    display: block;
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+    font-weight: 500;
+    margin-bottom: $spacing-xs;
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+  }
+
+  &__input {
+    width: 60px;
+    padding: $spacing-xs $spacing-sm;
+    background: $color-bg-tertiary;
+    border: 1px solid $border-color-default;
+    border-radius: $border-radius-sm;
+    color: $color-text;
+    font-size: $font-size-sm;
+    text-align: center;
+
+    &:focus {
+      outline: none;
+      border-color: $color-accent-teal;
+    }
+  }
+
+  &__hint {
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+    font-style: italic;
+  }
+}
+
+// Boss encounter toggle
+.boss-toggle {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-md;
+  cursor: pointer;
+
+  input {
+    accent-color: $color-accent-teal;
+    width: 16px;
+    height: 16px;
+  }
+
+  &__text {
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+  }
+}
+
+// Distribute XP button
+.significance-panel__actions {
+  display: flex;
+  gap: $spacing-sm;
+
+  .btn {
+    flex: 1;
+    padding: $spacing-sm $spacing-md;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-sm;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all $transition-fast;
+    border: 1px solid transparent;
+    text-align: center;
+  }
+
+  .btn--primary {
+    background: $color-accent-teal;
+    color: $color-text-dark;
+
+    &:hover {
+      background: darken($color-accent-teal, 8%);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
+
+// Calculating spinner
+.significance-panel__loading {
+  text-align: center;
+  padding: $spacing-sm;
+  font-size: $font-size-sm;
+  color: $color-text-muted;
+  font-style: italic;
+}
+
+// Error state
+.significance-panel__error {
+  padding: $spacing-sm;
+  font-size: $font-size-sm;
+  color: $color-danger;
+  background: rgba($color-danger, 0.1);
+  border-radius: $border-radius-sm;
+  text-align: center;
+}
+
+// No enemies state
+.significance-panel__empty {
+  text-align: center;
+  padding: $spacing-md;
+  color: $color-text-muted;
+  font-size: $font-size-sm;
+
+  &-hint {
+    font-size: $font-size-xs;
+    font-style: italic;
+    margin-top: $spacing-xs;
+  }
+}
