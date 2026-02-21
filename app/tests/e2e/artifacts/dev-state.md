@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-02-21T20:00:00
-updated_by: slave-collector (plan-20260221-063148)
+last_updated: 2026-02-21T22:30:00
+updated_by: slave-collector (plan-20260221-071325)
 ---
 
 # Dev Ecosystem State
@@ -16,15 +16,16 @@ updated_by: slave-collector (plan-20260221-063148)
 | Ticket | Priority | Status | Summary |
 |--------|----------|--------|---------|
 | ptu-rule-029–076 | P1–P3 | resolved | (all resolved — see sessions 1–12) |
-| ptu-rule-045 | P3 | **in-progress** | Equipment/armor system — P0+P1 reviewed+approved, P2 remains (UI) |
-| ptu-rule-055 | P3 | **in-progress** | XP calculation — P0+P1 reviewed+approved, P2 remains (level-up notifications) |
-| ptu-rule-056 | P3 | **in-progress** | Character creation form — P0+P1 reviewed+approved, P2 remains (bio fields, mode toggle) |
-| ptu-rule-058 | P3 | **in-progress** | Encounter density/significance — P0+P1 complete, P2 remains (environmental modifiers) |
-| ptu-rule-060 | P3 | **in-progress** | Level-budget/significance — **P0 complete** (budget utility, composable, component, modal extensions) |
-| ptu-rule-077 | P3 | **in-progress** | Focus (Speed) initiative/evasion — **fix implemented** (7 commits), pending review |
+| ptu-rule-045 | P3 | **in-progress** | Equipment/armor system — P0+P1 approved, **P2 implemented** (equipment tab, catalog browser — 6 commits), pending review |
+| ptu-rule-055 | P3 | **in-progress** | XP calculation — P0+P1 approved, **P2 implemented** (LevelUpNotification, add-experience endpoint — 4 commits), pending review |
+| ptu-rule-056 | P3 | **in-progress** | Character creation form — P0+P1 approved, **P2 implemented** (BiographySection, quick/full-create toggle — 5 commits), pending review |
+| ptu-rule-058 | P3 | **in-progress** | Encounter density/significance — P0+P1 complete, **P1 fixes applied** (7 commits from code-review-123 CHANGES_REQUIRED), needs re-review |
+| ptu-rule-060 | P3 | **in-progress** | Level-budget/significance — P0 complete, **reviewed**: code-review-124 CHANGES_REQUIRED, rules-review-114 APPROVED |
+| ptu-rule-077 | P3 | **reviewed** | Focus (Speed) initiative/evasion — fix implemented, **APPROVED** (code-review-125 + rules-review-115) |
 | ptu-rule-078 | P3 | **open** | Trainer class associated skills data mismatch (from rules-review-111) |
 | ptu-rule-079 | P3 | **open** | Helmet conditional DR not applied with manual DR override (from code-review-120) |
 | ptu-rule-080 | P3 | **open** | Higher-level char creation validation missing (from code-review-121) |
+| ptu-rule-081 | P4 | **open** | Multiple Focus items not explicitly prevented (from rules-review-115 M2) |
 
 ### Feature Tickets (`tickets/feature/`)
 (none)
@@ -34,31 +35,27 @@ updated_by: slave-collector (plan-20260221-063148)
 
 ## Active Developer Work
 
-**Current task:** Slave collection for plan-20260221-063148 — 4 slaves merged.
+**Current task:** Slave collection for plan-20260221-071325 completed — 6 slaves merged (26 commits total).
 
-**Session 14 (2026-02-21):**
-- ptu-rule-058 P1 implemented (11 commits) — reviewed: code-review-123 CHANGES_REQUIRED, rules-review-113 APPROVED
-- ptu-rule-060 P0 implemented (5 commits) — pending review
-- ptu-rule-077 fix implemented (7 commits) — pending review
+**Session 14 (2026-02-21) — continued:**
+- ptu-rule-058 P1 fixes applied (7 commits) — NaN guards, null guard, WS broadcast, utility extraction, fallback fix, app-surface update
+- ptu-rule-060 P0 reviewed — code-review-124 CHANGES_REQUIRED, rules-review-114 APPROVED
+- ptu-rule-077 reviewed — code-review-125 APPROVED, rules-review-115 APPROVED
+- ptu-rule-045 P2 implemented (6 commits) — HumanEquipmentTab, EquipmentCatalogBrowser, CharacterModal + GM page wiring
+- ptu-rule-055 P2 implemented (4 commits) — LevelUpNotification, add-experience endpoint, XpDistributionModal integration
+- ptu-rule-056 P2 implemented (5 commits) — BiographySection, quick/full-create mode toggle, section completion tracking
 
 **Next actions (by priority — "finish all tiers" rule):**
-1. **Fix** ptu-rule-058 P1 issues from code-review-123 (CHANGES_REQUIRED)
-2. **Review** ptu-rule-060 P0 (level budget utility + modal extensions)
-3. **Review** ptu-rule-077 (Focus Speed initiative/evasion fix)
-4. ptu-rule-045 P2 (equipment tab UI, catalog browser)
-5. ptu-rule-055 P2 (level-up notifications)
-6. ptu-rule-056 P2 (biographical fields, quick/full-create toggle)
-7. ptu-rule-060 P1+ (level budget remaining tiers)
-8. ptu-rule-078 P3 (trainer class skills data correction)
-9. ptu-rule-079 P3 (helmet DR parity gap)
-10. ptu-rule-080 P3 (higher-level char creation validation)
-
-**Design spec dependency graph (updated):**
-- ptu-rule-058 P1 (significance multiplier) — **DONE**, code review CHANGES_REQUIRED
-- ptu-rule-060 P0 (level budget) — **DONE**, pending review
-- ptu-rule-045 P2 (equipment UI) — independent, can start immediately
-- ptu-rule-055 P2 (level-up notifications) — independent, can start immediately
-- ptu-rule-056 P2 (bio fields) — independent, can start immediately
+1. **Fix** ptu-rule-060 P0 issues from code-review-124 (CHANGES_REQUIRED — C1: wire props, H1: app-surface, H2: SCSS extraction, M1: player count filter, M2: rename field)
+2. **Re-review** ptu-rule-058 P1 fixes (were the code-review-123 issues fully resolved?)
+3. **Review** ptu-rule-045 P2 (equipment tab + catalog browser)
+4. **Review** ptu-rule-055 P2 (level-up automation)
+5. **Review** ptu-rule-056 P2 (biographical fields + mode toggle)
+6. ptu-rule-060 P1+ (level budget remaining tiers)
+7. ptu-rule-078 P3 (trainer class skills data correction)
+8. ptu-rule-079 P3 (helmet DR parity gap)
+9. ptu-rule-080 P3 (higher-level char creation validation)
+10. ptu-rule-081 P4 (multiple Focus items enforcement)
 
 ## Review Status
 
@@ -67,6 +64,10 @@ updated_by: slave-collector (plan-20260221-063148)
 |-----------|--------|---------|----------|------|
 | code-review-123 | ptu-rule-058 P1 | CHANGES_REQUIRED | senior-reviewer | 2026-02-21 |
 | rules-review-113 | ptu-rule-058 P1 | APPROVED | game-logic-reviewer | 2026-02-21 |
+| code-review-124 | ptu-rule-060 P0 | CHANGES_REQUIRED | senior-reviewer | 2026-02-21 |
+| rules-review-114 | ptu-rule-060 P0 | APPROVED | game-logic-reviewer | 2026-02-21 |
+| code-review-125 | ptu-rule-077 fix | APPROVED | senior-reviewer | 2026-02-21 |
+| rules-review-115 | ptu-rule-077 fix | APPROVED | game-logic-reviewer | 2026-02-21 |
 
 ### Session 13 Reviews
 | Review ID | Target | Verdict | Reviewer | Date |
@@ -97,7 +98,11 @@ updated_by: slave-collector (plan-20260221-063148)
 | refactoring-060 | P4 | open | Count clamping test coverage (from code-review-122) |
 | refactoring-061 | P4 | open | CSS duplication in create components (from code-review-121) |
 | refactoring-062 | P4 | open | buildCombatantFromEntity test coverage (from code-review-120b) |
-| refactoring-063 | P4 | open | Extract shared significance preset utilities (from code-review-123 M2 + rules-review-113 M2) |
+| refactoring-063 | P4 | **resolved** | Extract shared significance preset utilities (from code-review-123 M2 + rules-review-113 M2) — resolved by slave-1 |
+| refactoring-064 | P4 | open | Extract shared difficulty color styles (from code-review-124 H2) |
+| refactoring-065 | P4 | open | Extract shared evasion computation helper in useMoveCalculation (from code-review-125 M1) |
+| refactoring-066 | P4 | open | Use calculateEvasion for initial evasion in combatant builder (from code-review-125 M2) |
+| refactoring-067 | P4 | open | Dead calculateInitiative in useCombat missing Focus bonus (from rules-review-115 M1) |
 
 ## Code Health
 
@@ -107,10 +112,10 @@ updated_by: slave-collector (plan-20260221-063148)
 | Open tickets (P0) | 0 |
 | Open tickets (P1) | 0 |
 | Open tickets (P2) | 0 |
-| Open tickets (P3) | 9 (5 ptu-rules in-progress + 4 open ptu-rules) |
-| Open tickets (P4) | 5 (refactoring-059, 060, 061, 062, 063) |
-| Total open | 14 |
-| Total resolved | 138 |
+| Open tickets (P3) | 10 (6 ptu-rules in-progress + 1 reviewed + 3 open ptu-rules) |
+| Open tickets (P4) | 8 (refactoring-059, 060, 061, 062, 064, 065, 066, 067 + ptu-rule-081) |
+| Total open | 18 |
+| Total resolved | 139 |
 
 ## Session Summary (2026-02-20, session 13)
 
@@ -149,3 +154,15 @@ updated_by: slave-collector (plan-20260221-063148)
 - **slave-2** (game-logic-reviewer): rules-review-113 for ptu-rule-058 P1 — verdict: **APPROVED**
 - **slave-4** (developer): ptu-rule-077 Focus (Speed) fix — 7 commits (evasion calc, combatant builder, move calc, damage endpoint, tests)
 - **slave-3** (developer): ptu-rule-060 P0 level budget — 5 commits (encounterBudget.ts, useEncounterBudget, BudgetIndicator, modal extensions)
+
+**Slave collection plan-20260221-071325:** 6 slaves merged (26 commits total)
+- **slave-1** (developer): ptu-rule-058 P1 fixes — 7 commits (NaN guards, null guard, WS broadcast, utility extraction, fallback fix, app-surface, ticket update)
+- **slave-2** (reviewers): ptu-rule-060 P0 review — code-review-124 CHANGES_REQUIRED + rules-review-114 APPROVED
+- **slave-3** (reviewers): ptu-rule-077 review — code-review-125 APPROVED + rules-review-115 APPROVED
+- **slave-4** (developer): ptu-rule-045 P2 — 6 commits (HumanEquipmentTab, EquipmentCatalogBrowser, CharacterModal, GM page, design+ticket update)
+- **slave-5** (developer): ptu-rule-055 P2 — 4 commits (LevelUpNotification, add-experience endpoint, XpDistributionModal integration, ticket update)
+- **slave-6** (developer): ptu-rule-056 P2 — 5 commits (BiographySection, useCharacterCreation, create page mode toggle, design+ticket update)
+
+**Tickets filed:** 5 (refactoring-064, 065, 066, 067, ptu-rule-081)
+**Tickets resolved:** 1 (refactoring-063 — by slave-1)
+**Net movement:** 14→18 open (+4 net: +5 new tickets, -1 resolved)

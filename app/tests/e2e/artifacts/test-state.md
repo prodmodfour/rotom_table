@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-02-21T20:00:00
-updated_by: slave-collector (plan-20260221-063148)
+last_updated: 2026-02-21T22:30:00
+updated_by: slave-collector (plan-20260221-071325)
 ---
 
 # Matrix Ecosystem State
@@ -47,7 +47,11 @@ All 8 domains are stale due to sessions 5–13 code changes. Re-mapping is now u
 ## Session 14 Changes (additional staleness)
 
 - **combat:** ptu-rule-077 fix — Focus (Speed) stat bonuses now applied to initiative + evasion (combatant.service.ts, useMoveCalculation.ts, useCombat.ts, damageCalculation.ts, calculate-damage endpoint)
+- **combat:** ptu-rule-045 P2 — HumanEquipmentTab.vue, EquipmentCatalogBrowser.vue, CharacterModal + GM page wiring
 - **encounter-tables:** ptu-rule-060 P0 — encounterBudget.ts utility, useEncounterBudget composable, BudgetIndicator component, GenerateEncounterModal + StartEncounterModal extensions
+- **encounter-tables:** ptu-rule-058 P1 fixes — NaN guards, null guard, WS broadcast, utility extraction in SignificancePanel + XpDistributionModal + experienceCalculation.ts
+- **pokemon-lifecycle:** ptu-rule-055 P2 — LevelUpNotification.vue, add-experience endpoint, XpDistributionModal level-up integration
+- **character-lifecycle:** ptu-rule-056 P2 — BiographySection.vue, useCharacterCreation biography fields, gm/create.vue quick/full-create mode toggle
 
 ## Recommended Next Steps
 
