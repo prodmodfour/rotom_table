@@ -610,6 +610,31 @@ export const useEncounterStore = defineStore('encounter', {
     },
 
     // ===========================================
+    // Significance Multiplier
+    // ===========================================
+
+    /** Persist the GM-set significance multiplier on the encounter */
+    async setSignificance(encounterId: string, significanceMultiplier: number) {
+      try {
+        await $fetch(`/api/encounters/${encounterId}/significance`, {
+          method: 'PUT',
+          body: { significanceMultiplier }
+        })
+
+        // Update local state immutably
+        if (this.encounter && this.encounter.id === encounterId) {
+          this.encounter = {
+            ...this.encounter,
+            significanceMultiplier
+          }
+        }
+      } catch (e: any) {
+        this.error = e.message || 'Failed to update significance'
+        throw e
+      }
+    },
+
+    // ===========================================
     // XP Distribution Actions
     // ===========================================
 
