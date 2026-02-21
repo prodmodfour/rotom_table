@@ -758,3 +758,20 @@ Equipment changes emit a `character_update` WebSocket event (existing event type
 - **H (Heavy Armor Speed Penalty):** `buildCombatantFromEntity()` applies speed default CS to initiative and initial stage modifiers. `breather.post.ts` resets speed CS to equipment default (not 0) for Heavy Armor wearers.
 
 **P1 Status:** All 4 items (E, F, G, H) implemented. P2 (UI) remains.
+
+### P2 — Equipment Tab UI & Item Catalog Browser (2026-02-21)
+
+| Commit | Description | Files |
+|--------|-------------|-------|
+| `5654e10` | I: HumanEquipmentTab.vue — 6 slots, catalog dropdown, custom item entry, combat bonuses summary | `app/components/character/tabs/HumanEquipmentTab.vue` (new) |
+| `d779419` | I: Register Equipment tab in CharacterModal | `app/components/character/CharacterModal.vue` |
+| `c0d9b59` | I: Register Equipment tab on GM character detail page | `app/pages/gm/characters/[id].vue` |
+| `56a2c1c` | J: EquipmentCatalogBrowser modal — grouped by slot, filter/search, equip button | `app/components/character/EquipmentCatalogBrowser.vue` (new) |
+| `5b76f2b` | I+J: Wire catalog browser into Equipment tab | `app/components/character/tabs/HumanEquipmentTab.vue` |
+
+**P2 Summary:**
+
+- **I (Equipment Tab):** New `HumanEquipmentTab.vue` added to both `CharacterModal.vue` and `gm/characters/[id].vue`. Six equipment slots with Phosphor Icons, each showing equipped item name + remove button. Empty slots show dropdown filtered to slot-compatible catalog items plus a "Custom..." option for manual item entry with bonus values. Combat Bonuses summary at bottom shows aggregate DR, evasion, speed CS, Focus stat bonuses, and conditional DR from `computeEquipmentBonuses()`. Equip/unequip calls `PUT /api/characters/:id/equipment`. WebSocket `character_update` emitted when character is in active encounter.
+- **J (Item Catalog Browser):** New `EquipmentCatalogBrowser.vue` modal. Full catalog view of all 15 EQUIPMENT_CATALOG entries grouped by slot. Filter by slot dropdown, search by name/description. Each item shows name, cost, description, and bonus tags (DR, evasion, speed CS, focus, conditional DR, can-ready). Equip button targets selected character via PUT API.
+
+**P2 Status:** All items (I, J) implemented. Design complete.

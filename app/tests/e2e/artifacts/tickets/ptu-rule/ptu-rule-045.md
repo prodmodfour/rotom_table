@@ -1,7 +1,7 @@
 ---
 ticket_id: ptu-rule-045
 priority: P3
-status: in-progress
+status: implemented
 design_spec: designs/design-equipment-001.md
 domain: combat
 matrix_source:
@@ -54,3 +54,12 @@ Two HIGH issues from code-review-120 resolved:
 
 - **H1: Immutability fix** — `buildCombatantFromEntity()` in `combatant.service.ts` was mutating the input `entity` parameter's `stageModifiers` to apply Heavy Armor speed default CS. Replaced with a shallow copy pattern: a new `combatantEntity` is created with the adjusted stageModifiers and passed into the returned combatant, leaving the caller's entity reference untouched.
 - **H2: `let` to `const`** — `targetEquipBonuses` in `calculate-damage.post.ts` was declared with `let` but never reassigned. Changed to `const`.
+
+### P2 Implementation (2026-02-21)
+
+P2 tier implemented: Equipment Tab UI and Item Catalog Browser.
+
+- **I: Equipment Tab** — New `HumanEquipmentTab.vue` component with 6 equipment slots (Head, Body, Main Hand, Off-Hand, Feet, Accessory). Each slot shows equipped item name + remove button, or a catalog dropdown for empty slots. Custom item entry via "Custom..." option. Combat Bonuses summary at bottom. Registered in both `CharacterModal.vue` and `gm/characters/[id].vue`. WebSocket `character_update` emitted when character is in active encounter.
+- **J: Item Catalog Browser** — New `EquipmentCatalogBrowser.vue` modal showing all 15 EQUIPMENT_CATALOG entries grouped by slot. Filter by slot, search by name/description. Item bonus tags (DR, evasion, speed CS, focus, conditional DR, can-ready). Equip button targets selected character. Integrated into Equipment tab via "Browse Full Catalog" button.
+
+All tiers (P0/P1/P2) complete. Ticket resolved.
