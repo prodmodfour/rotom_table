@@ -318,7 +318,7 @@ const phase = ref<'configure' | 'results'>('configure')
 const initialized = ref(false)
 
 // Configuration state — default from the encounter's persisted significance
-const persistedSignificance = props.encounter.significanceMultiplier ?? 2
+const persistedSignificance = props.encounter.significanceMultiplier ?? 1.0
 const selectedPreset = ref<SignificancePreset | 'custom'>(
   resolvePresetFromMultiplier(persistedSignificance)
 )
