@@ -20,6 +20,13 @@
             <PhUser :size="18" />
             <span>{{ characterCount }} characters (players)</span>
           </div>
+          <div v-if="budgetInfo" class="entity-count">
+            <PhScales :size="18" />
+            <span>
+              Budget: {{ budgetInfo.effectiveEnemyLevels }} / {{ budgetInfo.totalBudget }} levels
+              (<span class="difficulty-label" :class="`difficulty-label--${budgetInfo.difficulty}`">{{ budgetInfo.difficulty }}</span>)
+            </span>
+          </div>
           <div v-if="pokemonCount === 0 && characterCount === 0" class="entity-count entity-count--empty">
             <PhWarning :size="18" />
             <span>No Pokemon or characters in this scene</span>
@@ -63,12 +70,18 @@
 </template>
 
 <script setup lang="ts">
-import { PhPawPrint, PhUser, PhWarning, PhSword } from '@phosphor-icons/vue'
+import { PhPawPrint, PhUser, PhWarning, PhSword, PhScales } from '@phosphor-icons/vue'
 
 defineProps<{
   sceneName: string
   pokemonCount: number
   characterCount: number
+  budgetInfo?: {
+    totalBudget: number
+    totalEnemyLevels: number
+    effectiveEnemyLevels: number
+    difficulty: 'trivial' | 'easy' | 'balanced' | 'hard' | 'deadly'
+  }
 }>()
 
 const emit = defineEmits<{
@@ -111,6 +124,31 @@ const handleConfirm = () => {
 
   &--empty {
     color: $color-text-muted;
+  }
+}
+
+.difficulty-label {
+  font-weight: 600;
+  text-transform: capitalize;
+
+  &--trivial {
+    color: #9e9e9e;
+  }
+
+  &--easy {
+    color: $color-success;
+  }
+
+  &--balanced {
+    color: $color-info;
+  }
+
+  &--hard {
+    color: $color-warning;
+  }
+
+  &--deadly {
+    color: $color-danger;
   }
 }
 
