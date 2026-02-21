@@ -96,6 +96,22 @@
       </div>
     </div>
 
+    <!-- Browse Catalog Button -->
+    <div class="catalog-action">
+      <button class="btn btn--secondary btn--sm" @click="showCatalog = true">
+        <PhList :size="14" weight="bold" />
+        Browse Full Catalog
+      </button>
+    </div>
+
+    <!-- Catalog Browser Modal -->
+    <EquipmentCatalogBrowser
+      v-if="showCatalog"
+      :target-character-id="characterId"
+      @close="showCatalog = false"
+      @equipped="onCatalogEquipped"
+    />
+
     <!-- Combat Bonuses Summary -->
     <div class="bonuses-section">
       <h4>Combat Bonuses</h4>
@@ -135,7 +151,7 @@
 </template>
 
 <script setup lang="ts">
-import { PhX, PhShield, PhEye, PhSpeedometer, PhTarget, PhWarning } from '@phosphor-icons/vue'
+import { PhX, PhShield, PhEye, PhSpeedometer, PhTarget, PhWarning, PhList } from '@phosphor-icons/vue'
 import { PhBaseballCap, PhTShirt, PhSword, PhHandPalm, PhSneakerMove, PhRing } from '@phosphor-icons/vue'
 import { EQUIPMENT_CATALOG, EQUIPMENT_SLOTS } from '~/constants/equipment'
 import { computeEquipmentBonuses } from '~/utils/equipmentBonuses'
@@ -152,6 +168,7 @@ const emit = defineEmits<{
 }>()
 
 const saving = ref(false)
+const showCatalog = ref(false)
 const customSlot = ref<EquipmentSlot | null>(null)
 const customForm = ref({
   name: '',
@@ -288,6 +305,14 @@ function confirmCustomItem() {
 
   equipItem(customSlot.value, item)
   customSlot.value = null
+}
+
+function onCatalogEquipped(equipment: EquipmentSlots) {
+  emit('equipment-changed', equipment)
+  showCatalog.value = false
+  if (props.isInEncounter) {
+    emitCharacterUpdate()
+  }
 }
 
 function emitCharacterUpdate() {
@@ -461,6 +486,18 @@ function emitCharacterUpdate() {
   gap: $spacing-sm;
   justify-content: flex-end;
   margin-top: $spacing-md;
+}
+
+.catalog-action {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: $spacing-md;
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-xs;
+  }
 }
 
 .bonuses-section {
