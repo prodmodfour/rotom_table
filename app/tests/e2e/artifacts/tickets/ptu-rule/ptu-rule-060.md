@@ -24,3 +24,26 @@ Encounter difficulty is determined by total level budget (sum of opponent levels
 ## Actual Behavior
 
 The density tier system controls spawn count but has no connection to level-based budgeting or significance-based XP scaling.
+
+## Fix Log (P0 Review Fixes)
+
+| Issue | Commit | Description |
+|-------|--------|-------------|
+| M2 | `9f43e79` | Rename `baselineXpPerPlayer` to `levelBudgetPerPlayer` in `encounterBudget.ts` |
+| M1 / HIGH-1 | `107cc67` | Fix playerCount to count only human trainers (PTU p.460) in `useEncounterBudget.ts` |
+| H2 | `1c4a6cc` | Extract shared difficulty color styles to `_difficulty.scss`, add `$color-neutral` variable |
+| C1 (scene) | `6fcd1d7` | Wire `budgetInfo` prop to StartEncounterModal from `pages/gm/scenes/[id].vue` |
+| C1 (generate) | `65e5b77` | Add manual party input to GenerateEncounterModal budget guide |
+| H1 | `05f5847` | Update `app-surface.md` with budget system files |
+
+### Files Changed
+- `app/utils/encounterBudget.ts` — renamed field + JSDoc
+- `app/composables/useEncounterBudget.ts` — human-only player filter
+- `app/assets/scss/_variables.scss` — added `$color-neutral`
+- `app/assets/scss/_difficulty.scss` — new shared mixin partial
+- `app/nuxt.config.ts` — added `_difficulty.scss` to SCSS preprocessor
+- `app/components/encounter/BudgetIndicator.vue` — use shared mixin
+- `app/components/scene/StartEncounterModal.vue` — use shared mixin
+- `app/components/habitat/GenerateEncounterModal.vue` — manual party input + effective context
+- `app/pages/gm/scenes/[id].vue` — compute and pass budgetInfo prop
+- `.claude/skills/references/app-surface.md` — document budget system files

@@ -632,3 +632,28 @@ The density-to-significance mapping from ptu-rule-058 can be addressed as a foll
 9. **P1: Extend `GenerateEncounterModal.vue`** — add significance selector for wild encounters
 10. **P2: Budget warnings** — add contextual warnings to encounter creation and mid-combat
 11. **P2: Difficulty presets** — add quick-select buttons in GenerateEncounterModal
+
+---
+
+## Implementation Log
+
+### P0 — Initial Implementation (2026-02-21)
+
+Commits: `902b518`, `6a4f6a1`, `ca5243f`, `171f9f5`, `97bff99`
+
+Steps 1-5 implemented. Budget utility, composable, BudgetIndicator, and modal extensions.
+
+### P0 — Review Fixes (2026-02-21)
+
+Addressed code-review-124 (CHANGES_REQUIRED) and rules-review-114 HIGH-1:
+
+| Commit | Fix |
+|--------|-----|
+| `9f43e79` | M2: Renamed `baselineXpPerPlayer` to `levelBudgetPerPlayer` |
+| `107cc67` | M1/HIGH-1: Fixed playerCount to count human trainers only |
+| `1c4a6cc` | H2: Extracted difficulty colors to `_difficulty.scss` mixin |
+| `6fcd1d7` | C1: Wired budgetInfo prop in `pages/gm/scenes/[id].vue` |
+| `65e5b77` | C1: Added manual party input to GenerateEncounterModal |
+| `05f5847` | H1: Updated `app-surface.md` with budget system files |
+
+P0 status: **complete** (all review issues addressed).

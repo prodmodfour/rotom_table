@@ -2,7 +2,7 @@
 ticket_id: refactoring-064
 category: EXT-DUPLICATE
 priority: P4
-status: open
+status: resolved
 domain: scenes
 source: code-review-124 H2
 created_by: slave-collector (plan-20260221-071325)
@@ -30,3 +30,7 @@ The same 5-tier difficulty color mapping (`trivial: #9e9e9e`, `easy: $color-succ
 
 - **Extensibility:** P1/P2 budget features will add more consumers of difficulty colors. Without extraction, each new consumer copies the mapping independently.
 - **Consistency:** Hardcoded hex values bypass the SCSS variable system.
+
+## Resolution
+
+Resolved in commit `1c4a6cc`. Extracted to `app/assets/scss/_difficulty.scss` with `difficulty-text-colors` and `difficulty-bg-colors` mixins. Added `$color-neutral` variable to `_variables.scss`. Both `BudgetIndicator.vue` and `StartEncounterModal.vue` now use the shared mixins.
