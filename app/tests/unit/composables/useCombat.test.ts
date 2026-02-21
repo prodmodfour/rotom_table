@@ -108,6 +108,20 @@ describe('useCombat composable', () => {
       // stat 5 → 1, bonus -3 → -2 → clamped to 0
       expect(calculateEvasion(5, 0, -3)).toBe(0)
     })
+
+    it('should add statBonus after combat stages but before dividing by 5 (Focus items, PTU p.295)', () => {
+      // stat 20, stage 0, evasionBonus 0, statBonus +5 → (20 + 5) / 5 = 5
+      expect(calculateEvasion(20, 0, 0, 5)).toBe(5)
+      // stat 20, stage 0, evasionBonus 0, statBonus 0 → 20 / 5 = 4
+      expect(calculateEvasion(20, 0, 0, 0)).toBe(4)
+    })
+
+    it('should apply statBonus after combat stage multiplier', () => {
+      // stat 20, stage -1 → floor(20 * 0.9) = 18, then +5 = 23, then 23/5 = 4.6 → floor 4
+      expect(calculateEvasion(20, -1, 0, 5)).toBe(4)
+      // stat 20, stage +1 → floor(20 * 1.2) = 24, then +5 = 29, then 29/5 = 5.8 → floor 5
+      expect(calculateEvasion(20, 1, 0, 5)).toBe(5)
+    })
   })
 
   describe('evasion aliases', () => {
@@ -122,6 +136,12 @@ describe('useCombat composable', () => {
 
     it('calculateSpeedEvasion should match calculateEvasion', () => {
       expect(calculateSpeedEvasion(25)).toBe(calculateEvasion(25))
+    })
+
+    it('evasion aliases should pass statBonus through to calculateEvasion', () => {
+      expect(calculatePhysicalEvasion(20, 0, 0, 5)).toBe(calculateEvasion(20, 0, 0, 5))
+      expect(calculateSpecialEvasion(20, 0, 0, 5)).toBe(calculateEvasion(20, 0, 0, 5))
+      expect(calculateSpeedEvasion(20, 0, 0, 5)).toBe(calculateEvasion(20, 0, 0, 5))
     })
   })
 
