@@ -242,6 +242,12 @@
           <div class="results-total">
             Total XP Distributed: {{ totalDistributed }}
           </div>
+
+          <!-- Level-Up Notification (detailed view for leveled Pokemon) -->
+          <LevelUpNotification
+            v-if="hasLevelUps"
+            :results="distributionResults"
+          />
         </div>
       </div>
 
@@ -338,6 +344,11 @@ const calculationResult = ref<{
 // Distribution results
 const distributionResults = ref<XpApplicationResult[]>([])
 const totalDistributed = ref(0)
+
+// Whether any Pokemon leveled up (for showing LevelUpNotification)
+const hasLevelUps = computed(() =>
+  distributionResults.value.some(r => r.levelsGained > 0)
+)
 
 // XP allocation map: pokemonId -> xpAmount
 const xpAllocations = ref<Map<string, number>>(new Map())
