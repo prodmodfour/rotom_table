@@ -311,7 +311,7 @@ const handleDistributeXp = () => {
 }
 
 // Watch for defeated enemies changes (new enemies defeated during combat)
-watch(() => props.encounter.defeatedEnemies.length, () => {
+watch(() => (props.encounter.defeatedEnemies ?? []).length, () => {
   if (initialized.value && hasDefeatedEnemies.value) {
     recalculate()
   }
