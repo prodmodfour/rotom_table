@@ -51,7 +51,7 @@
         <div class="difficulty-adjust__label">
           <span>Difficulty Adjustment</span>
           <span class="difficulty-adjust__value">
-            {{ difficultyAdjustment > 0 ? '+' : '' }}{{ difficultyAdjustment.toFixed(1) }}
+            {{ safeDifficultyAdjustment > 0 ? '+' : '' }}{{ safeDifficultyAdjustment.toFixed(1) }}
           </span>
         </div>
         <input
@@ -117,7 +117,7 @@
           <span class="xp-breakdown__value">{{ calculationResult.breakdown.multipliedXp }}</span>
         </div>
         <div v-if="!isBossEncounter" class="xp-breakdown__row">
-          <span class="xp-breakdown__label">/ {{ playerCount }} players</span>
+          <span class="xp-breakdown__label">/ {{ safePlayerCount }} players</span>
           <span class="xp-breakdown__value">{{ calculationResult.totalXpPerPlayer }}</span>
         </div>
         <div class="xp-breakdown__row xp-breakdown__row--total">
@@ -212,15 +212,20 @@ const hasDefeatedEnemies = computed(() =>
   (props.encounter.defeatedEnemies ?? []).length > 0
 )
 
+// NaN-safe accessors — Vue 3.4+ v-model.number returns '' when input is cleared
+const safeCustomMultiplier = computed(() => Number(customMultiplier.value) || 1.0)
+const safeDifficultyAdjustment = computed(() => Number(difficultyAdjustment.value) || 0)
+const safePlayerCount = computed(() => Math.max(1, Number(playerCount.value) || 1))
+
 // Base significance from preset or custom value
 const baseSignificance = computed(() => {
-  if (selectedPreset.value === 'custom') return customMultiplier.value
+  if (selectedPreset.value === 'custom') return safeCustomMultiplier.value
   return SIGNIFICANCE_PRESETS[selectedPreset.value]
 })
 
 // Final significance: base + adjustment, clamped to >= 0.5
 const finalSignificance = computed(() => {
-  const raw = baseSignificance.value + difficultyAdjustment.value
+  const raw = baseSignificance.value + safeDifficultyAdjustment.value
   return Math.max(0.5, Math.round(raw * 10) / 10)
 })
 
@@ -241,7 +246,7 @@ const recalculate = async () => {
   try {
     const result = await encounterStore.calculateXp({
       significanceMultiplier: finalSignificance.value,
-      playerCount: playerCount.value,
+      playerCount: safePlayerCount.value,
       isBossEncounter: isBossEncounter.value
     })
 
