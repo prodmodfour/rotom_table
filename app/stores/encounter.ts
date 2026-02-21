@@ -369,6 +369,9 @@ export const useEncounterStore = defineStore('encounter', {
         this.encounter.isServed = data.isServed
       }
       this.encounter.moveLog = data.moveLog ?? this.encounter.moveLog
+      if (data.significanceMultiplier !== undefined) {
+        this.encounter.significanceMultiplier = data.significanceMultiplier
+      }
       if (data.gridConfig !== undefined) {
         this.encounter.gridConfig = data.gridConfig
       }
