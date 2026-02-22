@@ -423,7 +423,7 @@
 import type { PokemonType } from '~/types'
 import type { CharacterType } from '~/types/character'
 import type { PtuSkillName } from '~/constants/trainerSkills'
-import type { CreateMode } from '~/composables/useCharacterCreation'
+import { DEFAULT_STARTING_MONEY, type CreateMode } from '~/composables/useCharacterCreation'
 
 definePageMeta({
   layout: 'gm'
@@ -508,6 +508,11 @@ const createHumanQuick = async () => {
     // PTU Trainer HP formula: Level * 2 + HP Stat * 3 + 10
     const maxHp = level * 2 + hpStat * 3 + 10
 
+    // PCs get PTU standard starting money; NPCs default to 0 (no inventory tracking)
+    const money = quickForm.value.characterType === 'player'
+      ? DEFAULT_STARTING_MONEY
+      : 0
+
     const data = {
       name: quickForm.value.name,
       characterType: quickForm.value.characterType,
@@ -523,6 +528,7 @@ const createHumanQuick = async () => {
       },
       maxHp,
       currentHp: maxHp,
+      money,
       notes: quickForm.value.notes || undefined
     }
 

@@ -22,7 +22,7 @@ const MAX_FEATURES = 4
 /** Starting edges at level 1 */
 const STARTING_EDGES = 4
 /** Default starting money for level 1 trainers (PTU Core p. 17) */
-const DEFAULT_STARTING_MONEY = 5000
+export const DEFAULT_STARTING_MONEY = 5000
 
 export type CreateMode = 'quick' | 'full'
 
