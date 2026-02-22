@@ -38,8 +38,8 @@
 
           <!-- New Moves -->
           <div
-            v-for="move in entry.allNewMoves"
-            :key="move"
+            v-for="(move, index) in entry.allNewMoves"
+            :key="'move-' + index"
             class="levelup-detail-item levelup-detail-item--move"
           >
             <img src="/icons/phosphor/sword.svg" alt="" class="detail-icon" />
