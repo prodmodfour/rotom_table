@@ -70,7 +70,7 @@ const difficultyLabel = computed(() => {
     border-radius: $border-radius-full;
     transition: width $transition-normal;
 
-    @include difficulty-bg-colors('.budget-indicator');
+    @include difficulty-bg-colors-ancestor('.budget-indicator');
   }
 
   &__overflow {
