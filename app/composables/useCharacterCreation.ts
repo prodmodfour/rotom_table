@@ -12,7 +12,17 @@ import type { Stats, SkillRank, CharacterType } from '~/types/character'
 import type { TrainerBackground } from '~/constants/trainerBackgrounds'
 import type { PtuSkillName } from '~/constants/trainerSkills'
 import { getDefaultSkills } from '~/constants/trainerSkills'
-import { BASE_HP, BASE_OTHER, TOTAL_STAT_POINTS, MAX_POINTS_PER_STAT } from '~/constants/trainerStats'
+import {
+  BASE_HP,
+  BASE_OTHER,
+  TOTAL_STAT_POINTS,
+  MAX_POINTS_PER_STAT,
+  getStatPointsForLevel,
+  getMaxSkillRankForLevel,
+  getExpectedEdgesForLevel,
+  getExpectedFeaturesForLevel,
+  isSkillRankAboveCap
+} from '~/constants/trainerStats'
 import { MAX_TRAINER_CLASSES } from '~/constants/trainerClasses'
 import { validateStatAllocation, validateSkillBackground, validateEdgesAndFeatures } from '~/utils/characterCreationValidation'
 import type { CreationWarning } from '~/utils/characterCreationValidation'
@@ -87,7 +97,9 @@ export function useCharacterCreation() {
     Object.values(form.statPoints).reduce((sum, v) => sum + v, 0)
   )
 
-  const statPointsRemaining = computed(() => TOTAL_STAT_POINTS - statPointsUsed.value)
+  const statPointsRemaining = computed(() =>
+    getStatPointsForLevel(form.level) - statPointsUsed.value
+  )
 
   const computedStats = computed((): Stats => ({
     hp: BASE_HP + form.statPoints.hp,
@@ -112,7 +124,8 @@ export function useCharacterCreation() {
 
   // --- Stat Modification ---
   function incrementStat(stat: keyof StatPoints): void {
-    if (form.statPoints[stat] >= MAX_POINTS_PER_STAT) return
+    // Per-stat cap only applies at level 1 (PTU Core p. 15)
+    if (form.level === 1 && form.statPoints[stat] >= MAX_POINTS_PER_STAT) return
     if (statPointsRemaining.value <= 0) return
     form.statPoints = {
       ...form.statPoints,
@@ -241,9 +254,9 @@ export function useCharacterCreation() {
       return `${skill} is already at Master rank`
     }
 
-    // Level 1 cap: cannot exceed Novice via Skill Edges during creation
-    if (form.level === 1 && (nextRank === 'Adept' || nextRank === 'Expert' || nextRank === 'Master')) {
-      return `Cannot raise ${skill} above Novice at level 1 (PTU p. 13)`
+    // Skill rank cap based on level (PTU Core p. 13, 19)
+    if (isSkillRankAboveCap(nextRank, form.level)) {
+      return `Cannot raise ${skill} above ${getMaxSkillRankForLevel(form.level)} at level ${form.level} (PTU p. 13, 19)`
     }
 
     form.skills = {
@@ -291,8 +304,8 @@ export function useCharacterCreation() {
       },
       edges: {
         label: 'Edges',
-        complete: form.edges.length === STARTING_EDGES,
-        detail: `${form.edges.length}/${STARTING_EDGES}`
+        complete: form.edges.length === getExpectedEdgesForLevel(form.level).total,
+        detail: `${form.edges.length}/${getExpectedEdgesForLevel(form.level).total}`
       },
       classes: {
         label: 'Classes & Features',
@@ -302,7 +315,7 @@ export function useCharacterCreation() {
       stats: {
         label: 'Combat Stats',
         complete: statPointsRemaining.value === 0,
-        detail: `${statPointsUsed.value}/${TOTAL_STAT_POINTS} points`
+        detail: `${statPointsUsed.value}/${getStatPointsForLevel(form.level)} points`
       },
       biography: {
         label: 'Biography',

@@ -3,7 +3,7 @@
     <div class="stat-allocation__header">
       <h3>Combat Stats</h3>
       <div class="stat-allocation__pool" :class="{ 'stat-allocation__pool--empty': statPointsRemaining === 0, 'stat-allocation__pool--over': statPointsRemaining < 0 }">
-        Points Remaining: <strong>{{ statPointsRemaining }}</strong> / {{ TOTAL_STAT_POINTS }}
+        Points Remaining: <strong>{{ statPointsRemaining }}</strong> / {{ statPointsTotal }}
       </div>
     </div>
 
@@ -27,7 +27,7 @@
           <span class="stat-box__added">{{ statPoints[stat.key] }}</span>
           <button
             class="stat-box__btn stat-box__btn--plus"
-            :disabled="statPoints[stat.key] >= MAX_POINTS_PER_STAT || statPointsRemaining <= 0"
+            :disabled="(level === 1 && statPoints[stat.key] >= MAX_POINTS_PER_STAT) || statPointsRemaining <= 0"
             @click="$emit('increment', stat.key)"
           >
             +
@@ -77,18 +77,20 @@
 import type { Stats } from '~/types/character'
 import type { StatPoints } from '~/composables/useCharacterCreation'
 import type { CreationWarning } from '~/utils/characterCreationValidation'
-import { BASE_HP, BASE_OTHER, TOTAL_STAT_POINTS, MAX_POINTS_PER_STAT } from '~/constants/trainerStats'
+import { BASE_HP, BASE_OTHER, MAX_POINTS_PER_STAT } from '~/constants/trainerStats'
 
 interface Props {
   statPoints: StatPoints
   computedStats: Stats
   statPointsRemaining: number
+  statPointsTotal: number
+  level: number
   maxHp: number
   evasions: { physical: number; special: number; speed: number }
   warnings: CreationWarning[]
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 
 defineEmits<{
   increment: [stat: keyof StatPoints]

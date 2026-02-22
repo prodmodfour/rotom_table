@@ -176,6 +176,8 @@
             :stat-points="creation.form.statPoints"
             :computed-stats="creation.computedStats.value"
             :stat-points-remaining="creation.statPointsRemaining.value"
+            :stat-points-total="getStatPointsForLevel(creation.form.level)"
+            :level="creation.form.level"
             :max-hp="creation.maxHp.value"
             :evasions="creation.evasions.value"
             :warnings="creation.statWarnings.value"
@@ -356,6 +358,7 @@
 import type { PokemonType } from '~/types'
 import type { PtuSkillName } from '~/constants/trainerSkills'
 import type { CreateMode } from '~/composables/useCharacterCreation'
+import { getStatPointsForLevel } from '~/constants/trainerStats'
 
 definePageMeta({
   layout: 'gm'
