@@ -286,7 +286,7 @@ export function useCharacterCreation() {
       },
       background: {
         label: 'Background & Skills',
-        complete: hasBackground && skillsWithRanks >= 5,
+        complete: hasBackground,
         detail: hasBackground ? `${skillsWithRanks} skills set` : 'No background'
       },
       edges: {
