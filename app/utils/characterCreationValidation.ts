@@ -165,25 +165,52 @@ export function validateEdgesAndFeatures(
 ): CreationWarning[] {
   const warnings: CreationWarning[] = []
 
-  if (level === 1 && edges.length !== 4) {
+  // Edge count validation
+  const expectedEdges = getExpectedEdgesForLevel(level)
+  if (edges.length !== expectedEdges.total) {
+    const breakdown = level === 1
+      ? '4 starting edges'
+      : `${expectedEdges.base} base + ${expectedEdges.bonusSkillEdges} bonus Skill Edge${expectedEdges.bonusSkillEdges !== 1 ? 's' : ''} = ${expectedEdges.total} total`
     warnings.push({
       section: 'edges',
-      message: `Level 1 trainers start with 4 edges (have ${edges.length})`,
+      message: `Level ${level} trainers should have ${expectedEdges.total} edges (${breakdown}) (have ${edges.length})`,
       severity: 'warning'
     })
   }
-  if (level === 1 && features.length !== 5) {
+
+  // Feature count validation
+  const expectedFeatures = getExpectedFeaturesForLevel(level)
+  if (features.length !== expectedFeatures) {
+    const breakdown = level === 1
+      ? '4 + 1 Training'
+      : `${expectedFeatures} from progression (includes Training Feature)`
     warnings.push({
       section: 'features',
-      message: `Level 1 trainers start with 5 features (4 + 1 Training) (have ${features.length})`,
+      message: `Level ${level} trainers should have ${expectedFeatures} features (${breakdown}) (have ${features.length})`,
       severity: 'warning'
     })
   }
+
   if (trainerClasses.length > 4) {
     warnings.push({
       section: 'classes',
       message: `Maximum 4 trainer classes (have ${trainerClasses.length})`,
       severity: 'warning'
+    })
+  }
+
+  // Informational: milestone bonus choices for higher-level characters
+  if (level >= 5) {
+    const milestones: string[] = []
+    if (level >= 5) milestones.push('Lv5 Amateur (Atk/SpAtk points OR General Feature)')
+    if (level >= 10) milestones.push('Lv10 Capable (Atk/SpAtk points OR 2 Edges)')
+    if (level >= 20) milestones.push('Lv20 Veteran (Atk/SpAtk points OR 2 Edges)')
+    if (level >= 30) milestones.push('Lv30 Elite (Atk/SpAtk points OR 2 Edges OR General Feature)')
+    if (level >= 40) milestones.push('Lv40 Champion (Atk/SpAtk points OR 2 Edges OR General Feature)')
+    warnings.push({
+      section: 'edges',
+      message: `Milestone bonuses to apply manually: ${milestones.join('; ')}`,
+      severity: 'info'
     })
   }
 
