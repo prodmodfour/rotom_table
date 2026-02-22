@@ -62,11 +62,11 @@
       <div class="form-row">
         <div class="form-group form-group--sm">
           <label>DR</label>
-          <input v-model.number="customForm.damageReduction" type="number" class="form-input" min="0" />
+          <input v-model.number="customForm.damageReduction" type="number" class="form-input" min="0" max="100" />
         </div>
         <div class="form-group form-group--sm">
           <label>Evasion</label>
-          <input v-model.number="customForm.evasionBonus" type="number" class="form-input" min="0" />
+          <input v-model.number="customForm.evasionBonus" type="number" class="form-input" min="0" max="100" />
         </div>
         <div class="form-group form-group--sm">
           <label>Speed CS</label>
