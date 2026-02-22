@@ -49,12 +49,12 @@ export const TRAINER_CLASSES: TrainerClassDef[] = [
   { name: 'Mentor', category: 'Introductory', associatedSkills: ['Charm', 'Intuition', 'Intimidate', 'Pokemon Ed'], description: 'Draws out hidden potential in Pokemon' },
 
   // --- Battling Style ---
-  { name: 'Cheerleader', category: 'Battling Style', associatedSkills: ['Charm', 'Command'], description: 'Motivates Pokemon to victory through belief' },
-  { name: 'Duelist', category: 'Battling Style', associatedSkills: ['Command', 'Focus'], description: 'Gains momentum over time in battle' },
-  { name: 'Enduring Soul', category: 'Battling Style', associatedSkills: ['Focus', 'Intuition'], description: 'Pokemon shake off injuries through tenacity' },
+  { name: 'Cheerleader', category: 'Battling Style', associatedSkills: ['Charm'], description: 'Motivates Pokemon to victory through belief' },
+  { name: 'Duelist', category: 'Battling Style', associatedSkills: ['Focus'], description: 'Gains momentum over time in battle' },
+  { name: 'Enduring Soul', category: 'Battling Style', associatedSkills: ['Athletics', 'Focus'], description: 'Pokemon shake off injuries through tenacity' },
   { name: 'Juggler', category: 'Battling Style', associatedSkills: ['Acrobatics'], description: 'Quickly cycles through Pokemon team' },
   { name: 'Rider', category: 'Battling Style', associatedSkills: ['Acrobatics', 'Athletics'], description: 'Fights mounted on Pokemon' },
-  { name: 'Taskmaster', category: 'Battling Style', associatedSkills: ['Command', 'Intimidate'], description: 'Brutal training at any cost' },
+  { name: 'Taskmaster', category: 'Battling Style', associatedSkills: ['Intimidate'], description: 'Brutal training at any cost' },
   { name: 'Trickster', category: 'Battling Style', associatedSkills: ['Guile'], description: 'Outwits opponents with Status Moves' },
 
   // --- Specialist Team ---
