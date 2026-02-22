@@ -60,78 +60,11 @@
       </div>
 
       <!-- Quick Create Form -->
-      <form v-if="humanCreateMode === 'quick'" class="create-form" @submit.prevent="createHumanQuick">
-        <div class="create-form__section">
-          <h3>Quick Create</h3>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label>Name *</label>
-              <input v-model="quickForm.name" type="text" class="form-input" required />
-            </div>
-
-            <div class="form-group">
-              <label>Character Type</label>
-              <select v-model="quickForm.characterType" class="form-select">
-                <option value="player">Player Character</option>
-                <option value="npc">NPC</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label>Level</label>
-              <input v-model.number="quickForm.level" type="number" class="form-input" min="1" max="100" />
-            </div>
-            <div class="form-group">
-              <label>Location</label>
-              <input v-model="quickForm.location" type="text" class="form-input" placeholder="e.g., Mesagoza" />
-            </div>
-          </div>
-        </div>
-
-        <div class="create-form__section">
-          <h3>Raw Stats</h3>
-          <div class="stats-grid">
-            <div class="form-group">
-              <label>HP</label>
-              <input v-model.number="quickForm.hp" type="number" class="form-input" min="1" />
-            </div>
-            <div class="form-group">
-              <label>Attack</label>
-              <input v-model.number="quickForm.attack" type="number" class="form-input" min="1" />
-            </div>
-            <div class="form-group">
-              <label>Defense</label>
-              <input v-model.number="quickForm.defense" type="number" class="form-input" min="1" />
-            </div>
-            <div class="form-group">
-              <label>Sp. Attack</label>
-              <input v-model.number="quickForm.specialAttack" type="number" class="form-input" min="1" />
-            </div>
-            <div class="form-group">
-              <label>Sp. Defense</label>
-              <input v-model.number="quickForm.specialDefense" type="number" class="form-input" min="1" />
-            </div>
-            <div class="form-group">
-              <label>Speed</label>
-              <input v-model.number="quickForm.speed" type="number" class="form-input" min="1" />
-            </div>
-          </div>
-        </div>
-
-        <div class="create-form__section">
-          <h3>Notes</h3>
-          <textarea v-model="quickForm.notes" class="form-input" rows="3" placeholder="Additional notes..."></textarea>
-        </div>
-
-        <div class="create-form__actions">
-          <button type="submit" class="btn btn--primary" :disabled="creating">
-            {{ creating ? 'Creating...' : 'Create Human' }}
-          </button>
-        </div>
-      </form>
+      <QuickCreateForm
+        v-if="humanCreateMode === 'quick'"
+        :creating="creating"
+        @submit="createHumanQuick"
+      />
 
       <!-- Full Create Form -->
       <form v-if="humanCreateMode === 'full'" class="create-form" @submit.prevent="createHuman">
@@ -421,9 +354,8 @@
 
 <script setup lang="ts">
 import type { PokemonType } from '~/types'
-import type { CharacterType } from '~/types/character'
 import type { PtuSkillName } from '~/constants/trainerSkills'
-import { DEFAULT_STARTING_MONEY, type CreateMode } from '~/composables/useCharacterCreation'
+import type { CreateMode } from '~/composables/useCharacterCreation'
 
 definePageMeta({
   layout: 'gm'
@@ -465,21 +397,6 @@ function handleSkillEdge(skill: PtuSkillName): void {
   }
 }
 
-// Quick Create form (minimal fields, direct stat entry)
-const quickForm = ref({
-  name: '',
-  characterType: 'npc' as CharacterType,
-  level: 1,
-  location: '',
-  hp: 10,
-  attack: 5,
-  defense: 5,
-  specialAttack: 5,
-  specialDefense: 5,
-  speed: 5,
-  notes: ''
-})
-
 // Pokemon form (unchanged)
 const pokemonForm = ref({
   species: '',
@@ -499,40 +416,11 @@ const pokemonForm = ref({
   notes: ''
 })
 
-/** Quick Create submission — sends raw stats directly */
-const createHumanQuick = async () => {
+/** Quick Create submission — receives pre-built payload from QuickCreateForm */
+const createHumanQuick = async (payload: Record<string, unknown>) => {
   creating.value = true
   try {
-    const level = quickForm.value.level
-    const hpStat = quickForm.value.hp
-    // PTU Trainer HP formula: Level * 2 + HP Stat * 3 + 10
-    const maxHp = level * 2 + hpStat * 3 + 10
-
-    // PCs get PTU standard starting money; NPCs default to 0 (no inventory tracking)
-    const money = quickForm.value.characterType === 'player'
-      ? DEFAULT_STARTING_MONEY
-      : 0
-
-    const data = {
-      name: quickForm.value.name,
-      characterType: quickForm.value.characterType,
-      level,
-      location: quickForm.value.location || undefined,
-      stats: {
-        hp: hpStat,
-        attack: quickForm.value.attack,
-        defense: quickForm.value.defense,
-        specialAttack: quickForm.value.specialAttack,
-        specialDefense: quickForm.value.specialDefense,
-        speed: quickForm.value.speed
-      },
-      maxHp,
-      currentHp: maxHp,
-      money,
-      notes: quickForm.value.notes || undefined
-    }
-
-    await libraryStore.createHuman(data)
+    await libraryStore.createHuman(payload)
     router.push('/gm/sheets')
   } catch (e) {
     alert('Failed to create human character. Check the console for details.')
