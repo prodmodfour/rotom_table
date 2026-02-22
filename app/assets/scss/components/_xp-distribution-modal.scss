@@ -389,42 +389,6 @@
     color: $color-text-muted;
   }
 
-  &__details {
-    margin-top: $spacing-sm;
-    padding-top: $spacing-sm;
-    border-top: 1px solid $border-color-subtle;
-  }
-}
-
-.levelup-detail {
-  display: flex;
-  flex-wrap: wrap;
-  gap: $spacing-sm;
-  font-size: $font-size-xs;
-  color: $color-text-muted;
-  padding: 2px 0;
-
-  &__level {
-    font-weight: 600;
-    color: $color-text;
-  }
-
-  &__stat {
-    color: $color-accent-teal;
-  }
-
-  &__tutor {
-    color: $color-accent-violet;
-  }
-
-  &__move {
-    color: $color-success;
-  }
-
-  &__ability {
-    color: $color-accent-pink;
-    font-weight: 600;
-  }
 }
 
 .results-total {

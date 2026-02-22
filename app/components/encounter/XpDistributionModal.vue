@@ -219,24 +219,6 @@
                   Lv.{{ result.newLevel }}
                 </span>
               </div>
-              <!-- Level-up details -->
-              <div v-if="result.levelUps.length > 0" class="result-row__details">
-                <div v-for="lu in result.levelUps" :key="lu.newLevel" class="levelup-detail">
-                  <span class="levelup-detail__level">Level {{ lu.newLevel }}:</span>
-                  <span class="levelup-detail__stat">+1 Stat Point</span>
-                  <span v-if="lu.tutorPointGained" class="levelup-detail__tutor">+1 Tutor Point</span>
-                  <span
-                    v-for="move in lu.newMovesAvailable"
-                    :key="move"
-                    class="levelup-detail__move"
-                  >
-                    New Move: {{ move }}
-                  </span>
-                  <span v-if="lu.newAbilitySlot" class="levelup-detail__ability">
-                    {{ lu.newAbilitySlot === 'second' ? '2nd Ability Slot' : '3rd Ability Slot' }}
-                  </span>
-                </div>
-              </div>
             </div>
           </div>
           <div class="results-total">
