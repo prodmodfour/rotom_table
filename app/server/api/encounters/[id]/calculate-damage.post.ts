@@ -171,19 +171,20 @@ export default defineEventHandler(async (event) => {
     const targetData = getEntityStats(target, move.damageClass)
 
     // Auto-compute equipment DR for human targets (PTU p.293-294)
-    // Caller-provided DR overrides equipment DR (for manual GM adjustments)
+    // Caller-provided DR overrides base equipment DR (for manual GM adjustments)
     let effectiveDR = body.damageReduction
     const targetEquipBonuses = target.type === 'human'
       ? computeEquipmentBonuses((target.entity as HumanCharacter).equipment ?? {})
       : null
     if (effectiveDR === undefined && targetEquipBonuses) {
       effectiveDR = targetEquipBonuses.damageReduction
-      // Helmet: +15 DR on critical hits only (PTU p.293)
-      if (body.isCritical) {
-        for (const cdr of targetEquipBonuses.conditionalDR) {
-          if (cdr.condition === 'Critical Hits only') {
-            effectiveDR += cdr.amount
-          }
+    }
+    // Helmet: +15 DR on critical hits only (PTU p.293)
+    // Applied on top of BOTH manual override and equipment-based DR
+    if (body.isCritical && targetEquipBonuses) {
+      for (const cdr of targetEquipBonuses.conditionalDR) {
+        if (cdr.condition === 'Critical Hits only') {
+          effectiveDR = (effectiveDR ?? 0) + cdr.amount
         }
       }
     }
