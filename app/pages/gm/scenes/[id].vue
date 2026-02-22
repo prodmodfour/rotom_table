@@ -217,13 +217,17 @@ const budgetInfo = computed(() => {
   if (!scene.value) return undefined
   if (scene.value.pokemon.length === 0 || scene.value.characters.length === 0) return undefined
 
-  // Get character IDs in the scene (these are the player trainers)
+  // Filter to PC trainers only -- PTU p.473 uses 'number of player trainers', not all characters
   const sceneCharIds = scene.value.characters.map(c => c.characterId)
-  const playerCount = sceneCharIds.length
+  const playerCharIds = sceneCharIds.filter(id =>
+    allCharacters.value.find(c => c.id === id)?.characterType === 'pc'
+  )
+  const playerCount = playerCharIds.length
+  if (playerCount === 0) return undefined
 
-  // Gather owned Pokemon levels from library data for scene characters
+  // Gather owned Pokemon levels from PC trainers only
   const ownedPokemonLevels = allPokemon.value
-    .filter(p => p.ownerId && sceneCharIds.includes(p.ownerId))
+    .filter(p => p.ownerId && playerCharIds.includes(p.ownerId))
     .map(p => p.level)
 
   if (ownedPokemonLevels.length === 0) return undefined
