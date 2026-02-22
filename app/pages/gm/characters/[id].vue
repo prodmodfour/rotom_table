@@ -196,6 +196,7 @@
             :equipment="localEquipment"
             :is-in-encounter="isCharacterInEncounter"
             @equipment-changed="onEquipmentChanged"
+            @equipment-changed-in-encounter="onEquipmentChangedInEncounter"
           />
         </div>
 
@@ -288,6 +289,16 @@ watch(character, (char) => {
 
 const onEquipmentChanged = (equipment: EquipmentSlots) => {
   localEquipment.value = equipment
+}
+
+// WebSocket broadcast for equipment changes during encounters
+const { send } = useWebSocket()
+const onEquipmentChangedInEncounter = (equipment: EquipmentSlots) => {
+  if (!character.value) return
+  send({
+    type: 'character_update',
+    data: { ...character.value, equipment }
+  })
 }
 
 // Check if character is in an active encounter

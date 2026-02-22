@@ -187,6 +187,7 @@
                 :equipment="localEquipment"
                 :is-in-encounter="isInEncounter"
                 @equipment-changed="onEquipmentChanged"
+                @equipment-changed-in-encounter="onEquipmentChangedInEncounter"
               />
               <HumanPokemonTab
                 v-if="activeTab === 'pokemon'"
@@ -308,6 +309,15 @@ watch(() => props.character, () => {
 
 const onEquipmentChanged = (equipment: EquipmentSlots) => {
   localEquipment.value = equipment
+}
+
+// WebSocket broadcast for equipment changes during encounters
+const { send } = useWebSocket()
+const onEquipmentChangedInEncounter = (equipment: EquipmentSlots) => {
+  send({
+    type: 'character_update',
+    data: { ...humanData.value, equipment }
+  })
 }
 
 // Check if the character is in an active encounter

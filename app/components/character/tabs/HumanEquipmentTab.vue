@@ -165,6 +165,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   'equipment-changed': [equipment: EquipmentSlots]
+  'equipment-changed-in-encounter': [equipment: EquipmentSlots]
 }>()
 
 const saving = ref(false)
@@ -238,7 +239,7 @@ async function equipItem(slot: EquipmentSlot, item: EquippedItem) {
     if (response.success) {
       emit('equipment-changed', response.data.slots)
       if (props.isInEncounter) {
-        emitCharacterUpdate()
+        emit('equipment-changed-in-encounter', response.data.slots)
       }
     }
   } catch (error: any) {
@@ -258,7 +259,7 @@ async function unequipSlot(slot: EquipmentSlot) {
     if (response.success) {
       emit('equipment-changed', response.data.slots)
       if (props.isInEncounter) {
-        emitCharacterUpdate()
+        emit('equipment-changed-in-encounter', response.data.slots)
       }
     }
   } catch (error: any) {
@@ -311,21 +312,7 @@ function onCatalogEquipped(equipment: EquipmentSlots) {
   emit('equipment-changed', equipment)
   showCatalog.value = false
   if (props.isInEncounter) {
-    emitCharacterUpdate()
-  }
-}
-
-function emitCharacterUpdate() {
-  // Use the WebSocket composable to broadcast character_update
-  // This is a best-effort broadcast — the parent page handles the WS connection
-  try {
-    const { send } = useWebSocket()
-    send({
-      type: 'character_update',
-      data: { id: props.characterId, equipment: props.equipment }
-    })
-  } catch {
-    // WebSocket not available in this context — silently ignore
+    emit('equipment-changed-in-encounter', equipment)
   }
 }
 </script>
