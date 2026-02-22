@@ -66,7 +66,7 @@ The GM's home network has no static IP and sits behind ISP NAT, making direct po
 | **Setup complexity** | Install app, sign in with Google/GitHub. Each player must also install Tailscale | Install `cloudflared`, run one command. Players need nothing -- just a URL | Install binary, run one command. Players just use a URL | Requires self-hosting a relay server -- NOT suitable for non-technical GM |
 | **Cost (free tier)** | Free: 3 users, 100 devices | Free: unlimited tunnels, 100k concurrent WS connections | Free: 1 tunnel, 2h session limit, 1GB/month bandwidth, interstitial warning page | Free (self-hosted) but requires a VPS ($5-10/month) |
 | **Persistent URL** | Yes -- `machine-name.tailnet-name.ts.net` (Tailscale Funnel) or Tailscale IP | Yes -- custom subdomain on your Cloudflare domain, or auto-generated | No (free) / Yes ($8/month "Personal" plan) | No (unless self-hosted with fixed domain) |
-| **WebSocket support** | Full (it's a VPN -- any protocol works) | Yes -- proxied natively, no config needed. Free tier: 24h max connection | Yes -- supported across all plans | Yes (raw TCP) |
+| **WebSocket support** | Full (it's a VPN -- any protocol works) | Yes -- proxied natively, no config needed. Free tier: 100s idle timeout (keepalive pings required) | Yes -- supported across all plans | Yes (raw TCP) |
 | **Reliability** | Excellent -- peer-to-peer with relay fallback (DERP servers). Works through CGNAT, double NAT | Excellent -- Cloudflare's global edge network. Reconnects automatically | Moderate -- free tier sessions expire after 2 hours | Depends on self-hosted relay availability |
 | **Security** | WireGuard encryption. Only tailnet members can access. Zero-trust by default | HTTPS with Cloudflare SSL. Access policies available (Zero Trust). Tunnel token auth | HTTPS with ngrok SSL. Free tier has no auth. Paid tier has OAuth/IP whitelist | HMAC-based auth on relay. No HTTPS unless you add TLS yourself |
 | **Player experience** | Must install Tailscale app (phone or desktop). Then access via Tailscale IP or MagicDNS name | Click a URL. Nothing to install. Works on any browser | Click a URL. Free tier shows interstitial warning page before connecting | Click a URL (if self-hosted properly) |
@@ -127,7 +127,7 @@ Running on a cloud VPS adds ongoing cost ($5-20/month), operational complexity (
 ### Connection Flow
 
 1. **GM starts session:** Runs `npm run dev` (or production build). `cloudflared` is already running as a system service, auto-tunneling port 3000.
-2. **Player connects:** Opens `https://ptu.gm-domain.example.com` (or the auto-generated `*.cfargotunnel.com` subdomain). Cloudflare routes the request through the tunnel to the GM's machine.
+2. **Player connects:** Opens `https://ptu.gm-domain.example.com` (or the auto-generated `*.trycloudflare.com` subdomain). Cloudflare routes the request through the tunnel to the GM's machine.
 3. **WebSocket upgrade:** Player's browser negotiates `wss://` connection. Cloudflare proxies the WebSocket through the tunnel transparently. The Nitro WebSocket handler at `/ws` receives it as a normal connection.
 4. **LAN fallback:** Players on the same LAN can still use `http://<gm-local-ip>:3000` directly. No tunnel overhead.
 
@@ -144,13 +144,14 @@ This means:
 - Through Cloudflare Tunnel: `wss://ptu.example.com/ws` (auto-HTTPS)
 - On LAN: `ws://192.168.1.50:3000/ws`
 
-No code changes needed for WebSocket connectivity through the tunnel. Cloudflare natively proxies WebSocket connections. The free tier supports connections up to 24 hours -- more than enough for any session.
+No code changes needed for WebSocket connectivity through the tunnel. Cloudflare natively proxies WebSocket connections. The free tier enforces a 100-second idle timeout (connection drops if no data flows for 100s), so the server must send periodic keepalive pings to maintain connections during combat pauses. The current `useWebSocket.ts` does not send keepalive pings -- this must be added in P1.
 
 ### Reconnection Behavior
 
 The current `useWebSocket` composable has exponential backoff reconnection (up to 5 attempts, max 30s delay). This is adequate for tunnel-based connections, which may experience brief disconnects during Cloudflare edge re-routing. No changes needed for P0.
 
 For P1, the reconnection strategy should be enhanced:
+- Add WebSocket keepalive pings (every 30-60s) to prevent Cloudflare's 100-second idle timeout during combat pauses
 - Increase `MAX_RECONNECT_ATTEMPTS` for tunnel connections (tunnel recovery can take 10-30s)
 - Add a "connection lost" banner in the Player View UI
 - Distinguish between "server unreachable" and "tunnel down" errors
@@ -422,6 +423,7 @@ Players install the PWA from their browser (prompted automatically by the servic
 - "Session URL" display in GM View with QR code generation
 - Connection status indicator in Player View (LAN vs tunnel, latency)
 - Enhanced WebSocket reconnection for tunnel connections (longer timeouts, connection-lost banner)
+- WebSocket keepalive pings (every 30-60s) to prevent Cloudflare's 100-second idle timeout
 - `nuxt.config.ts` adjustments for tunnel-friendly CORS and WebSocket proxy
 
 **Files to Create:**
@@ -533,7 +535,7 @@ This scoping ensures that even if a player's device is compromised, only their o
 
 2. **API calls are standard HTTP**: All 106 REST endpoints use standard `GET/POST/PUT/DELETE`. Cloudflare proxies these transparently.
 
-3. **WebSocket is a single upgrade**: The `/ws` endpoint uses standard WebSocket upgrade. Cloudflare supports this natively on the free tier with up to 100,000 concurrent connections and 24-hour connection lifetime.
+3. **WebSocket is a single upgrade**: The `/ws` endpoint uses standard WebSocket upgrade. Cloudflare supports this natively on the free tier with up to 100,000 concurrent connections. Connections have a 100-second idle timeout, so keepalive pings (every 30-60s) are required to maintain long-lived connections during sessions.
 
 4. **No SSR complications**: Since there is no server-side rendering, there are no issues with Cloudflare caching dynamic HTML or interfering with SSR hydration.
 
@@ -795,7 +797,7 @@ Export character data to a Git repo that players pull from. But:
 
 ## Open Questions
 
-1. **Domain requirement:** Does the GM already own a domain? If not, the auto-generated `*.cfargotunnel.com` subdomain works but changes if the tunnel is recreated. The setup guide should cover both paths.
+1. **Domain requirement:** Does the GM already own a domain? If not, the auto-generated `*.trycloudflare.com` subdomain works but changes if the tunnel is recreated. The setup guide should cover both paths.
 
 2. **Tailscale as fallback:** Should we document Tailscale as a secondary option for groups willing to install the app? It provides better security for sensitive campaigns.
 
