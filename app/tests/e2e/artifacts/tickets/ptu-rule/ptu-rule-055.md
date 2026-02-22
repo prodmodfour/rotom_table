@@ -45,3 +45,13 @@ No XP calculation or distribution system. The GM manually updates each Pokemon's
 - **253e3cb:** Created `LevelUpNotification.vue` component with per-Pokemon level-up display (stat points, tutor points, new moves, ability milestones, evolution eligibility) and `_level-up-notification.scss`.
 - **f4bf446:** Created `add-experience.post.ts` endpoint for standalone manual/training XP grants with full level-up detection and learnset loading.
 - **1735d09:** Integrated `LevelUpNotification` into `XpDistributionModal` results phase, displayed conditionally when any Pokemon leveled up.
+
+**code-review-128 fixes (2026-02-22):** Fixed 1 HIGH and 3 MEDIUM issues from P2 code review.
+
+- **H1:** Removed duplicate inline level-up details from XpDistributionModal results phase. LevelUpNotification is now the sole level-up display. Removed associated SCSS (`result-row__details`, `levelup-detail` classes).
+- **M1:** Updated app-surface.md with `POST /api/pokemon/:id/add-experience` endpoint and `LevelUpNotification.vue` in encounter components list.
+- **M2:** Added `body.amount > MAX_EXPERIENCE` upper bound validation in add-experience.post.ts, returning 400 error.
+- **M3:** Changed `:key="move"` to `:key="'move-' + index"` in LevelUpNotification.vue to ensure unique v-for keys.
+
+**Commits:** `2458c81`, `496eaab`, `77b536d`, `29c0839`
+**Files (4):** `XpDistributionModal.vue`, `_xp-distribution-modal.scss`, `add-experience.post.ts`, `LevelUpNotification.vue`, `app-surface.md`

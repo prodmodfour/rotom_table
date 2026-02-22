@@ -52,3 +52,10 @@ Six issues from code-review-123 resolved:
 
 **Commits:** `2d6831b`, `fabb4e5`, `93713fa`, `d3e89b2`, `52206fb`, `c73d0ec`
 **Files (4):** `experienceCalculation.ts`, `SignificancePanel.vue`, `XpDistributionModal.vue`, `app-surface.md`
+
+### code-review-126 H1 Fix (XpDistributionModal NaN guards) -- 2026-02-22
+
+Added `safeCustomMultiplier` and `safePlayerCount` computed properties to XpDistributionModal, following the same NaN-safe pattern established in SignificancePanel (P1 Fix C1). Applied to `effectiveMultiplier`, `recalculate()`, `handleApply()`, and template display.
+
+**Commits:** `321bb51`
+**Files (1):** `XpDistributionModal.vue`
