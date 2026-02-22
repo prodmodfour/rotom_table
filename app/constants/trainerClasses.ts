@@ -70,13 +70,13 @@ export const TRAINER_CLASSES: TrainerClassDef[] = [
   { name: 'Survivalist', category: 'Professional', associatedSkills: ['Survival'], description: 'Master of wilderness terrains' },
 
   // --- Fighter ---
-  { name: 'Athlete', category: 'Fighter', associatedSkills: ['Athletics', 'Acrobatics'], description: 'Physically fit Trainer combatant' },
-  { name: 'Dancer', category: 'Fighter', associatedSkills: ['Acrobatics', 'Combat'], description: 'Graceful combat through dance' },
-  { name: 'Hunter', category: 'Fighter', associatedSkills: ['Perception', 'Stealth'], description: 'Tracks and captures quarry' },
-  { name: 'Martial Artist', category: 'Fighter', associatedSkills: ['Combat', 'Athletics'], description: 'Hand-to-hand fighter', isBranching: true },
+  { name: 'Athlete', category: 'Fighter', associatedSkills: ['Athletics'], description: 'Physically fit Trainer combatant' },
+  { name: 'Dancer', category: 'Fighter', associatedSkills: ['Acrobatics', 'Charm'], description: 'Graceful combat through dance' },
+  { name: 'Hunter', category: 'Fighter', associatedSkills: ['Stealth', 'Survival'], description: 'Tracks and captures quarry' },
+  { name: 'Martial Artist', category: 'Fighter', associatedSkills: ['Combat'], description: 'Hand-to-hand fighter', isBranching: true },
   { name: 'Musician', category: 'Fighter', associatedSkills: ['Charm', 'Focus'], description: 'Fights with musical abilities' },
-  { name: 'Provocateur', category: 'Fighter', associatedSkills: ['Charm', 'Guile'], description: 'Silver tongue in battle' },
-  { name: 'Rogue', category: 'Fighter', associatedSkills: ['Guile', 'Stealth'], description: 'Dark-typed stealth fighter' },
+  { name: 'Provocateur', category: 'Fighter', associatedSkills: ['Charm', 'Guile', 'Intimidate'], description: 'Silver tongue in battle' },
+  { name: 'Rogue', category: 'Fighter', associatedSkills: ['Acrobatics', 'Athletics', 'Stealth'], description: 'Dark-typed stealth fighter' },
   { name: 'Roughneck', category: 'Fighter', associatedSkills: ['Intimidate'], description: 'Fear tactics and brute force' },
   { name: 'Tumbler', category: 'Fighter', associatedSkills: ['Acrobatics'], description: 'Agile close-range fighter' },
 
