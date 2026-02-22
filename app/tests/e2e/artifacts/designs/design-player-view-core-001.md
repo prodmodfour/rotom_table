@@ -650,13 +650,13 @@ interface PlayerActionRequest {
 | File | Purpose |
 |------|---------|
 | `app/composables/usePlayerCombat.ts` | Combat action logic for player: turn detection, action execution, request sending |
+| `app/components/player/PlayerCombatActions.vue` | Full action panel (moves, shift, struggle, pass, maneuvers, items, switch) |
 
 #### Files to Modify
 
 | File | Change |
 |------|--------|
 | `app/components/player/PlayerEncounterView.vue` | Add action panel when it is player's turn |
-| `app/components/player/PlayerCombatActions.vue` | New component: full action panel (moves, shift, struggle, pass, maneuvers, items, switch) |
 | `app/components/encounter/PlayerActionPanel.vue` | Either replace with PlayerCombatActions or update to use PTU turn state instead of legacy action tracking |
 | `app/server/routes/ws.ts` | Update `player_action` handler to accept from `player` role clients |
 
@@ -718,7 +718,7 @@ interface PlayerActionRequest {
 
 ### All Phases Combined
 
-#### New Files (13)
+#### New Files (14)
 
 | Phase | File | Lines (est.) |
 |-------|------|-------------|
@@ -735,8 +735,9 @@ interface PlayerActionRequest {
 | P0 | `app/server/api/characters/[id]/player-view.get.ts` | ~60 |
 | P0 | `app/assets/scss/components/_player-view.scss` | ~300 |
 | P1 | `app/composables/usePlayerCombat.ts` | ~150 |
+| P1 | `app/components/player/PlayerCombatActions.vue` | ~250 |
 
-**Total new: ~2,380 lines across 13 files**
+**Total new: ~2,630 lines across 14 files**
 
 #### Modified Files (7)
 
