@@ -62,4 +62,13 @@ P2 tier implemented: Equipment Tab UI and Item Catalog Browser.
 - **I: Equipment Tab** — New `HumanEquipmentTab.vue` component with 6 equipment slots (Head, Body, Main Hand, Off-Hand, Feet, Accessory). Each slot shows equipped item name + remove button, or a catalog dropdown for empty slots. Custom item entry via "Custom..." option. Combat Bonuses summary at bottom. Registered in both `CharacterModal.vue` and `gm/characters/[id].vue`. WebSocket `character_update` emitted when character is in active encounter.
 - **J: Item Catalog Browser** — New `EquipmentCatalogBrowser.vue` modal showing all 15 EQUIPMENT_CATALOG entries grouped by slot. Filter by slot, search by name/description. Item bonus tags (DR, evasion, speed CS, focus, conditional DR, can-ready). Equip button targets selected character. Integrated into Equipment tab via "Browse Full Catalog" button.
 
+### P2 Follow-up Fixes (2026-02-22, code-review-127)
+
+Four issues from code-review-127 resolved:
+
+- **C1 (CRITICAL): WS broadcast fix** — `emitCharacterUpdate()` in HumanEquipmentTab sent `{ id, equipment }` as `character_update`, destroying full character data on receiving clients. Also called `useWebSocket()` inside a regular function (leaked connections). Removed `emitCharacterUpdate()` entirely. Added `equipment-changed-in-encounter` emit. Parent components (CharacterModal.vue, gm/characters/[id].vue) now handle WS broadcast with full `HumanCharacter` object. (49a45e7)
+- **H1: Shared constants** — Extracted duplicated `STAT_LABELS` and `SLOT_LABELS` from HumanEquipmentTab and EquipmentCatalogBrowser into `constants/equipment.ts`. Both components now import from the shared file. (dc177e9)
+- **M1: Input validation bounds** — Added `max="100"` to DR and Evasion number inputs in custom item form to match API Zod validation. (8c69c64)
+- **H2: app-surface.md** — Added Equipment to gm/characters/:id tab list. Documented HumanEquipmentTab.vue and EquipmentCatalogBrowser.vue as key components. (0a2f936)
+
 All tiers (P0/P1/P2) complete. Ticket resolved.
