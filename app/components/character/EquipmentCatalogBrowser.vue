@@ -99,7 +99,7 @@
 <script setup lang="ts">
 import { PhX, PhMagnifyingGlass, PhArrowRight } from '@phosphor-icons/vue'
 import { PhBaseballCap, PhTShirt, PhSword, PhHandPalm, PhSneakerMove, PhRing } from '@phosphor-icons/vue'
-import { EQUIPMENT_CATALOG, EQUIPMENT_SLOTS } from '~/constants/equipment'
+import { EQUIPMENT_CATALOG, EQUIPMENT_SLOTS, SLOT_LABELS, STAT_LABELS } from '~/constants/equipment'
 import type { EquipmentSlot, EquippedItem, EquipmentSlots } from '~/types/character'
 
 const props = defineProps<{
@@ -115,15 +115,6 @@ const selectedSlot = ref<EquipmentSlot | ''>('')
 const searchQuery = ref('')
 const saving = ref(false)
 
-const SLOT_LABELS: Record<EquipmentSlot, string> = {
-  head: 'Head',
-  body: 'Body',
-  mainHand: 'Main Hand',
-  offHand: 'Off-Hand',
-  feet: 'Feet',
-  accessory: 'Accessory'
-}
-
 const SLOT_ICONS: Record<EquipmentSlot, any> = {
   head: PhBaseballCap,
   body: PhTShirt,
@@ -131,17 +122,6 @@ const SLOT_ICONS: Record<EquipmentSlot, any> = {
   offHand: PhHandPalm,
   feet: PhSneakerMove,
   accessory: PhRing
-}
-
-const STAT_LABELS: Record<string, string> = {
-  attack: 'Attack',
-  defense: 'Defense',
-  specialAttack: 'Sp. Atk',
-  specialDefense: 'Sp. Def',
-  speed: 'Speed',
-  hp: 'HP',
-  accuracy: 'Accuracy',
-  evasion: 'Evasion'
 }
 
 interface CatalogGroup {

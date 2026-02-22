@@ -129,3 +129,25 @@ export const EQUIPMENT_CATALOG: Record<string, EquippedItem> = {
 export const EQUIPMENT_SLOTS: readonly EquipmentSlot[] = [
   'head', 'body', 'mainHand', 'offHand', 'feet', 'accessory'
 ] as const
+
+/** Human-readable labels for equipment slots */
+export const SLOT_LABELS: Record<EquipmentSlot, string> = {
+  head: 'Head',
+  body: 'Body',
+  mainHand: 'Main Hand',
+  offHand: 'Off-Hand',
+  feet: 'Feet',
+  accessory: 'Accessory'
+}
+
+/** Human-readable labels for stat keys (used in equipment bonus display) */
+export const STAT_LABELS: Record<string, string> = {
+  attack: 'Attack',
+  defense: 'Defense',
+  specialAttack: 'Sp. Atk',
+  specialDefense: 'Sp. Def',
+  speed: 'Speed',
+  hp: 'HP',
+  accuracy: 'Accuracy',
+  evasion: 'Evasion'
+}

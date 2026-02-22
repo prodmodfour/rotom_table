@@ -153,7 +153,7 @@
 <script setup lang="ts">
 import { PhX, PhShield, PhEye, PhSpeedometer, PhTarget, PhWarning, PhList } from '@phosphor-icons/vue'
 import { PhBaseballCap, PhTShirt, PhSword, PhHandPalm, PhSneakerMove, PhRing } from '@phosphor-icons/vue'
-import { EQUIPMENT_CATALOG, EQUIPMENT_SLOTS } from '~/constants/equipment'
+import { EQUIPMENT_CATALOG, EQUIPMENT_SLOTS, SLOT_LABELS, STAT_LABELS } from '~/constants/equipment'
 import { computeEquipmentBonuses } from '~/utils/equipmentBonuses'
 import type { EquipmentSlots, EquipmentSlot, EquippedItem } from '~/types/character'
 
@@ -179,25 +179,20 @@ const customForm = ref({
   description: ''
 })
 
-const slotDefinitions = [
-  { key: 'head' as EquipmentSlot, label: 'Head', icon: PhBaseballCap },
-  { key: 'body' as EquipmentSlot, label: 'Body', icon: PhTShirt },
-  { key: 'mainHand' as EquipmentSlot, label: 'Main Hand', icon: PhSword },
-  { key: 'offHand' as EquipmentSlot, label: 'Off-Hand', icon: PhHandPalm },
-  { key: 'feet' as EquipmentSlot, label: 'Feet', icon: PhSneakerMove },
-  { key: 'accessory' as EquipmentSlot, label: 'Accessory', icon: PhRing }
-]
-
-const STAT_LABELS: Record<string, string> = {
-  attack: 'Attack',
-  defense: 'Defense',
-  specialAttack: 'Sp. Atk',
-  specialDefense: 'Sp. Def',
-  speed: 'Speed',
-  hp: 'HP',
-  accuracy: 'Accuracy',
-  evasion: 'Evasion'
+const SLOT_ICONS: Record<EquipmentSlot, any> = {
+  head: PhBaseballCap,
+  body: PhTShirt,
+  mainHand: PhSword,
+  offHand: PhHandPalm,
+  feet: PhSneakerMove,
+  accessory: PhRing
 }
+
+const slotDefinitions = EQUIPMENT_SLOTS.map(key => ({
+  key,
+  label: SLOT_LABELS[key],
+  icon: SLOT_ICONS[key]
+}))
 
 const bonuses = computed(() => computeEquipmentBonuses(props.equipment))
 
