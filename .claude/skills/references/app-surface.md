@@ -72,6 +72,7 @@ CRUD + link/unlink + healing/rest + bulk.
 - `POST /api/pokemon/:id/pokemon-center` — full heal
 - `POST /api/pokemon/:id/heal-injury` — heal injury
 - `POST /api/pokemon/:id/new-day` — reset daily limits
+- `POST /api/pokemon/:id/add-experience` — manual/training XP grant with level-up detection
 - `POST /api/pokemon/bulk-action` — bulk archive/delete
 
 ### Encounters (`/api/encounters`)
@@ -103,7 +104,7 @@ CRUD + extensive combat actions.
 - `POST /api/encounters/:id/xp-calculate` — preview XP calculation (read-only breakdown + participating Pokemon)
 - `POST /api/encounters/:id/xp-distribute` — apply XP to Pokemon (updates experience, level, tutorPoints)
 
-**Key encounter components:** `SignificancePanel.vue` (significance preset selector, difficulty adjustment, XP breakdown), `XpDistributionModal.vue` (post-combat XP allocation per player/Pokemon), `BudgetIndicator.vue` (encounter difficulty bar/label based on level budget ratio).
+**Key encounter components:** `SignificancePanel.vue` (significance preset selector, difficulty adjustment, XP breakdown), `XpDistributionModal.vue` (post-combat XP allocation per player/Pokemon), `LevelUpNotification.vue` (aggregated level-up details shown after XP distribution), `BudgetIndicator.vue` (encounter difficulty bar/label based on level budget ratio).
 
 **Budget system:** `utils/encounterBudget.ts` (pure PTU level budget calculator — budget formula, difficulty assessment, XP calculation), `composables/useEncounterBudget.ts` (reactive wrapper for active encounter budget analysis).
 
