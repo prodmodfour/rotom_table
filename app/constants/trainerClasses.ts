@@ -42,11 +42,11 @@ export const MAX_TRAINER_CLASSES = 4
 export const TRAINER_CLASSES: TrainerClassDef[] = [
   // --- Introductory ---
   { name: 'Ace Trainer', category: 'Introductory', associatedSkills: ['Command'], description: 'Dedicated training regimen for your Pokemon' },
-  { name: 'Capture Specialist', category: 'Introductory', associatedSkills: ['Survival', 'Pokemon Ed'], description: 'Master of catching Pokemon' },
-  { name: 'Commander', category: 'Introductory', associatedSkills: ['Command', 'Intuition'], description: 'Tactical battlefield Orders' },
-  { name: 'Coordinator', category: 'Introductory', associatedSkills: ['Charm', 'Focus'], description: 'Pokemon Contest specialist' },
-  { name: 'Hobbyist', category: 'Introductory', associatedSkills: [], description: 'Jack of all trades with extra skill edges' },
-  { name: 'Mentor', category: 'Introductory', associatedSkills: ['Intuition', 'Pokemon Ed'], description: 'Draws out hidden potential in Pokemon' },
+  { name: 'Capture Specialist', category: 'Introductory', associatedSkills: ['Acrobatics', 'Athletics', 'Stealth', 'Survival', 'Perception', 'Guile'], description: 'Master of catching Pokemon' },
+  { name: 'Commander', category: 'Introductory', associatedSkills: ['Command'], description: 'Tactical battlefield Orders' },
+  { name: 'Coordinator', category: 'Introductory', associatedSkills: ['Charm', 'Command', 'Guile', 'Intimidate', 'Intuition'], description: 'Pokemon Contest specialist' },
+  { name: 'Hobbyist', category: 'Introductory', associatedSkills: ['General Ed', 'Perception'], description: 'Jack of all trades with extra skill edges' },
+  { name: 'Mentor', category: 'Introductory', associatedSkills: ['Charm', 'Intuition', 'Intimidate', 'Pokemon Ed'], description: 'Draws out hidden potential in Pokemon' },
 
   // --- Battling Style ---
   { name: 'Cheerleader', category: 'Battling Style', associatedSkills: ['Charm', 'Command'], description: 'Motivates Pokemon to victory through belief' },
