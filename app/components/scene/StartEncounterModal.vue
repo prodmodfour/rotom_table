@@ -52,6 +52,25 @@
             </label>
           </div>
         </div>
+
+        <div class="form-group">
+          <label class="form-label">Encounter Significance</label>
+          <p class="form-hint">Scales XP rewards (PTU Core p.460)</p>
+          <div class="significance-options">
+            <label
+              v-for="preset in SIGNIFICANCE_PRESETS"
+              :key="preset.tier"
+              class="radio-option"
+              :class="{ 'radio-option--selected': selectedTier === preset.tier }"
+            >
+              <input type="radio" v-model="selectedTier" :value="preset.tier" />
+              <div class="radio-option__content">
+                <strong>{{ preset.label }} (x{{ preset.defaultMultiplier }})</strong>
+                <span>{{ preset.description }}</span>
+              </div>
+            </label>
+          </div>
+        </div>
       </div>
 
       <div class="modal__footer">
@@ -71,6 +90,8 @@
 
 <script setup lang="ts">
 import { PhPawPrint, PhUser, PhWarning, PhSword, PhScales } from '@phosphor-icons/vue'
+import { SIGNIFICANCE_PRESETS } from '~/utils/encounterBudget'
+import type { SignificanceTier } from '~/utils/encounterBudget'
 
 defineProps<{
   sceneName: string
@@ -86,19 +107,32 @@ defineProps<{
 
 const emit = defineEmits<{
   close: []
-  confirm: [options: { battleType: 'trainer' | 'full_contact' }]
+  confirm: [options: {
+    battleType: 'trainer' | 'full_contact'
+    significanceMultiplier: number
+    significanceTier: SignificanceTier
+  }]
 }>()
 
 const battleType = ref<'trainer' | 'full_contact'>('full_contact')
+const selectedTier = ref<SignificanceTier>('insignificant')
+
+const selectedPreset = computed(() =>
+  SIGNIFICANCE_PRESETS.find(p => p.tier === selectedTier.value) ?? SIGNIFICANCE_PRESETS[0]
+)
 
 const handleConfirm = () => {
-  emit('confirm', { battleType: battleType.value })
+  emit('confirm', {
+    battleType: battleType.value,
+    significanceMultiplier: selectedPreset.value.defaultMultiplier,
+    significanceTier: selectedTier.value
+  })
 }
 </script>
 
 <style lang="scss" scoped>
 .start-encounter-modal {
-  max-width: 440px;
+  max-width: 480px;
 }
 
 .scene-summary {
@@ -134,10 +168,22 @@ const handleConfirm = () => {
   @include difficulty-text-colors('&');
 }
 
-.battle-type-options {
+.form-hint {
+  font-size: $font-size-xs;
+  color: $color-text-muted;
+  margin: 0 0 $spacing-sm 0;
+}
+
+.battle-type-options,
+.significance-options {
   display: flex;
   flex-direction: column;
   gap: $spacing-sm;
+}
+
+.significance-options {
+  max-height: 280px;
+  overflow-y: auto;
 }
 
 .radio-option {
