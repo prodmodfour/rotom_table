@@ -22,7 +22,7 @@ updated_by: slave-collector (plan-20260223-061421)
 | ptu-rule-058 | P3 | **resolved** | Encounter density/significance — P0+P1+H1 fix all APPROVED. code-review-131 APPROVED, rules-review-121 APPROVED |
 | ptu-rule-060 | P3 | **in-progress** | Level-budget/significance — P0 re-review: code-review-134 **CHANGES_REQUIRED** (C1: `'pc'` → `'player'` characterType), rules-review-124 CHANGES_REQUIRED (same C1). Needs fix cycle |
 | ptu-rule-077 | P3 | **resolved** | Focus (Speed) initiative/evasion — fix implemented, APPROVED (code-review-125 + rules-review-115) |
-| ptu-rule-078 | P3 | **in-progress** | Trainer class associated skills — code-review-135 APPROVED, rules-review-125 **CHANGES_REQUIRED** (H1: Juggler missing Guile, H2: Dancer missing Athletics). Needs fix cycle |
+| ptu-rule-078 | P3 | **in-progress** | Trainer class associated skills — code-review-135 APPROVED, rules-review-125 CHANGES_REQUIRED fixes applied (H1: Juggler +Guile, H2: Dancer +Athletics). Needs re-review |
 | ptu-rule-079 | P3 | **resolved** | Helmet conditional DR — fix applied, code-review-136 APPROVED, rules-review-126 APPROVED |
 | ptu-rule-080 | P3 | **resolved** | Higher-level char creation validation — fix applied, code-review-137 APPROVED (M1/M2 → refactoring-070, 071), rules-review-127 APPROVED |
 | ptu-rule-081 | P4 | **open** | Multiple Focus items not explicitly prevented (from rules-review-115 M2) |
@@ -53,7 +53,7 @@ updated_by: slave-collector (plan-20260223-061421)
 
 **Next actions (by priority — "finish all tiers" rule):**
 1. **Fix** ptu-rule-060 C1 from code-review-134 (CHANGES_REQUIRED — `'pc'` → `'player'` characterType, one-line fix)
-2. **Fix** ptu-rule-078 H1+H2 from rules-review-125 (CHANGES_REQUIRED — Juggler +Guile, Dancer +Athletics)
+2. ~~**Fix** ptu-rule-078 H1+H2 from rules-review-125~~ DONE (1e9c8ca) — needs re-review
 3. **Re-review** ptu-rule-056 P2 fixes (3 commits — SCSS partial, typed emit)
 4. ptu-rule-060 P1+ (level budget remaining tiers)
 5. ptu-rule-081 P4 (multiple Focus items enforcement)
