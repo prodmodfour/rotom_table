@@ -45,14 +45,16 @@ export default defineEventHandler(async (event) => {
     const updated = await prisma.encounter.update({
       where: { id },
       data: {
-        significanceMultiplier: body.significanceMultiplier
+        significanceMultiplier: body.significanceMultiplier,
+        ...(body.significanceTier && { significanceTier: body.significanceTier })
       }
     })
 
     return {
       success: true,
       data: {
-        significanceMultiplier: updated.significanceMultiplier
+        significanceMultiplier: updated.significanceMultiplier,
+        significanceTier: updated.significanceTier
       }
     }
   } catch (error: unknown) {

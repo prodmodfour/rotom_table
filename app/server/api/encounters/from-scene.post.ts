@@ -28,7 +28,7 @@ interface SceneCharacterEntry {
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
 
-  const { sceneId, battleType } = body
+  const { sceneId, battleType, significanceMultiplier, significanceTier } = body
 
   if (!sceneId) {
     throw createError({ statusCode: 400, message: 'sceneId is required' })
@@ -60,7 +60,9 @@ export default defineEventHandler(async (event) => {
         gridCellSize: 40,
         gridBackground: null,
         moveLog: '[]',
-        defeatedEnemies: '[]'
+        defeatedEnemies: '[]',
+        significanceMultiplier: significanceMultiplier ?? 1.0,
+        significanceTier: significanceTier ?? 'insignificant'
       }
     })
 

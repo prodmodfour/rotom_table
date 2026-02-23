@@ -23,7 +23,9 @@ export default defineEventHandler(async (event) => {
         gridCellSize: body.gridCellSize ?? 40,
         gridBackground: body.gridBackground ?? null,
         moveLog: '[]',
-        defeatedEnemies: '[]'
+        defeatedEnemies: '[]',
+        significanceMultiplier: body.significanceMultiplier ?? 1.0,
+        significanceTier: body.significanceTier ?? 'insignificant'
       }
     })
 

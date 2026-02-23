@@ -40,7 +40,8 @@ export default defineEventHandler(async (event) => {
         gridBackground: body.gridConfig?.background ?? null,
         moveLog: JSON.stringify(body.moveLog ?? []),
         defeatedEnemies: JSON.stringify(body.defeatedEnemies ?? []),
-        significanceMultiplier: body.significanceMultiplier ?? 1.0
+        significanceMultiplier: body.significanceMultiplier ?? 1.0,
+        significanceTier: body.significanceTier ?? 'insignificant'
       }
     })
 

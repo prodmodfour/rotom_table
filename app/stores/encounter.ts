@@ -110,13 +110,26 @@ export const useEncounterStore = defineStore('encounter', {
     },
 
     // Create new encounter
-    async createEncounter(name: string, battleType: 'trainer' | 'full_contact', weather?: string | null) {
+    async createEncounter(
+      name: string,
+      battleType: 'trainer' | 'full_contact',
+      weather?: string | null,
+      significance?: { multiplier: number; tier: string }
+    ) {
       this.loading = true
       this.error = null
       try {
         const response = await $fetch<{ data: Encounter }>('/api/encounters', {
           method: 'POST',
-          body: { name, battleType, weather }
+          body: {
+            name,
+            battleType,
+            weather,
+            ...(significance && {
+              significanceMultiplier: significance.multiplier,
+              significanceTier: significance.tier
+            })
+          }
         })
         this.encounter = response.data
         return response.data
@@ -129,13 +142,24 @@ export const useEncounterStore = defineStore('encounter', {
     },
 
     // Create encounter from scene data
-    async createFromScene(sceneId: string, battleType: 'trainer' | 'full_contact') {
+    async createFromScene(
+      sceneId: string,
+      battleType: 'trainer' | 'full_contact',
+      significance?: { multiplier: number; tier: string }
+    ) {
       this.loading = true
       this.error = null
       try {
         const response = await $fetch<{ data: Encounter }>('/api/encounters/from-scene', {
           method: 'POST',
-          body: { sceneId, battleType }
+          body: {
+            sceneId,
+            battleType,
+            ...(significance && {
+              significanceMultiplier: significance.multiplier,
+              significanceTier: significance.tier
+            })
+          }
         })
         this.encounter = response.data
         return response.data
@@ -617,18 +641,19 @@ export const useEncounterStore = defineStore('encounter', {
     // ===========================================
 
     /** Persist the GM-set significance multiplier on the encounter */
-    async setSignificance(encounterId: string, significanceMultiplier: number) {
+    async setSignificance(encounterId: string, significanceMultiplier: number, significanceTier?: string) {
       try {
         await $fetch(`/api/encounters/${encounterId}/significance`, {
           method: 'PUT',
-          body: { significanceMultiplier }
+          body: { significanceMultiplier, ...(significanceTier && { significanceTier }) }
         })
 
         // Update local state immutably
         if (this.encounter && this.encounter.id === encounterId) {
           this.encounter = {
             ...this.encounter,
-            significanceMultiplier
+            significanceMultiplier,
+            ...(significanceTier && { significanceTier: significanceTier as any })
           }
         }
       } catch (e: any) {

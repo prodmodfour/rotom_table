@@ -181,9 +181,12 @@ const generateFromTable = (table: EncounterTable) => {
   generatingFromTable.value = table
 }
 
-const handleAddToEncounter = async (pokemon: Array<{ speciesId: string; speciesName: string; level: number }>) => {
+const handleAddToEncounter = async (
+  pokemon: Array<{ speciesId: string; speciesName: string; level: number }>,
+  significance?: { multiplier: number; tier: string }
+) => {
   const tableName = generatingFromTable.value?.name || 'Wild Encounter'
-  const success = await encounterCreation.createWildEncounter(pokemon, tableName)
+  const success = await encounterCreation.createWildEncounter(pokemon, tableName, significance)
   if (success) {
     generatingFromTable.value = null
   }

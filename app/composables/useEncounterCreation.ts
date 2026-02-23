@@ -12,7 +12,8 @@ export function useEncounterCreation() {
 
   const createWildEncounter = async (
     pokemon: Array<{ speciesId: string; speciesName: string; level: number }>,
-    tableName: string
+    tableName: string,
+    significance?: { multiplier: number; tier: string }
   ): Promise<boolean> => {
     if (pokemon.length === 0) {
       error.value = 'No Pokemon to add'
@@ -23,7 +24,7 @@ export function useEncounterCreation() {
     error.value = null
 
     try {
-      await encounterStore.createEncounter(tableName, 'full_contact')
+      await encounterStore.createEncounter(tableName, 'full_contact', undefined, significance)
       await encounterStore.addWildPokemon(pokemon, 'enemies')
       await encounterStore.serveEncounter()
       router.push('/gm')
