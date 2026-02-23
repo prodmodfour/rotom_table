@@ -409,10 +409,13 @@ const biographyExpanded = ref(false)
 
 /** Full Create sprite picker state */
 const showFullCreateSpritePicker = ref(false)
-const fullCreateResolvedAvatar = computed(() => getTrainerSpriteUrl(creation.form.avatarUrl))
-const handleFullCreateAvatarError = (event: Event) => {
-  const img = event.target as HTMLImageElement
-  img.style.display = 'none'
+const fullCreateAvatarBroken = ref(false)
+const fullCreateResolvedAvatar = computed(() => {
+  if (fullCreateAvatarBroken.value) return null
+  return getTrainerSpriteUrl(creation.form.avatarUrl)
+})
+const handleFullCreateAvatarError = () => {
+  fullCreateAvatarBroken.value = true
 }
 
 const pokemonTypes: PokemonType[] = [

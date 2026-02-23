@@ -134,11 +134,14 @@ const localForm = reactive({
   notes: ''
 })
 
-const resolvedAvatarUrl = computed(() => getTrainerSpriteUrl(localForm.avatarUrl))
+const avatarBroken = ref(false)
+const resolvedAvatarUrl = computed(() => {
+  if (avatarBroken.value) return null
+  return getTrainerSpriteUrl(localForm.avatarUrl)
+})
 
-const handleAvatarError = (event: Event) => {
-  const img = event.target as HTMLImageElement
-  img.style.display = 'none'
+const handleAvatarError = () => {
+  avatarBroken.value = true
 }
 
 /** Build and emit the creation payload */

@@ -297,14 +297,15 @@ const activeTab = ref('stats')
 const showSpritePicker = ref(false)
 
 // Resolved avatar URL — uses editData when editing for live preview, else character
+const avatarBroken = ref(false)
 const resolvedAvatarUrl = computed(() => {
+  if (avatarBroken.value) return null
   const key = isEditing.value ? editData.value.avatarUrl : character.value?.avatarUrl
   return getTrainerSpriteUrl(key ?? null)
 })
 
-const handleAvatarError = (event: Event) => {
-  const img = event.target as HTMLImageElement
-  img.style.display = 'none'
+const handleAvatarError = () => {
+  avatarBroken.value = true
 }
 
 // Equipment state (tracked locally for reactivity on equip/unequip)

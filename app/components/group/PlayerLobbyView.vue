@@ -12,12 +12,13 @@
       >
         <div class="player-card__header">
           <div class="player-card__avatar">
+            <!-- deliberate: lightweight function in v-for, no per-item computed available -->
             <img
-              v-if="getTrainerSpriteUrl(player.avatarUrl)"
+              v-if="getTrainerSpriteUrl(player.avatarUrl) && !brokenAvatars.has(player.id)"
               :src="getTrainerSpriteUrl(player.avatarUrl)!"
               :alt="player.name"
               class="player-card__avatar-img"
-              @error="handleAvatarError"
+              @error="handleAvatarError(player.id)"
             />
             <span v-else class="player-card__initials">{{ player.name.charAt(0) }}</span>
           </div>
@@ -107,9 +108,9 @@ defineProps<{
 const { getSpriteUrl } = usePokemonSprite()
 const { getTrainerSpriteUrl } = useTrainerSprite()
 
-const handleAvatarError = (event: Event) => {
-  const img = event.target as HTMLImageElement
-  img.style.display = 'none'
+const brokenAvatars = ref<Set<string>>(new Set())
+const handleAvatarError = (playerId: string) => {
+  brokenAvatars.value = new Set([...brokenAvatars.value, playerId])
 }
 
 const handleSpriteError = (event: Event) => {
