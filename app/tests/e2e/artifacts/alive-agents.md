@@ -36,3 +36,8 @@
 | plan-20260222-214423/slave-6 | developer | ptu-rule-079 | success | 2026-02-22T21:52:30Z | d0ab030, 126879e |
 | plan-20260222-214423/slave-7 | developer | ptu-rule-080 | success | 2026-02-22T22:00:00Z | 9a4b92c, fb5ac76, 76f944b, 5607f5c, 3029b96, cfcc129 |
 | plan-20260222-214423/slave-8 | developer | feature-003-track-c | success | 2026-02-22T22:07:00Z | 6250402, f52849b |
+| plan-20260223-061421/slave-1 | developer | ptu-rule-056-fix | success | 2026-02-23T06:23:30Z | 27ffffd, 1180c9c, b7c53ee |
+| plan-20260223-061421/slave-2 | reviewers | ptu-rule-060-rereview | CHANGES_REQUIRED | 2026-02-23T06:27:00Z | aa25d97, da9cae0 |
+| plan-20260223-061421/slave-3 | reviewers | ptu-rule-078-review | CHANGES_REQUIRED | 2026-02-23T06:28:00Z | 92ada30, cb04908 |
+| plan-20260223-061421/slave-4 | reviewers | ptu-rule-079-review | APPROVED | 2026-02-23T06:36:00Z | 0e9651c, d665327 |
+| plan-20260223-061421/slave-5 | reviewers | ptu-rule-080-review | APPROVED | 2026-02-23T06:28:00Z | c0fac39, 4f4052c |
