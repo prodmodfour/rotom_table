@@ -1,9 +1,13 @@
 // Spatial types for VTT (Virtual Tabletop) functionality
 
+// Camera angle for isometric view (0 = default, 1 = 90deg CW, 2 = 180deg, 3 = 270deg)
+export type CameraAngle = 0 | 1 | 2 | 3;
+
 // Grid position (cell coordinates)
 export interface GridPosition {
   x: number;
   y: number;
+  z?: number; // Elevation level (0 = ground, positive = above, negative = below)
 }
 
 // Pixel position (for rendering)
@@ -19,6 +23,10 @@ export interface GridConfig {
   height: number;     // Number of cells tall
   cellSize: number;   // Pixels per cell
   background?: string; // URL to background image
+  // Isometric grid settings
+  isometric: boolean;         // Feature flag: false = flat 2D (default), true = isometric
+  cameraAngle: CameraAngle;   // 0 | 1 | 2 | 3 (cardinal rotation)
+  maxElevation: number;       // Max elevation levels (default 5)
 }
 
 // Token on the grid (combatant representation)
