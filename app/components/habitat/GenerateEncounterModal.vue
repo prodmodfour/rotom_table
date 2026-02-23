@@ -104,6 +104,26 @@
           </div>
         </div>
 
+        <!-- Significance Selector (for "New Encounter" action) -->
+        <div class="form-section">
+          <div class="form-group">
+            <label class="form-label">Encounter Significance</label>
+            <p class="significance-hint">Scales XP rewards when creating a new encounter (PTU p.460)</p>
+            <div class="significance-compact">
+              <label
+                v-for="preset in SIGNIFICANCE_PRESETS"
+                :key="preset.tier"
+                class="significance-compact__option"
+                :class="{ 'significance-compact__option--selected': selectedTier === preset.tier }"
+              >
+                <input type="radio" v-model="selectedTier" :value="preset.tier" />
+                <span class="significance-compact__label">{{ preset.label }}</span>
+                <span class="significance-compact__multiplier">x{{ preset.defaultMultiplier }}</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
         <!-- Pool Preview -->
         <div class="pool-preview" v-if="resolvedEntries.length > 0">
           <h4>Encounter Pool ({{ resolvedEntries.length }} species)</h4>
@@ -247,6 +267,8 @@
 <script setup lang="ts">
 import type { EncounterTable, ResolvedTableEntry, DensityTier } from '~/types'
 import { DENSITY_SUGGESTIONS, MAX_SPAWN_COUNT } from '~/types'
+import { SIGNIFICANCE_PRESETS } from '~/utils/encounterBudget'
+import type { SignificanceTier } from '~/utils/encounterBudget'
 
 const props = defineProps<{
   table: EncounterTable
@@ -259,7 +281,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   close: []
-  addToEncounter: [pokemon: Array<{ speciesId: string; speciesName: string; level: number }>]
+  addToEncounter: [pokemon: Array<{ speciesId: string; speciesName: string; level: number }>, significance: { multiplier: number; tier: SignificanceTier }]
   addToScene: [sceneId: string, pokemon: Array<{ speciesId: string; speciesName: string; level: number }>]
 }>()
 
@@ -270,6 +292,12 @@ const groupViewStore = useGroupViewStore()
 onMounted(() => {
   groupViewStore.fetchWildSpawnPreview()
 })
+
+// Significance state (defaults to insignificant for wild encounters)
+const selectedTier = ref<SignificanceTier>('insignificant')
+const selectedPreset = computed(() =>
+  SIGNIFICANCE_PRESETS.find(p => p.tier === selectedTier.value) ?? SIGNIFICANCE_PRESETS[0]
+)
 
 // State
 const servingToTv = ref(false)
@@ -391,7 +419,10 @@ const addToEncounter = () => {
     speciesId: p.speciesId,
     speciesName: p.speciesName,
     level: p.level
-  })))
+  })), {
+    multiplier: selectedPreset.value.defaultMultiplier,
+    tier: selectedTier.value
+  })
 }
 
 const handleAddToScene = () => {
@@ -672,6 +703,55 @@ watch(() => props.table, (newTable) => {
       background: rgba($color-accent-violet, 0.2);
       color: $color-accent-violet;
     }
+  }
+}
+
+.significance-hint {
+  font-size: $font-size-xs;
+  color: $color-text-muted;
+  margin: 0 0 $spacing-sm 0;
+}
+
+.significance-compact {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+
+  &__option {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-sm $spacing-md;
+    background: $color-bg-tertiary;
+    border: 2px solid transparent;
+    border-radius: $border-radius-sm;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    &:hover {
+      background: $color-bg-hover;
+    }
+
+    &--selected {
+      border-color: $color-warning;
+      background: rgba($color-warning, 0.1);
+    }
+
+    input[type="radio"] {
+      accent-color: $color-warning;
+    }
+  }
+
+  &__label {
+    flex: 1;
+    font-weight: 500;
+    font-size: $font-size-sm;
+  }
+
+  &__multiplier {
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+    font-weight: 600;
   }
 }
 
