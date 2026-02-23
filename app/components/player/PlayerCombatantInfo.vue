@@ -1,0 +1,344 @@
+<template>
+  <div
+    class="player-combatant"
+    :class="{
+      'player-combatant--current': isCurrentTurn,
+      'player-combatant--own': visibility.showExactHp && visibility.showStats,
+      'player-combatant--fainted': currentHp <= 0
+    }"
+  >
+    <!-- Sprite (for Pokemon) -->
+    <img
+      v-if="combatant.type === 'pokemon'"
+      :src="spriteUrl"
+      :alt="name"
+      class="player-combatant__sprite"
+      loading="lazy"
+    />
+    <div v-else class="player-combatant__avatar">
+      <span>{{ name.charAt(0).toUpperCase() }}</span>
+    </div>
+
+    <div class="player-combatant__info">
+      <div class="player-combatant__name-row">
+        <span class="player-combatant__name">{{ name }}</span>
+        <span v-if="isCurrentTurn" class="player-combatant__turn-badge">Turn</span>
+      </div>
+
+      <!-- Types (always visible for Pokemon) -->
+      <div v-if="combatant.type === 'pokemon' && types.length > 0" class="player-combatant__types">
+        <span
+          v-for="t in types"
+          :key="t"
+          class="player-combatant__type"
+          :class="`type--${t.toLowerCase()}`"
+        >
+          {{ t }}
+        </span>
+      </div>
+
+      <!-- HP Bar -->
+      <div class="player-combatant__hp">
+        <div class="hp-bar-track">
+          <div
+            class="hp-bar-fill"
+            :class="hpColorClass"
+            :style="{ width: hpPercent + '%' }"
+          ></div>
+        </div>
+        <span class="hp-bar-label">
+          <template v-if="visibility.showExactHp">
+            {{ currentHp }} / {{ maxHp }}
+          </template>
+          <template v-else>
+            {{ hpPercent }}%
+          </template>
+        </span>
+      </div>
+
+      <!-- Status conditions (always visible) -->
+      <div v-if="statusConditions.length > 0" class="player-combatant__statuses">
+        <span
+          v-for="status in statusConditions"
+          :key="status.name"
+          class="status-badge"
+        >
+          {{ status.name }}
+        </span>
+      </div>
+
+      <!-- Injuries (visible for own/allies) -->
+      <span v-if="visibility.showInjuries && injuries > 0" class="player-combatant__injuries">
+        {{ injuries }} {{ injuries === 1 ? 'injury' : 'injuries' }}
+      </span>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import type { Combatant, Pokemon, HumanCharacter, StatusCondition, PokemonType } from '~/types'
+
+const props = defineProps<{
+  combatant: Combatant
+  isCurrentTurn: boolean
+  myCharacterId: string
+  myPokemonIds: string[]
+}>()
+
+const { getCombatantName } = useCombatantDisplay()
+const { getSpriteUrl: getSprite } = usePokemonSprite()
+
+const name = computed(() => getCombatantName(props.combatant))
+
+const spriteUrl = computed(() => {
+  if (props.combatant.type === 'pokemon') {
+    const pokemon = props.combatant.entity as Pokemon
+    return getSprite(pokemon.species, pokemon.shiny)
+  }
+  return ''
+})
+
+const types = computed((): PokemonType[] => {
+  if (props.combatant.type === 'pokemon') {
+    const pokemon = props.combatant.entity as Pokemon
+    return pokemon.types
+  }
+  return []
+})
+
+const currentHp = computed(() => {
+  if (props.combatant.type === 'pokemon') {
+    return (props.combatant.entity as Pokemon).currentHp
+  }
+  return (props.combatant.entity as HumanCharacter).currentHp
+})
+
+const maxHp = computed(() => {
+  if (props.combatant.type === 'pokemon') {
+    return (props.combatant.entity as Pokemon).maxHp
+  }
+  return (props.combatant.entity as HumanCharacter).maxHp
+})
+
+const hpPercent = computed(() => {
+  if (maxHp.value <= 0) return 0
+  return Math.max(0, Math.min(100, Math.round((currentHp.value / maxHp.value) * 100)))
+})
+
+const hpColorClass = computed(() => {
+  if (hpPercent.value > 50) return 'hp-bar-fill--healthy'
+  if (hpPercent.value > 25) return 'hp-bar-fill--warning'
+  return 'hp-bar-fill--critical'
+})
+
+const statusConditions = computed((): StatusCondition[] => {
+  if (props.combatant.type === 'pokemon') {
+    return (props.combatant.entity as Pokemon).statusConditions ?? []
+  }
+  return (props.combatant.entity as HumanCharacter).statusConditions ?? []
+})
+
+const injuries = computed((): number => {
+  if (props.combatant.type === 'pokemon') {
+    return (props.combatant.entity as Pokemon).injuries ?? 0
+  }
+  return (props.combatant.entity as HumanCharacter).injuries ?? 0
+})
+
+// Visibility rules from design spec Section 5.1
+const visibility = computed(() => {
+  const isOwn =
+    props.combatant.entityId === props.myCharacterId ||
+    props.myPokemonIds.includes(props.combatant.entityId)
+  const isAlly =
+    props.combatant.side === 'players' || props.combatant.side === 'allies'
+
+  if (isOwn) {
+    return { showExactHp: true, showStats: true, showMoves: true, showAbilities: true, showInjuries: true }
+  }
+  if (isAlly) {
+    return { showExactHp: true, showStats: false, showMoves: false, showAbilities: false, showInjuries: true }
+  }
+  // Enemy
+  return { showExactHp: false, showStats: false, showMoves: false, showAbilities: false, showInjuries: false }
+})
+</script>
+
+<style lang="scss" scoped>
+.player-combatant {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-sm;
+  padding: $spacing-sm;
+  background: $glass-bg;
+  border: 1px solid $glass-border;
+  border-radius: $border-radius-md;
+  transition: border-color $transition-fast;
+
+  &--current {
+    border-color: rgba($color-accent-scarlet, 0.5);
+    box-shadow: 0 0 8px rgba($color-accent-scarlet, 0.15);
+  }
+
+  &--own {
+    border-color: rgba($color-accent-teal, 0.3);
+  }
+
+  &--fainted {
+    opacity: 0.5;
+  }
+
+  &__sprite {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    image-rendering: pixelated;
+    object-fit: contain;
+  }
+
+  &__avatar {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    border-radius: $border-radius-full;
+    background: $color-bg-tertiary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    span {
+      font-size: $font-size-sm;
+      font-weight: 700;
+      color: $color-text-muted;
+    }
+  }
+
+  &__info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &__name-row {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+  }
+
+  &__name {
+    font-size: $font-size-sm;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__turn-badge {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 1px 4px;
+    background: rgba($color-accent-scarlet, 0.2);
+    border: 1px solid rgba($color-accent-scarlet, 0.4);
+    border-radius: 3px;
+    color: $color-accent-scarlet;
+    white-space: nowrap;
+    animation: pulse-badge 2s ease-in-out infinite;
+  }
+
+  &__types {
+    display: flex;
+    gap: 2px;
+  }
+
+  &__type {
+    font-size: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 0 3px;
+    border-radius: 2px;
+    color: white;
+  }
+
+  &__hp {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+  }
+
+  &__statuses {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+  }
+
+  &__injuries {
+    font-size: 10px;
+    color: $color-danger;
+  }
+}
+
+@keyframes pulse-badge {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.hp-bar-track {
+  flex: 1;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: $border-radius-full;
+  overflow: hidden;
+}
+
+.hp-bar-fill {
+  height: 100%;
+  border-radius: $border-radius-full;
+  transition: width $transition-normal;
+
+  &--healthy { background: $color-success; }
+  &--warning { background: $color-warning; }
+  &--critical { background: $color-danger; }
+}
+
+.hp-bar-label {
+  font-size: 10px;
+  color: $color-text-muted;
+  white-space: nowrap;
+  min-width: 40px;
+  text-align: right;
+}
+
+.status-badge {
+  padding: 1px $spacing-xs;
+  background: rgba($color-accent-scarlet, 0.2);
+  border: 1px solid rgba($color-accent-scarlet, 0.4);
+  border-radius: 2px;
+  font-size: 9px;
+  color: $color-accent-pink;
+}
+
+// Type badge colors
+.type {
+  &--normal { background: $type-normal; }
+  &--fire { background: $type-fire; }
+  &--water { background: $type-water; }
+  &--electric { background: $type-electric; color: #333; }
+  &--grass { background: $type-grass; }
+  &--ice { background: $type-ice; color: #333; }
+  &--fighting { background: $type-fighting; }
+  &--poison { background: $type-poison; }
+  &--ground { background: $type-ground; color: #333; }
+  &--flying { background: $type-flying; }
+  &--psychic { background: $type-psychic; }
+  &--bug { background: $type-bug; }
+  &--rock { background: $type-rock; }
+  &--ghost { background: $type-ghost; }
+  &--dragon { background: $type-dragon; }
+  &--dark { background: $type-dark; }
+  &--steel { background: $type-steel; color: #333; }
+  &--fairy { background: $type-fairy; color: #333; }
+}
+</style>
