@@ -20,8 +20,7 @@
 
 <script setup lang="ts">
 import { PhUser, PhPawPrint, PhSword } from '@phosphor-icons/vue'
-
-export type PlayerTab = 'character' | 'team' | 'encounter'
+import type { PlayerTab } from '~/types/player'
 
 defineProps<{
   activeTab: PlayerTab

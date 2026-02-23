@@ -31,5 +31,8 @@ export * from './species';
 // Scene types (narrative scene system)
 export * from './scene';
 
+// Player view types
+export * from './player';
+
 // Type guards
 export * from './guards';

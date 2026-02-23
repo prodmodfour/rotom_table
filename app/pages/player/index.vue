@@ -67,7 +67,7 @@
 
 <script setup lang="ts">
 import { PhSwap, PhWarningCircle } from '@phosphor-icons/vue'
-import type { PlayerTab } from '~/components/player/PlayerNavBar.vue'
+import type { PlayerTab } from '~/types/player'
 
 definePageMeta({
   layout: 'player'
