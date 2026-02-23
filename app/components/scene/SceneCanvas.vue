@@ -71,9 +71,10 @@
         >
           <div class="avatar-circle">
             <img
-              v-if="character.avatarUrl"
-              :src="character.avatarUrl"
+              v-if="getTrainerSpriteUrl(character.avatarUrl)"
+              :src="getTrainerSpriteUrl(character.avatarUrl)!"
               :alt="character.name"
+              class="avatar-sprite"
             />
             <PhUser v-else :size="24" />
           </div>
@@ -133,6 +134,7 @@ const findGroupAtPosition = (x: number, y: number): string | null => {
 }
 
 const { getSpriteUrl } = usePokemonSprite()
+const { getTrainerSpriteUrl } = useTrainerSprite()
 
 // Drag and drop for sprites
 const startDragSprite = (event: MouseEvent, type: 'pokemon' | 'character', item: ScenePokemon | SceneCharacter) => {

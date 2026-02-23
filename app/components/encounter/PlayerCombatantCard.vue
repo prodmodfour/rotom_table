@@ -80,11 +80,15 @@ defineEmits<{
 }>()
 
 const { getSpriteUrl } = usePokemonSprite()
+const { getTrainerSpriteUrl } = useTrainerSprite()
 const { getHealthPercentage, getHealthStatus } = useCombat()
 
 const entity = computed(() => props.combatant.entity)
 const isPokemon = computed(() => props.combatant.type === 'pokemon')
-const avatarUrl = computed(() => isPokemon.value ? '' : (entity.value as HumanCharacter).avatarUrl || '')
+const avatarUrl = computed(() => {
+  if (isPokemon.value) return ''
+  return getTrainerSpriteUrl((entity.value as HumanCharacter).avatarUrl) || ''
+})
 const pokemonTypes = computed(() => isPokemon.value ? (entity.value as Pokemon).types : [])
 
 const displayName = computed(() => {

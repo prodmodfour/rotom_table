@@ -11,7 +11,13 @@
             class="header-info__sprite"
           />
           <div v-else class="header-info__avatar">
-            <span>{{ displayName.charAt(0) }}</span>
+            <img
+              v-if="resolvedHumanAvatarUrl"
+              :src="resolvedHumanAvatarUrl"
+              :alt="displayName"
+              class="header-info__avatar-img"
+            />
+            <span v-else>{{ displayName.charAt(0) }}</span>
           </div>
           <div class="header-info__text">
             <h2>{{ displayName }}</h2>
@@ -254,6 +260,7 @@ const emit = defineEmits<{
 }>()
 
 const { getSpriteUrl } = usePokemonSprite()
+const { getTrainerSpriteUrl } = useTrainerSprite()
 const encounterStore = useEncounterStore()
 
 const selectedMove = ref<Move | null>(null)
@@ -266,6 +273,11 @@ const volatileConditions = VOLATILE_CONDITIONS
 const otherConditions = OTHER_CONDITIONS
 
 const isPokemon = computed(() => props.combatant.type === 'pokemon')
+
+const resolvedHumanAvatarUrl = computed(() => {
+  if (isPokemon.value) return null
+  return getTrainerSpriteUrl((props.combatant.entity as HumanCharacter).avatarUrl)
+})
 
 // Provide default turnState if not present
 const turnState = computed(() => props.combatant.turnState ?? {
@@ -420,6 +432,7 @@ const selectManeuver = (maneuver: Maneuver) => {
         background: linear-gradient(135deg, $color-bg-tertiary 0%, $color-bg-secondary 100%);
         border: 2px solid $border-color-default;
         border-radius: $border-radius-md;
+        overflow: hidden;
 
         span {
           font-size: $font-size-xl;
@@ -429,6 +442,13 @@ const selectManeuver = (maneuver: Maneuver) => {
           -webkit-text-fill-color: transparent;
           background-clip: text;
         }
+      }
+
+      &__avatar-img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        image-rendering: pixelated;
       }
 
       &__text {

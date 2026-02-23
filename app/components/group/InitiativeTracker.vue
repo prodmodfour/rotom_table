@@ -24,7 +24,14 @@
           @error="handleSpriteError($event)"
         />
         <div v-else class="initiative-entry__avatar">
-          {{ getCombatantName(combatant).charAt(0) }}
+          <img
+            v-if="getTrainerSpriteUrl((combatant.entity as HumanCharacter).avatarUrl)"
+            :src="getTrainerSpriteUrl((combatant.entity as HumanCharacter).avatarUrl)!"
+            :alt="getCombatantName(combatant)"
+            class="initiative-entry__avatar-img"
+            @error="handleSpriteError($event)"
+          />
+          <span v-else>{{ getCombatantName(combatant).charAt(0) }}</span>
         </div>
         <div class="initiative-entry__info">
           <span class="initiative-entry__name">{{ getCombatantName(combatant) }}</span>
@@ -43,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Combatant, Pokemon } from '~/types'
+import type { Combatant, Pokemon, HumanCharacter } from '~/types'
 import { getEffectiveMaxHp } from '~/utils/restHealing'
 
 const PHASE_TITLES: Record<string, string> = {
@@ -68,6 +75,7 @@ const phaseTitle = computed(() => {
 })
 
 const { getSpriteUrl } = usePokemonSprite()
+const { getTrainerSpriteUrl } = useTrainerSprite()
 const { getCombatantName } = useCombatantDisplay()
 
 const handleSpriteError = (event: Event) => {
@@ -224,12 +232,20 @@ const getHpClass = (combatant: Combatant): string => {
     font-size: $font-size-sm;
     font-weight: 700;
     color: $color-text;
+    overflow: hidden;
 
     @media (min-width: 3000px) {
       width: 48px;
       height: 48px;
       font-size: $font-size-md;
     }
+  }
+
+  &__avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    image-rendering: pixelated;
   }
 
   &__info {

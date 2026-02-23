@@ -12,7 +12,14 @@
         @error="handleSpriteError($event)"
       />
       <div v-else class="combatant-details__avatar">
-        {{ combatantName.charAt(0) }}
+        <img
+          v-if="resolvedHumanAvatarUrl"
+          :src="resolvedHumanAvatarUrl"
+          :alt="combatantName"
+          class="combatant-details__avatar-img"
+          @error="handleSpriteError($event)"
+        />
+        <span v-else>{{ combatantName.charAt(0) }}</span>
       </div>
       <div class="combatant-details__name-block">
         <span class="combatant-details__name">{{ combatantName }}</span>
@@ -182,11 +189,17 @@ const props = defineProps<{
 }>()
 
 const { getSpriteUrl } = usePokemonSprite()
+const { getTrainerSpriteUrl } = useTrainerSprite()
 
 const handleSpriteError = (event: Event) => {
   const img = event.target as HTMLImageElement
   img.src = '/images/pokemon-placeholder.svg'
 }
+
+const resolvedHumanAvatarUrl = computed(() => {
+  if (!props.combatant || props.combatant.type === 'pokemon') return null
+  return getTrainerSpriteUrl((props.combatant.entity as HumanCharacter).avatarUrl)
+})
 
 // Computed
 const combatantName = computed(() => {
@@ -357,12 +370,20 @@ const formatFrequency = (freq: string): string => {
     font-size: $font-size-xxl;
     font-weight: 700;
     color: $color-text;
+    overflow: hidden;
 
     @media (min-width: 3000px) {
       width: 96px;
       height: 96px;
       font-size: $font-size-xxxl;
     }
+  }
+
+  &__avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    image-rendering: pixelated;
   }
 
   &__name-block {

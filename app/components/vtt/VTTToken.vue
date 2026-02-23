@@ -59,6 +59,7 @@ interface TokenData {
 }
 
 const { getSpriteUrl } = usePokemonSprite()
+const { getTrainerSpriteUrl } = useTrainerSprite()
 
 const props = defineProps<{
   token: TokenData
@@ -110,10 +111,9 @@ const avatarUrl = computed(() => {
   if (!entity.value) return null
   if (isPokemon.value) {
     const pokemon = entity.value as Pokemon
-    // Use usePokemonSprite to get the sprite URL based on species
     return getSpriteUrl(pokemon.species, pokemon.shiny)
   }
-  return (entity.value as HumanCharacter).avatarUrl
+  return getTrainerSpriteUrl((entity.value as HumanCharacter).avatarUrl)
 })
 
 const initial = computed(() => {

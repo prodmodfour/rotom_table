@@ -79,7 +79,7 @@
               @click="selectEntity(human.id, 'human')"
             >
               <div class="entity-item__avatar">
-                <img v-if="human.avatarUrl" :src="human.avatarUrl" :alt="human.name" />
+                <img v-if="getTrainerSpriteUrl(human.avatarUrl)" :src="getTrainerSpriteUrl(human.avatarUrl)!" :alt="human.name" />
                 <span v-else>{{ human.name.charAt(0) }}</span>
               </div>
               <div class="entity-item__info">
@@ -136,6 +136,7 @@ const emit = defineEmits<{
 
 const libraryStore = useLibraryStore()
 const { getSpriteUrl } = usePokemonSprite()
+const { getTrainerSpriteUrl } = useTrainerSprite()
 
 const activeTab = ref<'pokemon' | 'human'>('pokemon')
 const searchQuery = ref('')

@@ -1,7 +1,13 @@
 <template>
   <NuxtLink :to="`/gm/characters/${human.id}`" class="human-card">
     <div class="human-card__avatar">
-      <img v-if="human.avatarUrl" :src="human.avatarUrl" :alt="human.name" />
+      <img
+        v-if="resolvedAvatarUrl"
+        :src="resolvedAvatarUrl"
+        :alt="human.name"
+        class="human-card__avatar-img"
+        @error="handleAvatarError"
+      />
       <div v-else class="human-card__avatar-placeholder">
         {{ human.name.charAt(0).toUpperCase() }}
       </div>
@@ -55,6 +61,14 @@ defineProps<{
 }>()
 
 const { getSpriteUrl } = usePokemonSprite()
+const { getTrainerSpriteUrl } = useTrainerSprite()
+
+const resolvedAvatarUrl = computed(() => getTrainerSpriteUrl(props.human.avatarUrl ?? null))
+
+const handleAvatarError = (event: Event) => {
+  const img = event.target as HTMLImageElement
+  img.style.display = 'none'
+}
 
 const handleSpriteError = (event: Event) => {
   const img = event.target as HTMLImageElement
@@ -95,7 +109,8 @@ const handleSpriteError = (event: Event) => {
     img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
+      image-rendering: pixelated;
     }
   }
 

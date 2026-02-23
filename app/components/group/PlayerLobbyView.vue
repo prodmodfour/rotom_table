@@ -13,9 +13,11 @@
         <div class="player-card__header">
           <div class="player-card__avatar">
             <img
-              v-if="player.avatarUrl"
-              :src="player.avatarUrl"
+              v-if="getTrainerSpriteUrl(player.avatarUrl)"
+              :src="getTrainerSpriteUrl(player.avatarUrl)!"
               :alt="player.name"
+              class="player-card__avatar-img"
+              @error="handleAvatarError"
             />
             <span v-else class="player-card__initials">{{ player.name.charAt(0) }}</span>
           </div>
@@ -103,6 +105,12 @@ defineProps<{
 }>()
 
 const { getSpriteUrl } = usePokemonSprite()
+const { getTrainerSpriteUrl } = useTrainerSprite()
+
+const handleAvatarError = (event: Event) => {
+  const img = event.target as HTMLImageElement
+  img.style.display = 'none'
+}
 
 const handleSpriteError = (event: Event) => {
   const img = event.target as HTMLImageElement
@@ -194,7 +202,8 @@ const getHpClassFromPercent = (percentage: number): string => {
     img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
+      image-rendering: pixelated;
     }
 
     @media (min-width: 3000px) {
