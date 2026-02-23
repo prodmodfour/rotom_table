@@ -12,6 +12,10 @@ interface UseGridMovementOptions {
   tokens: Ref<TokenData[]>
   getMovementSpeed?: (combatantId: string) => number
   getCombatant?: (combatantId: string) => Combatant | undefined
+  /** Optional elevation lookup for isometric mode. Returns 0 if not provided. */
+  getTokenElevation?: (combatantId: string) => number
+  /** Optional terrain elevation lookup for isometric mode. Returns 0 if not provided. */
+  getTerrainElevation?: (x: number, y: number) => number
 }
 
 const DEFAULT_MOVEMENT_SPEED = 5
@@ -38,6 +42,58 @@ function combatantCanBurrow(combatant: Combatant): boolean {
     return (pokemon.capabilities?.burrow ?? 0) > 0
   }
   return false
+}
+
+/**
+ * Check whether a combatant has Sky capability (sky speed > 0).
+ * Flying Pokemon ignore elevation cost within their Sky speed range.
+ */
+function combatantCanFly(combatant: Combatant): boolean {
+  if (combatant.type === 'pokemon') {
+    const pokemon = combatant.entity as Pokemon
+    return (pokemon.capabilities?.sky ?? 0) > 0
+  }
+  return false
+}
+
+/**
+ * Get a combatant's Sky speed. Returns 0 for non-flying combatants.
+ */
+function getSkySpeed(combatant: Combatant): number {
+  if (combatant.type === 'pokemon') {
+    const pokemon = combatant.entity as Pokemon
+    return pokemon.capabilities?.sky ?? 0
+  }
+  return 0
+}
+
+/**
+ * Calculate the elevation change cost between two Z-levels.
+ * Cost: 1 movement point per level of elevation change (up or down).
+ * Flying Pokemon (Sky speed > 0) ignore elevation cost within their Sky speed range.
+ *
+ * @param fromZ - Starting elevation
+ * @param toZ - Destination elevation
+ * @param combatant - Optional combatant for Sky speed check
+ * @returns Movement point cost for the elevation change
+ */
+export function calculateElevationCost(
+  fromZ: number,
+  toZ: number,
+  combatant?: Combatant
+): number {
+  const dz = Math.abs(toZ - fromZ)
+  if (dz === 0) return 0
+
+  // Flying Pokemon ignore elevation cost within Sky speed range
+  if (combatant && combatantCanFly(combatant)) {
+    const sky = getSkySpeed(combatant)
+    if (dz <= sky) return 0
+    // Exceeds Sky speed: pay for the excess
+    return dz - sky
+  }
+
+  return dz
 }
 
 /**
@@ -255,10 +311,13 @@ export function useGridMovement(options: UseGridMovementOptions) {
   }
 
   /**
-   * Check if a move is valid, accounting for terrain costs and combatant capabilities.
+   * Check if a move is valid, accounting for terrain costs, elevation, and combatant capabilities.
    *
    * Uses terrain-aware pathfinding (A*) when terrain is present on the grid.
    * Falls back to geometric distance when no terrain exists (for performance).
+   *
+   * Elevation cost: 1 MP per level of elevation change (additive to XY movement cost).
+   * Flying Pokemon (Sky speed > 0) ignore elevation cost within their Sky speed range.
    *
    * - Slow/difficult terrain costs 2 movement per cell
    * - Blocking terrain prevents movement through it
@@ -287,6 +346,15 @@ export function useGridMovement(options: UseGridMovementOptions) {
       }
     }
 
+    // Calculate elevation cost (if elevation callbacks are provided)
+    let elevCost = 0
+    if (options.getTokenElevation && options.getTerrainElevation) {
+      const fromZ = options.getTokenElevation(combatantId)
+      const toZ = options.getTerrainElevation(toPos.x, toPos.y)
+      const combatant = findCombatant(combatantId)
+      elevCost = calculateElevationCost(fromZ, toZ, combatant)
+    }
+
     const terrainCostGetter = getTerrainCostGetter(combatantId)
 
     if (terrainCostGetter) {
@@ -297,22 +365,24 @@ export function useGridMovement(options: UseGridMovementOptions) {
         const geometricDistance = calculateMoveDistance(fromPos, toPos)
         return {
           valid: false,
-          distance: geometricDistance,
+          distance: geometricDistance + elevCost,
           blocked: true // Effectively blocked by terrain
         }
       }
+      const totalCost = pathResult.cost + elevCost
       return {
-        valid: pathResult.cost > 0 && pathResult.cost <= speed,
-        distance: pathResult.cost,
+        valid: totalCost > 0 && totalCost <= speed,
+        distance: totalCost,
         blocked: false
       }
     }
 
-    // No terrain: fast geometric check
+    // No terrain: fast geometric check + elevation cost
     const distance = calculateMoveDistance(fromPos, toPos)
+    const totalDistance = distance + elevCost
     return {
-      valid: distance > 0 && distance <= speed,
-      distance,
+      valid: totalDistance > 0 && totalDistance <= speed,
+      distance: totalDistance,
       blocked: false
     }
   }
@@ -326,6 +396,7 @@ export function useGridMovement(options: UseGridMovementOptions) {
     getTerrainCostForCombatant,
     getTerrainCostGetter,
     isValidMove,
+    findCombatant,
     DEFAULT_MOVEMENT_SPEED
   }
 }
