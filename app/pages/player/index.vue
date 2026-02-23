@@ -1,10 +1,13 @@
 <template>
   <div class="player-view">
     <!-- Identity Picker (overlay when not identified) -->
-    <PlayerIdentityPicker
-      v-if="!isIdentified"
-      @select="handleSelectCharacter"
-    />
+    <template v-if="!isIdentified">
+      <div v-if="selectionError" class="player-error player-error--selection">
+        <PhWarningCircle :size="32" />
+        <p>{{ selectionError }}</p>
+      </div>
+      <PlayerIdentityPicker @select="handleSelectCharacter" />
+    </template>
 
     <!-- Main Player View (when identified) -->
     <template v-if="isIdentified">
@@ -97,6 +100,9 @@ const { isConnected, identify, joinEncounter, onMessage } = useWebSocket()
 // Active tab
 const activeTab = ref<PlayerTab>('character')
 
+// Inline error for character selection failures (replaces alert())
+const selectionError = ref<string | null>(null)
+
 // Character name for top bar
 const characterName = computed(() => playerStore.characterName ?? 'Player')
 
@@ -168,6 +174,8 @@ const checkForActiveEncounter = async () => {
 
 // Handle character selection
 const handleSelectCharacter = async (characterId: string, characterName: string) => {
+  selectionError.value = null
+
   try {
     await selectCharacter(characterId, characterName)
 
@@ -182,7 +190,7 @@ const handleSelectCharacter = async (characterId: string, characterName: string)
       pollInterval = setInterval(checkForActiveEncounter, POLL_BASE_INTERVAL)
     }
   } catch (err: any) {
-    alert('Failed to select character: ' + (err.message || 'Unknown error'))
+    selectionError.value = 'Failed to select character: ' + (err.message || 'Unknown error')
   }
 }
 
@@ -357,5 +365,12 @@ onUnmounted(() => {
   color: $color-danger;
   text-align: center;
   flex: 1;
+
+  &--selection {
+    flex: 0;
+    padding: $spacing-md;
+    gap: $spacing-sm;
+    font-size: $font-size-sm;
+  }
 }
 </style>
