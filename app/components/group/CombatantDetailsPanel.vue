@@ -206,6 +206,11 @@ const handleAvatarError = () => {
   avatarBroken.value = true
 }
 
+// Reset broken state when the displayed combatant changes
+watch(() => props.combatant?.id, () => {
+  avatarBroken.value = false
+})
+
 // Computed
 const combatantName = computed(() => {
   if (!props.combatant) return ''
