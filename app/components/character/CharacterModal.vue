@@ -108,10 +108,25 @@
           <div class="sheet human-sheet">
             <!-- Header -->
             <div class="sheet__header">
-              <div class="sheet__avatar">
-                <img v-if="humanData.avatarUrl" :src="humanData.avatarUrl" :alt="characterName" />
+              <div
+                class="sheet__avatar"
+                :class="{ 'sheet__avatar--clickable': isEditing }"
+                @click="isEditing ? showSpritePicker = true : undefined"
+              >
+                <img
+                  v-if="resolvedHumanAvatarUrl"
+                  :src="resolvedHumanAvatarUrl"
+                  :alt="characterName"
+                  @error="handleAvatarError"
+                />
                 <span v-else>{{ characterName.charAt(0) }}</span>
               </div>
+
+              <TrainerSpritePicker
+                v-model="editData.avatarUrl"
+                :show="showSpritePicker"
+                @close="showSpritePicker = false"
+              />
               <div class="sheet__title">
                 <div class="form-row">
                   <div class="form-group">
@@ -238,6 +253,7 @@ const emit = defineEmits<{
 }>()
 
 const { getSpriteUrl } = usePokemonSprite()
+const { getTrainerSpriteUrl } = useTrainerSprite()
 
 const isPokemon = computed(() => 'species' in props.character)
 const isEditing = computed(() => props.mode === 'edit')
@@ -279,6 +295,19 @@ const humanTabs = [
 ]
 
 const activeTab = ref('stats')
+const showSpritePicker = ref(false)
+
+// Resolved human avatar URL
+const resolvedHumanAvatarUrl = computed(() => {
+  if (isPokemon.value) return null
+  const key = isEditing.value ? editData.value.avatarUrl : humanData.value.avatarUrl
+  return getTrainerSpriteUrl(key ?? null)
+})
+
+const handleAvatarError = (event: Event) => {
+  const img = event.target as HTMLImageElement
+  img.style.display = 'none'
+}
 
 // Edit data (reactive copy)
 const editData = ref<any>({})
@@ -392,6 +421,15 @@ const isInEncounter = computed(() => {
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+    }
+
+    &--clickable {
+      cursor: pointer;
+      transition: border-color $transition-fast;
+
+      &:hover {
+        border-color: $color-accent-teal;
+      }
     }
 
     .shiny-badge {

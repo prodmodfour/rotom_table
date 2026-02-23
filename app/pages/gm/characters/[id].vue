@@ -35,10 +35,25 @@
     <div v-else-if="character" class="sheet human-sheet">
       <!-- Header -->
       <div class="sheet__header">
-        <div class="sheet__avatar">
-          <img v-if="character.avatarUrl" :src="character.avatarUrl" :alt="character.name" />
+        <div
+          class="sheet__avatar"
+          :class="{ 'sheet__avatar--clickable': isEditing }"
+          @click="isEditing ? showSpritePicker = true : undefined"
+        >
+          <img
+            v-if="resolvedAvatarUrl"
+            :src="resolvedAvatarUrl"
+            :alt="character.name"
+            @error="handleAvatarError"
+          />
           <span v-else>{{ character.name.charAt(0) }}</span>
         </div>
+
+        <TrainerSpritePicker
+          v-model="editData.avatarUrl"
+          :show="showSpritePicker"
+          @close="showSpritePicker = false"
+        />
         <div class="sheet__title">
           <div class="form-row">
             <div class="form-group">
@@ -267,6 +282,8 @@ const router = useRouter()
 const libraryStore = useLibraryStore()
 const { getSpriteUrl } = usePokemonSprite()
 
+const { getTrainerSpriteUrl } = useTrainerSprite()
+
 const characterId = computed(() => route.params.id as string)
 
 // State
@@ -277,6 +294,18 @@ const isEditing = ref(false)
 const saving = ref(false)
 const editData = ref<Partial<HumanCharacter>>({})
 const activeTab = ref('stats')
+const showSpritePicker = ref(false)
+
+// Resolved avatar URL — uses editData when editing for live preview, else character
+const resolvedAvatarUrl = computed(() => {
+  const key = isEditing.value ? editData.value.avatarUrl : character.value?.avatarUrl
+  return getTrainerSpriteUrl(key ?? null)
+})
+
+const handleAvatarError = (event: Event) => {
+  const img = event.target as HTMLImageElement
+  img.style.display = 'none'
+}
 
 // Equipment state (tracked locally for reactivity on equip/unequip)
 const localEquipment = ref<EquipmentSlots>({})
@@ -438,7 +467,8 @@ const saveChanges = async () => {
     img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
+      image-rendering: pixelated;
     }
 
     span {
@@ -448,6 +478,15 @@ const saveChanges = async () => {
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+    }
+
+    &--clickable {
+      cursor: pointer;
+      transition: border-color $transition-fast;
+
+      &:hover {
+        border-color: $color-accent-teal;
+      }
     }
   }
 
