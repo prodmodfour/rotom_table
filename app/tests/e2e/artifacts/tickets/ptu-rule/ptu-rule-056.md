@@ -97,3 +97,11 @@ The manual creation form is a minimal stub. Full character data can only be ente
 - Added `QuickCreatePayload` interface to `app/types/character.ts` with exact field shapes (name, characterType, level, stats, maxHp, currentHp, money, optional location/notes)
 - Replaced `Record<string, unknown>` emit type in QuickCreateForm.vue with `QuickCreatePayload`
 - Updated `createHumanQuick` handler in create.vue to accept `QuickCreatePayload`
+
+### Style delivery fix (2026-02-23, code-review-138)
+
+**H1 — _create-form.scss duplicated across all component compilations** (`aec7187`)
+- `_create-form.scss` contains bare CSS rules but was registered in `additionalData`, which prepends it to every component's SCSS compilation (127 duplications)
+- Removed `@use "~/assets/scss/_create-form.scss" as *;` from `additionalData` in `nuxt.config.ts`
+- Added `'~/assets/scss/_create-form.scss'` to the `css` array for single global delivery
+- Added `@use 'variables' as *;` at top of `_create-form.scss` so variable references resolve independently
