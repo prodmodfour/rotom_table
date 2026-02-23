@@ -106,13 +106,37 @@ const pokemonIds = computed(() => playerStore.pokemonIds)
 // Active encounter detection
 const hasActiveEncounter = computed(() => encounterStore.encounter?.isActive ?? false)
 
-// Poll for active encounters
+// Poll for active encounters with backoff on failure
+const POLL_BASE_INTERVAL = 3000
+const POLL_MAX_INTERVAL = 30000
+const POLL_BACKOFF_THRESHOLD = 5
+
 let pollInterval: ReturnType<typeof setInterval> | null = null
+let pollFailureCount = 0
+
+const getPollInterval = (): number => {
+  if (pollFailureCount < POLL_BACKOFF_THRESHOLD) return POLL_BASE_INTERVAL
+  const backoffFactor = Math.pow(2, pollFailureCount - POLL_BACKOFF_THRESHOLD)
+  return Math.min(POLL_BASE_INTERVAL * backoffFactor, POLL_MAX_INTERVAL)
+}
+
+const restartPolling = () => {
+  if (pollInterval) {
+    clearInterval(pollInterval)
+    pollInterval = null
+  }
+  const interval = getPollInterval()
+  pollInterval = setInterval(checkForActiveEncounter, interval)
+}
 
 const checkForActiveEncounter = async () => {
   try {
     const response = await $fetch<{ data: any[] }>('/api/encounters')
     const activeEncounter = response.data?.find((e: any) => e.isActive)
+
+    // Reset failure counter on success
+    const wasBackedOff = pollFailureCount >= POLL_BACKOFF_THRESHOLD
+    pollFailureCount = 0
 
     if (activeEncounter) {
       if (pollInterval) {
@@ -126,9 +150,19 @@ const checkForActiveEncounter = async () => {
         identify('player', activeEncounter.id, playerStore.characterId)
         joinEncounter(activeEncounter.id)
       }
+    } else if (wasBackedOff) {
+      // Restore normal polling speed after recovery from backoff
+      restartPolling()
     }
   } catch {
-    // Silently continue polling
+    pollFailureCount++
+    // If we just crossed the backoff threshold, restart with longer interval
+    if (pollFailureCount === POLL_BACKOFF_THRESHOLD) {
+      restartPolling()
+    } else if (pollFailureCount > POLL_BACKOFF_THRESHOLD) {
+      // Continue increasing backoff
+      restartPolling()
+    }
   }
 }
 
@@ -145,7 +179,7 @@ const handleSelectCharacter = async (characterId: string, characterName: string)
     // Start polling for encounters
     await checkForActiveEncounter()
     if (!encounterStore.encounter?.isActive) {
-      pollInterval = setInterval(checkForActiveEncounter, 3000)
+      pollInterval = setInterval(checkForActiveEncounter, POLL_BASE_INTERVAL)
     }
   } catch (err: any) {
     alert('Failed to select character: ' + (err.message || 'Unknown error'))
@@ -186,7 +220,7 @@ onMounted(async () => {
     // Check for active encounters
     await checkForActiveEncounter()
     if (!encounterStore.encounter?.isActive) {
-      pollInterval = setInterval(checkForActiveEncounter, 3000)
+      pollInterval = setInterval(checkForActiveEncounter, POLL_BASE_INTERVAL)
     }
   }
 })
