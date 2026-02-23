@@ -17,7 +17,7 @@
             :class="isConnected ? 'player-top-bar__status--connected' : 'player-top-bar__status--disconnected'"
           ></span>
         </div>
-        <button class="player-top-bar__switch" @click="handleSwitchCharacter">
+        <button class="player-top-bar__switch" aria-label="Switch character" @click="handleSwitchCharacter">
           <PhSwap :size="18" />
         </button>
       </header>
