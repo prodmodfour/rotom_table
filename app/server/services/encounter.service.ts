@@ -6,6 +6,7 @@
 import { prisma } from '~/server/utils/prisma'
 import { rollDie } from '~/utils/diceRoller'
 import type { Combatant, Encounter, GridConfig } from '~/types'
+import type { SignificanceTier } from '~/utils/encounterBudget'
 
 // Prisma encounter record type (matches Prisma schema)
 interface EncounterRecord {
@@ -29,6 +30,7 @@ interface EncounterRecord {
   defeatedEnemies: string
   xpDistributed: boolean
   significanceMultiplier: number
+  significanceTier: string
   gridEnabled: boolean
   gridWidth: number
   gridHeight: number
@@ -61,6 +63,7 @@ export interface ParsedEncounter {
   defeatedEnemies: { species: string; level: number; type?: 'pokemon' | 'human' }[]
   xpDistributed: boolean
   significanceMultiplier: number
+  significanceTier: SignificanceTier
   sceneNumber: number // Derived from currentRound for now
   gridConfig: GridConfig | null
   trainerTurnOrder: string[]
@@ -222,6 +225,7 @@ export function buildEncounterResponse(
     defeatedEnemies,
     xpDistributed: record.xpDistributed ?? false,
     significanceMultiplier: record.significanceMultiplier ?? 1.0,
+    significanceTier: (record.significanceTier ?? 'insignificant') as SignificanceTier,
     sceneNumber: 1, // Scene number not stored in DB, default to 1
     gridConfig,
     trainerTurnOrder: options?.trainerTurnOrder ?? JSON.parse(record.trainerTurnOrder || '[]'),

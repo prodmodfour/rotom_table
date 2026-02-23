@@ -372,6 +372,9 @@ export const useEncounterStore = defineStore('encounter', {
       if (data.significanceMultiplier !== undefined) {
         this.encounter.significanceMultiplier = data.significanceMultiplier
       }
+      if (data.significanceTier !== undefined) {
+        this.encounter.significanceTier = data.significanceTier
+      }
       if (data.gridConfig !== undefined) {
         this.encounter.gridConfig = data.gridConfig
       }

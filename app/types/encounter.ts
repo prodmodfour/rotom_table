@@ -12,6 +12,7 @@ import type {
   InjuryState
 } from './combat';
 import type { Pokemon, HumanCharacter, PokemonType } from './character';
+import type { SignificanceTier } from '~/utils/encounterBudget';
 
 // Combatant in encounter (wrapper for Pokemon or Human)
 export interface Combatant {
@@ -137,6 +138,7 @@ export interface Encounter {
 
   // PTU significance multiplier for XP calculation (Core p.460)
   significanceMultiplier: number;
+  significanceTier: SignificanceTier;
 }
 
 // Movement preview for broadcasting to group view
