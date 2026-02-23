@@ -216,25 +216,19 @@ export function useIsometricRendering(options: UseIsometricRenderingOptions) {
   ) => {
     const diamond = getTileDiamondPoints(gridX, gridY, elevation, angle, gridW, gridH, cellSize)
 
-    // Fill
-    ctx.fillStyle = GRID_FILL_COLOR
+    // Build diamond path once, then fill and stroke on the same path
     ctx.beginPath()
     ctx.moveTo(diamond.top.x, diamond.top.y)
     ctx.lineTo(diamond.right.x, diamond.right.y)
     ctx.lineTo(diamond.bottom.x, diamond.bottom.y)
     ctx.lineTo(diamond.left.x, diamond.left.y)
     ctx.closePath()
+
+    ctx.fillStyle = GRID_FILL_COLOR
     ctx.fill()
 
-    // Outline
     ctx.strokeStyle = GRID_LINE_COLOR
     ctx.lineWidth = GRID_LINE_WIDTH
-    ctx.beginPath()
-    ctx.moveTo(diamond.top.x, diamond.top.y)
-    ctx.lineTo(diamond.right.x, diamond.right.y)
-    ctx.lineTo(diamond.bottom.x, diamond.bottom.y)
-    ctx.lineTo(diamond.left.x, diamond.left.y)
-    ctx.closePath()
     ctx.stroke()
 
     // Coordinate label (only at large cells to avoid clutter)
