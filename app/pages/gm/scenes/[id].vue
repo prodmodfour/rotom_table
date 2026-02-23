@@ -625,11 +625,18 @@ const handlePositionUpdate = async (type: 'pokemon' | 'character' | 'group', id:
 }
 
 // Start encounter from scene
-const handleStartEncounter = async (options: { battleType: 'trainer' | 'full_contact' }) => {
+const handleStartEncounter = async (options: {
+  battleType: 'trainer' | 'full_contact'
+  significanceMultiplier: number
+  significanceTier: string
+}) => {
   if (!scene.value) return
   startingEncounter.value = true
   try {
-    await encounterStore.createFromScene(scene.value.id, options.battleType)
+    await encounterStore.createFromScene(scene.value.id, options.battleType, {
+      multiplier: options.significanceMultiplier,
+      tier: options.significanceTier
+    })
     showStartEncounterModal.value = false
     router.push('/gm')
   } catch (error) {
