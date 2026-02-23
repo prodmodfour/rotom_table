@@ -52,7 +52,7 @@ export const TRAINER_CLASSES: TrainerClassDef[] = [
   { name: 'Cheerleader', category: 'Battling Style', associatedSkills: ['Charm'], description: 'Motivates Pokemon to victory through belief' },
   { name: 'Duelist', category: 'Battling Style', associatedSkills: ['Focus'], description: 'Gains momentum over time in battle' },
   { name: 'Enduring Soul', category: 'Battling Style', associatedSkills: ['Athletics', 'Focus'], description: 'Pokemon shake off injuries through tenacity' },
-  { name: 'Juggler', category: 'Battling Style', associatedSkills: ['Acrobatics'], description: 'Quickly cycles through Pokemon team' },
+  { name: 'Juggler', category: 'Battling Style', associatedSkills: ['Acrobatics', 'Guile'], description: 'Quickly cycles through Pokemon team' },
   { name: 'Rider', category: 'Battling Style', associatedSkills: ['Acrobatics', 'Athletics'], description: 'Fights mounted on Pokemon' },
   { name: 'Taskmaster', category: 'Battling Style', associatedSkills: ['Intimidate'], description: 'Brutal training at any cost' },
   { name: 'Trickster', category: 'Battling Style', associatedSkills: ['Guile'], description: 'Outwits opponents with Status Moves' },
@@ -71,7 +71,7 @@ export const TRAINER_CLASSES: TrainerClassDef[] = [
 
   // --- Fighter ---
   { name: 'Athlete', category: 'Fighter', associatedSkills: ['Athletics'], description: 'Physically fit Trainer combatant' },
-  { name: 'Dancer', category: 'Fighter', associatedSkills: ['Acrobatics', 'Charm'], description: 'Graceful combat through dance' },
+  { name: 'Dancer', category: 'Fighter', associatedSkills: ['Acrobatics', 'Athletics', 'Charm'], description: 'Graceful combat through dance' },
   { name: 'Hunter', category: 'Fighter', associatedSkills: ['Stealth', 'Survival'], description: 'Tracks and captures quarry' },
   { name: 'Martial Artist', category: 'Fighter', associatedSkills: ['Combat'], description: 'Hand-to-hand fighter', isBranching: true },
   { name: 'Musician', category: 'Fighter', associatedSkills: ['Charm', 'Focus'], description: 'Fights with musical abilities' },
