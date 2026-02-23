@@ -21,10 +21,10 @@
           <span class="encounter-header__turn-label">Current Turn:</span>
           <span class="encounter-header__turn-name">{{ getCombatantName(currentCombatant) }}</span>
         </div>
-        <div v-if="isMyTurn" class="encounter-header__my-turn">
-          Your Turn
-        </div>
       </div>
+
+      <!-- Combat Action Panel (shown when it is the player's turn) -->
+      <PlayerCombatActions v-if="isMyTurn" />
 
       <!-- Combatants by Side -->
       <div class="encounter-sides">
@@ -187,23 +187,6 @@ const isMyTurn = computed(() => {
     color: $color-text;
   }
 
-  &__my-turn {
-    margin-top: $spacing-xs;
-    padding: $spacing-xs $spacing-sm;
-    background: rgba($color-accent-scarlet, 0.15);
-    border: 1px solid rgba($color-accent-scarlet, 0.4);
-    border-radius: $border-radius-md;
-    color: $color-accent-scarlet;
-    font-weight: 700;
-    font-size: $font-size-sm;
-    text-align: center;
-    animation: pulse-turn 2s ease-in-out infinite;
-  }
-}
-
-@keyframes pulse-turn {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
 }
 
 .encounter-sides {
