@@ -8,123 +8,79 @@ domain: combat
 commits_reviewed:
   - d0ab030
   - 126879e
-files_reviewed:
-  - app/server/api/encounters/[id]/calculate-damage.post.ts
-  - app/composables/useMoveCalculation.ts
-  - app/utils/equipmentBonuses.ts
-  - app/constants/equipment.ts
-  - books/markdown/core/09-gear-and-items.md
+mechanics_verified:
+  - helmet-conditional-dr
+  - dr-stacking
+  - server-client-parity
 verdict: APPROVED
 issues_found:
   critical: 0
   high: 0
   medium: 0
+ptu_refs:
+  - 09-gear-and-items.md#page-293
+  - 07-combat.md#page-244
+  - errata-2.md
 reviewed_at: 2026-02-23T06:30:00Z
 follows_up: null
 ---
 
-## Review Scope
+## Mechanics Verified
 
-Verifying that the helmet conditional DR fix matches PTU 1.05 rules (p.293) and that server/client parity is restored for this mechanic.
+### 1. Helmet Conditional DR Value
+- **Rule:** "The user gains 15 Damage Reduction against Critical Hits. The user resists the Moves Headbutt and Zen Headbutt and can't be flinched by these Moves." (`09-gear-and-items.md` p.293, lines 1684-1686)
+- **Implementation:** Equipment catalog defines `conditionalDR: { amount: 15, condition: 'Critical Hits only' }` (`app/constants/equipment.ts` line 39). The `computeEquipmentBonuses()` utility collects this into the `conditionalDR[]` array (`app/utils/equipmentBonuses.ts` lines 53-55). Both server and client iterate this array and match on `cdr.condition === 'Critical Hits only'` to add `cdr.amount` (15) to DR.
+- **Status:** CORRECT
 
-## PTU Rule Reference
+### 2. Conditional Trigger (Critical Hits Only)
+- **Rule:** "15 Damage Reduction against Critical Hits" -- the DR is conditional, only applying on critical hit attacks (`09-gear-and-items.md` p.293)
+- **Implementation:** Server (`calculate-damage.post.ts` line 184): `if (body.isCritical && targetEquipBonuses)`. Client (`useMoveCalculation.ts` line 451): `if (isCriticalHit.value)`. Both correctly gate helmet DR behind the critical hit flag. Non-critical hits receive no helmet DR.
+- **Status:** CORRECT
 
-**PTU p.293 (09-gear-and-items.md line 1684-1687):**
-> Helmet
-> The user gains 15 Damage Reduction against Critical Hits. The user resists the Moves Headbutt and Zen Headbutt and can't be flinched by these Moves.
-> $2,250
+### 3. DR Stacking (Armor + Helmet)
+- **Rule:** PTU p.293 lists Helmet as head equipment and body armor as body equipment -- different equipment slots. The damage formula (07-combat.md p.244, step 7) says "Subtract relevant defense stat and damage reduction" as a single aggregated subtraction. There is no rule text prohibiting stacking DR from different equipment items. Errata-2 revises armor DR values but does NOT modify Helmet or introduce stacking restrictions.
+- **Implementation:** Server resolves `effectiveDR` from equipment base DR (armor), then independently adds helmet conditional DR on crits: `effectiveDR = (effectiveDR ?? 0) + cdr.amount`. Client does the same: `equipmentDR = equipBonuses.damageReduction` then `equipmentDR += cdr.amount`. For Light Armor (5 DR) + Helmet on a crit: both produce 5 + 15 = 20 DR. On a non-crit: both produce 5 DR.
+- **Status:** CORRECT
 
-Key properties:
-1. **15 Damage Reduction** -- flat DR value
-2. **Against Critical Hits only** -- conditional, only applies on crits
-3. **Stacks with other equipment** -- PTU does not state Helmet DR replaces other DR sources. DR from different equipment items stacks additively (Armor DR + Helmet DR on a crit)
-4. **No cap mentioned** -- there is no rule stating a DR cap that would prevent stacking
+### 4. DR Stacking (Manual Override + Helmet)
+- **Rule:** Manual DR override is a GM convenience feature (not a PTU mechanic). The Helmet rule says "15 Damage Reduction against Critical Hits" unconditionally -- there is no exception for "unless DR comes from a manual override." The GM can always adjust the manual DR value if they want to account for helmet DR themselves, but the system should not silently drop it.
+- **Implementation (pre-fix, BROKEN):** The helmet check was nested inside `if (effectiveDR === undefined && targetEquipBonuses)`, meaning when the GM provided `body.damageReduction`, `effectiveDR` was defined, so the entire block -- including the helmet check -- was skipped.
+- **Implementation (post-fix, CORRECT):** The helmet check is now its own independent block at lines 182-190: `if (body.isCritical && targetEquipBonuses)`. This runs regardless of whether `effectiveDR` came from manual override or equipment computation. The `(effectiveDR ?? 0)` pattern safely handles the edge case where no prior DR exists.
+- **Status:** CORRECT
 
-## Rule Compliance Verification
+### 5. Human-Only Application
+- **Rule:** Pokemon do not wear Trainer equipment in PTU. Equipment is a Trainer-only system (09-gear-and-items.md p.286).
+- **Implementation:** Server: `targetEquipBonuses` is `null` for Pokemon (line 176-178: only computed when `target.type === 'human'`). The helmet DR block guards with `&& targetEquipBonuses`, so Pokemon targets never receive helmet DR. Client: `target.type === 'human'` guard at line 445.
+- **Status:** CORRECT
 
-### 1. Helmet DR Value: CORRECT
+### 6. Server/Client Parity
+- **Rule:** The server endpoint (`calculate-damage.post.ts`) and client composable (`useMoveCalculation.ts`) should produce identical damage results for the same inputs.
+- **Implementation:** Before the fix, the server silently dropped helmet DR when a manual override was provided, while the client (which has no manual override concept) always applied it. After the fix, both paths consistently apply helmet DR on crits for human targets with a helmet equipped. The manual override path exists only on the server (GM API feature), which is correct by design.
+- **Status:** CORRECT -- parity restored
 
-Equipment catalog (`app/constants/equipment.ts` line 39):
-```typescript
-conditionalDR: { amount: 15, condition: 'Critical Hits only' }
-```
-Matches PTU p.293: "15 Damage Reduction against Critical Hits."
+### 7. Errata Check
+- **Rule:** Errata-2 revises some DR sources: Light Armor split into Physical/Special variants (5 DR each), Heavy Armor reduced to 5 DR. However, the errata makes NO changes to Helmet.
+- **Implementation:** The codebase uses the core rulebook value for Helmet (15 DR vs critical hits). No errata override needed.
+- **Status:** CORRECT -- errata does not affect this mechanic
 
-### 2. Conditional Trigger (Critical Hits Only): CORRECT
+## Summary
 
-**Server (calculate-damage.post.ts lines 184-189):**
-```typescript
-if (body.isCritical && targetEquipBonuses) {
-  for (const cdr of targetEquipBonuses.conditionalDR) {
-    if (cdr.condition === 'Critical Hits only') {
-      effectiveDR = (effectiveDR ?? 0) + cdr.amount
-    }
-  }
-}
-```
+The fix correctly addresses the bug where helmet conditional DR (+15 on critical hits) was skipped when the GM provided a manual `damageReduction` override via the server API. The root cause was structural: the helmet check was nested inside the equipment-only DR branch, so it was unreachable when the manual override path was taken.
 
-**Client (useMoveCalculation.ts lines 451-456):**
-```typescript
-if (isCriticalHit.value) {
-  for (const cdr of equipBonuses.conditionalDR) {
-    if (cdr.condition === 'Critical Hits only') {
-      equipmentDR += cdr.amount
-    }
-  }
-}
-```
+The fix separates the helmet conditional DR into its own independent block that runs regardless of how base DR was resolved. The `(effectiveDR ?? 0)` pattern safely handles the edge case where no prior DR exists at all.
 
-Both correctly gate on the critical hit flag. Both iterate through conditional DR entries and match on the condition string. Both add the amount additively on top of existing DR.
+The PTU rulebook (p.293) states "The user gains 15 Damage Reduction against Critical Hits" with no exceptions or stacking restrictions. The errata does not modify this rule. The implementation now correctly reflects this unconditional application.
 
-### 3. DR Stacking Behavior: CORRECT
+## Rulings
 
-PTU does not prohibit stacking DR from different equipment sources. A character wearing both Light Armor (5 DR) and a Helmet should receive:
-- Non-crit: 5 DR (armor only)
-- Crit: 5 + 15 = 20 DR (armor + helmet)
-
-**Server behavior after fix:**
-- `effectiveDR` = `equipBonuses.damageReduction` (5 from armor)
-- Helmet block adds 15 on crit: `effectiveDR` = 20
-
-**Client behavior (unchanged):**
-- `equipmentDR` = `equipBonuses.damageReduction` (5 from armor)
-- Helmet block adds 15 on crit: `equipmentDR` = 20
-
-Both produce 20 DR. CORRECT.
-
-### 4. Manual DR Override + Helmet Stacking: CORRECT
-
-The fix's key change is that when a GM provides a manual DR override (e.g., body.damageReduction = 10 for a custom scenario), the helmet +15 still applies on a crit. This is the correct behavior because:
-- The manual override replaces the base equipment DR (GM judgment call)
-- The helmet conditional DR is a separate conditional effect that should still trigger
-- PTU has no rule suggesting a manual DR adjustment should suppress equipment conditional effects
-- The GM can always set manual DR to account for the helmet if they want, but the system should not silently drop it
-
-### 5. Human-Only Application: CORRECT
-
-Both server and client correctly restrict equipment processing to human characters only:
-- Server: `target.type === 'human'` guard for computing `targetEquipBonuses` (line 176)
-- Client: `target.type === 'human'` guard at line 445
-
-Pokemon do not wear equipment in PTU. This is correct.
-
-### 6. Server/Client Parity: RESTORED
-
-Before the fix, there was a parity gap:
-- Server: manual DR override caused helmet DR to be silently dropped
-- Client: no manual override concept, helmet DR always applied
-
-After the fix, both paths consistently apply helmet DR on crits regardless of the DR source. The manual override path exists only on the server (GM API feature), which is correct by design -- the client computes damage locally for display, while the server is authoritative for applied damage.
-
-## What Looks Good
-
-1. The fix correctly separates the unconditional equipment DR (armor) from the conditional equipment DR (helmet on crits) into independent evaluation blocks.
-2. The condition string matching (`'Critical Hits only'`) is consistent across catalog, server, and client.
-3. The fix preserves the existing rule compliance for all non-helmet equipment (armor, shields, focus items) -- no regressions.
+1. **Helmet DR is unconditional on critical hits.** PTU p.293 does not restrict or exclude stacking with other DR sources. The fix correctly stacks helmet DR on top of both manual override and equipment-based DR.
+2. **The errata does not modify Helmet.** While the errata revises Light Armor and Heavy Armor DR values, Helmet is untouched. The 15 DR value and critical-hit-only condition stand as written in the core rulebook.
+3. **Conditional DR is additive.** The PTU damage formula (07-combat.md p.244, step 7) subtracts total DR as a single value. Helmet's conditional DR adds to any existing DR -- it does not replace it.
+4. **Manual DR override does not suppress equipment conditional effects.** The manual override replaces base equipment DR (GM judgment), but conditional effects like Helmet should still trigger independently.
 
 ## Verdict
 
-**APPROVED.** The fix correctly implements PTU p.293 helmet DR mechanics. Helmet +15 DR on critical hits now stacks properly with both equipment-derived DR and manual GM overrides. Server/client parity is restored.
+**APPROVED.** The fix correctly implements PTU p.293 helmet DR mechanics. Helmet +15 DR on critical hits now stacks properly with both equipment-derived DR and manual GM overrides. Server/client parity is restored. No game logic issues found.
 
 ## Required Changes
 
