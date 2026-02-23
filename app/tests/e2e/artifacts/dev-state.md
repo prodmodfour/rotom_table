@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-02-23T10:20:00
-updated_by: slave-collector (plan-20260223-095000)
+last_updated: 2026-02-23T11:30:00
+updated_by: slave-collector (plan-20260223-104924)
 ---
 
 # Dev Ecosystem State
@@ -31,9 +31,9 @@ updated_by: slave-collector (plan-20260223-095000)
 ### Feature Tickets (`tickets/feature/`)
 | Ticket | Priority | Status | Summary | Design Complexity |
 |--------|----------|--------|---------|-------------------|
-| feature-001 | P3 | **P0-CHANGES_REQUIRED** | B2W2 trainer sprites — P0 reviewed: code-review-143 CHANGES_REQUIRED (C1: props crash, H1: file size, M1-M3), rules-review-133 APPROVED. Needs fix cycle | single-phase |
-| feature-002 | P2 | **P0-fixed** | 3D isometric grid — P0 fix cycle complete (9 commits: C1+H1-H4+M1-M3 from code-review-140). Needs re-review | multi-phase |
-| feature-003 | P1 | **P0-fixed** | Player View — P0 Track A fix cycle complete (9 commits: C1+H1-H3+M1-M4 from code-review-139). Needs re-review | multi-phase-parallel |
+| feature-001 | P3 | **P0-fixed** | B2W2 trainer sprites — P0 fix cycle complete (6 commits: C1+M1-M3 from code-review-143). Needs re-review | single-phase |
+| feature-002 | P2 | **P0-APPROVED** | 3D isometric grid — P0 APPROVED. code-review-145 APPROVED, rules-review-135 APPROVED. Ready for P1 | multi-phase |
+| feature-003 | P1 | **P0-APPROVED** | Player View — P0 Track A APPROVED. code-review-144 APPROVED (M1 non-blocking → refactoring-076), rules-review-134 APPROVED. Ready for P1 | multi-phase-parallel |
 
 ### UX Tickets (`tickets/ux/`)
 | Ticket | Priority | Status | Summary |
@@ -43,23 +43,30 @@ updated_by: slave-collector (plan-20260223-095000)
 
 ## Active Developer Work
 
-**Current task:** Slave collection for plan-20260223-095000 completed — 3 slaves merged (20 commits total).
+**Current task:** Slave collection for plan-20260223-104924 completed — 3 slaves merged (10 commits total).
 
-**Session 20 (2026-02-23):**
-- feature-003 P0 fix cycle complete (slave-1, 9 commits) — C1 WS listener, H1 SCSS extraction, H2 evasion bonus, H3 polling backoff, M1-M4 from code-review-139. Needs re-review
-- feature-002 P0 fix cycle complete (slave-2, 9 commits) — C1 EncounterRecord type safety, H1-H4 validation/templates/cleanup/bounding-box, M1-M3 from code-review-140. Needs re-review
-- feature-001 P0 reviewed (slave-3, 2 commits) — code-review-143 CHANGES_REQUIRED (C1: props crash, H1: file size, M1-M3), rules-review-133 APPROVED
+**Session 21 (2026-02-23):**
+- feature-001 P0 fix cycle complete (slave-1, 6 commits) — C1 defineProps crash, M1 deliberate-invocation comments, M2 avatar error handling standardization (12 files), M3 app-surface update from code-review-143. Needs re-review
+- feature-003 P0 Track A re-review APPROVED (slave-2) — code-review-144 APPROVED (M1 non-blocking: 1px font regression → refactoring-076), rules-review-134 APPROVED
+- feature-002 P0 re-review APPROVED (slave-3) — code-review-145 APPROVED, rules-review-135 APPROVED
 
 **Next actions (by priority):**
-1. **Re-review** feature-003 P0 fix cycle (9 commits from code-review-139 fixes)
-2. **Re-review** feature-002 P0 fix cycle (9 commits from code-review-140 fixes)
-3. **Fix** feature-001 P0 C1+M1-M3 from code-review-143 (props crash, double invocation, avatar error handling, app-surface)
-4. feature-003 P1 Track A (remaining tiers — after re-review passes)
-5. feature-002 P1 (token interaction + movement — after re-review passes)
-6. ptu-rule-060 P2 (budget warnings)
-7. ptu-rule-081 P4, ptu-rule-082 P4
+1. **Implement** feature-003 P1 Track A (player view remaining tiers — P0 APPROVED)
+2. **Implement** feature-002 P1 (isometric token interaction + movement — P0 APPROVED)
+3. **Re-review** feature-001 P0 fix cycle (6 commits from code-review-143 fixes)
+4. feature-003 P1 Track B/C (after P1 Track A)
+5. feature-001 P1 (after re-review passes — if multi-tier)
+6. ptu-rule-081 P4, ptu-rule-082 P4
 
 ## Review Status
+
+### Session 21 Reviews
+| Review ID | Target | Verdict | Reviewer | Date |
+|-----------|--------|---------|----------|------|
+| code-review-144 | feature-003 P0 fix cycle re-review | APPROVED | senior-reviewer | 2026-02-23 |
+| rules-review-134 | feature-003 P0 fix cycle re-review | APPROVED | game-logic-reviewer | 2026-02-23 |
+| code-review-145 | feature-002 P0 fix cycle re-review | APPROVED | senior-reviewer | 2026-02-23 |
+| rules-review-135 | feature-002 P0 fix cycle re-review | APPROVED | game-logic-reviewer | 2026-02-23 |
 
 ### Session 19 Reviews
 | Review ID | Target | Verdict | Reviewer | Date |
@@ -169,6 +176,7 @@ updated_by: slave-collector (plan-20260223-095000)
 | refactoring-073 | P4 | open | Add server-side validation for significanceTier string values (from code-review-141 M2) |
 | refactoring-074 | P4 | open | Consolidate duplicate SIGNIFICANCE_PRESETS arrays (from rules-review-131 observation) |
 | refactoring-075 | P4 | open | Extract CombatantConditionsSection from GMActionModal.vue (803 lines, from code-review-143 H1) |
+| refactoring-076 | P4 | open | Restore 9px font-size for PokemonCard stat cell labels (from code-review-144 M1) |
 
 ## Code Health
 
@@ -176,11 +184,11 @@ updated_by: slave-collector (plan-20260223-095000)
 |--------|-------|
 | Last audited | 2026-02-18T12:00:00 |
 | Open tickets (P0) | 0 |
-| Open tickets (P1) | 1 (feature-003 — P0-fixed, needs re-review) |
-| Open tickets (P2) | 1 (feature-002 — P0-fixed, needs re-review) |
-| Open tickets (P3) | 1 (feature-001 — P0-CHANGES_REQUIRED, needs fix cycle) |
-| Open tickets (P4) | 19 (refactoring-059–075 excl resolved + ptu-rule-081, 082 + ux-001, 002) |
-| Total open | 22 |
+| Open tickets (P1) | 1 (feature-003 — P0-APPROVED, ready for P1) |
+| Open tickets (P2) | 1 (feature-002 — P0-APPROVED, ready for P1) |
+| Open tickets (P3) | 1 (feature-001 — P0-fixed, needs re-review) |
+| Open tickets (P4) | 20 (refactoring-059–076 excl resolved + ptu-rule-081, 082 + ux-001, 002) |
+| Total open | 23 |
 | Total resolved | 150 |
 
 ## Session Summary (2026-02-20, session 13)
@@ -343,3 +351,17 @@ updated_by: slave-collector (plan-20260223-095000)
 **Net movement:** 21→22 open (+1 net: +1 new refactoring ticket)
 
 **All P0 tickets remain at 0.**
+
+## Session Summary (2026-02-23, session 21 — plan-20260223-104924)
+
+**Slave collection plan-20260223-104924:** 3 slaves merged (10 commits total, 0 conflicts)
+- **slave-1** (developer): feature-001 P0 fix cycle — 6 commits (defineProps crash fix, deliberate-invocation comments, avatar error handling standardization across 12 files via reactive null-out, app-surface update, ticket resolution log)
+- **slave-2** (reviewers): feature-003 P0 fix cycle re-review — code-review-144 APPROVED (M1: 1px font regression → refactoring-076) + rules-review-134 APPROVED → **P0 APPROVED**
+- **slave-3** (reviewers): feature-002 P0 fix cycle re-review — code-review-145 APPROVED + rules-review-135 APPROVED → **P0 APPROVED**
+
+**Tickets filed:** 1 (refactoring-076 — PokemonCard stat cell font-size from code-review-144 M1)
+**Tickets resolved:** 0
+**Reviews completed:** 4 artifacts (code-review-144, rules-review-134, code-review-145, rules-review-135)
+**Net movement:** 22→23 open (+1 net: +1 new refactoring ticket)
+
+**All P0 tickets remain at 0. feature-003 and feature-002 are now APPROVED and ready for P1 implementation.**

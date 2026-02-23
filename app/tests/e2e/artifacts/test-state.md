@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-02-23T10:20:00
-updated_by: slave-collector (plan-20260223-095000)
+last_updated: 2026-02-23T11:30:00
+updated_by: slave-collector (plan-20260223-104924)
 ---
 
 # Matrix Ecosystem State
@@ -80,10 +80,16 @@ All 8 domains are stale due to sessions 5–13 code changes. Re-mapping is now u
 - **vtt-grid:** feature-002 P0 fix cycle — EncounterRecord isometric fields, server-side validation, template endpoint propagation, contextmenu Vue directive, bounding box fix, dead animation removal, sorted cell cache, canvas path optimization
 - **character-lifecycle:** feature-001 P0 reviewed — code-review-143 CHANGES_REQUIRED, rules-review-133 APPROVED (no code changes, just review artifacts)
 
+## Session 21 Changes (additional staleness)
+
+- **character-lifecycle:** feature-001 P0 fix cycle — defineProps crash fix in HumanCard.vue, avatar error handling standardized to reactive null-out across 12 files (HumanCard, CharacterModal, PlayerLobbyView, gm/characters/[id], gm/create, QuickCreateForm, GMActionModal, InitiativeTracker, VTTToken, CombatantDetailsPanel), app-surface.md update
+- **player-view:** feature-003 P0 APPROVED — no code changes, review artifacts only (code-review-144, rules-review-134)
+- **vtt-grid:** feature-002 P0 APPROVED — no code changes, review artifacts only (code-review-145, rules-review-135)
+
 ## Recommended Next Steps
 
-1. Re-map all 8 domains + add player-view domain — sessions 12-20 added major new capabilities
-2. Re-review feature-003 P0 fix cycle (9 commits from code-review-139 fixes)
-3. Re-review feature-002 P0 fix cycle (9 commits from code-review-140 fixes)
-4. Fix feature-001 P0 C1+M1-M3 from code-review-143 (props crash, double invocation, avatar error handling, app-surface)
-5. Continue feature P1 tiers after re-reviews pass
+1. Re-map all 8 domains + add player-view domain — sessions 12-21 added major new capabilities
+2. Re-review feature-001 P0 fix cycle (6 commits from code-review-143 fixes)
+3. Implement feature-003 P1 Track A (P0 APPROVED)
+4. Implement feature-002 P1 (P0 APPROVED)
+5. Continue feature P1 tiers

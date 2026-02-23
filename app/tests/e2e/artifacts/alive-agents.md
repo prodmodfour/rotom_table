@@ -55,3 +55,6 @@
 | plan-20260223-095000/slave-1 | developer | feature-003-p0-fix | success | 2026-02-23T10:11:00Z | 2340554, 818f479, b8bc03c, 41c25f8, 37f80d5, 430f96a, dc1f21e, 698e479, c04921c |
 | plan-20260223-095000/slave-2 | developer | feature-002-p0-fix | success | 2026-02-23T10:07:00Z | 91ae123, 5ff32c8, 0e60ba6, d64341b, 07a7319, d4b5948, aaa3b7c, e87c5e5, 352575d |
 | plan-20260223-095000/slave-3 | reviewers | feature-001-p0-review | CHANGES_REQUIRED | 2026-02-23T10:12:00Z | 2470daf, 27d880d |
+| plan-20260223-104924/slave-1 | developer | feature-001-fix | success | 2026-02-23T10:58:04Z | 477547f, 2cb1710, e1c2562, ae3ac24, cca2210, 0757f5c |
+| plan-20260223-104924/slave-2 | reviewers | feature-003-fix-rereview | APPROVED | 2026-02-23T11:00:00Z | cb52cd31, 31fa10e5 |
+| plan-20260223-104924/slave-3 | reviewers | feature-002-fix-rereview | APPROVED | 2026-02-23T11:01:00Z | 33a4adee, 7ba17a7c |
