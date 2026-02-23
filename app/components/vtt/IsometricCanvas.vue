@@ -8,6 +8,7 @@
     @mousemove="handleMouseMove"
     @mouseup="handleMouseUp"
     @mouseleave="handleMouseUp"
+    @contextmenu.prevent
   >
     <canvas
       ref="canvasRef"
@@ -242,8 +243,6 @@ onMounted(() => {
 
   window.addEventListener('resize', rendering.scheduleRender)
   window.addEventListener('keydown', handleKeyDown)
-  // Prevent context menu on right-click (used for panning)
-  containerRef.value?.addEventListener('contextmenu', (e) => e.preventDefault())
 })
 
 onUnmounted(() => {
