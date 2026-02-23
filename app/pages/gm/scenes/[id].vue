@@ -220,7 +220,7 @@ const budgetInfo = computed(() => {
   // Filter to PC trainers only -- PTU p.473 uses 'number of player trainers', not all characters
   const sceneCharIds = scene.value.characters.map(c => c.characterId)
   const playerCharIds = sceneCharIds.filter(id =>
-    allCharacters.value.find(c => c.id === id)?.characterType === 'pc'
+    allCharacters.value.find(c => c.id === id)?.characterType === 'player'
   )
   const playerCount = playerCharIds.length
   if (playerCount === 0) return undefined
