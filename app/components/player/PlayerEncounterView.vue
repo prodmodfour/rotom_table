@@ -109,7 +109,7 @@ const isMyTurn = computed(() => {
 <style lang="scss" scoped>
 .player-encounter {
   padding: $spacing-md;
-  padding-bottom: 72px; // Clear bottom nav
+  padding-bottom: $player-nav-clearance;
 }
 
 .encounter-waiting {

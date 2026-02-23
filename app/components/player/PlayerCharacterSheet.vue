@@ -281,7 +281,7 @@ const equipmentSlots = computed(() => {
   flex-direction: column;
   gap: $spacing-sm;
   padding: $spacing-md;
-  padding-bottom: 72px; // Clear bottom nav
+  padding-bottom: $player-nav-clearance;
 
   &__header {
     background: $glass-bg;

@@ -28,7 +28,7 @@ defineProps<{
 <style lang="scss" scoped>
 .player-pokemon-team {
   padding: $spacing-md;
-  padding-bottom: 72px; // Clear bottom nav
+  padding-bottom: $player-nav-clearance;
 }
 
 .team-empty {

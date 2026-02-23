@@ -6,12 +6,6 @@
 // Import via nuxt.config.ts css array.
 
 // ===========================================
-// Player Nav Clearance
-// ===========================================
-// Bottom nav is 56px + safe-area-inset. 72px provides nav + buffer.
-$player-nav-clearance: 72px;
-
-// ===========================================
 // Type Badge Colors (18 types)
 // ===========================================
 // Used by PlayerPokemonCard, PlayerMoveList, PlayerCombatantInfo

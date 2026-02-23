@@ -200,3 +200,9 @@ $spacing-4k-xl: 3rem;
 
 // 4K breakpoint (3840px width)
 $breakpoint-4k: 3000px;
+
+// ===========================================
+// Player View Layout
+// ===========================================
+// Bottom nav is 56px + safe-area-inset. 72px provides nav + buffer.
+$player-nav-clearance: 72px;
