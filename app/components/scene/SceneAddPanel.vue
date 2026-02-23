@@ -40,6 +40,7 @@
             class="add-item"
             @click="emit('add-character', char)"
           >
+            <!-- deliberate: lightweight function in v-for, no per-item computed available -->
             <div class="add-item__avatar">
               <img v-if="getTrainerSpriteUrl(char.avatarUrl)" :src="getTrainerSpriteUrl(char.avatarUrl)!" :alt="char.name" />
               <PhUser v-else :size="20" />

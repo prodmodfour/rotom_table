@@ -78,6 +78,7 @@
               :class="{ 'entity-item--selected': selectedId === human.id }"
               @click="selectEntity(human.id, 'human')"
             >
+              <!-- deliberate: lightweight function in v-for, no per-item computed available -->
               <div class="entity-item__avatar">
                 <img v-if="getTrainerSpriteUrl(human.avatarUrl)" :src="getTrainerSpriteUrl(human.avatarUrl)!" :alt="human.name" />
                 <span v-else>{{ human.name.charAt(0) }}</span>
