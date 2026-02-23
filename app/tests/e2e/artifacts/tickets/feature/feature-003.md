@@ -114,6 +114,38 @@ Functional scaffolding exists at `/player` — encounter display with combatant 
 - `app/composables/useWebSocket.ts` (characterId in identify())
 - `app/types/api.ts` (PlayerActionRequest, characterId in identify)
 
+### Track A: Core Player View (P0 Fix Cycle — code-review-139)
+
+| Date | Commit | Description |
+|------|--------|-------------|
+| 2026-02-23 | 2340554 | M1: Move `PlayerTab` type to `types/player.ts` — extracted from SFC export |
+| 2026-02-23 | 818f479 | H1: Extract duplicated SCSS to shared `_player-view.scss` — type badges, stat cells, HP bar, status badges |
+| 2026-02-23 | b8bc03c | M4: Extract `$player-nav-clearance` SCSS variable — replace hardcoded 72px in 3 components |
+| 2026-02-23 | 41c25f8 | H2: Pass equipment evasion bonus to `calculateEvasion()` — uses `computeEquipmentBonuses()` |
+| 2026-02-23 | 37f80d5 | C1: Wire `character_update` WebSocket listener — calls `refreshCharacterData()` on entity match |
+| 2026-02-23 | 430f96a | H3: Add exponential backoff to encounter polling — 5 failures triggers 3s->6s->12s->cap 30s |
+| 2026-02-23 | dc1f21e | M2: Add `aria-label="Switch character"` to icon-only button |
+| 2026-02-23 | 698e479 | M3: Replace `alert()` with inline error for character selection failures |
+
+**Files created (2):**
+- `app/types/player.ts`
+- `app/assets/scss/components/_player-view.scss`
+
+**Files modified (10):**
+- `app/types/index.ts` (added player.ts re-export)
+- `app/nuxt.config.ts` (added _player-view.scss to css array)
+- `app/assets/scss/_variables.scss` (added $player-nav-clearance)
+- `app/pages/player/index.vue` (C1, H3, M2, M3 fixes)
+- `app/components/player/PlayerNavBar.vue` (M1: import type from types/)
+- `app/components/player/PlayerCharacterSheet.vue` (H1, H2, M4 fixes)
+- `app/components/player/PlayerPokemonCard.vue` (H1: removed duplicated SCSS)
+- `app/components/player/PlayerMoveList.vue` (H1: removed duplicated SCSS)
+- `app/components/player/PlayerCombatantInfo.vue` (H1: removed duplicated SCSS)
+- `app/components/player/PlayerPokemonTeam.vue` (M4: use SCSS variable)
+- `app/components/player/PlayerEncounterView.vue` (M4: use SCSS variable)
+
+**All 8 issues from code-review-139 resolved:** 1 CRITICAL, 3 HIGH, 4 MEDIUM.
+
 ### Track B: Infrastructure / Remote Access (Design Phase)
 
 | Date | Commit | Description |
