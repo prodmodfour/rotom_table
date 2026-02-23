@@ -50,6 +50,7 @@ See `design-trainer-sprites-001.md` for the full design document.
 |------|--------|---------|
 | 2026-02-22 | Design spec written | `design-trainer-sprites-001.md` covering sprite source, composable, picker component, and 17 integration points |
 | 2026-02-23 | P0 implementation | Branch `slave/6-dev-feature-001-p0-20260223-085530` |
+| 2026-02-23 | P0 fix cycle | Branch `slave/1-dev-feature-001-fix-20260223-104924` — code-review-143 CHANGES_REQUIRED fixes (C1, M1, M2, M3). H1 deferred to refactoring-075 |
 
 ### P0 Commits
 
@@ -62,3 +63,13 @@ See `design-trainer-sprites-001.md` for the full design document.
 | `76fb481` | feat: integrate TrainerSpritePicker into character editing views |
 | `9d56757` | feat: update avatar rendering to use trainer sprite resolution |
 | `3393ffd` | feat: update remaining avatar displays to use trainer sprite resolution |
+
+### P0 Fix Cycle Commits (code-review-143)
+
+| Hash | Message |
+|------|---------|
+| `477547f` | fix: assign defineProps return value in HumanCard to prevent runtime crash |
+| `2cb1710` | fix: add deliberate-invocation comments for getTrainerSpriteUrl in v-for |
+| `e1c2562` | fix: standardize avatar error handling to reactive null-out pattern |
+| `ae3ac24` | fix: replace pokemon-placeholder fallback with reactive null-out for human avatars |
+| `cca2210` | docs: add trainer sprite files to app-surface.md |
