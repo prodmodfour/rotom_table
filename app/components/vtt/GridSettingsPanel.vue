@@ -39,6 +39,33 @@
       </div>
     </div>
 
+    <!-- Isometric Grid Toggle -->
+    <div class="grid-settings__row">
+      <div class="form-group">
+        <label class="checkbox-label">
+          <input
+            type="checkbox"
+            :checked="config.isometric"
+            @change="toggleIsometric"
+            data-testid="isometric-toggle"
+          />
+          Isometric View
+        </label>
+      </div>
+      <div v-if="config.isometric" class="form-group">
+        <label>Max Elevation</label>
+        <input
+          type="number"
+          :value="config.maxElevation"
+          @input="updateField('maxElevation', $event)"
+          class="form-input form-input--sm"
+          min="1"
+          max="10"
+          data-testid="max-elevation-input"
+        />
+      </div>
+    </div>
+
     <div class="grid-settings__row">
       <div class="form-group form-group--wide">
         <label>Background Image</label>
@@ -119,6 +146,11 @@ const updateField = (field: keyof GridConfig, event: Event) => {
   emit('update', field, value)
 }
 
+const toggleIsometric = (event: Event) => {
+  const input = event.target as HTMLInputElement
+  emit('update', 'isometric', input.checked)
+}
+
 const triggerFileInput = () => {
   fileInputRef.value?.click()
 }
@@ -185,6 +217,19 @@ const handleFileSelect = (event: Event) => {
     font-size: $font-size-xs;
     color: $color-text-muted;
     margin-bottom: $spacing-xs;
+  }
+
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    cursor: pointer;
+    font-size: $font-size-sm;
+    margin-bottom: 0;
+
+    input[type="checkbox"] {
+      cursor: pointer;
+    }
   }
 
   .form-input--sm {

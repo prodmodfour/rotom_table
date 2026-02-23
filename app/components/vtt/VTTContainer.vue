@@ -76,9 +76,29 @@
       @remove-background="removeBackground"
     />
 
-    <!-- Grid Canvas -->
+    <!-- Grid Canvas: 2D flat or Isometric based on feature flag -->
     <div v-if="config.enabled" class="vtt-grid-wrapper">
+      <!-- Isometric Canvas (when isometric mode is active) -->
+      <IsometricCanvas
+        v-if="config.isometric"
+        ref="isometricCanvasRef"
+        :config="config"
+        :tokens="tokens"
+        :combatants="combatants"
+        :current-turn-id="currentTurnId"
+        :is-gm="isGm"
+        :show-zoom-controls="true"
+        :show-coordinates="true"
+        @token-move="handleTokenMove"
+        @token-select="handleTokenSelect"
+        @cell-click="handleCellClick"
+        @multi-select="handleMultiSelect"
+        @movement-preview-change="handleMovementPreviewChange"
+      />
+
+      <!-- Standard 2D Grid Canvas (default) -->
       <GridCanvas
+        v-else
         ref="gridCanvasRef"
         :config="config"
         :tokens="tokens"
@@ -125,6 +145,7 @@
 import type { GridConfig, GridPosition, Combatant, MovementPreview } from '~/types'
 import { DEFAULT_SETTINGS } from '~/types'
 import GridCanvas from '~/components/vtt/GridCanvas.vue'
+import IsometricCanvas from '~/components/vtt/IsometricCanvas.vue'
 import { useSelectionStore } from '~/stores/selection'
 import { useMeasurementStore, type MeasurementMode } from '~/stores/measurement'
 import { useFogOfWarStore, type FogOfWarState } from '~/stores/fogOfWar'
@@ -177,7 +198,7 @@ watch(() => props.encounterId, async (newId, oldId) => {
     ])
     if (fogLoaded || terrainLoaded) {
       // Re-render grid canvas if available
-      gridCanvasRef.value?.render()
+      activeCanvasRef.value?.render()
     }
   }
 }, { immediate: true })
@@ -204,6 +225,12 @@ onUnmounted(() => {
 
 // Refs
 const gridCanvasRef = ref<InstanceType<typeof GridCanvas> | null>(null)
+const isometricCanvasRef = ref<InstanceType<typeof IsometricCanvas> | null>(null)
+
+// Active canvas ref (whichever mode is active)
+const activeCanvasRef = computed(() => {
+  return props.config.isometric ? isometricCanvasRef.value : gridCanvasRef.value
+})
 const showSettings = ref(false)
 const selectedTokenId = ref<string | null>(null)
 const isUploading = ref(false)
@@ -356,7 +383,7 @@ watch(() => props.config, (newConfig) => {
 
 // Expose methods
 defineExpose({
-  resetView: () => gridCanvasRef.value?.resetView(),
+  resetView: () => activeCanvasRef.value?.resetView(),
 })
 </script>
 
