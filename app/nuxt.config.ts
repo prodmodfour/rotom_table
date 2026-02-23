@@ -15,7 +15,7 @@ export default defineNuxtConfig({
     },
   ],
 
-  css: ['~/assets/scss/main.scss'],
+  css: ['~/assets/scss/main.scss', '~/assets/scss/_create-form.scss'],
 
   app: {
     head: {
@@ -45,7 +45,7 @@ export default defineNuxtConfig({
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: '@use "~/assets/scss/_variables.scss" as *; @use "~/assets/scss/_difficulty.scss" as *; @use "~/assets/scss/_pokemon-sheet.scss" as *; @use "~/assets/scss/_modal.scss" as *; @use "~/assets/scss/_sheet.scss" as *; @use "~/assets/scss/_create-form.scss" as *;'
+          additionalData: '@use "~/assets/scss/_variables.scss" as *; @use "~/assets/scss/_difficulty.scss" as *; @use "~/assets/scss/_pokemon-sheet.scss" as *; @use "~/assets/scss/_modal.scss" as *; @use "~/assets/scss/_sheet.scss" as *;'
         }
       }
     }

@@ -4,6 +4,8 @@
 // components/create/QuickCreateForm.vue (Quick Create)
 // ===========================================
 
+@use 'variables' as *;
+
 .create-form {
   background: $glass-bg;
   backdrop-filter: $glass-blur;
