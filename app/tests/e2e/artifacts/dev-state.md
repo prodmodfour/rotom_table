@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-02-23T07:00:00
-updated_by: slave-collector (plan-20260223-061421)
+last_updated: 2026-02-23T09:00:00
+updated_by: slave-collector (plan-20260223-083000)
 ---
 
 # Dev Ecosystem State
@@ -18,11 +18,11 @@ updated_by: slave-collector (plan-20260223-061421)
 | ptu-rule-029–076 | P1–P3 | resolved | (all resolved — see sessions 1–12) |
 | ptu-rule-045 | P3 | **resolved** | Equipment/armor system — P0+P1+P2 all APPROVED. code-review-132 APPROVED (M1: SLOT_ICONS duplication → refactoring-069), rules-review-122 APPROVED |
 | ptu-rule-055 | P3 | **resolved** | XP calculation — P0+P1+P2 all APPROVED. code-review-131 APPROVED, rules-review-121 APPROVED |
-| ptu-rule-056 | P3 | **in-progress** | Character creation form — P0+P1 approved, P2 code-review-133 fixes applied (SCSS partial extraction, QuickCreatePayload type). Needs re-review |
+| ptu-rule-056 | P3 | **in-progress** | Character creation form — P0+P1 approved, P2 re-review: code-review-138 **CHANGES_REQUIRED** (H1: CSS delivery mechanism — move `_create-form.scss` from `additionalData` to `css` array), rules-review-128 APPROVED. Needs fix cycle |
 | ptu-rule-058 | P3 | **resolved** | Encounter density/significance — P0+P1+H1 fix all APPROVED. code-review-131 APPROVED, rules-review-121 APPROVED |
-| ptu-rule-060 | P3 | **in-progress** | Level-budget/significance — P0 re-review: code-review-134 **CHANGES_REQUIRED** (C1: `'pc'` → `'player'` characterType), rules-review-124 CHANGES_REQUIRED (same C1). Needs fix cycle |
+| ptu-rule-060 | P3 | **in-progress** | Level-budget/significance — P0 C1 fix applied (`'pc'` → `'player'`), P1 significance multiplier implemented (Prisma, APIs, UI selectors, store). Needs review |
 | ptu-rule-077 | P3 | **resolved** | Focus (Speed) initiative/evasion — fix implemented, APPROVED (code-review-125 + rules-review-115) |
-| ptu-rule-078 | P3 | **in-progress** | Trainer class associated skills — code-review-135 APPROVED, rules-review-125 CHANGES_REQUIRED fixes applied (H1: Juggler +Guile, H2: Dancer +Athletics). Needs re-review |
+| ptu-rule-078 | P3 | **in-progress** | Trainer class associated skills — H1+H2 fixes re-applied (Juggler +Guile, Dancer +Athletics). Needs re-review |
 | ptu-rule-079 | P3 | **resolved** | Helmet conditional DR — fix applied, code-review-136 APPROVED, rules-review-126 APPROVED |
 | ptu-rule-080 | P3 | **resolved** | Higher-level char creation validation — fix applied, code-review-137 APPROVED (M1/M2 → refactoring-070, 071), rules-review-127 APPROVED |
 | ptu-rule-081 | P4 | **open** | Multiple Focus items not explicitly prevented (from rules-review-115 M2) |
@@ -32,8 +32,8 @@ updated_by: slave-collector (plan-20260223-061421)
 | Ticket | Priority | Status | Summary | Design Complexity |
 |--------|----------|--------|---------|-------------------|
 | feature-001 | P3 | **design-complete** | B2W2 trainer sprites for NPC/player avatars — design spec written (design-trainer-sprites-001.md) | single-phase |
-| feature-002 | P2 | **design-complete** | 3D isometric rotatable grid for VTT — design spec written (design-isometric-grid-001.md) | multi-phase |
-| feature-003 | P1 | **design-complete** | Full Player View — Track A (core) + Track B (infra) + Track C (integration) all design specs written | multi-phase-parallel |
+| feature-002 | P2 | **P0-implemented** | 3D isometric rotatable grid for VTT — P0 implemented (projection math, camera, rendering, feature flag). Needs review | multi-phase |
+| feature-003 | P1 | **P0-implemented** | Full Player View — P0 Track A implemented (identity picker, character sheet, Pokemon team, encounter view, WebSocket, nav). Needs review | multi-phase-parallel |
 
 ### UX Tickets (`tickets/ux/`)
 | Ticket | Priority | Status | Summary |
@@ -42,24 +42,33 @@ updated_by: slave-collector (plan-20260223-061421)
 
 ## Active Developer Work
 
-**Current task:** Slave collection for plan-20260223-061421 completed — 5 slaves merged (11 commits total).
+**Current task:** Slave collection for plan-20260223-083000 completed — 5 slaves merged (35 commits total).
 
-**Session 17 (2026-02-23):**
-- ptu-rule-056 P2 fixes applied (slave-1, 3 commits) — SCSS partial extraction for shared create-form styles, QuickCreatePayload typed emit
-- ptu-rule-060 P0 re-reviewed (slave-2) — code-review-134 CHANGES_REQUIRED (C1: `'pc'` → `'player'`), rules-review-124 CHANGES_REQUIRED (same C1)
-- ptu-rule-078 reviewed (slave-3) — code-review-135 APPROVED, rules-review-125 CHANGES_REQUIRED (H1: Juggler +Guile, H2: Dancer +Athletics)
-- ptu-rule-079 reviewed (slave-4) — code-review-136 APPROVED, rules-review-126 APPROVED → **resolved**
-- ptu-rule-080 reviewed (slave-5) — code-review-137 APPROVED (M1/M2 non-blocking), rules-review-127 APPROVED → **resolved**
+**Session 18 (2026-02-23):**
+- feature-003 P0 Track A implemented (slave-1, 11 commits) — player identity, character sheet, Pokemon team, encounter view, WebSocket player role, nav bar
+- feature-002 P0 implemented (slave-2, 12 commits) — isometric projection math, camera rotation, rendering engine, feature flag toggle, Prisma schema
+- ptu-rule-060 C1 fix + P1 significance implemented (slave-3, 8 commits) — `'pc'` → `'player'` fix, significance tier Prisma/API/UI/store
+- ptu-rule-078 H1+H2 re-applied (slave-4, 2 commits) — Juggler +Guile, Dancer +Athletics
+- ptu-rule-056 re-reviewed (slave-5, 2 commits) — code-review-138 CHANGES_REQUIRED (H1: CSS delivery), rules-review-128 APPROVED
 
-**Next actions (by priority — "finish all tiers" rule):**
-1. **Fix** ptu-rule-060 C1 from code-review-134 (CHANGES_REQUIRED — `'pc'` → `'player'` characterType, one-line fix)
-2. ~~**Fix** ptu-rule-078 H1+H2 from rules-review-125~~ DONE (1e9c8ca) — needs re-review
-3. **Re-review** ptu-rule-056 P2 fixes (3 commits — SCSS partial, typed emit)
-4. ptu-rule-060 P1+ (level budget remaining tiers)
-5. ptu-rule-081 P4 (multiple Focus items enforcement)
-6. ptu-rule-082 P4 (Pokemon maxHp auto-update on level-up)
+**Next actions (by priority):**
+1. **Review** feature-003 P0 Track A (11 commits, new domain)
+2. **Review** feature-002 P0 (12 commits, new domain)
+3. **Review** ptu-rule-060 C1 fix + P1 significance (8 commits)
+4. **Re-review** ptu-rule-078 H1+H2 fix (2 commits)
+5. **Fix** ptu-rule-056 H1 from code-review-138 (CSS delivery mechanism — move `_create-form.scss` from `additionalData` to `css` array)
+6. feature-003 P1 Track A (remaining tiers)
+7. feature-002 P1 (token interaction + movement)
+8. ptu-rule-060 P2 (budget warnings)
+9. ptu-rule-081 P4, ptu-rule-082 P4
 
 ## Review Status
+
+### Session 18 Reviews
+| Review ID | Target | Verdict | Reviewer | Date |
+|-----------|--------|---------|----------|------|
+| code-review-138 | ptu-rule-056 P2 re-review | CHANGES_REQUIRED | senior-reviewer | 2026-02-23 |
+| rules-review-128 | ptu-rule-056 P2 re-review | APPROVED | game-logic-reviewer | 2026-02-23 |
 
 ### Session 17 Reviews
 | Review ID | Target | Verdict | Reviewer | Date |
@@ -152,9 +161,9 @@ updated_by: slave-collector (plan-20260223-061421)
 |--------|-------|
 | Last audited | 2026-02-18T12:00:00 |
 | Open tickets (P0) | 0 |
-| Open tickets (P1) | 1 (feature-003 — design-complete) |
-| Open tickets (P2) | 1 (feature-002 — design-complete) |
-| Open tickets (P3) | 4 (ptu-rule-056 needs re-review + ptu-rule-060 needs fix + ptu-rule-078 needs fix + feature-001 design-complete) |
+| Open tickets (P1) | 1 (feature-003 — P0-implemented, needs review) |
+| Open tickets (P2) | 1 (feature-002 — P0-implemented, needs review) |
+| Open tickets (P3) | 4 (ptu-rule-056 needs fix + ptu-rule-060 needs review + ptu-rule-078 needs re-review + feature-001 design-complete) |
 | Open tickets (P4) | 14 (refactoring-059, 060, 061, 062, 065, 066, 067, 068, 069, 070, 071 + ptu-rule-081, 082 + ux-001) |
 | Total open | 20 |
 | Total resolved | 147 |
@@ -270,5 +279,21 @@ updated_by: slave-collector (plan-20260223-061421)
 **Tickets filed:** 2 (refactoring-070 unused props assignment, refactoring-071 MAX_FEATURES not level-aware)
 **Tickets resolved:** 2 (ptu-rule-079, ptu-rule-080)
 **Net movement:** 19→20 open (+1 net: -2 resolved + 2 new refactoring tickets, corrected P3 count from session 16)
+
+**All P0 tickets remain at 0.**
+
+## Session Summary (2026-02-23, session 18 — plan-20260223-083000)
+
+**Slave collection plan-20260223-083000:** 5 slaves merged (35 commits total, 0 conflicts)
+- **slave-1** (developer): feature-003 P0 Track A — 11 commits (playerIdentity store, usePlayerIdentity composable, player-view API endpoint, PlayerIdentityPicker, PlayerNavBar, PlayerCharacterSheet, PlayerPokemonTeam/Card/MoveList, PlayerEncounterView/CombatantInfo, player page rewrite, WebSocket player role)
+- **slave-2** (developer): feature-002 P0 — 12 commits (CameraAngle type, Prisma schema isometric fields, useIsometricProjection, isometricCamera store, useIsometricCamera, useIsometricRendering, CameraControls, IsometricCanvas, VTTContainer/GridSettingsPanel feature flag, tile geometry fix, projection reuse fix)
+- **slave-3** (developer): ptu-rule-060 C1 fix + P1 — 8 commits (`'pc'` → `'player'` fix, significanceTier Prisma column, encounter type, StartEncounterModal selector, GenerateEncounterModal selector, API/store/page wiring, significance pass-through, docs update)
+- **slave-4** (developer): ptu-rule-078 H1+H2 fix — 2 commits (Juggler +Guile, Dancer +Athletics in trainerClasses.ts)
+- **slave-5** (reviewers): ptu-rule-056 re-review — 2 commits (code-review-138 CHANGES_REQUIRED: H1 CSS delivery mechanism, rules-review-128 APPROVED)
+
+**Tickets filed:** 0
+**Tickets resolved:** 0
+**Reviews completed:** 2 artifacts (code-review-138, rules-review-128)
+**Net movement:** 20→20 open (no change — all work was feature implementations, fixes, and re-reviews)
 
 **All P0 tickets remain at 0.**

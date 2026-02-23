@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-02-21T22:30:00
-updated_by: slave-collector (plan-20260221-071325)
+last_updated: 2026-02-23T09:00:00
+updated_by: slave-collector (plan-20260223-083000)
 ---
 
 # Matrix Ecosystem State
@@ -60,9 +60,16 @@ All 8 domains are stale due to sessions 5–13 code changes. Re-mapping is now u
 - **character-lifecycle:** ptu-rule-080 fix — Level-aware stat allocation, skill rank caps, edges/features validation in characterCreationValidation.ts, trainerStats.ts, useCharacterCreation.ts, create.vue
 - **encounter-tables:** ptu-rule-060 P0 fixes — SCSS mixin ancestor selector, BudgetGuide extraction from GenerateEncounterModal, PC-only player count filter in scenes page
 
+## Session 18 Changes (additional staleness)
+
+- **encounter-tables:** ptu-rule-060 P1 significance — significanceTier Prisma column, tier selector in StartEncounterModal + GenerateEncounterModal, API endpoints, encounter store, parent page wiring
+- **vtt-grid:** feature-002 P0 isometric grid — useIsometricProjection, useIsometricCamera, useIsometricRendering, isometricCamera store, IsometricCanvas + CameraControls components, GridSettingsPanel + VTTContainer feature flag, Prisma schema isometric columns
+- **character-lifecycle:** ptu-rule-078 H1+H2 fix — Juggler +Guile, Dancer +Athletics in trainerClasses.ts
+- **NEW DOMAIN: player-view:** feature-003 P0 Track A — playerIdentity store, usePlayerIdentity composable, player-view API, 8 player components, WebSocket player role, player page + layout
+
 ## Recommended Next Steps
 
-1. Re-map all 8 domains — sessions 12-16 added major new capabilities across combat, pokemon-lifecycle, character-lifecycle, encounter-tables
-2. Fix ptu-rule-056 P2 issues from code-review-133 (CHANGES_REQUIRED — scoped CSS, type safety)
-3. Review ptu-rule-060 P0 fixes, ptu-rule-078, ptu-rule-079, ptu-rule-080
-4. Continue ptu-rule-060 P1+ tiers
+1. Re-map all 8 domains + add player-view domain — sessions 12-18 added major new capabilities
+2. Fix ptu-rule-056 H1 from code-review-138 (CSS delivery mechanism)
+3. Review feature-003 P0, feature-002 P0, ptu-rule-060 C1+P1, ptu-rule-078 H1+H2
+4. Continue feature P1 tiers after P0 reviews pass
