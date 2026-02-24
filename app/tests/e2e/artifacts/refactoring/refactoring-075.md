@@ -2,7 +2,7 @@
 ticket_id: refactoring-075
 category: EXT-GOD
 priority: P4
-status: open
+status: resolved
 source: code-review-143 H1
 created_by: slave-collector (plan-20260223-095000)
 created_at: 2026-02-23T10:20:00Z
@@ -33,3 +33,20 @@ This moves approximately 130 lines out of GMActionModal.vue, bringing it under 7
 - **Code health:** Reduces god component, improves SRP compliance
 - **Testability:** Condition management can be tested in isolation
 - **Extensibility:** Easier to add new condition types (e.g., from PTU supplements) without touching the modal
+
+## Resolution Log
+
+| Date | Action | Details |
+|------|--------|---------|
+| 2026-02-24 | Resolved | Extracted CombatantConditionsSection.vue (206 lines) from GMActionModal.vue (809 → 674 lines). Commit `b51ad5d`. |
+
+### Commits
+
+| Hash | Message |
+|------|---------|
+| `b51ad5d` | refactor: extract CombatantConditionsSection from GMActionModal.vue |
+
+### Files Changed
+
+- `app/components/encounter/GMActionModal.vue` — removed condition template/script/styles, replaced with `<CombatantConditionsSection>` usage
+- `app/components/encounter/CombatantConditionsSection.vue` — new component with condition toggle, category lists, add/remove handlers, scoped styles
