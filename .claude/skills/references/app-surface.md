@@ -29,6 +29,8 @@ Testable features, routes, and API endpoints for the PTU Session Helper.
 | `/gm/scenes/:id` | `pages/gm/scenes/[id].vue` | Scene editor — drag-and-drop canvas, groups, weather, habitats |
 | `/gm/map` | `pages/gm/map.vue` | Region map — display and serve to Group View |
 
+**GM layout components:** `ServerAddressDisplay.vue` (LAN address panel in GM header — shows server IP/port for player connections, click-outside dismiss, clipboard copy).
+
 ### Group View (`/group`) — TV/projector display
 
 | Route | Component | Purpose |
@@ -47,7 +49,7 @@ Testable features, routes, and API endpoints for the PTU Session Helper.
 
 **Key player components:** `PlayerIdentityPicker.vue` (character selection overlay), `PlayerNavBar.vue` (bottom tab navigation — Character/Team/Encounter), `PlayerCharacterSheet.vue` (read-only stats, skills, features, equipment, inventory), `PlayerPokemonTeam.vue` + `PlayerPokemonCard.vue` + `PlayerMoveList.vue` (team display), `PlayerEncounterView.vue` (encounter state with combatant cards by side), `PlayerCombatantInfo.vue` (visibility-aware combatant display — exact HP for own, percentage for enemies), `PlayerCombatActions.vue` (full PTU combat action panel — moves, shift, struggle, pass, item/switch/maneuver requests).
 
-**Key player composables:** `usePlayerIdentity.ts` (localStorage persistence, character data fetching), `usePlayerCombat.ts` (turn detection, action execution, move availability, target helpers, league battle phase awareness, canBeCommanded check).
+**Key player composables:** `usePlayerIdentity.ts` (localStorage persistence, character data fetching), `usePlayerCombat.ts` (turn detection, action execution, move availability, target helpers, league battle phase awareness, canBeCommanded check), `useCharacterExportImport.ts` (JSON export download, import file upload with conflict detection feedback).
 
 **Player stores:** `playerIdentity` (characterId, character, pokemon, loading, error).
 
@@ -173,6 +175,14 @@ Get/set/clear pattern.
 - `GET/PUT /api/group/tab` — active tab state
 - `GET/POST/DELETE /api/group/map` — served map
 - `GET/POST/DELETE /api/group/wild-spawn` — wild spawn preview
+
+### Player Data (`/api/player`)
+Export/import for offline character management.
+- `GET /api/player/export/:characterId` — export character + Pokemon as JSON blob (with metadata: exportVersion, exportedAt, appVersion)
+- `POST /api/player/import/:characterId` — import offline edits (background, personality, goals, notes, nicknames, held items, move order) with conflict detection (server wins)
+
+### Settings (`/api/settings`)
+- `GET /api/settings/server-info` — LAN network addresses, port, primary URL for player connections
 
 ### Utilities
 - `GET /api/species` — species list (search/autocomplete)
