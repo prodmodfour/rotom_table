@@ -2,10 +2,11 @@
 id: refactoring-072
 category: EXT-TYPE-SAFETY
 priority: P4
-status: open
+status: resolved
 source: code-review-141 M1
 created_by: slave-collector (plan-20260223-085530)
 created_at: 2026-02-23
+resolved_at: 2026-02-24
 ---
 
 # refactoring-072: Replace `tier: string` with `tier: SignificanceTier` in store/composable signatures
@@ -28,3 +29,13 @@ The `setSignificance`, `createEncounter`, `createFromScene`, and `createWildEnco
 ## Impact
 
 Type papercut — no runtime bug. All callers already pass valid `SignificanceTier` values from `SIGNIFICANCE_PRESETS`. The `as any` sets a bad precedent and defeats TypeScript's purpose.
+
+## Resolution Log
+
+- **Commit:** 6bce258
+- **Files changed:**
+  - `app/stores/encounter.ts` — imported `SignificanceTier`, changed `setSignificance`, `createEncounter`, `createFromScene` parameter types from `string` to `SignificanceTier`, removed `as any` cast
+  - `app/composables/useEncounterCreation.ts` — imported `SignificanceTier`, changed `createWildEncounter` parameter type
+  - `app/pages/gm/encounter-tables.vue` — imported `SignificanceTier`, updated handler signature
+  - `app/pages/gm/habitats/[id].vue` — imported `SignificanceTier`, updated handler signature
+  - `app/pages/gm/habitats/index.vue` — imported `SignificanceTier`, updated handler signature
