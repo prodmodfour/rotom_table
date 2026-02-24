@@ -55,6 +55,8 @@ interface UseIsometricRenderingOptions {
   movementPreview?: Ref<MovementPreview | null>
   movementRangeCells?: Ref<GridPosition[]>
   getTokenElevation?: (combatantId: string) => number
+  /** Terrain elevation lookup for movement preview arrow destination. */
+  getTerrainElevation?: (x: number, y: number) => number
 }
 
 // Sprite cache to avoid re-loading images every frame.
@@ -614,7 +616,9 @@ export function useIsometricRendering(options: UseIsometricRenderingOptions) {
     const fromElev = options.getTokenElevation
       ? options.getTokenElevation(preview.combatantId)
       : 0
-    const toElev = 0 // Target is ground level by default
+    const toElev = options.getTerrainElevation
+      ? options.getTerrainElevation(preview.toPosition.x, preview.toPosition.y)
+      : 0
 
     const from = worldToScreen(
       preview.fromPosition.x + 0.5,

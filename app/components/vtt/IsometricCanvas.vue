@@ -167,6 +167,7 @@ const rendering = useIsometricRendering({
   movementPreview: computed(() => props.externalMovementPreview ?? movementPreview.value),
   movementRangeCells,
   getTokenElevation: (id: string) => elevation.getTokenElevation(id),
+  getTerrainElevation: (x: number, y: number) => elevation.getTerrainElevation(x, y),
 })
 
 // Interaction composable (wires mouse events to grid logic)
