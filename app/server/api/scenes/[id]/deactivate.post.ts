@@ -1,5 +1,5 @@
 import { prisma } from '~/server/utils/prisma'
-import { broadcastToGroup } from '~/server/utils/websocket'
+import { broadcastToGroupAndPlayers } from '~/server/utils/websocket'
 import { restoreSceneAp } from '~/server/services/scene.service'
 
 export default defineEventHandler(async (event) => {
@@ -37,8 +37,8 @@ export default defineEventHandler(async (event) => {
       data: { activeSceneId: null }
     })
 
-    // Broadcast scene deactivation to group clients
-    broadcastToGroup('scene_deactivated', { sceneId: scene.id })
+    // Broadcast scene deactivation to group and player clients
+    broadcastToGroupAndPlayers('scene_deactivated', { sceneId: scene.id })
 
     return {
       success: true,

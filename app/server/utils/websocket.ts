@@ -108,39 +108,39 @@ export function broadcastToGroupAndPlayers(eventType: string, data: unknown) {
   }
 }
 
-// Scene-related broadcasts
+// Scene-related broadcasts (sent to both group and player clients)
 export function notifySceneUpdate(sceneId: string, scene: unknown) {
-  broadcastToGroup('scene_update', { sceneId, scene })
+  broadcastToGroupAndPlayers('scene_update', { sceneId, scene })
 }
 
 export function notifyScenePokemonAdded(sceneId: string, pokemon: unknown) {
-  broadcastToGroup('scene_pokemon_added', { sceneId, pokemon })
+  broadcastToGroupAndPlayers('scene_pokemon_added', { sceneId, pokemon })
 }
 
 export function notifyScenePokemonRemoved(sceneId: string, pokemonId: string) {
-  broadcastToGroup('scene_pokemon_removed', { sceneId, pokemonId })
+  broadcastToGroupAndPlayers('scene_pokemon_removed', { sceneId, pokemonId })
 }
 
 export function notifySceneCharacterAdded(sceneId: string, character: unknown) {
-  broadcastToGroup('scene_character_added', { sceneId, character })
+  broadcastToGroupAndPlayers('scene_character_added', { sceneId, character })
 }
 
 export function notifySceneCharacterRemoved(sceneId: string, characterId: string) {
-  broadcastToGroup('scene_character_removed', { sceneId, characterId })
+  broadcastToGroupAndPlayers('scene_character_removed', { sceneId, characterId })
 }
 
 export function notifyScenePositionsUpdated(sceneId: string, positions: unknown) {
-  broadcastToGroup('scene_positions_updated', { sceneId, positions })
+  broadcastToGroupAndPlayers('scene_positions_updated', { sceneId, positions })
 }
 
 export function notifySceneGroupCreated(sceneId: string, group: unknown) {
-  broadcastToGroup('scene_group_created', { sceneId, group })
+  broadcastToGroupAndPlayers('scene_group_created', { sceneId, group })
 }
 
 export function notifySceneGroupUpdated(sceneId: string, group: unknown) {
-  broadcastToGroup('scene_group_updated', { sceneId, group })
+  broadcastToGroupAndPlayers('scene_group_updated', { sceneId, group })
 }
 
 export function notifySceneGroupDeleted(sceneId: string, groupId: string) {
-  broadcastToGroup('scene_group_deleted', { sceneId, groupId })
+  broadcastToGroupAndPlayers('scene_group_deleted', { sceneId, groupId })
 }
