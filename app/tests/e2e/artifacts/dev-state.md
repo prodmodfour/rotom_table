@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-02-23T13:15:00
-updated_by: slave-collector (plan-20260223-130041)
+last_updated: 2026-02-24T00:30:00
+updated_by: slave-collector (plan-20260223-141341)
 ---
 
 # Dev Ecosystem State
@@ -31,9 +31,9 @@ updated_by: slave-collector (plan-20260223-130041)
 ### Feature Tickets (`tickets/feature/`)
 | Ticket | Priority | Status | Summary | Design Complexity |
 |--------|----------|--------|---------|-------------------|
-| feature-001 | P3 | **P0-fix-applied** | B2W2 trainer sprites — P0 fix cycle 2 applied (avatarBroken reset watchers in 3 files). Needs re-review | single-phase |
-| feature-002 | P2 | **P1-CHANGES_REQUIRED** | 3D isometric grid — P1 reviewed. code-review-148 CHANGES_REQUIRED (C1/C2: A* heuristic + elevation passthrough, H1/H2/H3, M1-M5), rules-review-138 APPROVED. Needs fix cycle | multi-phase |
-| feature-003 | P1 | **P1-CHANGES_REQUIRED** | Player View — P1 Track A reviewed. code-review-147 CHANGES_REQUIRED (C1: canBeCommanded, H1: file size, H2: app-surface, M1-M3), rules-review-137 APPROVED. Needs fix cycle | multi-phase-parallel |
+| feature-001 | P3 | **P0-APPROVED** | B2W2 trainer sprites — P0 fully approved (code-review-149 APPROVED, rules-review-139 APPROVED). Ready for P1 | single-phase |
+| feature-002 | P2 | **P1-fix-applied** | 3D isometric grid — P1 fix cycle applied (9 commits: A* heuristic, elevation passthrough, sprite cache, utility extraction, pathfinding extraction, diamond hit test, preview elevation). Needs re-review | multi-phase |
+| feature-003 | P1 | **P1-fix-applied** | Player View — P1 Track A fix cycle applied (7 commits: canBeCommanded, SCSS extraction, toast, isMyTurn dedup, dead code deletion, app-surface, Struggle comment). Needs re-review | multi-phase-parallel |
 
 ### UX Tickets (`tickets/ux/`)
 | Ticket | Priority | Status | Summary |
@@ -43,23 +43,28 @@ updated_by: slave-collector (plan-20260223-130041)
 
 ## Active Developer Work
 
-**Current task:** Slave collection for plan-20260223-130041 completed — 3 slaves merged (8 commits total).
+**Current task:** Slave collection for plan-20260223-141341 completed — 3 slaves merged (18 commits total).
 
-**Session 23 (2026-02-23):**
-- feature-003 P1 Track A reviewed (slave-1) — code-review-147 CHANGES_REQUIRED (C1: canBeCommanded not checked in league battles, H1: PlayerCombatActions 1002L > 800L limit, H2: app-surface not updated, M1: isMyTurn duplication, M2: alert() → toast, M3: delete dead PlayerActionPanel), rules-review-137 APPROVED
-- feature-002 P1 reviewed (slave-2) — code-review-148 CHANGES_REQUIRED (C1: A* heuristic inadmissible for flying, C2: isValidMove doesn't pass elevation to A*, H1: sprite cache no re-render, H2: duplicate combatantCanFly/getSkySpeed, H3: unbounded sprite cache, M1-M5), rules-review-138 APPROVED
-- feature-001 P0 fix cycle 2 applied (slave-3, 4 commits) — avatarBroken reset watchers in CombatantDetailsPanel, CharacterModal, gm/characters/[id].vue. Ticket resolution log updated. Needs re-review
+**Session 24 (2026-02-24):**
+- feature-003 P1 Track A fix cycle applied (slave-1, 7 commits) — canBeCommanded check for league battles, SCSS extraction to shared stylesheet, alert→toast, isMyTurn dedup via composable, dead PlayerActionPanel deleted, app-surface updated, Struggle comment fixed. Needs re-review
+- feature-002 P1 fix cycle applied (slave-2, 9 commits) — combatantCanFly/getSkySpeed extracted to shared utility, pathfinding extracted to usePathfinding.ts, elevation cost passed to A* in isValidMove, sprite cache re-render + bounded memory, combatant ID-only watcher, diamond-shaped hit detection, movement preview terrain elevation, app-surface updated. Needs re-review
+- feature-001 P0 re-review completed (slave-3) — code-review-149 APPROVED, rules-review-139 APPROVED. P0 fully resolved, ready for P1
 
 **Next actions (by priority):**
-1. **Fix cycle** feature-003 P1 Track A (C1+H1+H2+M1+M2+M3 from code-review-147 + MEDIUM-001 from rules-review-137)
-2. **Fix cycle** feature-002 P1 (C1+C2+H1+H2+H3+M1-M5 from code-review-148)
-3. **Re-review** feature-001 P0 (fix cycle 2 applied — needs re-review of avatarBroken reset watchers)
-4. feature-003 P1 Track B/C (after P1 Track A fix cycle passes review)
-5. feature-002 P2 (after P1 fix cycle passes review)
-6. feature-001 P1 (after P0 re-review passes)
-7. ptu-rule-081 P4, ptu-rule-082 P4
+1. **Re-review** feature-003 P1 Track A fix cycle (7 commits from code-review-147 + rules-review-137 fixes)
+2. **Re-review** feature-002 P1 fix cycle (9 commits from code-review-148 fixes)
+3. feature-003 P1 Track B/C (after P1 Track A re-review passes)
+4. feature-002 P2 (after P1 re-review passes)
+5. feature-001 P1 (P0 APPROVED, design ready)
+6. ptu-rule-081 P4, ptu-rule-082 P4
 
 ## Review Status
+
+### Session 24 Reviews
+| Review ID | Target | Verdict | Reviewer | Date |
+|-----------|--------|---------|----------|------|
+| code-review-149 | feature-001 P0 fix cycle 2 re-review | APPROVED | senior-reviewer | 2026-02-24 |
+| rules-review-139 | feature-001 P0 fix cycle 2 re-review | APPROVED | game-logic-reviewer | 2026-02-24 |
 
 ### Session 23 Reviews
 | Review ID | Target | Verdict | Reviewer | Date |
@@ -199,9 +204,9 @@ updated_by: slave-collector (plan-20260223-130041)
 |--------|-------|
 | Last audited | 2026-02-18T12:00:00 |
 | Open tickets (P0) | 0 |
-| Open tickets (P1) | 1 (feature-003 — P1-CHANGES_REQUIRED, needs fix cycle) |
-| Open tickets (P2) | 1 (feature-002 — P1-CHANGES_REQUIRED, needs fix cycle) |
-| Open tickets (P3) | 1 (feature-001 — P0-fix-applied, needs re-review) |
+| Open tickets (P1) | 1 (feature-003 — P1-fix-applied, needs re-review) |
+| Open tickets (P2) | 1 (feature-002 — P1-fix-applied, needs re-review) |
+| Open tickets (P3) | 1 (feature-001 — P0-APPROVED, ready for P1) |
 | Open tickets (P4) | 20 (refactoring-059–076 excl resolved + ptu-rule-081, 082 + ux-001, 002) |
 | Total open | 23 |
 | Total resolved | 150 |
@@ -392,6 +397,20 @@ updated_by: slave-collector (plan-20260223-130041)
 **Tickets resolved:** 0
 **Reviews completed:** 4 artifacts (code-review-147, rules-review-137, code-review-148, rules-review-138)
 **Net movement:** 23→23 open (no change — reviews produced fix cycle requirements, feature-001 fix applied but needs re-review)
+
+**All P0 tickets remain at 0.**
+
+## Session Summary (2026-02-24, session 24 — plan-20260223-141341)
+
+**Slave collection plan-20260223-141341:** 3 slaves merged (18 commits total, 0 conflicts)
+- **slave-1** (developer): feature-003 P1 Track A fix cycle — 7 commits (canBeCommanded check for league battles in usePlayerCombat + PlayerCombatActions, SCSS extraction to _player-combat-actions.scss, alert→toast, isMyTurn dedup via composable, dead PlayerActionPanel.vue deleted, app-surface.md updated, feature-003 ticket resolution log updated)
+- **slave-2** (developer): feature-002 P1 fix cycle — 9 commits (combatantCanFly/getSkySpeed to shared utility, pathfinding extraction to usePathfinding.ts, elevation cost passed to A* in isValidMove, sprite cache re-render on load + bounded memory with clearSpriteCache, combatant ID-only watcher for default elevation, diamond-shaped hit detection for isometric tokens, movement preview terrain elevation at destination, app-surface.md updated, feature-002 ticket resolution log updated)
+- **slave-3** (reviewers): feature-001 P0 re-review — code-review-149 APPROVED (0 issues) + rules-review-139 APPROVED (0 issues) → **P0 fully resolved**
+
+**Tickets filed:** 0 (both reviews APPROVED with no issues, no side-discoveries from dev slaves)
+**Tickets resolved:** 0 (feature-001 advanced to P0-APPROVED but ticket remains open for P1)
+**Reviews completed:** 2 artifacts (code-review-149, rules-review-139)
+**Net movement:** 23→23 open (no change — fix cycles applied, feature-001 P0 approved but ticket stays open for P1)
 
 **All P0 tickets remain at 0.**
 

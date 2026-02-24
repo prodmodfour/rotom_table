@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-02-23T11:30:00
-updated_by: slave-collector (plan-20260223-104924)
+last_updated: 2026-02-24T00:30:00
+updated_by: slave-collector (plan-20260223-141341)
 ---
 
 # Matrix Ecosystem State
@@ -86,10 +86,16 @@ All 8 domains are stale due to sessions 5–13 code changes. Re-mapping is now u
 - **player-view:** feature-003 P0 APPROVED — no code changes, review artifacts only (code-review-144, rules-review-134)
 - **vtt-grid:** feature-002 P0 APPROVED — no code changes, review artifacts only (code-review-145, rules-review-135)
 
+## Session 24 Changes (additional staleness)
+
+- **player-view:** feature-003 P1 fix cycle — canBeCommanded check in usePlayerCombat + PlayerCombatActions, SCSS extraction to _player-combat-actions.scss (new file), alert→toast notifications, isMyTurn dedup via composable in PlayerEncounterView, dead PlayerActionPanel.vue deleted, nuxt.config.ts updated
+- **vtt-grid:** feature-002 P1 fix cycle — combatantCanFly/getSkySpeed extracted to app/utils/combatantCapabilities.ts (new file), pathfinding extracted to app/composables/usePathfinding.ts (new file), elevation cost in A* heuristic fixed, isValidMove passes elevation to A*, sprite cache re-render + clearSpriteCache, combatant ID-only watcher, diamond hit detection, movement preview terrain elevation
+- **character-lifecycle:** feature-001 P0 APPROVED — no code changes, review artifacts only (code-review-149, rules-review-139)
+
 ## Recommended Next Steps
 
-1. Re-map all 8 domains + add player-view domain — sessions 12-21 added major new capabilities
-2. Re-review feature-001 P0 fix cycle (6 commits from code-review-143 fixes)
-3. Implement feature-003 P1 Track A (P0 APPROVED)
-4. Implement feature-002 P1 (P0 APPROVED)
-5. Continue feature P1 tiers
+1. Re-map all 8 domains + add player-view domain — sessions 12-24 added major new capabilities
+2. Re-review feature-003 P1 Track A fix cycle (7 commits from code-review-147 + rules-review-137 fixes)
+3. Re-review feature-002 P1 fix cycle (9 commits from code-review-148 fixes)
+4. Continue feature P1 tiers after re-reviews pass
+5. feature-001 P1 (P0 APPROVED)
