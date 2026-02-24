@@ -29,6 +29,12 @@
       <span v-else>Pokemon Phase</span>
     </div>
 
+    <!-- Cannot Command Warning (league battles — newly switched-in Pokemon) -->
+    <div v-if="!canBeCommanded" class="combat-actions__not-commandable">
+      <PhWarning :size="16" weight="bold" />
+      <span>Cannot command this Pokemon this turn</span>
+    </div>
+
     <!-- Target Selector Overlay -->
     <div v-if="showTargetSelector" class="target-selector">
       <div class="target-selector__header">
@@ -81,7 +87,7 @@
               'move-btn--exhausted': isMoveExhausted(move).exhausted,
               'move-btn--status': move.damageClass === 'Status'
             }"
-            :disabled="isMoveExhausted(move).exhausted || !canUseStandardAction"
+            :disabled="isMoveExhausted(move).exhausted || !canUseStandardAction || !canBeCommanded"
             :title="isMoveExhausted(move).reason || move.effect"
             @click="handleMoveSelect(move)"
           >
@@ -120,7 +126,7 @@
           <!-- Struggle -->
           <button
             class="combat-actions__btn combat-actions__btn--struggle"
-            :disabled="!canUseStandardAction"
+            :disabled="!canUseStandardAction || !canBeCommanded"
             @click="handleStruggleSelect"
           >
             <PhHandFist :size="20" />
@@ -271,6 +277,8 @@ import {
   PhX,
   PhCheck,
   PhCheckCircle,
+  PhWarning,
+  PhWarningCircle,
   PhArrowsOutSimple,
   PhHandFist,
   PhSkipForward,
@@ -290,6 +298,7 @@ const {
   turnState,
   canUseStandardAction,
   canUseShiftAction,
+  canBeCommanded,
   activeMoves,
   isMoveExhausted,
   hasUsableMoves,
@@ -332,7 +341,7 @@ const combatManeuvers = COMBAT_MANEUVERS
 // =============================================
 
 const handleMoveSelect = (move: Move) => {
-  if (isMoveExhausted(move).exhausted || !canUseStandardAction.value) return
+  if (isMoveExhausted(move).exhausted || !canUseStandardAction.value || !canBeCommanded.value) return
 
   pendingMoveId.value = move.id
   pendingAction.value = 'move'
@@ -342,7 +351,7 @@ const handleMoveSelect = (move: Move) => {
 }
 
 const handleStruggleSelect = () => {
-  if (!canUseStandardAction.value) return
+  if (!canUseStandardAction.value || !canBeCommanded.value) return
 
   pendingMoveId.value = null
   pendingAction.value = 'struggle'
@@ -764,6 +773,22 @@ onUnmounted(() => {
     .combat-actions__btn {
       flex: 1;
     }
+  }
+
+  // =============================================
+  // Cannot Command Warning
+  // =============================================
+  &__not-commandable {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    padding: $spacing-sm $spacing-md;
+    background: rgba($color-warning, 0.15);
+    border: 1px solid rgba($color-warning, 0.4);
+    border-radius: $border-radius-md;
+    font-size: $font-size-xs;
+    font-weight: 600;
+    color: $color-warning;
   }
 
   // =============================================

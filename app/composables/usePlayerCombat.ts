@@ -106,6 +106,15 @@ export function usePlayerCombat() {
     !turnState.value.swiftActionUsed
   )
 
+  /**
+   * Whether the active combatant can be commanded this turn.
+   * In league battles, a newly switched-in Pokemon cannot be commanded
+   * on the turn it enters (PTU p.227). Shift and pass remain available.
+   */
+  const canBeCommanded = computed((): boolean =>
+    turnState.value.canBeCommanded ?? true
+  )
+
   // =============================================
   // Move Availability
   // =============================================
@@ -229,7 +238,7 @@ export function usePlayerCombat() {
 
   /**
    * Use Struggle — Normal Type, AC 4, DB 4, Melee, Physical. No STAB.
-   * Available when no usable moves remain.
+   * Available as a Standard Action alternative to using a Move.
    * Struggle is executed as a move with a special 'struggle' moveId.
    */
   const useStruggle = async (targetIds: string[]): Promise<void> => {
@@ -359,6 +368,7 @@ export function usePlayerCombat() {
     canUseStandardAction,
     canUseShiftAction,
     canUseSwiftAction,
+    canBeCommanded,
 
     // Move availability
     activeMoves,
