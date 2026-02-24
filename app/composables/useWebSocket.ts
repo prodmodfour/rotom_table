@@ -5,6 +5,7 @@ import { isPokemon } from '~/types'
 const MAX_RECONNECT_ATTEMPTS = 5
 const BASE_RECONNECT_DELAY_MS = 1000
 const MAX_RECONNECT_DELAY_MS = 30000
+const KEEPALIVE_INTERVAL_MS = 45_000
 
 // Lazy getters for stores to avoid initialization issues
 const getEncounterStore = () => useEncounterStore()
@@ -14,11 +15,36 @@ const getGroupViewStore = () => useGroupViewStore()
 export function useWebSocket() {
 
   let ws: WebSocket | null = null
+  let keepaliveTimer: ReturnType<typeof setInterval> | null = null
   const isConnected = ref(false)
   const reconnectAttempts = ref(0)
   const lastError = ref<string | null>(null)
   const movementPreview = ref<MovementPreview | null>(null)
   const messageListeners = new Set<(message: WebSocketEvent) => void>()
+
+  // Stored identity for auto re-identification on reconnect
+  let storedRole: 'gm' | 'group' | 'player' | null = null
+  let storedEncounterId: string | undefined = undefined
+  let storedCharacterId: string | undefined = undefined
+
+  const startKeepalive = () => {
+    stopKeepalive()
+    keepaliveTimer = setInterval(() => {
+      if (ws?.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({
+          type: 'keepalive',
+          data: { timestamp: Date.now() }
+        }))
+      }
+    }, KEEPALIVE_INTERVAL_MS)
+  }
+
+  const stopKeepalive = () => {
+    if (keepaliveTimer) {
+      clearInterval(keepaliveTimer)
+      keepaliveTimer = null
+    }
+  }
 
   const connect = () => {
     if (ws?.readyState === WebSocket.OPEN) {
@@ -35,6 +61,21 @@ export function useWebSocket() {
         isConnected.value = true
         reconnectAttempts.value = 0
         lastError.value = null
+        startKeepalive()
+
+        // Auto re-identify on reconnect if identity was stored
+        if (storedRole) {
+          send({ type: 'identify', data: {
+            role: storedRole,
+            encounterId: storedEncounterId,
+            characterId: storedCharacterId
+          } })
+
+          // Rejoin encounter if applicable
+          if (storedEncounterId) {
+            send({ type: 'join_encounter', data: { encounterId: storedEncounterId } })
+          }
+        }
       }
 
       ws.onmessage = (event) => {
@@ -49,6 +90,7 @@ export function useWebSocket() {
 
       ws.onclose = () => {
         isConnected.value = false
+        stopKeepalive()
         attemptReconnect()
       }
 
@@ -136,6 +178,10 @@ export function useWebSocket() {
       case 'clear_wild_spawn':
         getGroupViewStore().setWildSpawnPreview(null)
         break
+
+      case 'keepalive_ack':
+        // Server acknowledged keepalive — connection is alive
+        break
     }
   }
 
@@ -148,14 +194,21 @@ export function useWebSocket() {
   }
 
   const identify = (role: 'gm' | 'group' | 'player', encounterId?: string, characterId?: string) => {
+    // Store identity for auto re-identification on reconnect
+    storedRole = role
+    storedEncounterId = encounterId
+    storedCharacterId = characterId
     send({ type: 'identify', data: { role, encounterId, characterId } })
   }
 
   const joinEncounter = (encounterId: string) => {
+    // Update stored encounterId so reconnect rejoins
+    storedEncounterId = encounterId
     send({ type: 'join_encounter', data: { encounterId } })
   }
 
   const leaveEncounter = () => {
+    storedEncounterId = undefined
     send({ type: 'leave_encounter', data: null })
   }
 
@@ -169,6 +222,7 @@ export function useWebSocket() {
   }
 
   const disconnect = () => {
+    stopKeepalive()
     if (ws) {
       ws.close()
       ws = null
