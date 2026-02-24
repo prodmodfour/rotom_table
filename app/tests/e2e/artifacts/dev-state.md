@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-02-24T19:00:00
-updated_by: slave-collector (plan-20260224-171113)
+last_updated: 2026-02-24T20:00:00
+updated_by: slave-collector (plan-20260224-173734)
 ---
 
 # Dev Ecosystem State
@@ -33,8 +33,8 @@ updated_by: slave-collector (plan-20260224-171113)
 | Ticket | Priority | Status | Summary | Design Complexity |
 |--------|----------|--------|---------|-------------------|
 | feature-001 | P3 | **resolved** | B2W2 trainer sprites — single-phase design complete, P0 APPROVED (code-review-149 + rules-review-139). Closed by slave-3 (plan-20260224-162105) | single-phase |
-| feature-002 | P2 | **P2-CHANGES_REQUIRED** | 3D isometric grid — P2 reviewed: code-review-154 CHANGES_REQUIRED (C1: broken 3D distance, H1-H3: elevation brush/side faces), rules-review-144 APPROVED | multi-phase |
-| feature-003 | P1 | **Track-B/C-CHANGES_REQUIRED** | Player View — Track B P0: code-review-152 CHANGES_REQUIRED (C1: .passthrough(), H1-H3), rules-review-142 APPROVED. Track C P0: code-review-153 CHANGES_REQUIRED (C1: multiple WS connections, H1-H3), rules-review-143 APPROVED | multi-phase-parallel |
+| feature-002 | P2 | **P2-fix-applied-needs-rereview** | 3D isometric grid — P2 fix cycle complete (8 commits: C1+H1-H3+M1-M3 from code-review-154). Needs re-review | multi-phase |
+| feature-003 | P1 | **Track-B/C-fix-applied-needs-rereview** | Player View — Track B P0 fix cycle complete (9 commits from code-review-152). Track C P0 fix cycle complete (9 commits from code-review-153). Both need re-review | multi-phase-parallel |
 
 ### UX Tickets (`tickets/ux/`)
 | Ticket | Priority | Status | Summary |
@@ -44,20 +44,19 @@ updated_by: slave-collector (plan-20260224-171113)
 
 ## Active Developer Work
 
-**Current task:** Slave collection for plan-20260224-171113 completed — 5 slaves merged (16 commits total).
+**Current task:** Slave collection for plan-20260224-173734 completed — 3 slaves merged (26 commits total).
 
-**Session 27 (2026-02-24):**
-- refactoring-065, 066, 067 resolved (combat evasion cluster) — 4 commits by slave-4
-- refactoring-072, 073, 074 resolved (significance type safety cluster) — 6 commits by slave-5
-- feature-003 Track B P0 reviewed — code-review-152 CHANGES_REQUIRED, rules-review-142 APPROVED
-- feature-003 Track C P0 reviewed — code-review-153 CHANGES_REQUIRED, rules-review-143 APPROVED
-- feature-002 P2 reviewed — code-review-154 CHANGES_REQUIRED, rules-review-144 APPROVED
+**Session 28 (2026-02-24):**
+- feature-003 Track B P0 fix cycle complete — 9 commits by slave-1 (all 8 code-review-152 issues resolved)
+- feature-003 Track C P0 fix cycle complete — 9 commits by slave-2 (all 7 code-review-153 issues resolved)
+- feature-002 P2 fix cycle complete — 8 commits by slave-3 (all 7 code-review-154 issues resolved)
 
 **Next actions (by priority):**
-1. **Fix cycle** feature-003 Track B P0 (C1 .passthrough, H1-H3, M1-M4 from code-review-152)
-2. **Fix cycle** feature-003 Track C P0 (C1 multiple WS, H1-H3, M1-M3 from code-review-153)
-3. **Fix cycle** feature-002 P2 (C1 broken 3D distance, H1-H3, M1-M3 from code-review-154)
-4. ptu-rule-081 P4, ptu-rule-082 P4, ptu-rule-083 P4
+1. **Re-review** feature-003 Track B P0 fix cycle (code review + rules review)
+2. **Re-review** feature-003 Track C P0 fix cycle (code review + rules review)
+3. **Re-review** feature-002 P2 fix cycle (code review + rules review)
+4. If all re-reviews APPROVED → feature-003 Track B/C P0 complete, feature-002 P2 complete → advance to P1/P3 or close
+5. ptu-rule-081 P4, ptu-rule-082 P4, ptu-rule-083 P4
 
 ## Review Status
 
@@ -225,8 +224,8 @@ updated_by: slave-collector (plan-20260224-171113)
 |--------|-------|
 | Last audited | 2026-02-18T12:00:00 |
 | Open tickets (P0) | 0 |
-| Open tickets (P1) | 1 (feature-003 — Track B/C P0 implemented, needs review) |
-| Open tickets (P2) | 1 (feature-002 — P2 implemented, needs review) |
+| Open tickets (P1) | 1 (feature-003 — Track B/C P0 fix cycle applied, needs re-review) |
+| Open tickets (P2) | 1 (feature-002 — P2 fix cycle applied, needs re-review) |
 | Open tickets (P3) | 0 |
 | Open tickets (P4) | 16 (refactoring-059–078 excl 6 resolved + ptu-rule-081, 082, 083 + ux-001, 002) |
 | Total open | 18 |
@@ -475,6 +474,20 @@ updated_by: slave-collector (plan-20260224-171113)
 **Tickets resolved:** 6 (refactoring-065, 066, 067, 072, 073, 074)
 **Reviews completed:** 6 artifacts (code-review-152–154, rules-review-142–144)
 **Net movement:** 23→18 open (-5 net: -6 resolved + 1 new ticket)
+
+**All P0 tickets remain at 0.**
+
+## Session Summary (2026-02-24, session 28 — plan-20260224-173734)
+
+**Slave collection plan-20260224-173734:** 3 slaves merged (26 commits total, 1 conflict resolved in app-surface.md)
+- **slave-1** (developer): feature-003 Track B P0 fix cycle — 9 commits (Zod .passthrough() removal, click-outside handler, single $transaction, separate field/entity counts, rename operationResult, package.json version, refetch on expand, app-surface update, resolution log)
+- **slave-2** (developer): feature-003 Track C P0 fix cycle — 9 commits (single WS connection via provide/inject, shared pendingRequests utility, granular scene event handlers, consolidated identification, enriched active scene endpoint, handleCharacterUpdate implementation, app-surface update, resolution log, dead import cleanup)
+- **slave-3** (developer): feature-002 P2 fix cycle — 8 commits (terrain elevation for 3D distance, elevation brush wiring, TerrainPainter mounting, camera angle docs, app-surface update, narrow watchers, terrain-derived side face colors, resolution log)
+
+**Tickets filed:** 0 (no side-discoveries — all issues were addressed in fix cycles)
+**Tickets resolved:** 0 (fix cycles applied but need re-review for final approval)
+**Reviews completed:** 0 (no reviewer slaves in this plan)
+**Net movement:** 18→18 open (no change — fix cycles applied, awaiting re-review)
 
 **All P0 tickets remain at 0.**
 
