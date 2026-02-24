@@ -128,9 +128,34 @@ export function useIsometricInteraction(options: UseIsometricInteractionOptions)
   }
 
   /**
+   * Point-in-polygon test using ray casting algorithm.
+   * Returns true if the point (px, py) is inside the polygon defined by vertices.
+   */
+  const pointInPolygon = (
+    px: number,
+    py: number,
+    vertices: Array<{ x: number; y: number }>
+  ): boolean => {
+    let inside = false
+    const n = vertices.length
+    for (let i = 0, j = n - 1; i < n; j = i++) {
+      const xi = vertices[i].x
+      const yi = vertices[i].y
+      const xj = vertices[j].x
+      const yj = vertices[j].y
+
+      if (((yi > py) !== (yj > py)) &&
+          (px < (xj - xi) * (py - yi) / (yj - yi) + xi)) {
+        inside = !inside
+      }
+    }
+    return inside
+  }
+
+  /**
    * Hit-test: find the token at a screen position.
-   * Checks projected bounding boxes, accounting for token size and elevation.
-   * Tests tokens from front to back (highest depth first) for correct occlusion.
+   * Uses diamond-shaped (rhombus) point-in-polygon test for accurate
+   * isometric hit detection. Tests tokens from front to back for correct occlusion.
    */
   const getTokenAtScreenPosition = (screenX: number, screenY: number): TokenData | undefined => {
     const container = options.containerRef.value
@@ -173,28 +198,43 @@ export function useIsometricInteraction(options: UseIsometricInteractionOptions)
 
     for (const { token } of tokensWithDepth) {
       const elev = token.elevation ?? 0
-      // Token bounding box in world-screen space
-      const topLeft = worldToScreen(
+
+      // Get isometric diamond vertices for the token's footprint
+      const diamond = getTileDiamondPoints(
         token.position.x, token.position.y, elev,
         angle, gridW, gridH, cellSize
       )
-      const bottomRight = worldToScreen(
-        token.position.x + token.size, token.position.y + token.size, elev,
-        angle, gridW, gridH, cellSize
-      )
 
-      // Approximate bounding rectangle for hit testing
-      const halfTokenW = cellSize * token.size
-      const halfTokenH = cellSize * token.size * 0.75 // Sprite height approximation
-      const centerX = (topLeft.px + bottomRight.px) / 2
-      const centerY = (topLeft.py + bottomRight.py) / 2 - halfTokenH * 0.25
+      // For multi-cell tokens, expand the diamond to cover the full footprint
+      let vertices: Array<{ x: number; y: number }>
+      if (token.size > 1) {
+        // Full footprint diamond: use corners of the NxN footprint
+        const bottomRight = getTileDiamondPoints(
+          token.position.x + token.size - 1,
+          token.position.y + token.size - 1,
+          elev, angle, gridW, gridH, cellSize
+        )
+        vertices = [
+          diamond.top,
+          bottomRight.right ?? diamond.right,
+          bottomRight.bottom,
+          diamond.left,
+        ]
+      } else {
+        vertices = [diamond.top, diamond.right, diamond.bottom, diamond.left]
+      }
 
-      if (
-        worldMX >= centerX - halfTokenW / 2 &&
-        worldMX <= centerX + halfTokenW / 2 &&
-        worldMY >= centerY - halfTokenH / 2 &&
-        worldMY <= centerY + halfTokenH / 2
-      ) {
+      // Extend the hit area upward to cover the billboarded sprite
+      // Sprite extends from the diamond center up by ~cellSize * 1.1
+      const spriteHeight = cellSize * token.size * 1.1
+      const extendedVertices = [
+        { x: vertices[0].x, y: vertices[0].y - spriteHeight }, // top lifted
+        { x: vertices[1].x, y: vertices[1].y },                // right
+        { x: vertices[2].x, y: vertices[2].y },                // bottom
+        { x: vertices[3].x, y: vertices[3].y },                // left
+      ]
+
+      if (pointInPolygon(worldMX, worldMY, extendedVertices)) {
         return token
       }
     }
