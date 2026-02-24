@@ -92,6 +92,21 @@
         </div>
       </div>
 
+      <!-- Elevation Brush (isometric mode only) -->
+      <div v-if="isIsometric" class="terrain-painter__section">
+        <label>Elevation Level: {{ elevationLevel }}</label>
+        <div class="terrain-painter__slider">
+          <input
+            type="range"
+            min="0"
+            :max="maxElevation"
+            :value="elevationLevel"
+            @input="elevationLevel = Number(($event.target as HTMLInputElement).value)"
+          />
+          <span class="terrain-painter__elev-value">Z{{ elevationLevel }}</span>
+        </div>
+      </div>
+
       <!-- Actions -->
       <div class="terrain-painter__actions">
         <button
@@ -133,10 +148,20 @@
 import { useTerrainStore, TERRAIN_COLORS } from '~/stores/terrain'
 import type { TerrainType } from '~/types'
 
+const props = defineProps<{
+  /** Whether isometric mode is active (shows elevation brush). */
+  isIsometric?: boolean
+  /** Max elevation level for the slider. */
+  maxElevation?: number
+}>()
+
 const terrainStore = useTerrainStore()
 
 // Tool mode (separate from terrain type)
 const toolMode = ref<'paint' | 'erase' | 'line' | 'fill'>('paint')
+
+// Elevation level for terrain painting (isometric mode)
+const elevationLevel = ref(0)
 
 // Terrain type definitions with UI metadata
 const terrainTypes = [
@@ -219,9 +244,10 @@ const clearAllTerrain = () => {
   }
 }
 
-// Expose tool mode for parent component
+// Expose tool mode and elevation level for parent component
 defineExpose({
   toolMode,
+  elevationLevel,
 })
 </script>
 
@@ -308,6 +334,14 @@ defineExpose({
   &__count {
     font-size: $font-size-xs;
     color: $color-text-muted;
+  }
+
+  &__elev-value {
+    font-size: $font-size-sm;
+    font-weight: 600;
+    color: $color-accent-teal;
+    min-width: 28px;
+    text-align: center;
   }
 
   &__legend {
