@@ -101,10 +101,12 @@ const {
 
 const playerStore = usePlayerIdentityStore()
 const encounterStore = useEncounterStore()
-const { isConnected, identify, joinEncounter, onMessage } = useWebSocket()
 
-// Player WebSocket orchestration (scene sync, action tracking)
-const { activeScene: playerActiveScene } = usePlayerWebSocket()
+// Single WebSocket connection via usePlayerWebSocket (scene sync, action tracking, identity)
+const { isConnected, identify, joinEncounter, onMessage, send, activeScene: playerActiveScene } = usePlayerWebSocket()
+
+// Provide the shared send function for child composables (usePlayerCombat)
+provide(PLAYER_WS_SEND_KEY, send)
 
 // Active tab
 const activeTab = ref<PlayerTab>('character')

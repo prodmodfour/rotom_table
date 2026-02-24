@@ -1,6 +1,13 @@
-import type { Combatant, Move, Pokemon, HumanCharacter } from '~/types'
+import type { Combatant, Move, Pokemon, HumanCharacter, WebSocketEvent } from '~/types'
 import type { PlayerActionRequest } from '~/types/api'
 import type { TurnPhase } from '~/types/combat'
+
+/**
+ * Injection key for the shared WebSocket send function.
+ * Provided by the player page (from usePlayerWebSocket) so child composables
+ * do not create separate WebSocket connections.
+ */
+export const PLAYER_WS_SEND_KEY = Symbol('playerWsSend') as InjectionKey<(event: WebSocketEvent) => void>
 
 /**
  * Composable for player combat action logic.
@@ -9,11 +16,22 @@ import type { TurnPhase } from '~/types/combat'
  *
  * Direct actions: use move, shift, struggle, pass turn
  * Requested actions: use item, switch pokemon, combat maneuvers
+ *
+ * The WebSocket send function is obtained via provide/inject from the
+ * player page, avoiding a separate WebSocket connection per composable.
  */
 export function usePlayerCombat() {
   const encounterStore = useEncounterStore()
   const playerStore = usePlayerIdentityStore()
-  const { send } = useWebSocket()
+
+  const injectedSend = inject(PLAYER_WS_SEND_KEY, null)
+  const send = (event: WebSocketEvent): void => {
+    if (injectedSend) {
+      injectedSend(event)
+    } else {
+      console.error('usePlayerCombat: No WebSocket send function available. Ensure the player page provides PLAYER_WS_SEND_KEY.')
+    }
+  }
 
   // =============================================
   // Turn Detection

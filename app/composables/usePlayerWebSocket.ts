@@ -185,6 +185,13 @@ export function usePlayerWebSocket() {
   )
 
   return {
+    // Expose underlying WebSocket utilities so the page uses a single connection
+    isConnected,
+    identify,
+    joinEncounter,
+    onMessage,
+    send,
+    // Player-specific state
     activeScene,
     sendAction,
     generateRequestId,
