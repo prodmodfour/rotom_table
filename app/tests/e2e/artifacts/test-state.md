@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-02-24T00:30:00
-updated_by: slave-collector (plan-20260223-141341)
+last_updated: 2026-02-24T18:00:00
+updated_by: slave-collector (plan-20260224-171710)
 ---
 
 # Matrix Ecosystem State
@@ -92,10 +92,15 @@ All 8 domains are stale due to sessions 5–13 code changes. Re-mapping is now u
 - **vtt-grid:** feature-002 P1 fix cycle — combatantCanFly/getSkySpeed extracted to app/utils/combatantCapabilities.ts (new file), pathfinding extracted to app/composables/usePathfinding.ts (new file), elevation cost in A* heuristic fixed, isValidMove passes elevation to A*, sprite cache re-render + clearSpriteCache, combatant ID-only watcher, diamond hit detection, movement preview terrain elevation
 - **character-lifecycle:** feature-001 P0 APPROVED — no code changes, review artifacts only (code-review-149, rules-review-139)
 
+## Session 26 Changes (additional staleness)
+
+- **player-view:** feature-003 Track B P0 — JSON export endpoint, JSON import endpoint (Zod validation, conservative edit scope), server-info endpoint (LAN address), useCharacterExportImport composable, PlayerCharacterSheet export/import buttons, ServerAddressDisplay component in GM layout
+- **player-view:** feature-003 Track C P0 — player-sync types, WebSocketEvent union expansion (keepalive, scene_sync, player_action_ack, player_turn_notify, etc.), WS server handlers (player identify with characterId, keepalive, scene_request, pendingRequests with 60s TTL), useWebSocket keepalive + reconnect identity storage, usePlayerScene composable, PlayerSceneView component, usePlayerWebSocket orchestration composable, REST fallback endpoint, Scene tab in player nav, scene broadcast to group+player clients
+- **vtt-grid:** feature-002 P2 — useIsometricOverlays composable (fog/terrain/measurement rendering), isometric fog of war (per-column 3-state), terrain painting through isometric projection with elevation brush, all 5 measurement modes as isometric diamond overlays (distance/burst/cone/line/blast), R key direction cycling, 3D distance display, terrain elevation 3D side faces, GroupGridCanvas isometric rendering with camera sync, camera angle grid settings
+
 ## Recommended Next Steps
 
-1. Re-map all 8 domains + add player-view domain — sessions 12-24 added major new capabilities
-2. Re-review feature-003 P1 Track A fix cycle (7 commits from code-review-147 + rules-review-137 fixes)
-3. Re-review feature-002 P1 fix cycle (9 commits from code-review-148 fixes)
-4. Continue feature P1 tiers after re-reviews pass
-5. feature-001 P1 (P0 APPROVED)
+1. Re-map all 8 domains + add player-view domain — sessions 12-26 added major new capabilities
+2. Review feature-003 Track B P0 + Track C P0 (new implementations, no prior review)
+3. Review feature-002 P2 (new implementation, no prior review)
+4. feature-001 P1 (P0 APPROVED, closed as single-phase — revisit if P1 is desired)

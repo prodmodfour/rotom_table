@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-02-24T17:00:00
-updated_by: slave-collector (plan-20260224-162105)
+last_updated: 2026-02-24T18:00:00
+updated_by: slave-collector (plan-20260224-171710)
 ---
 
 # Dev Ecosystem State
@@ -32,8 +32,8 @@ updated_by: slave-collector (plan-20260224-162105)
 | Ticket | Priority | Status | Summary | Design Complexity |
 |--------|----------|--------|---------|-------------------|
 | feature-001 | P3 | **resolved** | B2W2 trainer sprites — single-phase design complete, P0 APPROVED (code-review-149 + rules-review-139). Closed by slave-3 (plan-20260224-162105) | single-phase |
-| feature-002 | P2 | **P1-APPROVED** | 3D isometric grid — P1 re-review APPROVED (code-review-151 + rules-review-141). Ready for P2 | multi-phase |
-| feature-003 | P1 | **P1-Track-A-APPROVED** | Player View — P1 Track A re-review APPROVED (code-review-150 + rules-review-140). Ready for P1 Track B/C | multi-phase-parallel |
+| feature-002 | P2 | **P2-implemented** | 3D isometric grid — P2 implemented (fog, terrain, measurement, background, group view). Needs review | multi-phase |
+| feature-003 | P1 | **P1-Track-B/C-implemented** | Player View — Track B P0 (export/import + server address) + Track C P0 (WS protocol + scene view) implemented. Needs review | multi-phase-parallel |
 
 ### UX Tickets (`tickets/ux/`)
 | Ticket | Priority | Status | Summary |
@@ -43,17 +43,16 @@ updated_by: slave-collector (plan-20260224-162105)
 
 ## Active Developer Work
 
-**Current task:** Slave collection for plan-20260224-162105 completed — 3 slaves merged (7 commits total).
+**Current task:** Slave collection for plan-20260224-171710 completed — 3 slaves merged (28 commits total).
 
-**Session 25 (2026-02-24):**
-- feature-003 P1 Track A re-review — code-review-150 APPROVED + rules-review-140 APPROVED. All 7 issues from code-review-147 verified resolved. **P1 Track A complete.** Ready for Track B/C
-- feature-002 P1 re-review — code-review-151 APPROVED + rules-review-141 APPROVED. All 10 issues from code-review-148 verified resolved. **P1 complete.** Ready for P2
-- refactoring-075 resolved (CombatantConditionsSection extracted from GMActionModal.vue, 803→~670 lines)
-- feature-001 closed as resolved (single-phase design complete, P0 APPROVED)
+**Session 26 (2026-02-24):**
+- feature-003 Track B P0 implemented — JSON export/import endpoints + composable + UI buttons + GM server address display (7 commits)
+- feature-003 Track C P0 implemented — WS protocol expansion (keepalive, player identify with characterId, scene sync, pendingRequests routing), scene view composable+component, REST fallback endpoint (12 commits)
+- feature-002 P2 implemented — isometric fog of war, terrain painting, all 5 measurement modes, background map, group view rendering, grid settings (9 commits)
 
 **Next actions (by priority):**
-1. **Develop** feature-003 P1 Track B/C (P1 Track A APPROVED, design specs ready)
-2. **Develop** feature-002 P2 (P1 APPROVED, design spec ready)
+1. **Review** feature-003 Track B P0 + Track C P0 (code review + rules review)
+2. **Review** feature-002 P2 (code review + rules review)
 3. ptu-rule-081 P4, ptu-rule-082 P4
 
 ## Review Status
@@ -212,8 +211,8 @@ updated_by: slave-collector (plan-20260224-162105)
 |--------|-------|
 | Last audited | 2026-02-18T12:00:00 |
 | Open tickets (P0) | 0 |
-| Open tickets (P1) | 1 (feature-003 — P1 Track A APPROVED, ready for Track B/C) |
-| Open tickets (P2) | 1 (feature-002 — P1 APPROVED, ready for P2) |
+| Open tickets (P1) | 1 (feature-003 — Track B/C P0 implemented, needs review) |
+| Open tickets (P2) | 1 (feature-002 — P2 implemented, needs review) |
 | Open tickets (P3) | 0 |
 | Open tickets (P4) | 21 (refactoring-059–078 excl resolved + ptu-rule-081, 082 + ux-001, 002) |
 | Total open | 23 |
@@ -435,6 +434,19 @@ updated_by: slave-collector (plan-20260224-162105)
 **Net movement:** 23→23 open (no change: -2 resolved + 2 new refactoring tickets)
 
 **All P0 tickets remain at 0. feature-003 P1 Track A and feature-002 P1 are now fully APPROVED. feature-001 is closed.**
+
+## Session Summary (2026-02-24, session 26 — plan-20260224-171710)
+
+**Slave collection plan-20260224-171710:** 3 slaves merged (28 commits total, 0 conflicts)
+- **slave-1** (developer): feature-003 Track B P0 — 7 commits (JSON export endpoint, JSON import endpoint with Zod validation, server-info endpoint, useCharacterExportImport composable, PlayerCharacterSheet export/import UI, ServerAddressDisplay component, GM layout integration)
+- **slave-2** (developer): feature-003 Track C P0 — 12 commits (player-sync types, WebSocketEvent union extension, requestId generation, player broadcast helpers, WS server protocol handlers with pendingRequests/keepalive/scene_request, useWebSocket keepalive + reconnect storage, usePlayerScene composable, PlayerSceneView component, usePlayerWebSocket orchestration, REST fallback endpoint, Scene tab in player nav, scene broadcast to group+player)
+- **slave-3** (developer): feature-002 P2 — 9 commits (isometric overlay rendering for fog/terrain/measurement, R key direction cycling, GroupGridCanvas isometric rendering with camera sync, CoordinateDisplay elevation+measurement info, MeasurementToolbar 3D distance, camera angle grid settings, TerrainPainter elevation brush, terrain elevation 3D side faces, ticket docs update)
+
+**Tickets filed:** 0
+**Tickets resolved:** 0
+**Net movement:** 23→23 open (no change — all work was new implementations needing review)
+
+**All P0 tickets remain at 0.**
 
 ## Session Summary (2026-02-23, session 22 — plan-20260223-122250)
 
