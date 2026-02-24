@@ -328,15 +328,29 @@ watch(() => props.combatants, () => {
 }, { deep: true })
 
 // P2: Re-render on fog/terrain/measurement state changes
-watch(() => fogOfWarStore.$state, () => {
+// Watch only rendering-relevant state (not UI-only fields like toolMode, brushSize)
+watch(() => fogOfWarStore.cellStates, () => {
   rendering.scheduleRender()
 }, { deep: true })
 
-watch(() => terrainStore.$state, () => {
+watch(() => fogOfWarStore.enabled, () => {
+  rendering.scheduleRender()
+})
+
+watch(() => terrainStore.cells, () => {
   rendering.scheduleRender()
 }, { deep: true })
 
-watch(() => measurementStore.$state, () => {
+// Measurement: watch the fields that affect overlay rendering
+const measurementRenderState = computed(() => ({
+  mode: measurementStore.mode,
+  startPosition: measurementStore.startPosition,
+  endPosition: measurementStore.endPosition,
+  aoeSize: measurementStore.aoeSize,
+  aoeDirection: measurementStore.aoeDirection,
+}))
+
+watch(measurementRenderState, () => {
   rendering.scheduleRender()
 }, { deep: true })
 
