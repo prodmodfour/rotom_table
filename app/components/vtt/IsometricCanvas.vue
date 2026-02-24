@@ -252,12 +252,18 @@ const handleKeyDown = (event: KeyboardEvent) => {
   interaction.handleKeyDown(event)
 }
 
-// Apply default elevations for flying Pokemon
-watch(() => props.combatants, (combatants) => {
-  for (const combatant of combatants) {
-    elevation.applyDefaultElevation(combatant.id)
-  }
-}, { immediate: true, deep: true })
+// Apply default elevations for flying Pokemon when combatant list changes.
+// Watch only combatant IDs (not deep state) to avoid unnecessary calls
+// when HP, status, or other combatant fields change.
+watch(
+  () => props.combatants.map(c => c.id),
+  (_ids) => {
+    for (const combatant of props.combatants) {
+      elevation.applyDefaultElevation(combatant.id)
+    }
+  },
+  { immediate: true }
+)
 
 // Watch for rotation completion
 watch(() => camera.isRotating.value, (rotating) => {
