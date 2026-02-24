@@ -287,27 +287,34 @@ const isometric3dDistance = computed(() => {
   if (!props.config.isometric) return undefined
   if (measurementStore.mode !== 'distance') return undefined
   if (!measurementStore.startPosition || !measurementStore.endPosition) return undefined
-  if (!isometricCanvasRef.value) return measurementStore.distance
+  if (!isometricCanvasRef.value?.getTerrainElevation) return measurementStore.distance
 
   const start = measurementStore.startPosition
   const end = measurementStore.endPosition
-  const startZ = isometricCanvasRef.value.getTokenElevation?.('')
-    ? 0 // fallback — terrain elevation at start
-    : 0
-  const endZ = 0
+  const startZ = isometricCanvasRef.value.getTerrainElevation(start.x, start.y) ?? 0
+  const endZ = isometricCanvasRef.value.getTerrainElevation(end.x, end.y) ?? 0
 
-  // PTU 3D distance: chebyshev(dx, dy) + |dz|
-  const flatDist = measurementStore.distance
-  const elevDelta = Math.abs(endZ - startZ)
-  return flatDist + elevDelta
+  const dx = Math.abs(end.x - start.x)
+  const dy = Math.abs(end.y - start.y)
+  const dz = Math.abs(endZ - startZ)
+
+  // 3D Euclidean distance for elevation-aware measurement
+  const flatDist = Math.max(dx, dy) // Chebyshev for XY plane
+  return Math.round(Math.sqrt(flatDist * flatDist + dz * dz) * 10) / 10
 })
 
 const isometricElevationDelta = computed(() => {
   if (!props.config.isometric) return undefined
   if (measurementStore.mode !== 'distance') return undefined
-  // For now, elevation delta between measurement points is 0 (ground plane measurement)
-  // This will be enhanced when terrain elevation lookup is available per-cell
-  return 0
+  if (!measurementStore.startPosition || !measurementStore.endPosition) return undefined
+  if (!isometricCanvasRef.value?.getTerrainElevation) return 0
+
+  const start = measurementStore.startPosition
+  const end = measurementStore.endPosition
+  const startZ = isometricCanvasRef.value.getTerrainElevation(start.x, start.y) ?? 0
+  const endZ = isometricCanvasRef.value.getTerrainElevation(end.x, end.y) ?? 0
+
+  return endZ - startZ
 })
 
 // Elevation toolbar state

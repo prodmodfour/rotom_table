@@ -347,6 +347,7 @@ defineExpose({
   render: rendering.render,
   // Elevation API for ElevationToolbar
   getTokenElevation: elevation.getTokenElevation,
+  getTerrainElevation: elevation.getTerrainElevation,
   setTokenElevation: elevation.setTokenElevation,
   raiseToken: elevation.raiseToken,
   lowerToken: elevation.lowerToken,
