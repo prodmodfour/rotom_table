@@ -13,6 +13,8 @@
 
 import { checkLevelUp } from '~/utils/levelUpCheck'
 import type { LearnsetEntry } from '~/utils/levelUpCheck'
+import { SIGNIFICANCE_PRESETS as BUDGET_PRESETS } from '~/utils/encounterBudget'
+import type { SignificanceTier } from '~/utils/encounterBudget'
 
 // ============================================
 // CONSTANTS
@@ -53,32 +55,25 @@ export const MAX_LEVEL = 100
 export const MAX_EXPERIENCE = EXPERIENCE_CHART[MAX_LEVEL]
 
 /**
- * Default significance multiplier presets (GM convenience).
+ * Significance multiplier presets derived from encounterBudget.ts (canonical source).
  * PTU Core p.460: GM-assigned based on narrative significance.
+ *
+ * Object format for template v-for="(value, key)" iteration:
+ * { insignificant: 1.0, everyday: 2.0, significant: 3.5, climactic: 4.5, legendary: 5.0 }
  */
-export const SIGNIFICANCE_PRESETS = {
-  insignificant: 1,
-  below_average: 1.5,
-  average: 2,
-  above_average: 3,
-  significant: 4,
-  major: 5,
-} as const
+export const SIGNIFICANCE_PRESETS = Object.fromEntries(
+  BUDGET_PRESETS.map(p => [p.tier, p.defaultMultiplier])
+) as Record<SignificanceTier, number>
 
-export type SignificancePreset = keyof typeof SIGNIFICANCE_PRESETS
+export type SignificancePreset = SignificanceTier
 
 /**
  * Canonical friendly labels for significance presets.
  * Used in both SignificancePanel and XpDistributionModal for consistent display.
  */
-export const SIGNIFICANCE_PRESET_LABELS: Record<SignificancePreset, string> = {
-  insignificant: 'Insignificant',
-  below_average: 'Minor',
-  average: 'Everyday',
-  above_average: 'Notable',
-  significant: 'Significant',
-  major: 'Climactic',
-}
+export const SIGNIFICANCE_PRESET_LABELS: Record<SignificancePreset, string> = Object.fromEntries(
+  BUDGET_PRESETS.map(p => [p.tier, p.label])
+) as Record<SignificancePreset, string>
 
 /**
  * Resolve a significance preset key from a multiplier value.
