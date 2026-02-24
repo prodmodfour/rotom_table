@@ -59,28 +59,6 @@ export function useCombat() {
     return calculateEvasion(speed, speedStages, evasionBonus, statBonus)
   }
 
-  // ===========================================
-  // PTU Initiative
-  // Initiative = Modified Speed stat + bonuses
-  // ===========================================
-  const calculateInitiative = (entity: Pokemon | HumanCharacter, bonus: number = 0): number => {
-    let speed: number
-    let stages: number = 0
-
-    if ('species' in entity) {
-      // Pokemon
-      speed = entity.currentStats.speed
-      stages = entity.stageModifiers.speed
-    } else {
-      // Human
-      speed = entity.stats.speed
-      stages = entity.stageModifiers.speed
-    }
-
-    const modifiedSpeed = applyStageModifier(speed, stages)
-    return modifiedSpeed + bonus
-  }
-
   // Get health percentage
   const getHealthPercentage = (current: number, max: number): number => {
     return Math.round((current / max) * 100)
@@ -196,9 +174,6 @@ export function useCombat() {
     calculatePhysicalEvasion,
     calculateSpecialEvasion,
     calculateSpeedEvasion,
-
-    // Initiative
-    calculateInitiative,
 
     // Health utilities
     getHealthPercentage,
