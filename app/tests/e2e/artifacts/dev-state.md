@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-02-24T00:30:00
-updated_by: slave-collector (plan-20260223-141341)
+last_updated: 2026-02-24T17:00:00
+updated_by: slave-collector (plan-20260224-162105)
 ---
 
 # Dev Ecosystem State
@@ -31,9 +31,9 @@ updated_by: slave-collector (plan-20260223-141341)
 ### Feature Tickets (`tickets/feature/`)
 | Ticket | Priority | Status | Summary | Design Complexity |
 |--------|----------|--------|---------|-------------------|
-| feature-001 | P3 | **P0-APPROVED** | B2W2 trainer sprites — P0 fully approved (code-review-149 APPROVED, rules-review-139 APPROVED). Ready for P1 | single-phase |
-| feature-002 | P2 | **P1-fix-applied** | 3D isometric grid — P1 fix cycle applied (9 commits: A* heuristic, elevation passthrough, sprite cache, utility extraction, pathfinding extraction, diamond hit test, preview elevation). Needs re-review | multi-phase |
-| feature-003 | P1 | **P1-fix-applied** | Player View — P1 Track A fix cycle applied (7 commits: canBeCommanded, SCSS extraction, toast, isMyTurn dedup, dead code deletion, app-surface, Struggle comment). Needs re-review | multi-phase-parallel |
+| feature-001 | P3 | **resolved** | B2W2 trainer sprites — single-phase design complete, P0 APPROVED (code-review-149 + rules-review-139). Closed by slave-3 (plan-20260224-162105) | single-phase |
+| feature-002 | P2 | **P1-APPROVED** | 3D isometric grid — P1 re-review APPROVED (code-review-151 + rules-review-141). Ready for P2 | multi-phase |
+| feature-003 | P1 | **P1-Track-A-APPROVED** | Player View — P1 Track A re-review APPROVED (code-review-150 + rules-review-140). Ready for P1 Track B/C | multi-phase-parallel |
 
 ### UX Tickets (`tickets/ux/`)
 | Ticket | Priority | Status | Summary |
@@ -43,22 +43,28 @@ updated_by: slave-collector (plan-20260223-141341)
 
 ## Active Developer Work
 
-**Current task:** Slave collection for plan-20260223-141341 completed — 3 slaves merged (18 commits total).
+**Current task:** Slave collection for plan-20260224-162105 completed — 3 slaves merged (7 commits total).
 
-**Session 24 (2026-02-24):**
-- feature-003 P1 Track A fix cycle applied (slave-1, 7 commits) — canBeCommanded check for league battles, SCSS extraction to shared stylesheet, alert→toast, isMyTurn dedup via composable, dead PlayerActionPanel deleted, app-surface updated, Struggle comment fixed. Needs re-review
-- feature-002 P1 fix cycle applied (slave-2, 9 commits) — combatantCanFly/getSkySpeed extracted to shared utility, pathfinding extracted to usePathfinding.ts, elevation cost passed to A* in isValidMove, sprite cache re-render + bounded memory, combatant ID-only watcher, diamond-shaped hit detection, movement preview terrain elevation, app-surface updated. Needs re-review
-- feature-001 P0 re-review completed (slave-3) — code-review-149 APPROVED, rules-review-139 APPROVED. P0 fully resolved, ready for P1
+**Session 25 (2026-02-24):**
+- feature-003 P1 Track A re-review — code-review-150 APPROVED + rules-review-140 APPROVED. All 7 issues from code-review-147 verified resolved. **P1 Track A complete.** Ready for Track B/C
+- feature-002 P1 re-review — code-review-151 APPROVED + rules-review-141 APPROVED. All 10 issues from code-review-148 verified resolved. **P1 complete.** Ready for P2
+- refactoring-075 resolved (CombatantConditionsSection extracted from GMActionModal.vue, 803→~670 lines)
+- feature-001 closed as resolved (single-phase design complete, P0 APPROVED)
 
 **Next actions (by priority):**
-1. **Re-review** feature-003 P1 Track A fix cycle (7 commits from code-review-147 + rules-review-137 fixes)
-2. **Re-review** feature-002 P1 fix cycle (9 commits from code-review-148 fixes)
-3. feature-003 P1 Track B/C (after P1 Track A re-review passes)
-4. feature-002 P2 (after P1 re-review passes)
-5. feature-001 P1 (P0 APPROVED, design ready)
-6. ptu-rule-081 P4, ptu-rule-082 P4
+1. **Develop** feature-003 P1 Track B/C (P1 Track A APPROVED, design specs ready)
+2. **Develop** feature-002 P2 (P1 APPROVED, design spec ready)
+3. ptu-rule-081 P4, ptu-rule-082 P4
 
 ## Review Status
+
+### Session 25 Reviews
+| Review ID | Target | Verdict | Reviewer | Date |
+|-----------|--------|---------|----------|------|
+| code-review-150 | feature-003 P1 Track A fix cycle re-review | APPROVED | senior-reviewer | 2026-02-24 |
+| rules-review-140 | feature-003 P1 Track A fix cycle re-review | APPROVED | game-logic-reviewer | 2026-02-24 |
+| code-review-151 | feature-002 P1 fix cycle re-review | APPROVED | senior-reviewer | 2026-02-24 |
+| rules-review-141 | feature-002 P1 fix cycle re-review | APPROVED | game-logic-reviewer | 2026-02-24 |
 
 ### Session 24 Reviews
 | Review ID | Target | Verdict | Reviewer | Date |
@@ -195,8 +201,10 @@ updated_by: slave-collector (plan-20260223-141341)
 | refactoring-072 | P4 | open | Replace `tier: string` with `SignificanceTier` in store/composable signatures (from code-review-141 M1) |
 | refactoring-073 | P4 | open | Add server-side validation for significanceTier string values (from code-review-141 M2) |
 | refactoring-074 | P4 | open | Consolidate duplicate SIGNIFICANCE_PRESETS arrays (from rules-review-131 observation) |
-| refactoring-075 | P4 | open | Extract CombatantConditionsSection from GMActionModal.vue (803 lines, from code-review-143 H1) |
+| refactoring-075 | P4 | **resolved** | Extract CombatantConditionsSection from GMActionModal.vue (803→~670 lines) — resolved by slave-3 (plan-20260224-162105) |
 | refactoring-076 | P4 | open | Restore 9px font-size for PokemonCard stat cell labels (from code-review-144 M1) |
+| refactoring-077 | P4 | open | Move TerrainCostGetter type to shared types file (from code-review-151 M2 note) |
+| refactoring-078 | P4 | open | Add elevation parameters to validateMovement for unit tests (from code-review-151 regression check note) |
 
 ## Code Health
 
@@ -204,12 +212,12 @@ updated_by: slave-collector (plan-20260223-141341)
 |--------|-------|
 | Last audited | 2026-02-18T12:00:00 |
 | Open tickets (P0) | 0 |
-| Open tickets (P1) | 1 (feature-003 — P1-fix-applied, needs re-review) |
-| Open tickets (P2) | 1 (feature-002 — P1-fix-applied, needs re-review) |
-| Open tickets (P3) | 1 (feature-001 — P0-APPROVED, ready for P1) |
-| Open tickets (P4) | 20 (refactoring-059–076 excl resolved + ptu-rule-081, 082 + ux-001, 002) |
+| Open tickets (P1) | 1 (feature-003 — P1 Track A APPROVED, ready for Track B/C) |
+| Open tickets (P2) | 1 (feature-002 — P1 APPROVED, ready for P2) |
+| Open tickets (P3) | 0 |
+| Open tickets (P4) | 21 (refactoring-059–078 excl resolved + ptu-rule-081, 082 + ux-001, 002) |
 | Total open | 23 |
-| Total resolved | 150 |
+| Total resolved | 152 |
 
 ## Session Summary (2026-02-20, session 13)
 
@@ -413,6 +421,20 @@ updated_by: slave-collector (plan-20260223-141341)
 **Net movement:** 23→23 open (no change — fix cycles applied, feature-001 P0 approved but ticket stays open for P1)
 
 **All P0 tickets remain at 0.**
+
+## Session Summary (2026-02-24, session 25 — plan-20260224-162105)
+
+**Slave collection plan-20260224-162105:** 3 slaves merged (7 commits total, 0 conflicts)
+- **slave-3** (developer): refactoring-075 — 3 commits (extracted CombatantConditionsSection from GMActionModal.vue, updated refactoring-075 ticket to resolved, closed feature-001 as resolved)
+- **slave-1** (reviewers): feature-003 P1 Track A re-review — code-review-150 APPROVED (0 issues, all 7 fixes verified) + rules-review-140 APPROVED (0 issues, all 7 mechanics re-verified) → **P1 Track A complete**
+- **slave-2** (reviewers): feature-002 P1 re-review — code-review-151 APPROVED (0 issues, all 10 fixes verified) + rules-review-141 APPROVED (0 issues, all 8 mechanics re-verified) → **P1 complete**
+
+**Tickets filed:** 2 (refactoring-077 circular type dependency, refactoring-078 validateMovement elevation params)
+**Tickets resolved:** 2 (feature-001 closed, refactoring-075 resolved)
+**Reviews completed:** 4 artifacts (code-review-150, rules-review-140, code-review-151, rules-review-141)
+**Net movement:** 23→23 open (no change: -2 resolved + 2 new refactoring tickets)
+
+**All P0 tickets remain at 0. feature-003 P1 Track A and feature-002 P1 are now fully APPROVED. feature-001 is closed.**
 
 ## Session Summary (2026-02-23, session 22 — plan-20260223-122250)
 

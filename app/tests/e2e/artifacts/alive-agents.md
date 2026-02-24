@@ -67,3 +67,6 @@
 | plan-20260223-141341/slave-1 | developer | feature-003-p1-fix | success | 2026-02-23T14:23:00Z | af5ee4f, 867e189, 58673d8, 7a512e7, f8931ab, b7b81c5, fdcdc55 |
 | plan-20260223-141341/slave-2 | developer | feature-002-p1-fix | success | 2026-02-23T14:29:00Z | b79aa84, 5c5fe68, d3cbb0e, 5d71f46, 3a4d6fd, d19e3bb, f593a32, 65f41b3, 0fee174 |
 | plan-20260223-141341/slave-3 | reviewers | feature-001-rereview | APPROVED | 2026-02-23T14:22:00Z | 174c394, 8d911aa |
+| plan-20260224-162105/slave-3 | developer | refactoring-075+feature-001-close | success | 2026-02-24T16:26:00Z | b51ad5d9, 19c6f09d, 1990998d |
+| plan-20260224-162105/slave-1 | reviewers | feature-003-p1-rereview | APPROVED | 2026-02-24T16:31:00Z | c108575c, 441dd81e |
+| plan-20260224-162105/slave-2 | reviewers | feature-002-p1-rereview | APPROVED | 2026-02-24T16:28:00Z | 0a750ffe, c13c5ddb |
