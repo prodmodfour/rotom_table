@@ -43,6 +43,9 @@
       </nav>
 
       <div class="gm-header__actions">
+        <!-- Server Address for Players -->
+        <ServerAddressDisplay />
+
         <!-- Group View Tab Selector -->
         <div class="tab-selector">
           <label class="tab-selector__label">Group View:</label>
