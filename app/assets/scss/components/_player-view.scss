@@ -104,3 +104,112 @@
   font-size: $font-size-xs;
   color: $color-accent-pink;
 }
+
+// ===========================================
+// Export/Import Actions
+// ===========================================
+// Used by PlayerCharacterSheet for data portability buttons and import feedback.
+.player-sheet__actions {
+  display: flex;
+  gap: $spacing-sm;
+}
+
+.player-sheet__action-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-xs;
+  padding: $spacing-sm $spacing-md;
+  background: $glass-bg;
+  border: 1px solid $glass-border;
+  border-radius: $border-radius-lg;
+  color: $color-text;
+  font-size: $font-size-sm;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  &:hover:not(:disabled) {
+    background: $color-bg-hover;
+    border-color: $color-accent-teal;
+    color: $color-accent-teal;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.player-sheet__file-input {
+  display: none;
+}
+
+// Import result banner
+.player-sheet__import-result {
+  position: relative;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $border-radius-lg;
+  font-size: $font-size-sm;
+}
+
+.import-result {
+  &--success {
+    background: rgba($color-success, 0.1);
+    border: 1px solid rgba($color-success, 0.3);
+    color: $color-success;
+  }
+
+  &--warning {
+    background: rgba($color-warning, 0.1);
+    border: 1px solid rgba($color-warning, 0.3);
+    color: $color-warning;
+  }
+
+  &--error {
+    background: rgba($color-danger, 0.1);
+    border: 1px solid rgba($color-danger, 0.3);
+    color: $color-danger;
+  }
+
+  &__message {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+  }
+
+  &__conflicts {
+    list-style: none;
+    padding: $spacing-xs 0 0 ($spacing-md + 18px);
+    margin: 0;
+    font-size: $font-size-xs;
+    opacity: 0.85;
+
+    li {
+      padding: 2px 0;
+    }
+  }
+
+  &__dismiss {
+    position: absolute;
+    top: $spacing-xs;
+    right: $spacing-xs;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    border-radius: $border-radius-sm;
+    opacity: 0.6;
+    transition: opacity $transition-fast;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}

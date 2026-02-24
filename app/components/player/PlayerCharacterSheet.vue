@@ -26,6 +26,51 @@
       </div>
     </section>
 
+    <!-- Export / Import Actions -->
+    <section class="player-sheet__actions">
+      <button
+        class="player-sheet__action-btn"
+        :disabled="exporting"
+        @click="handleExport"
+      >
+        <PhDownloadSimple :size="16" />
+        <span>{{ exporting ? 'Exporting...' : 'Export Character' }}</span>
+      </button>
+      <button
+        class="player-sheet__action-btn"
+        :disabled="importing"
+        @click="triggerImport"
+      >
+        <PhUploadSimple :size="16" />
+        <span>{{ importing ? 'Importing...' : 'Import Character' }}</span>
+      </button>
+      <input
+        ref="fileInput"
+        type="file"
+        accept=".json"
+        class="player-sheet__file-input"
+        @change="handleImportFile"
+      />
+    </section>
+
+    <!-- Import Result Banner -->
+    <div v-if="importResult" class="player-sheet__import-result" :class="importResultClass">
+      <div class="import-result__message">
+        <PhCheckCircle v-if="importResult.success && !importResult.hasConflicts" :size="18" />
+        <PhWarningCircle v-else-if="importResult.hasConflicts" :size="18" />
+        <PhXCircle v-else :size="18" />
+        <span>{{ importResult.message }}</span>
+      </div>
+      <ul v-if="importResult.conflicts && importResult.conflicts.length > 0" class="import-result__conflicts">
+        <li v-for="(conflict, idx) in importResult.conflicts" :key="idx">
+          {{ conflict.entityName }}: "{{ conflict.field }}" was changed on the server (server version kept)
+        </li>
+      </ul>
+      <button class="import-result__dismiss" @click="clearImportResult">
+        <PhX :size="14" />
+      </button>
+    </div>
+
     <!-- Stats Grid -->
     <section class="player-sheet__section">
       <button class="player-sheet__section-header" @click="toggleSection('stats')">
@@ -195,7 +240,15 @@
 </template>
 
 <script setup lang="ts">
-import { PhCaretDown } from '@phosphor-icons/vue'
+import {
+  PhCaretDown,
+  PhDownloadSimple,
+  PhUploadSimple,
+  PhCheckCircle,
+  PhWarningCircle,
+  PhXCircle,
+  PhX
+} from '@phosphor-icons/vue'
 import type { HumanCharacter, EquippedItem, EquipmentSlots } from '~/types'
 import { calculateEvasion } from '~/utils/damageCalculation'
 import { computeEquipmentBonuses } from '~/utils/equipmentBonuses'
@@ -203,6 +256,46 @@ import { computeEquipmentBonuses } from '~/utils/equipmentBonuses'
 const props = defineProps<{
   character: HumanCharacter
 }>()
+
+const emit = defineEmits<{
+  imported: []
+}>()
+
+// Export/Import composable
+const characterId = computed(() => props.character.id)
+const characterName = computed(() => props.character.name)
+
+const {
+  exporting,
+  importing,
+  importResult,
+  importResultClass,
+  handleExport,
+  handleImportFile: processImportFile,
+  clearImportResult
+} = useCharacterExportImport(characterId, characterName)
+
+const fileInput = ref<HTMLInputElement | null>(null)
+
+/** Open the file picker for import. */
+const triggerImport = () => {
+  fileInput.value?.click()
+}
+
+/** Handle the selected import file from the file input. */
+const handleImportFile = async (event: Event) => {
+  const target = event.target as HTMLInputElement
+  const file = target.files?.[0]
+  if (!file) return
+
+  // Reset file input so the same file can be selected again
+  target.value = ''
+
+  const updated = await processImportFile(file)
+  if (updated) {
+    emit('imported')
+  }
+}
 
 // Section collapse state
 const openSections = reactive({

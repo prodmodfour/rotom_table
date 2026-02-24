@@ -45,6 +45,7 @@
         <PlayerCharacterSheet
           v-if="activeTab === 'character'"
           :character="character"
+          @imported="refreshCharacterData"
         />
         <PlayerPokemonTeam
           v-else-if="activeTab === 'team'"
