@@ -33,11 +33,14 @@
       @reset="camera.resetView"
     />
 
-    <!-- Coordinate Display (with elevation) -->
+    <!-- Coordinate Display (with full elevation display) -->
     <CoordinateDisplay
       v-if="showCoordinates"
       :cell="interaction.hoveredCell.value"
       :elevation="hoveredElevation"
+      :is-isometric="true"
+      :mode="measurementStore.mode"
+      :distance="measurementStore.distance"
     />
   </div>
 </template>

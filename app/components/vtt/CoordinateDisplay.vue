@@ -1,7 +1,7 @@
 <template>
   <div v-if="cell" class="coordinate-display">
     {{ cell.x }}, {{ cell.y }}
-    <span v-if="elevation !== undefined && elevation > 0" class="coordinate-display__elevation">
+    <span v-if="elevation !== undefined && (elevation > 0 || isIsometric)" class="coordinate-display__elevation">
       Z{{ elevation }}
     </span>
     <template v-if="mode !== 'none'">
@@ -22,6 +22,8 @@ defineProps<{
   mode?: MeasurementMode
   distance?: number
   elevation?: number
+  /** When true, always show elevation (even Z0) for spatial awareness. */
+  isIsometric?: boolean
 }>()
 </script>
 
