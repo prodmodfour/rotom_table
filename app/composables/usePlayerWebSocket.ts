@@ -14,6 +14,7 @@ export function usePlayerWebSocket() {
   const { isConnected, identify, joinEncounter, send, onMessage } = useWebSocket()
   const playerStore = usePlayerIdentityStore()
   const encounterStore = useEncounterStore()
+  const { refreshCharacterData } = usePlayerIdentity()
   const { handleSceneSync, handleSceneDeactivated, fetchActiveScene, activeScene } = usePlayerScene()
 
   // Pending action requests: requestId -> { resolve, reject, timestamp }
@@ -88,14 +89,15 @@ export function usePlayerWebSocket() {
 
   /**
    * Handle character_update events for the player's own character/pokemon.
+   * Refreshes character data from the server when the updated entity
+   * matches the player's character or any of their pokemon.
    */
   const handleCharacterUpdate = (data: { id?: string }): void => {
     if (!playerStore.characterId) return
 
     const entityId = data?.id
     if (entityId === playerStore.characterId || playerStore.pokemonIds.includes(entityId ?? '')) {
-      // Refresh character data from server — identity composable handles this
-      // This is an event notification; the actual refresh is triggered by the parent
+      refreshCharacterData()
     }
   }
 
@@ -114,6 +116,10 @@ export function usePlayerWebSocket() {
 
       case 'player_action_ack':
         handleActionAck(message.data as PlayerActionAck)
+        break
+
+      case 'character_update':
+        handleCharacterUpdate(message.data as { id?: string })
         break
 
       case 'scene_activated':

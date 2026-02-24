@@ -211,21 +211,9 @@ const handleSwitchCharacter = () => {
   activeTab.value = 'character'
 }
 
-// WebSocket listener for real-time character/Pokemon updates
-let removeWsListener: (() => void) | null = null
-
 // Initialize on mount
 onMounted(async () => {
-  // Register WebSocket listener for character_update events
-  removeWsListener = onMessage((message) => {
-    if (message.type === 'character_update' && playerStore.characterId) {
-      const data = message.data as { id?: string }
-      const entityId = data?.id
-      if (entityId === playerStore.characterId || playerStore.pokemonIds.includes(entityId ?? '')) {
-        refreshCharacterData()
-      }
-    }
-  })
+  // character_update handling is in usePlayerWebSocket (handleCharacterUpdate)
 
   const restored = await restoreIdentity()
   // usePlayerWebSocket watches characterId + isConnected and auto-identifies
@@ -241,10 +229,6 @@ onMounted(async () => {
 
 // Cleanup
 onUnmounted(() => {
-  if (removeWsListener) {
-    removeWsListener()
-    removeWsListener = null
-  }
   if (pollInterval) {
     clearInterval(pollInterval)
     pollInterval = null
