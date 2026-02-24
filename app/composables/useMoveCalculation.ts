@@ -188,18 +188,24 @@ export function useMoveCalculation(
     return stages.accuracy || 0
   })
 
-  const getTargetEvasion = (targetId: string): number => {
-    const target = targets.value.find(t => t.id === targetId)
-    if (!target || !target.entity) return 0
-
+  /**
+   * Compute all three evasion values for a target, including Focus bonuses
+   * and equipment evasion. Returns physical, special, and speed evasion
+   * with the evasion bonus already applied.
+   *
+   * PTU p.234 (07-combat.md:648-653): Evasion bonus from moves/effects is additive,
+   * stacking on top of stat-derived evasion. This is NOT a combat stage multiplier.
+   * PTU p.294-295: Equipment evasion bonus (shields) and Focus stat bonuses.
+   */
+  const computeTargetEvasions = (target: Combatant): {
+    physical: number
+    special: number
+    speed: number
+  } => {
     const entity = target.entity
     const stages = getStageModifiers(entity)
-    // PTU p.234 (07-combat.md:648-653): Evasion bonus from moves/effects is additive,
-    // stacking on top of stat-derived evasion. This is NOT a combat stage multiplier —
-    // the actual combat stages on Def/SpDef/Speed already affect evasion via the
-    // multiplier table applied to the stat before dividing by 5.
+
     let evasionBonus = stages.evasion ?? 0
-    // Equipment evasion bonus (shields) and Focus stat bonuses (PTU p.294-295)
     let focusDefBonus = 0
     let focusSpDefBonus = 0
     let focusSpeedBonus = 0
@@ -211,25 +217,35 @@ export function useMoveCalculation(
       focusSpeedBonus = equipBonuses.statBonuses.speed ?? 0
     }
 
-    // PTU p.234: Speed Evasion may be applied to any Move with an accuracy check.
-    // Auto-select the highest applicable evasion (rational defender always picks best).
     const speedStat = target.type === 'pokemon'
       ? getPokemonSpeedStat(entity)
       : getHumanStat(entity, 'speed')
-    const speedEvasion = calculateSpeedEvasion(speedStat, stages.speed, evasionBonus, focusSpeedBonus)
+    const defStat = target.type === 'pokemon'
+      ? getPokemonDefenseStat(entity)
+      : getHumanStat(entity, 'defense')
+    const spDefStat = target.type === 'pokemon'
+      ? getPokemonSpDefStat(entity)
+      : getHumanStat(entity, 'specialDefense')
 
+    return {
+      physical: calculatePhysicalEvasion(defStat, stages.defense, evasionBonus, focusDefBonus),
+      special: calculateSpecialEvasion(spDefStat, stages.specialDefense, evasionBonus, focusSpDefBonus),
+      speed: calculateSpeedEvasion(speedStat, stages.speed, evasionBonus, focusSpeedBonus)
+    }
+  }
+
+  const getTargetEvasion = (targetId: string): number => {
+    const target = targets.value.find(t => t.id === targetId)
+    if (!target || !target.entity) return 0
+
+    const evasions = computeTargetEvasions(target)
+
+    // PTU p.234: Speed Evasion may be applied to any Move with an accuracy check.
+    // Auto-select the highest applicable evasion (rational defender always picks best).
     if (move.value.damageClass === 'Physical') {
-      const defStat = target.type === 'pokemon'
-        ? getPokemonDefenseStat(entity)
-        : getHumanStat(entity, 'defense')
-      const physEvasion = calculatePhysicalEvasion(defStat, stages.defense, evasionBonus, focusDefBonus)
-      return Math.max(physEvasion, speedEvasion)
+      return Math.max(evasions.physical, evasions.speed)
     } else {
-      const spDefStat = target.type === 'pokemon'
-        ? getPokemonSpDefStat(entity)
-        : getHumanStat(entity, 'specialDefense')
-      const specEvasion = calculateSpecialEvasion(spDefStat, stages.specialDefense, evasionBonus, focusSpDefBonus)
-      return Math.max(specEvasion, speedEvasion)
+      return Math.max(evasions.special, evasions.speed)
     }
   }
 
@@ -242,39 +258,12 @@ export function useMoveCalculation(
     const target = targets.value.find(t => t.id === targetId)
     if (!target || !target.entity) return 'Evasion'
 
-    const entity = target.entity
-    const stages = getStageModifiers(entity)
-    // Evasion bonus from moves/effects (additive, not a multiplier-based combat stage)
-    let evasionBonus = stages.evasion ?? 0
-    // Equipment evasion bonus (shields) and Focus stat bonuses (PTU p.294-295)
-    let focusDefBonus = 0
-    let focusSpDefBonus = 0
-    let focusSpeedBonus = 0
-    if (target.type === 'human') {
-      const equipBonuses = computeEquipmentBonuses((entity as HumanCharacter).equipment ?? {})
-      evasionBonus += equipBonuses.evasionBonus
-      focusDefBonus = equipBonuses.statBonuses.defense ?? 0
-      focusSpDefBonus = equipBonuses.statBonuses.specialDefense ?? 0
-      focusSpeedBonus = equipBonuses.statBonuses.speed ?? 0
-    }
-
-    const speedStat = target.type === 'pokemon'
-      ? getPokemonSpeedStat(entity)
-      : getHumanStat(entity, 'speed')
-    const speedEvasion = calculateSpeedEvasion(speedStat, stages.speed, evasionBonus, focusSpeedBonus)
+    const evasions = computeTargetEvasions(target)
 
     if (move.value.damageClass === 'Physical') {
-      const defStat = target.type === 'pokemon'
-        ? getPokemonDefenseStat(entity)
-        : getHumanStat(entity, 'defense')
-      const physEvasion = calculatePhysicalEvasion(defStat, stages.defense, evasionBonus, focusDefBonus)
-      return speedEvasion > physEvasion ? 'Speed Evasion' : 'Phys Evasion'
+      return evasions.speed > evasions.physical ? 'Speed Evasion' : 'Phys Evasion'
     } else {
-      const spDefStat = target.type === 'pokemon'
-        ? getPokemonSpDefStat(entity)
-        : getHumanStat(entity, 'specialDefense')
-      const specEvasion = calculateSpecialEvasion(spDefStat, stages.specialDefense, evasionBonus, focusSpDefBonus)
-      return speedEvasion > specEvasion ? 'Speed Evasion' : 'Spec Evasion'
+      return evasions.speed > evasions.special ? 'Speed Evasion' : 'Spec Evasion'
     }
   }
 
