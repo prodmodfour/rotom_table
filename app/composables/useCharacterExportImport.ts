@@ -14,7 +14,7 @@ interface ImportConflict {
   resolution: string
 }
 
-export interface ImportResult {
+export interface OperationResult {
   success: boolean
   message: string
   hasConflicts: boolean
@@ -24,12 +24,12 @@ export interface ImportResult {
 export function useCharacterExportImport(characterId: Ref<string>, characterName: Ref<string>) {
   const exporting = ref(false)
   const importing = ref(false)
-  const importResult = ref<ImportResult | null>(null)
+  const operationResult = ref<OperationResult | null>(null)
 
-  const importResultClass = computed(() => {
-    if (!importResult.value) return ''
-    if (!importResult.value.success) return 'import-result--error'
-    if (importResult.value.hasConflicts) return 'import-result--warning'
+  const operationResultClass = computed(() => {
+    if (!operationResult.value) return ''
+    if (!operationResult.value.success) return 'import-result--error'
+    if (operationResult.value.hasConflicts) return 'import-result--warning'
     return 'import-result--success'
   })
 
@@ -52,7 +52,7 @@ export function useCharacterExportImport(characterId: Ref<string>, characterName
       link.click()
       URL.revokeObjectURL(url)
     } catch (err: any) {
-      importResult.value = {
+      operationResult.value = {
         success: false,
         message: `Export failed: ${err.message || 'Unknown error'}`,
         hasConflicts: false,
@@ -66,7 +66,7 @@ export function useCharacterExportImport(characterId: Ref<string>, characterName
   /** Process an import file and send to the server. Returns true if fields were updated. */
   const handleImportFile = async (file: File): Promise<boolean> => {
     importing.value = true
-    importResult.value = null
+    operationResult.value = null
 
     try {
       const text = await file.text()
@@ -75,7 +75,7 @@ export function useCharacterExportImport(characterId: Ref<string>, characterName
       try {
         payload = JSON.parse(text)
       } catch {
-        importResult.value = {
+        operationResult.value = {
           success: false,
           message: 'Invalid JSON file. Please select a valid export file.',
           hasConflicts: false,
@@ -121,7 +121,7 @@ export function useCharacterExportImport(characterId: Ref<string>, characterName
         }
       }
 
-      importResult.value = {
+      operationResult.value = {
         success: true,
         message,
         hasConflicts,
@@ -131,7 +131,7 @@ export function useCharacterExportImport(characterId: Ref<string>, characterName
       return totalUpdated > 0
     } catch (err: any) {
       const serverMessage = err.data?.message || err.message || 'Unknown error'
-      importResult.value = {
+      operationResult.value = {
         success: false,
         message: `Import failed: ${serverMessage}`,
         hasConflicts: false,
@@ -143,17 +143,17 @@ export function useCharacterExportImport(characterId: Ref<string>, characterName
     }
   }
 
-  const clearImportResult = () => {
-    importResult.value = null
+  const clearOperationResult = () => {
+    operationResult.value = null
   }
 
   return {
     exporting: readonly(exporting),
     importing: readonly(importing),
-    importResult: readonly(importResult),
-    importResultClass,
+    operationResult: readonly(operationResult),
+    operationResultClass,
     handleExport,
     handleImportFile,
-    clearImportResult
+    clearOperationResult
   }
 }

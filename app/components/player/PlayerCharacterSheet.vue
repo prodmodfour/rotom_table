@@ -54,19 +54,19 @@
     </section>
 
     <!-- Import Result Banner -->
-    <div v-if="importResult" class="player-sheet__import-result" :class="importResultClass">
+    <div v-if="operationResult" class="player-sheet__import-result" :class="operationResultClass">
       <div class="import-result__message">
-        <PhCheckCircle v-if="importResult.success && !importResult.hasConflicts" :size="18" />
-        <PhWarningCircle v-else-if="importResult.hasConflicts" :size="18" />
+        <PhCheckCircle v-if="operationResult.success && !operationResult.hasConflicts" :size="18" />
+        <PhWarningCircle v-else-if="operationResult.hasConflicts" :size="18" />
         <PhXCircle v-else :size="18" />
-        <span>{{ importResult.message }}</span>
+        <span>{{ operationResult.message }}</span>
       </div>
-      <ul v-if="importResult.conflicts && importResult.conflicts.length > 0" class="import-result__conflicts">
-        <li v-for="(conflict, idx) in importResult.conflicts" :key="idx">
+      <ul v-if="operationResult.conflicts && operationResult.conflicts.length > 0" class="import-result__conflicts">
+        <li v-for="(conflict, idx) in operationResult.conflicts" :key="idx">
           {{ conflict.entityName }}: "{{ conflict.field }}" was changed on the server (server version kept)
         </li>
       </ul>
-      <button class="import-result__dismiss" @click="clearImportResult">
+      <button class="import-result__dismiss" @click="clearOperationResult">
         <PhX :size="14" />
       </button>
     </div>
@@ -268,11 +268,11 @@ const characterName = computed(() => props.character.name)
 const {
   exporting,
   importing,
-  importResult,
-  importResultClass,
+  operationResult,
+  operationResultClass,
   handleExport,
   handleImportFile: processImportFile,
-  clearImportResult
+  clearOperationResult
 } = useCharacterExportImport(characterId, characterName)
 
 const fileInput = ref<HTMLInputElement | null>(null)
