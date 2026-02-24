@@ -20,6 +20,23 @@ const MEASUREMENT_COLORS: Record<string, { fill: string; stroke: string }> = {
   'close-blast': { fill: 'rgba(168, 85, 247, 0.3)', stroke: 'rgba(168, 85, 247, 0.8)' },
 }
 
+/**
+ * Darken an rgba color string by blending toward black.
+ * @param rgba - CSS rgba string like 'rgba(r, g, b, a)'
+ * @param amount - Darkening amount from 0 (no change) to 1 (full black)
+ * @returns Darkened rgba string
+ */
+function darkenRgba(rgba: string, amount: number): string {
+  const match = rgba.match(/rgba?\((\d+),\s*(\d+),\s*(\d+),?\s*([\d.]+)?\)/)
+  if (!match) return rgba
+
+  const r = Math.round(Number(match[1]) * (1 - amount))
+  const g = Math.round(Number(match[2]) * (1 - amount))
+  const b = Math.round(Number(match[3]) * (1 - amount))
+  const a = match[4] !== undefined ? Math.min(1, Number(match[4]) + 0.2) : 0.8
+  return `rgba(${r}, ${g}, ${b}, ${a})`
+}
+
 interface IsometricOverlayOptions {
   config: Ref<GridConfig>
   cameraAngle: Ref<CameraAngle>
@@ -216,7 +233,7 @@ export function useIsometricOverlays(options: IsometricOverlayOptions) {
 
       // Draw stacked side faces for elevated terrain (visual height indicator)
       if (elev > 0) {
-        drawTerrainSideFaces(ctx, cell.x, cell.y, elev, angle, gridW, gridH, cellSize, terrainColor.stroke)
+        drawTerrainSideFaces(ctx, cell.x, cell.y, elev, angle, gridW, gridH, cellSize, terrainColor.fill, terrainColor.stroke)
       }
 
       // Draw terrain pattern at elevation
@@ -241,17 +258,22 @@ export function useIsometricOverlays(options: IsometricOverlayOptions) {
     elevation: number,
     angle: CameraAngle,
     gridW: number, gridH: number, cellSize: number,
+    fillColor: string,
     strokeColor: string
   ) => {
     const topDiamond = getTileDiamondPoints(gridX, gridY, elevation, angle, gridW, gridH, cellSize)
     const bottomDiamond = getTileDiamondPoints(gridX, gridY, 0, angle, gridW, gridH, cellSize)
 
-    // Draw the two visible side faces (right and left from camera perspective)
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.2)'
+    // Derive side face fill from terrain fill color (darker shade for depth effect).
+    // Right face gets a medium-dark blend, left face gets a darker blend.
+    const rightFill = darkenRgba(fillColor, 0.3)
+    const leftFill = darkenRgba(fillColor, 0.5)
+
     ctx.strokeStyle = strokeColor
     ctx.lineWidth = 1
 
     // Right face: top.right -> bottom.right -> bottom.bottom -> top.bottom
+    ctx.fillStyle = rightFill
     ctx.beginPath()
     ctx.moveTo(topDiamond.right.x, topDiamond.right.y)
     ctx.lineTo(bottomDiamond.right.x, bottomDiamond.right.y)
@@ -262,6 +284,7 @@ export function useIsometricOverlays(options: IsometricOverlayOptions) {
     ctx.stroke()
 
     // Left face: top.left -> bottom.left -> bottom.bottom -> top.bottom
+    ctx.fillStyle = leftFill
     ctx.beginPath()
     ctx.moveTo(topDiamond.left.x, topDiamond.left.y)
     ctx.lineTo(bottomDiamond.left.x, bottomDiamond.left.y)
