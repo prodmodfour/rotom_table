@@ -45,7 +45,7 @@
 <script setup lang="ts">
 import type { GridConfig, GridPosition, CameraAngle, Combatant, MovementPreview } from '~/types'
 import { useIsometricCamera } from '~/composables/useIsometricCamera'
-import { useIsometricRendering } from '~/composables/useIsometricRendering'
+import { useIsometricRendering, clearSpriteCache } from '~/composables/useIsometricRendering'
 import { useIsometricInteraction } from '~/composables/useIsometricInteraction'
 import { useGridMovement, calculateElevationCost } from '~/composables/useGridMovement'
 import { useElevation } from '~/composables/useElevation'
@@ -278,6 +278,7 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('resize', rendering.scheduleRender)
   window.removeEventListener('keydown', handleKeyDown)
+  clearSpriteCache()
 })
 
 // Watch for config changes

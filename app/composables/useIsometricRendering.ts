@@ -57,22 +57,19 @@ interface UseIsometricRenderingOptions {
   getTokenElevation?: (combatantId: string) => number
 }
 
-// Sprite cache to avoid re-loading images every frame
+// Sprite cache to avoid re-loading images every frame.
+// Module-level but with explicit clear function to prevent unbounded growth.
 const spriteCache = new Map<string, HTMLImageElement | null>()
 
-function loadSprite(url: string): HTMLImageElement | null {
-  if (spriteCache.has(url)) return spriteCache.get(url) || null
+// Maximum cache size before evicting oldest entries
+const SPRITE_CACHE_MAX = 200
 
-  const img = new Image()
-  img.onload = () => {
-    spriteCache.set(url, img)
-  }
-  img.onerror = () => {
-    spriteCache.set(url, null)
-  }
-  spriteCache.set(url, null) // Mark as loading
-  img.src = url
-  return null
+/**
+ * Clear the sprite cache. Called from onUnmounted to prevent memory leaks
+ * across encounter changes.
+ */
+export function clearSpriteCache(): void {
+  spriteCache.clear()
 }
 
 /**
@@ -141,6 +138,36 @@ export function useIsometricRendering(options: UseIsometricRenderingOptions) {
       renderScheduled = false
       render()
     })
+  }
+
+  /**
+   * Load a sprite image into the cache. Returns the cached image if available,
+   * null if still loading or failed. Triggers a re-render when the image loads
+   * so tokens update from fallback circles to actual sprites.
+   * Evicts oldest entries when cache exceeds SPRITE_CACHE_MAX.
+   */
+  const loadSprite = (url: string): HTMLImageElement | null => {
+    if (spriteCache.has(url)) return spriteCache.get(url) || null
+
+    // Evict oldest entries if cache is full
+    if (spriteCache.size >= SPRITE_CACHE_MAX) {
+      const firstKey = spriteCache.keys().next().value
+      if (firstKey !== undefined) {
+        spriteCache.delete(firstKey)
+      }
+    }
+
+    const img = new Image()
+    img.onload = () => {
+      spriteCache.set(url, img)
+      scheduleRender()
+    }
+    img.onerror = () => {
+      spriteCache.set(url, null)
+    }
+    spriteCache.set(url, null) // Mark as loading
+    img.src = url
+    return null
   }
 
   /**
