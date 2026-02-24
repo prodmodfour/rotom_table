@@ -87,23 +87,12 @@ const props = defineProps<{
 
 const encounterStore = useEncounterStore()
 const { getCombatantName } = useCombatantDisplay()
+const { isMyTurn, currentCombatant } = usePlayerCombat()
 
 const encounter = computed(() => encounterStore.encounter)
-const currentCombatant = computed(() => encounterStore.currentCombatant)
 const playerCombatants = computed(() => encounterStore.playerCombatants)
 const allyCombatants = computed(() => encounterStore.allyCombatants)
 const enemyCombatants = computed(() => encounterStore.enemyCombatants)
-
-// Determine if it is the player's turn
-const isMyTurn = computed(() => {
-  const current = currentCombatant.value
-  if (!current) return false
-
-  return (
-    current.entityId === props.myCharacterId ||
-    props.myPokemonIds.includes(current.entityId)
-  )
-})
 </script>
 
 <style lang="scss" scoped>
