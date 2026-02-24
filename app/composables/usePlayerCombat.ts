@@ -266,7 +266,11 @@ export function usePlayerCombat() {
   // Requested Actions (send via WebSocket to GM)
   // =============================================
 
-  const buildBaseRequest = (): Pick<PlayerActionRequest, 'playerId' | 'playerName'> => ({
+  const generateRequestId = (): string =>
+    `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
+
+  const buildBaseRequest = (): Pick<PlayerActionRequest, 'requestId' | 'playerId' | 'playerName'> => ({
+    requestId: generateRequestId(),
     playerId: playerStore.characterId ?? '',
     playerName: playerStore.characterName ?? 'Player'
   })
