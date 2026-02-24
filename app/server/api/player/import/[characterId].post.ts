@@ -257,13 +257,15 @@ export default defineEventHandler(async (event) => {
       include: { pokemon: true }
     })
 
-    const totalUpdated = Object.keys(characterUpdate).length + pokemonUpdates.length
+    const characterFieldsUpdated = Object.keys(characterUpdate).length
+    const pokemonUpdated = pokemonUpdates.length
 
     return {
       success: true,
       data: {
         character: updatedCharacter ? serializeCharacter(updatedCharacter) : null,
-        fieldsUpdated: totalUpdated,
+        characterFieldsUpdated,
+        pokemonUpdated,
         conflicts,
         hasConflicts: conflicts.length > 0
       }

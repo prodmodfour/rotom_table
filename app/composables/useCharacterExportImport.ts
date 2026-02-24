@@ -87,7 +87,8 @@ export function useCharacterExportImport(characterId: Ref<string>, characterName
       const response = await $fetch<{
         success: boolean
         data: {
-          fieldsUpdated: number
+          characterFieldsUpdated: number
+          pokemonUpdated: number
           hasConflicts: boolean
           conflicts: ImportConflict[]
         }
@@ -96,15 +97,28 @@ export function useCharacterExportImport(characterId: Ref<string>, characterName
         body: payload
       })
 
-      const { fieldsUpdated, hasConflicts, conflicts } = response.data
+      const { characterFieldsUpdated, pokemonUpdated, hasConflicts, conflicts } = response.data
+      const totalUpdated = characterFieldsUpdated + pokemonUpdated
 
       let message: string
-      if (fieldsUpdated === 0 && !hasConflicts) {
+      if (totalUpdated === 0 && !hasConflicts) {
         message = 'No changes to import. Character is already up to date.'
-      } else if (hasConflicts) {
-        message = `Imported ${fieldsUpdated} change(s). ${conflicts.length} conflict(s) detected (server version kept).`
       } else {
-        message = `Successfully imported ${fieldsUpdated} change(s).`
+        const parts: string[] = []
+        if (characterFieldsUpdated > 0) {
+          parts.push(`${characterFieldsUpdated} character field(s)`)
+        }
+        if (pokemonUpdated > 0) {
+          parts.push(`${pokemonUpdated} Pokemon`)
+        }
+
+        message = parts.length > 0
+          ? `Updated ${parts.join(' and ')}.`
+          : 'No changes applied.'
+
+        if (hasConflicts) {
+          message += ` ${conflicts.length} conflict(s) detected (server version kept).`
+        }
       }
 
       importResult.value = {
@@ -114,7 +128,7 @@ export function useCharacterExportImport(characterId: Ref<string>, characterName
         conflicts
       }
 
-      return fieldsUpdated > 0
+      return totalUpdated > 0
     } catch (err: any) {
       const serverMessage = err.data?.message || err.message || 'Unknown error'
       importResult.value = {
