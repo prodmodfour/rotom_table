@@ -64,6 +64,20 @@
           data-testid="max-elevation-input"
         />
       </div>
+      <div v-if="config.isometric" class="form-group">
+        <label>Camera Angle</label>
+        <select
+          :value="config.cameraAngle"
+          @change="updateCameraAngle"
+          class="form-input form-input--sm"
+          data-testid="camera-angle-select"
+        >
+          <option :value="0">North (default)</option>
+          <option :value="1">East (90)</option>
+          <option :value="2">South (180)</option>
+          <option :value="3">West (270)</option>
+        </select>
+      </div>
     </div>
 
     <div class="grid-settings__row">
@@ -149,6 +163,11 @@ const updateField = (field: keyof GridConfig, event: Event) => {
 const toggleIsometric = (event: Event) => {
   const input = event.target as HTMLInputElement
   emit('update', 'isometric', input.checked)
+}
+
+const updateCameraAngle = (event: Event) => {
+  const select = event.target as HTMLSelectElement
+  emit('update', 'cameraAngle', Number(select.value))
 }
 
 const triggerFileInput = () => {
