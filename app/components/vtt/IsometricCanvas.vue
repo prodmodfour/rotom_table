@@ -50,6 +50,9 @@ import { useIsometricInteraction } from '~/composables/useIsometricInteraction'
 import { useGridMovement, calculateElevationCost } from '~/composables/useGridMovement'
 import { useElevation } from '~/composables/useElevation'
 import { useRangeParser } from '~/composables/useRangeParser'
+import { useFogOfWarStore } from '~/stores/fogOfWar'
+import { useTerrainStore, TERRAIN_COLORS } from '~/stores/terrain'
+import { useMeasurementStore } from '~/stores/measurement'
 
 interface TokenData {
   combatantId: string
@@ -89,6 +92,11 @@ const tokensRef = computed(() => props.tokens)
 const combatantsRef = computed(() => props.combatants)
 const currentTurnIdRef = computed(() => props.currentTurnId)
 const isGmRef = computed(() => props.isGm ?? false)
+
+// P2: Stores for fog, terrain, measurement
+const fogOfWarStore = useFogOfWarStore()
+const terrainStore = useTerrainStore()
+const measurementStore = useMeasurementStore()
 
 // Elevation management
 const maxElevationRef = computed(() => props.config.maxElevation ?? 5)
@@ -149,7 +157,7 @@ const tokensWithElevation = computed(() => {
   }))
 })
 
-// Rendering (P1: pass tokens, combatants, hover, selection, movement data)
+// Rendering (P1: tokens, P2: fog, terrain, measurement)
 const rendering = useIsometricRendering({
   canvasRef,
   containerRef,
@@ -168,6 +176,19 @@ const rendering = useIsometricRendering({
   movementRangeCells,
   getTokenElevation: (id: string) => elevation.getTokenElevation(id),
   getTerrainElevation: (x: number, y: number) => elevation.getTerrainElevation(x, y),
+  // P2: Fog of war
+  isGm: isGmRef,
+  getFogState: (x: number, y: number) => fogOfWarStore.getCellState(x, y),
+  fogEnabled: computed(() => fogOfWarStore.enabled),
+  // P2: Terrain
+  getTerrainType: (x: number, y: number) => terrainStore.getTerrainAt(x, y),
+  terrainColors: TERRAIN_COLORS,
+  // P2: Measurement
+  measurementMode: computed(() => measurementStore.mode),
+  measurementCells: computed(() => measurementStore.affectedCells),
+  measurementOrigin: computed(() => measurementStore.startPosition),
+  measurementEnd: computed(() => measurementStore.endPosition),
+  measurementDistance: computed(() => measurementStore.distance),
 })
 
 // Interaction composable (wires mouse events to grid logic)
@@ -299,6 +320,19 @@ watch(() => props.tokens, () => {
 }, { deep: true })
 
 watch(() => props.combatants, () => {
+  rendering.scheduleRender()
+}, { deep: true })
+
+// P2: Re-render on fog/terrain/measurement state changes
+watch(() => fogOfWarStore.$state, () => {
+  rendering.scheduleRender()
+}, { deep: true })
+
+watch(() => terrainStore.$state, () => {
+  rendering.scheduleRender()
+}, { deep: true })
+
+watch(() => measurementStore.$state, () => {
   rendering.scheduleRender()
 }, { deep: true })
 

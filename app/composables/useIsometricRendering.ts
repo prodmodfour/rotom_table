@@ -1,5 +1,8 @@
-import type { GridConfig, GridPosition, CameraAngle, Combatant, MovementPreview, Pokemon, HumanCharacter, CombatSide } from '~/types'
+import type { GridConfig, GridPosition, CameraAngle, Combatant, MovementPreview, Pokemon, HumanCharacter, CombatSide, TerrainType } from '~/types'
 import { useIsometricProjection } from '~/composables/useIsometricProjection'
+import { useIsometricOverlays } from '~/composables/useIsometricOverlays'
+import type { FogState } from '~/stores/fogOfWar'
+import type { MeasurementMode } from '~/stores/measurement'
 
 // Constants
 const GRID_LINE_COLOR = 'rgba(255, 255, 255, 0.25)'
@@ -57,6 +60,19 @@ interface UseIsometricRenderingOptions {
   getTokenElevation?: (combatantId: string) => number
   /** Terrain elevation lookup for movement preview arrow destination. */
   getTerrainElevation?: (x: number, y: number) => number
+  // P2: Fog of war
+  isGm?: Ref<boolean>
+  getFogState?: (x: number, y: number) => FogState
+  fogEnabled?: Ref<boolean>
+  // P2: Terrain
+  getTerrainType?: (x: number, y: number) => TerrainType
+  terrainColors?: Record<TerrainType, { fill: string; stroke: string }>
+  // P2: Measurement
+  measurementMode?: Ref<MeasurementMode>
+  measurementCells?: Ref<GridPosition[]>
+  measurementOrigin?: Ref<GridPosition | null>
+  measurementEnd?: Ref<GridPosition | null>
+  measurementDistance?: Ref<number>
 }
 
 // Sprite cache to avoid re-loading images every frame.
@@ -91,10 +107,7 @@ export function useIsometricRendering(options: UseIsometricRenderingOptions) {
   // Background image
   const backgroundImage = ref<HTMLImageElement | null>(null)
 
-  // Render loop state
-  let renderScheduled = false
-
-  // Cached depth-sorted cell array. Rebuilt only when cameraAngle, gridW, or gridH change.
+  // Cached depth-sorted cell array (declared early for overlay composable).
   const sortedCells = computed(() => {
     const { width: gridW, height: gridH } = options.config.value
     const angle = options.cameraAngle.value
@@ -108,6 +121,26 @@ export function useIsometricRendering(options: UseIsometricRenderingOptions) {
     cells.sort((a, b) => a.depth - b.depth)
     return cells
   })
+
+  // P2: Overlay composable for fog, terrain, measurement rendering
+  const overlays = useIsometricOverlays({
+    config: options.config,
+    cameraAngle: options.cameraAngle,
+    sortedCells,
+    isGm: options.isGm,
+    getFogState: options.getFogState,
+    fogEnabled: options.fogEnabled,
+    getTerrainType: options.getTerrainType,
+    terrainColors: options.terrainColors,
+    measurementMode: options.measurementMode,
+    measurementCells: options.measurementCells,
+    measurementOrigin: options.measurementOrigin,
+    measurementEnd: options.measurementEnd,
+    measurementDistance: options.measurementDistance,
+  })
+
+  // Render loop state
+  let renderScheduled = false
 
   /**
    * Load background image from config.
@@ -212,12 +245,23 @@ export function useIsometricRendering(options: UseIsometricRenderingOptions) {
       drawBackgroundImage(ctx, config, angle)
     }
 
+    // P2: Draw terrain layer (before grid lines for visual layering)
+    if (options.getTerrainType && options.terrainColors) {
+      overlays.drawTerrainLayer(ctx)
+    }
+
     // Draw isometric grid cells (back to front for proper layering)
     drawIsometricGrid(ctx, config, angle)
 
     // Draw movement range overlay
     if (options.movementRangeCells?.value && options.movementRangeCells.value.length > 0) {
       drawMovementRange(ctx, options.movementRangeCells.value, angle, gridW, gridH, cellSize)
+    }
+
+    // P2: Draw measurement overlay
+    if (options.measurementMode?.value && options.measurementMode.value !== 'none' &&
+        options.measurementCells?.value && options.measurementCells.value.length > 0) {
+      overlays.drawMeasurementOverlay(ctx)
     }
 
     // Draw hover cell highlight
@@ -231,6 +275,16 @@ export function useIsometricRendering(options: UseIsometricRenderingOptions) {
     // Draw movement preview arrow
     if (options.movementPreview?.value) {
       drawMovementArrow(ctx, options.movementPreview.value, angle, gridW, gridH, cellSize)
+    }
+
+    // P2: Draw fog of war (after tokens — fog overlays on top)
+    if (options.fogEnabled?.value && options.getFogState) {
+      const isGm = options.isGm?.value ?? false
+      if (isGm) {
+        overlays.drawFogOfWarPreview(ctx)
+      } else {
+        overlays.drawFogOfWar(ctx)
+      }
     }
 
     ctx.restore()

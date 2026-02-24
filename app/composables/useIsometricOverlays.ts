@@ -1,0 +1,425 @@
+import type { GridConfig, GridPosition, CameraAngle, TerrainType } from '~/types'
+import { useIsometricProjection } from '~/composables/useIsometricProjection'
+import type { FogState } from '~/stores/fogOfWar'
+import type { MeasurementMode } from '~/stores/measurement'
+
+// Fog of war constants
+const FOG_HIDDEN_FILL = 'rgba(10, 10, 15, 0.95)'
+const FOG_EXPLORED_FILL = 'rgba(10, 10, 15, 0.5)'
+const FOG_GM_HIDDEN_FILL = 'rgba(239, 68, 68, 0.15)'
+const FOG_GM_HIDDEN_STRIPE = 'rgba(239, 68, 68, 0.3)'
+const FOG_GM_EXPLORED_FILL = 'rgba(245, 158, 11, 0.15)'
+const FOG_GM_EXPLORED_DOT = 'rgba(245, 158, 11, 0.4)'
+
+// Measurement colors by mode
+const MEASUREMENT_COLORS: Record<string, { fill: string; stroke: string }> = {
+  distance: { fill: 'rgba(59, 130, 246, 0.3)', stroke: 'rgba(59, 130, 246, 0.8)' },
+  burst: { fill: 'rgba(239, 68, 68, 0.3)', stroke: 'rgba(239, 68, 68, 0.8)' },
+  cone: { fill: 'rgba(245, 158, 11, 0.3)', stroke: 'rgba(245, 158, 11, 0.8)' },
+  line: { fill: 'rgba(34, 197, 94, 0.3)', stroke: 'rgba(34, 197, 94, 0.8)' },
+  'close-blast': { fill: 'rgba(168, 85, 247, 0.3)', stroke: 'rgba(168, 85, 247, 0.8)' },
+}
+
+interface IsometricOverlayOptions {
+  config: Ref<GridConfig>
+  cameraAngle: Ref<CameraAngle>
+  // Sorted cells array (shared with main renderer for consistency)
+  sortedCells: ComputedRef<Array<{ x: number; y: number; depth: number }>>
+  // Fog of war
+  isGm?: Ref<boolean>
+  getFogState?: (x: number, y: number) => FogState
+  fogEnabled?: Ref<boolean>
+  // Terrain
+  getTerrainType?: (x: number, y: number) => TerrainType
+  terrainColors?: Record<TerrainType, { fill: string; stroke: string }>
+  // Measurement
+  measurementMode?: Ref<MeasurementMode>
+  measurementCells?: Ref<GridPosition[]>
+  measurementOrigin?: Ref<GridPosition | null>
+  measurementEnd?: Ref<GridPosition | null>
+  measurementDistance?: Ref<number>
+}
+
+/**
+ * Isometric overlay rendering: fog of war, terrain, measurement.
+ * Extracted from useIsometricRendering to keep file sizes under limit.
+ * All functions accept canvas context and draw directly.
+ */
+export function useIsometricOverlays(options: IsometricOverlayOptions) {
+  const { worldToScreen, getTileDiamondPoints } = useIsometricProjection()
+
+  // --- Shared diamond drawing primitives ---
+
+  /**
+   * Draw a filled isometric diamond (no stroke).
+   */
+  const drawFilledDiamond = (
+    ctx: CanvasRenderingContext2D,
+    gridX: number, gridY: number,
+    elevation: number, angle: CameraAngle,
+    gridW: number, gridH: number, cellSize: number,
+    fillColor: string
+  ) => {
+    const diamond = getTileDiamondPoints(gridX, gridY, elevation, angle, gridW, gridH, cellSize)
+    ctx.beginPath()
+    ctx.moveTo(diamond.top.x, diamond.top.y)
+    ctx.lineTo(diamond.right.x, diamond.right.y)
+    ctx.lineTo(diamond.bottom.x, diamond.bottom.y)
+    ctx.lineTo(diamond.left.x, diamond.left.y)
+    ctx.closePath()
+    ctx.fillStyle = fillColor
+    ctx.fill()
+  }
+
+  /**
+   * Draw diagonal stripes inside an isometric diamond (GM fog preview for hidden cells).
+   */
+  const drawDiamondStripes = (
+    ctx: CanvasRenderingContext2D,
+    gridX: number, gridY: number,
+    elevation: number, angle: CameraAngle,
+    gridW: number, gridH: number, cellSize: number,
+    strokeColor: string
+  ) => {
+    const diamond = getTileDiamondPoints(gridX, gridY, elevation, angle, gridW, gridH, cellSize)
+
+    ctx.save()
+    ctx.beginPath()
+    ctx.moveTo(diamond.top.x, diamond.top.y)
+    ctx.lineTo(diamond.right.x, diamond.right.y)
+    ctx.lineTo(diamond.bottom.x, diamond.bottom.y)
+    ctx.lineTo(diamond.left.x, diamond.left.y)
+    ctx.closePath()
+    ctx.clip()
+
+    const minX = Math.min(diamond.top.x, diamond.right.x, diamond.bottom.x, diamond.left.x)
+    const maxX = Math.max(diamond.top.x, diamond.right.x, diamond.bottom.x, diamond.left.x)
+    const minY = Math.min(diamond.top.y, diamond.right.y, diamond.bottom.y, diamond.left.y)
+    const maxY = Math.max(diamond.top.y, diamond.right.y, diamond.bottom.y, diamond.left.y)
+    const stripeGap = 6
+
+    ctx.strokeStyle = strokeColor
+    ctx.lineWidth = 1
+    ctx.beginPath()
+    for (let offset = 0; offset < (maxX - minX) + (maxY - minY); offset += stripeGap) {
+      ctx.moveTo(minX + offset, minY)
+      ctx.lineTo(minX, minY + offset)
+    }
+    ctx.stroke()
+    ctx.restore()
+  }
+
+  /**
+   * Draw a center dot inside an isometric diamond.
+   */
+  const drawDiamondCenterDot = (
+    ctx: CanvasRenderingContext2D,
+    gridX: number, gridY: number,
+    elevation: number, angle: CameraAngle,
+    gridW: number, gridH: number, cellSize: number,
+    dotColor: string
+  ) => {
+    const diamond = getTileDiamondPoints(gridX, gridY, elevation, angle, gridW, gridH, cellSize)
+    const cx = (diamond.top.x + diamond.right.x + diamond.bottom.x + diamond.left.x) / 4
+    const cy = (diamond.top.y + diamond.right.y + diamond.bottom.y + diamond.left.y) / 4
+
+    ctx.fillStyle = dotColor
+    ctx.beginPath()
+    ctx.arc(cx, cy, 3, 0, Math.PI * 2)
+    ctx.fill()
+  }
+
+  // --- Fog of war ---
+
+  /**
+   * Draw fog of war for non-GM players.
+   * Hidden cells get near-opaque overlay, explored cells get semi-transparent.
+   * Fog is per-column (2D) — covers all elevations at that XY.
+   */
+  const drawFogOfWar = (ctx: CanvasRenderingContext2D) => {
+    if (!options.getFogState) return
+    const config = options.config.value
+    const angle = options.cameraAngle.value
+    const { cellSize, width: gridW, height: gridH } = config
+
+    for (const cell of options.sortedCells.value) {
+      const fogState = options.getFogState(cell.x, cell.y)
+      if (fogState === 'revealed') continue
+
+      const fill = fogState === 'hidden' ? FOG_HIDDEN_FILL : FOG_EXPLORED_FILL
+      drawFilledDiamond(ctx, cell.x, cell.y, 0, angle, gridW, gridH, cellSize, fill)
+    }
+  }
+
+  /**
+   * Draw fog of war preview for GM.
+   * Hidden cells get striped pattern, explored cells get center dot.
+   */
+  const drawFogOfWarPreview = (ctx: CanvasRenderingContext2D) => {
+    if (!options.getFogState) return
+    const config = options.config.value
+    const angle = options.cameraAngle.value
+    const { cellSize, width: gridW, height: gridH } = config
+
+    for (const cell of options.sortedCells.value) {
+      const fogState = options.getFogState(cell.x, cell.y)
+      if (fogState === 'revealed') continue
+
+      if (fogState === 'hidden') {
+        drawFilledDiamond(ctx, cell.x, cell.y, 0, angle, gridW, gridH, cellSize, FOG_GM_HIDDEN_FILL)
+        drawDiamondStripes(ctx, cell.x, cell.y, 0, angle, gridW, gridH, cellSize, FOG_GM_HIDDEN_STRIPE)
+      } else {
+        drawFilledDiamond(ctx, cell.x, cell.y, 0, angle, gridW, gridH, cellSize, FOG_GM_EXPLORED_FILL)
+        drawDiamondCenterDot(ctx, cell.x, cell.y, 0, angle, gridW, gridH, cellSize, FOG_GM_EXPLORED_DOT)
+      }
+    }
+  }
+
+  // --- Terrain ---
+
+  /**
+   * Draw terrain layer as colored isometric diamonds with patterns.
+   */
+  const drawTerrainLayer = (ctx: CanvasRenderingContext2D) => {
+    if (!options.getTerrainType || !options.terrainColors) return
+    const config = options.config.value
+    const angle = options.cameraAngle.value
+    const { cellSize, width: gridW, height: gridH } = config
+
+    for (const cell of options.sortedCells.value) {
+      const terrain = options.getTerrainType(cell.x, cell.y)
+      if (terrain === 'normal') continue
+
+      const terrainColor = options.terrainColors[terrain]
+      if (!terrainColor) continue
+
+      // Fill diamond with terrain color
+      drawFilledDiamond(ctx, cell.x, cell.y, 0, angle, gridW, gridH, cellSize, terrainColor.fill)
+
+      // Draw terrain border
+      const diamond = getTileDiamondPoints(cell.x, cell.y, 0, angle, gridW, gridH, cellSize)
+      ctx.beginPath()
+      ctx.moveTo(diamond.top.x, diamond.top.y)
+      ctx.lineTo(diamond.right.x, diamond.right.y)
+      ctx.lineTo(diamond.bottom.x, diamond.bottom.y)
+      ctx.lineTo(diamond.left.x, diamond.left.y)
+      ctx.closePath()
+      ctx.strokeStyle = terrainColor.stroke
+      ctx.lineWidth = 1
+      ctx.stroke()
+
+      // Draw terrain pattern
+      drawIsometricTerrainPattern(ctx, cell.x, cell.y, terrain, angle, gridW, gridH, cellSize)
+    }
+  }
+
+  /**
+   * Draw terrain-specific pattern inside an isometric diamond.
+   */
+  const drawIsometricTerrainPattern = (
+    ctx: CanvasRenderingContext2D,
+    gridX: number, gridY: number,
+    terrain: TerrainType,
+    angle: CameraAngle,
+    gridW: number, gridH: number, cellSize: number
+  ) => {
+    const diamond = getTileDiamondPoints(gridX, gridY, 0, angle, gridW, gridH, cellSize)
+    const cx = (diamond.top.x + diamond.right.x + diamond.bottom.x + diamond.left.x) / 4
+    const cy = (diamond.top.y + diamond.right.y + diamond.bottom.y + diamond.left.y) / 4
+
+    ctx.save()
+
+    // Clip to diamond
+    ctx.beginPath()
+    ctx.moveTo(diamond.top.x, diamond.top.y)
+    ctx.lineTo(diamond.right.x, diamond.right.y)
+    ctx.lineTo(diamond.bottom.x, diamond.bottom.y)
+    ctx.lineTo(diamond.left.x, diamond.left.y)
+    ctx.closePath()
+    ctx.clip()
+
+    const halfW = (diamond.right.x - diamond.left.x) / 2
+    const halfH = (diamond.bottom.y - diamond.top.y) / 2
+
+    switch (terrain) {
+      case 'blocking': {
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)'
+        ctx.lineWidth = 2
+        ctx.beginPath()
+        ctx.moveTo(cx - halfW * 0.5, cy - halfH * 0.5)
+        ctx.lineTo(cx + halfW * 0.5, cy + halfH * 0.5)
+        ctx.moveTo(cx + halfW * 0.5, cy - halfH * 0.5)
+        ctx.lineTo(cx - halfW * 0.5, cy + halfH * 0.5)
+        ctx.stroke()
+        break
+      }
+      case 'water': {
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)'
+        ctx.lineWidth = 1
+        ctx.beginPath()
+        for (let i = -1; i <= 1; i++) {
+          const waveY = cy + i * halfH * 0.35
+          ctx.moveTo(cx - halfW * 0.6, waveY)
+          ctx.quadraticCurveTo(cx - halfW * 0.2, waveY - 3, cx, waveY)
+          ctx.quadraticCurveTo(cx + halfW * 0.2, waveY + 3, cx + halfW * 0.6, waveY)
+        }
+        ctx.stroke()
+        break
+      }
+      case 'hazard': {
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.5)'
+        ctx.beginPath()
+        ctx.moveTo(cx, cy - halfH * 0.4)
+        ctx.lineTo(cx - halfW * 0.3, cy + halfH * 0.3)
+        ctx.lineTo(cx + halfW * 0.3, cy + halfH * 0.3)
+        ctx.closePath()
+        ctx.fill()
+        ctx.fillStyle = 'rgba(255, 69, 0, 0.8)'
+        ctx.font = 'bold 9px sans-serif'
+        ctx.textAlign = 'center'
+        ctx.textBaseline = 'middle'
+        ctx.fillText('!', cx, cy + halfH * 0.05)
+        break
+      }
+      case 'elevated': {
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)'
+        ctx.lineWidth = 2
+        ctx.beginPath()
+        ctx.moveTo(cx, cy - halfH * 0.4)
+        ctx.lineTo(cx, cy + halfH * 0.4)
+        ctx.moveTo(cx - halfW * 0.2, cy - halfH * 0.15)
+        ctx.lineTo(cx, cy - halfH * 0.4)
+        ctx.lineTo(cx + halfW * 0.2, cy - halfH * 0.15)
+        ctx.stroke()
+        break
+      }
+      case 'difficult': {
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.4)'
+        const dots = [
+          { dx: 0, dy: 0 },
+          { dx: -halfW * 0.3, dy: -halfH * 0.2 },
+          { dx: halfW * 0.3, dy: -halfH * 0.2 },
+          { dx: -halfW * 0.15, dy: halfH * 0.25 },
+          { dx: halfW * 0.15, dy: halfH * 0.25 },
+        ]
+        for (const d of dots) {
+          ctx.beginPath()
+          ctx.arc(cx + d.dx, cy + d.dy, 1.5, 0, Math.PI * 2)
+          ctx.fill()
+        }
+        break
+      }
+      case 'earth': {
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)'
+        ctx.lineWidth = 2
+        ctx.beginPath()
+        ctx.moveTo(cx, cy + halfH * 0.4)
+        ctx.lineTo(cx, cy - halfH * 0.4)
+        ctx.moveTo(cx - halfW * 0.2, cy + halfH * 0.15)
+        ctx.lineTo(cx, cy + halfH * 0.4)
+        ctx.lineTo(cx + halfW * 0.2, cy + halfH * 0.15)
+        ctx.stroke()
+        break
+      }
+      case 'rough': {
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)'
+        ctx.lineWidth = 1.5
+        ctx.beginPath()
+        ctx.moveTo(cx - halfW * 0.5, cy)
+        ctx.lineTo(cx - halfW * 0.3, cy - halfH * 0.2)
+        ctx.lineTo(cx - halfW * 0.1, cy + halfH * 0.15)
+        ctx.lineTo(cx + halfW * 0.1, cy - halfH * 0.15)
+        ctx.lineTo(cx + halfW * 0.3, cy + halfH * 0.2)
+        ctx.lineTo(cx + halfW * 0.5, cy)
+        ctx.stroke()
+        break
+      }
+    }
+
+    ctx.restore()
+  }
+
+  // --- Measurement ---
+
+  /**
+   * Draw measurement overlay as isometric diamond highlights.
+   */
+  const drawMeasurementOverlay = (ctx: CanvasRenderingContext2D) => {
+    if (!options.measurementMode || !options.measurementCells) return
+    const config = options.config.value
+    const angle = options.cameraAngle.value
+    const { cellSize, width: gridW, height: gridH } = config
+    const mode = options.measurementMode.value
+    const cells = options.measurementCells.value
+    const origin = options.measurementOrigin?.value
+    const end = options.measurementEnd?.value
+    const distance = options.measurementDistance?.value ?? 0
+
+    const color = MEASUREMENT_COLORS[mode] || MEASUREMENT_COLORS.distance
+
+    // Draw affected cells
+    for (const cell of cells) {
+      if (cell.x >= 0 && cell.x < gridW && cell.y >= 0 && cell.y < gridH) {
+        drawFilledDiamond(ctx, cell.x, cell.y, 0, angle, gridW, gridH, cellSize, color.fill)
+
+        const diamond = getTileDiamondPoints(cell.x, cell.y, 0, angle, gridW, gridH, cellSize)
+        ctx.beginPath()
+        ctx.moveTo(diamond.top.x, diamond.top.y)
+        ctx.lineTo(diamond.right.x, diamond.right.y)
+        ctx.lineTo(diamond.bottom.x, diamond.bottom.y)
+        ctx.lineTo(diamond.left.x, diamond.left.y)
+        ctx.closePath()
+        ctx.strokeStyle = color.stroke
+        ctx.lineWidth = 2
+        ctx.stroke()
+      }
+    }
+
+    // Draw origin marker
+    if (origin) {
+      drawDiamondCenterDot(ctx, origin.x, origin.y, 0, angle, gridW, gridH, cellSize, 'rgba(255, 255, 255, 0.8)')
+    }
+
+    // Draw distance line for distance mode
+    if (mode === 'distance' && origin && end) {
+      const fromScreen = worldToScreen(origin.x + 0.5, origin.y + 0.5, 0, angle, gridW, gridH, cellSize)
+      const toScreen = worldToScreen(end.x + 0.5, end.y + 0.5, 0, angle, gridW, gridH, cellSize)
+
+      ctx.save()
+      ctx.strokeStyle = 'rgba(59, 130, 246, 1)'
+      ctx.lineWidth = 3
+      ctx.setLineDash([5, 5])
+      ctx.beginPath()
+      ctx.moveTo(fromScreen.px, fromScreen.py)
+      ctx.lineTo(toScreen.px, toScreen.py)
+      ctx.stroke()
+      ctx.setLineDash([])
+
+      if (distance > 0) {
+        const midX = (fromScreen.px + toScreen.px) / 2
+        const midY = (fromScreen.py + toScreen.py) / 2 - 12
+        const label = `${distance}m`
+        ctx.font = 'bold 12px sans-serif'
+        const metrics = ctx.measureText(label)
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.8)'
+        ctx.fillRect(midX - metrics.width / 2 - 4, midY - 8, metrics.width + 8, 16)
+        ctx.fillStyle = color.stroke
+        ctx.textAlign = 'center'
+        ctx.textBaseline = 'middle'
+        ctx.fillText(label, midX, midY)
+      }
+
+      ctx.restore()
+    }
+  }
+
+  return {
+    drawFogOfWar,
+    drawFogOfWarPreview,
+    drawTerrainLayer,
+    drawMeasurementOverlay,
+    // Expose primitives for potential reuse
+    drawFilledDiamond,
+    drawDiamondCenterDot,
+  }
+}
