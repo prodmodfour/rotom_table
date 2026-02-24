@@ -1,7 +1,7 @@
 ---
 ticket_id: feature-001
 priority: P3
-status: in-progress
+status: resolved
 domain: character-lifecycle
 source: product-roadmap
 created_by: user
@@ -82,3 +82,9 @@ See `design-trainer-sprites-001.md` for the full design document.
 | `48d55fc` | fix: reset avatarBroken when combatant changes in CombatantDetailsPanel |
 | `c6aeb4d` | fix: reset avatarBroken on route param change in character sheet page |
 | `1cd884d` | fix: reset avatarBroken when character prop changes in CharacterModal |
+
+### Resolution
+
+| Date | Action | Details |
+|------|--------|---------|
+| 2026-02-24 | Resolved | Single-phase design complete. All P0 steps implemented across 3 branches (implementation + 2 fix cycles). code-review-149 APPROVED with 0 issues. rules-review-139 APPROVED with 0 issues. H1 deferred to refactoring-075 (now also resolved). |
