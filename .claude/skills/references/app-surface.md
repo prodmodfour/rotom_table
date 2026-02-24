@@ -45,15 +45,19 @@ Testable features, routes, and API endpoints for the PTU Session Helper.
 
 | Route | Purpose |
 |-------|---------|
-| `/player` | Character picker, character sheet, Pokemon team, encounter with combat actions |
+| `/player` | Character picker, character sheet, Pokemon team, encounter with combat actions, scene view |
 
-**Key player components:** `PlayerIdentityPicker.vue` (character selection overlay), `PlayerNavBar.vue` (bottom tab navigation — Character/Team/Encounter), `PlayerCharacterSheet.vue` (read-only stats, skills, features, equipment, inventory), `PlayerPokemonTeam.vue` + `PlayerPokemonCard.vue` + `PlayerMoveList.vue` (team display), `PlayerEncounterView.vue` (encounter state with combatant cards by side), `PlayerCombatantInfo.vue` (visibility-aware combatant display — exact HP for own, percentage for enemies), `PlayerCombatActions.vue` (full PTU combat action panel — moves, shift, struggle, pass, item/switch/maneuver requests).
+**Key player components:** `PlayerIdentityPicker.vue` (character selection overlay), `PlayerNavBar.vue` (bottom tab navigation — Character/Team/Encounter/Scene), `PlayerCharacterSheet.vue` (read-only stats, skills, features, equipment, inventory), `PlayerPokemonTeam.vue` + `PlayerPokemonCard.vue` + `PlayerMoveList.vue` (team display), `PlayerEncounterView.vue` (encounter state with combatant cards by side), `PlayerCombatantInfo.vue` (visibility-aware combatant display — exact HP for own, percentage for enemies), `PlayerCombatActions.vue` (full PTU combat action panel — moves, shift, struggle, pass, item/switch/maneuver requests), `PlayerSceneView.vue` (read-only scene display with characters, pokemon, groups, weather).
 
-**Key player composables:** `usePlayerIdentity.ts` (localStorage persistence, character data fetching), `usePlayerCombat.ts` (turn detection, action execution, move availability, target helpers, league battle phase awareness, canBeCommanded check), `useCharacterExportImport.ts` (JSON export download, import file upload with conflict detection feedback).
+**Key player composables:** `usePlayerIdentity.ts` (localStorage persistence, character data fetching), `usePlayerCombat.ts` (turn detection, action execution, move availability, target helpers, league battle phase awareness, canBeCommanded check, WebSocket send via provide/inject), `useCharacterExportImport.ts` (JSON export download, import file upload with conflict detection feedback), `usePlayerWebSocket.ts` (single WebSocket connection owner for player page — scene sync, character updates, action ack routing, auto-identification on connect/reconnect), `usePlayerScene.ts` (player scene state — receives scene_sync via WS, REST fallback via fetchActiveScene, maps to PlayerSceneData).
 
 **Player stores:** `playerIdentity` (characterId, character, pokemon, loading, error).
 
-**Player types:** `types/player.ts` (PlayerTab), `types/api.ts` (PlayerActionRequest).
+**Player types:** `types/player.ts` (PlayerTab), `types/api.ts` (PlayerActionRequest, WebSocketEvent), `types/player-sync.ts` (PlayerActionRequest, PlayerActionAck, PlayerTurnNotification, PlayerMoveRequest, PlayerMoveResponse, GroupViewRequest, GroupViewResponse, SceneSyncPayload).
+
+**Player API endpoints:** `POST /api/player/action-request` (REST fallback for player action requests when WS is disconnected — registers in shared pendingRequests map, forwards to GM peers).
+
+**Player WebSocket events:** `keepalive` / `keepalive_ack` (45s interval to prevent tunnel idle timeout), `scene_sync` (full scene data pushed to player on connect), `scene_request` (player requests current active scene), `player_action` (player submits action to GM), `player_action_ack` (GM acknowledges action — routed via pendingRequests map), `player_turn_notify` (P1 — turn notification), `player_move_request` / `player_move_response` (P1 — token movement), `group_view_request` / `group_view_response` (P1 — tab change requests).
 
 ## API Endpoint Groups
 
@@ -218,6 +222,7 @@ Export/import for offline character management.
 | `server/utils/csv-parser.ts` | Reusable CSV parser (parseCSV, getCell, parseNumber) |
 | `server/utils/prisma.ts` | Prisma client singleton |
 | `server/utils/websocket.ts` | WebSocket broadcast utilities |
+| `server/utils/pendingRequests.ts` | Shared pending action request tracking (requestId -> characterId routing, 60s TTL) |
 | `server/utils/pokemon-nickname.ts` | Nickname resolution |
 
 ## Selector Guidance
