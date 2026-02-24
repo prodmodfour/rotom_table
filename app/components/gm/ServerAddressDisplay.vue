@@ -125,9 +125,7 @@ const handleClickOutside = (event: MouseEvent) => {
 
 watch(expanded, (isExpanded) => {
   if (isExpanded) {
-    if (addresses.value.length === 0 && !loading.value) {
-      fetchServerInfo()
-    }
+    fetchServerInfo()
     document.addEventListener('click', handleClickOutside, true)
   } else {
     document.removeEventListener('click', handleClickOutside, true)
