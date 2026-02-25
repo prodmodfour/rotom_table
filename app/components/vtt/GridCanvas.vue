@@ -30,7 +30,9 @@
         :is-selected="token.combatantId === interaction.selectedTokenId.value"
         :is-multi-selected="selectionStore.isSelected(token.combatantId)"
         :is-gm="isGm"
-        @select="(id, evt) => interaction.handleTokenSelect(id, evt)"
+        :is-own-token="playerMode ? isOwnTokenCheck(token.combatantId) : false"
+        :is-pending-move="token.combatantId === pendingMoveCombatantId"
+        @select="(id, evt) => handleTokenSelectWithPlayerMode(id, evt)"
       />
     </div>
 
@@ -85,6 +87,14 @@ const props = defineProps<{
   showMovementRange?: boolean
   getMovementSpeed?: (combatantId: string) => number
   externalMovementPreview?: MovementPreview | null
+  /** Player mode: disables drag-to-move, highlights own tokens */
+  playerMode?: boolean
+  /** Player's character ID for ownership checks in player mode */
+  playerCharacterId?: string
+  /** Player's pokemon IDs for ownership checks in player mode */
+  playerPokemonIds?: string[]
+  /** Combatant ID with a pending move request (shows pulsing state) */
+  pendingMoveCombatantId?: string | null
 }>()
 
 const emit = defineEmits<{
@@ -93,6 +103,10 @@ const emit = defineEmits<{
   cellClick: [position: GridPosition]
   multiSelect: [combatantIds: string[]]
   movementPreviewChange: [preview: MovementPreview | null]
+  /** Player mode: player tapped a cell (for move destination selection) */
+  playerCellClick: [position: GridPosition]
+  /** Player mode: player tapped their own token */
+  playerTokenSelect: [combatantId: string]
 }>()
 
 // Stores
@@ -137,6 +151,26 @@ const visibleTokens = computed(() => {
 // Combatant lookup (used by movement composable and template)
 const getCombatant = (combatantId: string): Combatant | undefined => {
   return props.combatants.find(c => c.id === combatantId)
+}
+
+// Player mode helpers
+const isOwnTokenCheck = (combatantId: string): boolean => {
+  if (!props.playerMode) return false
+  const combatant = getCombatant(combatantId)
+  if (!combatant) return false
+  return combatant.entityId === props.playerCharacterId ||
+    (props.playerPokemonIds?.includes(combatant.entityId) ?? false)
+}
+
+const handleTokenSelectWithPlayerMode = (combatantId: string, evt: MouseEvent): void => {
+  if (props.playerMode) {
+    if (isOwnTokenCheck(combatantId)) {
+      emit('playerTokenSelect', combatantId)
+    }
+    // In player mode, non-own tokens are ignored for selection
+    return
+  }
+  interaction.handleTokenSelect(combatantId, evt)
 }
 
 // Movement composable
@@ -214,11 +248,39 @@ const marqueePixelRect = computed(() => {
   }
 })
 
-// Event handlers (delegate to interaction composable)
+// Event handlers (delegate to interaction composable, with player mode intercepts)
 const handleWheel = interaction.handleWheel
-const handleMouseDown = interaction.handleMouseDown
 const handleMouseMove = interaction.handleMouseMove
 const handleMouseUp = interaction.handleMouseUp
+
+const handleMouseDown = (event: MouseEvent): void => {
+  if (props.playerMode && event.button === 0) {
+    // In player mode, left-click on the grid emits playerCellClick
+    // (panning and zooming still work via middle-click/wheel)
+    const container = containerRef.value
+    if (!container) return
+
+    const rect = container.getBoundingClientRect()
+    const mouseX = event.clientX - rect.left
+    const mouseY = event.clientY - rect.top
+
+    // Convert screen coordinates to grid cell
+    const gridX = Math.floor((mouseX - panOffset.value.x) / scaledCellSize.value)
+    const gridY = Math.floor((mouseY - panOffset.value.y) / scaledCellSize.value)
+
+    if (gridX >= 0 && gridX < props.config.width && gridY >= 0 && gridY < props.config.height) {
+      // Check if clicking on a token (handled by token click handler)
+      const clickedToken = props.tokens.find(t =>
+        t.position.x === gridX && t.position.y === gridY
+      )
+      if (!clickedToken) {
+        emit('playerCellClick', { x: gridX, y: gridY })
+      }
+    }
+    return
+  }
+  interaction.handleMouseDown(event)
+}
 
 // Lifecycle
 onMounted(() => {

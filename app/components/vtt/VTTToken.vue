@@ -9,6 +9,8 @@
       'vtt-token--ally': side === 'allies',
       'vtt-token--enemy': side === 'enemies',
       'vtt-token--fainted': isFainted,
+      'vtt-token--own': isOwnToken,
+      'vtt-token--pending-move': isPendingMove,
     }"
     :style="tokenStyle"
     :data-testid="`vtt-token-${token.combatantId}`"
@@ -82,6 +84,10 @@ const props = defineProps<{
   isoScreenY?: number
   /** Token elevation level (displayed as badge) */
   elevation?: number
+  /** Player mode: highlights this token as belonging to the current player */
+  isOwnToken?: boolean
+  /** Player mode: shows pulsing pending state for a move request */
+  isPendingMove?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -218,6 +224,18 @@ const handleClick = (event: MouseEvent) => {
     filter: grayscale(0.8);
   }
 
+  // Player mode: own token highlight (colored border ring)
+  &--own {
+    outline: 2px solid $color-side-player;
+    outline-offset: 1px;
+    border-radius: 50%;
+  }
+
+  // Player mode: pending move pulsing animation
+  &--pending-move {
+    animation: token-pulse 1.5s ease-in-out infinite;
+  }
+
   // Current turn glow - color based on side
   &--current.vtt-token--player {
     filter: drop-shadow(0 0 8px $color-side-player) drop-shadow(0 0 16px $color-side-player);
@@ -345,4 +363,14 @@ const handleClick = (event: MouseEvent) => {
   color: $color-accent-teal;
 }
 
+@keyframes token-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(0.95);
+  }
+}
 </style>
