@@ -92,3 +92,6 @@
 | plan-20260225-130000/slave-1 | reviewers | feature-003-track-b-p1-review | CHANGES_REQUIRED | 2026-02-25T13:12:00Z | 783889b, 898719d |
 | plan-20260225-130000/slave-2 | reviewers | feature-003-track-c-p1-review | CHANGES_REQUIRED | 2026-02-25T13:20:00Z | 00df404, 62eebe9 |
 | plan-20260225-130000/slave-3 | reviewers | feature-002-p2-rereview | APPROVED | 2026-02-25T13:08:30Z | c342a78, 0e09260 |
+| plan-20260225-032831/slave-1 | developer | feature-003-track-b-p1-fix | success | 2026-02-25T03:35:00Z | 76b2cc8, 348da35, dad1106, 58df654, 24e1f16, fce6559 |
+| plan-20260225-032831/slave-2 | developer | feature-003-track-c-p1-fix | success | 2026-02-25T04:18:00Z | 6e48b8a, 849c211, aed853a, adb6ecb, 9b89809, ce8e6a4, 279f4d7, c3ba9c9 |
+| plan-20260225-032831/slave-3 | reviewers | ptu-rule-082+083-review | APPROVED | 2026-02-25T03:35:00Z | dd1b1f7, 3c753d3 |

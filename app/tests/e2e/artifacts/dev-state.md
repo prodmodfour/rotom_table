@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-02-25T14:00:00
-updated_by: slave-collector (plan-20260225-130000)
+last_updated: 2026-02-25T04:30:00
+updated_by: slave-collector (plan-20260225-032831)
 ---
 
 # Dev Ecosystem State
@@ -28,15 +28,15 @@ updated_by: slave-collector (plan-20260225-130000)
 | ptu-rule-079 | P3 | **resolved** | Helmet conditional DR — fix applied, code-review-136 APPROVED, rules-review-126 APPROVED |
 | ptu-rule-080 | P3 | **resolved** | Higher-level char creation validation — fix applied, code-review-137 APPROVED (M1/M2 → refactoring-070, 071), rules-review-127 APPROVED |
 | ptu-rule-081 | P4 | **open** | Multiple Focus items not explicitly prevented (from rules-review-115 M2) |
-| ptu-rule-082 | P4 | **in-progress** | Pokemon maxHp not auto-updated on level-up (from rules-review-118). Fix applied: maxHp += levelsGained in both XP endpoints. Needs review |
-| ptu-rule-083 | P4 | **in-progress** | Measurement store uses Chebyshev distance instead of PTU alternating diagonal (from rules-review-144 RULING-1). Fix applied: PTU alternating diagonal in measurement.ts + PlayerGridView + VTTContainer. Needs review |
+| ptu-rule-082 | P4 | **resolved** | Pokemon maxHp not auto-updated on level-up (from rules-review-118). Fix applied + APPROVED (code-review-161, rules-review-151). M2 → ux-005 |
+| ptu-rule-083 | P4 | **resolved** | Measurement store uses Chebyshev distance instead of PTU alternating diagonal (from rules-review-144 RULING-1). Fix applied + APPROVED (code-review-161, rules-review-151). M1 → refactoring-080 |
 
 ### Feature Tickets (`tickets/feature/`)
 | Ticket | Priority | Status | Summary | Design Complexity |
 |--------|----------|--------|---------|-------------------|
 | feature-001 | P3 | **resolved** | B2W2 trainer sprites — single-phase design complete, P0 APPROVED (code-review-149 + rules-review-139). Closed by slave-3 (plan-20260224-162105) | single-phase |
 | feature-002 | P2 | **P2-APPROVED** | 3D isometric grid — P2 fix cycle 2 APPROVED (code-review-160 + rules-review-150). All tiers complete | multi-phase |
-| feature-003 | P1 | **Track-B-P1+Track-C-P1-CHANGES_REQUIRED** | Player View — Track B P1 reviewed: code-review-158 CHANGES_REQUIRED (C1 WS race, H1 LAN detection, H2 app-surface), rules-review-148 APPROVED. Track C P1 reviewed: code-review-159 CHANGES_REQUIRED (C1 Chebyshev distance, H1 tab state, H2 cooldown, H3 token click), rules-review-149 CHANGES_REQUIRED (R1 Chebyshev). Both need fix cycle | multi-phase-parallel |
+| feature-003 | P1 | **Track-B-P1+Track-C-P1-fix-applied** | Player View — Track B P1 fix cycle applied (6 commits: C1+H1+H2+M1+M2+M3 from code-review-158). Track C P1 fix cycle applied (8 commits: H1+H2+H3+M1+M2+M3+R3 from code-review-159+rules-review-149). C1/R1 pre-fixed by ptu-rule-083. Both need re-review | multi-phase-parallel |
 
 ### UX Tickets (`tickets/ux/`)
 | Ticket | Priority | Status | Summary |
@@ -45,10 +45,17 @@ updated_by: slave-collector (plan-20260225-130000)
 | ux-002 | P4 | **open** | Trainer HP stat display shows raw stat without formula context in player view (from rules-review-129 M1) |
 | ux-003 | P3 | **open** | QR code generation for SessionUrlDisplay tunnel/LAN URLs (from code-review-158 M1) |
 | ux-004 | P3 | **open** | Wire getDisplayHp into VTTToken for player mode HP masking (from rules-review-149 R2) |
+| ux-005 | P4 | **open** | Pokemon at full HP appears damaged after level-up — currentHp not increased with maxHp (from code-review-161 M2) |
 
 ## Active Developer Work
 
-**Current task:** feature-003 Track B P1 + Track C P1 reviewed (CHANGES_REQUIRED). feature-002 P2 APPROVED. ptu-rule-082 + ptu-rule-083 fixes applied.
+**Current task:** feature-003 Track B P1 + Track C P1 fix cycles applied (needs re-review). ptu-rule-082 + ptu-rule-083 APPROVED + resolved.
+
+**Session 32 (2026-02-25, plan-20260225-032831):**
+- feature-003 Track B P1 fix cycle — 6 commits (C1 WS race fix, H1 LAN misclassification via shared getConnectionType(), H2 app-surface.md, M1 QR TODO, M2 extract getConnectionType utility, M3 execCommand TODO) → **fix applied, needs re-review**
+- feature-003 Track C P1 fix cycle — 8 commits (H1 tab state broadcast to players, H2 reactive cooldown, H3 multi-cell token click, M1 dead fetch removal, M2 encounter_unserved broadcast, M3 click-vs-drag panning, R3 bug-031 TODO) → **fix applied, needs re-review**
+- ptu-rule-082 + ptu-rule-083 review — code-review-161 APPROVED (M1 → refactoring-080, M2 → ux-005) + rules-review-151 APPROVED → **both resolved**
+- Tickets filed: refactoring-080 (diagonal formula duplication), ux-005 (currentHp on level-up)
 
 **Session 31 (2026-02-25):**
 - feature-002 P2 re-review — code-review-160 APPROVED + rules-review-150 APPROVED → **P2 complete, all tiers done**
@@ -58,12 +65,17 @@ updated_by: slave-collector (plan-20260225-130000)
 - ptu-rule-082 fix — 2 commits (maxHp += levelsGained in both XP endpoints) → **fix applied, needs review**
 
 **Next actions (by priority):**
-1. **Fix cycle** feature-003 Track B P1 (C1+H1+H2+M1+M2+M3 from code-review-158)
-2. **Fix cycle** feature-003 Track C P1 (C1+H1+H2+H3+M1+M2+M3 from code-review-159 + R1+R3 from rules-review-149)
-3. **Review** ptu-rule-082 + ptu-rule-083 fixes
-4. ptu-rule-081 P4, bug-030 P2, bug-031 P3, ux-003 P3, ux-004 P3
+1. **Re-review** feature-003 Track B P1 fix cycle (6 commits addressing code-review-158)
+2. **Re-review** feature-003 Track C P1 fix cycle (8 commits addressing code-review-159 + rules-review-149)
+3. bug-030 P2, ux-003 P3, ux-004 P3, bug-031 P3, ptu-rule-081 P4, ux-005 P4
 
 ## Review Status
+
+### Session 32 Reviews (plan-20260225-032831)
+| Review ID | Target | Verdict | Reviewer | Date |
+|-----------|--------|---------|----------|------|
+| code-review-161 | ptu-rule-082 + ptu-rule-083 | APPROVED | senior-reviewer | 2026-02-25 |
+| rules-review-151 | ptu-rule-082 + ptu-rule-083 | APPROVED | game-logic-reviewer | 2026-02-25 |
 
 ### Session 31 Reviews (plan-20260225-130000)
 | Review ID | Target | Verdict | Reviewer | Date |
