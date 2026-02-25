@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-02-25T13:00:00
-updated_by: slave-collector (plan-20260224-210000)
+last_updated: 2026-02-25T14:00:00
+updated_by: slave-collector (plan-20260225-130000)
 ---
 
 # Dev Ecosystem State
@@ -11,6 +11,8 @@ updated_by: slave-collector (plan-20260224-210000)
 | Ticket | Priority | Severity | Status | Summary |
 |--------|----------|----------|--------|---------|
 | bug-001–029 | P0–P3 | — | resolved | (all resolved — see sessions 1–9) |
+| bug-030 | P2 | **open** | Player grid has no touch event support for mobile (pinch-to-zoom, touch panning) — from code-review-159 M3 |
+| bug-031 | P3 | **open** | Explored fog cells show tokens contrary to design spec (from rules-review-149 R3) |
 
 ### PTU Rule Tickets (`tickets/ptu-rule/`)
 | Ticket | Priority | Status | Summary |
@@ -26,37 +28,52 @@ updated_by: slave-collector (plan-20260224-210000)
 | ptu-rule-079 | P3 | **resolved** | Helmet conditional DR — fix applied, code-review-136 APPROVED, rules-review-126 APPROVED |
 | ptu-rule-080 | P3 | **resolved** | Higher-level char creation validation — fix applied, code-review-137 APPROVED (M1/M2 → refactoring-070, 071), rules-review-127 APPROVED |
 | ptu-rule-081 | P4 | **open** | Multiple Focus items not explicitly prevented (from rules-review-115 M2) |
-| ptu-rule-082 | P4 | **open** | Pokemon maxHp not auto-updated on level-up (from rules-review-118) |
-| ptu-rule-083 | P4 | **open** | Measurement store uses Chebyshev distance instead of PTU alternating diagonal (from rules-review-144 RULING-1) |
+| ptu-rule-082 | P4 | **in-progress** | Pokemon maxHp not auto-updated on level-up (from rules-review-118). Fix applied: maxHp += levelsGained in both XP endpoints. Needs review |
+| ptu-rule-083 | P4 | **in-progress** | Measurement store uses Chebyshev distance instead of PTU alternating diagonal (from rules-review-144 RULING-1). Fix applied: PTU alternating diagonal in measurement.ts + PlayerGridView + VTTContainer. Needs review |
 
 ### Feature Tickets (`tickets/feature/`)
 | Ticket | Priority | Status | Summary | Design Complexity |
 |--------|----------|--------|---------|-------------------|
 | feature-001 | P3 | **resolved** | B2W2 trainer sprites — single-phase design complete, P0 APPROVED (code-review-149 + rules-review-139). Closed by slave-3 (plan-20260224-162105) | single-phase |
-| feature-002 | P2 | **P2-fix-cycle-2-applied** | 3D isometric grid — P2 fix cycle 2 applied (52ca518: pass terrainPaintElevation to drag handler). Ready for re-review | multi-phase |
-| feature-003 | P1 | **Track-B-P1+Track-C-P1-implemented** | Player View — Track B P1 implemented (8 commits: tunnel config, SessionUrlDisplay, ConnectionStatus, enhanced reconnection). Track C P1 implemented (9 commits: group view control, player VTT grid, action ack, state sync). Both need review | multi-phase-parallel |
+| feature-002 | P2 | **P2-APPROVED** | 3D isometric grid — P2 fix cycle 2 APPROVED (code-review-160 + rules-review-150). All tiers complete | multi-phase |
+| feature-003 | P1 | **Track-B-P1+Track-C-P1-CHANGES_REQUIRED** | Player View — Track B P1 reviewed: code-review-158 CHANGES_REQUIRED (C1 WS race, H1 LAN detection, H2 app-surface), rules-review-148 APPROVED. Track C P1 reviewed: code-review-159 CHANGES_REQUIRED (C1 Chebyshev distance, H1 tab state, H2 cooldown, H3 token click), rules-review-149 CHANGES_REQUIRED (R1 Chebyshev). Both need fix cycle | multi-phase-parallel |
 
 ### UX Tickets (`tickets/ux/`)
 | Ticket | Priority | Status | Summary |
 |--------|----------|--------|---------|
 | ux-001 | P4 | **open** | Equipment catalog browser closes on equip, forces re-open for multi-item sessions (from code-review-127 M3) |
 | ux-002 | P4 | **open** | Trainer HP stat display shows raw stat without formula context in player view (from rules-review-129 M1) |
+| ux-003 | P3 | **open** | QR code generation for SessionUrlDisplay tunnel/LAN URLs (from code-review-158 M1) |
+| ux-004 | P3 | **open** | Wire getDisplayHp into VTTToken for player mode HP masking (from rules-review-149 R2) |
 
 ## Active Developer Work
 
-**Current task:** feature-003 Track B P1 + Track C P1 implemented. feature-002 P2 fix cycle 2 applied. All three need review.
+**Current task:** feature-003 Track B P1 + Track C P1 reviewed (CHANGES_REQUIRED). feature-002 P2 APPROVED. ptu-rule-082 + ptu-rule-083 fixes applied.
 
-**Session 30 (2026-02-25):**
-- feature-002 P2 fix cycle 2 — 52ca518: pass `terrainPaintElevation` to `applyTool` in drag handler at `useIsometricInteraction.ts:477` → **fix applied, ready for re-review**
-- feature-003 Track B P1 — 8 commits (9e0e740..a04aedc): tunnelUrl AppSettings field, GET/PUT tunnel endpoints, SessionUrlDisplay with copy-to-clipboard, enhanced WS reconnection (10 attempts for non-localhost), ConnectionStatus component, reconnect banner, route rules for tunnel, REMOTE_ACCESS_SETUP.md docs → **implemented, needs review**
-- feature-003 Track C P1 — 9 commits (fda245d..6661d43): WS handlers for group_view/player_move/turn_notify, PlayerGroupControl component, usePlayerGridView composable, GridCanvas+VTTToken player mode, PlayerGridView+PlayerMoveRequest components, action ack toast + turn notify, useStateSync composable, player page wiring → **implemented, needs review**
+**Session 31 (2026-02-25):**
+- feature-002 P2 re-review — code-review-160 APPROVED + rules-review-150 APPROVED → **P2 complete, all tiers done**
+- feature-003 Track B P1 review — code-review-158 CHANGES_REQUIRED (C1: WS race condition, H1: LAN misclassification, H2: app-surface gap) + rules-review-148 APPROVED → **needs fix cycle**
+- feature-003 Track C P1 review — code-review-159 CHANGES_REQUIRED (C1: Chebyshev distance, H1: tab state blindness, H2: frozen cooldown, H3: token click detection) + rules-review-149 CHANGES_REQUIRED (R1: Chebyshev distance) → **needs fix cycle**
+- ptu-rule-083 fix — 2 commits (PTU alternating diagonal in measurement.ts + PlayerGridView + VTTContainer) → **fix applied, needs review**
+- ptu-rule-082 fix — 2 commits (maxHp += levelsGained in both XP endpoints) → **fix applied, needs review**
 
 **Next actions (by priority):**
-1. **Review** feature-003 Track B P1 + Track C P1 (code-review + rules-review)
-2. **Re-review** feature-002 P2 fix cycle 2 (code-review + rules-review)
-3. ptu-rule-081 P4, ptu-rule-082 P4, ptu-rule-083 P4
+1. **Fix cycle** feature-003 Track B P1 (C1+H1+H2+M1+M2+M3 from code-review-158)
+2. **Fix cycle** feature-003 Track C P1 (C1+H1+H2+H3+M1+M2+M3 from code-review-159 + R1+R3 from rules-review-149)
+3. **Review** ptu-rule-082 + ptu-rule-083 fixes
+4. ptu-rule-081 P4, bug-030 P2, bug-031 P3, ux-003 P3, ux-004 P3
 
 ## Review Status
+
+### Session 31 Reviews (plan-20260225-130000)
+| Review ID | Target | Verdict | Reviewer | Date |
+|-----------|--------|---------|----------|------|
+| code-review-158 | feature-003 Track B P1 | CHANGES_REQUIRED | senior-reviewer | 2026-02-25 |
+| rules-review-148 | feature-003 Track B P1 | APPROVED | game-logic-reviewer | 2026-02-25 |
+| code-review-159 | feature-003 Track C P1 | CHANGES_REQUIRED | senior-reviewer | 2026-02-25 |
+| rules-review-149 | feature-003 Track C P1 | CHANGES_REQUIRED | game-logic-reviewer | 2026-02-25 |
+| code-review-160 | feature-002 P2 fix cycle 2 | APPROVED | senior-reviewer | 2026-02-25 |
+| rules-review-150 | feature-002 P2 fix cycle 2 | APPROVED | game-logic-reviewer | 2026-02-25 |
 
 ### Session 29 Reviews (plan-20260224-200000)
 | Review ID | Target | Verdict | Reviewer | Date |
@@ -225,6 +242,7 @@ updated_by: slave-collector (plan-20260224-210000)
 | refactoring-076 | P4 | open | Restore 9px font-size for PokemonCard stat cell labels (from code-review-144 M1) |
 | refactoring-077 | P4 | open | Move TerrainCostGetter type to shared types file (from code-review-151 M2 note) |
 | refactoring-078 | P4 | open | Add elevation parameters to validateMovement for unit tests (from code-review-151 regression check note) |
+| refactoring-079 | P4 | open | Replace deprecated document.execCommand('copy') in SessionUrlDisplay (from code-review-158 M3) |
 
 ## Code Health
 
@@ -232,12 +250,12 @@ updated_by: slave-collector (plan-20260224-210000)
 |--------|-------|
 | Last audited | 2026-02-18T12:00:00 |
 | Open tickets (P0) | 0 |
-| Open tickets (P1) | 1 (feature-003 — Track B/C P1 implemented, needs review) |
-| Open tickets (P2) | 1 (feature-002 — P2 fix cycle 2 applied, awaiting re-review) |
-| Open tickets (P3) | 0 |
-| Open tickets (P4) | 16 (refactoring-059–078 excl 6 resolved + ptu-rule-081, 082, 083 + ux-001, 002) |
-| Total open | 18 |
-| Total resolved | 158 |
+| Open tickets (P1) | 1 (feature-003 — Track B/C P1 CHANGES_REQUIRED, needs fix cycle) |
+| Open tickets (P2) | 1 (bug-030 — mobile touch events) |
+| Open tickets (P3) | 2 (bug-031 fog tokens, ux-003 QR code, ux-004 HP masking) |
+| Open tickets (P4) | 14 (refactoring-059–079 excl 6 resolved + ptu-rule-081/082/083 + ux-001/002) |
+| Total open | 21 |
+| Total resolved | 159 (feature-002 fully resolved) |
 
 ## Session Summary (2026-02-20, session 13)
 
@@ -527,6 +545,22 @@ updated_by: slave-collector (plan-20260224-210000)
 **Net movement:** 18→18 open (no change — implementations need review)
 
 **All P0 tickets remain at 0.**
+
+## Session Summary (2026-02-25, session 31 — plan-20260225-130000)
+
+**Slave collection plan-20260225-130000:** 5 slaves merged (10 commits total, 0 conflicts)
+- **slave-4** (developer): ptu-rule-083 fix — 2 commits (PTU alternating diagonal in measurement.ts distance getter + PlayerGridView + VTTContainer distance imports)
+- **slave-5** (developer): ptu-rule-082 fix — 2 commits (maxHp += levelsGained in xp-distribute and add-experience endpoints)
+- **slave-1** (reviewers): feature-003 Track B P1 review — code-review-158 CHANGES_REQUIRED (C1: WS race condition in resetAndReconnect, H1: isTunnelConnection misclassifies LAN, H2: app-surface missing endpoints) + rules-review-148 APPROVED (all 4 mechanics correct)
+- **slave-2** (reviewers): feature-003 Track C P1 review — code-review-159 CHANGES_REQUIRED (C1: Chebyshev distance in PlayerGridView, H1: player tab state blindness, H2: frozen cooldown computed, H3: multi-cell token click) + rules-review-149 CHANGES_REQUIRED (R1: Chebyshev distance, R2+R3 MEDIUM: HP masking + fog tokens)
+- **slave-3** (reviewers): feature-002 P2 re-review — code-review-160 APPROVED (0 issues, H-NEW resolved) + rules-review-150 APPROVED (0 issues) → **P2 fully APPROVED, feature-002 resolved**
+
+**Tickets filed:** 5 (bug-030 mobile touch events, bug-031 fog cell tokens, ux-003 QR code, ux-004 HP masking, refactoring-079 deprecated execCommand)
+**Tickets resolved:** 1 (feature-002 fully approved — all tiers P0+P1+P2 done)
+**Reviews completed:** 6 artifacts (code-review-158–160, rules-review-148–150)
+**Net movement:** 18→21 open (+3 net: +5 new tickets, -1 resolved, -1 feature-002 closed)
+
+**All P0 tickets remain at 0. feature-002 is fully resolved. feature-003 Track B/C P1 needs fix cycles.**
 
 ## Session Summary (2026-02-23, session 22 — plan-20260223-122250)
 
