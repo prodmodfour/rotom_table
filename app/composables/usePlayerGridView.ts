@@ -76,6 +76,10 @@ export function usePlayerGridView(options: {
    * Tokens visible to the player based on fog of war state.
    * Hidden cells are not visible; explored cells show tokens dimmed.
    * When fog is disabled, all tokens are visible.
+   *
+   * TODO (bug-031): Explored fog cells currently show tokens, which
+   * contradicts the design spec. Explored cells should show terrain
+   * but NOT tokens. Only 'revealed' cells should display tokens.
    */
   const visibleTokens = computed((): TokenInfo[] => {
     if (!encounterStore.encounter) return []
