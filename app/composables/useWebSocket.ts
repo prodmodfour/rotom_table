@@ -1,5 +1,6 @@
 import type { WebSocketEvent, Encounter, Pokemon, HumanCharacter, MoveLogEntry, MovementPreview } from '~/types'
 import { isPokemon } from '~/types'
+import { getConnectionType } from '~/utils/connectionType'
 
 // WebSocket configuration constants
 const MAX_RECONNECT_ATTEMPTS_LOCAL = 5
@@ -14,13 +15,11 @@ const getLibraryStore = () => useLibraryStore()
 const getGroupViewStore = () => useGroupViewStore()
 
 /**
- * Determine if the current connection is through a tunnel (non-localhost).
+ * Determine if the current connection is through a tunnel (non-localhost/non-LAN).
  * Tunnel connections get more reconnect attempts since recovery may take longer.
  */
 const isTunnelConnection = (): boolean => {
-  if (typeof window === 'undefined') return false
-  const hostname = window.location.hostname
-  return hostname !== 'localhost' && hostname !== '127.0.0.1' && hostname !== '::1'
+  return getConnectionType() === 'tunnel'
 }
 
 export function useWebSocket() {
@@ -63,7 +62,7 @@ export function useWebSocket() {
   }
 
   const connect = () => {
-    if (ws?.readyState === WebSocket.OPEN) {
+    if (ws?.readyState === WebSocket.OPEN || ws?.readyState === WebSocket.CONNECTING) {
       return
     }
 
@@ -265,6 +264,12 @@ export function useWebSocket() {
   const disconnect = () => {
     stopKeepalive()
     if (ws) {
+      // Null out handlers before close to prevent onclose from triggering
+      // attemptReconnect(), which would race with any subsequent connect() call
+      ws.onclose = null
+      ws.onerror = null
+      ws.onmessage = null
+      ws.onopen = null
       ws.close()
       ws = null
     }
