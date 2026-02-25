@@ -38,10 +38,35 @@ export default defineNuxtConfig({
   nitro: {
     experimental: {
       websocket: true
+    },
+    // Route rules for tunnel-friendly caching and WebSocket
+    routeRules: {
+      // WebSocket endpoint: no caching, prevent Cloudflare from buffering
+      '/ws': {
+        headers: {
+          'Cache-Control': 'no-store',
+          'X-Accel-Buffering': 'no'
+        }
+      },
+      // API endpoints: no caching to ensure fresh data through tunnel
+      '/api/**': {
+        headers: {
+          'Cache-Control': 'no-store'
+        }
+      }
     }
   },
 
   vite: {
+    // When developing through a Cloudflare Tunnel, Vite HMR needs explicit
+    // configuration. Uncomment and set the tunnel hostname:
+    // server: {
+    //   hmr: {
+    //     protocol: 'wss',
+    //     host: 'ptu.example.com',  // Your tunnel hostname
+    //     clientPort: 443
+    //   }
+    // },
     css: {
       preprocessorOptions: {
         scss: {
