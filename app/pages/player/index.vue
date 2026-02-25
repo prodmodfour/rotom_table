@@ -15,15 +15,28 @@
       <header class="player-top-bar">
         <div class="player-top-bar__info">
           <span class="player-top-bar__name">{{ characterName }}</span>
-          <span
-            class="player-top-bar__status"
-            :class="isConnected ? 'player-top-bar__status--connected' : 'player-top-bar__status--disconnected'"
-          ></span>
+          <ConnectionStatus
+            :is-connected="isConnected"
+            :is-reconnecting="isReconnecting"
+            :reconnect-attempt="reconnectAttempt"
+            :max-reconnect-attempts="maxReconnectAttempts"
+            :latency-ms="latencyMs"
+            :last-error="wsError"
+            @retry="resetAndReconnect"
+          />
         </div>
         <button class="player-top-bar__switch" aria-label="Switch character" @click="handleSwitchCharacter">
           <PhSwap :size="18" />
         </button>
       </header>
+
+      <!-- Connection Lost Banner -->
+      <div v-if="isReconnecting" class="player-reconnect-banner">
+        Connection lost. Reconnecting ({{ reconnectAttempt }}/{{ maxReconnectAttempts }})...
+      </div>
+      <div v-else-if="!isConnected && wsError" class="player-reconnect-banner player-reconnect-banner--failed">
+        Connection lost. <button class="player-reconnect-banner__retry" @click="resetAndReconnect">Retry</button>
+      </div>
 
       <!-- Loading State -->
       <div v-if="loading" class="player-loading">
@@ -103,7 +116,19 @@ const playerStore = usePlayerIdentityStore()
 const encounterStore = useEncounterStore()
 
 // Single WebSocket connection via usePlayerWebSocket (scene sync, action tracking, identity)
-const { isConnected, identify, joinEncounter, send, activeScene: playerActiveScene } = usePlayerWebSocket()
+const {
+  isConnected,
+  isReconnecting,
+  reconnectAttempt,
+  maxReconnectAttempts,
+  latencyMs,
+  lastError: wsError,
+  identify,
+  joinEncounter,
+  send,
+  resetAndReconnect,
+  activeScene: playerActiveScene
+} = usePlayerWebSocket()
 
 // Provide the shared send function for child composables (usePlayerCombat)
 provide(PLAYER_WS_SEND_KEY, send)
@@ -271,21 +296,7 @@ onUnmounted(() => {
     text-overflow: ellipsis;
   }
 
-  &__status {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-
-    &--connected {
-      background: $color-success;
-      box-shadow: 0 0 4px rgba($color-success, 0.5);
-    }
-
-    &--disconnected {
-      background: $color-danger;
-    }
-  }
+  // ConnectionStatus component replaces the old status dot
 
   &__switch {
     display: flex;
@@ -351,6 +362,42 @@ onUnmounted(() => {
     padding: $spacing-md;
     gap: $spacing-sm;
     font-size: $font-size-sm;
+  }
+}
+
+.player-reconnect-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+  padding: $spacing-xs $spacing-md;
+  background: rgba($color-warning, 0.15);
+  color: $color-warning;
+  font-size: $font-size-xs;
+  font-weight: 500;
+  text-align: center;
+  border-bottom: 1px solid rgba($color-warning, 0.3);
+
+  &--failed {
+    background: rgba($color-danger, 0.15);
+    color: $color-danger;
+    border-bottom-color: rgba($color-danger, 0.3);
+  }
+
+  &__retry {
+    padding: 2px $spacing-sm;
+    font-size: $font-size-xs;
+    font-weight: 600;
+    color: inherit;
+    background: transparent;
+    border: 1px solid currentColor;
+    border-radius: $border-radius-sm;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    &:hover {
+      background: rgba(currentColor, 0.1);
+    }
   }
 }
 </style>
