@@ -126,6 +126,7 @@
 </template>
 
 <script setup lang="ts">
+// TODO: QR code generation for player connection URLs — see ticket ux-003
 import { PhWifiHigh, PhGlobe, PhCopy, PhCheck, PhGear, PhFloppyDisk, PhTrash } from '@phosphor-icons/vue'
 
 interface ServerAddress {
@@ -219,7 +220,8 @@ const copyToClipboard = async (url: string) => {
       copiedUrl.value = null
     }, 2000)
   } catch {
-    // Fallback for non-HTTPS contexts
+    // TODO: document.execCommand('copy') is deprecated but required as fallback
+    // for non-HTTPS contexts (LAN IP access). See refactoring-079 for cleanup.
     const textarea = document.createElement('textarea')
     textarea.value = url
     textarea.style.position = 'fixed'
