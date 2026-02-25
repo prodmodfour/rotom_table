@@ -33,7 +33,7 @@ updated_by: slave-collector (plan-20260224-200000)
 | Ticket | Priority | Status | Summary | Design Complexity |
 |--------|----------|--------|---------|-------------------|
 | feature-001 | P3 | **resolved** | B2W2 trainer sprites — single-phase design complete, P0 APPROVED (code-review-149 + rules-review-139). Closed by slave-3 (plan-20260224-162105) | single-phase |
-| feature-002 | P2 | **P2-fix-cycle-2-needed** | 3D isometric grid — P2 re-review: code-review-157 CHANGES_REQUIRED (H-NEW: drag painting elevation not passed in handleMouseMove), rules-review-147 APPROVED. One-line fix needed | multi-phase |
+| feature-002 | P2 | **P2-fix-cycle-2-applied** | 3D isometric grid — P2 fix cycle 2 applied (52ca518: pass terrainPaintElevation to drag handler). Ready for re-review | multi-phase |
 | feature-003 | P1 | **Track-B/C-P0-APPROVED** | Player View — Track B P0 APPROVED (code-review-155 + rules-review-145). Track C P0 APPROVED (code-review-156 + rules-review-146). All fix cycles complete. Ready for P1 tracks | multi-phase-parallel |
 
 ### UX Tickets (`tickets/ux/`)
@@ -44,18 +44,15 @@ updated_by: slave-collector (plan-20260224-200000)
 
 ## Active Developer Work
 
-**Current task:** Slave collection for plan-20260224-200000 completed — 3 reviewer slaves merged (6 commits total).
+**Current task:** feature-002 P2 fix cycle 2 applied (1 commit). Ready for re-review.
 
-**Session 29 (2026-02-24):**
-- feature-003 Track B P0 re-review — code-review-155 APPROVED + rules-review-145 APPROVED → **Track B P0 complete**
-- feature-003 Track C P0 re-review — code-review-156 APPROVED + rules-review-146 APPROVED → **Track C P0 complete**
-- feature-002 P2 re-review — code-review-157 CHANGES_REQUIRED (H-NEW: drag painting elevation in handleMouseMove) + rules-review-147 APPROVED → **needs one-line fix**
+**Session 30 (2026-02-25):**
+- feature-002 P2 fix cycle 2 — 52ca518: pass `terrainPaintElevation` to `applyTool` in drag handler at `useIsometricInteraction.ts:477` → **fix applied, ready for re-review**
 
 **Next actions (by priority):**
-1. **Fix** feature-002 P2 H-NEW (one-line: pass `terrainPaintElevation` to `applyTool` in drag handler at `useIsometricInteraction.ts:477`)
-2. **Re-review** feature-002 P2 fix cycle 2 after fix
-3. **Implement** feature-003 Track B P1 + Track C P1 (both P0 tracks now APPROVED)
-4. ptu-rule-081 P4, ptu-rule-082 P4, ptu-rule-083 P4
+1. **Re-review** feature-002 P2 fix cycle 2 (code-review + rules-review)
+2. **Implement** feature-003 Track B P1 + Track C P1 (both P0 tracks now APPROVED)
+3. ptu-rule-081 P4, ptu-rule-082 P4, ptu-rule-083 P4
 
 ## Review Status
 
@@ -234,7 +231,7 @@ updated_by: slave-collector (plan-20260224-200000)
 | Last audited | 2026-02-18T12:00:00 |
 | Open tickets (P0) | 0 |
 | Open tickets (P1) | 1 (feature-003 — Track B/C P0 APPROVED, ready for P1 tracks) |
-| Open tickets (P2) | 1 (feature-002 — P2 re-review CHANGES_REQUIRED, one-line fix needed) |
+| Open tickets (P2) | 1 (feature-002 — P2 fix cycle 2 applied, awaiting re-review) |
 | Open tickets (P3) | 0 |
 | Open tickets (P4) | 16 (refactoring-059–078 excl 6 resolved + ptu-rule-081, 082, 083 + ux-001, 002) |
 | Total open | 18 |

@@ -40,6 +40,7 @@ Replace the current 2D flat Canvas grid with a 3D isometric grid supporting Z-ax
 | 2026-02-23 | P1 code-review-148 fixes | 8 commits on slave/2-dev-feature-002-p1-fix-20260223-141341 |
 | 2026-02-24 | P2 implemented | 8 commits on slave/3-dev-feature-002-p2-20260224-171710 |
 | 2026-02-24 | P2 code-review-154 fixes | 7 commits on slave/3-dev-feature-002-p2-fix-20260224-173734 |
+| 2026-02-25 | P2 code-review-157 fix | 1 commit on slave/1-dev-feature-002-p2-fix2-20260224-210000 |
 
 ### P2 Fix Cycle (code-review-154)
 
@@ -62,6 +63,17 @@ Replace the current 2D flat Canvas grid with a 3D isometric grid supporting Z-ax
 - `app/composables/useIsometricInteraction.ts` (H1: pass terrain paint elevation to applyTool)
 - `app/composables/useIsometricOverlays.ts` (H3: camera angle doc comment; M3: terrain-derived side face colors)
 - `.claude/skills/references/app-surface.md` (M1: add useIsometricOverlays and TerrainPainter)
+
+### P2 Fix Cycle 2 (code-review-157)
+
+| Commit | Issue | Description |
+|--------|-------|-------------|
+| 52ca518 | H-NEW | fix: pass terrain paint elevation to drag painting handler |
+
+### P2 Fix Cycle 2 Files Changed
+
+**Modified files (1):**
+- `app/composables/useIsometricInteraction.ts` (H-NEW: pass terrainPaintElevation to applyTool during drag painting)
 
 ### P1 Fix Cycle (code-review-148)
 
