@@ -250,37 +250,59 @@ const marqueePixelRect = computed(() => {
 
 // Event handlers (delegate to interaction composable, with player mode intercepts)
 const handleWheel = interaction.handleWheel
-const handleMouseMove = interaction.handleMouseMove
-const handleMouseUp = interaction.handleMouseUp
+
+// Player mode click-vs-drag detection: track mousedown position to distinguish
+// a click (< 5px movement) from a drag/pan gesture.
+// TODO: Touch events (pinch-to-zoom, touch panning) — see bug-030
+const CLICK_THRESHOLD_PX = 5
+const playerMouseDownPos = ref<{ x: number; y: number } | null>(null)
+
+const handleMouseMove = (event: MouseEvent): void => {
+  interaction.handleMouseMove(event)
+}
+
+const handleMouseUp = (event: MouseEvent): void => {
+  // In player mode, check if this was a click (not a drag) and emit cell click
+  if (props.playerMode && event.button === 0 && playerMouseDownPos.value) {
+    const dx = Math.abs(event.clientX - playerMouseDownPos.value.x)
+    const dy = Math.abs(event.clientY - playerMouseDownPos.value.y)
+    const wasClick = dx < CLICK_THRESHOLD_PX && dy < CLICK_THRESHOLD_PX
+
+    if (wasClick) {
+      const container = containerRef.value
+      if (container) {
+        const rect = container.getBoundingClientRect()
+        const mouseX = event.clientX - rect.left
+        const mouseY = event.clientY - rect.top
+
+        const gridX = Math.floor((mouseX - panOffset.value.x) / scaledCellSize.value)
+        const gridY = Math.floor((mouseY - panOffset.value.y) / scaledCellSize.value)
+
+        if (gridX >= 0 && gridX < props.config.width && gridY >= 0 && gridY < props.config.height) {
+          // Multi-cell tokens occupy position.x..position.x+size-1 on each axis
+          const clickedToken = props.tokens.find(t =>
+            gridX >= t.position.x && gridX < t.position.x + t.size &&
+            gridY >= t.position.y && gridY < t.position.y + t.size
+          )
+          if (!clickedToken) {
+            emit('playerCellClick', { x: gridX, y: gridY })
+          }
+        }
+      }
+    }
+
+    playerMouseDownPos.value = null
+  }
+
+  interaction.handleMouseUp(event)
+}
 
 const handleMouseDown = (event: MouseEvent): void => {
   if (props.playerMode && event.button === 0) {
-    // In player mode, left-click on the grid emits playerCellClick
-    // (panning and zooming still work via middle-click/wheel)
-    const container = containerRef.value
-    if (!container) return
-
-    const rect = container.getBoundingClientRect()
-    const mouseX = event.clientX - rect.left
-    const mouseY = event.clientY - rect.top
-
-    // Convert screen coordinates to grid cell
-    const gridX = Math.floor((mouseX - panOffset.value.x) / scaledCellSize.value)
-    const gridY = Math.floor((mouseY - panOffset.value.y) / scaledCellSize.value)
-
-    if (gridX >= 0 && gridX < props.config.width && gridY >= 0 && gridY < props.config.height) {
-      // Check if clicking on a token (handled by token click handler)
-      // Multi-cell tokens occupy position.x..position.x+size-1 on each axis
-      const clickedToken = props.tokens.find(t =>
-        gridX >= t.position.x && gridX < t.position.x + t.size &&
-        gridY >= t.position.y && gridY < t.position.y + t.size
-      )
-      if (!clickedToken) {
-        emit('playerCellClick', { x: gridX, y: gridY })
-      }
-    }
-    return
+    // Record mousedown position for click-vs-drag detection
+    playerMouseDownPos.value = { x: event.clientX, y: event.clientY }
   }
+  // Always delegate to interaction for panning (all modes, all buttons)
   interaction.handleMouseDown(event)
 }
 
