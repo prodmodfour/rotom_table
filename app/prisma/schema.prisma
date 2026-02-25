@@ -448,6 +448,9 @@ model AppSettings {
   defaultGridHeight Int  @default(15)
   defaultCellSize   Int  @default(40) // pixels
 
+  // Remote access
+  tunnelUrl     String?  // Cloudflare Tunnel URL (e.g. https://ptu.example.com)
+
   // Timestamps
   updatedAt     DateTime @updatedAt
 }

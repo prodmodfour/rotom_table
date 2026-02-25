@@ -9,6 +9,7 @@ export interface AppSettings {
   defaultGridWidth: number;
   defaultGridHeight: number;
   defaultCellSize: number;
+  tunnelUrl?: string | null;
 }
 
 // Default settings
