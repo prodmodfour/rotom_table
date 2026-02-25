@@ -474,7 +474,7 @@ export function useIsometricInteraction(options: UseIsometricInteractionOptions)
     if (isTerrainPainting.value && options.isGm.value && terrainStore.enabled) {
       if (cellChanged && isInBounds(gridPos)) {
         lastTerrainCell.value = gridPos
-        terrainStore.applyTool(gridPos.x, gridPos.y)
+        terrainStore.applyTool(gridPos.x, gridPos.y, options.terrainPaintElevation?.value ?? 0)
         options.render()
       }
     }
