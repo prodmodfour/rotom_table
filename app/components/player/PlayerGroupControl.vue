@@ -82,7 +82,7 @@ let cooldownTimer: ReturnType<typeof setInterval> | null = null
 let timeoutTimer: ReturnType<typeof setTimeout> | null = null
 
 // Computed
-const isOnCooldown = computed(() => Date.now() < cooldownUntil.value)
+const isOnCooldown = computed(() => cooldownRemaining.value > 0)
 const canRequest = computed(() => !isPending.value && !isOnCooldown.value)
 
 const TAB_LABELS: Record<string, string> = {
