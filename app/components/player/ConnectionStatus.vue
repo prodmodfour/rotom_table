@@ -1,10 +1,11 @@
 <template>
   <div class="conn-status">
-    <!-- Connection indicator dot -->
+    <!-- Connection indicator dot (tap to show details) -->
     <span
       class="conn-status__dot"
       :class="dotClass"
       :title="statusTitle"
+      @click.stop="toggleDetails"
     ></span>
 
     <!-- Connection details (shown on tap/click) -->
