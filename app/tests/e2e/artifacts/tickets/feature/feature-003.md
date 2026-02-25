@@ -271,3 +271,45 @@ Functional scaffolding exists at `/player` — encounter display with combatant 
 - `.claude/skills/references/app-surface.md` (H2: tunnel endpoints, new components, utility)
 
 **All 6 issues from code-review-158 resolved:** 1 CRITICAL, 2 HIGH, 3 MEDIUM.
+
+### Track C: Integration (P1 Implementation)
+
+| Date | Commit | Description |
+|------|--------|-------------|
+| 2026-02-24 | fda245d | WebSocket handlers: group_view_request/response, player_move_request/response, player_turn_notify |
+| 2026-02-24 | 7419874 | Component: `PlayerGroupControl.vue` — GM-approved tab change requests with cooldown |
+| 2026-02-24 | 2f09939 | Composable: `usePlayerGridView.ts` — player VTT grid state, ownership, fog filter, move flow |
+| 2026-02-24 | 5a01c60 | Components: `PlayerGridView.vue`, `PlayerMoveRequest.vue` — player mode VTT grid + move confirm |
+| 2026-02-24 | 1630177 | GridCanvas/VTTToken: `playerMode` prop, ownership highlighting, pending move pulse |
+| 2026-02-24 | 3d0b92b | Composable: `usePlayerWebSocket.ts` additions — action ack toast, turn notification |
+| 2026-02-24 | d3eeb8e | Composable: `useStateSync.ts` — reconnect recovery (re-identify, rejoin, re-sync) |
+| 2026-02-24 | 51029cb | Page: wired P1 features into player/index.vue — group control, encounter tab, scene tab |
+| 2026-02-24 | 6661d43 | Fix: use PhLightning icon for turn notification flash |
+
+### Track C: Integration (P1 Fix Cycle 1 — code-review-159 + rules-review-149)
+
+**Pre-fixed by ptu-rule-083:** C1 (Chebyshev distance) and R1 (PTU diagonal rule) — commit 1151a18.
+
+| Date | Commit | Description |
+|------|--------|-------------|
+| 2026-02-25 | 6e48b8a | H1: Broadcast tab state to player-role clients — identify, tab_sync_request, tab.put.ts |
+| 2026-02-25 | 849c211 | H2: Use reactive cooldownRemaining for isOnCooldown computed |
+| 2026-02-25 | aed853a | H3: Check full bounding box for multi-cell token click detection |
+| 2026-02-25 | adb6ecb | M1: Replace dead fetch with real refreshCharacterData in useStateSync |
+| 2026-02-25 | 9b89809 | M2: Broadcast encounter_unserved and encounter_served to players |
+| 2026-02-25 | ce8e6a4 | M3: Implement click-vs-drag detection for player grid panning |
+| 2026-02-25 | 279f4d7 | R3: Add TODO for explored fog showing tokens (bug-031) |
+
+**Files modified (5):**
+- `app/server/routes/ws.ts` (H1: sendTabState for player, tab_sync_request for player; M2: encounter_unserved/served to players)
+- `app/server/api/group/tab.put.ts` (H1: broadcastToGroupAndPlayers for tab_change)
+- `app/components/player/PlayerGroupControl.vue` (H2: reactive isOnCooldown)
+- `app/components/vtt/GridCanvas.vue` (H3: multi-cell token bounds; M3: click-vs-drag detection)
+- `app/composables/useStateSync.ts` (M1: use real refreshCharacterData)
+- `app/pages/player/index.vue` (M1: pass refreshCharacterData to useStateSync)
+- `app/composables/usePlayerGridView.ts` (R3: bug-031 TODO)
+
+**Deferred:** R2 (HP bar leaks info) → ux-004 (P2). R3 (explored fog tokens) → bug-031.
+
+**All 7 issues from code-review-159 resolved:** 3 HIGH, 3 MEDIUM, 1 rules MEDIUM (TODO).
+**All applicable issues from rules-review-149 resolved:** R1 pre-fixed, R2 deferred, R3 tracked.
