@@ -15,6 +15,7 @@ export function useStateSync(options: {
   send: (event: WebSocketEvent) => void
   identify: (role: 'gm' | 'group' | 'player', encounterId?: string, characterId?: string) => void
   joinEncounter: (encounterId: string) => void
+  refreshCharacterData: () => Promise<void>
 }) {
   const playerStore = usePlayerIdentityStore()
   const encounterStore = useEncounterStore()
@@ -61,31 +62,14 @@ export function useStateSync(options: {
       // 5. Request tab state
       options.send({ type: 'tab_sync_request', data: null })
 
-      // 6. Also re-fetch character data via REST as a safety net
-      await refreshCharacterDataSafe()
+      // 6. Re-fetch character data via REST as a safety net
+      try {
+        await options.refreshCharacterData()
+      } catch {
+        // Network may still be recovering — silently ignore
+      }
     } finally {
       isSyncing.value = false
-    }
-  }
-
-  /**
-   * Safely refresh character data from REST.
-   * Does not throw on failure (network may still be recovering).
-   */
-  const refreshCharacterDataSafe = async (): Promise<void> => {
-    if (!playerStore.characterId) return
-
-    try {
-      const response = await $fetch<{ success: boolean; data: unknown }>(
-        `/api/characters/${playerStore.characterId}?include=pokemon`
-      )
-      if (response.success && response.data) {
-        // Data will be updated via the character_update WS handler or
-        // the existing usePlayerIdentity composable's refreshCharacterData()
-        // This is just a trigger to ensure data freshness
-      }
-    } catch {
-      // Network may still be recovering — silently ignore
     }
   }
 

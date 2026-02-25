@@ -165,7 +165,7 @@ const {
 provide(PLAYER_WS_SEND_KEY, send)
 
 // Reconnect recovery
-useStateSync({ isConnected, send, identify, joinEncounter })
+useStateSync({ isConnected, send, identify, joinEncounter, refreshCharacterData })
 
 // Group View tab state (fetched from server for display in PlayerGroupControl)
 const groupViewTab = ref('lobby')
