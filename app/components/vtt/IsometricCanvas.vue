@@ -124,7 +124,8 @@ const movement = useGridMovement({
 const movementPreview = ref<MovementPreview | null>(null)
 
 // Movement range cells (computed from selected token)
-const { getMovementRangeCells } = useRangeParser()
+// Uses terrain-type-aware averaging when terrain is present per PTU p.231 / decree-011
+const { getMovementRangeCells, getMovementRangeCellsWithAveraging } = useRangeParser()
 const movementRangeCells = computed<GridPosition[]>(() => {
   if (!props.showMovementRange) return []
   const selectedId = interaction.selectedTokenId.value
@@ -133,7 +134,6 @@ const movementRangeCells = computed<GridPosition[]>(() => {
   const token = props.tokens.find(t => t.combatantId === selectedId)
   if (!token) return []
 
-  const speed = movement.getSpeed(selectedId)
   const blockedCells = movement.getBlockedCells(selectedId)
   const terrainCostGetter = movement.getTerrainCostGetter(selectedId)
 
@@ -143,15 +143,37 @@ const movementRangeCells = computed<GridPosition[]>(() => {
     calculateElevationCost(fromZ, toZ, combatant)
 
   const originElev = elevation.getTokenElevation(selectedId)
+  const terrainElevGetter = (x: number, y: number) => elevation.getTerrainElevation(x, y)
 
+  // Use speed-averaging flood-fill when terrain is present
+  if (terrainCostGetter) {
+    const maxSpeed = movement.getMaxPossibleSpeed(selectedId)
+    const averagingFn = movement.buildSpeedAveragingFn(selectedId)
+    const terrainTypeGetter = movement.getTerrainTypeAt
+
+    return getMovementRangeCellsWithAveraging(
+      token.position,
+      maxSpeed,
+      blockedCells,
+      terrainCostGetter,
+      terrainTypeGetter,
+      averagingFn,
+      elevationCostGetter,
+      terrainElevGetter,
+      originElev,
+    )
+  }
+
+  // No terrain: use standard flood-fill
+  const speed = movement.getSpeed(selectedId)
   return getMovementRangeCells(
     token.position,
     speed,
     blockedCells,
     terrainCostGetter,
     elevationCostGetter,
-    (x: number, y: number) => elevation.getTerrainElevation(x, y),
-    originElev
+    terrainElevGetter,
+    originElev,
   )
 })
 
