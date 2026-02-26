@@ -2,7 +2,10 @@ import { describe, it, expect } from 'vitest'
 import { useRangeParser } from '~/composables/useRangeParser'
 
 describe('useRangeParser', () => {
-  const { parseRange, isInRange, validateMovement, getMovementRangeCells } = useRangeParser()
+  const {
+    parseRange, isInRange, validateMovement, getMovementRangeCells,
+    getAffectedCells, getOccupiedCells, closestCellPair
+  } = useRangeParser()
 
   describe('parseRange', () => {
     it('should parse "Melee" as melee range 1', () => {
@@ -444,6 +447,178 @@ describe('useRangeParser', () => {
       expect(result).not.toBeNull()
       // Path: (0,0) -> (1,0) [cost 2] -> (2,0) [cost 1] = 3
       expect(result!.cost).toBe(3)
+    })
+  })
+
+  describe('getAffectedCells - cone shapes (decree-007)', () => {
+    const origin = { x: 5, y: 5 }
+
+    it('should produce 4 cells for cardinal Cone 2 (d=1: 1 cell, d=2: 3 cells)', () => {
+      const parsed = parseRange('Cone 2')
+      const cells = getAffectedCells(origin, { dx: 0, dy: -1 }, parsed)
+      expect(cells).toHaveLength(4)
+      // d=1: center only
+      expect(cells).toContainEqual({ x: 5, y: 4 })
+      // d=2: 3 cells wide
+      expect(cells).toContainEqual({ x: 4, y: 3 })
+      expect(cells).toContainEqual({ x: 5, y: 3 })
+      expect(cells).toContainEqual({ x: 6, y: 3 })
+    })
+
+    it('should produce 8 cells for diagonal Cone 2 (decree-024: diamond pattern with corner)', () => {
+      const parsed = parseRange('Cone 2')
+      const cells = getAffectedCells(origin, { dx: 1, dy: -1 }, parsed)
+      // Cone 2 diagonal: tip (1 cell) + 7 unique cells at d=2
+      // Per decree-024: includes diagonal corner cell via three push groups
+      // d=1: (6,4)
+      // d=2: (6,3), (7,2), (6,2), (7,3), (8,3), (7,4), (8,4)
+      expect(cells).toHaveLength(8)
+    })
+
+    it('should produce 1 cell at d=1 for any cone direction', () => {
+      const parsed = parseRange('Cone 1')
+      const cells = getAffectedCells(origin, { dx: 1, dy: 0 }, parsed)
+      expect(cells).toHaveLength(1)
+      expect(cells).toContainEqual({ x: 6, y: 5 })
+    })
+
+    it('should produce fixed 3-wide rows at d=2+ for cardinal cone', () => {
+      const parsed = parseRange('Cone 4')
+      const cells = getAffectedCells(origin, { dx: 1, dy: 0 }, parsed)
+      // d=1: 1 cell, d=2: 3, d=3: 3, d=4: 3 = 10 total
+      expect(cells).toHaveLength(10)
+    })
+  })
+
+  describe('getAffectedCells - diagonal line shortening (decree-009)', () => {
+    const origin = { x: 5, y: 5 }
+
+    it('should not shorten cardinal lines', () => {
+      const parsed = parseRange('Line 4')
+      const cells = getAffectedCells(origin, { dx: 1, dy: 0 }, parsed)
+      expect(cells).toHaveLength(4)
+    })
+
+    it('should shorten diagonal Line 4 to 3 cells (1+2+1=4m)', () => {
+      const parsed = parseRange('Line 4')
+      const cells = getAffectedCells(origin, { dx: 1, dy: -1 }, parsed)
+      expect(cells).toHaveLength(3)
+    })
+
+    it('should shorten diagonal Line 6 to 4 cells (1+2+1+2=6m)', () => {
+      const parsed = parseRange('Line 6')
+      const cells = getAffectedCells(origin, { dx: 1, dy: 1 }, parsed)
+      expect(cells).toHaveLength(4)
+    })
+
+    it('should shorten diagonal Line 2 to 1 cell (next step costs 2m, total 3m > 2m)', () => {
+      const parsed = parseRange('Line 2')
+      const cells = getAffectedCells(origin, { dx: -1, dy: -1 }, parsed)
+      expect(cells).toHaveLength(1)
+    })
+  })
+
+  describe('getAffectedCells - burst shapes (decree-023)', () => {
+    const origin = { x: 5, y: 5 }
+
+    it('should produce 9 cells for Burst 1 (PTU diagonal: first diag = 1m)', () => {
+      const parsed = parseRange('Burst 1')
+      const cells = getAffectedCells(origin, { dx: 0, dy: 0 }, parsed)
+      // ptuDiag(1,1) = 1 (first diagonal = 1m) so all 8 neighbors are included
+      // Same result as Chebyshev for radius 1 because first diagonal costs only 1m
+      expect(cells).toHaveLength(9)
+      expect(cells).toContainEqual({ x: 5, y: 5 }) // center
+      expect(cells).toContainEqual({ x: 6, y: 5 }) // east
+      expect(cells).toContainEqual({ x: 4, y: 5 }) // west
+      expect(cells).toContainEqual({ x: 5, y: 4 }) // north
+      expect(cells).toContainEqual({ x: 5, y: 6 }) // south
+      // Diagonals included because ptuDiag(1,1) = 1 <= 1
+      expect(cells).toContainEqual({ x: 6, y: 6 })
+      expect(cells).toContainEqual({ x: 4, y: 4 })
+    })
+
+    it('should produce 21 cells for Burst 2 (not 25-cell Chebyshev square)', () => {
+      const parsed = parseRange('Burst 2')
+      const cells = getAffectedCells(origin, { dx: 0, dy: 0 }, parsed)
+      // PTU diagonal Burst 2: cells where ptuDiagonalDistance <= 2
+      // 1 center + 8 at dist 1 + 12 at dist 2 = 21
+      // Excludes the 4 corners at (+-2, +-2) which have ptuDiag = 3
+      expect(cells).toHaveLength(21)
+    })
+
+    it('should exclude far diagonal corners from Burst 2 (PTU diagonal distance > radius)', () => {
+      const parsed = parseRange('Burst 2')
+      const cells = getAffectedCells(origin, { dx: 0, dy: 0 }, parsed)
+      // The corners (x+-2, y+-2) have ptuDiagonalDistance = 3 > radius 2
+      expect(cells).not.toContainEqual({ x: 3, y: 3 })
+      expect(cells).not.toContainEqual({ x: 7, y: 7 })
+      expect(cells).not.toContainEqual({ x: 3, y: 7 })
+      expect(cells).not.toContainEqual({ x: 7, y: 3 })
+    })
+
+    it('should include (2,1) type cells in Burst 2 (ptuDiag = 2)', () => {
+      const parsed = parseRange('Burst 2')
+      const cells = getAffectedCells(origin, { dx: 0, dy: 0 }, parsed)
+      // ptuDiag(2,1) = 1 diag + 1 straight = 2 <= 2
+      expect(cells).toContainEqual({ x: 7, y: 6 })
+      expect(cells).toContainEqual({ x: 7, y: 4 })
+      expect(cells).toContainEqual({ x: 3, y: 6 })
+      expect(cells).toContainEqual({ x: 3, y: 4 })
+    })
+  })
+
+  describe('getOccupiedCells', () => {
+    it('should return single cell for 1x1 token', () => {
+      const cells = getOccupiedCells({ position: { x: 3, y: 4 }, size: 1 })
+      expect(cells).toHaveLength(1)
+      expect(cells).toContainEqual({ x: 3, y: 4 })
+    })
+
+    it('should return 4 cells for 2x2 token', () => {
+      const cells = getOccupiedCells({ position: { x: 3, y: 4 }, size: 2 })
+      expect(cells).toHaveLength(4)
+      expect(cells).toContainEqual({ x: 3, y: 4 })
+      expect(cells).toContainEqual({ x: 4, y: 4 })
+      expect(cells).toContainEqual({ x: 3, y: 5 })
+      expect(cells).toContainEqual({ x: 4, y: 5 })
+    })
+
+    it('should return 9 cells for 3x3 token', () => {
+      const cells = getOccupiedCells({ position: { x: 0, y: 0 }, size: 3 })
+      expect(cells).toHaveLength(9)
+    })
+  })
+
+  describe('closestCellPair', () => {
+    it('should return positions directly for two 1x1 tokens', () => {
+      const result = closestCellPair(
+        { position: { x: 0, y: 0 }, size: 1 },
+        { position: { x: 5, y: 5 }, size: 1 }
+      )
+      expect(result.from).toEqual({ x: 0, y: 0 })
+      expect(result.to).toEqual({ x: 5, y: 5 })
+    })
+
+    it('should find closest pair between multi-cell tokens', () => {
+      // 2x2 at (0,0) and 2x2 at (5,5)
+      // Closest pair: (1,1) from first, (5,5) from second
+      const result = closestCellPair(
+        { position: { x: 0, y: 0 }, size: 2 },
+        { position: { x: 5, y: 5 }, size: 2 }
+      )
+      expect(result.from).toEqual({ x: 1, y: 1 })
+      expect(result.to).toEqual({ x: 5, y: 5 })
+    })
+
+    it('should handle adjacent tokens', () => {
+      // 1x1 at (3,3) and 2x2 at (4,2)
+      // Closest pair: (3,3) and (4,3) with distance 1
+      const result = closestCellPair(
+        { position: { x: 3, y: 3 }, size: 1 },
+        { position: { x: 4, y: 2 }, size: 2 }
+      )
+      expect(result.from).toEqual({ x: 3, y: 3 })
+      expect(result.to).toEqual({ x: 4, y: 3 })
     })
   })
 })
