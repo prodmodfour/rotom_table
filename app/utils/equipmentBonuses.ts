@@ -35,6 +35,9 @@ export function computeEquipmentBonuses(equipment: EquipmentSlots): EquipmentCom
   const statBonuses: Record<string, number> = {}
   let speedDefaultCS = 0
   const conditionalDR: { amount: number; condition: string }[] = []
+  // PTU p.295: "a Trainer may only benefit from one Focus at a time,
+  // regardless of the Equipment Slot." Only apply the first Focus found.
+  let focusApplied = false
 
   for (const item of items) {
     if (item.damageReduction) {
@@ -43,9 +46,10 @@ export function computeEquipmentBonuses(equipment: EquipmentSlots): EquipmentCom
     if (item.evasionBonus) {
       evasionBonus += item.evasionBonus
     }
-    if (item.statBonus) {
+    if (item.statBonus && !focusApplied) {
       const key = item.statBonus.stat
       statBonuses[key] = (statBonuses[key] ?? 0) + item.statBonus.value
+      focusApplied = true
     }
     if (item.speedDefaultCS !== undefined) {
       speedDefaultCS = Math.min(speedDefaultCS, item.speedDefaultCS)
