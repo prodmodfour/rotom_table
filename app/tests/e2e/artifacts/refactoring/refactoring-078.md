@@ -2,7 +2,7 @@
 ticket_id: refactoring-078
 category: TEST-STALE
 priority: P4
-status: open
+status: in-progress
 source: code-review-151 regression check note
 created_by: slave-collector (plan-20260224-162105)
 created_at: 2026-02-24T17:00:00Z
@@ -28,3 +28,9 @@ Add optional `getElevationCost`, `getTerrainElevation`, and `fromElev` parameter
 - **Code health:** Low — test utility function only
 - **Testability:** Enables unit testing of elevation-aware movement validation
 - **Extensibility:** None
+
+## Resolution Log
+
+| Commit | Files | Description |
+|--------|-------|-------------|
+| 5258f2f | `app/composables/usePathfinding.ts`, `app/tests/unit/composables/useRangeParser.test.ts` | Added getElevationCost, getTerrainElevation, fromElevation params to validateMovement; added 6 elevation-aware tests |
