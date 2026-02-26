@@ -1,7 +1,7 @@
 ---
 ticket_id: feature-003
 priority: P1
-status: in-progress  # P0 implemented, P1/P2 pending
+status: in-progress  # All tracks P0/P1/P2 implemented, pending review
 domain: player-view
 source: product-roadmap
 created_by: user
@@ -313,3 +313,37 @@ Functional scaffolding exists at `/player` — encounter display with combatant 
 
 **All 7 issues from code-review-159 resolved:** 3 HIGH, 3 MEDIUM, 1 rules MEDIUM (TODO).
 **All applicable issues from rules-review-149 resolved:** R1 pre-fixed, R2 deferred, R3 tracked.
+
+### Track A: Core Player View (P2 Implementation)
+
+| Date | Commit | Description |
+|------|--------|-------------|
+| 2026-02-26 | 3977389 | Composable: `useHapticFeedback.ts` — vibration patterns for turn start, move exec, damage taken |
+| 2026-02-26 | 5db7d48 | Component: `PlayerSkeleton.vue` — shimmer skeleton loading screen replacing spinner |
+| 2026-02-26 | 202a193 | Animated tab transitions with directional slide (left/right based on tab index) |
+| 2026-02-26 | d55d876 | Move detail overlay via long-press (500ms) and right-click on combat move buttons |
+| 2026-02-26 | 0ac933d | Auto-scroll to current combatant on turn change via scrollIntoView |
+| 2026-02-26 | bd43261 | Accessibility: aria-expanded, aria-controls, role=alert/status, aria-labels on all buttons |
+| 2026-02-26 | 406fc90 | 4K scaling: @media queries for 3000px+ viewport across all player view components |
+| 2026-02-26 | 68b3baa | Enhanced action feedback toasts with move names, target counts, specific errors |
+| 2026-02-26 | 3df70e2 | Touch target fix: all interactive elements now 44x44px minimum (WCAG) |
+
+**Files created (2):**
+- `app/composables/useHapticFeedback.ts`
+- `app/components/player/PlayerSkeleton.vue`
+
+**Files modified (11):**
+- `app/composables/usePlayerWebSocket.ts` (haptic integration, damage_applied/move_executed handlers)
+- `app/pages/player/index.vue` (skeleton, tab transitions, aria, 4K, toasts, touch targets)
+- `app/components/player/PlayerCombatActions.vue` (long-press, aria, action feedback)
+- `app/components/player/PlayerCharacterSheet.vue` (aria-expanded, aria-controls)
+- `app/components/player/PlayerPokemonTeam.vue` (aria region)
+- `app/components/player/PlayerPokemonCard.vue` (aria-expanded)
+- `app/components/player/PlayerEncounterView.vue` (aria, auto-scroll)
+- `app/components/player/PlayerCombatantInfo.vue` (data attributes for scroll targeting)
+- `app/components/player/PlayerIdentityPicker.vue` (aria-labels)
+- `app/components/player/ConnectionStatus.vue` (aria, keyboard navigation)
+- `app/components/player/PlayerNavBar.vue` (4K scaling)
+- `app/assets/scss/components/_player-view.scss` (4K, touch targets)
+- `app/assets/scss/components/_player-combat-actions.scss` (move detail overlay, 4K)
+- `app/layouts/player.vue` (4K font scaling)
