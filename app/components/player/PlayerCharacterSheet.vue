@@ -80,7 +80,7 @@
         <PhCaretDown :size="16" :class="{ 'rotated': !openSections.stats }" />
       </button>
       <div v-if="openSections.stats" id="section-stats" class="player-sheet__stats-grid">
-        <div v-for="stat in statEntries" :key="stat.key" class="player-stat-cell">
+        <div v-for="stat in statEntries" :key="stat.key" class="player-stat-cell" :title="stat.tooltip">
           <span class="player-stat-cell__label">{{ stat.label }}</span>
           <span class="player-stat-cell__value">{{ stat.value }}</span>
           <span
@@ -330,13 +330,14 @@ const hpColorClass = computed(() => {
 const statEntries = computed(() => {
   const stats = props.character.stats
   const stages = props.character.stageModifiers
+  const hpTooltip = `Max HP = Level (${props.character.level}) + HP Base (${stats.hp}) x3 + 10 = ${props.character.maxHp}`
   return [
-    { key: 'hp', label: 'HP', value: stats.hp, stage: stages.hp ?? 0 },
-    { key: 'attack', label: 'ATK', value: stats.attack, stage: stages.attack ?? 0 },
-    { key: 'defense', label: 'DEF', value: stats.defense, stage: stages.defense ?? 0 },
-    { key: 'specialAttack', label: 'SPA', value: stats.specialAttack, stage: stages.specialAttack ?? 0 },
-    { key: 'specialDefense', label: 'SPD', value: stats.specialDefense, stage: stages.specialDefense ?? 0 },
-    { key: 'speed', label: 'SPE', value: stats.speed, stage: stages.speed ?? 0 }
+    { key: 'hp', label: 'HP Base', value: stats.hp, stage: stages.hp ?? 0, tooltip: hpTooltip },
+    { key: 'attack', label: 'ATK', value: stats.attack, stage: stages.attack ?? 0, tooltip: undefined },
+    { key: 'defense', label: 'DEF', value: stats.defense, stage: stages.defense ?? 0, tooltip: undefined },
+    { key: 'specialAttack', label: 'SPA', value: stats.specialAttack, stage: stages.specialAttack ?? 0, tooltip: undefined },
+    { key: 'specialDefense', label: 'SPD', value: stats.specialDefense, stage: stages.specialDefense ?? 0, tooltip: undefined },
+    { key: 'speed', label: 'SPE', value: stats.speed, stage: stages.speed ?? 0, tooltip: undefined }
   ]
 })
 
