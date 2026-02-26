@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-02-26T07:30:00
-updated_by: slave-collector (plan-20260226-070756)
+last_updated: 2026-02-26T09:00:00
+updated_by: slave-collector (plan-20260226-073726)
 ---
 
 # Dev Ecosystem State
@@ -36,12 +36,12 @@ updated_by: slave-collector (plan-20260226-070756)
 |--------|----------|--------|---------|-------------------|
 | feature-001 | P3 | **resolved** | B2W2 trainer sprites — single-phase design complete, P0 APPROVED (code-review-149 + rules-review-139). Closed by slave-3 (plan-20260224-162105) | single-phase |
 | feature-002 | P2 | **P2-APPROVED** | 3D isometric grid — P2 fix cycle 2 APPROVED (code-review-160 + rules-review-150). All tiers complete | multi-phase |
-| feature-003 | P1 | **Track-B-P1-APPROVED + Track-C-P1-APPROVED** | Player View — Track B P1 APPROVED (code-review-162). Track C P1 APPROVED (code-review-163 + rules-review-152). All tracks P0+P1 complete | multi-phase-parallel |
+| feature-003 | P1 | **Track-A-P2-implemented + Track-B-P1-APPROVED + Track-C-P1-APPROVED** | Player View — Track A P2 implemented (11 commits, needs review). Track B P1 APPROVED (code-review-162). Track C P1 APPROVED (code-review-163 + rules-review-152). All tracks P0+P1 complete | multi-phase-parallel |
 
 ### UX Tickets (`tickets/ux/`)
 | Ticket | Priority | Status | Summary |
 |--------|----------|--------|---------|
-| ux-001 | P4 | **open** | Equipment catalog browser closes on equip, forces re-open for multi-item sessions (from code-review-127 M3) |
+| ux-001 | P4 | **resolved** | Equipment catalog browser closes on equip — fixed: modal stays open with success toast. Resolved by slave-3 (plan-20260226-073726) |
 | ux-002 | P4 | **open** | Trainer HP stat display shows raw stat without formula context in player view (from rules-review-129 M1) |
 | ux-003 | P3 | **resolved** | QR code rendering — fix cycle complete (3 commits: dead bestMatrix removed, app-surface.md updated). code-review-165 CHANGES_REQUIRED → fixed. code-review-171 **APPROVED** |
 | ux-004 | P3 | **resolved** | Enemy HP masking — fix cycle complete (3 commits: roundToDisplayTier extracted to utils/displayHp.ts, dead getDisplayHp removed, commit hashes fixed). code-review-167 CHANGES_REQUIRED → fixed. code-review-172 **APPROVED**. rules-review-154 APPROVED |
@@ -52,7 +52,15 @@ updated_by: slave-collector (plan-20260226-070756)
 
 ## Active Developer Work
 
-**Current task:** Session 36 collection complete. All 5 slaves merged (17 commits). Refactoring batch resolved (083, 082, 080, 069, 071, 070). Re-reviews: ux-003 APPROVED, ux-004 APPROVED, bug-030 CHANGES_REQUIRED (H1 file size — already resolved by refactoring-082 touch extraction in same plan). No CHANGES_REQUIRED outstanding.
+**Current task:** Session 37 collection complete. All 5 slaves merged (28 commits). Reviews: code-review-173 CHANGES_REQUIRED (refactoring-083 file size), code-review-174/175/176 APPROVED. Feature-003 Track A P2 implemented (11 commits). refactoring-059/061/068/077 resolved. ux-001 resolved.
+
+**Session 37 (2026-02-26, plan-20260226-073726):**
+- slave-1 (reviewers): 4 review artifacts for session 36 refactoring batch. code-review-173 CHANGES_REQUIRED (C1: XpDistributionModal 1019 lines > 800 limit after SCSS inline). code-review-174 APPROVED (M1: surface doc). code-review-175 APPROVED (M1: surface doc). code-review-176 APPROVED (clean).
+- slave-2 (developer): feature-003 Track A P2 — 11 commits: haptic feedback, skeleton loading, tab transitions, move detail overlay, auto-scroll, aria-labels, 4K scaling, action feedback toasts, touch targets, design+ticket docs → **needs review**
+- slave-3 (developer): refactoring-068 + ux-001 — 3 commits: reactive refs for equipment dropdowns, keep catalog modal open with success toast → **resolved, needs review**
+- slave-4 (developer): refactoring-061 — 7 commits: extracted _create-form-shared.scss partial, registered in nuxt config, applied to 4 components → **resolved, needs review**
+- slave-5 (developer): refactoring-059 + refactoring-077 — 3 commits: removed dead densityMultiplier from 5 API endpoints, moved TerrainCostGetter types to shared vtt.ts → **resolved, needs review**
+- Tickets filed: refactoring-084 (app-surface.md missing useTouchInteraction + gridDistance entries)
 
 **Session 36 (2026-02-26, plan-20260226-070756):**
 - refactoring-083 (P0) — 2 commits: inlined SCSS partial into XpDistributionModal, deleted _xp-distribution-modal.scss → **resolved**
@@ -95,13 +103,22 @@ updated_by: slave-collector (plan-20260226-070756)
 - Tickets filed: refactoring-080 (diagonal formula duplication), ux-005 (currentHp on level-up)
 
 **Next actions (by priority):**
-1. **Review** refactoring-083 (P0 — build fix, needs code review)
-2. **Review** refactoring-082 (P4 — touch extraction, needs code review)
-3. **Review** refactoring-080+069 (P4 — grid distance + SLOT_ICONS, needs code review)
-4. **Review** refactoring-071+070 (P4 — character-lifecycle, needs code review)
-5. Remaining open: ux-001 P4, ux-002 P4, ux-006 P4, ux-007 P4, ux-008 P4, refactoring-068/076/077/078/079
+1. **Fix cycle** refactoring-083 (P0 — code-review-173 CHANGES_REQUIRED: XpDistributionModal 1019 lines, needs to get under 800)
+2. **Review** feature-003 Track A P2 (P1 — 11 commits, player view polish/UX/accessibility)
+3. **Review** refactoring-068+ux-001 (P4 — equipment dropdown reactivity + catalog modal UX)
+4. **Review** refactoring-061 (P4 — CSS extraction for create form components)
+5. **Review** refactoring-059+077 (P4 — densityMultiplier cleanup + TerrainCostGetter type move)
+6. Remaining open: ux-002 P4, ux-006 P4, ux-007 P4, ux-008 P4, refactoring-060/062/076/078/079/084
 
 ## Review Status
+
+### Session 37 Reviews (plan-20260226-073726)
+| Review ID | Target | Verdict | Reviewer | Date |
+|-----------|--------|---------|----------|------|
+| code-review-173 | refactoring-083 (XpDistributionModal SCSS inline) | CHANGES_REQUIRED (C1: 1019 lines > 800 limit) | senior-reviewer | 2026-02-26 |
+| code-review-174 | refactoring-082 (useTouchInteraction extraction) | APPROVED (M1: surface doc) | senior-reviewer | 2026-02-26 |
+| code-review-175 | refactoring-080+069 (gridDistance + SLOT_ICONS) | APPROVED (M1: surface doc) | senior-reviewer | 2026-02-26 |
+| code-review-176 | refactoring-071+070 (MAX_FEATURES + unused props) | APPROVED | senior-reviewer | 2026-02-26 |
 
 ### Session 36 Reviews (plan-20260226-070756)
 | Review ID | Target | Verdict | Reviewer | Date |
@@ -298,16 +315,16 @@ updated_by: slave-collector (plan-20260226-070756)
 | refactoring-032–056 | P2–P3 | resolved | (all resolved — see sessions 8–12) |
 | refactoring-057 | P4 | resolved | Zero-weight selection guard (session 12-13) |
 | refactoring-058 | P4 | resolved | Immutable turnState pattern (session 12-13) |
-| refactoring-059 | P4 | open | densityMultiplier API serialization cleanup (from code-review-122) |
+| refactoring-059 | P4 | **resolved** | densityMultiplier removed from 5 encounter-tables API endpoints — resolved by slave-5 (plan-20260226-073726) |
 | refactoring-060 | P4 | open | Count clamping test coverage (from code-review-122) |
-| refactoring-061 | P4 | open | CSS duplication in create components (from code-review-121) |
+| refactoring-061 | P4 | **resolved** | CSS duplication extracted to _create-form-shared.scss partial, applied to 4 components — resolved by slave-4 (plan-20260226-073726) |
 | refactoring-062 | P4 | open | buildCombatantFromEntity test coverage (from code-review-120b) |
 | refactoring-063 | P4 | **resolved** | Extract shared significance preset utilities (from code-review-123 M2 + rules-review-113 M2) — resolved by slave-1 |
 | refactoring-064 | P4 | **resolved** | Extract shared difficulty color styles (from code-review-124 H2) — resolved by slave-1 (plan-20260221-215717) |
 | refactoring-065 | P4 | **resolved** | Extract shared evasion computation helper in useMoveCalculation — resolved by slave-4 (plan-20260224-171113) |
 | refactoring-066 | P4 | **resolved** | Use calculateEvasion for initial evasion in combatant builder — resolved by slave-4 (plan-20260224-171113) |
 | refactoring-067 | P4 | **resolved** | Dead calculateInitiative removed from useCombat — resolved by slave-4 (plan-20260224-171113) |
-| refactoring-068 | P4 | open | Equipment dropdown uses DOM manipulation instead of reactive ref (from code-review-127 M2) |
+| refactoring-068 | P4 | **resolved** | Equipment dropdown replaced DOM manipulation with reactive refs — resolved by slave-3 (plan-20260226-073726) |
 | refactoring-069 | P4 | **resolved** | SLOT_ICONS extracted to constants/equipment.ts — resolved by slave-5 (plan-20260226-070756) |
 | refactoring-070 | P4 | **resolved** | Unused `props` assignment removed from StatAllocationSection.vue — resolved by slave-4 (plan-20260226-070756) |
 | refactoring-071 | P4 | **resolved** | MAX_FEATURES hard cap removed, addFeature now matches addEdge behavior — resolved by slave-4 (plan-20260226-070756) |
@@ -316,13 +333,14 @@ updated_by: slave-collector (plan-20260226-070756)
 | refactoring-074 | P4 | **resolved** | Consolidate duplicate SIGNIFICANCE_PRESETS — resolved by slave-5 (plan-20260224-171113) |
 | refactoring-075 | P4 | **resolved** | Extract CombatantConditionsSection from GMActionModal.vue (803→~670 lines) — resolved by slave-3 (plan-20260224-162105) |
 | refactoring-076 | P4 | open | Restore 9px font-size for PokemonCard stat cell labels (from code-review-144 M1) |
-| refactoring-077 | P4 | open | Move TerrainCostGetter type to shared types file (from code-review-151 M2 note) |
+| refactoring-077 | P4 | **resolved** | TerrainCostGetter/ElevationCostGetter types moved to shared types/vtt.ts — resolved by slave-5 (plan-20260226-073726) |
 | refactoring-078 | P4 | open | Add elevation parameters to validateMovement for unit tests (from code-review-151 regression check note) |
 | refactoring-079 | P4 | open | Replace deprecated document.execCommand('copy') in SessionUrlDisplay (from code-review-158 M3) |
 | refactoring-080 | P4 | **resolved** | ptuDiagonalDistance extracted to utils/gridDistance.ts, 6 inline implementations replaced — resolved by slave-5 (plan-20260226-070756) |
 | refactoring-081 | P1 | **APPROVED** | SCSS unit incompatibility in _player-view.scss — calc() fix. code-review-164 APPROVED |
 | refactoring-082 | P4 | **resolved** | Touch handlers extracted to useTouchInteraction composable, used by both useGridInteraction (630 lines) and useIsometricInteraction (691 lines) — resolved by slave-3 (plan-20260226-070756) |
-| refactoring-083 | P0 | **resolved** | Undefined $z-index-modal in XpDistributionModal — SCSS partial inlined into component, partial file deleted — resolved by slave-1 (plan-20260226-070756) |
+| refactoring-083 | P0 | **CHANGES_REQUIRED** | Undefined $z-index-modal in XpDistributionModal — SCSS partial inlined into component, partial file deleted. code-review-173 CHANGES_REQUIRED (C1: file at 1019 lines > 800 limit, needs extraction or split) |
+| refactoring-084 | P4 | open | app-surface.md missing entries for useTouchInteraction.ts and gridDistance.ts (from code-review-174 M1 + code-review-175 M1) |
 
 ## Code Health
 
@@ -333,7 +351,7 @@ updated_by: slave-collector (plan-20260226-070756)
 | Open tickets (P1) | 0 |
 | Open tickets (P2) | 1 (bug-030 — CHANGES_REQUIRED fix cycle needed) |
 | Open tickets (P3) | 2 (ux-003 CHANGES_REQUIRED, ux-004 CHANGES_REQUIRED) |
-| Open tickets (P4) | 8 (refactoring-068/076/077/078/079 + ux-001/002/006/007/008) |
+| Open tickets (P4) | 10 (refactoring-060/062/076/078/079/084 + ux-002/006/007/008) |
 | Total open | 16 |
 | Total resolved | 159 (feature-002 fully resolved) |
 
