@@ -6,7 +6,10 @@
  * - Apply Tripped + Vulnerable until next turn (stored as tempConditions)
  */
 import { prisma } from '~/server/utils/prisma'
-import { loadEncounter, findCombatant, buildEncounterResponse, getEntityName } from '~/server/services/encounter.service'
+import {
+  loadEncounter, findCombatant, buildEncounterResponse, getEntityName,
+  reorderInitiativeAfterSpeedChange, saveInitiativeReorder
+} from '~/server/services/encounter.service'
 import { syncEntityToDatabase } from '~/server/services/entity-update.service'
 import { createDefaultStageModifiers, reapplyActiveStatusCsEffects } from '~/server/services/combatant.service'
 import { computeEquipmentBonuses } from '~/utils/equipmentBonuses'
@@ -159,15 +162,65 @@ export default defineEventHandler(async (event) => {
       notes: buildBreatherNotes(result, combatant.stageSources || [])
     })
 
-    await prisma.encounter.update({
-      where: { id },
-      data: {
-        combatants: JSON.stringify(combatants),
-        moveLog: JSON.stringify(moveLog)
-      }
-    })
+    // Decree-006: Breather resets stages (potentially changing speed CS),
+    // so attempt initiative reorder if encounter is active
+    let initiativeReorder = null
+    if (result.stagesReset && record.isActive) {
+      const turnOrder = JSON.parse(record.turnOrder) as string[]
+      const trainerTurnOrder = JSON.parse(record.trainerTurnOrder || '[]') as string[]
+      const pokemonTurnOrder = JSON.parse(record.pokemonTurnOrder || '[]') as string[]
 
-    const response = buildEncounterResponse(record, combatants, { moveLog })
+      const reorder = reorderInitiativeAfterSpeedChange(
+        combatants,
+        turnOrder,
+        record.currentTurnIndex,
+        record.battleType,
+        trainerTurnOrder,
+        pokemonTurnOrder
+      )
+
+      if (reorder.changed) {
+        // Save combatants, move log, AND turn order together
+        await prisma.encounter.update({
+          where: { id },
+          data: {
+            combatants: JSON.stringify(combatants),
+            moveLog: JSON.stringify(moveLog),
+            turnOrder: JSON.stringify(reorder.turnOrder),
+            trainerTurnOrder: JSON.stringify(reorder.trainerTurnOrder),
+            pokemonTurnOrder: JSON.stringify(reorder.pokemonTurnOrder),
+            currentTurnIndex: reorder.currentTurnIndex
+          }
+        })
+        initiativeReorder = reorder
+      } else {
+        await prisma.encounter.update({
+          where: { id },
+          data: {
+            combatants: JSON.stringify(combatants),
+            moveLog: JSON.stringify(moveLog)
+          }
+        })
+      }
+    } else {
+      await prisma.encounter.update({
+        where: { id },
+        data: {
+          combatants: JSON.stringify(combatants),
+          moveLog: JSON.stringify(moveLog)
+        }
+      })
+    }
+
+    const response = buildEncounterResponse(record, combatants, {
+      moveLog,
+      ...(initiativeReorder ? {
+        turnOrder: initiativeReorder.turnOrder,
+        trainerTurnOrder: initiativeReorder.trainerTurnOrder,
+        pokemonTurnOrder: initiativeReorder.pokemonTurnOrder,
+        currentTurnIndex: initiativeReorder.currentTurnIndex
+      } : {})
+    })
 
     return {
       success: true,
