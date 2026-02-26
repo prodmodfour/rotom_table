@@ -2,7 +2,7 @@
 ticket_id: ptu-rule-100
 ticket_type: ptu-rule
 priority: P1
-status: open
+status: in-progress
 domain: vtt
 source: decree-007, decree-024
 affected_files:
@@ -36,3 +36,11 @@ Cone shapes currently expand proportionally with distance (`halfWidth = Math.flo
 - Cone 6: d=1 (1 cell), d=2-6 (3 cells each)
 - `useRangeParser.ts` and `measurement.ts` produce identical cell sets for all directions
 - Visual rendering matches fixed-width pattern
+
+## Resolution Log
+
+| Commit | Files Changed | Description |
+|--------|--------------|-------------|
+| d68871e | `app/composables/useRangeParser.ts`, `app/stores/measurement.ts` | Fixed cone shapes to use fixed 3m-wide rows per decree-007. |
+| d72bdb8 | `app/composables/useRangeParser.ts` | Per decree-024: diagonal cones include corner cell (3 push groups matching measurement.ts). |
+| 4c4c285 | `app/tests/unit/composables/useRangeParser.test.ts` | Added unit tests for cardinal and diagonal cone shapes. |

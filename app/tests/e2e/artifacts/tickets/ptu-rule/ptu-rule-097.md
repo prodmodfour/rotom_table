@@ -45,3 +45,9 @@ All tokens currently block movement entirely via `getBlockedCells()` in `useGrid
 | 9923a29 | `app/composables/useGridMovement.ts` | `getBlockedCells` returns empty (tokens no longer block). Added `getOccupiedCells` for no-stacking destination check, `getEnemyOccupiedCells` for accuracy penalty. `isValidMove` checks destination occupancy. `calculateTerrainAwarePathCost` passes empty blocked list. |
 | 2359162 | `app/composables/useGridRendering.ts` | Movement preview shows 'Occupied' instead of 'Blocked' when hovering occupied cells. |
 | d83c7f2 | `app/composables/useMoveCalculation.ts` | Added enemy-occupied rough terrain accuracy penalty. `enemyOccupiedCells` computed, Bresenham line trace via `targetsThroughEnemyRoughTerrain`, `getRoughTerrainPenalty` returns +2 threshold modifier. Integrated into `getAccuracyThreshold`. |
+| 98a0d76 | `app/utils/combatSides.ts` | Extract shared `isEnemySide` utility for combat side determination (HIGH-2: DRY). |
+| 07fd02a | `app/composables/useMoveCalculation.ts`, `useGridMovement.ts`, `MoveTargetModal.vue` | CRIT-1: `enemyOccupiedCells` now iterates `allCombatants` (grid property, not targeting list). HIGH-2: both composables use shared `isEnemySide`. |
+| ee8ca1c | `app/composables/useGridMovement.ts` | HIGH-1: `isValidMove` checks full token footprint (size*size) for no-stacking, not just anchor cell. |
+| bac22c3 | `app/composables/useMoveCalculation.ts` | MED-1: `targetsThroughEnemyRoughTerrain` uses `closestCellPair` for multi-cell token LoS endpoints. |
+| dd88134 | `useGridMovement.ts`, `useGridRendering.ts`, `useGridInteraction.ts`, `GridCanvas.vue`, `IsometricCanvas.vue` | MED-3: Removed dead `getBlockedCells` function and all callers (always returned []). |
+| 4c4c285 | tests | MED-2: Added unit tests for `isEnemySide`, `getOccupiedCells`, `closestCellPair`. |
