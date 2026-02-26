@@ -72,7 +72,7 @@ export function useEncounterActions(options: EncounterActionsOptions) {
     await broadcastUpdate()
   }
 
-  const handleStatus = async (combatantId: string, add: StatusCondition[], remove: StatusCondition[]) => {
+  const handleStatus = async (combatantId: string, add: StatusCondition[], remove: StatusCondition[], override: boolean = false) => {
     if (!encounterStore.encounter) return
     const combatant = findCombatant(combatantId)
     const name = getCombatantName(combatant)
@@ -80,11 +80,22 @@ export function useEncounterActions(options: EncounterActionsOptions) {
     if (add.length > 0) parts.push(`added ${add.join(', ')}`)
     if (remove.length > 0) parts.push(`removed ${remove.join(', ')}`)
     encounterStore.captureSnapshot(`${name}: ${parts.join('; ')}`)
-    encounterStore.encounter = await encounterCombatStore.updateStatusConditions(
-      encounterStore.encounter.id, combatantId, add, remove
-    )
-    refreshUndoRedoState()
-    await broadcastUpdate()
+
+    try {
+      encounterStore.encounter = await encounterCombatStore.updateStatusConditions(
+        encounterStore.encounter.id, combatantId, add, remove, override
+      )
+      refreshUndoRedoState()
+      await broadcastUpdate()
+    } catch (error: unknown) {
+      // Decree-012: type immunity rejection — re-throw with immunity data for UI handling
+      const fetchError = error as { statusCode?: number; data?: { data?: { immune?: Array<{ status: string; immuneType: string }> } } }
+      if (fetchError.statusCode === 409) {
+        throw error
+      }
+      // Re-throw other errors
+      throw error
+    }
   }
 
   // Maneuver name mapping
