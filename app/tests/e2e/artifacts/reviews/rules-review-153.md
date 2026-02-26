@@ -12,75 +12,88 @@ commits_reviewed:
   - cb66ca0
   - 7d2dd53
   - 8d368b2
-mechanics_verified:
-  - diagonal-movement
-  - grid-coordinate-conversion
-  - token-selection
-  - movement-validation
+files_reviewed:
+  - app/composables/useGridInteraction.ts
+  - app/components/vtt/GridCanvas.vue
+  - app/components/vtt/IsometricCanvas.vue
 verdict: APPROVED
 issues_found:
   critical: 0
   high: 0
   medium: 0
-ptu_refs:
-  - core/07-combat.md#Movement-and-Positioning
-reviewed_at: 2026-02-26T06:00:00Z
+reviewed_at: 2026-02-26T05:25:00Z
 follows_up: null
 ---
 
-## Mechanics Verified
+## Review Scope
 
-### Diagonal Movement (PTU Alternating 1m/2m)
+Verify that touch gesture implementation does not alter PTU movement or distance calculations. Touch events should only affect viewport panning/zooming, not game-mechanical movement. Confirm that tap-based cell/token selection produces the same result as mouse click.
 
-- **Rule:** "Diagonal movement is simple. The first square you move diagonally in a turn counts as 1 meter. The second counts as 2 meters. The third counts as 1 meter again. And so on and so forth." (`core/07-combat.md`, p.232)
-- **Implementation:** Touch event handlers (`handleTouchStart`, `handleTouchMove`, `handleTouchEnd` in `useGridInteraction.ts` lines 584-716) only modify viewport state (`panOffset`, `zoom`). They never call `calculateMoveDistance`, `isValidMove`, or `onTokenMove`. The diagonal movement formula in `useGridMovement.ts` and `useRangeParser.ts` is not invoked or bypassed by any touch code path.
-- **Status:** CORRECT -- Touch events are viewport-only and cannot alter movement distance calculations.
+## Analysis
 
-### Grid Coordinate Conversion (screenToGrid)
+### Touch Pan and Zoom: Viewport-Only Operations
 
-- **Rule:** Grid positions must map correctly from screen coordinates so that cell/token selection produces the same result regardless of input device.
-- **Implementation:** Touch tap detection (line 694) uses `screenToGrid(changedTouch.clientX, changedTouch.clientY)` -- the exact same function used by mouse click handling (line 167: `screenToGrid(event.clientX, event.clientY)`). The `screenToGrid` function (lines 98-111) applies identical reverse transformations (accounting for container rect, pan offset, and scaled cell size) regardless of whether the coordinates came from a mouse event or touch event. Both `clientX`/`clientY` coordinate systems are identical per W3C spec.
-- **Status:** CORRECT -- Touch taps and mouse clicks resolve to the same grid cell for the same screen position.
+The three touch handlers (`handleTouchStart`, `handleTouchMove`, `handleTouchEnd`) in `useGridInteraction.ts` modify exactly two pieces of state:
 
-### Token Selection (Tap vs Click Equivalence)
+1. **`options.panOffset.value`** -- the viewport translation offset (lines 625-628 for single-finger pan, lines 651-652 for pinch zoom-and-pan adjustment)
+2. **`options.zoom.value`** -- the viewport zoom level (line 657 for pinch-to-zoom)
 
-- **Rule:** Selecting a token or cell should produce the same game-mechanical result regardless of input method (mouse click vs touch tap).
-- **Implementation:** Verified both paths produce identical outcomes:
-  - **Mouse path (player mode):** `handleMouseUp` (GridCanvas.vue line 317-351) checks click-vs-drag with 5px threshold, computes grid position, emits `playerCellClick` or `playerTokenSelect` via `handleTokenSelectWithPlayerMode`.
-  - **Touch path (player mode):** `handleTouchEnd` (useGridInteraction.ts line 690-710) checks tap-vs-pan with 5px threshold (`TOUCH_TAP_THRESHOLD`), computes grid position via `screenToGrid`, finds token via `getTokenAtPosition`, then delegates to `onTouchTap` callback. The callback (GridCanvas.vue lines 244-255) emits the same `playerTokenSelect` (for own tokens) and `playerCellClick` (for empty cells in bounds) events.
-  - Both paths use identical bounds checking: `gridPos.x >= 0 && gridPos.x < config.width && gridPos.y >= 0 && gridPos.y < config.height`.
-  - Both paths use identical token hit detection: `getTokenAtPosition` checks `position.x` through `position.x + size - 1` on both axes.
-- **Status:** CORRECT -- Touch taps produce the same selection events as mouse clicks.
+These are the same two values modified by mouse wheel zoom (`handleWheel`, line 148) and mouse-button panning (`handleMouseMove`, lines 351-354). Neither `panOffset` nor `zoom` participate in any game-mechanical calculation:
 
-### Movement Validation Isolation
+- **Movement distance** is calculated by `useGridMovement.calculateMoveDistance()`, which uses grid positions (integer cell coordinates), not screen coordinates or zoom levels.
+- **Movement validation** (`isValidMove`) uses grid positions, combatant speed, terrain costs, and blocked cells -- all zoom/pan-independent.
+- **PTU diagonal movement** (alternating 1m/2m cost) is calculated in `useGridMovement` using the A* pathfinder, which operates entirely in grid space.
+- **Measurement tools** (distance, burst, cone, line, blast) operate on grid positions set by `measurementStore.startMeasurement(gridPos)` and `measurementStore.updateMeasurement(gridPos)`. Touch handlers do not invoke any measurement store methods.
 
-- **Rule:** Movement must always be validated through `isValidMove` (which enforces terrain costs, blocked cells, and PTU diagonal alternation) before executing `onTokenMove`.
-- **Implementation:** `onTokenMove` is called exactly once in the composable, at line 223, inside a GM-only block (`if (movingTokenId.value && options.isGm.value)`) within `handleMouseDown`. The touch tap handler never calls `onTokenMove` -- it only calls `handleTokenSelect` (which enters "move mode" selection state) or `onCellClick`. In player mode, the `onTouchTap` callback short-circuits before any move validation by returning `true` (handled), emitting only `playerTokenSelect`/`playerCellClick`. Player mode movement requests go through a separate server-mediated flow, not direct grid movement.
-- **Status:** CORRECT -- Touch events cannot execute token movement without going through the full validation pipeline.
+**Conclusion:** Touch pan and pinch-to-zoom are purely viewport transforms. No PTU mechanical state is affected.
 
-## Summary
+### Tap Detection: Same Grid Cell as Mouse Click
 
-The touch event implementation (bug-030) is purely a viewport interaction layer. All six commits add input handling code that translates touch gestures into:
-1. **Pan offset changes** (single-finger drag modifies `panOffset.value`)
-2. **Zoom level changes** (pinch modifies `zoom.value`)
-3. **Tap-to-select events** (tap calls same `screenToGrid` + `getTokenAtPosition` pipeline as mouse click)
+The tap handler in `handleTouchEnd` (lines 690-709) uses `screenToGrid(changedTouch.clientX, changedTouch.clientY)` to convert the tap position to a grid cell. This is the exact same `screenToGrid` function used by `handleMouseDown` (line 167) for mouse clicks.
 
-None of these code paths touch game-mechanical calculations:
-- No movement distance computation is invoked or bypassed
-- No token position is changed without going through `isValidMove`
-- No combat state (HP, conditions, initiative) is affected
-- The PTU diagonal movement rule (alternating 1m/2m) remains enforced via `useGridMovement` and `useRangeParser`, which are not called by any touch handler
+The `screenToGrid` function (lines 98-111) applies:
+```
+gridX = floor((canvasX - panOffset.x) / scaledCellSize)
+gridY = floor((canvasY - panOffset.y) / scaledCellSize)
+```
 
-The `screenToGrid` coordinate conversion function is shared between mouse and touch paths, guaranteeing that the same screen position maps to the same grid cell regardless of input method.
+This means a tap at the same screen position as a mouse click will resolve to the same grid cell. The coordinate conversion is identical.
 
-## Rulings
+### Tap Actions: Same Emissions as Mouse Click
 
-No PTU rule interpretations required. This change is entirely in the input-handling layer and does not implement, modify, or bypass any game mechanic.
+For tap-on-token (non-player mode): calls `handleTokenSelect(clickedToken.combatantId)` -- the same function called by mouse-click token selection. This enters move mode, which is a GM-only feature gated by `options.isGm.value` checks inside the handler.
+
+For tap-on-empty-cell (non-player mode): calls `options.onCellClick(gridPos)` -- the same emission as mouse-click empty cell (line 266).
+
+For player mode taps: the `onTouchTap` callback in GridCanvas.vue (lines 244-255) emits `playerTokenSelect` for own tokens and `playerCellClick` for empty cells, matching the mouse-based `handleTokenSelectWithPlayerMode` and `handleMouseUp` player mode paths exactly.
+
+### Token Hit Detection: Same Function
+
+`getTokenAtPosition(gridPos)` (lines 116-123) is used by both the touch tap handler (line 695) and the mouse click handler (line 201). The function checks if the grid position falls within any token's bounding box. The hit detection logic is shared and produces identical results.
+
+### No Touch-Triggered Movement Execution
+
+Touch handlers never call `options.onTokenMove()`. Token movement requires:
+1. GM mode (`options.isGm.value`)
+2. A token in move mode (`movingTokenId.value`)
+3. A second click/tap on a valid destination cell
+
+The tap handler calls `handleTokenSelect` (which enters move mode) or `onCellClick` (which the parent component handles). The actual movement execution path in `handleMouseDown` (lines 209-237) is only reachable via mouse events, not touch events. This is acceptable because player mode (the primary touch target) does not support direct grid movement -- players request moves via `playerCellClick` which the GM approves.
+
+### PTU Movement Costs Unaffected
+
+The following PTU mechanical calculations are completely untouched by this change:
+
+- **Speed stat usage** (`getSpeed()`)
+- **Terrain cost multipliers** (grass 2x, sand 2x, water 3x, ice 1x, rough 3x, lava 4x)
+- **Diagonal movement** (alternating 1m/2m per PTU rules)
+- **Blocked cell detection** (occupied cells)
+- **Movement range display** (A* pathfinder cells)
+- **Combat maneuver distances** (Push, Sprint, etc.)
+- **Measurement tool calculations** (burst radius, cone, line, blast)
 
 ## Verdict
 
-**APPROVED** -- Zero PTU mechanics are affected by the touch event implementation. Touch gestures map exclusively to viewport transforms (pan, zoom) and selection events (tap), all of which use the same coordinate conversion and validation pipelines as the existing mouse handlers.
+**APPROVED**
 
-## Required Changes
-
-None.
+Touch gesture implementation is strictly a viewport interaction layer. It modifies only `panOffset` and `zoom` (viewport transforms), uses the same `screenToGrid` coordinate conversion as mouse input, and produces identical grid positions and event emissions. No PTU mechanical calculations (movement distance, terrain costs, diagonal movement, accuracy, capture rate) are affected. Tap-based cell/token selection is functionally identical to mouse click.
