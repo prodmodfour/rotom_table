@@ -234,15 +234,24 @@ export const useTerrainStore = defineStore('terrain', {
     // Set terrain at a single cell with flags
     setTerrain(x: number, y: number, type: TerrainType, flags?: TerrainFlags, elevation: number = 0, note?: string) {
       const key = posToKey(x, y)
-      const cellFlags = flags ?? { ...DEFAULT_FLAGS }
 
-      if (type === 'normal' && !cellFlags.rough && !cellFlags.slow && elevation === 0 && !note) {
+      // Runtime conversion: legacy types are converted to normal + flags
+      // (same logic as migrateLegacyCell, prevents inconsistent state)
+      const resolvedType: TerrainType = (type === 'difficult' || type === 'rough') ? 'normal' : type
+      const baseFlags = flags ?? { ...DEFAULT_FLAGS }
+      const cellFlags: TerrainFlags = type === 'difficult'
+        ? { ...baseFlags, slow: true }
+        : type === 'rough'
+          ? { ...baseFlags, rough: true }
+          : baseFlags
+
+      if (resolvedType === 'normal' && !cellFlags.rough && !cellFlags.slow && elevation === 0 && !note) {
         // Remove from map if setting to fully default
         this.cells.delete(key)
       } else {
         this.cells.set(key, {
           position: { x, y },
-          type,
+          type: resolvedType,
           flags: cellFlags,
           elevation,
           note,
