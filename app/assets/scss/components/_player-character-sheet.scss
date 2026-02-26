@@ -78,7 +78,7 @@
     flex-direction: column;
     gap: 4px;
 
-    :deep(.player-hp-bar-label) {
+    .player-hp-bar-label {
       text-align: right;
     }
   }
@@ -108,7 +108,7 @@
       background: $color-bg-hover;
     }
 
-    :deep(svg) {
+    svg {
       transition: transform $transition-fast;
       color: $color-text-muted;
 
@@ -129,7 +129,7 @@
     }
 
     // Character sheet uses larger stat values than default
-    :deep(.player-stat-cell__value) {
+    .player-stat-cell__value {
       font-size: $font-size-md;
     }
   }
