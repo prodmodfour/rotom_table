@@ -3,7 +3,7 @@ id: ptu-rule-084
 title: Vulnerable condition does not zero evasion
 priority: P2
 severity: HIGH
-status: open
+status: in-progress
 domain: combat
 source: combat-audit.md (combat-R108)
 created_by: slave-collector (plan-20260226-175938)
@@ -36,3 +36,12 @@ In `getTargetEvasion`, check the target's active conditions. If Vulnerable, Froz
 - Take a Breather (applies Tripped + Vulnerable) does not create the intended attack opening
 - Low Blow dirty trick does not work as intended
 - Frozen/Asleep targets are harder to hit than PTU intends
+
+## Fix Log
+
+- **Commit:** 9023151 — `fix: zero evasion for Vulnerable, Frozen, and Asleep conditions`
+- **Files changed:**
+  - `app/constants/statusConditions.ts` — added `ZERO_EVASION_CONDITIONS` constant
+  - `app/composables/useMoveCalculation.ts` — early return in `computeTargetEvasions` when target has Vulnerable/Frozen/Asleep
+  - `app/server/api/encounters/[id]/calculate-damage.post.ts` — same zero-evasion check in server-side damage calculation endpoint
+- **Approach:** Both client-side (composable) and server-side (API endpoint) evasion code paths now check for these conditions and return 0 for all evasion values before any stat-based calculation

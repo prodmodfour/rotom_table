@@ -3,7 +3,7 @@ id: ptu-rule-085
 title: Legendary Pokemon detection hard-coded to false
 priority: P2
 severity: HIGH
-status: open
+status: in-progress
 domain: capture
 source: capture-audit.md (capture-R016)
 created_by: slave-collector (plan-20260226-175938)
@@ -38,3 +38,12 @@ Option 1 is most robust. Option 3 is quickest.
 ## Impact
 
 All legendary Pokemon capture attempts ignore the -30 penalty, making them significantly easier to capture than intended.
+
+## Fix Log
+
+- **Commit:** d680f8b — `fix: auto-detect legendary Pokemon for capture rate -30 modifier`
+- **Files changed:**
+  - `app/constants/legendarySpecies.ts` — new file with `LEGENDARY_SPECIES` Set (96 species, Gen 1-8) and `isLegendarySpecies()` helper with case-insensitive lookup
+  - `app/server/api/capture/rate.post.ts` — auto-detects legendary from species name, accepts `isLegendary` GM override in request body
+  - `app/server/api/capture/attempt.post.ts` — auto-detects legendary from species name
+- **Approach:** Used Option 2 (constant lookup) as primary detection, with Option 3 (GM override) as fallback in the rate endpoint. No Prisma migration needed.
