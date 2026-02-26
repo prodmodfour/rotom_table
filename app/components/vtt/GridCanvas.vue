@@ -73,6 +73,7 @@ import { useMeasurementStore } from '~/stores/measurement'
 import { useGridMovement } from '~/composables/useGridMovement'
 import { useGridRendering } from '~/composables/useGridRendering'
 import { useGridInteraction, TOUCH_TAP_THRESHOLD } from '~/composables/useGridInteraction'
+import { roundToDisplayTier } from '~/utils/displayHp'
 
 interface TokenData {
   combatantId: string
@@ -166,19 +167,7 @@ const isOwnTokenCheck = (combatantId: string): boolean => {
     (props.playerPokemonIds?.includes(combatant.entityId) ?? false)
 }
 
-/**
- * Round a percentage to display tiers for enemy HP masking.
- * Matches the tiers in usePlayerGridView.roundToDisplayTier.
- */
-const roundToDisplayTier = (percentage: number): number => {
-  if (percentage <= 0) return 0
-  if (percentage >= 100) return 100
-  if (percentage >= 88) return 100
-  if (percentage >= 63) return 75
-  if (percentage >= 38) return 50
-  if (percentage >= 25) return 25
-  return 10
-}
+// roundToDisplayTier imported from ~/utils/displayHp
 
 /**
  * Get the display HP override for a combatant in player mode.
