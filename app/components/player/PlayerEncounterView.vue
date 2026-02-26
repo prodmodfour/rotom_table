@@ -1,5 +1,5 @@
 <template>
-  <div class="player-encounter">
+  <div ref="encounterContainer" class="player-encounter">
     <!-- No Active Encounter -->
     <div v-if="!encounter || !encounter.isActive" class="encounter-waiting">
       <PhSword :size="48" />
@@ -106,6 +106,22 @@ const gridEnabled = computed(() => encounterStore.encounter?.gridConfig?.enabled
 const playerCombatants = computed(() => encounterStore.playerCombatants)
 const allyCombatants = computed(() => encounterStore.allyCombatants)
 const enemyCombatants = computed(() => encounterStore.enemyCombatants)
+
+// Auto-scroll to current combatant when turn changes
+const encounterContainer = ref<HTMLElement | null>(null)
+
+watch(currentCombatant, (combatant) => {
+  if (!combatant) return
+
+  nextTick(() => {
+    const el = encounterContainer.value?.querySelector(
+      `[data-combatant-id="${combatant.id}"]`
+    )
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+    }
+  })
+})
 </script>
 
 <style lang="scss" scoped>

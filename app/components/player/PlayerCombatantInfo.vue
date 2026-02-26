@@ -6,6 +6,8 @@
       'player-combatant--own': visibility.showExactHp && visibility.showStats,
       'player-combatant--fainted': currentHp <= 0
     }"
+    :data-combatant-id="combatant.id"
+    :data-is-current="isCurrentTurn || undefined"
   >
     <!-- Sprite (for Pokemon) -->
     <img
