@@ -112,38 +112,6 @@ export function usePlayerGridView(options: {
     return 'enemy'
   }
 
-  /**
-   * Round a percentage to the nearest 25% increment for enemy display.
-   * Returns: 100 (full), 75, 50, 25, 10 (critical), or 0 (fainted).
-   * The 10% "critical" tier prevents enemies at 1-24% from appearing at 0%.
-   */
-  const roundToDisplayTier = (percentage: number): number => {
-    if (percentage <= 0) return 0
-    if (percentage >= 100) return 100
-    if (percentage >= 88) return 100
-    if (percentage >= 63) return 75
-    if (percentage >= 38) return 50
-    if (percentage >= 25) return 25
-    return 10 // "critical" — low but not fainted
-  }
-
-  /**
-   * Get display HP for a combatant based on information asymmetry.
-   * Own/allied: exact HP percentage. Enemy: rounded to 25% increments.
-   */
-  const getDisplayHp = (combatant: Combatant): { current: number; max: number; percentage: number } | { percentage: number } => {
-    const entity = combatant.entity
-    const currentHp = 'currentHp' in entity ? entity.currentHp : 0
-    const maxHp = 'maxHp' in entity ? entity.maxHp : 1
-    const percentage = maxHp > 0 ? Math.round((currentHp / maxHp) * 100) : 0
-
-    const level = getInfoLevel(combatant)
-    if (level === 'enemy') {
-      return { percentage: roundToDisplayTier(percentage) }
-    }
-    return { current: currentHp, max: maxHp, percentage }
-  }
-
   // =============================================
   // Token Selection (Player Mode)
   // =============================================
@@ -297,7 +265,6 @@ export function usePlayerGridView(options: {
     // Visibility
     visibleTokens,
     getInfoLevel,
-    getDisplayHp,
     // Selection
     selectedCombatantId: readonly(selectedCombatantId),
     selectToken,
