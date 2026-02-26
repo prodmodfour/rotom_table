@@ -8,6 +8,9 @@
     @mousemove="interaction.handleMouseMove"
     @mouseup="interaction.handleMouseUp"
     @mouseleave="onMouseLeave"
+    @touchstart="interaction.handleTouchStart"
+    @touchmove="interaction.handleTouchMove"
+    @touchend="interaction.handleTouchEnd"
     @contextmenu.prevent
   >
     <canvas
@@ -386,6 +389,7 @@ defineExpose({
   cursor: grab;
   user-select: none;
   -webkit-user-select: none;
+  touch-action: none;
 
   &:active {
     cursor: grabbing;
