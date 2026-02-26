@@ -97,9 +97,8 @@
 </template>
 
 <script setup lang="ts">
-import { PhX, PhMagnifyingGlass, PhArrowRight } from '@phosphor-icons/vue'
-import { PhBaseballCap, PhTShirt, PhSword, PhHandPalm, PhSneakerMove, PhRing } from '@phosphor-icons/vue'
-import { EQUIPMENT_CATALOG, EQUIPMENT_SLOTS, SLOT_LABELS, STAT_LABELS } from '~/constants/equipment'
+import { PhX, PhMagnifyingGlass, PhArrowRight, PhRing } from '@phosphor-icons/vue'
+import { EQUIPMENT_CATALOG, EQUIPMENT_SLOTS, SLOT_LABELS, SLOT_ICONS, STAT_LABELS } from '~/constants/equipment'
 import type { EquipmentSlot, EquippedItem, EquipmentSlots } from '~/types/character'
 
 const props = defineProps<{
@@ -114,15 +113,6 @@ const emit = defineEmits<{
 const selectedSlot = ref<EquipmentSlot | ''>('')
 const searchQuery = ref('')
 const saving = ref(false)
-
-const SLOT_ICONS: Record<EquipmentSlot, any> = {
-  head: PhBaseballCap,
-  body: PhTShirt,
-  mainHand: PhSword,
-  offHand: PhHandPalm,
-  feet: PhSneakerMove,
-  accessory: PhRing
-}
 
 interface CatalogGroup {
   slot: EquipmentSlot

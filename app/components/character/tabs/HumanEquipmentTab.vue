@@ -152,8 +152,7 @@
 
 <script setup lang="ts">
 import { PhX, PhShield, PhEye, PhSpeedometer, PhTarget, PhWarning, PhList } from '@phosphor-icons/vue'
-import { PhBaseballCap, PhTShirt, PhSword, PhHandPalm, PhSneakerMove, PhRing } from '@phosphor-icons/vue'
-import { EQUIPMENT_CATALOG, EQUIPMENT_SLOTS, SLOT_LABELS, STAT_LABELS } from '~/constants/equipment'
+import { EQUIPMENT_CATALOG, EQUIPMENT_SLOTS, SLOT_LABELS, SLOT_ICONS, STAT_LABELS } from '~/constants/equipment'
 import { computeEquipmentBonuses } from '~/utils/equipmentBonuses'
 import type { EquipmentSlots, EquipmentSlot, EquippedItem } from '~/types/character'
 
@@ -178,15 +177,6 @@ const customForm = ref({
   speedDefaultCS: 0,
   description: ''
 })
-
-const SLOT_ICONS: Record<EquipmentSlot, any> = {
-  head: PhBaseballCap,
-  body: PhTShirt,
-  mainHand: PhSword,
-  offHand: PhHandPalm,
-  feet: PhSneakerMove,
-  accessory: PhRing
-}
 
 const slotDefinitions = EQUIPMENT_SLOTS.map(key => ({
   key,
