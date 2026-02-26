@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-02-26T04:00:00
-updated_by: slave-collector (plan-20260225-174854)
+last_updated: 2026-02-26T06:00:00
+updated_by: slave-collector (plan-20260226-051629)
 ---
 
 # Dev Ecosystem State
@@ -11,8 +11,8 @@ updated_by: slave-collector (plan-20260225-174854)
 | Ticket | Priority | Severity | Status | Summary |
 |--------|----------|----------|--------|---------|
 | bug-001–029 | P0–P3 | — | resolved | (all resolved — see sessions 1–9) |
-| bug-030 | P2 | **resolved** | Player grid touch event support (pan, pinch-to-zoom, tap) — implemented in useGridInteraction + GridCanvas + IsometricCanvas. 6 commits |
-| bug-031 | P3 | **open** | Explored fog cells show tokens contrary to design spec (from rules-review-149 R3) |
+| bug-030 | P2 | **CHANGES_REQUIRED** | Player grid touch event support — code-review-166 CHANGES_REQUIRED (C1: IsometricCanvas refs undefined touch handlers, M1: duplicate threshold, M2: file size → refactoring-082). rules-review-153 APPROVED |
+| bug-031 | P3 | **resolved** | Explored fog cells show tokens — 1-line fix in usePlayerGridView.ts. 2 commits. Needs review |
 
 ### PTU Rule Tickets (`tickets/ptu-rule/`)
 | Ticket | Priority | Status | Summary |
@@ -27,7 +27,7 @@ updated_by: slave-collector (plan-20260225-174854)
 | ptu-rule-078 | P3 | **resolved** | Trainer class associated skills — H1+H2 fix APPROVED. code-review-142 APPROVED, rules-review-132 APPROVED. All 39 classes correct |
 | ptu-rule-079 | P3 | **resolved** | Helmet conditional DR — fix applied, code-review-136 APPROVED, rules-review-126 APPROVED |
 | ptu-rule-080 | P3 | **resolved** | Higher-level char creation validation — fix applied, code-review-137 APPROVED (M1/M2 → refactoring-070, 071), rules-review-127 APPROVED |
-| ptu-rule-081 | P4 | **open** | Multiple Focus items not explicitly prevented (from rules-review-115 M2) |
+| ptu-rule-081 | P4 | **resolved** | Multiple Focus items — single Focus limit enforced in equipmentBonuses.ts. 2 commits. Needs review |
 | ptu-rule-082 | P4 | **resolved** | Pokemon maxHp not auto-updated on level-up (from rules-review-118). Fix applied + APPROVED (code-review-161, rules-review-151). M2 → ux-005 |
 | ptu-rule-083 | P4 | **resolved** | Measurement store uses Chebyshev distance instead of PTU alternating diagonal (from rules-review-144 RULING-1). Fix applied + APPROVED (code-review-161, rules-review-151). M1 → refactoring-080 |
 
@@ -43,21 +43,32 @@ updated_by: slave-collector (plan-20260225-174854)
 |--------|----------|--------|---------|
 | ux-001 | P4 | **open** | Equipment catalog browser closes on equip, forces re-open for multi-item sessions (from code-review-127 M3) |
 | ux-002 | P4 | **open** | Trainer HP stat display shows raw stat without formula context in player view (from rules-review-129 M1) |
-| ux-003 | P3 | **resolved** | QR code rendering in SessionUrlDisplay — pure TS QR encoder + SVG rendering, no external deps. 3 commits |
-| ux-004 | P3 | **resolved** | Enemy HP masking in VTTToken player mode — wired getDisplayHp with 25% increment rounding. 4 commits |
-| ux-005 | P4 | **open** | Pokemon at full HP appears damaged after level-up — currentHp not increased with maxHp (from code-review-161 M2) |
+| ux-003 | P3 | **CHANGES_REQUIRED** | QR code rendering — code-review-165 CHANGES_REQUIRED (M1: dead bestMatrix var, M2: app-surface.md not updated) |
+| ux-004 | P3 | **CHANGES_REQUIRED** | Enemy HP masking — code-review-167 CHANGES_REQUIRED (H1: duplicated roundToDisplayTier, M1: dead getDisplayHp in composable, M2: wrong commit hashes). rules-review-154 APPROVED |
+| ux-005 | P4 | **resolved** | Pokemon full HP on level-up — currentHp now preserved when at full HP in both XP endpoints. 2 commits. Needs review |
+| ux-006 | P4 | **open** | PTU injury markers may leak precise HP info in player mode (from rules-review-154 R2) |
 
 ## Active Developer Work
 
-**Current task:** Session 33 collection complete. feature-003 Track B+C P1 both APPROVED. refactoring-081, bug-030, ux-003, ux-004 all resolved. All dev work needs review.
+**Current task:** Session 34 collection complete. Reviews + dev fixes merged. 3 CHANGES_REQUIRED need fix cycles (bug-030, ux-003, ux-004). refactoring-081 APPROVED. bug-031, ux-005, ptu-rule-081 resolved (needs review).
+
+**Session 34 (2026-02-26, plan-20260226-051629):**
+- refactoring-081 review — code-review-164 **APPROVED** → refactoring-081 complete
+- ux-003 review — code-review-165 **CHANGES_REQUIRED** (M1: dead bestMatrix var, M2: app-surface.md gap)
+- bug-030 review — code-review-166 **CHANGES_REQUIRED** (C1: IsometricCanvas refs undefined touch handlers, M1: duplicate threshold, M2: file size → refactoring-082). rules-review-153 **APPROVED**
+- ux-004 review — code-review-167 **CHANGES_REQUIRED** (H1: duplicated roundToDisplayTier, M1: dead getDisplayHp, M2: wrong commit hashes). rules-review-154 **APPROVED**
+- bug-031 (P3) — 1-line fix: hide tokens in explored fog cells → **resolved, needs review**
+- ux-005 (P4) — Preserve full HP state on level-up in both XP endpoints → **resolved, needs review**
+- ptu-rule-081 (P4) — Enforce single Focus item limit in equipmentBonuses.ts → **resolved, needs review**
+- Tickets filed: refactoring-082 (extract touch handlers composable), ux-006 (injury marker HP leak)
 
 **Session 33 (2026-02-26, plan-20260225-174854):**
 - feature-003 Track B P1 re-review — code-review-162 **APPROVED** → Track B P1 complete
 - feature-003 Track C P1 re-review — code-review-163 **APPROVED** + rules-review-152 **APPROVED** → Track C P1 complete
-- refactoring-081 (P1) — SCSS unit incompatibility fix (_player-view.scss calc() for mixed units) → **resolved, needs review**
-- bug-030 (P2) — Touch event support (pan, pinch-to-zoom, tap) in useGridInteraction + GridCanvas + IsometricCanvas → **resolved, needs review**
-- ux-003 (P3) — QR code rendering in SessionUrlDisplay via pure TS QR encoder (app/utils/qrcode.ts) → **resolved, needs review**
-- ux-004 (P3) — Enemy HP masking in VTTToken player mode via getDisplayHp 25% rounding → **resolved, needs review**
+- refactoring-081 (P1) — SCSS unit incompatibility fix → **APPROVED in session 34 (code-review-164)**
+- bug-030 (P2) — Touch event support → **CHANGES_REQUIRED in session 34 (code-review-166)**
+- ux-003 (P3) — QR code rendering → **CHANGES_REQUIRED in session 34 (code-review-165)**
+- ux-004 (P3) — Enemy HP masking → **CHANGES_REQUIRED in session 34 (code-review-167)**
 
 **Session 32 (2026-02-25, plan-20260225-032831):**
 - feature-003 Track B P1 fix cycle — 6 commits → **APPROVED in session 33 (code-review-162)**
@@ -65,21 +76,26 @@ updated_by: slave-collector (plan-20260225-174854)
 - ptu-rule-082 + ptu-rule-083 review — code-review-161 APPROVED + rules-review-151 APPROVED → **both resolved**
 - Tickets filed: refactoring-080 (diagonal formula duplication), ux-005 (currentHp on level-up)
 
-**Session 31 (2026-02-25):**
-- feature-002 P2 re-review — code-review-160 APPROVED + rules-review-150 APPROVED → **P2 complete, all tiers done**
-- feature-003 Track B P1 review — code-review-158 CHANGES_REQUIRED (C1: WS race condition, H1: LAN misclassification, H2: app-surface gap) + rules-review-148 APPROVED → **needs fix cycle**
-- feature-003 Track C P1 review — code-review-159 CHANGES_REQUIRED (C1: Chebyshev distance, H1: tab state blindness, H2: frozen cooldown, H3: token click detection) + rules-review-149 CHANGES_REQUIRED (R1: Chebyshev distance) → **needs fix cycle**
-- ptu-rule-083 fix — 2 commits (PTU alternating diagonal in measurement.ts + PlayerGridView + VTTContainer) → **fix applied, needs review**
-- ptu-rule-082 fix — 2 commits (maxHp += levelsGained in both XP endpoints) → **fix applied, needs review**
-
 **Next actions (by priority):**
-1. **Review** refactoring-081 (P1 SCSS fix — 2 commits)
-2. **Review** bug-030 (P2 touch events — 6 commits)
-3. **Review** ux-003 (P3 QR code — 3 commits)
-4. **Review** ux-004 (P3 HP masking — 4 commits)
-5. Remaining open: bug-031 P3, ptu-rule-081 P4, ux-001 P4, ux-002 P4, ux-005 P4
+1. **Fix cycle** bug-030 (P2 — C1 critical: IsometricCanvas crash on touch)
+2. **Fix cycle** ux-003 (P3 — M1+M2: dead code + app-surface gap)
+3. **Fix cycle** ux-004 (P3 — H1+M1+M2: DRY violation + dead code + wrong hashes)
+4. **Review** bug-031 (P3 — 2 commits, fog cell token fix)
+5. **Review** ux-005 (P4 — 2 commits, level-up HP fix)
+6. **Review** ptu-rule-081 (P4 — 2 commits, Focus item limit)
+7. Remaining open: ux-001 P4, ux-002 P4, ux-006 P4, refactoring-076–082
 
 ## Review Status
+
+### Session 34 Reviews (plan-20260226-051629)
+| Review ID | Target | Verdict | Reviewer | Date |
+|-----------|--------|---------|----------|------|
+| code-review-164 | refactoring-081 (SCSS fix) | APPROVED | senior-reviewer | 2026-02-26 |
+| code-review-165 | ux-003 (QR code) | CHANGES_REQUIRED | senior-reviewer | 2026-02-26 |
+| code-review-166 | bug-030 (touch events) | CHANGES_REQUIRED | senior-reviewer | 2026-02-26 |
+| rules-review-153 | bug-030 (touch events) | APPROVED | game-logic-reviewer | 2026-02-26 |
+| code-review-167 | ux-004 (HP masking) | CHANGES_REQUIRED | senior-reviewer | 2026-02-26 |
+| rules-review-154 | ux-004 (HP masking) | APPROVED | game-logic-reviewer | 2026-02-26 |
 
 ### Session 33 Reviews (plan-20260225-174854)
 | Review ID | Target | Verdict | Reviewer | Date |
@@ -273,19 +289,20 @@ updated_by: slave-collector (plan-20260225-174854)
 | refactoring-078 | P4 | open | Add elevation parameters to validateMovement for unit tests (from code-review-151 regression check note) |
 | refactoring-079 | P4 | open | Replace deprecated document.execCommand('copy') in SessionUrlDisplay (from code-review-158 M3) |
 | refactoring-080 | P4 | open | Diagonal formula duplication across movement distance code paths (from code-review-161 M1) |
-| refactoring-081 | P1 | **resolved** | SCSS unit incompatibility in _player-view.scss — calc() fix for mixed rem+px. 2 commits (plan-20260225-174854 slave-3) |
+| refactoring-081 | P1 | **APPROVED** | SCSS unit incompatibility in _player-view.scss — calc() fix. code-review-164 APPROVED |
+| refactoring-082 | P4 | open | Extract touch handlers from useGridInteraction.ts (764 lines → approaching 800 limit) into shared useTouchInteraction composable (from code-review-166 M2) |
 
 ## Code Health
 
 | Metric | Value |
 |--------|-------|
-| Last audited | 2026-02-18T12:00:00 |
+| Last audited | 2026-02-26T06:00:00 |
 | Open tickets (P0) | 0 |
-| Open tickets (P1) | 1 (feature-003 — Track B/C P1 CHANGES_REQUIRED, needs fix cycle) |
-| Open tickets (P2) | 1 (bug-030 — mobile touch events) |
-| Open tickets (P3) | 2 (bug-031 fog tokens, ux-003 QR code, ux-004 HP masking) |
-| Open tickets (P4) | 14 (refactoring-059–079 excl 6 resolved + ptu-rule-081/082/083 + ux-001/002) |
-| Total open | 21 |
+| Open tickets (P1) | 0 |
+| Open tickets (P2) | 1 (bug-030 — CHANGES_REQUIRED fix cycle needed) |
+| Open tickets (P3) | 2 (ux-003 CHANGES_REQUIRED, ux-004 CHANGES_REQUIRED) |
+| Open tickets (P4) | 13 (refactoring-076–080,082 + ux-001/002/006 + bug-031/ux-005/ptu-rule-081 needs review) |
+| Total open | 16 |
 | Total resolved | 159 (feature-002 fully resolved) |
 
 ## Session Summary (2026-02-20, session 13)
