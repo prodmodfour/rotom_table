@@ -11,6 +11,7 @@
  */
 import { prisma } from '~/server/utils/prisma'
 import { buildEncounterResponse } from '~/server/services/encounter.service'
+import { createDefaultStageModifiers } from '~/server/services/combatant.service'
 import { VOLATILE_CONDITIONS } from '~/constants/statusConditions'
 import { syncEntityToDatabase } from '~/server/services/entity-update.service'
 import { resetSceneUsage } from '~/utils/moveFrequency'
@@ -53,10 +54,12 @@ export default defineEventHandler(async (event) => {
     const combatants: Combatant[] = JSON.parse(encounter.combatants)
 
     // PTU p.247: clear volatile conditions and reset scene-frequency moves at encounter end
+    // PTU p.235: combat stages are encounter-scoped — reset to defaults
+    const defaultStages = createDefaultStageModifiers()
+
     const updatedCombatants = combatants.map(combatant => {
       const currentConditions: StatusCondition[] = combatant.entity?.statusConditions || []
       const clearedConditions = clearVolatileConditions(currentConditions)
-      const conditionsChanged = clearedConditions.length !== currentConditions.length
 
       // Reset scene-frequency moves for Pokemon combatants
       let updatedEntity = combatant.entity
@@ -64,27 +67,25 @@ export default defineEventHandler(async (event) => {
         const pokemonEntity = combatant.entity as Pokemon
         const moves: Move[] = pokemonEntity.moves || []
         const resetMoves = resetSceneUsage(moves)
-        const movesChanged = !resetMoves.every((m, i) => m === moves[i])
 
-        if (movesChanged || conditionsChanged) {
-          updatedEntity = {
-            ...pokemonEntity,
-            moves: resetMoves,
-            statusConditions: clearedConditions
-          }
+        updatedEntity = {
+          ...pokemonEntity,
+          moves: resetMoves,
+          statusConditions: clearedConditions,
+          stageModifiers: { ...defaultStages }
         }
-      }
-
-      // Only create new object if something actually changed
-      if (updatedEntity === combatant.entity && !conditionsChanged) {
-        return combatant
+      } else {
+        updatedEntity = {
+          ...combatant.entity,
+          statusConditions: clearedConditions,
+          stageModifiers: { ...defaultStages }
+        }
       }
 
       return {
         ...combatant,
-        entity: conditionsChanged && combatant.type !== 'pokemon'
-          ? { ...combatant.entity, statusConditions: clearedConditions }
-          : updatedEntity
+        stageSources: [],
+        entity: updatedEntity
       }
     })
 
@@ -104,17 +105,11 @@ export default defineEventHandler(async (event) => {
     for (const c of updatedCombatants) {
       if (!c.entityId) continue
 
-      const original = combatants.find(oc => oc.id === c.id)
-      const originalConditions: StatusCondition[] = original?.entity?.statusConditions || []
-      const newConditions: StatusCondition[] = c.entity?.statusConditions || []
-      const conditionsChanged = newConditions.length !== originalConditions.length
-
-      // Sync volatile condition clearing
-      if (conditionsChanged) {
-        syncPromises.push(syncEntityToDatabase(c, {
-          statusConditions: newConditions
-        }))
-      }
+      // Sync volatile condition clearing + stage reset for all entities
+      syncPromises.push(syncEntityToDatabase(c, {
+        statusConditions: c.entity?.statusConditions || [],
+        stageModifiers: { ...defaultStages }
+      }))
 
       // Sync scene-frequency move resets for Pokemon
       if (c.type === 'pokemon') {
