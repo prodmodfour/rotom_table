@@ -1,5 +1,11 @@
-import type { GridPosition, TerrainCostGetter, ElevationCostGetter, TerrainElevationGetter } from '~/types'
+import type { GridPosition, TerrainType, TerrainCostGetter, ElevationCostGetter, TerrainElevationGetter } from '~/types'
 import { ptuDiagonalDistance } from '~/utils/gridDistance'
+
+/** Callback to look up the base terrain type at a grid position */
+export type TerrainTypeGetter = (x: number, y: number) => TerrainType
+
+/** Callback to compute averaged speed given a set of terrain types along a path */
+export type SpeedAveragingFn = (terrainTypes: Set<string>) => number
 
 /**
  * Pathfinding composable for PTU grid movement.
@@ -392,8 +398,164 @@ export function usePathfinding() {
     return null // No path found
   }
 
+  /**
+   * Get movement range cells with terrain-type-aware speed averaging.
+   *
+   * Per PTU p.231 and decree-011: when a path crosses terrain boundaries,
+   * the applicable movement capabilities are averaged to determine the
+   * effective speed for that path.
+   *
+   * This variant of getMovementRangeCells explores with the maximum possible
+   * speed, tracks terrain types along each path, and filters cells where
+   * the path cost exceeds the averaged speed for the terrain types encountered.
+   *
+   * @param origin - Starting position
+   * @param maxSpeed - Maximum possible movement speed (used as exploration budget)
+   * @param blockedCells - Cells blocked by other tokens
+   * @param getTerrainCost - Terrain movement cost getter
+   * @param getTerrainType - Terrain type lookup at each position
+   * @param getAveragedSpeed - Callback that returns averaged speed for a set of terrain types
+   * @param getElevationCost - Optional elevation transition cost function
+   * @param getTerrainElevation - Optional ground elevation lookup
+   * @param originElevation - Starting elevation level (default 0)
+   */
+  function getMovementRangeCellsWithAveraging(
+    origin: GridPosition,
+    maxSpeed: number,
+    blockedCells: GridPosition[],
+    getTerrainCost: TerrainCostGetter,
+    getTerrainType: TerrainTypeGetter,
+    getAveragedSpeed: SpeedAveragingFn,
+    getElevationCost?: ElevationCostGetter,
+    getTerrainElevation?: TerrainElevationGetter,
+    originElevation: number = 0
+  ): GridPosition[] {
+    const reachable: GridPosition[] = []
+    const blockedSet = new Set(blockedCells.map(c => `${c.x},${c.y}`))
+
+    // Extended cost map: tracks cost, diagonal parity, elevation, AND terrain types on path
+    const costMap = new Map<string, {
+      cost: number
+      diagonalParity: number
+      elevation: number
+      terrainTypes: Set<string>
+    }>()
+    const startKey = `${origin.x},${origin.y}`
+    const originTerrainType = getTerrainType(origin.x, origin.y)
+    costMap.set(startKey, {
+      cost: 0,
+      diagonalParity: 0,
+      elevation: originElevation,
+      terrainTypes: new Set([originTerrainType]),
+    })
+
+    // Priority queue entries: [x, y, cost, diagonalParity, elevation, terrainTypesEncoded]
+    // We encode terrain types as a sorted comma-joined string for the queue
+    const queue: Array<{
+      x: number; y: number; cost: number; parity: number
+      elevation: number; terrainTypes: Set<string>
+    }> = [
+      { x: origin.x, y: origin.y, cost: 0, parity: 0,
+        elevation: originElevation, terrainTypes: new Set([originTerrainType]) }
+    ]
+
+    const directions: Array<[number, number, boolean]> = [
+      [-1, -1, true], [-1, 0, false], [-1, 1, true],
+      [0, -1, false], /* origin */ [0, 1, false],
+      [1, -1, true], [1, 0, false], [1, 1, true],
+    ]
+
+    while (queue.length > 0) {
+      // Sort by cost (lowest first) - simple priority queue
+      queue.sort((a, b) => a.cost - b.cost)
+      const current = queue.shift()!
+
+      // Skip if we've already found a cheaper path to this cell
+      const cellKey = `${current.x},${current.y}`
+      const existing = costMap.get(cellKey)
+      if (existing && existing.cost < current.cost) {
+        continue
+      }
+
+      // Explore neighbors
+      for (const [dx, dy, isDiagonal] of directions) {
+        const nx = current.x + dx
+        const ny = current.y + dy
+        const neighborKey = `${nx},${ny}`
+
+        if (blockedSet.has(neighborKey)) continue
+
+        const terrainMultiplier = getTerrainCost(nx, ny)
+        if (!isFinite(terrainMultiplier)) continue
+
+        // PTU diagonal rules
+        let baseCost: number
+        let newParity: number
+        if (isDiagonal) {
+          baseCost = current.parity === 0 ? 1 : 2
+          newParity = 1 - current.parity
+        } else {
+          baseCost = 1
+          newParity = current.parity
+        }
+
+        let moveCost = baseCost * terrainMultiplier
+
+        // Elevation cost
+        const neighborElev = getTerrainElevation ? getTerrainElevation(nx, ny) : 0
+        if (getElevationCost && current.elevation !== neighborElev) {
+          moveCost += getElevationCost(current.elevation, neighborElev)
+        }
+
+        const totalCost = current.cost + moveCost
+
+        // Skip if exceeds maximum possible speed budget
+        if (totalCost > maxSpeed) continue
+
+        // Build terrain types set for this path
+        const neighborTerrainType = getTerrainType(nx, ny)
+        const pathTerrainTypes = new Set(current.terrainTypes)
+        pathTerrainTypes.add(neighborTerrainType)
+
+        // Check if path cost fits within the averaged speed for this terrain set
+        const averagedSpeed = getAveragedSpeed(pathTerrainTypes)
+        if (totalCost > averagedSpeed) continue
+
+        // Check if we've found a better path
+        const existingNeighbor = costMap.get(neighborKey)
+        if (existingNeighbor && existingNeighbor.cost <= totalCost) continue
+
+        // Record this path with terrain type tracking
+        costMap.set(neighborKey, {
+          cost: totalCost,
+          diagonalParity: newParity,
+          elevation: neighborElev,
+          terrainTypes: pathTerrainTypes,
+        })
+
+        // Add to reachable if not the origin
+        if (nx !== origin.x || ny !== origin.y) {
+          const existingIndex = reachable.findIndex(c => c.x === nx && c.y === ny)
+          if (existingIndex === -1) {
+            reachable.push({ x: nx, y: ny, z: neighborElev })
+          } else {
+            reachable[existingIndex] = { x: nx, y: ny, z: neighborElev }
+          }
+        }
+
+        queue.push({
+          x: nx, y: ny, cost: totalCost, parity: newParity,
+          elevation: neighborElev, terrainTypes: pathTerrainTypes,
+        })
+      }
+    }
+
+    return reachable
+  }
+
   return {
     getMovementRangeCells,
+    getMovementRangeCellsWithAveraging,
     calculateMoveCost,
     validateMovement,
     calculatePathCost,
