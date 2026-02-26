@@ -54,6 +54,7 @@ export default defineEventHandler(async (event) => {
         level: true,
         experience: true,
         tutorPoints: true,
+        currentHp: true,
         maxHp: true
       }
     })
@@ -101,6 +102,11 @@ export default defineEventHandler(async (event) => {
     // The HP stat component only changes when stat points are allocated manually.
     const maxHpIncrease = levelResult.levelsGained
 
+    // Preserve "full HP" visual state: if the Pokemon was at full HP before
+    // leveling, increase currentHp alongside maxHp so it doesn't appear damaged.
+    const wasAtFullHp = pokemon.currentHp >= pokemon.maxHp
+    const newMaxHp = pokemon.maxHp + maxHpIncrease
+
     // Update Pokemon record in DB
     await prisma.pokemon.update({
       where: { id },
@@ -108,7 +114,10 @@ export default defineEventHandler(async (event) => {
         experience: cappedExperience,
         level: levelResult.newLevel,
         tutorPoints: pokemon.tutorPoints + tutorPointsGained,
-        ...(maxHpIncrease > 0 ? { maxHp: pokemon.maxHp + maxHpIncrease } : {})
+        ...(maxHpIncrease > 0 ? {
+          maxHp: newMaxHp,
+          ...(wasAtFullHp ? { currentHp: newMaxHp } : {})
+        } : {})
       }
     })
 
