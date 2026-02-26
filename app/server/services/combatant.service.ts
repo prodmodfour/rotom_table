@@ -157,6 +157,15 @@ export function applyDamageToEntity(
   // "Other" conditions (Stuck, Slowed, Trapped, Tripped, Vulnerable) are NOT cleared.
   if (damageResult.fainted) {
     const conditionsToClear = [...PERSISTENT_CONDITIONS, ...VOLATILE_CONDITIONS] as StatusCondition[]
+
+    // Reverse CS effects from conditions being cleared (decree-005)
+    const conditionsBeingCleared = (entity.statusConditions || []).filter(
+      (s: StatusCondition) => conditionsToClear.includes(s)
+    )
+    for (const condition of conditionsBeingCleared) {
+      reverseStatusCsEffects(combatant, condition)
+    }
+
     const survivingConditions = (entity.statusConditions || []).filter(
       (s: StatusCondition) => !conditionsToClear.includes(s) && s !== 'Fainted'
     )
