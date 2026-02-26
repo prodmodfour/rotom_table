@@ -5,6 +5,7 @@
 
 import { prisma } from '~/server/utils/prisma'
 import { rollDie } from '~/utils/diceRoller'
+import { calculateCurrentInitiative } from '~/server/services/combatant.service'
 import type { Combatant, Encounter, GridConfig } from '~/types'
 import type { SignificanceTier } from '~/utils/encounterBudget'
 
@@ -281,4 +282,163 @@ export function getEntityName(combatant: Combatant): string {
   }
   const entity = combatant.entity as { name: string }
   return entity.name
+}
+
+// ============================================
+// INITIATIVE REORDER (decree-006)
+// ============================================
+
+export interface InitiativeReorderResult {
+  /** Whether the turn order actually changed */
+  changed: boolean
+  /** Updated turn order (full contact) or phase-specific orders (league) */
+  turnOrder: string[]
+  trainerTurnOrder: string[]
+  pokemonTurnOrder: string[]
+  /** Updated currentTurnIndex (may shift if unacted combatants reorder around current) */
+  currentTurnIndex: number
+}
+
+/**
+ * Recalculate initiative for all combatants and re-sort the turn order.
+ * Per decree-006: combatants who have already acted retain their position.
+ * Only unacted combatants are re-sorted among the remaining slots.
+ *
+ * This function:
+ * 1. Recalculates initiative for every combatant (updating combatant.initiative)
+ * 2. Splits turn order into acted (frozen) + unacted (re-sortable)
+ * 3. Re-sorts unacted combatants by new initiative (high→low, with rolloff for ties)
+ * 4. Reconstructs the turn order: [...acted, ...re-sorted-unacted]
+ * 5. Returns new turn orders + adjusted currentTurnIndex
+ */
+export function reorderInitiativeAfterSpeedChange(
+  combatants: Combatant[],
+  currentTurnOrder: string[],
+  currentTurnIndex: number,
+  battleType: string,
+  trainerTurnOrder: string[],
+  pokemonTurnOrder: string[]
+): InitiativeReorderResult {
+  // Step 1: Recalculate initiative for all combatants (mutates combatant.initiative)
+  for (const c of combatants) {
+    c.initiative = calculateCurrentInitiative(c)
+  }
+
+  // Helper to build a lookup map
+  const combatantMap = new Map(combatants.map(c => [c.id, c]))
+
+  // Step 2-4: Reorder a single turn order array, preserving acted positions
+  const reorderSingleList = (
+    order: string[],
+    turnIndex: number,
+    descending: boolean
+  ): { newOrder: string[]; newIndex: number } => {
+    if (order.length === 0) return { newOrder: [], newIndex: 0 }
+
+    // Acted = slots 0..turnIndex-1 (already had their turn this round)
+    // Current = slot at turnIndex (currently acting, treated as acted — don't reorder them)
+    // Unacted = slots turnIndex+1..end (haven't acted yet, can be re-sorted)
+    const actedSlots = order.slice(0, turnIndex + 1)
+    const unactedIds = order.slice(turnIndex + 1)
+
+    if (unactedIds.length <= 1) {
+      // Nothing to re-sort
+      return { newOrder: order, newIndex: turnIndex }
+    }
+
+    // Resolve combatants for unacted slots
+    const unactedCombatants = unactedIds
+      .map(id => combatantMap.get(id))
+      .filter((c): c is Combatant => c !== undefined)
+
+    // Sort unacted by initiative (re-use rolloff for ties)
+    const sorted = sortByInitiativeWithRollOff(unactedCombatants, descending)
+
+    const newOrder = [...actedSlots, ...sorted.map(c => c.id)]
+    return { newOrder, newIndex: turnIndex }
+  }
+
+  if (battleType === 'trainer') {
+    // League battle: reorder trainer and pokemon orders separately
+    // For trainer declaration: low→high speed (ascending)
+    // For pokemon: high→low speed (descending)
+    //
+    // We use index -1 for the sub-lists that are not currently active
+    // so all combatants in inactive phases get fully re-sorted
+    const isTrainerPhase = currentTurnOrder.length > 0 &&
+      trainerTurnOrder.length > 0 &&
+      currentTurnOrder[0] === trainerTurnOrder[0]
+
+    let newTurnOrder: string[]
+    let newTurnIndex: number
+
+    // Reorder trainer list
+    const trainerIndex = isTrainerPhase ? currentTurnIndex : -1
+    const { newOrder: newTrainerOrder } = reorderSingleList(
+      trainerTurnOrder, trainerIndex, false
+    )
+
+    // Reorder pokemon list
+    const pokemonIndex = !isTrainerPhase ? currentTurnIndex : -1
+    const { newOrder: newPokemonOrder } = reorderSingleList(
+      pokemonTurnOrder, pokemonIndex, true
+    )
+
+    // Determine active turn order and index
+    if (isTrainerPhase) {
+      const result = reorderSingleList(currentTurnOrder, currentTurnIndex, false)
+      newTurnOrder = result.newOrder
+      newTurnIndex = result.newIndex
+    } else {
+      const result = reorderSingleList(currentTurnOrder, currentTurnIndex, true)
+      newTurnOrder = result.newOrder
+      newTurnIndex = result.newIndex
+    }
+
+    const changed = JSON.stringify(newTurnOrder) !== JSON.stringify(currentTurnOrder) ||
+      JSON.stringify(newTrainerOrder) !== JSON.stringify(trainerTurnOrder) ||
+      JSON.stringify(newPokemonOrder) !== JSON.stringify(pokemonTurnOrder)
+
+    return {
+      changed,
+      turnOrder: newTurnOrder,
+      trainerTurnOrder: newTrainerOrder,
+      pokemonTurnOrder: newPokemonOrder,
+      currentTurnIndex: newTurnIndex
+    }
+  }
+
+  // Full contact: single turn order, high→low
+  const { newOrder, newIndex } = reorderSingleList(
+    currentTurnOrder, currentTurnIndex, true
+  )
+
+  return {
+    changed: JSON.stringify(newOrder) !== JSON.stringify(currentTurnOrder),
+    turnOrder: newOrder,
+    trainerTurnOrder,
+    pokemonTurnOrder,
+    currentTurnIndex: newIndex
+  }
+}
+
+/**
+ * Persist reordered initiative data to the database.
+ * Saves updated combatants (with new initiative values) and turn orders.
+ */
+export async function saveInitiativeReorder(
+  encounterId: string,
+  combatants: Combatant[],
+  reorder: InitiativeReorderResult
+): Promise<void> {
+  await prisma.encounter.update({
+    where: { id: encounterId },
+    data: {
+      combatants: JSON.stringify(combatants),
+      turnOrder: JSON.stringify(reorder.turnOrder),
+      trainerTurnOrder: JSON.stringify(reorder.trainerTurnOrder),
+      pokemonTurnOrder: JSON.stringify(reorder.pokemonTurnOrder),
+      currentTurnIndex: reorder.currentTurnIndex
+    }
+  })
 }
