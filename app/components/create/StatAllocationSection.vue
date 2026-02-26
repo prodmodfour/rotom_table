@@ -90,7 +90,7 @@ interface Props {
   warnings: CreationWarning[]
 }
 
-const props = defineProps<Props>()
+defineProps<Props>()
 
 defineEmits<{
   increment: [stat: keyof StatPoints]
