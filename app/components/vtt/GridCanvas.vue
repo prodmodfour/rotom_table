@@ -8,6 +8,9 @@
     @mousemove="handleMouseMove"
     @mouseup="handleMouseUp"
     @mouseleave="handleMouseUp"
+    @touchstart="handleTouchStart"
+    @touchmove="handleTouchMove"
+    @touchend="handleTouchEnd"
   >
     <canvas
       ref="canvasRef"
@@ -198,7 +201,19 @@ const interaction = useGridInteraction({
   onTokenSelect: (id) => emit('tokenSelect', id),
   onCellClick: (pos) => emit('cellClick', pos),
   onMultiSelect: (ids) => emit('multiSelect', ids),
-  onMovementPreviewChange: (preview) => emit('movementPreviewChange', preview)
+  onMovementPreviewChange: (preview) => emit('movementPreviewChange', preview),
+  // Player mode: override touch tap to emit player-specific events
+  onTouchTap: (gridPos, token) => {
+    if (!props.playerMode) return false
+    if (token) {
+      if (isOwnTokenCheck(token.combatantId)) {
+        emit('playerTokenSelect', token.combatantId)
+      }
+    } else {
+      emit('playerCellClick', gridPos)
+    }
+    return true
+  }
 })
 
 // Selected token for movement range display
@@ -251,9 +266,8 @@ const marqueePixelRect = computed(() => {
 // Event handlers (delegate to interaction composable, with player mode intercepts)
 const handleWheel = interaction.handleWheel
 
-// Player mode click-vs-drag detection: track mousedown position to distinguish
-// a click (< 5px movement) from a drag/pan gesture.
-// TODO: Touch events (pinch-to-zoom, touch panning) — see bug-030
+// Player mode click-vs-drag detection: track mousedown/touchstart position to
+// distinguish a click/tap (< 5px movement) from a drag/pan gesture.
 const CLICK_THRESHOLD_PX = 5
 const playerMouseDownPos = ref<{ x: number; y: number } | null>(null)
 
@@ -305,6 +319,12 @@ const handleMouseDown = (event: MouseEvent): void => {
   // Always delegate to interaction for panning (all modes, all buttons)
   interaction.handleMouseDown(event)
 }
+
+// Touch event handlers — delegate directly to composable
+// Player mode tap behavior is handled via onTouchTap callback in interaction setup
+const handleTouchStart = interaction.handleTouchStart
+const handleTouchMove = interaction.handleTouchMove
+const handleTouchEnd = interaction.handleTouchEnd
 
 // Lifecycle
 onMounted(() => {

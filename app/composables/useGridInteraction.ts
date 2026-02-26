@@ -30,6 +30,8 @@ interface UseGridInteractionOptions {
   onCellClick: (position: GridPosition) => void
   onMultiSelect: (combatantIds: string[]) => void
   onMovementPreviewChange: (preview: MovementPreview | null) => void
+  // Optional touch tap override. If provided and returns true, default tap handling is skipped.
+  onTouchTap?: (gridPos: GridPosition, token: TokenData | undefined) => boolean
 }
 
 // Constants
@@ -690,16 +692,18 @@ export function useGridInteraction(options: UseGridInteractionOptions) {
       const changedTouch = event.changedTouches[0]
       if (changedTouch) {
         const gridPos = screenToGrid(changedTouch.clientX, changedTouch.clientY)
-
-        // Check if tapping on a token
         const clickedToken = getTokenAtPosition(gridPos)
-        if (clickedToken) {
-          // Delegate to token select handler
-          handleTokenSelect(clickedToken.combatantId)
-        } else if (gridPos.x >= 0 && gridPos.x < options.config.value.width &&
-                   gridPos.y >= 0 && gridPos.y < options.config.value.height) {
-          // Tapped on empty cell
-          options.onCellClick(gridPos)
+
+        // Allow caller to override tap handling (e.g. player mode)
+        const handled = options.onTouchTap?.(gridPos, clickedToken) ?? false
+
+        if (!handled) {
+          if (clickedToken) {
+            handleTokenSelect(clickedToken.combatantId)
+          } else if (gridPos.x >= 0 && gridPos.x < options.config.value.width &&
+                     gridPos.y >= 0 && gridPos.y < options.config.value.height) {
+            options.onCellClick(gridPos)
+          }
         }
       }
     }
