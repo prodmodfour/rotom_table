@@ -2,7 +2,7 @@
 ticket_id: ptu-rule-105
 ticket_type: ptu-rule
 priority: P2
-status: open
+status: in-progress
 domain: rest
 topic: extended-rest-bound-ap
 source: decree-016
@@ -29,6 +29,15 @@ Extended rest should only clear Drained AP, not Bound AP. Fix `extended-rest.pos
 2. Preserve `boundAp` value (do not modify)
 3. Set current AP to `maxAp - boundAp` (not full max)
 4. Bound AP can only be cleared by GM manually removing the binding effect
+
+## Resolution Log
+
+| Date | Commit | Description |
+|------|--------|-------------|
+| 2026-02-26 | 3e0dfd9 | fix: extended rest preserves Bound AP per decree-016 |
+
+**Files modified (1):**
+- `app/server/api/characters/[id]/extended-rest.post.ts` (only clear drainedAp, preserve boundAp, set currentAp to maxAp - boundAp)
 
 ## Notes
 

@@ -362,3 +362,14 @@ Functional scaffolding exists at `/player` — encounter display with combatant 
 - `app/nuxt.config.ts` (registered new SCSS file in css array)
 
 **All 2 issues from code-review-181 resolved:** 2 MEDIUM.
+
+### Track A: Core Player View (P2 Fix Cycle 3 — code-review-182)
+
+| Date | Commit | Description |
+|------|--------|-------------|
+| 2026-02-26 | 904f848 | C1: Remove :deep() pseudo-selectors from global SCSS file (3 locations) |
+
+**Files modified (1):**
+- `app/assets/scss/components/_player-character-sheet.scss` (replace :deep(X) with plain X at 3 locations)
+
+**All 1 issue from code-review-182 resolved:** 1 CRITICAL.
