@@ -52,31 +52,36 @@
 
       <!-- Tab Content -->
       <main v-else-if="character" class="player-content">
-        <PlayerCharacterSheet
-          v-if="activeTab === 'character'"
-          :character="character"
-          @imported="refreshCharacterData"
-        />
-        <PlayerPokemonTeam
-          v-else-if="activeTab === 'team'"
-          :pokemon="pokemon"
-          :active-pokemon-id="character.activePokemonId"
-        />
-        <PlayerEncounterView
-          v-else-if="activeTab === 'encounter'"
-          :my-character-id="character.id"
-          :my-pokemon-ids="pokemonIds"
-          :send="send"
-          :on-message="onMessage"
-        />
-        <template v-else-if="activeTab === 'scene'">
-          <PlayerGroupControl
-            :current-tab="groupViewTab"
+        <Transition :name="tabTransitionName" mode="out-in">
+          <PlayerCharacterSheet
+            v-if="activeTab === 'character'"
+            key="character"
+            :character="character"
+            @imported="refreshCharacterData"
+          />
+          <PlayerPokemonTeam
+            v-else-if="activeTab === 'team'"
+            key="team"
+            :pokemon="pokemon"
+            :active-pokemon-id="character.activePokemonId"
+          />
+          <PlayerEncounterView
+            v-else-if="activeTab === 'encounter'"
+            key="encounter"
+            :my-character-id="character.id"
+            :my-pokemon-ids="pokemonIds"
             :send="send"
             :on-message="onMessage"
           />
-          <PlayerSceneView :scene="playerActiveScene" />
-        </template>
+          <div v-else-if="activeTab === 'scene'" key="scene">
+            <PlayerGroupControl
+              :current-tab="groupViewTab"
+              :send="send"
+              :on-message="onMessage"
+            />
+            <PlayerSceneView :scene="playerActiveScene" />
+          </div>
+        </Transition>
       </main>
 
       <!-- Action Ack Toast (fixed overlay) -->
@@ -167,8 +172,23 @@ useStateSync({ isConnected, send, identify, joinEncounter, refreshCharacterData 
 // Group View tab state (fetched from server for display in PlayerGroupControl)
 const groupViewTab = ref('lobby')
 
-// Active tab
+// Active tab with slide direction tracking
+const TAB_ORDER: Record<PlayerTab, number> = {
+  character: 0,
+  team: 1,
+  encounter: 2,
+  scene: 3
+}
+
 const activeTab = ref<PlayerTab>('character')
+const tabTransitionName = ref('tab-slide-left')
+
+watch(activeTab, (newTab, oldTab) => {
+  if (!oldTab) return
+  tabTransitionName.value = TAB_ORDER[newTab] > TAB_ORDER[oldTab]
+    ? 'tab-slide-left'
+    : 'tab-slide-right'
+})
 
 // Inline error for character selection failures (replaces alert())
 const selectionError = ref<string | null>(null)
@@ -496,5 +516,33 @@ onUnmounted(() => {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+// Tab slide transitions (direction based on tab order)
+.tab-slide-left-enter-active,
+.tab-slide-left-leave-active,
+.tab-slide-right-enter-active,
+.tab-slide-right-leave-active {
+  transition: all 0.2s ease;
+}
+
+.tab-slide-left-enter-from {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.tab-slide-left-leave-to {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.tab-slide-right-enter-from {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.tab-slide-right-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
 }
 </style>
