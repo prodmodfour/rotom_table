@@ -724,7 +724,7 @@ export function buildCombatantFromEntity(options: BuildCombatantOptions): Combat
       }
     : entity
 
-  return {
+  const combatant: Combatant = {
     id: uuidv4(),
     type: entityType,
     entityId,
@@ -742,6 +742,7 @@ export function buildCombatantFromEntity(options: BuildCombatantOptions): Combat
       canBeCommanded: true,
       isHolding: false
     },
+    stageSources: [],
     injuries: { count: 0, sources: [] },
     physicalEvasion: calculateEvasion(stats.defense || 0, 0, equipmentEvasionBonus, equipmentStatBonuses.defense ?? 0),
     specialEvasion: calculateEvasion(stats.specialDefense || 0, 0, equipmentEvasionBonus, equipmentStatBonuses.specialDefense ?? 0),
@@ -750,4 +751,10 @@ export function buildCombatantFromEntity(options: BuildCombatantOptions): Combat
     tokenSize,
     entity: combatantEntity
   }
+
+  // Auto-apply CS effects for pre-existing status conditions (decree-005)
+  // e.g., a Burned Pokemon entering combat should start with -2 Def CS
+  reapplyActiveStatusCsEffects(combatant)
+
+  return combatant
 }
