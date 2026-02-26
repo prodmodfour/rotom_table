@@ -374,10 +374,12 @@ export function useRangeParser() {
 
     switch (parsedRange.type) {
       case 'burst':
-        // Burst is a square centered on origin
+        // Burst N includes cells whose PTU diagonal distance from center <= N
+        // Per decree-002 and decree-023: all distance uses PTU alternating diagonal.
+        // This produces a diamond shape, not a filled square.
         for (let dx = -size; dx <= size; dx++) {
           for (let dy = -size; dy <= size; dy++) {
-            if (Math.max(Math.abs(dx), Math.abs(dy)) <= size) {
+            if (ptuDiagonalDistance(dx, dy) <= size) {
               cells.push({ x: origin.x + dx, y: origin.y + dy })
             }
           }

@@ -184,11 +184,12 @@ function getLineCells(start: GridPosition, end: GridPosition, width: number = 1)
 function getBurstCells(center: GridPosition, radius: number): GridPosition[] {
   const cells: GridPosition[] = []
 
-  // Burst is a circle centered on origin
+  // Burst N includes cells whose PTU diagonal distance from center <= N
+  // Per decree-002 and decree-023: all distance uses PTU alternating diagonal.
+  // This produces a diamond shape, not a filled square.
   for (let dx = -radius; dx <= radius; dx++) {
     for (let dy = -radius; dy <= radius; dy++) {
-      // Use Chebyshev distance for PTU
-      if (Math.max(Math.abs(dx), Math.abs(dy)) <= radius) {
+      if (ptuDiagonalDistance(dx, dy) <= radius) {
         cells.push({ x: center.x + dx, y: center.y + dy })
       }
     }
