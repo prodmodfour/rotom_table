@@ -15,7 +15,7 @@ export default defineNuxtConfig({
     },
   ],
 
-  css: ['~/assets/scss/main.scss', '~/assets/scss/_create-form.scss', '~/assets/scss/components/_create-form-shared.scss', '~/assets/scss/components/_player-view.scss', '~/assets/scss/components/_player-combat-actions.scss', '~/assets/scss/components/_form-utilities.scss'],
+  css: ['~/assets/scss/main.scss', '~/assets/scss/_create-form.scss', '~/assets/scss/components/_create-form-shared.scss', '~/assets/scss/components/_player-view.scss', '~/assets/scss/components/_player-combat-actions.scss', '~/assets/scss/components/_player-character-sheet.scss', '~/assets/scss/components/_form-utilities.scss'],
 
   app: {
     head: {
