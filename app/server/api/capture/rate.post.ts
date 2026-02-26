@@ -1,5 +1,6 @@
 import { prisma } from '~/server/utils/prisma'
 import { calculateCaptureRate, getCaptureDescription } from '~/utils/captureRate'
+import { isLegendarySpecies } from '~/constants/legendarySpecies'
 import type { StatusCondition } from '~/types'
 
 interface CaptureRateRequest {
@@ -12,6 +13,7 @@ interface CaptureRateRequest {
   statusConditions?: StatusCondition[]
   injuries?: number
   isShiny?: boolean
+  isLegendary?: boolean  // GM override for legendary status
 }
 
 export default defineEventHandler(async (event) => {
@@ -87,6 +89,9 @@ export default defineEventHandler(async (event) => {
     }
   }
 
+  // Legendary detection: GM override takes priority, otherwise auto-detect from species name
+  const isLegendary = body.isLegendary ?? isLegendarySpecies(species)
+
   const result = calculateCaptureRate({
     level,
     currentHp,
@@ -96,7 +101,7 @@ export default defineEventHandler(async (event) => {
     statusConditions,
     injuries,
     isShiny,
-    isLegendary: false // Could add legendary detection later
+    isLegendary
   })
 
   return {

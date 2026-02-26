@@ -1,5 +1,6 @@
 import { prisma } from '~/server/utils/prisma'
 import { calculateCaptureRate, attemptCapture, getCaptureDescription } from '~/utils/captureRate'
+import { isLegendarySpecies } from '~/constants/legendarySpecies'
 import type { StatusCondition } from '~/types'
 
 interface CaptureAttemptRequest {
@@ -51,6 +52,9 @@ export default defineEventHandler(async (event) => {
   const evolutionStage = speciesData?.evolutionStage || 1
   const maxEvolutionStage = speciesData?.maxEvolutionStage || evolutionStage
 
+  // Legendary detection: auto-detect from species name
+  const isLegendary = isLegendarySpecies(pokemon.species)
+
   // Calculate capture rate
   const rateResult = calculateCaptureRate({
     level: pokemon.level,
@@ -61,7 +65,7 @@ export default defineEventHandler(async (event) => {
     statusConditions: JSON.parse(pokemon.statusConditions || '[]') as StatusCondition[],
     injuries: pokemon.injuries || 0,
     isShiny: pokemon.shiny || false,
-    isLegendary: false
+    isLegendary
   })
 
   // Check if capture is possible
