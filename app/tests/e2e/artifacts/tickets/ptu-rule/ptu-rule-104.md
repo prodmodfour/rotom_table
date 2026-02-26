@@ -2,7 +2,7 @@
 ticket_id: ptu-rule-104
 ticket_type: ptu-rule
 priority: P1
-status: open
+status: in-progress
 domain: combat
 topic: type-immunity-enforcement
 source: decree-012
@@ -35,3 +35,27 @@ Type-immunity mapping exists client-side in `useTypeChart.ts` (lines 12-20), but
 
 - Type-immunity map may need to be shared between client and server (extract to shared utility)
 - Related: decree-012 establishes the "enforce by default, override for edge cases" pattern
+
+## Resolution Log
+
+### Implementation (slave/2-dev-combat-initiative-immunity branch)
+
+**Files changed:**
+- `app/utils/typeStatusImmunity.ts` — NEW: shared type-status immunity map and helpers
+- `app/composables/useTypeChart.ts` — refactored to use shared utility
+- `app/server/api/encounters/[id]/status.post.ts` — server-side immunity check with 409 rejection
+- `app/stores/encounterCombat.ts` — added `override` parameter to status methods
+- `app/composables/useEncounterActions.ts` — passes override flag, shows alert on 409
+- `app/components/encounter/StatusConditionsModal.vue` — IMMUNE tags, warning banner, "Force Apply" button
+- `app/components/encounter/CombatantCard.vue` — passes entity types and override to modal
+- `app/components/gm/CombatantSides.vue` — passes override through event chain
+- `app/components/encounter/GMActionModal.vue` — updated emit type for override
+
+**Commits:** 590dffb, ac2c68c, 77fa3bb, 4e8d498, a81da94, 55c6fc8, 6e8c203, 9a8ff96, a9c9193
+
+**Approach:**
+1. Extracted `TYPE_STATUS_IMMUNITIES` map to `app/utils/typeStatusImmunity.ts` (shared between server/client)
+2. Server checks Pokemon types against immunity map before applying status; rejects with 409 + informative message
+3. `override: true` parameter bypasses the check (GM override per decree-012)
+4. Client StatusConditionsModal shows IMMUNE tags on immune checkboxes, warning banner, and "Force Apply (GM Override)" button
+5. Quick add/remove in GMActionModal shows alert on rejection guiding user to full modal
