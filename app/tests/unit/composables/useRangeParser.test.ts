@@ -297,6 +297,107 @@ describe('useRangeParser', () => {
     })
   })
 
+  describe('validateMovement with elevation costs', () => {
+    const origin = { x: 5, y: 5 }
+
+    // Simple elevation: 1 MP per level of elevation change
+    const getElevationCost = (fromZ: number, toZ: number): number => {
+      return Math.abs(toZ - fromZ)
+    }
+
+    it('should reject movement when elevation cost exceeds remaining budget', () => {
+      // Destination is 2 cells away (XY cost = 2) + elevation change of 4 = total 6
+      const getTerrainElevation = (x: number, y: number): number => {
+        if (x === 7) return 4
+        if (x === 6) return 2
+        return 0
+      }
+
+      // Speed 3 is not enough: cost to (6,5) = 1 (xy) + 2 (elev) = 3, then
+      // (7,5) = 1 (xy) + 2 (elev) = 2 more, total 5 > 3
+      const result = validateMovement(
+        origin, { x: 7, y: 5 }, 3, [],
+        undefined, getElevationCost, getTerrainElevation, 0
+      )
+      expect(result.valid).toBe(false)
+    })
+
+    it('should allow movement when elevation cost fits within budget', () => {
+      const getTerrainElevation = (x: number, y: number): number => {
+        if (x >= 6) return 1
+        return 0
+      }
+
+      // Cost to (6,5) = 1 (xy) + 1 (elev) = 2. Speed 5 is sufficient.
+      const result = validateMovement(
+        origin, { x: 6, y: 5 }, 5, [],
+        undefined, getElevationCost, getTerrainElevation, 0
+      )
+      expect(result.valid).toBe(true)
+    })
+
+    it('should work with both terrain and elevation costs', () => {
+      const getTerrainCost = (x: number, y: number): number => {
+        if (x === 6 && y === 5) return 2  // Difficult terrain
+        return 1
+      }
+      const getTerrainElevation = (x: number, y: number): number => {
+        if (x >= 6) return 1
+        return 0
+      }
+
+      // (5,5) -> (6,5): base=1, terrain=2x, elev=1 => cost = 1*2 + 1 = 3
+      // Speed 2 not enough
+      const result = validateMovement(
+        origin, { x: 6, y: 5 }, 2, [],
+        getTerrainCost, getElevationCost, getTerrainElevation, 0
+      )
+      expect(result.valid).toBe(false)
+    })
+
+    it('should respect fromElevation parameter', () => {
+      const getTerrainElevation = (x: number, y: number): number => {
+        return 3 // All cells at elevation 3
+      }
+
+      // Starting from elevation 3, moving to elevation 3 cells => no elevation cost
+      const resultSameElev = validateMovement(
+        origin, { x: 6, y: 5 }, 1, [],
+        undefined, getElevationCost, getTerrainElevation, 3
+      )
+      expect(resultSameElev.valid).toBe(true)
+
+      // Starting from elevation 0, moving to elevation 3 cells => +3 cost
+      const resultDiffElev = validateMovement(
+        origin, { x: 6, y: 5 }, 1, [],
+        undefined, getElevationCost, getTerrainElevation, 0
+      )
+      expect(resultDiffElev.valid).toBe(false)
+    })
+
+    it('should allow flying Pokemon with zero elevation cost', () => {
+      const flyingElevationCost = (_fromZ: number, _toZ: number): number => 0
+
+      const getTerrainElevation = (x: number, y: number): number => {
+        if (x >= 6) return 5
+        return 0
+      }
+
+      // Flying: no elevation cost, so 1 cell XY = cost 1. Speed 1 is enough.
+      const result = validateMovement(
+        origin, { x: 6, y: 5 }, 1, [],
+        undefined, flyingElevationCost, getTerrainElevation, 0
+      )
+      expect(result.valid).toBe(true)
+    })
+
+    it('should default to no elevation cost when getters are omitted', () => {
+      // Without elevation params, same behavior as before
+      const result = validateMovement(origin, { x: 6, y: 5 }, 1)
+      expect(result.valid).toBe(true)
+    })
+  })
+
   describe('calculatePathCost', () => {
     const { calculatePathCost } = useRangeParser()
     const origin = { x: 0, y: 0 }

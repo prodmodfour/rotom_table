@@ -153,14 +153,26 @@ export function usePathfinding() {
   }
 
   /**
-   * Validate if a movement is legal, accounting for terrain costs
+   * Validate if a movement is legal, accounting for terrain costs and elevation.
+   *
+   * @param from - Start position
+   * @param to - Destination position
+   * @param speed - Movement speed budget
+   * @param blockedCells - Cells occupied by other tokens
+   * @param getTerrainCost - Optional terrain cost multiplier function
+   * @param getElevationCost - Optional elevation transition cost function
+   * @param getTerrainElevation - Optional ground elevation lookup
+   * @param fromElevation - Starting elevation (default 0)
    */
   function validateMovement(
     from: GridPosition,
     to: GridPosition,
     speed: number,
     blockedCells: GridPosition[] = [],
-    getTerrainCost?: TerrainCostGetter
+    getTerrainCost?: TerrainCostGetter,
+    getElevationCost?: ElevationCostGetter,
+    getTerrainElevation?: TerrainElevationGetter,
+    fromElevation: number = 0
   ): { valid: boolean; distance: number; cost: number; reason?: string } {
     const distance = calculateMoveCost(from, to)
 
@@ -178,9 +190,12 @@ export function usePathfinding() {
       }
     }
 
-    // For simple validation, calculate minimum path cost
-    // This is simplified - for true pathfinding, use getMovementRangeCells
-    const reachable = getMovementRangeCells(from, speed, blockedCells, getTerrainCost)
+    // For simple validation, calculate minimum path cost using flood-fill
+    // with full elevation support
+    const reachable = getMovementRangeCells(
+      from, speed, blockedCells, getTerrainCost,
+      getElevationCost, getTerrainElevation, fromElevation
+    )
     const canReach = reachable.some(c => c.x === to.x && c.y === to.y)
 
     if (!canReach) {
