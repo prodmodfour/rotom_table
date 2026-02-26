@@ -181,7 +181,7 @@
 
   &__conflicts {
     list-style: none;
-    padding: $spacing-xs 0 0 ($spacing-md + 18px);
+    padding: $spacing-xs 0 0 calc(#{$spacing-md} + 18px);
     margin: 0;
     font-size: $font-size-xs;
     opacity: 0.85;
