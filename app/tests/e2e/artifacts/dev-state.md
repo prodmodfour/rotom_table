@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-02-26T20:00:00
-updated_by: slave-collector (plan-20260226-154130)
+last_updated: 2026-02-26T21:30:00
+updated_by: slave-collector (plan-20260226-190737)
 ---
 
 # Dev Ecosystem State
@@ -31,8 +31,8 @@ updated_by: slave-collector (plan-20260226-154130)
 | ptu-rule-081 | P4 | **resolved** | Multiple Focus items — single Focus limit enforced in equipmentBonuses.ts. code-review-169 APPROVED (M1 non-blocking → ux-008), rules-review-156 APPROVED |
 | ptu-rule-082 | P4 | **resolved** | Pokemon maxHp not auto-updated on level-up (from rules-review-118). Fix applied + APPROVED (code-review-161, rules-review-151). M2 → ux-005 |
 | ptu-rule-083 | P4 | **resolved** | Measurement store uses Chebyshev distance instead of PTU alternating diagonal (from rules-review-144 RULING-1). Fix applied + APPROVED (code-review-161, rules-review-151). M1 → refactoring-080 |
-| ptu-rule-084 | P2 | **implemented, needs review** | Vulnerable/Frozen/Asleep conditions now zero evasion in getTargetEvasion + calculate-damage endpoint. Implemented by slave-5 (plan-20260226-154130). 3 commits |
-| ptu-rule-085 | P2 | **implemented, needs review** | Legendary Pokemon auto-detected for capture rate -30 modifier via LEGENDARY_SPECIES constant. Implemented by slave-5 (plan-20260226-154130). 3 commits |
+| ptu-rule-084 | P2 | **CHANGES_REQUIRED** | Vulnerable/Frozen/Asleep zero evasion. code-review-184 CHANGES_REQUIRED (M1: ZERO_EVASION_CONDITIONS unused). rules-review-161 CHANGES_REQUIRED (HIGH-1: double-CS on re-entry, M3: tempConditions Vulnerable missed) |
+| ptu-rule-085 | P2 | **CHANGES_REQUIRED** | Legendary auto-detection -30 capture. code-review-184 ok. rules-review-161 M1: missing Meltan/Melmetal/Zarude/Enamorus |
 | ptu-rule-086 | P3 | **open** | Capture modifier sign convention inverted from PTU (from capture-audit R005) |
 | ptu-rule-087 | P3 | **open** | Generated Pokemon start with 0 tutor points instead of level-based calculation (from pokemon-lifecycle-audit R022) |
 | ptu-rule-088 | P3 | **open** | Significance tier presets misaligned with PTU values (from encounter-tables-audit R008) |
@@ -43,19 +43,29 @@ updated_by: slave-collector (plan-20260226-154130)
 | ptu-rule-093 | P3 | **open** | Rough terrain accuracy penalty not implemented (from vtt-grid-audit R015 + scenes-audit R018) |
 | ptu-rule-094 | P4 | **open** | Natural healing min(1) HP contradicts PTU for low-HP entities (from healing-audit R007) |
 | ptu-rule-095 | P4 | **open** | Disengage maneuver missing from combatManeuvers — defer until AoO implemented (from vtt-grid-audit R030) |
-| ptu-rule-096 | P0 | **implemented, needs review** | Switch ALL range measurement from Chebyshev to PTU alternating diagonal. Implemented by slave-1 (plan-20260226-154130). Part of 3-commit VTT range overhaul |
-| ptu-rule-097 | P0 | **implemented, needs review** | Make all tokens passable, enemy-occupied squares as dynamic rough terrain with -2 accuracy penalty, no stacking at end. Implemented by slave-2 (plan-20260226-154130). 4 commits |
-| ptu-rule-098 | P1 | **implemented, needs review** | Auto-apply combat stage changes from status conditions (Burn=-2 Def, Paralysis=-4 Speed, Poison=-2 SpDef) with source tracking. Cure reversal, breather re-application, faint reversal, combat entry auto-apply. Implemented by slave-3 (plan-20260226-154130). 9 commits |
-| ptu-rule-100 | P1 | **implemented, needs review** | Fix cone shapes to fixed 3m-wide rows per PTU literal text. Implemented by slave-1 (plan-20260226-154130). Part of 3-commit VTT range overhaul |
-| ptu-rule-101 | P1 | **implemented, needs review** | Change water terrain default cost to 1 (was 2). Water is basic terrain per PTU; GM can overlay slow flag. Implemented by slave-4 (plan-20260226-154130). Part of terrain multi-tag overhaul |
-| ptu-rule-102 | P1 | **implemented, needs review** | Shorten diagonal Line attacks per PTU alternating diagonal rule. Implemented by slave-1 (plan-20260226-154130). Part of 3-commit VTT range overhaul |
+| ptu-rule-096 | P0 | **CHANGES_REQUIRED** | Range measurement switched to PTU alternating diagonal. code-review-183 CHANGES_REQUIRED (CRIT-1: enemyOccupiedCells uses targets not all combatants, HIGH-1: multi-cell stacking, HIGH-3: burst Chebyshev). rules-review-160 APPROVED |
+| ptu-rule-097 | P0 | **CHANGES_REQUIRED** | Token passability + enemy rough terrain -2 accuracy. code-review-183 CHANGES_REQUIRED (HIGH-2: duplicate enemy logic, MED-2: missing tests, MED-3: dead getBlockedCells). rules-review-160 APPROVED |
+| ptu-rule-098 | P1 | **CHANGES_REQUIRED** | Status CS auto-tracking (Burn/Paralysis/Poison) with source tracking. code-review-184 CHANGES_REQUIRED (H1: faint path doesn't sync stageModifiers to DB). rules-review-161 CHANGES_REQUIRED (HIGH-1: double-CS on combat re-entry) |
+| ptu-rule-099 | P1 | **implemented, needs review** | Dynamic initiative reorder on Speed CS change. Tracks hasActed per round, re-sorts unacted combatants, WebSocket broadcast. Implemented by slave-2 (plan-20260226-190737). 6 commits |
+| ptu-rule-100 | P1 | **CHANGES_REQUIRED** | Cone shapes fixed to 3m-wide rows. code-review-183 part of VTT review. rules-review-160 APPROVED but M1: diagonal cone inconsistency between useRangeParser and measurement store |
+| ptu-rule-101 | P1 | **CHANGES_REQUIRED** | Water cost 1 (was 2) + terrain multi-tag refactoring. code-review-185 CHANGES_REQUIRED (CRIT-1: broken unit tests, HIGH-1: no server-side flags validation, HIGH-2: legacy types still valid). rules-review-162 APPROVED |
+| ptu-rule-102 | P1 | **CHANGES_REQUIRED** | Diagonal Line attacks shortened. code-review-183 part of VTT review (MED-2: missing tests). rules-review-160 APPROVED |
+| ptu-rule-103 | P1 | **implemented, needs review** | Mixed-terrain speed averaging. A* path terrain analysis, capability-per-terrain, speed averaging for movement range. Implemented by slave-3 (plan-20260226-190737). 8 commits |
+| ptu-rule-104 | P1 | **implemented, needs review** | Type-immunity enforcement for status conditions server-side. Electric/Paralysis, Fire/Burn, Ghost/Stuck+Trapped, Ice/Frozen, Poison+Steel/Poison. GM override flag. Client UI warnings. Implemented by slave-2 (plan-20260226-190737). 10 commits |
+| ptu-rule-105 | P2 | **implemented, needs review** | Extended rest preserves Bound AP (clears only Drained AP) per decree-016. Implemented by slave-1 (plan-20260226-190737). 1 commit |
+| ptu-rule-106 | P2 | **implemented, needs review** | Extended rest duration parameter (4-8h, default 4). Scalable healing periods with 8h daily cap. Client UI input. Per decree-018. Implemented by slave-1 (plan-20260226-190737). 4 commits |
+| ptu-rule-108 | P2 | **open** | Static rough terrain accuracy penalty for painted terrain cells (from rules-review-160 M2 + rules-review-162 M1) |
+| ptu-rule-109 | P3 | **open** | Legendary species list missing Meltan/Melmetal/Zarude/Enamorus (from rules-review-161 M1) |
+| ptu-rule-110 | P2 | **open** | Encounter end should reset combat stages (from rules-review-161 M2 + code-review-184 H1) |
+| ptu-rule-111 | P2 | **open** | tempConditions Vulnerable not checked for zero evasion (from rules-review-161 M3) |
+| ptu-rule-112 | P3 | **open** | Naturewalk capability bypass for terrain flags (from rules-review-162 M2) |
 
 ### Feature Tickets (`tickets/feature/`)
 | Ticket | Priority | Status | Summary | Design Complexity |
 |--------|----------|--------|---------|-------------------|
 | feature-001 | P3 | **resolved** | B2W2 trainer sprites — single-phase design complete, P0 APPROVED (code-review-149 + rules-review-139). Closed by slave-3 (plan-20260224-162105) | single-phase |
 | feature-002 | P2 | **P2-APPROVED** | 3D isometric grid — P2 fix cycle 2 APPROVED (code-review-160 + rules-review-150). All tiers complete | multi-phase |
-| feature-003 | P1 | **Track-A-P2-CHANGES_REQUIRED + Track-B-P1-APPROVED + Track-C-P1-APPROVED** | Player View — Track A P2 fix cycle 3 needed: code-review-182 CHANGES_REQUIRED (C1: `:deep()` selectors in global SCSS produce dead CSS — replace with plain selectors in 3 locations). rules-review-159 APPROVED. Track B P1 APPROVED (code-review-162). Track C P1 APPROVED (code-review-163 + rules-review-152). All tracks P0+P1 complete | multi-phase-parallel |
+| feature-003 | P1 | **Track-A-P2-fix3-done, needs re-review + Track-B-P1-APPROVED + Track-C-P1-APPROVED** | Player View — Track A P2 fix cycle 3 implemented by slave-1 (plan-20260226-190737): removed `:deep()` from 3 SCSS locations (C1 from code-review-182). Track B P1 APPROVED (code-review-162). Track C P1 APPROVED (code-review-163 + rules-review-152). All tracks P0+P1 complete | multi-phase-parallel |
 
 ### UX Tickets (`tickets/ux/`)
 | Ticket | Priority | Status | Summary |
@@ -71,14 +81,23 @@ updated_by: slave-collector (plan-20260226-154130)
 
 ## Active Developer Work
 
-**Current task:** Session 42 collection complete. All 6 slaves merged (31 commits, 2 conflicts resolved). 5 developer slaves: VTT range/measurement overhaul (ptu-rule-096+100+102), token passability (ptu-rule-097), status CS tracking (ptu-rule-098), terrain multi-tag (refactoring-001+ptu-rule-101), evasion+legendary fixes (ptu-rule-084+085). 1 reviewer slave: feature-003 Track A P2 re-review (CHANGES_REQUIRED C1: `:deep()` in global SCSS).
+**Current task:** Session 43 collection complete. All 6 slaves merged (37 commits). 3 developer slaves: feature-003 fix3 + rest mechanics (ptu-rule-105+106), combat initiative+immunity (ptu-rule-099+104), terrain speed averaging (ptu-rule-103). 3 reviewer slaves: all returned CHANGES_REQUIRED. 8 follow-up tickets filed.
+
+**Session 43 (2026-02-26, plan-20260226-190737):**
+- slave-1 (developer): feature-003-fix3+ptu-rule-105+106 — 7 commits: removed `:deep()` from 3 SCSS locations (code-review-182 C1 fix), extended rest preserves Bound AP (decree-016), added duration parameter 4-8h (decree-018) → **implemented, needs review**
+- slave-2 (developer): ptu-rule-099+104 — 16 commits: dynamic initiative reorder on Speed CS change (decree-006), type-immunity enforcement for status conditions server-side with GM override (decree-012) → **implemented, needs review**
+- slave-3 (developer): ptu-rule-103 — 8 commits: mixed-terrain speed averaging (decree-011), A* path terrain analysis, combatantCapabilities utility, speed-averaged movement range rendering → **implemented, needs review**
+- slave-4 (reviewers): ptu-rule-096+100+102+097 — code-review-183 **CHANGES_REQUIRED** (CRIT-1: enemyOccupiedCells uses targets not all combatants, HIGH-1: multi-cell stacking, HIGH-2: duplicate enemy logic, HIGH-3: burst Chebyshev, MED-1-3). rules-review-160 **APPROVED** (M1: diagonal cone inconsistency, M2: static rough terrain penalty gap)
+- slave-5 (reviewers): ptu-rule-098+084+085 — code-review-184 **CHANGES_REQUIRED** (H1: faint path doesn't sync stageModifiers to DB, M1: ZERO_EVASION_CONDITIONS unused). rules-review-161 **CHANGES_REQUIRED** (HIGH-1: double-CS on combat re-entry, M1: legendary list incomplete, M2: encounter end no stage reset, M3: tempConditions Vulnerable)
+- slave-6 (reviewers): refactoring-001+ptu-rule-101 — code-review-185 **CHANGES_REQUIRED** (CRIT-1: broken unit tests, HIGH-1: no server flags validation, HIGH-2: legacy types, MED-1: emoji icons, MED-2: let mutation). rules-review-162 **APPROVED** (M1: rough terrain accuracy gap, M2: Naturewalk gap)
+- **Merge notes:** 0 conflicts. Slave 3 rebased cleanly onto slave 1. Slave 2 rebased cleanly onto slave 3 (medium-risk useGridMovement.ts overlap resolved — no textual conflicts). One untracked file conflict (ptu-rule-099.md) resolved by removing pre-existing untracked copy.
 
 **Session 42 (2026-02-26, plan-20260226-154130):**
-- slave-1 (developer): ptu-rule-096+100+102 — 3 commits: switched range measurement to PTU alternating diagonal, fixed cone shapes to 3m-wide rows, shortened diagonal Line attacks → **all 3 implemented, need review**
-- slave-2 (developer): ptu-rule-097 — 4 commits: made all tokens passable, enemy-occupied squares as dynamic rough terrain with -2 accuracy penalty, no stacking at movement end → **implemented, needs review**
-- slave-3 (developer): ptu-rule-098 — 9 commits: StageSource type, STATUS_CS_EFFECTS constant, source-tracked auto-CS on status apply, DB sync, Take a Breather re-application, faint reversal, combat entry auto-apply, Badly Poisoned mapping → **implemented, needs review**
-- slave-4 (developer): refactoring-001+ptu-rule-101 — 10 commits: TerrainFlags interface, terrain store multi-tag overhaul, persistence update, API update, 2D+isometric rendering, TerrainPainter UI, elevation fix, water cost changed to 1 → **implemented, needs review**
-- slave-5 (developer): ptu-rule-084+085 — 3 commits: Vulnerable/Frozen/Asleep zero evasion in getTargetEvasion + calculate-damage endpoint, legendary Pokemon auto-detection via LEGENDARY_SPECIES constant → **implemented, needs review**
+- slave-1 (developer): ptu-rule-096+100+102 — 3 commits: switched range measurement to PTU alternating diagonal, fixed cone shapes to 3m-wide rows, shortened diagonal Line attacks → **reviewed: CHANGES_REQUIRED**
+- slave-2 (developer): ptu-rule-097 — 4 commits: made all tokens passable, enemy-occupied squares as dynamic rough terrain with -2 accuracy penalty, no stacking at movement end → **reviewed: CHANGES_REQUIRED**
+- slave-3 (developer): ptu-rule-098 — 9 commits: StageSource type, STATUS_CS_EFFECTS constant, source-tracked auto-CS on status apply, DB sync, Take a Breather re-application, faint reversal, combat entry auto-apply, Badly Poisoned mapping → **reviewed: CHANGES_REQUIRED**
+- slave-4 (developer): refactoring-001+ptu-rule-101 — 10 commits: TerrainFlags interface, terrain store multi-tag overhaul, persistence update, API update, 2D+isometric rendering, TerrainPainter UI, elevation fix, water cost changed to 1 → **reviewed: CHANGES_REQUIRED**
+- slave-5 (developer): ptu-rule-084+085 — 3 commits: Vulnerable/Frozen/Asleep zero evasion in getTargetEvasion + calculate-damage endpoint, legendary Pokemon auto-detection via LEGENDARY_SPECIES constant → **reviewed: CHANGES_REQUIRED**
 - slave-6 (reviewers): feature-003 Track A P2 re-review — code-review-182 **CHANGES_REQUIRED** (C1: `:deep()` pseudo-selectors in global SCSS file produce dead CSS rules — 3 locations need plain selector replacement). rules-review-159 **APPROVED** (trainer HP formula correct)
 - **Merge notes:** 2 conflicts resolved (useMoveCalculation.ts import merge between slaves 2+5, statusConditions.ts export merge between slaves 5+3). Slave 4 high-risk merge with slave 2 (shared useGridMovement.ts) resolved cleanly — no textual conflicts.
 
@@ -419,7 +438,8 @@ updated_by: slave-collector (plan-20260226-154130)
 | refactoring-082 | P4 | **resolved** | Touch handlers extracted to useTouchInteraction composable, used by both useGridInteraction (630 lines) and useIsometricInteraction (691 lines) — resolved by slave-3 (plan-20260226-070756) |
 | refactoring-083 | P0 | **APPROVED** | Undefined $z-index-modal in XpDistributionModal — fix cycle complete. Extracted _form-utilities.scss (shared SCSS utilities) + XpDistributionResults.vue child component. File reduced from 1019 to 798 lines. code-review-179 APPROVED (re-review of code-review-173 C1) |
 | refactoring-084 | P4 | **resolved** | app-surface.md missing entries for useTouchInteraction.ts and gridDistance.ts — updated. Resolved by slave-2 (plan-20260226-120000) |
-| refactoring-001 | P1 | **implemented, needs review** | Multi-tag terrain system — cells support multiple flags (rough, slow) simultaneously instead of single enum. 10 commits: TerrainFlags interface, terrain store overhaul, persistence update, API update, 2D+isometric rendering, TerrainPainter UI, elevation fix. Implemented by slave-4 (plan-20260226-154130) |
+| refactoring-001 | P1 | **CHANGES_REQUIRED** | Multi-tag terrain system. code-review-185 CHANGES_REQUIRED (CRIT-1: broken unit tests, HIGH-1: no server-side flags validation, HIGH-2: legacy types still valid, MED-1: emojis not Phosphor Icons). rules-review-162 APPROVED |
+| refactoring-002 | P3 | **open** | Deprecate legacy terrain types ('difficult','rough') in setTerrain — prevent direct use, add runtime conversion (from code-review-185 HIGH-2) |
 
 ## Code Health
 
@@ -433,6 +453,26 @@ updated_by: slave-collector (plan-20260226-154130)
 | Open tickets (P4) | 10 (refactoring-060/062/076/078/079/084 + ux-002/006/007/008) |
 | Total open | 16 |
 | Total resolved | 159 (feature-002 fully resolved) |
+
+## Session Summary (2026-02-26, session 43 — plan-20260226-190737)
+
+**Slave collection plan-20260226-190737:** 6 slaves merged (37 commits total, 0 conflicts)
+- **slave-1** (developer): feature-003-fix3+ptu-rule-105+106 — 7 commits: `:deep()` removal (feature-003 Track A P2 fix cycle 3), extended rest Bound AP preservation (decree-016), extended rest duration parameter 4-8h (decree-018)
+- **slave-2** (developer): ptu-rule-099+104 — 16 commits: dynamic initiative reorder on Speed CS change (decree-006), type-immunity enforcement for status conditions server-side with GM override (decree-012)
+- **slave-3** (developer): ptu-rule-103 — 8 commits: mixed-terrain speed averaging (decree-011), A* path terrain analysis, combatantCapabilities utility, speed-averaged movement range rendering
+- **slave-4** (reviewers): ptu-rule-096+100+102+097 — code-review-183 CHANGES_REQUIRED (CRIT-1 + HIGH-1-3 + MED-1-3), rules-review-160 APPROVED (M1+M2)
+- **slave-5** (reviewers): ptu-rule-098+084+085 — code-review-184 CHANGES_REQUIRED (H1 + M1-2), rules-review-161 CHANGES_REQUIRED (HIGH-1 + M1-3)
+- **slave-6** (reviewers): refactoring-001+ptu-rule-101 — code-review-185 CHANGES_REQUIRED (CRIT-1 + HIGH-1-2 + MED-1-2), rules-review-162 APPROVED (M1+M2)
+
+**Tickets filed:** 8 — decree-need-023 (burst Chebyshev ruling), decree-need-024 (diagonal cone semantics), ptu-rule-108 (static rough terrain accuracy), ptu-rule-109 (legendary list incomplete), ptu-rule-110 (encounter end stage reset), ptu-rule-111 (tempConditions Vulnerable evasion), ptu-rule-112 (Naturewalk bypass), refactoring-002 (deprecate legacy terrain types)
+**Tickets implemented:** 6 (ptu-rule-099, 103, 104, 105, 106, feature-003-fix3) — all need review
+**Reviews completed:** 6 artifacts (code-review-183/184/185, rules-review-160/161/162)
+
+**Follow-up needed:**
+- 12 tickets now have CHANGES_REQUIRED status (ptu-rule-084/085/096/097/098/100/101/102, refactoring-001) — fix cycles needed
+- 6 newly implemented tickets (ptu-rule-099/103/104/105/106, feature-003-fix3) need code + rules review
+- decree-need-023 (burst shapes) and decree-need-024 (diagonal cones) need human ruling before fix cycles
+- HIGH-1 from rules-review-161 (double-CS on combat re-entry) is shared across ptu-rule-098 and ptu-rule-110 — fix one to fix both
 
 ## Session Summary (2026-02-26, session 42 — plan-20260226-154130)
 

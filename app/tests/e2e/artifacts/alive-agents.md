@@ -145,3 +145,9 @@
 | plan-20260226-154130/slave-4 | developer | refactoring-001+ptu-rule-101 | success | 2026-02-26T17:28:30Z | 75fb072, 2279851, 0f00d30, b56dba8, 9e3d08a, 1e8837d, 96fad60, 0cb762d, 1aa6cc4, 0ca001a |
 | plan-20260226-154130/slave-5 | developer | ptu-rule-084+085 | success | 2026-02-26T16:11:30Z | 46757fa, 112e5ba, 96a36ae |
 | plan-20260226-154130/slave-6 | reviewers | feature-003-track-a-p2-rereview | CHANGES_REQUIRED | 2026-02-26T15:57:00Z | c3283e3, 067754c |
+| plan-20260226-190737/slave-1 | developer | feature-003-fix3+ptu-rule-105+106 | success | 2026-02-26T19:15:00Z | 904f848, 3e0dfd9, 81c2b02, 46be3bf, 1835cf6, b2bce27, 5534e2b |
+| plan-20260226-190737/slave-2 | developer | ptu-rule-099+104 | success | 2026-02-26T19:24:00Z | 8b7728d, 19b063e, f5a22bf, 6660710, 9245d99, c1ed289, 590dffb, ac2c68c, 77fa3bb, 4e8d498, a81da94, 55c6fc8, 6e8c203, 9a8ff96, a9c9193, cd9e090 |
+| plan-20260226-190737/slave-3 | developer | ptu-rule-103 | success | 2026-02-26T19:21:00Z | 8998549, e8ac904, 26964bd, e49685e, 6120220, f8d6f66, 9a36a0c, ff9dd1b |
+| plan-20260226-190737/slave-4 | reviewers | ptu-rule-096+100+102+097 | CHANGES_REQUIRED | 2026-02-26T19:25:00Z | be06ef5, ccf5c73 |
+| plan-20260226-190737/slave-5 | reviewers | ptu-rule-098+084+085 | CHANGES_REQUIRED | 2026-02-26T19:25:00Z | 7b05f47, ec3658e |
+| plan-20260226-190737/slave-6 | reviewers | refactoring-001+ptu-rule-101 | CHANGES_REQUIRED | 2026-02-26T19:16:00Z | 8fe772e, 2c095dd |
