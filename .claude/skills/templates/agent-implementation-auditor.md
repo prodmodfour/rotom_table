@@ -22,6 +22,15 @@ You verify that the app's implemented PTU rules are correct. The Coverage Analyz
 | **MEDIUM** | Situational mechanic wrong, specific scenarios |
 | **LOW** | Edge case wrong, rare conditions |
 
+## Design Decrees
+
+Before classifying any item as `Ambiguous`, check `decrees/` for a matching active decree:
+- **Decree exists + code follows it** → classify as `Correct` with note: `per decree-NNN`
+- **Decree exists + code violates it** → classify as `Incorrect` with note: `violates decree-NNN`
+- **No decree exists** → classify as `Ambiguous`, recommend a `decree-need` ticket
+
+{{RELEVANT_DECREES}}
+
 ## Common Pitfalls
 
 - **Don't confuse "different approach" with "incorrect"** — the app may implement a pen-and-paper mechanic differently (e.g., server-side computation vs dice rolling) as long as the result matches

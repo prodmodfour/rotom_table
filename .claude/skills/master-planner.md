@@ -37,18 +37,29 @@ If either doesn't exist, the ecosystem is uninitialized.
 ### 1d. Scan Artifact Directories
 
 Check what exists:
-- `app/tests/e2e/artifacts/tickets/bug/`, `ptu-rule/`, `feature/`, `ux/`
+- `app/tests/e2e/artifacts/tickets/bug/`, `ptu-rule/`, `feature/`, `ux/`, `decree/`
 - `app/tests/e2e/artifacts/refactoring/`
 - `app/tests/e2e/artifacts/reviews/`
 - `app/tests/e2e/artifacts/designs/`
 - `app/tests/e2e/artifacts/matrix/`
 - `app/tests/e2e/artifacts/lessons/`
+- `decrees/`
 
 For each ecosystem, determine:
 1. Open tickets (scan for `status: open`)
 2. Matrix completeness per domain
 3. Unresolved reviews (CHANGES_REQUIRED without follow-up)
 4. Design spec status
+
+### 1f. Scan Decree-Need Tickets and Active Decrees
+
+Scan `app/tests/e2e/artifacts/tickets/decree/` for `status: open` decree-need tickets. Count them.
+
+Scan `decrees/` for `status: active` decrees. Index them by domain for Step 5 template data gathering.
+
+Report open decree-need tickets: "N decree-need tickets await human ruling. Run `/address_design_decrees` to unblock."
+
+**Never assign decree-need tickets to slaves.** They require human decision-making.
 
 ### 1e. Read Recently Completed Work
 
@@ -58,9 +69,33 @@ Read `app/tests/e2e/artifacts/alive-agents.md` for the last 10 entries.
 
 Apply both priority trees and collect ALL actionable items — not just the highest priority one.
 
-### Dev Ecosystem Priorities (D1-D9)
+### Priority Model: P-Level First, Pipeline State Second
 
-| Priority | Condition | Agent Type |
+**P-level (P0-P4) is the primary sort key for developer time.** Pipeline state (D-categories below) determines *what kind of work* is needed, but does NOT override P-level ordering. A P1 design-complete feature always gets a developer slave before a P3 fix cycle.
+
+**Reviews always run in parallel.** Reviewer slaves don't modify code — they can clear the review backlog alongside any dev work. Never hold developer slaves idle waiting for reviews when higher P-level work is available.
+
+**One exception: CRITICAL/HIGH severity bugs on master.** If a CHANGES_REQUIRED review found a CRITICAL correctness bug (data loss, wrong game values, security issue), that escalates above all other developer work regardless of P-level. Cosmetic or low-severity CHANGES_REQUIRED issues (CSS regressions, type safety nits) queue normally by P-level.
+
+### Developer Assignment Order
+
+1. **Escalated CHANGES_REQUIRED** — only if review found CRITICAL severity correctness bugs on master
+2. **Highest P-level actionable ticket** — P0 > P1 > P2 > P3 > P4, regardless of pipeline state
+3. **Within same P-level**, prefer: fix cycles (CHANGES_REQUIRED) > open tickets > designs > refactoring
+4. **Within same P-level and state**, prefer: extensibility impact > scope size
+
+### Reviewer Assignment (Always Parallel)
+
+Reviewers run independently of developer priority. Always clear the review backlog:
+- Committed fixes without reviews get reviewer slaves every plan
+- Re-reviews after CHANGES_REQUIRED fixes get reviewer slaves every plan
+- Reviews never block or delay developer assignments
+
+### Dev Ecosystem Categories (D1-D9)
+
+These categorize *what kind of work* exists. They do NOT determine priority order — P-level does.
+
+| Category | Condition | Agent Type |
 |----------|-----------|-----------|
 | D1 | CRITICAL bugs — `tickets/bug/` with severity CRITICAL | Developer |
 | D2 | Review verdict CHANGES_REQUIRED — latest review for a target | Developer |
@@ -151,6 +186,7 @@ Do NOT inject file contents — just provide paths. The agent reads files it nee
 - `{{WORKTREE_PATH}}` — Set to `{{RESOLVED_AT_SLAVE_TIME}}`
 - `{{BRANCH_NAME}}` — Set to `{{RESOLVED_AT_SLAVE_TIME}}`
 - `{{PREVIOUS_REVIEW}}` — Prior review artifact if re-review
+- `{{RELEVANT_DECREES}}` — Gather active decrees from `decrees/` matching the slave's domain. Include decree ID, title, and ruling summary for each. If no decrees match, use "(No active decrees for this domain)"
 
 Store all resolved values in `template_data` for each slave. `WORKTREE_PATH` and `BRANCH_NAME` are left as `{{RESOLVED_AT_SLAVE_TIME}}` — the slave resolves these at runtime after creating its worktree.
 
@@ -170,6 +206,7 @@ For each slave's template data:
 | `{{DESIGN_SPEC}}` | "(No design spec — implement directly from ticket)" |
 | `{{GIT_LOG}}` | "(No recent git history available)" |
 | `{{PREVIOUS_REVIEW}}` | "(First review — no prior review artifact)" |
+| `{{RELEVANT_DECREES}}` | "(No active decrees for this domain)" |
 
 ## Step 6: Write Plan File
 
@@ -202,6 +239,7 @@ Write `.worktrees/slave-plan.json` with this schema:
         "REVIEW_FEEDBACK": "...",
         "DESIGN_SPEC": "...",
         "PREVIOUS_REVIEW": "...",
+        "RELEVANT_DECREES": "...",
         "WORKTREE_PATH": "{{RESOLVED_AT_SLAVE_TIME}}",
         "BRANCH_NAME": "{{RESOLVED_AT_SLAVE_TIME}}"
       },
