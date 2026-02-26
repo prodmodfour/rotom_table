@@ -1,9 +1,13 @@
 /**
  * Update status conditions on a combatant
  */
-import { loadEncounter, findCombatant, saveEncounterCombatants, buildEncounterResponse } from '~/server/services/encounter.service'
+import {
+  loadEncounter, findCombatant, saveEncounterCombatants,
+  buildEncounterResponse, reorderInitiativeAfterSpeedChange, saveInitiativeReorder
+} from '~/server/services/encounter.service'
 import { updateStatusConditions, validateStatusConditions } from '~/server/services/combatant.service'
 import { syncEntityToDatabase } from '~/server/services/entity-update.service'
+import { getStatusCsEffect } from '~/constants/statusConditions'
 import type { StatusCondition } from '~/types'
 
 export default defineEventHandler(async (event) => {
@@ -52,9 +56,46 @@ export default defineEventHandler(async (event) => {
       stageModifiers: combatant.entity.stageModifiers
     })
 
-    await saveEncounterCombatants(id, combatants)
+    // Decree-006: Check if any added/removed status affects Speed CS
+    // If so, trigger initiative reorder on the active encounter
+    const allChangedStatuses = [...statusResult.added, ...statusResult.removed]
+    const speedCsAffected = allChangedStatuses.some(s => {
+      const effect = getStatusCsEffect(s)
+      return effect?.stat === 'speed'
+    })
 
-    const response = buildEncounterResponse(record, combatants)
+    let initiativeReorder = null
+
+    if (speedCsAffected && record.isActive) {
+      const turnOrder = JSON.parse(record.turnOrder) as string[]
+      const trainerTurnOrder = JSON.parse(record.trainerTurnOrder || '[]') as string[]
+      const pokemonTurnOrder = JSON.parse(record.pokemonTurnOrder || '[]') as string[]
+
+      const reorder = reorderInitiativeAfterSpeedChange(
+        combatants,
+        turnOrder,
+        record.currentTurnIndex,
+        record.battleType,
+        trainerTurnOrder,
+        pokemonTurnOrder
+      )
+
+      if (reorder.changed) {
+        await saveInitiativeReorder(id, combatants, reorder)
+        initiativeReorder = reorder
+      } else {
+        await saveEncounterCombatants(id, combatants)
+      }
+    } else {
+      await saveEncounterCombatants(id, combatants)
+    }
+
+    const response = buildEncounterResponse(record, combatants, initiativeReorder ? {
+      turnOrder: initiativeReorder.turnOrder,
+      trainerTurnOrder: initiativeReorder.trainerTurnOrder,
+      pokemonTurnOrder: initiativeReorder.pokemonTurnOrder,
+      currentTurnIndex: initiativeReorder.currentTurnIndex
+    } : undefined)
 
     return {
       success: true,
@@ -65,7 +106,12 @@ export default defineEventHandler(async (event) => {
         removed: statusResult.removed,
         current: statusResult.current,
         stageChanges: statusResult.stageChanges
-      }
+      },
+      initiativeReorder: initiativeReorder ? {
+        changed: true,
+        turnOrder: initiativeReorder.turnOrder,
+        currentTurnIndex: initiativeReorder.currentTurnIndex
+      } : null
     }
   } catch (error: unknown) {
     if (error && typeof error === 'object' && 'statusCode' in error) throw error
