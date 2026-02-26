@@ -156,14 +156,10 @@ export const useTerrainStore = defineStore('terrain', {
       if (terrain === 'earth') return canBurrow ? 1 : Infinity
 
       // Base cost from terrain type
-      let cost = TERRAIN_COSTS[terrain]
+      const baseCost = TERRAIN_COSTS[terrain]
 
       // Slow flag doubles movement cost (decree-010)
-      if (flags.slow) {
-        cost = cost * 2
-      }
-
-      return cost
+      return flags.slow ? baseCost * 2 : baseCost
     },
 
     // Check if cell is passable
