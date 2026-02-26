@@ -1,0 +1,89 @@
+// Create Form Shared Styles
+// Extracted from ClassFeatureSection, EdgeSelectionSection,
+// SkillBackgroundSection, and StatAllocationSection to eliminate
+// duplication (refactoring-061 via code-review-121 M2).
+//
+// These are global utility classes used across character creation components.
+// Import via nuxt.config.ts css array.
+
+// ===========================================
+// Warning Item
+// ===========================================
+// Used by all 4 create form section components for validation warnings.
+.warning-item {
+  font-size: $font-size-sm;
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $border-radius-sm;
+
+  &--warning {
+    background: rgba($color-warning, 0.1);
+    border: 1px solid rgba($color-warning, 0.3);
+    color: $color-warning;
+  }
+
+  &--info {
+    background: rgba($color-info, 0.1);
+    border: 1px solid rgba($color-info, 0.3);
+    color: $color-info;
+  }
+}
+
+// ===========================================
+// Counter Badge
+// ===========================================
+// Used by ClassFeatureSection and EdgeSelectionSection for "X / Y" counters.
+.counter {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  padding: 2px $spacing-sm;
+  background: $color-bg-tertiary;
+  border-radius: $border-radius-sm;
+  border: 1px solid $border-color-default;
+
+  &--full {
+    color: $color-success;
+    border-color: rgba($color-success, 0.3);
+  }
+}
+
+// ===========================================
+// Selected Tags Container
+// ===========================================
+// Used by ClassFeatureSection and EdgeSelectionSection for tag lists.
+.selected-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-xs;
+  margin-top: $spacing-sm;
+}
+
+// ===========================================
+// Tag (base + remove button)
+// ===========================================
+// Used by ClassFeatureSection and EdgeSelectionSection.
+// Variant modifiers (--class, --feature, --edge, --skill-edge)
+// remain in each component's scoped styles.
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+  font-size: $font-size-sm;
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $border-radius-sm;
+
+  &__remove {
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    padding: 0;
+    font-size: $font-size-md;
+    line-height: 1;
+    opacity: 0.6;
+    transition: opacity $transition-fast;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
