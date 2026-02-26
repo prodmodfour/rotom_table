@@ -403,9 +403,12 @@ export function useRangeParser() {
               cells.push({ x: baseX, y: baseY + w })
             }
           } else {
+            // Diagonal cone: three push groups for diamond pattern (decree-024)
+            // Horizontal axis, vertical axis, AND diagonal corner cell
             for (let w = -halfWidth; w <= halfWidth; w++) {
               cells.push({ x: baseX + w, y: baseY })
               cells.push({ x: baseX, y: baseY + w })
+              cells.push({ x: baseX + w, y: baseY + w })
             }
           }
         }
