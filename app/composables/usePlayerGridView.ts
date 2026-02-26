@@ -74,7 +74,8 @@ export function usePlayerGridView(options: {
 
   /**
    * Tokens visible to the player based on fog of war state.
-   * Only 'revealed' cells show tokens. Hidden and explored cells hide tokens.
+   * Own tokens (trainer + Pokemon) are always visible regardless of fog.
+   * Other tokens: only 'revealed' cells show tokens. Hidden and explored cells hide tokens.
    * When fog is disabled, all tokens are visible.
    */
   const visibleTokens = computed((): TokenInfo[] => {
@@ -85,6 +86,7 @@ export function usePlayerGridView(options: {
       .filter(c => c.position != null)
       .filter(c => {
         if (!fogStore.enabled) return true
+        if (isOwnCombatant(c)) return true
         const pos = c.position!
         const state: FogState = fogStore.getCellState(pos.x, pos.y)
         return state === 'revealed'
