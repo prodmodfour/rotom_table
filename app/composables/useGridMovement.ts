@@ -482,11 +482,25 @@ export function useGridMovement(options: UseGridMovementOptions) {
     gridWidth: number,
     gridHeight: number
   ): { valid: boolean; distance: number; blocked: boolean } => {
-    const inBounds = toPos.x >= 0 && toPos.x < gridWidth && toPos.y >= 0 && toPos.y < gridHeight
+    // Determine the moving token's size for multi-cell footprint checks
+    const movingToken = options.tokens.value.find(t => t.combatantId === combatantId)
+    const tokenSize = movingToken?.size || 1
+
+    const inBounds = toPos.x >= 0 && toPos.x + tokenSize - 1 < gridWidth &&
+                     toPos.y >= 0 && toPos.y + tokenSize - 1 < gridHeight
 
     // No-stacking rule: cannot end movement on any occupied square
+    // Check ALL cells the moving token would occupy at the destination (HIGH-1)
     const occupiedCells = getOccupiedCells(combatantId)
-    const isOccupied = occupiedCells.some(c => c.x === toPos.x && c.y === toPos.y)
+    const occupiedSet = new Set(occupiedCells.map(c => `${c.x},${c.y}`))
+    let isOccupied = false
+    for (let dx = 0; dx < tokenSize && !isOccupied; dx++) {
+      for (let dy = 0; dy < tokenSize && !isOccupied; dy++) {
+        if (occupiedSet.has(`${toPos.x + dx},${toPos.y + dy}`)) {
+          isOccupied = true
+        }
+      }
+    }
 
     if (isOccupied || !inBounds) {
       const geometricDistance = calculateMoveDistance(fromPos, toPos)
