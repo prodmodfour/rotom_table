@@ -369,9 +369,10 @@ export function useGridMovement(options: UseGridMovementOptions) {
    * Elevation cost: 1 MP per level of elevation change (additive to XY movement cost).
    * Flying Pokemon (Sky speed > 0) ignore elevation cost within their Sky speed range.
    *
-   * - Slow/difficult terrain costs 2 movement per cell
+   * - Slow flag on any terrain doubles movement cost per cell
+   * - Rough flag on terrain only affects accuracy (no movement cost change)
    * - Blocking terrain prevents movement through it
-   * - Water terrain blocks non-swimming combatants
+   * - Water terrain blocks non-swimming combatants (cost 1 with swim per decree-008)
    * - Earth terrain blocks non-burrowing combatants
    * - Movement conditions (Stuck, Slowed) reduce effective speed
    */
