@@ -8,7 +8,22 @@
  * PTU Reference: 09-gear-and-items.md (p.286-295)
  */
 
-import type { EquipmentSlots, EquippedItem } from '~/types/character'
+import type { EquipmentSlots, EquipmentSlot, EquippedItem } from '~/types/character'
+
+/**
+ * Explicit slot priority for Focus item selection.
+ * When a character has Focus items in multiple slots,
+ * the one in the highest-priority slot wins.
+ * PTU p.295: "a Trainer may only benefit from one Focus at a time."
+ */
+const FOCUS_SLOT_PRIORITY: readonly EquipmentSlot[] = [
+  'accessory',
+  'head',
+  'mainHand',
+  'offHand',
+  'feet',
+  'body',
+] as const
 
 export interface EquipmentCombatBonuses {
   /** Total flat Damage Reduction from all equipped items */
@@ -28,7 +43,11 @@ export interface EquipmentCombatBonuses {
  * Pure function. No side effects.
  */
 export function computeEquipmentBonuses(equipment: EquipmentSlots): EquipmentCombatBonuses {
-  const items = Object.values(equipment).filter(Boolean) as EquippedItem[]
+  // Iterate slots in deterministic priority order for Focus selection.
+  // Non-Focus bonuses (DR, evasion, speed CS, conditional DR) accumulate from all slots.
+  const items = FOCUS_SLOT_PRIORITY
+    .map(slot => equipment[slot])
+    .filter(Boolean) as EquippedItem[]
 
   let damageReduction = 0
   let evasionBonus = 0
@@ -36,7 +55,8 @@ export function computeEquipmentBonuses(equipment: EquipmentSlots): EquipmentCom
   let speedDefaultCS = 0
   const conditionalDR: { amount: number; condition: string }[] = []
   // PTU p.295: "a Trainer may only benefit from one Focus at a time,
-  // regardless of the Equipment Slot." Only apply the first Focus found.
+  // regardless of the Equipment Slot." The first Focus found in
+  // FOCUS_SLOT_PRIORITY order wins (accessory > head > mainHand > ...).
   let focusApplied = false
 
   for (const item of items) {
