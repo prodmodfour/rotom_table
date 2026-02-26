@@ -89,7 +89,12 @@
             }"
             :disabled="isMoveExhausted(move).exhausted || !canUseStandardAction || !canBeCommanded"
             :title="isMoveExhausted(move).reason || move.effect"
+            :aria-label="`Use move ${move.name}. Hold to see details.`"
             @click="handleMoveSelect(move)"
+            @touchstart.passive="startLongPress(move)"
+            @touchend="cancelLongPress"
+            @touchcancel="cancelLongPress"
+            @contextmenu.prevent="showMoveDetails(move)"
           >
             <div class="move-btn__header">
               <span class="move-btn__type" :class="`type--${move.type.toLowerCase()}`">
@@ -261,6 +266,38 @@
       </div>
     </div>
 
+    <!-- Move Detail Overlay (long-press/right-click) -->
+    <Transition name="fade">
+      <div v-if="detailMove" class="combat-actions__move-detail-overlay" @click="detailMove = null">
+        <div class="combat-actions__move-detail" @click.stop>
+          <div class="combat-actions__move-detail-header">
+            <span class="move-btn__type" :class="`type--${detailMove.type.toLowerCase()}`">
+              {{ detailMove.type }}
+            </span>
+            <span class="combat-actions__move-detail-name">{{ detailMove.name }}</span>
+            <button
+              class="combat-actions__move-detail-close"
+              aria-label="Close move details"
+              @click="detailMove = null"
+            >
+              <PhX :size="18" />
+            </button>
+          </div>
+          <div class="combat-actions__move-detail-stats">
+            <span v-if="detailMove.damageBase">DB {{ detailMove.damageBase }}</span>
+            <span v-if="detailMove.ac !== null">AC {{ detailMove.ac }}</span>
+            <span>{{ detailMove.frequency }}</span>
+            <span>{{ detailMove.damageClass }}</span>
+          </div>
+          <div class="combat-actions__move-detail-row">
+            <span class="combat-actions__move-detail-label">Range</span>
+            <span>{{ detailMove.range }}</span>
+          </div>
+          <p class="combat-actions__move-detail-effect">{{ detailMove.effect }}</p>
+        </div>
+      </div>
+    </Transition>
+
     <!-- Toast Notification (success/error) -->
     <Transition name="toast">
       <div
@@ -334,6 +371,29 @@ const selectedTargetIds = ref<string[]>([])
 const targetSelectorTitle = ref('')
 const pendingMoveId = ref<string | null>(null)
 const pendingAction = ref<'move' | 'struggle' | null>(null)
+
+// Move detail overlay (long-press / right-click)
+const detailMove = ref<Move | null>(null)
+let longPressTimer: ReturnType<typeof setTimeout> | null = null
+const LONG_PRESS_MS = 500
+
+const startLongPress = (move: Move) => {
+  longPressTimer = setTimeout(() => {
+    detailMove.value = move
+    longPressTimer = null
+  }, LONG_PRESS_MS)
+}
+
+const cancelLongPress = () => {
+  if (longPressTimer) {
+    clearTimeout(longPressTimer)
+    longPressTimer = null
+  }
+}
+
+const showMoveDetails = (move: Move) => {
+  detailMove.value = move
+}
 
 // Toast message for request confirmation and error feedback
 const toastMessage = ref<string | null>(null)
@@ -469,6 +529,7 @@ watch(isMyTurn, (isTurn) => {
 
 onUnmounted(() => {
   if (toastTimer) clearTimeout(toastTimer)
+  if (longPressTimer) clearTimeout(longPressTimer)
 })
 </script>
 
