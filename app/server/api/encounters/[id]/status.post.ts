@@ -3,7 +3,7 @@
  */
 import { loadEncounter, findCombatant, saveEncounterCombatants, buildEncounterResponse } from '~/server/services/encounter.service'
 import { updateStatusConditions, validateStatusConditions } from '~/server/services/combatant.service'
-import { syncStatusToDatabase } from '~/server/services/entity-update.service'
+import { syncEntityToDatabase } from '~/server/services/entity-update.service'
 import type { StatusCondition } from '~/types'
 
 export default defineEventHandler(async (event) => {
@@ -42,11 +42,15 @@ export default defineEventHandler(async (event) => {
     const { record, combatants } = await loadEncounter(id)
     const combatant = findCombatant(combatants, body.combatantId)
 
-    // Update status conditions using service
+    // Update status conditions using service (auto-applies/reverses CS per decree-005)
     const statusResult = updateStatusConditions(combatant, addStatuses, removeStatuses)
 
-    // Sync to database if entity has a record
-    await syncStatusToDatabase(combatant, statusResult.current)
+    // Sync both status conditions AND stage modifiers to database
+    // (stages may have changed due to auto-CS from status conditions)
+    await syncEntityToDatabase(combatant, {
+      statusConditions: statusResult.current,
+      stageModifiers: combatant.entity.stageModifiers
+    })
 
     await saveEncounterCombatants(id, combatants)
 
@@ -59,7 +63,8 @@ export default defineEventHandler(async (event) => {
         combatantId: body.combatantId,
         added: statusResult.added,
         removed: statusResult.removed,
-        current: statusResult.current
+        current: statusResult.current,
+        stageChanges: statusResult.stageChanges
       }
     }
   } catch (error: unknown) {
