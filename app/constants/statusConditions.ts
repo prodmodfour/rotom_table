@@ -47,7 +47,8 @@ export const STATUS_CS_EFFECTS: ReadonlyArray<{
 }> = [
   { condition: 'Burned', stat: 'defense', value: -2 },
   { condition: 'Paralyzed', stat: 'speed', value: -4 },
-  { condition: 'Poisoned', stat: 'specialDefense', value: -2 }
+  { condition: 'Poisoned', stat: 'specialDefense', value: -2 },
+  { condition: 'Badly Poisoned', stat: 'specialDefense', value: -2 }
 ] as const
 
 /**
