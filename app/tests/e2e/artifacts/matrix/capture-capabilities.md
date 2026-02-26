@@ -1,290 +1,234 @@
 ---
 domain: capture
-mapped_at: 2026-02-19T00:00:00Z
+mapped_at: 2026-02-26T12:00:00Z
 mapped_by: app-capability-mapper
-total_capabilities: 25
-files_read: 12
+total_capabilities: 21
+files_read: 6
 ---
 
 # App Capabilities: Capture
 
-## Summary
-- Total capabilities: 25
-- Types: api-endpoint(2), service-function(0), composable-function(4), store-action(0), store-getter(0), component(2), constant(3), utility(3), websocket-event(0), prisma-model(2), prisma-field(8)
-- Orphan capabilities: 0
+> Re-mapped: 2026-02-26. No major changes since last mapping; refresh for consistency. Covers full PTU capture rate formula, accuracy check, capture attempt, auto-link on success.
 
 ---
 
-## capture-C001: Pokemon Prisma Model
+## Utility Function Capabilities
 
-- **Type:** prisma-model
-- **Location:** `prisma/schema.prisma:Pokemon`
-- **Game Concept:** Pokemon entity that can be captured
-- **Description:** Core data model for Pokemon. Stores ownership (`ownerId`), origin tracking (`origin`), HP, status conditions, injuries, shiny flag, and species — all fields used in capture rate calculation and post-capture linking.
-- **Inputs:** N/A (schema definition)
-- **Outputs:** Defines fields: `id`, `ownerId`, `origin`, `currentHp`, `maxHp`, `level`, `statusConditions`, `injuries`, `shiny`, `species`
-- **Orphan:** false
+### capture-C001: calculateCaptureRate
+- **cap_id**: capture-C001
+- **name**: PTU Capture Rate Calculator
+- **type**: utility
+- **location**: `app/utils/captureRate.ts` — `calculateCaptureRate()`
+- **game_concept**: PTU capture rate formula (base 100 with modifiers)
+- **description**: Pure function computing capture rate: base 100, subtract level*2, HP modifier (+30 at 1HP, +15 at <=25%, 0 at <=50%, -15 at <=75%, -30 above), evolution modifier (+10 for 2 remaining, 0 for 1, -10 for final), shiny modifier (-10), legendary modifier (-30), persistent status (+10 each, Poisoned/Badly Poisoned count once), volatile status (+5 each), Stuck (+10), Slowed (+5), injury modifier (+5 per injury).
+- **inputs**: CaptureRateInput (level, currentHp, maxHp, evolutionStage, maxEvolutionStage, statusConditions, injuries, isShiny, isLegendary)
+- **outputs**: CaptureRateResult (captureRate, breakdown, canBeCaptured, hpPercentage)
+- **accessible_from**: gm, player (via composable)
 
-## capture-C002: SpeciesData Prisma Model
+### capture-C002: attemptCapture
+- **cap_id**: capture-C002
+- **name**: Capture Attempt Simulator
+- **type**: utility
+- **location**: `app/utils/captureRate.ts` — `attemptCapture()`
+- **game_concept**: Rolling 1d100 vs capture rate with trainer level modifier
+- **description**: Rolls 1d100, applies trainer level subtraction and additional modifiers. Critical hit (nat 20 on accuracy) adds +10 to effective capture rate. Natural 100 always captures. Success if modifiedRoll <= effectiveCaptureRate.
+- **inputs**: captureRate, trainerLevel, modifiers, criticalHit
+- **outputs**: { success, roll, modifiedRoll, effectiveCaptureRate, naturalHundred }
+- **accessible_from**: gm (via attempt endpoint)
 
-- **Type:** prisma-model
-- **Location:** `prisma/schema.prisma:SpeciesData`
-- **Game Concept:** Species reference data for evolution stage lookup
-- **Description:** Reference data model storing `evolutionStage` and `maxEvolutionStage` per species. Used by capture endpoints to determine evolution-based capture rate modifiers.
-- **Inputs:** N/A (schema definition)
-- **Outputs:** Defines fields: `name`, `evolutionStage`, `maxEvolutionStage`
-- **Orphan:** false
+### capture-C003: getCaptureDescription
+- **cap_id**: capture-C003
+- **name**: Capture Difficulty Label
+- **type**: utility
+- **location**: `app/utils/captureRate.ts` — `getCaptureDescription()`
+- **game_concept**: Human-readable difficulty rating
+- **description**: Maps capture rate to label: Very Easy (>=80), Easy (>=60), Moderate (>=40), Difficult (>=20), Very Difficult (>=1), Nearly Impossible (<1).
+- **inputs**: captureRate number
+- **outputs**: Difficulty string
+- **accessible_from**: gm, player
 
-## capture-C003: Pokemon.ownerId Field
+---
 
-- **Type:** prisma-field
-- **Location:** `prisma/schema.prisma:Pokemon.ownerId`
-- **Game Concept:** Pokemon ownership — links captured Pokemon to trainer
-- **Description:** Nullable foreign key to `HumanCharacter`. Set to the capturing trainer's ID on successful capture. `null` indicates a wild (unowned) Pokemon.
-- **Inputs:** HumanCharacter ID string
-- **Outputs:** Establishes ownership relation
-- **Orphan:** false
+## API Endpoint Capabilities
 
-## capture-C004: Pokemon.origin Field
+### capture-C010: Calculate Capture Rate
+- **cap_id**: capture-C010
+- **name**: Capture Rate Calculation Endpoint
+- **type**: api-endpoint
+- **location**: `app/server/api/capture/rate.post.ts`
+- **game_concept**: Server-side capture rate calculation
+- **description**: Accepts pokemonId (looks up DB for level, HP, status, injuries, shiny, evolution data from SpeciesData) OR raw data (level, currentHp, maxHp, species, statusConditions, injuries, isShiny). Returns capture rate with full breakdown and difficulty label.
+- **inputs**: `{ pokemonId }` or `{ level, currentHp, maxHp, species?, statusConditions?, injuries?, isShiny? }`
+- **outputs**: `{ species, level, currentHp, maxHp, captureRate, difficulty, canBeCaptured, hpPercentage, breakdown }`
+- **accessible_from**: gm
 
-- **Type:** prisma-field
-- **Location:** `prisma/schema.prisma:Pokemon.origin`
-- **Game Concept:** Pokemon provenance tracking
-- **Description:** String field tracking how a Pokemon was created. Set to `'captured'` on successful capture. Valid values: `'manual' | 'wild' | 'template' | 'import' | 'captured'`.
-- **Inputs:** Origin string value
-- **Outputs:** Origin classification for filtering/display
-- **Orphan:** false
+### capture-C011: Attempt Capture
+- **cap_id**: capture-C011
+- **name**: Capture Attempt Endpoint
+- **type**: api-endpoint
+- **location**: `app/server/api/capture/attempt.post.ts`
+- **game_concept**: Executing a capture attempt with auto-link on success
+- **description**: Looks up Pokemon and Trainer from DB. Calculates capture rate (using SpeciesData for evolution). Checks canBeCaptured (0 HP = fail). Detects critical hit from accuracy roll (nat 20). Rolls capture via attemptCapture(). On success: auto-links Pokemon to trainer (ownerId) and sets origin to 'captured'. Returns full result with breakdown.
+- **inputs**: `{ pokemonId, trainerId, accuracyRoll?, modifiers? }`
+- **outputs**: CaptureAttemptResult (captured, roll, modifiedRoll, captureRate, breakdown, pokemon, trainer)
+- **accessible_from**: gm
 
-## capture-C005: Pokemon.currentHp Field
+---
 
-- **Type:** prisma-field
-- **Location:** `prisma/schema.prisma:Pokemon.currentHp`
-- **Game Concept:** Current HP — primary capture rate modifier
-- **Description:** Integer tracking current HP. Used in capture rate calculation for HP percentage bracket determination. Pokemon at 0 HP cannot be captured.
-- **Inputs:** Integer value
-- **Outputs:** HP value for capture rate formula
-- **Orphan:** false
+## Composable Capabilities
 
-## capture-C006: Pokemon.statusConditions Field
+### capture-C020: useCapture — getCaptureRate
+- **cap_id**: capture-C020
+- **name**: Get Capture Rate (API Call)
+- **type**: composable-function
+- **location**: `app/composables/useCapture.ts` — `getCaptureRate()`
+- **game_concept**: Client-side capture rate fetching
+- **description**: Calls POST /api/capture/rate with pokemonId and returns CaptureRateData. Manages loading/error state.
+- **inputs**: pokemonId
+- **outputs**: CaptureRateData or null
+- **accessible_from**: gm
 
-- **Type:** prisma-field
-- **Location:** `prisma/schema.prisma:Pokemon.statusConditions`
-- **Game Concept:** Status conditions — capture rate modifiers
-- **Description:** JSON-serialized array of `StatusCondition` strings. Persistent conditions add +10 each, volatile conditions add +5 each to capture rate. Stuck/Trapped and Slowed have additional stacking bonuses.
-- **Inputs:** JSON string of StatusCondition[]
-- **Outputs:** Status condition list for capture rate formula
-- **Orphan:** false
+### capture-C021: useCapture — calculateCaptureRateLocal
+- **cap_id**: capture-C021
+- **name**: Local Capture Rate Calculation
+- **type**: composable-function
+- **location**: `app/composables/useCapture.ts` — `calculateCaptureRateLocal()`
+- **game_concept**: Client-side capture rate without API call
+- **description**: Calculates capture rate locally using the pure utility function. No DB lookup — uses provided data. Returns CaptureRateData with difficulty label.
+- **inputs**: { level, currentHp, maxHp, evolutionStage?, maxEvolutionStage?, statusConditions?, injuries?, isShiny?, isLegendary? }
+- **outputs**: CaptureRateData
+- **accessible_from**: gm, player
 
-## capture-C007: Pokemon.injuries Field
+### capture-C022: useCapture — attemptCapture
+- **cap_id**: capture-C022
+- **name**: Attempt Capture (API Call)
+- **type**: composable-function
+- **location**: `app/composables/useCapture.ts` — `attemptCapture()`
+- **game_concept**: Client-side capture attempt execution
+- **description**: Calls POST /api/capture/attempt. On success, optionally consumes the trainer's Standard Action in an encounter context (calls /api/encounters/:id/action). Manages loading/error/warning state. Warning set if action consumption fails but capture succeeded.
+- **inputs**: { pokemonId, trainerId, accuracyRoll?, modifiers?, encounterContext?: { encounterId, trainerCombatantId } }
+- **outputs**: CaptureAttemptResult or null
+- **accessible_from**: gm
 
-- **Type:** prisma-field
-- **Location:** `prisma/schema.prisma:Pokemon.injuries`
-- **Game Concept:** Injury count — capture rate modifier
-- **Description:** Integer tracking number of injuries. Each injury adds +5 to capture rate.
-- **Inputs:** Integer value
-- **Outputs:** Injury count for capture rate formula
-- **Orphan:** false
+### capture-C023: useCapture — rollAccuracyCheck
+- **cap_id**: capture-C023
+- **name**: Poke Ball Accuracy Roll
+- **type**: composable-function
+- **location**: `app/composables/useCapture.ts` — `rollAccuracyCheck()`
+- **game_concept**: PTU Poke Ball throw — AC 6, d20 accuracy check
+- **description**: Rolls 1d20 for the Poke Ball accuracy check. Returns roll value, isNat20 flag, and total.
+- **inputs**: None
+- **outputs**: { roll, isNat20, total }
+- **accessible_from**: gm
 
-## capture-C008: Pokemon.shiny Field
+---
 
-- **Type:** prisma-field
-- **Location:** `prisma/schema.prisma:Pokemon.shiny`
-- **Game Concept:** Shiny status — capture rate penalty
-- **Description:** Boolean flag. Shiny Pokemon receive a -10 capture rate modifier.
-- **Inputs:** Boolean value
-- **Outputs:** Shiny flag for capture rate formula
-- **Orphan:** false
+## Component Capabilities
 
-## capture-C009: HumanCharacter.level Field
+### capture-C030: CaptureRateDisplay
+- **cap_id**: capture-C030
+- **name**: Capture Rate Display Component
+- **type**: component
+- **location**: `app/components/encounter/CaptureRateDisplay.vue`
+- **game_concept**: In-encounter capture rate visualization
+- **description**: Displays capture rate for a wild Pokemon within the encounter context. Shows rate value, difficulty label, breakdown of modifiers, HP percentage.
+- **inputs**: Pokemon capture data
+- **outputs**: Display only
+- **accessible_from**: gm
 
-- **Type:** prisma-field
-- **Location:** `prisma/schema.prisma:HumanCharacter.level`
-- **Game Concept:** Trainer level — modifies capture roll
-- **Description:** Integer tracking trainer level. Subtracted from the d100 capture roll (higher trainer level = easier capture).
-- **Inputs:** Integer value
-- **Outputs:** Trainer level for capture attempt roll modification
-- **Orphan:** false
+---
 
-## capture-C010: PokemonOrigin Type
+## Prisma Model Capabilities
 
-- **Type:** prisma-field
-- **Location:** `types/character.ts:PokemonOrigin`
-- **Game Concept:** Origin type union including 'captured'
-- **Description:** TypeScript type `'manual' | 'wild' | 'template' | 'import' | 'captured'`. The `'captured'` value is set by the capture attempt endpoint on success.
-- **Inputs:** N/A (type definition)
-- **Outputs:** Type constraint for origin field
-- **Orphan:** false
+### capture-C040: Pokemon.origin Field
+- **cap_id**: capture-C040
+- **name**: Pokemon Origin Tracking
+- **type**: prisma-field
+- **location**: `app/prisma/schema.prisma` — `Pokemon.origin`
+- **game_concept**: How a Pokemon was obtained
+- **description**: String field tracking Pokemon origin: 'manual', 'wild', 'template', 'import', 'captured'. Set to 'captured' on successful capture attempt.
+- **inputs**: Set by various creation/capture flows
+- **outputs**: Origin label on Pokemon record
+- **accessible_from**: gm, player
 
-## capture-C011: calculateCaptureRate Utility
+### capture-C041: Pokemon.ownerId Field
+- **cap_id**: capture-C041
+- **name**: Pokemon Ownership Link
+- **type**: prisma-field
+- **location**: `app/prisma/schema.prisma` — `Pokemon.ownerId`
+- **game_concept**: Trainer-Pokemon ownership
+- **description**: Foreign key linking Pokemon to its owning HumanCharacter. Set on capture success to the capturing trainer's ID. Can be null for wild/unowned Pokemon.
+- **inputs**: Set via capture attempt or link endpoint
+- **outputs**: Owner reference
+- **accessible_from**: gm, player
 
-- **Type:** utility
-- **Location:** `utils/captureRate.ts:calculateCaptureRate`
-- **Game Concept:** PTU capture rate formula (complete calculation)
-- **Description:** Pure function implementing the full PTU 1.05 capture rate formula. Starts at base 100, subtracts level×2, applies HP bracket modifier (1HP=+30, ≤25%=+15, ≤50%=0, ≤75%=-15, >75%=-30), evolution stage modifier (+10/0/-10 based on evolutions remaining), shiny (-10), legendary (-30), persistent status (+10 each), volatile status (+5 each), stuck/trapped (+10 each), slowed (+5 each), injuries (+5 each). Returns rate, breakdown, canBeCaptured flag, and hpPercentage.
-- **Inputs:** `CaptureRateInput` — `{ level, currentHp, maxHp, evolutionStage, maxEvolutionStage, statusConditions, injuries, isShiny, isLegendary? }`
-- **Outputs:** `CaptureRateResult` — `{ captureRate, breakdown, canBeCaptured, hpPercentage }`
-- **Orphan:** false
-
-## capture-C012: attemptCapture Utility
-
-- **Type:** utility
-- **Location:** `utils/captureRate.ts:attemptCapture`
-- **Game Concept:** Capture roll resolution (d100 vs capture rate)
-- **Description:** Rolls 1d100, applies trainer level and modifier subtraction to the roll, compares modified roll against capture rate. Natural 100 always captures. Critical hit (nat 20 on accuracy) adds +10 to effective capture rate. Returns success, roll, modifiedRoll, effectiveCaptureRate, naturalHundred.
-- **Inputs:** `captureRate: number, trainerLevel: number, modifiers?: number, criticalHit?: boolean`
-- **Outputs:** `{ success, roll, modifiedRoll, effectiveCaptureRate, naturalHundred }`
-- **Orphan:** false
-
-## capture-C013: getCaptureDescription Utility
-
-- **Type:** utility
-- **Location:** `utils/captureRate.ts:getCaptureDescription`
-- **Game Concept:** Capture difficulty label
-- **Description:** Converts numeric capture rate to human-readable difficulty string. Thresholds: ≥80 "Very Easy", ≥60 "Easy", ≥40 "Moderate", ≥20 "Difficult", ≥1 "Very Difficult", <1 "Nearly Impossible".
-- **Inputs:** `captureRate: number`
-- **Outputs:** Difficulty string
-- **Orphan:** false
-
-## capture-C014: Persistent Conditions Constant
-
-- **Type:** constant
-- **Location:** `constants/statusConditions.ts:PERSISTENT_CONDITIONS`
-- **Game Concept:** Persistent status conditions (+10 capture modifier each)
-- **Description:** Array of persistent condition names: Burned, Frozen, Paralyzed, Poisoned, Badly Poisoned. Each adds +10 to capture rate.
-- **Inputs:** N/A (constant)
-- **Outputs:** `StatusCondition[]` — ['Burned', 'Frozen', 'Paralyzed', 'Poisoned', 'Badly Poisoned']
-- **Orphan:** false
-
-## capture-C015: Volatile Conditions Constant
-
-- **Type:** constant
-- **Location:** `constants/statusConditions.ts:VOLATILE_CONDITIONS`
-- **Game Concept:** Volatile status conditions (+5 capture modifier each)
-- **Description:** Array of volatile condition names: Asleep, Confused, Flinched, Infatuated, Cursed, Disabled, Enraged, Suppressed. Each adds +5 to capture rate.
-- **Inputs:** N/A (constant)
-- **Outputs:** `StatusCondition[]` — ['Asleep', 'Confused', 'Flinched', 'Infatuated', 'Cursed', 'Disabled', 'Enraged', 'Suppressed']
-- **Orphan:** false
-
-## capture-C016: Other Conditions Constant (Stuck/Slowed)
-
-- **Type:** constant
-- **Location:** `constants/statusConditions.ts:OTHER_CONDITIONS` + `utils/captureRate.ts:STUCK_CONDITIONS,SLOW_CONDITIONS`
-- **Game Concept:** Stuck/Trapped (+10) and Slowed (+5) capture modifiers
-- **Description:** `STUCK_CONDITIONS` ['Stuck', 'Trapped'] add +10 each (stacking with persistent/volatile). `SLOW_CONDITIONS` ['Slowed'] add +5 each. Defined as module-level constants in `captureRate.ts` using values from `OTHER_CONDITIONS`.
-- **Inputs:** N/A (constants)
-- **Outputs:** Condition arrays for capture rate formula
-- **Orphan:** false
-
-## capture-C017: Calculate Capture Rate API
-
-- **Type:** api-endpoint
-- **Location:** `server/api/capture/rate.post.ts:default`
-- **Game Concept:** Server-side capture rate calculation
-- **Description:** POST endpoint that calculates capture rate. Accepts either `pokemonId` (looks up Pokemon + SpeciesData from DB) or raw data (`level`, `currentHp`, `maxHp`, `species`, `statusConditions`, `injuries`, `isShiny`). Delegates to `calculateCaptureRate()` utility. Returns rate, difficulty description, canBeCaptured flag, hpPercentage, and full breakdown.
-- **Inputs:** `{ pokemonId?: string } | { level, currentHp, maxHp, species?, statusConditions?, injuries?, isShiny? }`
-- **Outputs:** `{ success, data: { species, level, currentHp, maxHp, captureRate, difficulty, canBeCaptured, hpPercentage, breakdown } }`
-- **Orphan:** false
-
-## capture-C018: Attempt Capture API
-
-- **Type:** api-endpoint
-- **Location:** `server/api/capture/attempt.post.ts:default`
-- **Game Concept:** Execute a capture attempt with roll resolution and DB update
-- **Description:** POST endpoint that executes a full capture attempt. Looks up Pokemon, Trainer, and SpeciesData from DB. Calculates capture rate via `calculateCaptureRate()`, then rolls via `attemptCapture()`. On success, updates Pokemon record: sets `ownerId` to trainer ID and `origin` to 'captured'. Returns full result including roll details, rate breakdown, and updated pokemon/trainer info.
-- **Inputs:** `{ pokemonId: string, trainerId: string, accuracyRoll?: number, modifiers?: number, pokeBallType?: string }`
-- **Outputs:** `{ success, data: { captured, roll, modifiedRoll, captureRate, effectiveCaptureRate, naturalHundred, criticalHit, trainerLevel, modifiers, difficulty, breakdown, pokemon: {...}, trainer: {...} } }`
-- **Orphan:** false
-
-## capture-C019: useCapture Composable — getCaptureRate
-
-- **Type:** composable-function
-- **Location:** `composables/useCapture.ts:getCaptureRate`
-- **Game Concept:** Client-side API call to get capture rate for a Pokemon
-- **Description:** Async function that calls `POST /api/capture/rate` with a `pokemonId`. Returns `CaptureRateData` on success or `null` on failure. Manages `loading` and `error` reactive state.
-- **Inputs:** `pokemonId: string`
-- **Outputs:** `CaptureRateData | null` (species, level, HP, captureRate, difficulty, canBeCaptured, hpPercentage, breakdown)
-- **Orphan:** false
-
-## capture-C020: useCapture Composable — calculateCaptureRateLocal
-
-- **Type:** composable-function
-- **Location:** `composables/useCapture.ts:calculateCaptureRateLocal`
-- **Game Concept:** Client-side capture rate calculation (no API call)
-- **Description:** Synchronous function that replicates the full capture rate formula client-side. Used by CombatantCard to show live capture rate without network round-trip. Takes Pokemon stats directly, returns `CaptureRateData`.
-- **Inputs:** `{ level, currentHp, maxHp, evolutionStage?, maxEvolutionStage?, statusConditions?, injuries?, isShiny?, isLegendary? }`
-- **Outputs:** `CaptureRateData` — `{ species, level, currentHp, maxHp, captureRate, difficulty, canBeCaptured, hpPercentage, breakdown }`
-- **Orphan:** false
-
-## capture-C021: useCapture Composable — attemptCapture
-
-- **Type:** composable-function
-- **Location:** `composables/useCapture.ts:attemptCapture`
-- **Game Concept:** Client-side API call to execute a capture attempt
-- **Description:** Async function that calls `POST /api/capture/attempt` with pokemonId, trainerId, optional accuracyRoll, modifiers, and pokeBallType. Returns `CaptureAttemptResult` on success or `null` on failure. Manages `loading` and `error` reactive state.
-- **Inputs:** `{ pokemonId: string, trainerId: string, accuracyRoll?: number, modifiers?: number, pokeBallType?: string }`
-- **Outputs:** `CaptureAttemptResult | null`
-- **Orphan:** false
-
-## capture-C022: useCapture Composable — rollAccuracyCheck
-
-- **Type:** composable-function
-- **Location:** `composables/useCapture.ts:rollAccuracyCheck`
-- **Game Concept:** Poke Ball throw accuracy check (d20 vs AC 6)
-- **Description:** Client-side function that rolls 1d20 for the Poke Ball throw accuracy check. Returns roll value, isNat20 flag, and total. Does not compare against AC 6 — caller must check. AC 6 and range (4 + Athletics rank) are documented in code comment but not enforced.
-- **Inputs:** None
-- **Outputs:** `{ roll: number, isNat20: boolean, total: number }`
-- **Orphan:** false
-
-## capture-C023: CaptureRateDisplay Component
-
-- **Type:** component
-- **Location:** `components/encounter/CaptureRateDisplay.vue`
-- **Game Concept:** Visual capture rate display with breakdown tooltip
-- **Description:** Presentational component showing capture rate percentage, difficulty label, color-coded border (green=easy through red=difficult), and hover breakdown tooltip showing all modifiers. Optional "Attempt Capture" button that emits an `attempt` event. Handles the "Fainted" impossible state.
-- **Inputs:** Props: `captureRate: CaptureRateData`, `showBreakdown?: boolean`, `showAttemptButton?: boolean`
-- **Outputs:** Visual display; emits `attempt` event
-- **Orphan:** false
-
-## capture-C024: CombatantCard Capture Rate Integration
-
-- **Type:** component
-- **Location:** `components/encounter/CombatantCard.vue:captureRate,isWildPokemon`
-- **Game Concept:** Live capture rate on wild Pokemon combatant cards
-- **Description:** CombatantCard computes `isWildPokemon` (enemy Pokemon with no `ownerId`) and a reactive `captureRate` via `calculateCaptureRateLocal()`. Renders `CaptureRateDisplay` for GM-only view on wild Pokemon. Currently passes hardcoded `evolutionStage: 1, maxEvolutionStage: 3` instead of looking up actual species data.
-- **Inputs:** `combatant` prop with entity data (Pokemon fields: level, currentHp, maxHp, statusConditions, injuries, shiny, ownerId, side)
-- **Outputs:** Renders CaptureRateDisplay within combatant card
-- **Orphan:** false
-
-## capture-C025: Origin Filter on Sheets Page
-
-- **Type:** component
-- **Location:** `pages/gm/sheets.vue`
-- **Game Concept:** Filter Pokemon by origin including 'captured'
-- **Description:** The GM sheets page includes an origin filter dropdown with options: All Origins, Manual, Wild, Captured, Template, Imported. Allows GMs to filter the Pokemon library to show only captured Pokemon.
-- **Inputs:** User selection from dropdown
-- **Outputs:** Filtered Pokemon list display
-- **Orphan:** false
+### capture-C042: SpeciesData Evolution Fields
+- **cap_id**: capture-C042
+- **name**: Evolution Stage Data
+- **type**: prisma-field
+- **location**: `app/prisma/schema.prisma` — `SpeciesData.evolutionStage`, `SpeciesData.maxEvolutionStage`
+- **game_concept**: Evolution stage for capture rate modifier
+- **description**: evolutionStage (current stage 1-3) and maxEvolutionStage (total stages in line). Used to compute evolutions remaining for capture rate modifier.
+- **inputs**: Seeded from PTU data
+- **outputs**: Evolution data for capture rate
+- **accessible_from**: gm (via API)
 
 ---
 
 ## Capability Chains
 
-### Chain 1: Calculate Capture Rate (Server)
-1. `capture-C023` (component — CaptureRateDisplay button or GM action) → 2. `capture-C019` (composable — getCaptureRate) → 3. `capture-C017` (api-endpoint — rate.post.ts) → 4. `capture-C011` (utility — calculateCaptureRate) → 5. `capture-C002` (prisma-model — SpeciesData lookup) + `capture-C001` (prisma-model — Pokemon lookup)
-**Breaks at:** complete
+### Chain 1: Capture Rate Preview
+CaptureRateDisplay -> useCapture.getCaptureRate -> POST /api/capture/rate -> calculateCaptureRate -> SpeciesData lookup (evolution) + Pokemon lookup (HP, status, injuries)
+- **Accessibility**: gm
 
-### Chain 2: Calculate Capture Rate (Client-side, Live)
-1. `capture-C024` (component — CombatantCard isWildPokemon check) → 2. `capture-C020` (composable — calculateCaptureRateLocal) → 3. `capture-C014` + `capture-C015` + `capture-C016` (constants — condition lists) → 4. `capture-C023` (component — CaptureRateDisplay renders result)
-**Breaks at:** complete — but `capture-C024` uses hardcoded evolution stage (1/3) instead of querying actual SpeciesData, so evolution modifier is inaccurate for non-base-form Pokemon
+### Chain 2: Capture Attempt
+GM UI -> useCapture.rollAccuracyCheck -> useCapture.attemptCapture -> POST /api/capture/attempt -> calculateCaptureRate + attemptCapture -> Pokemon.update (ownerId, origin) on success -> optionally consume Standard Action in encounter
+- **Accessibility**: gm
 
-### Chain 3: Execute Capture Attempt
-1. `capture-C023` (component — CaptureRateDisplay "Attempt Capture" button) → 2. `capture-C021` (composable — attemptCapture) → 3. `capture-C018` (api-endpoint — attempt.post.ts) → 4. `capture-C011` (utility — calculateCaptureRate) + `capture-C012` (utility — attemptCapture roll) → 5. `capture-C001` (prisma-model — Pokemon update: ownerId, origin) + `capture-C002` (prisma-model — SpeciesData lookup)
-**Breaks at:** `capture-C023` emits `attempt` event but `capture-C024` (CombatantCard) does not handle it — there is no `@attempt` listener wiring the button to the composable's `attemptCapture()` function. The UI button exists but is not connected to execution.
+### Chain 3: Local Capture Rate (No API)
+useCapture.calculateCaptureRateLocal -> captureRate.calculateCaptureRate (pure function)
+- **Accessibility**: gm, player
 
-### Chain 4: Accuracy Check for Poke Ball Throw
-1. (No UI trigger found) → 2. `capture-C022` (composable — rollAccuracyCheck) → 3. `capture-C018` (api-endpoint — attempt.post.ts receives accuracyRoll)
-**Breaks at:** No component calls `rollAccuracyCheck()`. The function exists in the composable but no UI integrates it. The accuracy check (d20 vs AC 6) is not enforced anywhere.
+---
 
-### Chain 5: Post-Capture Origin Display
-1. `capture-C018` (api-endpoint — sets origin to 'captured') → 2. `capture-C004` (prisma-field — origin stored) → 3. `capture-C025` (component — sheets page origin filter) + `capture-C010` (type — PokemonOrigin)
-**Breaks at:** complete
+## Accessibility Summary
+
+| Category | Cap IDs |
+|----------|---------|
+| **gm-only** | C010 (rate API), C011 (attempt API), C020 (getCaptureRate), C022 (attemptCapture), C023 (rollAccuracy), C030 (CaptureRateDisplay) |
+| **gm + player** | C001 (calculateCaptureRate util), C003 (description), C021 (local calc), C040 (origin), C041 (ownerId) |
+| **api-only** | None |
+
+---
+
+## Missing Subsystems
+
+### 1. No Player-Initiated Capture Flow
+- **subsystem**: Players cannot throw Poke Balls from the player view
+- **actor**: player
+- **ptu_basis**: PTU p.227 — throwing a Poke Ball is a Standard Action any trainer can take during their turn
+- **impact**: Only the GM can execute capture attempts. Players must verbally request capture and the GM performs it. In a multi-player game, this creates a bottleneck.
+
+### 2. No Poke Ball Type Selection
+- **subsystem**: No Poke Ball type catalog or ball-specific modifier system
+- **actor**: both
+- **ptu_basis**: PTU p.228-230 — different Poke Balls (Great Ball, Ultra Ball, Dusk Ball, Quick Ball, etc.) have different modifiers
+- **impact**: All captures use a flat modifier parameter. GM must manually calculate ball-specific bonuses and pass them as the `modifiers` field. No UI for selecting ball type.
+
+### 3. No Capture Rate Display for Players
+- **subsystem**: Players cannot see capture rate for enemy Pokemon
+- **actor**: player
+- **ptu_basis**: PTU p.226 — players make informed decisions about when to attempt capture
+- **impact**: Players have no visibility into capture difficulty. CaptureRateDisplay only renders in GM encounter view.
+
+### 4. No Trainer Feature Capture Modifiers
+- **subsystem**: No automated application of Capture Specialist or similar features
+- **actor**: both
+- **ptu_basis**: PTU Capture Specialist class and features modify capture rate
+- **impact**: GM must manually account for trainer features in the modifiers field.
+
+### 5. No Capture History/Log
+- **subsystem**: No persistent record of capture attempts
+- **actor**: both
+- **ptu_basis**: Game tracking — knowing which Pokemon were caught, by whom, and when
+- **impact**: Capture attempts are fire-and-forget. No history visible in UI.
