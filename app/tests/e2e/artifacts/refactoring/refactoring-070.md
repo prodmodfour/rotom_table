@@ -1,7 +1,7 @@
 ---
 ticket_id: refactoring-070
 priority: P4
-status: open
+status: in-progress
 category: CODE-HYGIENE
 source: code-review-137 (M1)
 created_at: 2026-02-23
@@ -23,3 +23,10 @@ Revert to `defineProps<Props>()` without the assignment.
 ## Impact
 
 No runtime impact — linter cleanliness only.
+
+## Resolution Log
+
+### Commit: bdedc47 (branch: slave/4-dev-refactoring-071-070-20260226)
+
+**Files changed:**
+- `app/components/create/StatAllocationSection.vue`: Changed `const props = defineProps<Props>()` to `defineProps<Props>()`, removing the unused variable assignment.
