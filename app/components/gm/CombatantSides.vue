@@ -22,7 +22,7 @@
         @damage="(id, damage) => emit('damage', id, damage)"
         @heal="(id, amount, temp, injuries) => emit('heal', id, amount, temp, injuries)"
         @stages="(id, changes, absolute) => emit('stages', id, changes, absolute)"
-        @status="(id, add, remove) => emit('status', id, add, remove)"
+        @status="(id, add, remove, override) => emit('status', id, add, remove, override)"
         @openActions="(id) => emit('openActions', id)"
       />
     </div>
@@ -49,7 +49,7 @@
             @heal="(id, amount, temp, injuries) => emit('heal', id, amount, temp, injuries)"
             @remove="(id) => emit('remove', id)"
             @stages="(id, changes, absolute) => emit('stages', id, changes, absolute)"
-            @status="(id, add, remove) => emit('status', id, add, remove)"
+            @status="(id, add, remove, override) => emit('status', id, add, remove, override)"
             @openActions="(id) => emit('openActions', id)"
           />
           <p v-if="playerCombatants.length === 0" class="side__empty">
@@ -78,7 +78,7 @@
             @heal="(id, amount, temp, injuries) => emit('heal', id, amount, temp, injuries)"
             @remove="(id) => emit('remove', id)"
             @stages="(id, changes, absolute) => emit('stages', id, changes, absolute)"
-            @status="(id, add, remove) => emit('status', id, add, remove)"
+            @status="(id, add, remove, override) => emit('status', id, add, remove, override)"
             @openActions="(id) => emit('openActions', id)"
           />
           <p v-if="allyCombatants.length === 0" class="side__empty">
@@ -107,7 +107,7 @@
             @heal="(id, amount, temp, injuries) => emit('heal', id, amount, temp, injuries)"
             @remove="(id) => emit('remove', id)"
             @stages="(id, changes, absolute) => emit('stages', id, changes, absolute)"
-            @status="(id, add, remove) => emit('status', id, add, remove)"
+            @status="(id, add, remove, override) => emit('status', id, add, remove, override)"
             @openActions="(id) => emit('openActions', id)"
           />
           <p v-if="enemyCombatants.length === 0" class="side__empty">
@@ -150,7 +150,7 @@ const emit = defineEmits<{
   heal: [combatantId: string, amount: number, tempHp?: number, healInjuries?: number]
   remove: [combatantId: string]
   stages: [combatantId: string, changes: Partial<StageModifiers>, absolute: boolean]
-  status: [combatantId: string, add: StatusCondition[], remove: StatusCondition[]]
+  status: [combatantId: string, add: StatusCondition[], remove: StatusCondition[], override: boolean]
   openActions: [combatantId: string]
   addCombatant: [side: CombatSide]
 }>()

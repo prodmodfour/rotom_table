@@ -183,7 +183,7 @@ const emit = defineEmits<{
   close: []
   executeMove: [combatantId: string, moveId: string, targetIds: string[], damage?: number, targetDamages?: Record<string, number>]
   executeAction: [combatantId: string, actionType: string]
-  updateStatus: [combatantId: string, add: StatusCondition[], remove: StatusCondition[]]
+  updateStatus: [combatantId: string, add: StatusCondition[], remove: StatusCondition[], override: boolean]
 }>()
 
 const { getSpriteUrl } = usePokemonSprite()
@@ -260,11 +260,11 @@ const currentConditions = computed((): StatusCondition[] => {
 })
 
 const addCondition = (condition: StatusCondition) => {
-  emit('updateStatus', props.combatant.id, [condition], [])
+  emit('updateStatus', props.combatant.id, [condition], [], false)
 }
 
 const removeCondition = (condition: StatusCondition) => {
-  emit('updateStatus', props.combatant.id, [], [condition])
+  emit('updateStatus', props.combatant.id, [], [condition], false)
 }
 
 // Create a Struggle move for Pokemon
