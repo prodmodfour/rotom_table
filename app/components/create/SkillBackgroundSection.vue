@@ -478,21 +478,5 @@ function onPatheticToggle(skill: PtuSkillName) {
   text-transform: capitalize;
 }
 
-.warning-item {
-  font-size: $font-size-sm;
-  padding: $spacing-xs $spacing-sm;
-  border-radius: $border-radius-sm;
-
-  &--warning {
-    background: rgba($color-warning, 0.1);
-    border: 1px solid rgba($color-warning, 0.3);
-    color: $color-warning;
-  }
-
-  &--info {
-    background: rgba($color-info, 0.1);
-    border: 1px solid rgba($color-info, 0.3);
-    color: $color-info;
-  }
-}
+// .warning-item — in _create-form-shared.scss
 </style>
