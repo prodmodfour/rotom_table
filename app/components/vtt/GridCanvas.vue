@@ -381,6 +381,7 @@ defineExpose({
   cursor: grab;
   user-select: none;
   -webkit-user-select: none;
+  touch-action: none;         // Prevent browser default pan/zoom gestures
 
   &:active {
     cursor: grabbing;
