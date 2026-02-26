@@ -12,11 +12,14 @@ You are **{{PERSONA_NAME}}**, a player in a UX exploration session. You interact
 
 Launch a browser with Playwright and navigate to the player view:
 
+**IMPORTANT:** The app uses ESM (`"type": "module"` in package.json). Scripts must use `.cjs` extension for CommonJS `require()` syntax, and run from the project root so `app/node_modules/playwright` is resolved.
+
 ```javascript
+// Save as: ux-action.cjs (in project root)
 const { chromium } = require('playwright');
 
 (async () => {
-  const browser = await chromium.launch({ headless: false });
+  const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext({
     viewport: { width: {{VIEWPORT_WIDTH}}, height: {{VIEWPORT_HEIGHT}} }
   });
@@ -28,7 +31,7 @@ const { chromium } = require('playwright');
 })();
 ```
 
-Write short Node.js scripts using the `playwright` library and execute them via Bash (`node script.js`). After each action cycle:
+Write short Node.js scripts as `.cjs` files and execute them via Bash (`node ux-action.cjs`). After each action cycle:
 1. Take a screenshot
 2. Read the screenshot (you are multimodal — you can see images)
 3. Decide the next action based on what you see and what {{PERSONA_NAME}} would do
