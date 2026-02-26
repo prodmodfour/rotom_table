@@ -218,13 +218,14 @@ function getConeCells(
 
   const dir = dirVectors[direction]
 
-  // Cone expands as it goes - width at distance d is d
+  // Cone with fixed 3m-wide rows per PTU (decree-007)
+  // d=1: 1 cell (center only), d=2+: 3 cells wide (1 center + 1 each side)
   for (let d = 1; d <= length; d++) {
     const baseX = origin.x + dir.dx * d
     const baseY = origin.y + dir.dy * d
 
-    // Width at this distance
-    const halfWidth = Math.floor(d / 2)
+    // Width at this distance: d=1 is 1 cell, d=2+ is 3 cells
+    const halfWidth = d === 1 ? 0 : 1
 
     // Perpendicular expansion
     if (dir.dx === 0) {

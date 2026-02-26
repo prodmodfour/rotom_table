@@ -384,11 +384,12 @@ export function useRangeParser() {
         break
 
       case 'cone':
-        // Cone expands from origin in direction
+        // Cone from origin in direction (decree-007: fixed 3m-wide rows)
+        // d=1: 1 cell (center only), d=2+: 3 cells wide (1 center + 1 each side)
         for (let d = 1; d <= size; d++) {
           const baseX = origin.x + direction.dx * d
           const baseY = origin.y + direction.dy * d
-          const halfWidth = Math.floor(d / 2)
+          const halfWidth = d === 1 ? 0 : 1
 
           if (direction.dx === 0) {
             for (let w = -halfWidth; w <= halfWidth; w++) {
