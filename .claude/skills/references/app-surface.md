@@ -29,7 +29,7 @@ Testable features, routes, and API endpoints for the PTU Session Helper.
 | `/gm/scenes/:id` | `pages/gm/scenes/[id].vue` | Scene editor — drag-and-drop canvas, groups, weather, habitats |
 | `/gm/map` | `pages/gm/map.vue` | Region map — display and serve to Group View |
 
-**GM layout components:** `ServerAddressDisplay.vue` (LAN address panel in GM header — shows server IP/port for player connections, click-outside dismiss, clipboard copy), `SessionUrlDisplay.vue` (combined tunnel + LAN URL panel — tunnel URL CRUD, LAN address list, clipboard copy with deprecated-execCommand fallback for non-HTTPS, QR code toggle rendering scannable codes for each URL via `utils/qrcode.ts`).
+**GM layout components:** `ServerAddressDisplay.vue` (LAN address panel in GM header — shows server IP/port for player connections, click-outside dismiss, clipboard copy), `SessionUrlDisplay.vue` (combined tunnel + LAN URL panel — tunnel URL CRUD, LAN address list, clipboard copy with select-to-copy fallback for non-HTTPS, QR code toggle rendering scannable codes for each URL via `utils/qrcode.ts`).
 
 **QR utility:** `utils/qrcode.ts` (pure TypeScript QR code encoder — byte mode, EC level L, versions 1-6, up to 134-char URLs; exports `encodeQR()`, `generateQrSvg()`, `QrSvgOptions`).
 

@@ -2,7 +2,7 @@
 ticket_id: refactoring-079
 priority: P4
 severity: LOW
-status: open
+status: resolved
 domain: player-view
 source: code-review-158 M3
 created_by: slave-collector (plan-20260225-130000)
@@ -36,3 +36,10 @@ Low — the tunnel connection (HTTPS) always has `navigator.clipboard` available
 ## Suggested Fix
 
 Replace the `execCommand` fallback with a user-friendly "tap to select, then copy" approach using a pre-populated readonly input field with a select-all-on-focus behavior.
+
+## Resolution Log
+
+- **Approach:** Replaced `document.execCommand('copy')` fallback with a visible readonly input field that auto-selects its content. When clipboard API fails, `fallbackUrl` ref is set, rendering the input inline in the panel. Focus triggers `select()` so the user can immediately Ctrl+C or long-press copy.
+- **Files changed:**
+  - `app/components/gm/SessionUrlDisplay.vue` — removed execCommand code, added fallbackUrl state + template + SCSS
+  - `.claude/skills/references/app-surface.md` — updated description to reflect new fallback approach

@@ -103,6 +103,27 @@
           </p>
         </div>
 
+        <!-- Fallback copy prompt (non-HTTPS) -->
+        <div v-if="fallbackUrl" class="session-url__fallback">
+          <span class="session-url__fallback-label">Select and copy:</span>
+          <div class="session-url__fallback-row">
+            <input
+              ref="fallbackInputRef"
+              :value="fallbackUrl"
+              class="session-url__fallback-input"
+              readonly
+              @focus="($event.target as HTMLInputElement).select()"
+            />
+            <button
+              class="session-url__fallback-dismiss"
+              title="Dismiss"
+              @click="dismissFallback"
+            >
+              <PhCheck :size="14" />
+            </button>
+          </div>
+        </div>
+
         <!-- Tunnel Configuration (inline) -->
         <div v-if="showTunnelConfig || tunnelUrl" class="session-url__config">
           <div class="session-url__config-header">
@@ -165,6 +186,8 @@ const tunnelInput = ref('')
 const savingTunnel = ref(false)
 const tunnelError = ref<string | null>(null)
 const showQrCodes = ref(false)
+const fallbackUrl = ref<string | null>(null)
+const fallbackInputRef = ref<HTMLInputElement | null>(null)
 
 /** QR code styling options for the dark theme */
 const qrOptions: QrSvgOptions = {
@@ -259,23 +282,17 @@ const copyToClipboard = async (url: string) => {
       copiedUrl.value = null
     }, 2000)
   } catch {
-    // TODO: document.execCommand('copy') is deprecated but required as fallback
-    // for non-HTTPS contexts (LAN IP access). See refactoring-079 for cleanup.
-    const textarea = document.createElement('textarea')
-    textarea.value = url
-    textarea.style.position = 'fixed'
-    textarea.style.opacity = '0'
-    document.body.appendChild(textarea)
-    textarea.select()
-    document.execCommand('copy')
-    document.body.removeChild(textarea)
-
-    copiedUrl.value = url
-    if (copyTimeout) clearTimeout(copyTimeout)
-    copyTimeout = setTimeout(() => {
-      copiedUrl.value = null
-    }, 2000)
+    // Clipboard API unavailable (non-HTTPS / LAN context).
+    // Show a pre-selected input so the user can manually copy.
+    fallbackUrl.value = url
+    nextTick(() => {
+      fallbackInputRef.value?.select()
+    })
   }
+}
+
+const dismissFallback = () => {
+  fallbackUrl.value = null
 }
 
 // Click-outside handler to dismiss the panel
@@ -295,6 +312,7 @@ watch(expanded, (isExpanded) => {
     showTunnelConfig.value = false
     showQrCodes.value = false
     tunnelError.value = null
+    fallbackUrl.value = null
   }
 })
 
@@ -597,6 +615,60 @@ onUnmounted(() => {
     font-size: $font-size-xs;
     color: $color-danger;
     margin: 0;
+  }
+
+  &__fallback {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+    padding: $spacing-sm;
+    background: rgba($color-accent-teal, 0.05);
+    border: 1px solid rgba($color-accent-teal, 0.2);
+    border-radius: $border-radius-sm;
+  }
+
+  &__fallback-label {
+    font-size: $font-size-xs;
+    color: $color-accent-teal;
+    font-weight: 600;
+  }
+
+  &__fallback-row {
+    display: flex;
+    gap: $spacing-xs;
+  }
+
+  &__fallback-input {
+    flex: 1;
+    padding: $spacing-xs $spacing-sm;
+    font-size: $font-size-sm;
+    font-family: monospace;
+    color: $color-text;
+    background: $color-bg-tertiary;
+    border: 1px solid $color-accent-teal;
+    border-radius: $border-radius-sm;
+    outline: none;
+    cursor: text;
+  }
+
+  &__fallback-dismiss {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    border: 1px solid $border-color-default;
+    background: transparent;
+    color: $color-success;
+    border-radius: $border-radius-sm;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    &:hover {
+      background: rgba($color-success, 0.1);
+      border-color: $color-success;
+    }
   }
 }
 </style>
