@@ -1,5 +1,5 @@
 <template>
-  <div ref="encounterContainer" class="player-encounter">
+  <div ref="encounterContainer" class="player-encounter" role="region" aria-label="Encounter view">
     <!-- No Active Encounter -->
     <div v-if="!encounter || !encounter.isActive" class="encounter-waiting">
       <PhSword :size="48" />

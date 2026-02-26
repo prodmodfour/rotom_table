@@ -122,6 +122,7 @@
           <button
             class="combat-actions__btn combat-actions__btn--shift"
             :disabled="!canUseShiftAction"
+            aria-label="Shift: move 1 meter"
             @click="handleShift"
           >
             <PhArrowsOutSimple :size="20" />
@@ -132,6 +133,7 @@
           <button
             class="combat-actions__btn combat-actions__btn--struggle"
             :disabled="!canUseStandardAction || !canBeCommanded"
+            aria-label="Struggle attack"
             @click="handleStruggleSelect"
           >
             <PhHandFist :size="20" />
@@ -141,6 +143,7 @@
           <!-- Pass Turn -->
           <button
             class="combat-actions__btn combat-actions__btn--pass"
+            aria-label="Pass turn and end actions"
             @click="handlePassTurn"
           >
             <PhSkipForward :size="20" />
@@ -160,6 +163,8 @@
           <button
             class="combat-actions__btn combat-actions__btn--item"
             :disabled="trainerInventory.length === 0"
+            :aria-expanded="showItemPanel"
+            aria-label="Request to use an item (requires GM approval)"
             @click="showItemPanel = !showItemPanel"
           >
             <PhFirstAidKit :size="20" />
@@ -170,6 +175,8 @@
           <button
             class="combat-actions__btn combat-actions__btn--switch"
             :disabled="switchablePokemon.length === 0"
+            :aria-expanded="showSwitchPanel"
+            aria-label="Request to switch Pokemon (requires GM approval)"
             @click="showSwitchPanel = !showSwitchPanel"
           >
             <PhArrowsClockwise :size="20" />
@@ -179,6 +186,8 @@
           <!-- Maneuvers -->
           <button
             class="combat-actions__btn combat-actions__btn--maneuver"
+            :aria-expanded="showManeuverPanel"
+            aria-label="Request a combat maneuver (requires GM approval)"
             @click="showManeuverPanel = !showManeuverPanel"
           >
             <PhStrategy :size="20" />
@@ -252,14 +261,14 @@
     </template>
 
     <!-- Pass Turn Confirmation -->
-    <div v-if="showPassConfirm" class="combat-actions__confirm-overlay">
+    <div v-if="showPassConfirm" class="combat-actions__confirm-overlay" role="dialog" aria-modal="true" aria-label="Confirm pass turn">
       <div class="combat-actions__confirm-dialog">
         <p>End your turn?</p>
         <div class="combat-actions__confirm-buttons">
-          <button class="combat-actions__btn combat-actions__btn--cancel" @click="showPassConfirm = false">
+          <button class="combat-actions__btn combat-actions__btn--cancel" aria-label="Cancel and keep your turn" @click="showPassConfirm = false">
             Cancel
           </button>
-          <button class="combat-actions__btn combat-actions__btn--confirm" @click="confirmPassTurn">
+          <button class="combat-actions__btn combat-actions__btn--confirm" aria-label="Confirm pass turn" @click="confirmPassTurn">
             Pass Turn
           </button>
         </div>

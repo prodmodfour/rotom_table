@@ -30,6 +30,8 @@
             :key="player.id"
             class="picker-card"
             :class="{ 'picker-card--selecting': selectingId === player.id }"
+            :aria-label="`Select ${player.name}, Level ${player.level}${player.trainerClasses.length > 0 ? ', ' + player.trainerClasses.join(' / ') : ''}`"
+            :aria-busy="selectingId === player.id"
             @click="handleSelect(player)"
           >
             <div class="picker-card__avatar">

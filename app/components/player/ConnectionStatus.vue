@@ -1,11 +1,16 @@
 <template>
-  <div class="conn-status">
+  <div class="conn-status" role="status" :aria-label="statusTitle">
     <!-- Connection indicator dot (tap to show details) -->
     <span
       class="conn-status__dot"
       :class="dotClass"
       :title="statusTitle"
+      role="button"
+      tabindex="0"
+      :aria-label="`Connection: ${stateLabel}. Tap for details.`"
       @click.stop="toggleDetails"
+      @keydown.enter.stop="toggleDetails"
+      @keydown.space.prevent.stop="toggleDetails"
     ></span>
 
     <!-- Connection details (shown on tap/click) -->

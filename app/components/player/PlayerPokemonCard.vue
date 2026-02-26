@@ -8,7 +8,12 @@
     }"
   >
     <!-- Collapsed Summary -->
-    <button class="pokemon-card__summary" @click="expanded = !expanded">
+    <button
+      class="pokemon-card__summary"
+      :aria-expanded="expanded"
+      :aria-label="`${displayName}, Level ${pokemon.level}. ${expanded ? 'Collapse' : 'Expand'} details.`"
+      @click="expanded = !expanded"
+    >
       <img
         :src="spriteUrl"
         :alt="displayName"

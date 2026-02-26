@@ -1,7 +1,7 @@
 <template>
-  <div class="player-sheet">
+  <div class="player-sheet" role="region" aria-label="Character sheet">
     <!-- Header: Name, Level, HP -->
-    <section class="player-sheet__header">
+    <section class="player-sheet__header" aria-label="Character identity and HP">
       <div class="player-sheet__identity">
         <div class="player-sheet__avatar">
           <span>{{ character.name.charAt(0).toUpperCase() }}</span>
@@ -27,10 +27,11 @@
     </section>
 
     <!-- Export / Import Actions -->
-    <section class="player-sheet__actions">
+    <section class="player-sheet__actions" aria-label="Character data actions">
       <button
         class="player-sheet__action-btn"
         :disabled="exporting"
+        :aria-label="exporting ? 'Exporting character data' : 'Export character data as JSON'"
         @click="handleExport"
       >
         <PhDownloadSimple :size="16" />
@@ -39,6 +40,7 @@
       <button
         class="player-sheet__action-btn"
         :disabled="importing"
+        :aria-label="importing ? 'Importing character data' : 'Import character data from JSON'"
         @click="triggerImport"
       >
         <PhUploadSimple :size="16" />
@@ -73,11 +75,11 @@
 
     <!-- Stats Grid -->
     <section class="player-sheet__section">
-      <button class="player-sheet__section-header" @click="toggleSection('stats')">
+      <button class="player-sheet__section-header" :aria-expanded="openSections.stats" aria-controls="section-stats" @click="toggleSection('stats')">
         <span>Stats</span>
         <PhCaretDown :size="16" :class="{ 'rotated': !openSections.stats }" />
       </button>
-      <div v-if="openSections.stats" class="player-sheet__stats-grid">
+      <div v-if="openSections.stats" id="section-stats" class="player-sheet__stats-grid">
         <div v-for="stat in statEntries" :key="stat.key" class="player-stat-cell">
           <span class="player-stat-cell__label">{{ stat.label }}</span>
           <span class="player-stat-cell__value">{{ stat.value }}</span>
@@ -94,11 +96,11 @@
 
     <!-- Combat Info -->
     <section class="player-sheet__section">
-      <button class="player-sheet__section-header" @click="toggleSection('combat')">
+      <button class="player-sheet__section-header" :aria-expanded="openSections.combat" aria-controls="section-combat" @click="toggleSection('combat')">
         <span>Combat Info</span>
         <PhCaretDown :size="16" :class="{ 'rotated': !openSections.combat }" />
       </button>
-      <div v-if="openSections.combat" class="player-sheet__combat">
+      <div v-if="openSections.combat" id="section-combat" class="player-sheet__combat">
         <div class="combat-row">
           <div class="combat-item">
             <span class="combat-item__label">Phys Evasion</span>
@@ -149,11 +151,11 @@
 
     <!-- Skills -->
     <section class="player-sheet__section">
-      <button class="player-sheet__section-header" @click="toggleSection('skills')">
+      <button class="player-sheet__section-header" :aria-expanded="openSections.skills" aria-controls="section-skills" @click="toggleSection('skills')">
         <span>Skills</span>
         <PhCaretDown :size="16" :class="{ 'rotated': !openSections.skills }" />
       </button>
-      <div v-if="openSections.skills" class="player-sheet__skills">
+      <div v-if="openSections.skills" id="section-skills" class="player-sheet__skills">
         <div
           v-for="[skillName, rank] in sortedSkills"
           :key="skillName"
@@ -169,11 +171,11 @@
 
     <!-- Features & Edges -->
     <section class="player-sheet__section">
-      <button class="player-sheet__section-header" @click="toggleSection('features')">
+      <button class="player-sheet__section-header" :aria-expanded="openSections.features" aria-controls="section-features" @click="toggleSection('features')">
         <span>Features & Edges</span>
         <PhCaretDown :size="16" :class="{ 'rotated': !openSections.features }" />
       </button>
-      <div v-if="openSections.features" class="player-sheet__list">
+      <div v-if="openSections.features" id="section-features" class="player-sheet__list">
         <template v-if="character.features.length > 0">
           <h4 class="list-subheader">Features</h4>
           <div class="tag-list">
@@ -198,11 +200,11 @@
 
     <!-- Equipment -->
     <section class="player-sheet__section">
-      <button class="player-sheet__section-header" @click="toggleSection('equipment')">
+      <button class="player-sheet__section-header" :aria-expanded="openSections.equipment" aria-controls="section-equipment" @click="toggleSection('equipment')">
         <span>Equipment</span>
         <PhCaretDown :size="16" :class="{ 'rotated': !openSections.equipment }" />
       </button>
-      <div v-if="openSections.equipment" class="player-sheet__equipment">
+      <div v-if="openSections.equipment" id="section-equipment" class="player-sheet__equipment">
         <div
           v-for="slot in equipmentSlots"
           :key="slot.key"
@@ -218,11 +220,11 @@
 
     <!-- Inventory -->
     <section class="player-sheet__section">
-      <button class="player-sheet__section-header" @click="toggleSection('inventory')">
+      <button class="player-sheet__section-header" :aria-expanded="openSections.inventory" aria-controls="section-inventory" @click="toggleSection('inventory')">
         <span>Inventory ({{ character.money }}P)</span>
         <PhCaretDown :size="16" :class="{ 'rotated': !openSections.inventory }" />
       </button>
-      <div v-if="openSections.inventory" class="player-sheet__inventory">
+      <div v-if="openSections.inventory" id="section-inventory" class="player-sheet__inventory">
         <div
           v-for="item in character.inventory"
           :key="item.id"

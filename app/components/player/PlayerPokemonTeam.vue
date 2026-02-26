@@ -1,5 +1,5 @@
 <template>
-  <div class="player-pokemon-team">
+  <div class="player-pokemon-team" role="region" aria-label="Pokemon team">
     <div v-if="pokemon.length === 0" class="team-empty">
       <PhPawPrint :size="48" />
       <p>No Pokemon on this team.</p>

@@ -2,7 +2,7 @@
   <div class="player-view">
     <!-- Identity Picker (overlay when not identified) -->
     <template v-if="!isIdentified">
-      <div v-if="selectionError" class="player-error player-error--selection">
+      <div v-if="selectionError" class="player-error player-error--selection" role="alert">
         <PhWarningCircle :size="32" />
         <p>{{ selectionError }}</p>
       </div>
@@ -31,21 +31,21 @@
       </header>
 
       <!-- Connection Lost Banner -->
-      <div v-if="isReconnecting" class="player-reconnect-banner">
+      <div v-if="isReconnecting" class="player-reconnect-banner" role="status" aria-live="polite">
         Connection lost. Reconnecting ({{ reconnectAttempt }}/{{ maxReconnectAttempts }})...
       </div>
-      <div v-else-if="!isConnected && wsError" class="player-reconnect-banner player-reconnect-banner--failed">
-        Connection lost. <button class="player-reconnect-banner__retry" @click="resetAndReconnect">Retry</button>
+      <div v-else-if="!isConnected && wsError" class="player-reconnect-banner player-reconnect-banner--failed" role="alert">
+        Connection lost. <button class="player-reconnect-banner__retry" aria-label="Retry connection" @click="resetAndReconnect">Retry</button>
       </div>
 
       <!-- Loading State (skeleton screen) -->
       <PlayerSkeleton v-if="loading" />
 
       <!-- Error State -->
-      <div v-else-if="error" class="player-error">
+      <div v-else-if="error" class="player-error" role="alert">
         <PhWarningCircle :size="48" />
         <p>{{ error }}</p>
-        <button class="btn btn--primary" @click="refreshCharacterData">
+        <button class="btn btn--primary" aria-label="Retry loading character data" @click="refreshCharacterData">
           Retry
         </button>
       </div>
@@ -90,6 +90,8 @@
           v-if="lastActionAck"
           class="player-toast"
           :class="lastActionAck.status === 'accepted' ? 'player-toast--success' : 'player-toast--error'"
+          role="status"
+          aria-live="polite"
         >
           {{ lastActionAck.status === 'accepted' ? 'Action accepted' : 'Action rejected' }}
           <span v-if="lastActionAck.reason" class="player-toast__reason">{{ lastActionAck.reason }}</span>
@@ -98,7 +100,7 @@
 
       <!-- Turn Notification Flash (fixed overlay) -->
       <Transition name="fade">
-        <div v-if="turnNotification" class="player-turn-flash">
+        <div v-if="turnNotification" class="player-turn-flash" role="alert" aria-live="assertive">
           <PhLightning :size="24" />
           <span>Your turn! {{ turnNotification.combatantName }}</span>
         </div>
