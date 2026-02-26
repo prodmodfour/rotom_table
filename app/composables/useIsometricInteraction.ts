@@ -1,5 +1,6 @@
 import type { GridConfig, GridPosition, CameraAngle, MovementPreview } from '~/types'
 import { useIsometricProjection } from '~/composables/useIsometricProjection'
+import { TOUCH_TAP_THRESHOLD } from '~/composables/useGridInteraction'
 import { useSelectionStore } from '~/stores/selection'
 import { useMeasurementStore } from '~/stores/measurement'
 import { useFogOfWarStore } from '~/stores/fogOfWar'
@@ -97,7 +98,6 @@ export function useIsometricInteraction(options: UseIsometricInteractionOptions)
   const isPinching = ref(false)
   const lastPinchDistance = ref(0)
   const lastPinchCenter = ref<{ x: number; y: number } | null>(null)
-  const TOUCH_TAP_THRESHOLD = 5
 
   // Moving token data for preview
   const movingToken = computed(() => {
