@@ -106,3 +106,8 @@
 | plan-20260226-051629/slave-3 | senior-reviewer + game-logic-reviewer | ux-004 review | CHANGES_REQUIRED+APPROVED | 2026-02-26T05:22:00Z | 5b9e560, 6dd406f |
 | plan-20260226-051629/slave-4 | developer | bug-031 | success | 2026-02-26T05:21:30Z | 6cfd225, bfaa1fb |
 | plan-20260226-051629/slave-5 | developer | ux-005+ptu-rule-081 | success | 2026-02-26T05:23:00Z | 4a7db22, d0698b3, 0387a94, 21b43d1 |
+| plan-20260226-060858/slave-1 | developer | bug-030-fix | success | 2026-02-26T06:13:32Z | 6d9ae64, fc2e626, 51d8396, af784a8 |
+| plan-20260226-060858/slave-2 | developer | ux-003-fix | success | 2026-02-26T06:11:30Z | 814791b, 8ef4737, cb10fd8 |
+| plan-20260226-060858/slave-3 | developer | ux-004-fix | success | 2026-02-26T06:16:00Z | ddcd8d9, ad2734e, e6e9c90 |
+| plan-20260226-060858/slave-4 | reviewers | bug-031-review | APPROVED | 2026-02-26T06:15:00Z | ec6dac2, 4663264 |
+| plan-20260226-060858/slave-5 | reviewers | ux-005+ptu-rule-081-review | APPROVED | 2026-02-26T06:17:00Z | 5a4bd22, 96b0953 |

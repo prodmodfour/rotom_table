@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-02-26T06:00:00
-updated_by: slave-collector (plan-20260226-051629)
+last_updated: 2026-02-26T06:30:00
+updated_by: slave-collector (plan-20260226-060858)
 ---
 
 # Dev Ecosystem State
@@ -11,8 +11,8 @@ updated_by: slave-collector (plan-20260226-051629)
 | Ticket | Priority | Severity | Status | Summary |
 |--------|----------|----------|--------|---------|
 | bug-001–029 | P0–P3 | — | resolved | (all resolved — see sessions 1–9) |
-| bug-030 | P2 | **CHANGES_REQUIRED** | Player grid touch event support — code-review-166 CHANGES_REQUIRED (C1: IsometricCanvas refs undefined touch handlers, M1: duplicate threshold, M2: file size → refactoring-082). rules-review-153 APPROVED |
-| bug-031 | P3 | **resolved** | Explored fog cells show tokens — 1-line fix in usePlayerGridView.ts. 2 commits. Needs review |
+| bug-030 | P2 | **resolved** | Player grid touch event support — fix cycle complete (4 commits: touch handlers added to useIsometricInteraction, threshold deduped). code-review-166 CHANGES_REQUIRED → fixed. rules-review-153 APPROVED |
+| bug-031 | P3 | **resolved** | Explored fog cells show tokens — 1-line fix in usePlayerGridView.ts. code-review-168 APPROVED, rules-review-155 APPROVED |
 
 ### PTU Rule Tickets (`tickets/ptu-rule/`)
 | Ticket | Priority | Status | Summary |
@@ -27,7 +27,7 @@ updated_by: slave-collector (plan-20260226-051629)
 | ptu-rule-078 | P3 | **resolved** | Trainer class associated skills — H1+H2 fix APPROVED. code-review-142 APPROVED, rules-review-132 APPROVED. All 39 classes correct |
 | ptu-rule-079 | P3 | **resolved** | Helmet conditional DR — fix applied, code-review-136 APPROVED, rules-review-126 APPROVED |
 | ptu-rule-080 | P3 | **resolved** | Higher-level char creation validation — fix applied, code-review-137 APPROVED (M1/M2 → refactoring-070, 071), rules-review-127 APPROVED |
-| ptu-rule-081 | P4 | **resolved** | Multiple Focus items — single Focus limit enforced in equipmentBonuses.ts. 2 commits. Needs review |
+| ptu-rule-081 | P4 | **resolved** | Multiple Focus items — single Focus limit enforced in equipmentBonuses.ts. code-review-169 APPROVED (M1 non-blocking → ux-008), rules-review-156 APPROVED |
 | ptu-rule-082 | P4 | **resolved** | Pokemon maxHp not auto-updated on level-up (from rules-review-118). Fix applied + APPROVED (code-review-161, rules-review-151). M2 → ux-005 |
 | ptu-rule-083 | P4 | **resolved** | Measurement store uses Chebyshev distance instead of PTU alternating diagonal (from rules-review-144 RULING-1). Fix applied + APPROVED (code-review-161, rules-review-151). M1 → refactoring-080 |
 
@@ -43,23 +43,33 @@ updated_by: slave-collector (plan-20260226-051629)
 |--------|----------|--------|---------|
 | ux-001 | P4 | **open** | Equipment catalog browser closes on equip, forces re-open for multi-item sessions (from code-review-127 M3) |
 | ux-002 | P4 | **open** | Trainer HP stat display shows raw stat without formula context in player view (from rules-review-129 M1) |
-| ux-003 | P3 | **CHANGES_REQUIRED** | QR code rendering — code-review-165 CHANGES_REQUIRED (M1: dead bestMatrix var, M2: app-surface.md not updated) |
-| ux-004 | P3 | **CHANGES_REQUIRED** | Enemy HP masking — code-review-167 CHANGES_REQUIRED (H1: duplicated roundToDisplayTier, M1: dead getDisplayHp in composable, M2: wrong commit hashes). rules-review-154 APPROVED |
-| ux-005 | P4 | **resolved** | Pokemon full HP on level-up — currentHp now preserved when at full HP in both XP endpoints. 2 commits. Needs review |
+| ux-003 | P3 | **resolved** | QR code rendering — fix cycle complete (3 commits: dead bestMatrix removed, app-surface.md updated). code-review-165 CHANGES_REQUIRED → fixed |
+| ux-004 | P3 | **resolved** | Enemy HP masking — fix cycle complete (3 commits: roundToDisplayTier extracted to utils/displayHp.ts, dead getDisplayHp removed, commit hashes fixed). code-review-167 CHANGES_REQUIRED → fixed. rules-review-154 APPROVED |
+| ux-005 | P4 | **resolved** | Pokemon full HP on level-up — currentHp preserved when at full HP. code-review-169 APPROVED, rules-review-156 APPROVED |
 | ux-006 | P4 | **open** | PTU injury markers may leak precise HP info in player mode (from rules-review-154 R2) |
+| ux-007 | P4 | **open** | Player's own tokens hidden in explored fog cells (from rules-review-155 edge case) |
+| ux-008 | P4 | **open** | Focus item selection non-deterministic across different equipment slots (from code-review-169 M1) |
 
 ## Active Developer Work
 
-**Current task:** Session 34 collection complete. Reviews + dev fixes merged. 3 CHANGES_REQUIRED need fix cycles (bug-030, ux-003, ux-004). refactoring-081 APPROVED. bug-031, ux-005, ptu-rule-081 resolved (needs review).
+**Current task:** Session 35 collection complete. All 5 slaves merged. All fix cycles (bug-030, ux-003, ux-004) resolved. All reviews (bug-031, ux-005, ptu-rule-081) APPROVED. No CHANGES_REQUIRED outstanding.
+
+**Session 35 (2026-02-26, plan-20260226-060858):**
+- bug-030 fix cycle (P2) — 4 commits: touch handlers added to useIsometricInteraction, threshold deduplicated → **resolved**
+- ux-003 fix cycle (P3) — 3 commits: dead bestMatrix removed, app-surface.md updated → **resolved**
+- ux-004 fix cycle (P3) — 3 commits: roundToDisplayTier extracted to utils/displayHp.ts, dead getDisplayHp removed, commit hashes fixed → **resolved**
+- bug-031 review (P3) — code-review-168 **APPROVED**, rules-review-155 **APPROVED** → **resolved**
+- ux-005 + ptu-rule-081 review (P4) — code-review-169 **APPROVED** (M1 non-blocking → ux-008), rules-review-156 **APPROVED** → **both resolved**
+- Tickets filed: ux-007 (own tokens in explored fog), ux-008 (Focus selection non-deterministic)
 
 **Session 34 (2026-02-26, plan-20260226-051629):**
 - refactoring-081 review — code-review-164 **APPROVED** → refactoring-081 complete
-- ux-003 review — code-review-165 **CHANGES_REQUIRED** (M1: dead bestMatrix var, M2: app-surface.md gap)
-- bug-030 review — code-review-166 **CHANGES_REQUIRED** (C1: IsometricCanvas refs undefined touch handlers, M1: duplicate threshold, M2: file size → refactoring-082). rules-review-153 **APPROVED**
-- ux-004 review — code-review-167 **CHANGES_REQUIRED** (H1: duplicated roundToDisplayTier, M1: dead getDisplayHp, M2: wrong commit hashes). rules-review-154 **APPROVED**
-- bug-031 (P3) — 1-line fix: hide tokens in explored fog cells → **resolved, needs review**
-- ux-005 (P4) — Preserve full HP state on level-up in both XP endpoints → **resolved, needs review**
-- ptu-rule-081 (P4) — Enforce single Focus item limit in equipmentBonuses.ts → **resolved, needs review**
+- ux-003 review — code-review-165 **CHANGES_REQUIRED** → fixed in session 35
+- bug-030 review — code-review-166 **CHANGES_REQUIRED** → fixed in session 35. rules-review-153 **APPROVED**
+- ux-004 review — code-review-167 **CHANGES_REQUIRED** → fixed in session 35. rules-review-154 **APPROVED**
+- bug-031 (P3) — 1-line fix: hide tokens in explored fog cells → **APPROVED in session 35**
+- ux-005 (P4) — Preserve full HP state on level-up in both XP endpoints → **APPROVED in session 35**
+- ptu-rule-081 (P4) — Enforce single Focus item limit in equipmentBonuses.ts → **APPROVED in session 35**
 - Tickets filed: refactoring-082 (extract touch handlers composable), ux-006 (injury marker HP leak)
 
 **Session 33 (2026-02-26, plan-20260225-174854):**
@@ -77,15 +87,20 @@ updated_by: slave-collector (plan-20260226-051629)
 - Tickets filed: refactoring-080 (diagonal formula duplication), ux-005 (currentHp on level-up)
 
 **Next actions (by priority):**
-1. **Fix cycle** bug-030 (P2 — C1 critical: IsometricCanvas crash on touch)
-2. **Fix cycle** ux-003 (P3 — M1+M2: dead code + app-surface gap)
-3. **Fix cycle** ux-004 (P3 — H1+M1+M2: DRY violation + dead code + wrong hashes)
-4. **Review** bug-031 (P3 — 2 commits, fog cell token fix)
-5. **Review** ux-005 (P4 — 2 commits, level-up HP fix)
-6. **Review** ptu-rule-081 (P4 — 2 commits, Focus item limit)
-7. Remaining open: ux-001 P4, ux-002 P4, ux-006 P4, refactoring-076–082
+1. **Re-review** ux-003 (P3 — fix cycle complete, needs re-review)
+2. **Re-review** ux-004 (P3 — fix cycle complete, needs re-review)
+3. **Re-review** bug-030 (P2 — fix cycle complete, needs re-review)
+4. Remaining open: ux-001 P4, ux-002 P4, ux-006 P4, ux-007 P4, ux-008 P4, refactoring-076–082
 
 ## Review Status
+
+### Session 35 Reviews (plan-20260226-060858)
+| Review ID | Target | Verdict | Reviewer | Date |
+|-----------|--------|---------|----------|------|
+| code-review-168 | bug-031 (fog token fix) | APPROVED | senior-reviewer | 2026-02-26 |
+| rules-review-155 | bug-031 (fog token fix) | APPROVED | game-logic-reviewer | 2026-02-26 |
+| code-review-169 | ux-005 + ptu-rule-081 | APPROVED | senior-reviewer | 2026-02-26 |
+| rules-review-156 | ux-005 + ptu-rule-081 | APPROVED | game-logic-reviewer | 2026-02-26 |
 
 ### Session 34 Reviews (plan-20260226-051629)
 | Review ID | Target | Verdict | Reviewer | Date |
