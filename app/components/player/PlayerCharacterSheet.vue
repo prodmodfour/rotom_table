@@ -330,7 +330,7 @@ const hpColorClass = computed(() => {
 const statEntries = computed(() => {
   const stats = props.character.stats
   const stages = props.character.stageModifiers
-  const hpTooltip = `Max HP = Level (${props.character.level}) + HP Base (${stats.hp}) x3 + 10 = ${props.character.maxHp}`
+  const hpTooltip = `Max HP = Level (${props.character.level}) x2 + HP Base (${stats.hp}) x3 + 10 = ${props.character.maxHp}`
   return [
     { key: 'hp', label: 'HP Base', value: stats.hp, stage: stages.hp ?? 0, tooltip: hpTooltip },
     { key: 'attack', label: 'ATK', value: stats.attack, stage: stages.attack ?? 0, tooltip: undefined },
