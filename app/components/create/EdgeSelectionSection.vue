@@ -200,20 +200,10 @@ function onAddSkillEdge(skill: PtuSkillName): void {
   }
 }
 
+// .counter base + --full — in _create-form-shared.scss
 .counter {
-  font-size: $font-size-sm;
-  color: $color-text-secondary;
-  padding: 2px $spacing-sm;
-  background: $color-bg-tertiary;
-  border-radius: $border-radius-sm;
-  border: 1px solid $border-color-default;
   margin-left: $spacing-md;
   flex-shrink: 0;
-
-  &--full {
-    color: $color-success;
-    border-color: rgba($color-success, 0.3);
-  }
 }
 
 .edge-input {
@@ -318,21 +308,9 @@ function onAddSkillEdge(skill: PtuSkillName): void {
   }
 }
 
-.selected-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: $spacing-xs;
-  margin-top: $spacing-sm;
-}
+// .selected-tags, .tag base, .tag__remove — in _create-form-shared.scss
 
 .tag {
-  display: inline-flex;
-  align-items: center;
-  gap: $spacing-xs;
-  font-size: $font-size-sm;
-  padding: $spacing-xs $spacing-sm;
-  border-radius: $border-radius-sm;
-
   &--edge {
     background: rgba($color-warning, 0.15);
     border: 1px solid rgba($color-warning, 0.3);
@@ -343,39 +321,7 @@ function onAddSkillEdge(skill: PtuSkillName): void {
     background: rgba($color-warning, 0.2);
     border-color: rgba($color-warning, 0.4);
   }
-
-  &__remove {
-    background: none;
-    border: none;
-    color: inherit;
-    cursor: pointer;
-    padding: 0;
-    font-size: $font-size-md;
-    line-height: 1;
-    opacity: 0.6;
-    transition: opacity $transition-fast;
-
-    &:hover {
-      opacity: 1;
-    }
-  }
 }
 
-.warning-item {
-  font-size: $font-size-sm;
-  padding: $spacing-xs $spacing-sm;
-  border-radius: $border-radius-sm;
-
-  &--warning {
-    background: rgba($color-warning, 0.1);
-    border: 1px solid rgba($color-warning, 0.3);
-    color: $color-warning;
-  }
-
-  &--info {
-    background: rgba($color-info, 0.1);
-    border: 1px solid rgba($color-info, 0.3);
-    color: $color-info;
-  }
-}
+// .warning-item — in _create-form-shared.scss
 </style>
