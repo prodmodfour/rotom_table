@@ -384,10 +384,13 @@ const pendingAction = ref<'move' | 'struggle' | null>(null)
 // Move detail overlay (long-press / right-click)
 const detailMove = ref<Move | null>(null)
 let longPressTimer: ReturnType<typeof setTimeout> | null = null
+let longPressTriggered = false
 const LONG_PRESS_MS = 500
 
 const startLongPress = (move: Move) => {
+  longPressTriggered = false
   longPressTimer = setTimeout(() => {
+    longPressTriggered = true
     detailMove.value = move
     longPressTimer = null
   }, LONG_PRESS_MS)
@@ -416,6 +419,11 @@ const combatManeuvers = COMBAT_MANEUVERS
 // =============================================
 
 const handleMoveSelect = (move: Move) => {
+  // Prevent synthesized click from firing after a long-press on mobile
+  if (longPressTriggered) {
+    longPressTriggered = false
+    return
+  }
   if (isMoveExhausted(move).exhausted || !canUseStandardAction.value || !canBeCommanded.value) return
 
   pendingMoveId.value = move.id
