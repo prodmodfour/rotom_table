@@ -88,6 +88,8 @@ const props = defineProps<{
   isOwnToken?: boolean
   /** Player mode: shows pulsing pending state for a move request */
   isPendingMove?: boolean
+  /** Optional HP percentage override (0-100). When provided, used instead of exact HP for bar fill. */
+  displayHpOverride?: number
 }>()
 
 const emit = defineEmits<{
@@ -155,6 +157,11 @@ const initial = computed(() => {
 })
 
 const hpPercent = computed(() => {
+  // When a display override is provided (e.g. player mode enemy HP masking),
+  // use the pre-rounded percentage instead of exact HP
+  if (props.displayHpOverride !== undefined) {
+    return Math.max(0, Math.min(100, props.displayHpOverride))
+  }
   if (!entity.value) return 100
   const current = entity.value.currentHp
   const max = entity.value.maxHp
