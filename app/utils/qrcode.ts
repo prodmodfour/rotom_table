@@ -572,7 +572,6 @@ export function encodeQR(text: string): QrMatrix {
   // Try all 8 mask patterns and pick the one with lowest penalty
   let bestMask = 0
   let bestPenalty = Infinity
-  let bestMatrix = matrix
 
   for (let m = 0; m < 8; m++) {
     const masked = applyMask(matrix, functionMask, m)
@@ -581,7 +580,6 @@ export function encodeQR(text: string): QrMatrix {
     if (penalty < bestPenalty) {
       bestPenalty = penalty
       bestMask = m
-      bestMatrix = masked
     }
   }
 
