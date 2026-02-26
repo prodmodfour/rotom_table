@@ -63,7 +63,7 @@ export function useMoveCalculation(
 
   const { getCombatantNameById } = useCombatantDisplay()
 
-  const { parseRange, isInRange } = useRangeParser()
+  const { parseRange, isInRange, closestCellPair } = useRangeParser()
   const terrainStore = useTerrainStore()
 
   // State
@@ -166,12 +166,16 @@ export function useMoveCalculation(
       }
     }
 
-    // Bresenham's line from actor center-ish to target center-ish
-    // For multi-cell tokens, use anchor position (top-left)
-    let x0 = actorPos.x
-    let y0 = actorPos.y
-    const x1 = target.position.x
-    const y1 = target.position.y
+    // Use closest cell pair for multi-cell tokens (MED-1)
+    // instead of anchor positions (top-left)
+    const { from: closestFrom, to: closestTo } = closestCellPair(
+      { position: actorPos, size: actorSize },
+      { position: target.position, size: targetSize }
+    )
+    let x0 = closestFrom.x
+    let y0 = closestFrom.y
+    const x1 = closestTo.x
+    const y1 = closestTo.y
 
     const dx = Math.abs(x1 - x0)
     const dy = Math.abs(y1 - y0)
