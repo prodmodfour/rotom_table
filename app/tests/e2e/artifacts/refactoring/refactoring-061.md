@@ -1,7 +1,7 @@
 ---
 ticket_id: refactoring-061
 priority: P4
-status: in-progress
+status: resolved
 category: EXT-DUPLICATE
 source: code-review-121 (M2)
 created_at: 2026-02-20

@@ -1,7 +1,7 @@
 ---
 ticket_id: refactoring-059
 priority: P4
-status: in-progress
+status: resolved
 category: EXT-DEAD-CODE
 source: code-review-122 (HIGH-001), rules-review-112
 created_at: 2026-02-20

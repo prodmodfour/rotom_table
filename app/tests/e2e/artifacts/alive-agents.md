@@ -121,3 +121,7 @@
 | plan-20260226-073726/slave-3 | developer | refactoring-068+ux-001 | success | 2026-02-26T07:46:30Z | 86e1ffa, 81a0857, 4a55ff0 |
 | plan-20260226-073726/slave-4 | developer | refactoring-061 | success | 2026-02-26T07:47:30Z | 8533c01, 0e48a79, 5a6ee19, aacbf4b, e5118e0, 0f7acde, e80d8ae |
 | plan-20260226-073726/slave-5 | developer | refactoring-059+077 | success | 2026-02-26T07:47:00Z | 8cf3288, 49d2d15, aff4e10 |
+| plan-20260226-120000/slave-1 | developer | refactoring-083-fix | success | 2026-02-26T12:16:00Z | f03e508, 4ac40f2, 994cf41, b5aa508 |
+| plan-20260226-120000/slave-2 | developer | ux-007+refactoring-084 | success | 2026-02-26T12:03:00Z | 33cf41d, 87445c8 |
+| plan-20260226-120000/slave-3 | reviewers | feature-003-track-a-p2-review | CHANGES_REQUIRED | 2026-02-26T12:55:00Z | 54651cb, 3801afd |
+| plan-20260226-120000/slave-4 | reviewers | refactoring-batch-review | APPROVED | 2026-02-26T12:05:30Z | f80ebd9 |

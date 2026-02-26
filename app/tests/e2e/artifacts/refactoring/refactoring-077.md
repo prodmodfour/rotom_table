@@ -2,7 +2,7 @@
 ticket_id: refactoring-077
 category: EXT-COSMETIC
 priority: P4
-status: in-progress
+status: resolved
 source: code-review-151 M2 note
 created_by: slave-collector (plan-20260224-162105)
 created_at: 2026-02-24T17:00:00Z

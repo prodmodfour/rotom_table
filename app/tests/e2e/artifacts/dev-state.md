@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-02-26T09:00:00
-updated_by: slave-collector (plan-20260226-073726)
+last_updated: 2026-02-26T12:30:00
+updated_by: slave-collector (plan-20260226-120000)
 ---
 
 # Dev Ecosystem State
@@ -36,7 +36,7 @@ updated_by: slave-collector (plan-20260226-073726)
 |--------|----------|--------|---------|-------------------|
 | feature-001 | P3 | **resolved** | B2W2 trainer sprites — single-phase design complete, P0 APPROVED (code-review-149 + rules-review-139). Closed by slave-3 (plan-20260224-162105) | single-phase |
 | feature-002 | P2 | **P2-APPROVED** | 3D isometric grid — P2 fix cycle 2 APPROVED (code-review-160 + rules-review-150). All tiers complete | multi-phase |
-| feature-003 | P1 | **Track-A-P2-implemented + Track-B-P1-APPROVED + Track-C-P1-APPROVED** | Player View — Track A P2 implemented (11 commits, needs review). Track B P1 APPROVED (code-review-162). Track C P1 APPROVED (code-review-163 + rules-review-152). All tracks P0+P1 complete | multi-phase-parallel |
+| feature-003 | P1 | **Track-A-P2-CHANGES_REQUIRED + Track-B-P1-APPROVED + Track-C-P1-APPROVED** | Player View — Track A P2 reviewed: code-review-177 CHANGES_REQUIRED (H1: long-press+click double-fire, M1-M3), rules-review-157 APPROVED. Track B P1 APPROVED (code-review-162). Track C P1 APPROVED (code-review-163 + rules-review-152). All tracks P0+P1 complete | multi-phase-parallel |
 
 ### UX Tickets (`tickets/ux/`)
 | Ticket | Priority | Status | Summary |
@@ -47,19 +47,26 @@ updated_by: slave-collector (plan-20260226-073726)
 | ux-004 | P3 | **resolved** | Enemy HP masking — fix cycle complete (3 commits: roundToDisplayTier extracted to utils/displayHp.ts, dead getDisplayHp removed, commit hashes fixed). code-review-167 CHANGES_REQUIRED → fixed. code-review-172 **APPROVED**. rules-review-154 APPROVED |
 | ux-005 | P4 | **resolved** | Pokemon full HP on level-up — currentHp preserved when at full HP. code-review-169 APPROVED, rules-review-156 APPROVED |
 | ux-006 | P4 | **open** | PTU injury markers may leak precise HP info in player mode (from rules-review-154 R2) |
-| ux-007 | P4 | **open** | Player's own tokens hidden in explored fog cells (from rules-review-155 edge case) |
+| ux-007 | P4 | **resolved** | Player's own tokens hidden in explored fog cells — fixed: isOwnCombatant exception in usePlayerGridView.ts. Resolved by slave-2 (plan-20260226-120000) |
 | ux-008 | P4 | **open** | Focus item selection non-deterministic across different equipment slots (from code-review-169 M1) |
 
 ## Active Developer Work
 
-**Current task:** Session 37 collection complete. All 5 slaves merged (28 commits). Reviews: code-review-173 CHANGES_REQUIRED (refactoring-083 file size), code-review-174/175/176 APPROVED. Feature-003 Track A P2 implemented (11 commits). refactoring-059/061/068/077 resolved. ux-001 resolved.
+**Current task:** Session 38 collection complete. All 4 slaves merged (9 commits). refactoring-083 fix cycle done (4 commits). ux-007+refactoring-084 resolved (2 commits). feature-003 Track A P2: code-review-177 CHANGES_REQUIRED (H1+M1-M3), rules-review-157 APPROVED. Refactoring batch: code-review-178 APPROVED. Ticket statuses fixed (M1 from code-review-178).
+
+**Session 38 (2026-02-26, plan-20260226-120000):**
+- slave-1 (developer): refactoring-083 fix cycle — 4 commits: extracted _form-utilities.scss (shared SCSS utilities), removed from XpDistributionModal, extracted XpDistributionResults.vue child component. File reduced from 1019 to under 800 lines → **resolved, needs review**
+- slave-2 (developer): ux-007 + refactoring-084 — 2 commits: added isOwnCombatant exception to visibleTokens filter in usePlayerGridView.ts, added useTouchInteraction + gridDistance to app-surface.md → **resolved (ux-007 needs review, refactoring-084 docs-only)**
+- slave-3 (reviewers): feature-003 Track A P2 review — code-review-177 **CHANGES_REQUIRED** (H1: long-press+click double-fire on mobile, M1: toast/turn-flash overlap, M2: incomplete 4K scaling, M3: app-surface.md missing files). rules-review-157 **APPROVED** (all PTU mechanics correct)
+- slave-4 (reviewers): refactoring batch review — code-review-178 **APPROVED** (M1: ticket statuses fixed by collector, M2: global CSS names accepted as-is)
+- Ticket statuses fixed: refactoring-068, ux-001, refactoring-059, refactoring-077, refactoring-061 → all `status: resolved` in frontmatter (code-review-178 M1)
 
 **Session 37 (2026-02-26, plan-20260226-073726):**
 - slave-1 (reviewers): 4 review artifacts for session 36 refactoring batch. code-review-173 CHANGES_REQUIRED (C1: XpDistributionModal 1019 lines > 800 limit after SCSS inline). code-review-174 APPROVED (M1: surface doc). code-review-175 APPROVED (M1: surface doc). code-review-176 APPROVED (clean).
-- slave-2 (developer): feature-003 Track A P2 — 11 commits: haptic feedback, skeleton loading, tab transitions, move detail overlay, auto-scroll, aria-labels, 4K scaling, action feedback toasts, touch targets, design+ticket docs → **needs review**
-- slave-3 (developer): refactoring-068 + ux-001 — 3 commits: reactive refs for equipment dropdowns, keep catalog modal open with success toast → **resolved, needs review**
-- slave-4 (developer): refactoring-061 — 7 commits: extracted _create-form-shared.scss partial, registered in nuxt config, applied to 4 components → **resolved, needs review**
-- slave-5 (developer): refactoring-059 + refactoring-077 — 3 commits: removed dead densityMultiplier from 5 API endpoints, moved TerrainCostGetter types to shared vtt.ts → **resolved, needs review**
+- slave-2 (developer): feature-003 Track A P2 — 11 commits: haptic feedback, skeleton loading, tab transitions, move detail overlay, auto-scroll, aria-labels, 4K scaling, action feedback toasts, touch targets, design+ticket docs → **reviewed in session 38**
+- slave-3 (developer): refactoring-068 + ux-001 — 3 commits: reactive refs for equipment dropdowns, keep catalog modal open with success toast → **APPROVED (code-review-178)**
+- slave-4 (developer): refactoring-061 — 7 commits: extracted _create-form-shared.scss partial, registered in nuxt config, applied to 4 components → **APPROVED (code-review-178)**
+- slave-5 (developer): refactoring-059 + refactoring-077 — 3 commits: removed dead densityMultiplier from 5 API endpoints, moved TerrainCostGetter types to shared vtt.ts → **APPROVED (code-review-178)**
 - Tickets filed: refactoring-084 (app-surface.md missing useTouchInteraction + gridDistance entries)
 
 **Session 36 (2026-02-26, plan-20260226-070756):**
@@ -103,14 +110,19 @@ updated_by: slave-collector (plan-20260226-073726)
 - Tickets filed: refactoring-080 (diagonal formula duplication), ux-005 (currentHp on level-up)
 
 **Next actions (by priority):**
-1. **Fix cycle** refactoring-083 (P0 — code-review-173 CHANGES_REQUIRED: XpDistributionModal 1019 lines, needs to get under 800)
-2. **Review** feature-003 Track A P2 (P1 — 11 commits, player view polish/UX/accessibility)
-3. **Review** refactoring-068+ux-001 (P4 — equipment dropdown reactivity + catalog modal UX)
-4. **Review** refactoring-061 (P4 — CSS extraction for create form components)
-5. **Review** refactoring-059+077 (P4 — densityMultiplier cleanup + TerrainCostGetter type move)
-6. Remaining open: ux-002 P4, ux-006 P4, ux-007 P4, ux-008 P4, refactoring-060/062/076/078/079/084
+1. **Fix cycle** feature-003 Track A P2 (P1 — code-review-177 CHANGES_REQUIRED: H1 long-press+click, M1 toast overlap, M2 incomplete 4K, M3 app-surface.md)
+2. **Review** refactoring-083 fix (P0 — 4 commits: _form-utilities.scss + XpDistributionResults.vue extraction)
+3. **Review** ux-007 (P4 — 1 commit: isOwnCombatant fog exception in usePlayerGridView.ts)
+4. Remaining open: ux-002 P4, ux-006 P4, ux-008 P4, refactoring-060/062/076/078/079
 
 ## Review Status
+
+### Session 38 Reviews (plan-20260226-120000)
+| Review ID | Target | Verdict | Reviewer | Date |
+|-----------|--------|---------|----------|------|
+| code-review-177 | feature-003 Track A P2 (player view polish) | CHANGES_REQUIRED (H1: long-press+click, M1: toast overlap, M2: 4K scaling, M3: surface doc) | senior-reviewer | 2026-02-26 |
+| rules-review-157 | feature-003 Track A P2 (player view polish) | APPROVED | game-logic-reviewer | 2026-02-26 |
+| code-review-178 | refactoring batch (068+ux-001, 061, 059, 077) | APPROVED (M1: ticket statuses fixed, M2: CSS names accepted) | senior-reviewer | 2026-02-26 |
 
 ### Session 37 Reviews (plan-20260226-073726)
 | Review ID | Target | Verdict | Reviewer | Date |
@@ -339,8 +351,8 @@ updated_by: slave-collector (plan-20260226-073726)
 | refactoring-080 | P4 | **resolved** | ptuDiagonalDistance extracted to utils/gridDistance.ts, 6 inline implementations replaced — resolved by slave-5 (plan-20260226-070756) |
 | refactoring-081 | P1 | **APPROVED** | SCSS unit incompatibility in _player-view.scss — calc() fix. code-review-164 APPROVED |
 | refactoring-082 | P4 | **resolved** | Touch handlers extracted to useTouchInteraction composable, used by both useGridInteraction (630 lines) and useIsometricInteraction (691 lines) — resolved by slave-3 (plan-20260226-070756) |
-| refactoring-083 | P0 | **CHANGES_REQUIRED** | Undefined $z-index-modal in XpDistributionModal — SCSS partial inlined into component, partial file deleted. code-review-173 CHANGES_REQUIRED (C1: file at 1019 lines > 800 limit, needs extraction or split) |
-| refactoring-084 | P4 | open | app-surface.md missing entries for useTouchInteraction.ts and gridDistance.ts (from code-review-174 M1 + code-review-175 M1) |
+| refactoring-083 | P0 | **resolved** | Undefined $z-index-modal in XpDistributionModal — fix cycle complete. Extracted _form-utilities.scss (shared SCSS utilities) + XpDistributionResults.vue child component. File reduced from 1019 to under 800 lines. Resolved by slave-1 (plan-20260226-120000). Needs review |
+| refactoring-084 | P4 | **resolved** | app-surface.md missing entries for useTouchInteraction.ts and gridDistance.ts — updated. Resolved by slave-2 (plan-20260226-120000) |
 
 ## Code Health
 

@@ -1,7 +1,7 @@
 ---
 ticket_id: refactoring-068
 priority: P4
-status: in-progress
+status: resolved
 category: EXT-FRAGILE
 domain: combat
 source: code-review-127 M2
