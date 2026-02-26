@@ -1,22 +1,48 @@
+import { z } from 'zod'
 import { prisma } from '~/server/utils/prisma'
-import type { GridPosition, TerrainType, TerrainFlags } from '~/types'
 
-interface TerrainCellData {
-  position: GridPosition
-  type: TerrainType
-  elevation: number
-  note?: string
-  flags?: TerrainFlags  // Optional for backward compat with legacy clients
-}
+// Valid terrain types for cell data
+const VALID_TERRAIN_TYPES = ['normal', 'difficult', 'blocking', 'water', 'earth', 'rough', 'hazard', 'elevated'] as const
 
-interface TerrainStateBody {
-  enabled?: boolean
-  cells?: TerrainCellData[]
-}
+// Zod schema for terrain flags — strict: only rough and slow booleans allowed
+const terrainFlagsSchema = z.object({
+  rough: z.boolean(),
+  slow: z.boolean(),
+}).strict()
+
+// Zod schema for a single terrain cell
+const terrainCellSchema = z.object({
+  position: z.object({
+    x: z.number(),
+    y: z.number(),
+    z: z.number().optional(),
+  }),
+  type: z.enum(VALID_TERRAIN_TYPES),
+  elevation: z.number(),
+  note: z.string().optional(),
+  flags: terrainFlagsSchema.optional(),
+})
+
+// Zod schema for the request body
+const terrainStateBodySchema = z.object({
+  enabled: z.boolean().optional(),
+  cells: z.array(terrainCellSchema).optional(),
+})
 
 export default defineEventHandler(async (event) => {
   const id = getRouterParam(event, 'id')
-  const body = await readBody<TerrainStateBody>(event)
+  const rawBody = await readBody(event)
+
+  // Validate request body
+  const parseResult = terrainStateBodySchema.safeParse(rawBody)
+  if (!parseResult.success) {
+    throw createError({
+      statusCode: 400,
+      message: `Invalid terrain data: ${parseResult.error.issues.map(i => i.message).join(', ')}`,
+    })
+  }
+
+  const body = parseResult.data
 
   if (!id) {
     throw createError({
