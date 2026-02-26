@@ -1,362 +1,407 @@
 ---
 domain: character-lifecycle
-audited_at: 2026-02-19T18:00:00Z
+audited_at: 2026-02-26T16:00:00Z
 audited_by: implementation-auditor
-items_audited: 41
-correct: 28
-incorrect: 5
-approximation: 8
-ambiguous: 2
+rules_catalog: character-lifecycle-rules.md
+capabilities_catalog: character-lifecycle-capabilities.md
+matrix: character-lifecycle-matrix.md
+items_audited: 42
 ---
 
 # Implementation Audit: Character Lifecycle
 
-## Summary
+## Audit Summary
 
 | Classification | Count |
 |---------------|-------|
-| Correct | 28 |
-| Incorrect | 5 |
-| Approximation | 8 |
-| Ambiguous | 2 |
-| **Total** | **41** |
-
-*Note: The Auditor Queue has 43 numbered items, but items 27 and 29 are marked "already queued above" (R003 and R008 duplicates). 41 unique items were audited. The 2 Ambiguous items are secondary aspects of R042 and R020 (already counted under Incorrect and Approximation respectively).*
+| Correct | 33 |
+| Incorrect | 1 |
+| Approximation | 7 |
+| Ambiguous | 1 |
+| **Total Audited** | **42** |
 
 ### Severity Breakdown (Incorrect + Approximation)
-- CRITICAL: 0
-- HIGH: 1
-- MEDIUM: 5
-- LOW: 7
+
+| Severity | Count | Items |
+|----------|-------|-------|
+| CRITICAL | 0 | — |
+| HIGH | 0 | — |
+| MEDIUM | 3 | R035 (branch class duplicate block), R024 (Pathetic skill enforcement gap in custom mode), R037 (no duplicate feature detection) |
+| LOW | 5 | R040 (no max level validation), R020 (no WC derivation), R033 (no stat tag auto-bonus), R034 (no ranked tracking), R042 (AP refresh function exists but no auto-trigger) |
 
 ---
 
-## Correct Items
+## Tier 1: Core Formulas and Enumerations
 
-### character-lifecycle-R001: Trainer Combat Stats Definition
-- **Classification:** Correct
-- **Code:** `app/prisma/schema.prisma:24-30` — HumanCharacter stat columns; `app/types/character.ts:21-28` — Stats interface
+### R001 — Trainer Combat Stats Definition
+
 - **Rule:** "The 6 combat stats are HP, Attack, Defense, Special Attack, Special Defense, and Speed."
-- **Verification:** The Prisma schema defines all 6 stats as integer columns (hp, attack, defense, specialAttack, specialDefense, speed) with defaults. The Stats TypeScript interface mirrors all 6 fields exactly. Both the create endpoint (`index.post.ts:19-24`) and update endpoint (`[id].put.ts:28-33`) handle all 6 stats via nested stats object.
-
-### character-lifecycle-R004: Skill Ranks and Dice
+- **Expected behavior:** Model stores all 6 stats.
+- **Actual behavior:** Prisma model `HumanCharacter` has `hp`, `attack`, `defense`, `specialAttack`, `specialDefense`, `speed` fields (`app/prisma/schema.prisma:25-30`). `trainerStats.ts` defines `BASE_HP=10`, `BASE_OTHER=5`. `useCharacterCreation.ts:103-110` computes all 6 stats.
 - **Classification:** Correct
-- **Code:** `app/types/character.ts:18` — SkillRank type
-- **Rule:** "There are 6 Ranks of Skills." Pathetic=1d6, Untrained=2d6, Novice=3d6, Adept=4d6, Expert=5d6, Master=6d6.
-- **Verification:** The SkillRank type defines exactly 6 ranks: `'Pathetic' | 'Untrained' | 'Novice' | 'Adept' | 'Expert' | 'Master'`. The HumanSkillsTab component (`HumanSkillsTab.vue:8`) applies rank-based CSS classes for visual differentiation of all 6 ranks (pathetic, untrained, novice, adept, expert, master). The dice counts themselves are not stored (they are a table lookup handled at the physical table), which is appropriate for a GM tool.
 
-### character-lifecycle-R006: Skills Default Rank
+### R003 — Skill Categories
+
+- **Rule:** "Body: Acrobatics, Athletics, Combat, Intimidate, Stealth, Survival. Mind: General Education, Medicine Education, Occult Education, Pokemon Education, Technology Education, Guile, Perception. Spirit: Charm, Command, Focus, Intuition."
+- **Expected behavior:** 17 skills across 3 categories: Body(6), Mind(7), Spirit(4).
+- **Actual behavior:** `app/constants/trainerSkills.ts:4-8` defines `PTU_SKILL_CATEGORIES` with Body(6), Mind(7), Spirit(4) = 17 total. Skill names use abbreviated forms (`General Ed`, `Medicine Ed`, etc.) but map correctly to PTU skills.
 - **Classification:** Correct
-- **Code:** `app/prisma/schema.prisma:36` — skills default `"{}"`; `app/server/api/characters/index.post.ts:29` — skills default `{}`
-- **Rule:** "Skills begin at Untrained unless modified by a Background."
-- **Verification:** When a character is created without specifying skills, the default is an empty JSON object `{}`. Since the app stores only non-default ranks and the SkillRank type has Untrained as the baseline, any skill not in the object is implicitly Untrained. This matches the PTU rule.
 
-### character-lifecycle-R009: Physical Evasion Formula
+### R004 — Skill Ranks and Dice
+
+- **Rule:** Pathetic=1d6, Untrained=2d6, Novice=3d6, Adept=4d6, Expert=5d6, Master=6d6.
+- **Expected behavior:** 6 ranks with matching dice values.
+- **Actual behavior:** `app/constants/trainerSkills.ts:19-26` defines `SKILL_RANKS` with exactly these 6 ranks and dice: `{rank:'Pathetic', value:1, dice:'1d6'}` through `{rank:'Master', value:6, dice:'6d6'}`.
 - **Classification:** Correct
-- **Code:** `app/utils/damageCalculation.ts:91-96` — calculateEvasion()
-- **Rule:** "for every 5 points a Pokemon or Trainer has in Defense, they gain +1 Physical Evasion, up to a maximum of +6 at 30 Defense."
-- **Verification:** The `calculateEvasion` function computes `Math.min(6, Math.floor(applyStageModifier(baseStat, combatStage) / 5))`. For Physical Evasion, it is called with `defenseBase` and `defenseStage` (`calculate-damage.post.ts:190`). The formula correctly divides by 5, floors the result, and caps at 6. Stage-modified stats are used (consistent with PTU 07-combat.md where raising Defense via Combat Stages grants additional evasion).
 
-### character-lifecycle-R010: Special Evasion Formula
-- **Classification:** Correct
-- **Code:** `app/utils/damageCalculation.ts:91-96` — calculateEvasion(); `app/server/api/encounters/[id]/calculate-damage.post.ts:191`
-- **Rule:** "for every 5 points a Pokemon or Trainer has in Special Defense, they gain +1 Special Evasion, up to a maximum of +6 at 30 Special Defense."
-- **Verification:** Same `calculateEvasion` function called with `spDefBase` and `spDefStage`. Formula `Math.min(6, Math.floor(modifiedSpDef / 5))` correctly implements the rule.
+### R008 — Trainer HP Formula
 
-### character-lifecycle-R011: Speed Evasion Formula
-- **Classification:** Correct
-- **Code:** `app/utils/damageCalculation.ts:91-96` — calculateEvasion(); `app/server/api/encounters/[id]/calculate-damage.post.ts:192`
-- **Rule:** "for every 5 points a Pokemon or Trainer has in Speed, they gain +1 Speed Evasion, up to a maximum of +6 at 30 Speed."
-- **Verification:** Same `calculateEvasion` function called with `speedBase` and `speedStage`. Formula correctly implements the rule.
-
-### character-lifecycle-R012: Evasion General Formula
-- **Classification:** Correct
-- **Code:** `app/utils/damageCalculation.ts:91-96` — calculateEvasion()
-- **Rule:** "To calculate these Evasion values, divide the related Combat Stat by 5 and round down. You may never have more than +6 in a given Evasion from Combat Stats alone."
-- **Verification:** The function uses `Math.floor` for rounding down and `Math.min(6, ...)` for the cap. The evasion from stats is capped at 6, while bonus evasion from moves/effects stacks on top (line 95: `statEvasion + evasionBonus`), correctly modeling "from Combat Stats alone" as the 6-cap scope.
-
-### character-lifecycle-R021: Rounding Rule
-- **Classification:** Correct
-- **Code:** `app/utils/restHealing.ts:50` — Math.floor; `app/utils/damageCalculation.ts:92,202` — Math.floor
-- **Rule:** "When working with decimals in the system, round down to the nearest whole number, even if the decimal is .5 or higher."
-- **Verification:** All calculation utilities use `Math.floor` consistently. Rest healing: `Math.floor(maxHp / 16)` (line 50). Evasion: `Math.floor(applyStageModifier(...) / 5)` (line 92). Stage modifier: `Math.floor(baseStat * multiplier)` (line 202). No instances of `Math.round` or `Math.ceil` found in game mechanic calculations.
-
-### character-lifecycle-R041: Action Points Pool
-- **Classification:** Correct
-- **Code:** `app/composables/useCombat.ts:174-177` — calculateMaxActionPoints()
-- **Rule:** "Trainers have a maximum Action Point pool equal to 5, plus 1 more for every 5 Trainer Levels they have achieved; a Level 15 Trainer would have a maximum of 8 Action Points."
-- **Verification:** The function computes `5 + Math.floor(trainerLevel / 5)`. For Level 15: `5 + Math.floor(15/5) = 5 + 3 = 8`. This matches the PTU example exactly. The formula correctly handles non-multiples: Level 14 = 5 + 2 = 7, Level 16 = 5 + 3 = 8.
-
-### character-lifecycle-R043: AP Bind and Drain
-- **Classification:** Correct
-- **Code:** `app/server/api/characters/[id]/heal-injury.post.ts:64-89` — drain_ap method; `app/server/api/characters/[id]/extended-rest.post.ts:74,84` — AP restore
-- **Rule:** "Drained AP becomes unavailable for use until after an Extended Rest is taken."
-- **Verification:** The drain AP method (`heal-injury.post.ts:66`) adds 2 to drainedAp per injury healed. The extended rest endpoint (`extended-rest.post.ts:84`) sets `drainedAp: 0`, restoring all drained AP. This correctly models the PTU rule that drained AP is restored after an Extended Rest. Note: Bound AP is not tracked (see R042 for that distinction).
-
-### character-lifecycle-R068: Percentages Are Additive
-- **Classification:** Correct
-- **Code:** `app/utils/captureRate.ts:53-130` — calculateCaptureRate()
-- **Rule:** "Percentages are additive, not multiplicative."
-- **Verification:** The capture rate calculator sums all modifiers additively: `base + levelModifier + hpModifier + evolutionModifier + shinyModifier + legendaryModifier + statusModifier + injuryModifier + stuckModifier + slowModifier`. No multiplicative combination of percentage modifiers exists. The rest healing utility also uses additive percentage logic (1/16th max HP is a fixed formula, not layered percentages).
-
-### character-lifecycle-R019: Trainer Size
-- **Classification:** Correct
-- **Code:** `app/prisma/schema.prisma:11-76` — HumanCharacter model (no size field = implicit Medium)
-- **Rule:** "Size is how big you are. Trainers are Medium by default."
-- **Verification:** The HumanCharacter model does not have an explicit `size` field, meaning trainers are implicitly Medium. This is consistent with the PTU rule since trainers are always Medium and no size change mechanic exists for trainers. The app does not need to store what never changes.
-
-### character-lifecycle-R003: Skill Categories
-- **Classification:** Correct
-- **Code:** `app/server/services/csv-import.service.ts:123-141` — parseTrainerSheet() skill rows
-- **Rule:** "The Body Skills are Acrobatics, Athletics, Combat, Intimidate, Stealth, and Survival. The Mind Skills are General Education, Medicine Education, Occult Education, Pokemon Education, Technology Education, Guile, and Perception. The Spirit Skills are Charm, Command, Focus, and Intuition."
-- **Verification:** The CSV import parses all 17 skills: Acrobatics (row 12), Athletics (13), Charm (14), Combat (15), Command (16), General Ed (17), Medicine Ed (18), Occult Ed (19), Pokemon Ed (20), Technology Ed (21), Focus (22), Guile (23), Intimidate (24), Intuition (25), Perception (26), Stealth (27), Survival (28). All 17 PTU skills across all 3 categories are present. The categorization (Body/Mind/Spirit) is not stored in the data model, but all skills are individually tracked.
-
-### character-lifecycle-R005: Skill Rank Level Prerequisites
-- **Classification:** Correct
-- **Code:** `app/types/character.ts:18` — SkillRank type
-- **Rule:** "Adept Rank requires Level 2. Expert Rank requires Level 6, and Master Rank requires Level 12."
-- **Verification:** The SkillRank type includes all six ranks. The level prerequisites are NOT enforced by code validation, but this is consistent with the app's design philosophy as a GM tool. The type correctly defines the full rank spectrum. The prerequisites are meant to be enforced by the GM during manual editing. The matrix classified this as "Implemented" because the type includes all ranks and the GM manages prerequisites, which is accurate for this app's design.
-
-### character-lifecycle-R022: Starting Edges
-- **Classification:** Correct
-- **Code:** `app/prisma/schema.prisma:38` — edges JSON; `app/server/api/characters/index.post.ts:31` — edges default
-- **Rule:** "Starting Trainers begin with four Edges to distribute as they see fit."
-- **Verification:** Edges are stored as a JSON array. The create endpoint accepts an edges array and defaults to `[]`. The 4-edge starting allocation is a character creation guideline managed by the GM, consistent with the app's design. CSV import (`csv-import.service.ts:157-173`) parses edges from the sheet.
-
-### character-lifecycle-R030: Starting Features
-- **Classification:** Correct
-- **Code:** `app/prisma/schema.prisma:37` — features JSON; `app/server/api/characters/index.post.ts:30` — features default
-- **Rule:** "Starting Trainers begin with four Features to distribute as they see fit. They also choose one Training Feature to gain, regardless of prerequisites."
-- **Verification:** Features are stored as a JSON array. The create endpoint accepts a features array and defaults to `[]`. The 4+1 starting allocation is managed by the GM. CSV import (`csv-import.service.ts:149-155`) parses features from the sheet.
-
-### character-lifecycle-R032: Max Class Features
-- **Classification:** Correct
-- **Code:** `app/prisma/schema.prisma:35` — trainerClasses JSON; `app/components/character/tabs/HumanClassesTab.vue:3-8`
-- **Rule:** "A Trainer may only have a maximum of 4 Class Features."
-- **Verification:** Trainer classes are stored as a JSON array. The HumanClassesTab component displays them. The 4-class maximum is a constraint the GM enforces, consistent with the app's design philosophy.
-
-### character-lifecycle-R038: Stat Points Per Level
-- **Classification:** Correct
-- **Code:** `app/server/api/characters/[id].put.ts:27-34` — stat update handling
-- **Rule:** "Every Level you gain a Stat Point. Trainers don't follow Base Relations, so feel free to spend these freely."
-- **Verification:** The update endpoint allows unrestricted modification of all 6 stats. There are no base relation constraints or per-stat caps for trainers. Stats can be freely allocated, matching the PTU rule that trainers don't follow Base Relations.
-
-### character-lifecycle-R040: Max Trainer Level
-- **Classification:** Correct
-- **Code:** `app/prisma/schema.prisma:24` — level Int; `app/server/api/characters/index.post.ts:18` — level default; `app/pages/gm/create.vue:57` — max="100" on input
-- **Rule:** "Trainers have a Maximum Level of 50."
-- **Verification:** The level is stored as an integer with default 1. The create page input has `max="100"` which is higher than PTU's max of 50, but this is a UI guideline not a hard constraint. The API does not validate the max level. The GM manages the level constraint. Since the matrix classified this as "Implemented" with the note that "The max of 50 is a data constraint enforceable at the UI/API level", and the code does store and allow editing of level, this is correct for the GM-tool design. Note: the UI `max` attribute of 100 instead of 50 is a minor inconsistency but does not break functionality since the GM controls the value.
-
-### character-lifecycle-R002: Starting Stat Baseline (Partial — present portion)
-- **Classification:** Correct
-- **Code:** `app/prisma/schema.prisma:25-30` — stat defaults; `app/pages/gm/create.vue:251-256` — form defaults
-- **Rule:** "Level 1 Trainers begin with 10 HP and 5 in each of their other Stats."
-- **Verification:** Schema defaults: hp=10, attack/defense/specialAttack/specialDefense/speed=5. Create page form defaults: hp=10, others=5. These match the PTU Level 1 baselines exactly.
-
-### character-lifecycle-R007: Background Skill Modification (Partial — present portion)
-- **Classification:** Correct
-- **Code:** `app/prisma/schema.prisma:36` — skills JSON; `app/server/services/csv-import.service.ts:122-147` — skill parsing
-- **Rule:** "Simply choose 1 Skill to raise to Adept Rank and 1 Skill to raise to Novice Rank."
-- **Verification:** Skills are stored as JSON and fully editable. CSV import correctly parses all skill ranks from the sheet. The present portion (data storage and editability) is correctly implemented.
-
-### character-lifecycle-R025: Skill Edge Definitions (Partial — present portion)
-- **Classification:** Correct
-- **Code:** `app/types/character.ts:18` — SkillRank type; `app/prisma/schema.prisma:38` — edges JSON
-- **Rule:** "Basic Skills: Rank Up from Pathetic to Untrained or Untrained to Novice. Adept Skills [Level 2]... Expert Skills [Level 6]... Master Skills [Level 12]..."
-- **Verification:** The SkillRank type includes all 6 ranks. Edges are stored as a JSON array of names. The Skill Edge type distinctions (Basic, Adept, Expert, Master) are not enforced by code but the data storage supports all rank values. The present portion is correct.
-
-### character-lifecycle-R026: Edges Per Level (Partial — present portion)
-- **Classification:** Correct
-- **Code:** `app/prisma/schema.prisma:38` — edges JSON; `app/server/api/characters/[id].put.ts` — update
-- **Rule:** "You gain 4 Edges during character creation, another at every even Level..."
-- **Verification:** Edges are stored as a JSON array and can be modified through the create and update endpoints. The present portion (data storage and editability) is correct.
-
-### character-lifecycle-R036: Features Per Level (Partial — present portion)
-- **Classification:** Correct
-- **Code:** `app/prisma/schema.prisma:37` — features JSON
-- **Rule:** "Every odd Level you gain a Feature."
-- **Verification:** Features are stored as a JSON array. The present portion (data storage) is correct.
-
-### character-lifecycle-R039: Edges Per Level Advancement (Partial — present portion)
-- **Classification:** Correct
-- **Code:** `app/prisma/schema.prisma:38` — edges JSON
-- **Rule:** "Every even Level you gain an Edge."
-- **Verification:** Edges are stored and editable. The present portion is correct.
-
-### character-lifecycle-R053: Leveling Triggers (Partial — present portion)
-- **Classification:** Correct
-- **Code:** `app/server/api/characters/[id].put.ts:19` — level update
-- **Rule:** "In Pokemon Tabletop United, there are two ways for Trainers to gain levels; Milestones and Experience."
-- **Verification:** The level field is editable via the update endpoint. The GM can manually change a character's level. The present portion (level field editability) is correct.
-
-### character-lifecycle-R054: Experience Bank (Partial — present portion)
-- **Classification:** Correct
-- **Code:** `app/server/api/characters/[id].put.ts:19` — level update
-- **Rule:** "Whenever a Trainer reaches 10 Experience or higher, they immediately subtract 10 Experience and gain 1 Level."
-- **Verification:** The level field can be manually incremented. The present portion (manual level increment) is correct.
-
-### character-lifecycle-R060: Experience From Pokemon (Partial — present portion)
-- **Classification:** Correct
-- **Code:** `app/server/api/capture/attempt.post.ts:92-98` — capture auto-link
-- **Rule:** "Whenever a Trainer catches, hatches, or evolves a Pokemon species they did not previously own, they gain +1 Experience."
-- **Verification:** The capture system sets `origin: 'captured'` and links the Pokemon to the trainer via `ownerId`. The present portion (capture linking) is correctly implemented.
-
----
-
-## Incorrect Items
-
-### character-lifecycle-R008: Trainer HP Formula
-- **Classification:** Incorrect
-- **Severity:** HIGH
-- **Code:** `app/pages/gm/create.vue:295-296` — createHuman(); `app/server/api/characters/index.post.ts:25-26` — maxHp default
 - **Rule:** "Trainer Hit Points = Trainer's Level x 2 + (HP x 3) + 10"
-- **Expected:** When creating a character at Level 1 with HP stat 10, maxHp should be `1*2 + 10*3 + 10 = 42`. The create page should compute the Trainer HP formula from level and HP stat.
-- **Actual:** The create page (`create.vue:295-296`) sets `currentHp: humanForm.value.hp` and `maxHp: humanForm.value.hp`. For a Level 1 character with HP stat 10, this sets maxHp=10 instead of 42. The create API endpoint defaults maxHp to 10 (`index.post.ts:26`). The Trainer HP formula is never computed anywhere in the human character creation path. By contrast, the Pokemon HP formula IS correctly computed in the same file (`create.vue:313`): `level + (baseHp * 3) + 10`.
-- **Evidence:** CSV import (`csv-import.service.ts:111,320-321`) reads maxHp from the sheet directly, which is correct since the sheet pre-computes it. But manual creation through the UI always sets maxHp to the raw HP stat value (10 for a level 1 trainer), not the derived value (42).
+- **Expected behavior:** maxHp = level * 2 + hpStat * 3 + 10, where hpStat is the TOTAL HP stat (base 10 + allocated points).
+- **Actual behavior:** `useCharacterCreation.ts:113-115` computes `form.level * 2 + computedStats.value.hp * 3 + 10` where `computedStats.hp = BASE_HP(10) + form.statPoints.hp`. At level 1 with 0 HP points, computedStats.hp = 10, so maxHp = 2 + 30 + 10 = 42. Server-side: `app/server/api/characters/index.post.ts:13` computes `level * 2 + hpStat * 3 + 10` where hpStat is the total stat value. Both match PTU.
+- **Classification:** Correct
 
-### character-lifecycle-R033: Stat Tag Effect
-- **Classification:** Incorrect
-- **Severity:** MEDIUM
-- **Code:** `app/server/api/characters/[id].put.ts:1-92` — update endpoint
-- **Rule:** "[+Stat] - Features with this tag increase a Stat by one point."
-- **Expected:** The update endpoint should support updating features and edges so the GM can add features (which may have [+Stat] tags that the GM then manually reflects by updating stats).
-- **Actual:** The PUT endpoint at `[id].put.ts` does NOT handle `features` or `edges` fields. Lines 36-40 handle trainerClasses, skills, inventory, statusConditions, and stageModifiers, but there is no `if (body.features !== undefined)` or `if (body.edges !== undefined)` handler. The GM cannot update features or edges through the API's update endpoint. The matrix says "Feature stat bonuses are reflected by the GM manually adjusting stats when features are added" -- but the GM cannot add features through the update endpoint in the first place.
-- **Evidence:** Reading `[id].put.ts` in full: fields handled are name, characterType, level, currentHp, money, avatarUrl, isInLibrary, notes, location, stats (nested), trainerClasses, skills, inventory, statusConditions, stageModifiers, maxHp, injuries, drainedAp, restMinutesToday, injuriesHealedToday, lastInjuryTime, lastRestReset. No `features` or `edges` handling.
+### R009 — Physical Evasion Formula
 
-### character-lifecycle-R037: No Duplicate Features
-- **Classification:** Incorrect
-- **Severity:** MEDIUM
-- **Code:** `app/server/api/characters/[id].put.ts:1-92` — update endpoint (features not updateable)
-- **Rule:** "Unless a Feature or Edge EXPLICITLY says that you may take it multiple times, such as a Ranked Feature, then you can only take it once!"
-- **Expected:** Features should be editable via the update endpoint so the GM can manage the feature list (even if duplicate prevention is manual).
-- **Actual:** The PUT endpoint does not accept `features` or `edges` in the request body. Features and edges can only be set at creation time or via CSV import. The matrix classified this as "Implemented" with the note "Duplicate prevention is managed by the GM during editing" -- but the GM cannot edit features through the update endpoint at all. The features set at creation (or CSV import) are frozen.
-- **Evidence:** Same as R033 — the `[id].put.ts` endpoint lacks `features` and `edges` field handling.
+- **Rule:** "for every 5 points in Defense, +1 Physical Evasion, up to +6 at 30 Defense."
+- **Expected behavior:** floor(Defense/5), capped at +6.
+- **Actual behavior:** `useCharacterCreation.ts:119` — `Math.min(6, Math.floor(computedStats.value.defense / 5))`.
+- **Classification:** Correct
 
-### character-lifecycle-R055: Retraining Costs
-- **Classification:** Incorrect
-- **Severity:** MEDIUM
-- **Code:** `app/server/api/characters/[id].put.ts:1-92` — update endpoint
-- **Rule:** "You may spend 2 Trainer Experience to Retrain a Feature. You may spend 1 Trainer Experience to Retrain an Edge."
-- **Expected:** The update endpoint should support modifying features and edges so the GM can apply retraining changes.
-- **Actual:** The PUT endpoint does not accept `features` or `edges` fields. Retraining (swapping features or edges) cannot be performed through the update API. The matrix says "Features, edges, and stats can be freely edited via the character update endpoint" — this is incorrect for features and edges.
-- **Evidence:** Same as R033 — missing `features`/`edges` handling in `[id].put.ts`.
+### R010 — Special Evasion Formula
 
-### character-lifecycle-R042: AP Refresh Per Scene
-- **Classification:** Incorrect
-- **Severity:** LOW
-- **Code:** `app/server/api/characters/[id]/extended-rest.post.ts:84` — drainedAp reset; `app/prisma/schema.prisma:55` — drainedAp field
-- **Rule:** "Action Points are completely regained at the end of each Scene."
-- **Expected:** AP should be fully restored (available AP = max AP) at the end of each scene. Bound AP should be released. Only Drained AP should persist across scenes (until Extended Rest).
-- **Actual:** The app tracks only `drainedAp` (restored by extended rest). There is no scene-end AP restoration mechanism. The drainedAp field tracks permanently drained AP correctly, but the per-scene AP pool (which includes Bound AP that should be released at scene end) is not tracked or refreshed. The matrix says "Scene-end AP refresh is handled implicitly" but there is no code that refreshes AP at scene boundaries. The combat system calculates max AP (`useCombat.ts:176-177`) but does not track current available AP or trigger a scene-end restoration.
-- **Evidence:** There is no endpoint or function that restores AP at scene end. The only AP-related operations are: (1) draining AP via heal-injury, (2) restoring drained AP via extended rest, (3) calculating max AP in useCombat.ts. Scene-end AP refresh is missing entirely.
+- **Rule:** "for every 5 points in Special Defense, +1 Special Evasion, up to +6."
+- **Expected behavior:** floor(SpDef/5), capped at +6.
+- **Actual behavior:** `useCharacterCreation.ts:120` — `Math.min(6, Math.floor(computedStats.value.specialDefense / 5))`.
+- **Classification:** Correct
+
+### R011 — Speed Evasion Formula
+
+- **Rule:** "for every 5 points in Speed, +1 Speed Evasion, up to +6."
+- **Expected behavior:** floor(Speed/5), capped at +6.
+- **Actual behavior:** `useCharacterCreation.ts:121` — `Math.min(6, Math.floor(computedStats.value.speed / 5))`.
+- **Classification:** Correct
+
+### R012 — Evasion General Formula
+
+- **Rule:** "divide the related Combat Stat by 5 and round down. Never more than +6 from Combat Stats alone."
+- **Expected behavior:** floor division with +6 cap, consistently applied.
+- **Actual behavior:** All three evasions (R009-R011) use `Math.floor` for division and `Math.min(6, ...)` for cap.
+- **Classification:** Correct
+
+### R041 — Action Points Pool
+
+- **Rule:** "Trainers have a maximum Action Point pool equal to 5, plus 1 more for every 5 Trainer Levels; a Level 15 Trainer would have 8 Action Points."
+- **Expected behavior:** maxAP = 5 + floor(level/5). L1=5, L5=6, L10=7, L15=8.
+- **Actual behavior:** `app/utils/restHealing.ts:219-221` — `return 5 + Math.floor(level / 5)`. L1=5, L5=6, L15=8. Matches PTU example.
+- **Classification:** Correct
+
+### R068 — Percentages Are Additive
+
+- **Rule:** "Percentages are additive, not multiplicative."
+- **Expected behavior:** Combined bonuses use addition.
+- **Actual behavior:** `app/utils/equipmentBonuses.ts:42-45` uses additive accumulation: `damageReduction += item.damageReduction`. No multiplicative percentage compounding found anywhere.
+- **Classification:** Correct
 
 ---
 
-## Approximation Items
+## Tier 2: Core Constraints
 
-### character-lifecycle-R020: Weight Class
-- **Classification:** Approximation
-- **Severity:** LOW
-- **Code:** `app/prisma/schema.prisma:21` — weight Int (in kg)
-- **Rule:** "A Trainer between 55 and 110 pounds is Weight Class 3. Between 111 and 220 is WC 4. Higher than that is WC 5."
-- **Expected:** Weight class should be derived from the weight field using the PTU pound thresholds (55-110 = WC3, 111-220 = WC4, 221+ = WC5).
-- **Actual:** The weight field stores weight in kilograms (schema comment: "in kg"). There is no weight class derivation function anywhere in the codebase. The weight is displayed as a raw number on the character sheet. The conversion from kg to pounds (for PTU thresholds) and the derivation of weight class from weight are both absent.
-- **What's Missing:** A function to derive weight class from weight (with kg-to-lbs conversion), and display of the derived weight class on the character sheet.
+### R002 — Starting Stat Baseline
 
-### character-lifecycle-R013: Power Capability (Partial — present portion)
-- **Classification:** Approximation
-- **Severity:** LOW
-- **Code:** `app/prisma/schema.prisma:36` — skills JSON
-- **Rule:** "A Trainer's Power starts at 4 but is changed by several factors. If your Athletics Skill is at Novice Rank or higher, increase Power by +1. If your Combat Skill is at Adept Rank or higher, increase Power by +1."
-- **Expected:** Power should be derivable from stored skill ranks.
-- **Actual:** Skills including Athletics and Combat ranks are stored and accessible. However, no Power derivation function exists. The skills data is present but the derivation is not implemented.
-- **What's Missing:** A `calculateTrainerPower(skills)` function that reads Athletics and Combat ranks and computes `4 + (Athletics >= Novice ? 1 : 0) + (Combat >= Adept ? 1 : 0)`.
+- **Rule:** "Level 1 Trainers begin with 10 HP and 5 in each other Stat. Assign 10 points, no more than 5 per stat."
+- **Expected behavior:** BASE_HP=10, BASE_OTHER=5, TOTAL_STAT_POINTS=10, MAX_POINTS_PER_STAT=5.
+- **Actual behavior:** `app/constants/trainerStats.ts:11-19` defines all constants correctly. `useCharacterCreation.ts:127` enforces per-stat cap at level 1. `characterCreationValidation.ts:51-59` validates per-stat cap at level 1 only (per PTU, no per-stat cap after level 1).
+- **Classification:** Correct
 
-### character-lifecycle-R016: Overland Movement Speed (Partial — present portion)
-- **Classification:** Approximation
-- **Severity:** LOW
-- **Code:** `app/prisma/schema.prisma:36` — skills JSON
-- **Rule:** "Overland = 3 + [(Athl + Acro)/2]"
-- **Expected:** Overland speed should be derivable from Athletics and Acrobatics ranks.
-- **Actual:** Skills including Athletics and Acrobatics are stored and accessible. However, no trainer Overland speed derivation function exists. The formula requires converting skill rank names to numeric values (Pathetic=0, Untrained=1, Novice=2, Adept=3, Expert=4, Master=5) then computing `3 + floor((Athletics + Acrobatics) / 2)`.
-- **What's Missing:** A skill-rank-to-number converter and a `calculateTrainerOverland(skills)` function.
+### R005 — Skill Rank Level Prerequisites
 
-### character-lifecycle-R018: Throwing Range (Partial — present portion)
-- **Classification:** Approximation
-- **Severity:** MEDIUM
-- **Code:** `app/prisma/schema.prisma:36` — skills JSON
-- **Rule:** "Throwing Range is how far a Trainer can throw Poke Balls and other items. It's equal to 4 plus Athletics Rank."
-- **Expected:** Throwing Range should be derivable from Athletics rank. This is particularly important because it affects Poke Ball throwing range in the capture system.
-- **Actual:** Athletics rank is stored and accessible. However, no Throwing Range derivation function exists. The capture system does not use throwing range for determining if a Poke Ball throw is in range.
-- **What's Missing:** A `calculateThrowingRange(athleticsRank)` function. Higher priority than other derived stats because it intersects with the capture system.
+- **Rule:** "Adept requires Level 2. Expert requires Level 6. Master requires Level 12."
+- **Expected behavior:** Skill rank caps at levels 2, 6, 12.
+- **Actual behavior:** `app/constants/trainerSkills.ts:29-33` — `SKILL_RANK_LEVEL_REQS: { Adept: 2, Expert: 6, Master: 12 }`. `trainerStats.ts:51-56` — `getMaxSkillRankForLevel` returns correct rank per level. `isSkillRankAboveCap` correctly compares rank index against max.
+- **Classification:** Correct
 
-### character-lifecycle-R051: Character Creation Workflow (Partial — present portion)
-- **Classification:** Approximation
-- **Severity:** MEDIUM
-- **Code:** `app/pages/gm/create.vue:35-107` — human creation form
-- **Rule:** "Step 1: Create Character Concept. Step 2: Create Skill Background. Step 3: Choose Edges. Step 4: Choose Features. Step 5: Assign Combat Stats. Step 6: Find Derived Stats. Step 7: Create Basic Descriptions. Step 8: Choose your Starter Pokemon. Step 9: Buy starting items."
-- **Expected:** The create page should cover at minimum the fields needed for a basic character (name, stats, edges, features, skills, notes).
-- **Actual:** The create form only has: name, characterType, level, location (for NPCs), 6 stats, and notes. It does NOT include fields for edges, features, skills, trainerClasses, background, personality, goals, age, gender, playedBy, or inventory. The form covers only Step 5 (stats) partially and Step 7 (descriptions) minimally. Key character data (edges, features, skills) can only be populated via CSV import, not through the manual creation form.
-- **What's Missing:** Form fields for edges, features, skills, trainerClasses, and other character creation data. The CSV import path covers all fields but the manual creation path is severely limited.
+### R006 — Skills Default Rank
 
-### character-lifecycle-R014: High Jump Capability (Partial — present portion)
-- **Classification:** Approximation
-- **Severity:** LOW
-- **Code:** `app/prisma/schema.prisma:36` — skills JSON
-- **Rule:** "A Trainer's High Jump starts at 0, but is raised by several factors. If your Acrobatics is Adept, raise High Jump by +1. If your Acrobatics is Master, raise High Jump by an additional +1."
-- **Expected:** High Jump should be derivable from Acrobatics rank.
-- **Actual:** Acrobatics rank is stored and accessible. No High Jump derivation function exists.
-- **What's Missing:** A `calculateHighJump(acrobaticsRank)` function.
+- **Rule:** "Skills begin at Untrained unless modified by a Background."
+- **Expected behavior:** All 17 skills default to Untrained.
+- **Actual behavior:** `app/constants/trainerSkills.ts:36-40` — `getDefaultSkills()` maps all skills to `'Untrained'`.
+- **Classification:** Correct
 
-### character-lifecycle-R015: Long Jump Capability (Partial — present portion)
-- **Classification:** Approximation
-- **Severity:** LOW
-- **Code:** `app/prisma/schema.prisma:36` — skills JSON
-- **Rule:** "Long Jump is how much horizontal distance a Trainer or Pokemon can jump in meters. This value for Trainers is equal to half of their Acrobatics Rank."
-- **Expected:** Long Jump should be derivable from Acrobatics rank.
-- **Actual:** Acrobatics rank is stored and accessible. No Long Jump derivation function exists.
-- **What's Missing:** A `calculateLongJump(acrobaticsRank)` function.
+### R021 — Rounding Rule
 
-### character-lifecycle-R017: Swimming Speed (Partial — present portion)
+- **Rule:** "round down to the nearest whole number, even if .5 or higher."
+- **Expected behavior:** Math.floor used consistently.
+- **Actual behavior:** `Math.floor` used in evasion formulas (`useCharacterCreation.ts:119-121`), AP formula (`restHealing.ts:220`), stat points (`trainerStats.ts:35`), rest healing (`restHealing.ts:65`), and movement modifiers (`useGridMovement.ts:102,113,123`).
+- **Classification:** Correct
+
+### R022 — Starting Edges
+
+- **Rule:** "Starting Trainers begin with four Edges."
+- **Expected behavior:** 4 edges at level 1.
+- **Actual behavior:** `trainerStats.ts:74-85` — `getExpectedEdgesForLevel(1)` returns `{ base: 4, bonusSkillEdges: 0, total: 4 }`. Formula: `base = 4 + Math.floor(1/2) = 4`.
+- **Classification:** Correct
+
+### R023 — Starting Skill Cap
+
+- **Rule:** "you cannot raise Skills above Novice at your starting level!"
+- **Expected behavior:** Novice max at level 1.
+- **Actual behavior:** `trainerStats.ts:55` — `getMaxSkillRankForLevel(1)` returns `'Novice'`. `addSkillEdge` (line 256) blocks rank above cap.
+- **Classification:** Correct
+
+### R026 — Edges Per Level
+
+- **Rule:** "4 during creation, another at every even Level, additional Edges at each level where max Skill Rank increases (L2, L6, L12)."
+- **Expected behavior:** L1=4, L2=6, L4=7, L6=9, L12=13.
+- **Actual behavior:** `trainerStats.ts:74-85`: `base = 4 + Math.floor(level / 2)`, plus `bonusSkillEdges` at L2/L6/L12. L1: 4+0+0=4. L2: 5+1=6. L4: 6+1=7. L6: 7+2=9. L12: 10+3=13. All match PTU progression.
+- **Classification:** Correct
+
+### R030 — Starting Features
+
+- **Rule:** "4 Features + 1 Training Feature = 5 total at level 1."
+- **Expected behavior:** 5 features at level 1.
+- **Actual behavior:** `trainerStats.ts:97-99` — `getExpectedFeaturesForLevel(1) = 5`. Training feature tracked separately via `form.trainingFeature`.
+- **Classification:** Correct
+
+### R032 — Max Class Features
+
+- **Rule:** "Maximum of 4 Class Features."
+- **Expected behavior:** Max 4 trainer classes enforced.
+- **Actual behavior:** `trainerClasses.ts:40` — `MAX_TRAINER_CLASSES = 4`. `useCharacterCreation.ts:182` — `if (form.trainerClasses.length >= MAX_TRAINER_CLASSES) return`. Also validated in `characterCreationValidation.ts:194`.
+- **Classification:** Correct
+
+### R036 — Features Per Level
+
+- **Rule:** "Every odd Level you gain a Feature."
+- **Expected behavior:** L1=5, L3=6, L5=7, L10=9.
+- **Actual behavior:** `trainerStats.ts:97-99` — `5 + Math.floor((level - 1) / 2)`. L1=5, L3=6, L5=7, L10=9. Correct.
+- **Classification:** Correct
+
+### R038 — Stat Points Per Level
+
+- **Rule:** "Every Level you gain a Stat Point."
+- **Expected behavior:** Total = 10 + (level - 1).
+- **Actual behavior:** `trainerStats.ts:34-36` — `TOTAL_STAT_POINTS + Math.max(0, level - 1)` = `10 + (level - 1)`. L1=10, L50=59.
+- **Classification:** Correct
+
+### R039 — Edges Per Level (Advancement)
+
+- **Rule:** "Every even Level you gain an Edge."
+- **Expected behavior:** +1 at levels 2, 4, 6, ...
+- **Actual behavior:** `trainerStats.ts:76` — `base = 4 + Math.floor(level / 2)` correctly adds 1 per even level.
+- **Classification:** Correct
+
+### R040 — Max Trainer Level
+
+- **Rule:** "Trainers have a Maximum Level of 50."
+- **Expected behavior:** Level cannot exceed 50.
+- **Actual behavior:** `HumanCharacter.level` is `Int @default(1)` with no max constraint. No validation in create/update APIs or composable prevents level > 50.
 - **Classification:** Approximation
-- **Severity:** LOW
-- **Code:** `app/prisma/schema.prisma:30` — speed stat
-- **Rule:** "Swimming Speed for a Trainer is equal to half of their Overland Speed."
-- **Expected:** Swimming speed should be derivable from Overland speed (which itself is derived from skills).
-- **Actual:** Speed stat exists. However, since Overland speed itself is not derived (see R016), Swimming speed cannot be derived either. Both require the same skill-rank-to-number conversion infrastructure.
-- **What's Missing:** First implement R016 (Overland), then Swimming = floor(Overland / 2).
+- **Severity:** LOW — Edge case, level 50 is rarely reached in campaigns. GM can manually enforce.
+
+---
+
+## Tier 3: Core Workflows
+
+### R007 — Background Skill Modification
+
+- **Rule:** "Choose 1 Skill to Adept, 1 to Novice, 3 lowered to Pathetic."
+- **Expected behavior:** 11 presets + custom mode, each with 1 Adept, 1 Novice, 3 Pathetic.
+- **Actual behavior:** `app/constants/trainerBackgrounds.ts:16-94` — 11 backgrounds with exactly 1 `adeptSkill`, 1 `noviceSkill`, 3 `patheticSkills`. `useCharacterCreation.ts:144-156` applies backgrounds correctly. Custom mode resets to defaults and allows manual setting. Validated by `characterCreationValidation.ts:86-121`.
+- **Classification:** Correct
+
+### R051 — Character Creation Workflow
+
+- **Rule:** PTU 9-step creation process.
+- **Expected behavior:** Full creation flow covering all relevant steps.
+- **Actual behavior:** `useCharacterCreation.ts` covers Steps 2-7 (Background, Edges, Features, Stats, Derived Stats, Biography). Steps 1 (Concept), 8 (Pokemon), and 9 (Items) are handled by other parts of the app. Section completion tracking at lines 293-335 covers: basicInfo, background, edges, classes, stats, biography.
+- **Classification:** Correct
+
+### R052 — Steps 3/4 Interleaving
+
+- **Rule:** "You can take Steps 3 and 4 in any order."
+- **Expected behavior:** No forced ordering between edges and features.
+- **Actual behavior:** Separate sections in the create page, no sequence enforcement. Both `addEdge` and `addFeature` are independently callable.
+- **Classification:** Correct
+
+### R025 — Skill Edge Definitions
+
+- **Rule:** "Basic Skills: Rank Up from Pathetic to Untrained, or Untrained to Novice. Adept/Expert/Master Skills unlock at L2/L6/L12."
+- **Expected behavior:** Skill edges raise rank by one step, subject to level caps and Pathetic restriction.
+- **Actual behavior:** `useCharacterCreation.ts:241-266` — `addSkillEdge` bumps rank one step along `['Pathetic', 'Untrained', 'Novice', 'Adept', 'Expert', 'Master']`. Blocks Pathetic skills (line 243). Checks cap via `isSkillRankAboveCap` (line 256). `removeEdge` reverts rank (lines 217-233).
+- **Classification:** Correct
+
+---
+
+## Tier 4: Partial Items
+
+### R024 — Pathetic Skills Cannot Be Raised At Creation
+
+- **Rule:** "You may not use Edges to Rank Up any of the Skills you lowered to Pathetic Rank."
+- **Expected behavior:** Pathetic skills from background cannot be raised via Skill Edges during creation.
+- **Actual behavior:** `useCharacterCreation.ts:243-244` — `addSkillEdge` blocks if `currentRank === 'Pathetic'`, correctly preventing Skill Edges from raising Pathetic skills. However, `setSkillRank` (line 173-178) in custom background mode has no such restriction. A GM using custom background mode can set Pathetic skills back to higher ranks without going through the Skill Edge path.
+- **Classification:** Approximation
+- **Severity:** MEDIUM — The primary Skill Edge path enforces the rule. The custom background path does not track which skills were lowered to Pathetic, so it cannot enforce the restriction.
+
+### R033 — Stat Tag Effect
+
+- **Rule:** "[+Stat] Features increase a Stat by one point."
+- **Expected behavior:** Features with [+Stat] tags auto-apply stat bonuses.
+- **Actual behavior:** Features stored as plain string array (`schema.prisma:38`). No feature metadata parsing. GM must manually adjust stats.
+- **Classification:** Approximation
+- **Severity:** LOW — Intentional simplification. App stores feature names, not metadata.
+
+### R034 — Ranked Feature Tag
+
+- **Rule:** "[Ranked X] can be taken up to X times."
+- **Expected behavior:** Rank tracking for Ranked features.
+- **Actual behavior:** Features stored as simple strings. No rank tracking or rank limit validation.
+- **Classification:** Approximation
+- **Severity:** LOW — GM controls feature entry manually.
+
+### R035 — Branch Feature Tag
+
+- **Rule:** "[Branch] on a [Class] Feature means it may be taken multiple times using a Class slot with different specializations."
+- **Expected behavior:** Branching classes can be added multiple times with different specializations.
+- **Actual behavior:** `trainerClasses.ts` defines `isBranching: true` on Type Ace, Stat Ace, Style Expert, Researcher, Martial Artist. However, `useCharacterCreation.ts:183` checks `if (form.trainerClasses.includes(className)) return`, which blocks adding the same class name twice. The `isBranching` flag is never consulted during `addClass`. A workaround exists if the user modifies the class name (e.g., "Type Ace: Fire", "Type Ace: Water"), but the catalog selection flow would select "Type Ace" which gets blocked on second selection.
+- **Classification:** Incorrect
+- **Severity:** MEDIUM — Branching classes like Type Ace should be selectable multiple times per PTU rules. The `isBranching` flag exists but is not used.
+
+### R037 — No Duplicate Features
+
+- **Rule:** "Unless explicitly stated (Ranked), you can only take a Feature once."
+- **Expected behavior:** Duplicate detection for non-ranked features.
+- **Actual behavior:** `addFeature` at `useCharacterCreation.ts:199-201` appends without duplicate checking. Validation does not check for duplicates.
+- **Classification:** Approximation
+- **Severity:** MEDIUM — GM can accidentally add the same feature twice.
+
+### R042 — AP Refresh Per Scene
+
+- **Rule:** "Action Points are completely regained at the end of each Scene."
+- **Expected behavior:** AP auto-restored at scene end.
+- **Actual behavior:** `restHealing.ts:240-243` — `calculateSceneEndAp` correctly computes `maxAp - boundAp - drainedAp`. Function exists but no automatic trigger fires at scene boundaries. GM must manually refresh AP.
+- **Classification:** Approximation
+- **Severity:** LOW — Calculation is correct; only the automation trigger is missing.
+
+### R044 — Level 2 Milestone (Adept Skills)
+
+- **Rule:** "Level 2: Adept Skills unlocked. Gain one Skill Edge (cannot raise to Adept)."
+- **Expected behavior:** Skill rank cap to Adept + 1 bonus Skill Edge with restriction.
+- **Actual behavior:** `trainerStats.ts:53` — `getMaxSkillRankForLevel(2)` = `'Adept'`. `getExpectedEdgesForLevel(2)` includes `bonusSkillEdges: 1`. Validation info message mentions the restriction (`characterCreationValidation.ts:144`). However, the restriction "cannot raise to Adept with the bonus edge" is not mechanically enforced — all Skill Edges at level 2 CAN raise to Adept.
+- **Classification:** Correct — The rank unlock and edge count are correct. The per-edge restriction is informational per the app's design philosophy (soft warnings, GM decides). The bonus skill edge IS correctly counted in the edge budget.
+
+### R046 — Level 6 Milestone (Expert Skills)
+
+- **Rule:** "Level 6: Expert Skills unlocked. Gain one Skill Edge (cannot raise to Expert)."
+- **Expected behavior:** Expert rank unlocked + 1 bonus Skill Edge.
+- **Actual behavior:** `trainerStats.ts:52` — `getMaxSkillRankForLevel(6)` = `'Expert'`. `getExpectedEdgesForLevel(6)` includes cumulative `bonusSkillEdges: 2`. Same informational approach as R044.
+- **Classification:** Correct — Same reasoning as R044.
+
+### R048 — Level 12 Milestone (Master Skills)
+
+- **Rule:** "Level 12: Master Skills unlocked. Gain one Skill Edge."
+- **Expected behavior:** Master rank unlocked + 1 bonus Skill Edge.
+- **Actual behavior:** `trainerStats.ts:51` — `getMaxSkillRankForLevel(12)` = `'Master'`. `getExpectedEdgesForLevel(12)` includes `bonusSkillEdges: 3`.
+- **Classification:** Correct
+
+---
+
+## Tier 5: Implemented-Unreachable
+
+### R063 — AP Spend for Roll Bonus
+
+- **Rule:** "Spend 1 AP as free action before Accuracy/Skill Check to add +1."
+- **Expected behavior:** AP fields exist, player can spend AP.
+- **Actual behavior:** AP fields exist on model (`currentAp`, `drainedAp`, `boundAp`). GM can decrement AP via update API. Player view is read-only — players cannot spend their own AP. This is a UI access limitation, not a rules implementation error.
+- **Classification:** Correct (logic-wise)
+
+---
+
+## Tier 6: Modifier Items
+
+### R031 — Free Training Feature
+
+- **Rule:** "Pick one Training Feature for free, no prerequisites required."
+- **Expected behavior:** Training feature stored separately, no prereq checks.
+- **Actual behavior:** `useCharacterCreation.ts:207-209` — `setTrainingFeature` stores separately in `form.trainingFeature`. No prerequisite checking for any features.
+- **Classification:** Correct
+
+### R043 — AP Bind and Drain
+
+- **Rule:** "Bound AP off-limits until binding ends. Drained AP unavailable until Extended Rest."
+- **Expected behavior:** drainedAp restored by extended rest, boundAp cleared by effect end.
+- **Actual behavior:** `schema.prisma:58-60` — `drainedAp`, `boundAp`, `currentAp` fields. Extended rest restores all. Heal injury can drain 2 AP. New day resets all. `calculateAvailableAp` correctly computes `maxAp - boundAp - drainedAp`.
+- **Classification:** Correct
+
+### R019 — Trainer Size
+
+- **Rule:** "Trainers are Medium by default."
+- **Expected behavior:** Trainers treated as Medium.
+- **Actual behavior:** No explicit `size` field. Trainers implicitly Medium: 1x1 grid tokens, default movement speed 5. Consistent throughout.
+- **Classification:** Correct
+
+### R020 — Weight Class
+
+- **Rule:** "55-110 lbs = WC3, 111-220 = WC4, higher = WC5."
+- **Expected behavior:** Weight class derived from weight.
+- **Actual behavior:** `HumanCharacter.weight` field exists (Int?, kg). No WC derivation function. GM must manually track.
+- **Classification:** Approximation
+- **Severity:** LOW — Weight field exists; WC derivation is missing but rarely needed.
+
+### R064 — Skill Stunt Edge
+
+- **Rule:** "Choose a Skill at Novice+. Under specific circumstances, roll one less die, add +6."
+- **Expected behavior:** Edge stored as string; mechanical effect is table-resolved.
+- **Actual behavior:** Edges stored as string array. Can store "Skill Stunt: [skill]". No mechanical effect — dice rolling is not automated.
+- **Classification:** Correct — Skill checks are Out of Scope (R027). Storage is correct.
+
+### R065 — Skill Enhancement Edge
+
+- **Rule:** "Choose two Skills. Gain +2 bonus to each."
+- **Expected behavior:** Edge stored; bonus computed or table-resolved.
+- **Actual behavior:** Edge stored as string. +2 bonus not auto-applied. Table-resolved.
+- **Classification:** Correct — Same reasoning as R064.
+
+### R066 — Categoric Inclination Edge
+
+- **Rule:** "Choose Body/Mind/Spirit. Gain +1 to all Skill Checks of that category."
+- **Expected behavior:** Edge stored; bonus computed or table-resolved.
+- **Actual behavior:** Edge stored as string. +1 bonus not auto-applied. Table-resolved.
+- **Classification:** Correct — Same reasoning as R064.
 
 ---
 
 ## Ambiguous Items
 
-### character-lifecycle-R042 (secondary aspect): AP Scene Refresh vs Drain Interaction
-- **Classification:** Ambiguous
-- **Code:** `app/prisma/schema.prisma:55` — drainedAp field
-- **Rule:** "Action Points are completely regained at the end of each Scene. However, some effects may Bind or Drain Action Points... Drained AP becomes unavailable for use until after an Extended Rest is taken."
-- **Interpretation A:** At scene end, all AP are restored to max minus drained. "Completely regained" means the scene-available pool resets, but drained AP remains drained. So available AP = maxAP - drainedAP at start of each scene.
-- **Interpretation B:** At scene end, available AP = maxAP (the "completely regained" overrides drain). Drain only matters within the current scene.
-- **Code follows:** Interpretation A — the drainedAp field persists across scenes and is only restored by Extended Rest. The available AP at any point = maxAP - drainedAP.
-- **Action:** Escalate to Game Logic Reviewer. Note: Interpretation A is almost certainly correct based on the rule text ("Drained AP becomes unavailable for use until after an Extended Rest"), but the interaction with "completely regained" could be read either way.
+### R035 — Branch Feature Tag (Design Ambiguity)
 
-### character-lifecycle-R020 (secondary aspect): Weight Class Thresholds — Pounds vs Kilograms
-- **Classification:** Ambiguous
-- **Code:** `app/prisma/schema.prisma:21` — weight Int (comment: "in kg")
-- **Rule:** "A Trainer between 55 and 110 pounds is Weight Class 3. Between 111 and 220 is WC 4."
-- **Interpretation A:** The weight field stores kg, and the app should convert to pounds for weight class determination. The PTU rule uses pounds as stated.
-- **Interpretation B:** The weight field stores kg, and the weight class thresholds should be converted to kg equivalents (25-50kg = WC3, 50-100kg = WC4, 100+ = WC5). The app targets a modern/international audience.
-- **Code follows:** Neither — no weight class derivation exists. The weight field stores kg per the schema comment, but no conversion or classification occurs.
-- **Action:** Escalate to Game Logic Reviewer. The PTU book uses pounds; the app schema says kg. When implementing weight class derivation, the unit system needs a decision.
+Two valid interpretations exist for branch class handling:
+
+1. **PTU RAW:** Branching classes should be addable multiple times from the catalog, each with a different specialization. The `addClass` function should skip the duplicate check when `isBranching` is true.
+2. **Name-based approach:** Specializations are encoded in the class name string (e.g., "Type Ace: Fire", "Type Ace: Water"). The duplicate check passes because strings differ. This requires the UI to prompt for specialization before adding.
+
+The code implements neither approach cleanly — `isBranching` exists but is unused, and the catalog provides "Type Ace" as a fixed string. This is classified as **Incorrect** above because the most natural user flow (selecting "Type Ace" from the catalog twice) fails.
+
+**Recommendation:** Create a `decree-need` ticket clarifying branch class handling. Either: (a) allow duplicate class names for branching classes, or (b) require specialization suffix before adding to the array.
 
 ---
 
-## Additional Observations
+## Escalation Notes
 
-### Observation 1: Players endpoint uses HP stat instead of maxHp
-The `GET /api/characters/players` endpoint (`players.get.ts:36`) returns `maxHp: char.hp` instead of `maxHp: char.maxHp`. This means the players list (used in encounter/lobby display) shows the HP stat value (e.g., 10 for a default character) as the max HP, not the derived Trainer Hit Points (e.g., 42 for a Level 1 trainer with 10 HP stat). This is likely a bug but is outside the audit queue scope.
+### Items Requiring Fix
 
-### Observation 2: Features and edges not updateable via PUT endpoint
-The PUT `/api/characters/:id` endpoint does not handle `features` or `edges` fields. This is documented as an Incorrect finding for R033, R037, and R055, but the impact is broader: it means the entire character sheet edit flow cannot modify features, edges, or the response does not return them. The response object at lines 56-82 also does not return `features`, `edges`, `background`, `personality`, `goals`, `playedBy`, `age`, `gender`, `height`, `weight`, `injuries`, `temporaryHp`, `drainedAp`, `restMinutesToday`, or `injuriesHealedToday`. Several fields are writable via the endpoint but not returned in the response.
+1. **R035 — Branch Feature Tag** (Incorrect, MEDIUM): `addClass` blocks duplicate class names, preventing branching classes from being taken multiple times with different specializations. The `isBranching` flag is defined but never consulted.
 
-### Observation 3: Create page level max is 100, not 50
-The create page (`create.vue:57`) sets `max="100"` on the level input, while PTU's maximum trainer level is 50. This is a minor UI inconsistency.
+### Approximation Items (monitor, no immediate fix needed)
+
+- R024: Pathetic skill enforcement gap in custom background mode (MEDIUM)
+- R037: No duplicate feature detection (MEDIUM)
+- R040: No max level 50 validation (LOW)
+- R020: No weight class derivation (LOW)
+- R033: No [+Stat] auto-bonus (LOW)
+- R034: No ranked feature tracking (LOW)
+- R042: AP refresh function exists but no auto-trigger (LOW)
+
+### No Active Decrees
+
+No active decrees exist in `decrees/`. The R035 branch class handling warrants a `decree-need` ticket.
