@@ -309,7 +309,6 @@ function confirmCustomItem() {
 
 function onCatalogEquipped(equipment: EquipmentSlots) {
   emit('equipment-changed', equipment)
-  showCatalog.value = false
   if (props.isInEncounter) {
     emit('equipment-changed-in-encounter', equipment)
   }

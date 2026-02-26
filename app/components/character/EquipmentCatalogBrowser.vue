@@ -92,12 +92,20 @@
 
         <p v-else class="empty-state">No items match your search</p>
       </div>
+
+      <!-- Success Toast -->
+      <Transition name="equip-toast">
+        <div v-if="successMessage" class="equip-toast">
+          <PhCheckCircle :size="16" weight="bold" />
+          {{ successMessage }}
+        </div>
+      </Transition>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { PhX, PhMagnifyingGlass, PhArrowRight, PhRing } from '@phosphor-icons/vue'
+import { PhX, PhMagnifyingGlass, PhArrowRight, PhRing, PhCheckCircle } from '@phosphor-icons/vue'
 import { EQUIPMENT_CATALOG, EQUIPMENT_SLOTS, SLOT_LABELS, SLOT_ICONS, STAT_LABELS } from '~/constants/equipment'
 import type { EquipmentSlot, EquippedItem, EquipmentSlots } from '~/types/character'
 
@@ -113,6 +121,8 @@ const emit = defineEmits<{
 const selectedSlot = ref<EquipmentSlot | ''>('')
 const searchQuery = ref('')
 const saving = ref(false)
+const successMessage = ref<string | null>(null)
+let successTimer: ReturnType<typeof setTimeout> | null = null
 
 interface CatalogGroup {
   slot: EquipmentSlot
@@ -158,6 +168,14 @@ const filteredGroups = computed<CatalogGroup[]>(() => {
     .filter(group => group.items.length > 0)
 })
 
+function showSuccess(itemName: string) {
+  successMessage.value = `Equipped ${itemName}`
+  if (successTimer) clearTimeout(successTimer)
+  successTimer = setTimeout(() => {
+    successMessage.value = null
+  }, 2500)
+}
+
 async function equipToCharacter(item: EquippedItem) {
   if (!props.targetCharacterId) return
 
@@ -168,6 +186,7 @@ async function equipToCharacter(item: EquippedItem) {
       body: { slots: { [item.slot]: item } }
     })
     if (response.success) {
+      showSuccess(item.name)
       emit('equipped', response.data.slots)
     }
   } catch (error: any) {
@@ -176,6 +195,10 @@ async function equipToCharacter(item: EquippedItem) {
     saving.value = false
   }
 }
+
+onUnmounted(() => {
+  if (successTimer) clearTimeout(successTimer)
+})
 </script>
 
 <style lang="scss" scoped>
@@ -187,6 +210,7 @@ async function equipToCharacter(item: EquippedItem) {
   @include modal-container-enhanced;
 
   &--catalog {
+    position: relative;
     max-width: 700px;
     max-height: 80vh;
   }
@@ -401,5 +425,35 @@ async function equipToCharacter(item: EquippedItem) {
   font-style: italic;
   text-align: center;
   padding: $spacing-xl;
+}
+
+.equip-toast {
+  position: absolute;
+  bottom: $spacing-md;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $border-radius-full;
+  font-size: $font-size-xs;
+  font-weight: 600;
+  color: white;
+  background: rgba($color-success, 0.9);
+  white-space: nowrap;
+  box-shadow: $shadow-md;
+  z-index: 1;
+}
+
+.equip-toast-enter-active,
+.equip-toast-leave-active {
+  transition: all 300ms ease;
+}
+
+.equip-toast-enter-from,
+.equip-toast-leave-to {
+  opacity: 0;
+  transform: translateX(-50%) translateY(10px);
 }
 </style>
