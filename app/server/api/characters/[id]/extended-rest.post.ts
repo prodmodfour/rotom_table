@@ -6,12 +6,14 @@ import {
   getStatusesToClear,
   calculateMaxAp
 } from '~/utils/restHealing'
+import { refreshDailyMovesForOwnedPokemon } from '~/server/services/rest-healing.service'
 
 /**
  * Apply extended rest to a human character (decree-018: configurable duration)
  * - Duration: 4-8 hours (default 4), each 30-min period heals 1/16th max HP
  * - Clears all persistent status conditions
  * - Restores drained AP (bound AP preserved per decree-016)
+ * - Refreshes daily-frequency moves on owned Pokemon (PTU Core p.252)
  * - Respects daily 8h rest cap via restMinutesToday
  */
 export default defineEventHandler(async (event) => {
@@ -96,6 +98,10 @@ export default defineEventHandler(async (event) => {
     }
   })
 
+  // PTU Core p.252: Refresh daily-frequency moves on owned Pokemon
+  // Rolling window: moves used today are NOT refreshed; only yesterday's are eligible
+  const pokemonMoveRefresh = await refreshDailyMovesForOwnedPokemon(id)
+
   return {
     success: true,
     message: `Extended rest complete (${duration} hours).`,
@@ -108,7 +114,8 @@ export default defineEventHandler(async (event) => {
       apRestored,
       boundAp: updated.boundAp,
       restMinutesToday: currentRestMinutes,
-      restMinutesRemaining: Math.max(0, 480 - currentRestMinutes)
+      restMinutesRemaining: Math.max(0, 480 - currentRestMinutes),
+      pokemonMoveRefresh
     }
   }
 })
