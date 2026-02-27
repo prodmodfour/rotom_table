@@ -5,7 +5,7 @@ Data contracts between skills in the PTU Skills Ecosystem. All artifacts use mar
 ## Artifact Directory Layout
 
 ```
-app/tests/e2e/artifacts/
+artifacts/
 ├── tickets/               # Cross-ecosystem communication
 │   ├── bug/               # Orchestrator writes (from audit) → Developer reads
 │   ├── ptu-rule/          # Orchestrator/Game Logic Reviewer writes → Developer reads
@@ -50,7 +50,7 @@ app/tests/e2e/artifacts/
 - Capability catalogs: `matrix/<domain>/capabilities/<domain>-C<NNN>.md` (atomized) with `_index.md` summary
 - Coverage matrices: `matrix/<domain>/matrix.md` (single file per domain)
 - Implementation audits: `matrix/<domain>/audit/tier-N-<slug>.md` (per-tier) with `_index.md` summary
-- Tickets: `<type>-<NNN>.md` in `tickets/<type>/` (e.g., `tickets/bug/bug-003.md`)
+- Tickets: `<type>-<NNN>.md` in `tickets/open/<type>/` (e.g., `tickets/bug/bug-003.md`)
 - Designs: `design-<NNN>.md` (e.g., `design-001.md`) — per-prefix counter in `artifacts/designs/`
 - Code reviews: `code-review-<NNN>.md` (e.g., `code-review-001.md`) — per-prefix counter in `artifacts/reviews/`
 - Rules reviews: `rules-review-<NNN>.md` (e.g., `rules-review-001.md`) — per-prefix counter in `artifacts/reviews/`
@@ -617,7 +617,7 @@ The Orchestrator is the **sole writer** of both state files. No other skill writ
 
 **Written by:** Orchestrator (sole writer)
 **Read by:** Dev Ecosystem skills
-**Location:** `artifacts/dev-state.md`
+**Location:** `artifacts/state/dev-state.md`
 
 Tracks: open tickets per type, active Developer work, review status, retest tickets created, refactoring queue, code health metrics.
 
@@ -625,7 +625,7 @@ Tracks: open tickets per type, active Developer work, review status, retest tick
 
 **Written by:** Orchestrator (sole writer)
 **Read by:** Matrix Ecosystem skills
-**Location:** `artifacts/test-state.md`
+**Location:** `artifacts/state/test-state.md`
 
 Tracks: domain progress table (Rules → Capabilities → Matrix → Audit → Tickets), coverage scores, active work, ambiguous items pending ruling.
 
@@ -690,7 +690,7 @@ estimated_scope: small | medium | large    # refactoring only
 
 **Written by:** Senior Reviewer, Game Logic Reviewer, Implementation Auditor, Slave Collector, UX Ticket Creator
 **Read by:** Decree Facilitator
-**Location:** `artifacts/tickets/decree/decree-need-<NNN>.md`
+**Location:** `artifacts/tickets/open/decree/decree-need-<NNN>.md`
 
 ```markdown
 ---

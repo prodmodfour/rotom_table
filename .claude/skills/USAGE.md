@@ -196,7 +196,7 @@ Plan 1: /create_slave_plan
 
 ## Artifact Locations
 
-All artifacts live under `app/tests/e2e/artifacts/`:
+All artifacts live under `artifacts/`:
 
 ```
 artifacts/
@@ -241,7 +241,7 @@ All skills cite and enforce the decree going forward
 
 - **`/address_design_decrees`** — Scan open decree-need tickets and facilitate human rulings
 - Decrees live in `decrees/` (project root)
-- Decree-need tickets live in `app/tests/e2e/artifacts/tickets/decree/`
+- Decree-need tickets live in `artifacts/tickets/open/decree/`
 
 ### Key Rules
 

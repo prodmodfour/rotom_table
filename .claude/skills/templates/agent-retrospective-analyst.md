@@ -64,7 +64,7 @@ Transcripts at `~/.claude/projects/-home-ashraf-pokemon-ttrpg-session-helper/*.j
 
 ### Per-Skill Lesson Files
 
-Write to `app/tests/e2e/artifacts/lessons/<skill-name>.lessons.md`:
+Write to `artifacts/lessons/<skill-name>.lessons.md`:
 
 ```markdown
 ---
@@ -95,7 +95,7 @@ domains_covered:
 
 ### Retrospective Summary
 
-Write to `app/tests/e2e/artifacts/lessons/retrospective-summary.md`
+Write to `artifacts/lessons/retrospective-summary.md`
 
 ## Working Directory
 

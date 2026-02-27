@@ -15,10 +15,10 @@ Start with `session-report.md` for the consolidated view, then reference individ
 {{EXISTING_TICKETS}}
 
 Scan these directories for existing tickets to avoid duplicates:
-- `app/tests/e2e/artifacts/tickets/bug/`
-- `app/tests/e2e/artifacts/tickets/ux/`
-- `app/tests/e2e/artifacts/tickets/feature/`
-- `app/tests/e2e/artifacts/tickets/decree/`
+- `artifacts/tickets/open/bug/`
+- `artifacts/tickets/open/ux/`
+- `artifacts/tickets/open/feature/`
+- `artifacts/tickets/open/decree/`
 
 ## Process
 
@@ -34,10 +34,10 @@ Scan these directories for existing tickets to avoid duplicates:
 
 | Finding Type | Ticket Category | Directory |
 |-------------|----------------|-----------|
-| Confirmed bugs (broken behavior) | `bug` | `tickets/bug/` |
-| UX issues (confusing, hard to use) | `ux` | `tickets/ux/` |
-| Missing features (expected capability not present) | `feature` | `tickets/feature/` |
-| Design questions (ambiguous, needs human ruling) | `decree-need` | `tickets/decree/` |
+| Confirmed bugs (broken behavior) | `bug` | `tickets/open/bug/` |
+| UX issues (confusing, hard to use) | `ux` | `tickets/open/ux/` |
+| Missing features (expected capability not present) | `feature` | `tickets/open/feature/` |
+| Design questions (ambiguous, needs human ruling) | `decree-need` | `tickets/open/decree/` |
 
 ### Ticket Numbering
 
@@ -216,7 +216,7 @@ written_at: <ISO timestamp>
 
 Then commit all new ticket files:
 ```bash
-git add app/tests/e2e/artifacts/tickets/
+git add artifacts/tickets/
 git add ux-sessions/reports/
 git commit -m "feat: create tickets from ux-session-NNN findings"
 ```

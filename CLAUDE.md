@@ -250,7 +250,7 @@ Use **incremental multi-tier delivery** for non-trivial features. Break the feat
 Binding human rulings on ambiguous design decisions. Skills discover ambiguity and create `decree-need` tickets. The human runs `/address_design_decrees` to make rulings, which are recorded as decree files.
 
 - **Decrees live in:** `decrees/decree-NNN.md` (project root)
-- **Decree-need tickets:** `app/tests/e2e/artifacts/tickets/decree/decree-need-NNN.md`
+- **Decree-need tickets:** `artifacts/tickets/open/decree/decree-need-NNN.md`
 - **Authority:** Decrees override all skill-level rulings. Violations are CRITICAL severity.
 - **Command:** `/address_design_decrees` — scan open decree-needs, facilitate human rulings, record decrees
 - **Skills affected:** All reviewers check decrees before reviewing. Implementation Auditor uses decrees to resolve ambiguity. Developer follows decrees during implementation.

@@ -14,18 +14,18 @@ This skill requires the Coverage Analyzer to have completed the domain matrix. Y
 **Workflow position:** PTU Rule Extractor + App Capability Mapper → Coverage Analyzer → **You**
 
 **Input locations (atomized — preferred):**
-- `app/tests/e2e/artifacts/matrix/<domain>/matrix.md` (Auditor Queue section)
-- `app/tests/e2e/artifacts/matrix/<domain>/rules/<domain>-R<NNN>.md` (individual rule files)
-- `app/tests/e2e/artifacts/matrix/<domain>/capabilities/<domain>-C<NNN>.md` (individual capability files)
+- `artifacts/matrix/<domain>/matrix.md` (Auditor Queue section)
+- `artifacts/matrix/<domain>/rules/<domain>-R<NNN>.md` (individual rule files)
+- `artifacts/matrix/<domain>/capabilities/<domain>-C<NNN>.md` (individual capability files)
 - Actual source code files (deep-read)
 - Actual PTU rulebook sections (deep-read)
 
 **Input locations (monolithic — fallback):**
-- `app/tests/e2e/artifacts/matrix/<domain>-matrix.md`
-- `app/tests/e2e/artifacts/matrix/<domain>-rules.md`
-- `app/tests/e2e/artifacts/matrix/<domain>-capabilities.md`
+- `artifacts/matrix/<domain>-matrix.md`
+- `artifacts/matrix/<domain>-rules.md`
+- `artifacts/matrix/<domain>-capabilities.md`
 
-**Output location:** `app/tests/e2e/artifacts/matrix/<domain>/audit/` (tiered files + `_index.md`)
+**Output location:** `artifacts/matrix/<domain>/audit/` (tiered files + `_index.md`)
 
 See `ptu-skills-ecosystem.md` for the full architecture.
 
@@ -53,7 +53,7 @@ Before starting, read these files:
 6. **Skill Interfaces** — `.claude/skills/references/skill-interfaces.md`
    Defines the exact output format for your audit report.
 
-7. **Lesson files** — `app/tests/e2e/artifacts/lessons/implementation-auditor.lessons.md` (if it exists)
+7. **Lesson files** — `artifacts/lessons/implementation-auditor.lessons.md` (if it exists)
    Lessons from previous audit runs. Read and apply.
 
 ## Process
@@ -136,7 +136,7 @@ Calculate:
 
 ### Step 6: Write Output
 
-Write the audit report to `app/tests/e2e/artifacts/matrix/<domain>/audit/` using the atomized format:
+Write the audit report to `artifacts/matrix/<domain>/audit/` using the atomized format:
 
 1. **Tier files** — one file per tier: `tier-<N>-<slug>.md`
    Group audit entries by verification tier (Core Formulas, Core Constraints, etc.)

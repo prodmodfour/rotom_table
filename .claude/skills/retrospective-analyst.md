@@ -20,17 +20,17 @@ This skill sits **outside the two main loops** in the 10-skill PTU ecosystem. It
 2. On-demand by user request
 
 **Input:**
-- `app/tests/e2e/artifacts/verifications/*.verified.md`
-- `app/tests/e2e/artifacts/results/*.result.md`
-- `app/tests/e2e/artifacts/reports/*.md`
-- `app/tests/e2e/artifacts/tickets/` (all ticket directories)
-- `app/tests/e2e/artifacts/dev-state.md` and `test-state.md`
+- `artifacts/verifications/*.verified.md`
+- `artifacts/results/*.result.md`
+- `artifacts/reports/*.md`
+- `artifacts/tickets/` (all ticket directories)
+- `artifacts/state/dev-state.md` and `test-state.md`
 - Git history (`git log`, `git diff`)
 - Past conversation transcripts (`~/.claude/projects/-home-ashraf-pokemon-ttrpg-session-helper/*.jsonl`)
 
 **Output:**
-- `app/tests/e2e/artifacts/lessons/<skill-name>.lessons.md` (per-skill)
-- `app/tests/e2e/artifacts/lessons/retrospective-summary.md` (cross-cutting)
+- `artifacts/lessons/<skill-name>.lessons.md` (per-skill)
+- `artifacts/lessons/retrospective-summary.md` (cross-cutting)
 
 See `ptu-skills-ecosystem.md` for the full architecture.
 
@@ -38,7 +38,7 @@ See `ptu-skills-ecosystem.md` for the full architecture.
 
 ### Step 1: Determine Analysis Scope
 
-Read both ecosystem state files (`artifacts/dev-state.md` and `artifacts/test-state.md`) to find:
+Read both ecosystem state files (`artifacts/state/dev-state.md` and `artifacts/state/test-state.md`) to find:
 - Which domains have completed full cycles
 - When the last retrospective analysis was run (check `artifacts/lessons/retrospective-summary.md` for `last_analyzed` timestamp)
 

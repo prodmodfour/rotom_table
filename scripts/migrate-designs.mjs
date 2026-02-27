@@ -1,8 +1,8 @@
 /**
  * Migrates monolithic design docs into per-design directories with atomized files.
  *
- * Input:  app/tests/e2e/artifacts/designs/design-*.md (monolithic files)
- * Output: app/tests/e2e/artifacts/designs/design-NAME/ (directories containing split files)
+ * Input:  artifacts/designs/design-*.md (monolithic files)
+ * Output: artifacts/designs/design-NAME/ (directories containing split files)
  *
  * Each design directory contains:
  *   _index.md           — frontmatter + summary + priority map (~50-80 lines)
@@ -23,7 +23,7 @@ import { fileURLToPath } from 'url'
 
 const __dirname = resolve(fileURLToPath(import.meta.url), '..')
 const ROOT = resolve(__dirname, '..')
-const DESIGNS_DIR = join(ROOT, 'app/tests/e2e/artifacts/designs')
+const DESIGNS_DIR = join(ROOT, 'artifacts/designs')
 const ARCHIVE_DIR = join(DESIGNS_DIR, '_archive')
 
 const DRY_RUN = process.argv.includes('--dry-run')

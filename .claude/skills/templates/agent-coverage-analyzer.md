@@ -97,7 +97,7 @@ After classifying individual rules, scan for patterns:
 
 ## Output Requirements
 
-Write the matrix to: {{WORKTREE_PATH}}/app/tests/e2e/artifacts/matrix/{{DOMAIN}}-matrix.md
+Write the matrix to: {{WORKTREE_PATH}}/artifacts/matrix/{{DOMAIN}}-matrix.md
 
 Include:
 1. **Coverage Score** with breakdown (total, implemented, implemented-unreachable, partial, missing, subsystem-missing, out of scope)

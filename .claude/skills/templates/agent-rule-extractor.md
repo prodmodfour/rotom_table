@@ -69,7 +69,7 @@ Every rule must be tagged with WHO performs or triggers it in a TTRPG session:
 
 ## Output Requirements
 
-Write the complete rule catalog to: {{WORKTREE_PATH}}/app/tests/e2e/artifacts/matrix/{{DOMAIN}}-rules.md
+Write the complete rule catalog to: {{WORKTREE_PATH}}/artifacts/matrix/{{DOMAIN}}-rules.md
 
 Each rule entry must include:
 - `rule_id`: `<domain>-R<NNN>` (sequential)

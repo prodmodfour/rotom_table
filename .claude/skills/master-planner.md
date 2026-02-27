@@ -28,8 +28,8 @@ Scan `.worktrees/slave-status/` for status JSON files. For each:
 
 Read both ecosystem state files:
 ```
-app/tests/e2e/artifacts/dev-state.md
-app/tests/e2e/artifacts/test-state.md
+artifacts/state/dev-state.md
+artifacts/state/test-state.md
 ```
 
 If either doesn't exist, the ecosystem is uninitialized.
@@ -40,11 +40,11 @@ If either doesn't exist, the ecosystem is uninitialized.
 
 If index files exist, read them for a fast summary instead of scanning hundreds of individual files:
 
-1. `app/tests/e2e/artifacts/_index.md` — global open work counts, active reviews, open tickets by priority
-2. `app/tests/e2e/artifacts/tickets/_index.md` — open/in-progress tickets with ID, category, priority, domain
-3. `app/tests/e2e/artifacts/reviews/_index.md` — active reviews (CHANGES_REQUIRED/FAIL), recent approvals
-4. `app/tests/e2e/artifacts/designs/_index.md` — design status, tier completion
-5. `app/tests/e2e/artifacts/matrix/_index.md` — per-domain coverage, pipeline completeness, staleness
+1. `artifacts/_index.md` — global open work counts, active reviews, open tickets by priority
+2. `artifacts/tickets/_index.md` — open/in-progress tickets with ID, category, priority, domain
+3. `artifacts/reviews/_index.md` — active reviews (CHANGES_REQUIRED/FAIL), recent approvals
+4. `artifacts/designs/_index.md` — design status, tier completion
+5. `artifacts/matrix/_index.md` — per-domain coverage, pipeline completeness, staleness
 6. `decrees/_index.md` — active decrees by domain
 
 From these indexes, extract:
@@ -58,13 +58,13 @@ From these indexes, extract:
 **Fallback path — scan directories directly:**
 
 If `_index.md` files don't exist, fall back to scanning directories:
-- `app/tests/e2e/artifacts/tickets/open/` — scan all subdirectories (`bug/`, `ptu-rule/`, `feature/`, `ux/`, `decree/`)
-- `app/tests/e2e/artifacts/tickets/in-progress/` — scan all subdirectories
-- `app/tests/e2e/artifacts/refactoring/`
-- `app/tests/e2e/artifacts/reviews/active/`
-- `app/tests/e2e/artifacts/designs/`
-- `app/tests/e2e/artifacts/matrix/`
-- `app/tests/e2e/artifacts/lessons/`
+- `artifacts/tickets/open/` — scan all subdirectories (`bug/`, `ptu-rule/`, `feature/`, `ux/`, `decree/`)
+- `artifacts/tickets/in-progress/` — scan all subdirectories
+- `artifacts/refactoring/`
+- `artifacts/reviews/active/`
+- `artifacts/designs/`
+- `artifacts/matrix/`
+- `artifacts/lessons/`
 - `decrees/`
 
 For each ecosystem, determine:
@@ -75,9 +75,9 @@ For each ecosystem, determine:
 
 ### 1f. Scan Decree-Need Tickets and Active Decrees
 
-Read `decrees/_index.md` for active decrees. Read `app/tests/e2e/artifacts/tickets/_index.md` for open decree-need tickets (check "Open Decree-Needs" section).
+Read `decrees/_index.md` for active decrees. Read `artifacts/tickets/_index.md` for open decree-need tickets (check "Open Decree-Needs" section).
 
-If indexes are missing, fall back to scanning `app/tests/e2e/artifacts/tickets/open/decree/` for open decree-needs and `decrees/` for `status: active`.
+If indexes are missing, fall back to scanning `artifacts/tickets/open/decree/` for open decree-needs and `decrees/` for `status: active`.
 
 Index decrees by domain for Step 5 template data gathering.
 
@@ -87,7 +87,7 @@ Report open decree-need tickets: "N decree-need tickets await human ruling. Run 
 
 ### 1e. Read Recently Completed Work
 
-Read `app/tests/e2e/artifacts/alive-agents.md` for the last 10 entries.
+Read `artifacts/state/alive-agents.md` for the last 10 entries.
 
 ## Step 2: Build Full Work Queue
 

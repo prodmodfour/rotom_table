@@ -13,7 +13,7 @@ This skill is one of two entry points to the **Feature Matrix Workflow**. You an
 
 **Workflow position:** You (parallel with App Capability Mapper) → Coverage Analyzer → Implementation Auditor
 
-**Output location:** `app/tests/e2e/artifacts/matrix/<domain>/rules/` (atomized per-rule files + `_index.md`)
+**Output location:** `artifacts/matrix/<domain>/rules/` (atomized per-rule files + `_index.md`)
 
 See `ptu-skills-ecosystem.md` for the full architecture.
 
@@ -30,7 +30,7 @@ Before starting, read these files:
 3. **Skill Interfaces** — `.claude/skills/references/skill-interfaces.md`
    Defines the exact output format for your rule catalog.
 
-4. **Lesson files** — `app/tests/e2e/artifacts/lessons/ptu-rule-extractor.lessons.md` (if it exists)
+4. **Lesson files** — `artifacts/lessons/ptu-rule-extractor.lessons.md` (if it exists)
    Lessons from previous extraction runs. Read and apply.
 
 ## Process
@@ -91,7 +91,7 @@ Some rules reference mechanics from other domains. When you find one:
 
 ### Step 7: Write Output
 
-Write atomized output to `app/tests/e2e/artifacts/matrix/<domain>/rules/`:
+Write atomized output to `artifacts/matrix/<domain>/rules/`:
 
 1. **Per-rule files** — one file per rule: `<domain>-R<NNN>.md`
    ```

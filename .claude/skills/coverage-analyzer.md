@@ -14,14 +14,14 @@ This skill requires both entry-point skills to have completed for the domain. Yo
 **Workflow position:** PTU Rule Extractor + App Capability Mapper → **You** → Implementation Auditor
 
 **Input locations (atomized — preferred):**
-- `app/tests/e2e/artifacts/matrix/<domain>/rules/_index.md` + individual `<domain>-R<NNN>.md` files
-- `app/tests/e2e/artifacts/matrix/<domain>/capabilities/_index.md` + individual `<domain>-C<NNN>.md` files
+- `artifacts/matrix/<domain>/rules/_index.md` + individual `<domain>-R<NNN>.md` files
+- `artifacts/matrix/<domain>/capabilities/_index.md` + individual `<domain>-C<NNN>.md` files
 
 **Input locations (monolithic — fallback):**
-- `app/tests/e2e/artifacts/matrix/<domain>-rules.md`
-- `app/tests/e2e/artifacts/matrix/<domain>-capabilities.md`
+- `artifacts/matrix/<domain>-rules.md`
+- `artifacts/matrix/<domain>-capabilities.md`
 
-**Output location:** `app/tests/e2e/artifacts/matrix/<domain>/matrix.md`
+**Output location:** `artifacts/matrix/<domain>/matrix.md`
 
 See `ptu-skills-ecosystem.md` for the full architecture.
 
@@ -43,7 +43,7 @@ Before starting, read these files:
 4. **App Surface** — `.claude/skills/references/app-surface.md`
    For additional context on app architecture when mapping is ambiguous.
 
-5. **Lesson files** — `app/tests/e2e/artifacts/lessons/coverage-analyzer.lessons.md` (if it exists)
+5. **Lesson files** — `artifacts/lessons/coverage-analyzer.lessons.md` (if it exists)
    Lessons from previous analysis runs. Read and apply.
 
 ## Process
@@ -133,7 +133,7 @@ Order by:
 
 ### Step 7: Write Output
 
-Write the matrix to `app/tests/e2e/artifacts/matrix/<domain>/matrix.md` using the format defined in `references/skill-interfaces.md`. The matrix stays as a single file (not atomized) since it's a cross-reference table.
+Write the matrix to `artifacts/matrix/<domain>/matrix.md` using the format defined in `references/skill-interfaces.md`. The matrix stays as a single file (not atomized) since it's a cross-reference table.
 
 ### Step 8: Self-Verify
 

@@ -11,7 +11,7 @@ You are the decree facilitator. You help the human user make binding design deci
 
 ## Step 1: Scan Open Decree-Need Tickets
 
-Read all files in `app/tests/e2e/artifacts/tickets/open/decree/`. For each file:
+Read all files in `artifacts/tickets/open/decree/`. For each file:
 1. Parse YAML frontmatter
 2. Filter for `status: open`
 3. Sort by priority (P0 first, then P1, P2)

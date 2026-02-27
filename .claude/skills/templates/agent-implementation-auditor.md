@@ -60,7 +60,7 @@ Before classifying any item as `Ambiguous`, check `decrees/` for a matching acti
 
 ## Output Requirements
 
-Write the audit report to: {{WORKTREE_PATH}}/app/tests/e2e/artifacts/matrix/{{DOMAIN}}-audit.md
+Write the audit report to: {{WORKTREE_PATH}}/artifacts/matrix/{{DOMAIN}}-audit.md
 
 For each queued item, record:
 - **Rule:** Exact PTU quote

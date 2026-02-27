@@ -14,10 +14,10 @@ This skill is part of the **Dev Ecosystem** in the 10-skill PTU testing pipeline
 - **Senior Reviewer** handles code quality and architecture.
 - **You** handle PTU rule correctness — formulas, mechanics, game logic.
 - **Escalations** come from the Implementation Auditor (ambiguous audit items) and design specs with PTU rule questions via `artifacts/designs/design-*.md` — check the "PTU Rule Questions" section.
-- **PTU rule tickets:** When you find PTU rule violations during reviews, you can create `tickets/ptu-rule/ptu-rule-NNN.md` tickets for the Developer to address. Use the unified ticket schema (see `.claude/skills/references/skill-interfaces.md`).
-- **Review artifacts** go to `app/tests/e2e/artifacts/reviews/active/rules-review-<NNN>.md`. The `verdict` field determines pipeline flow: `APPROVED` allows the fix to proceed, `CHANGES_REQUIRED` routes back to Developer, `BLOCKED` halts progress. APPROVED reviews are archived to `reviews/archive/` by the Slave Collector.
+- **PTU rule tickets:** When you find PTU rule violations during reviews, you can create `tickets/open/ptu-rule/ptu-rule-NNN.md` tickets for the Developer to address. Use the unified ticket schema (see `.claude/skills/references/skill-interfaces.md`).
+- **Review artifacts** go to `artifacts/reviews/active/rules-review-<NNN>.md`. The `verdict` field determines pipeline flow: `APPROVED` allows the fix to proceed, `CHANGES_REQUIRED` routes back to Developer, `BLOCKED` halts progress. APPROVED reviews are archived to `reviews/archive/` by the Slave Collector.
 - **Escalation rulings** should also produce a `rules-review-*.md` artifact for audit trail, using `trigger: escalation-ruling`.
-- **State file:** `app/tests/e2e/artifacts/dev-state.md` tracks Dev ecosystem state (written by Orchestrator).
+- **State file:** `artifacts/state/dev-state.md` tracks Dev ecosystem state (written by Orchestrator).
 - See `ptu-skills-ecosystem.md` for the full pipeline architecture.
 
 ## Triggers
@@ -49,7 +49,7 @@ Full table and pokedex lookup guide in `.claude/skills/references/ptu-chapter-in
 
 ### Step 0: Read Lessons
 
-Before starting work, check `app/tests/e2e/artifacts/lessons/game-logic-reviewer.lessons.md` for patterns from previous cycles. If the file exists, review active lessons — they highlight recurring rule ambiguities and past rulings that provide precedent for current decisions. If no lesson file exists, skip this step.
+Before starting work, check `artifacts/lessons/game-logic-reviewer.lessons.md` for patterns from previous cycles. If the file exists, review active lessons — they highlight recurring rule ambiguities and past rulings that provide precedent for current decisions. If no lesson file exists, skip this step.
 
 ### Step 1: Identify What to Verify
 
@@ -115,7 +115,7 @@ Output a structured report:
 
 ### Step 4a: Write Review Artifact
 
-Write the review to `app/tests/e2e/artifacts/reviews/active/rules-review-<NNN>.md` using the schema from `references/skill-interfaces.md` section 9. Include all reviewed commits, mechanics verified, issues found, verdict, and PTU references.
+Write the review to `artifacts/reviews/active/rules-review-<NNN>.md` using the schema from `references/skill-interfaces.md` section 9. Include all reviewed commits, mechanics verified, issues found, verdict, and PTU references.
 
 ### Step 4b: State Update
 

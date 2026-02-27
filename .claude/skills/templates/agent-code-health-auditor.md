@@ -74,7 +74,7 @@ You scan production source code under `app/` to find structural problems that ma
 
 ### Refactoring Ticket Format
 
-Write to `app/tests/e2e/artifacts/refactoring/refactoring-<NNN>.md`:
+Write to `artifacts/refactoring/refactoring-<NNN>.md`:
 
 ```markdown
 ---
@@ -99,7 +99,7 @@ created_at: <ISO timestamp>
 
 ### Audit Summary
 
-Write to `app/tests/e2e/artifacts/refactoring/audit-summary.md`
+Write to `artifacts/refactoring/audit-summary.md`
 
 ## Working Directory
 

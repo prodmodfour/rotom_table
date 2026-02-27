@@ -41,19 +41,19 @@ You cross-reference: read lesson files to boost priority of files the Analyst al
 
 - Source code files under `app/` (components, composables, stores, services, API endpoints, pages)
 - `.claude/skills/references/app-surface.md` for architecture context
-- `app/tests/e2e/artifacts/lessons/` to cross-reference Retrospective Analyst findings
+- `artifacts/lessons/` to cross-reference Retrospective Analyst findings
 - `git log` for recent change frequency (hot files get extra scrutiny)
 
 ### Output
 
-- `app/tests/e2e/artifacts/refactoring/refactoring-<NNN>.md` (per-ticket)
-- `app/tests/e2e/artifacts/refactoring/audit-summary.md`
+- `artifacts/refactoring/refactoring-<NNN>.md` (per-ticket)
+- `artifacts/refactoring/audit-summary.md`
 
 ## Process
 
 ### Step 0: Read Lessons
 
-Check `app/tests/e2e/artifacts/lessons/code-health-auditor.lessons.md` for patterns from previous audits. Skip if no file exists.
+Check `artifacts/lessons/code-health-auditor.lessons.md` for patterns from previous audits. Skip if no file exists.
 
 ### Step 1: Determine Scope
 
@@ -62,7 +62,7 @@ Ask the user or infer from context:
 - **Domain audit**: Files related to a specific domain (use `app-surface.md` to identify them)
 - **Targeted audit**: Specific files/directories the user specifies
 
-Check `app/tests/e2e/artifacts/refactoring/audit-summary.md` for last audit timestamp. If the file exists, note the date for hot-file detection in Step 3.
+Check `artifacts/refactoring/audit-summary.md` for last audit timestamp. If the file exists, note the date for hot-file detection in Step 3.
 
 ### Step 2: Cheap Size Scan
 
@@ -101,7 +101,7 @@ For each file in the read list, read it and check against all 12 categories (7 L
 
 ### Step 6: Cross-Reference Retrospective Lessons
 
-Read lesson files in `app/tests/e2e/artifacts/lessons/`. Boost priority of files the Analyst flagged. Note cross-references in ticket "Related Lessons" section.
+Read lesson files in `artifacts/lessons/`. Boost priority of files the Analyst flagged. Note cross-references in ticket "Related Lessons" section.
 
 ### Step 7: Prioritize and Deduplicate
 
@@ -110,17 +110,17 @@ Group findings by file. Assign priority:
 - P1: 600-800 line files, >50-line functions, 5-level nesting, cross-referenced with Retrospective lessons
 - P2: Everything else that crosses a threshold
 
-Deduplicate against existing open tickets in `app/tests/e2e/artifacts/refactoring/`. If a ticket already covers the same file and categories, skip it. If the file has new findings beyond the existing ticket, update the existing ticket or note it in the summary.
+Deduplicate against existing open tickets in `artifacts/refactoring/`. If a ticket already covers the same file and categories, skip it. If the file has new findings beyond the existing ticket, update the existing ticket or note it in the summary.
 
 **No cap on ticket count.** Write a ticket for every finding that crosses a threshold.
 
 ### Step 8: Write Tickets
 
-Write to `app/tests/e2e/artifacts/refactoring/refactoring-<NNN>.md` using the format below. Number sequentially from the highest existing ticket number + 1.
+Write to `artifacts/refactoring/refactoring-<NNN>.md` using the format below. Number sequentially from the highest existing ticket number + 1.
 
 ### Step 9: Write Audit Summary
 
-Write `app/tests/e2e/artifacts/refactoring/audit-summary.md` using the format below.
+Write `artifacts/refactoring/audit-summary.md` using the format below.
 
 ### Step 10: State Update
 
@@ -174,7 +174,7 @@ The project follows SOLID principles (see CLAUDE.md). When auditing, apply these
 
 ### Refactoring Ticket
 
-**Location:** `app/tests/e2e/artifacts/refactoring/refactoring-<NNN>.md`
+**Location:** `artifacts/refactoring/refactoring-<NNN>.md`
 
 ```markdown
 ---
@@ -228,7 +228,7 @@ Estimated commits: <count>
 
 ### Audit Summary
 
-**Location:** `app/tests/e2e/artifacts/refactoring/audit-summary.md`
+**Location:** `artifacts/refactoring/audit-summary.md`
 
 ```markdown
 ---
@@ -285,4 +285,4 @@ overflow_files: <count of files that qualified but exceeded the 20-file cap>
 - Write or modify matrix artifacts or test scenarios (that's the Matrix Ecosystem skills)
 - Create bug reports (those come from the matrix workflow — you find structural smells, not functional bugs)
 - Scan test files or artifacts — only production code under `app/`
-- Write to any artifact directory other than `app/tests/e2e/artifacts/refactoring/`
+- Write to any artifact directory other than `artifacts/refactoring/`

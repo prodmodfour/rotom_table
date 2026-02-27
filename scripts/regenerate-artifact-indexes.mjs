@@ -2,11 +2,11 @@
  * Regenerates all _index.md summary files across the artifact ecosystem.
  *
  * Scans artifact directories, parses YAML frontmatter, and writes index files:
- *   - app/tests/e2e/artifacts/_index.md         (global summary)
- *   - app/tests/e2e/artifacts/reviews/_index.md  (review summary)
- *   - app/tests/e2e/artifacts/tickets/_index.md  (ticket summary)
- *   - app/tests/e2e/artifacts/designs/_index.md  (design summary)
- *   - app/tests/e2e/artifacts/matrix/_index.md   (matrix summary)
+ *   - artifacts/_index.md         (global summary)
+ *   - artifacts/reviews/_index.md  (review summary)
+ *   - artifacts/tickets/_index.md  (ticket summary)
+ *   - artifacts/designs/_index.md  (design summary)
+ *   - artifacts/matrix/_index.md   (matrix summary)
  *   - decrees/_index.md                          (decree summary)
  *
  * Usage: node scripts/regenerate-artifact-indexes.mjs
@@ -18,7 +18,7 @@ import { fileURLToPath } from 'url'
 
 const __dirname = resolve(fileURLToPath(import.meta.url), '..')
 const ROOT = resolve(__dirname, '..')
-const ARTIFACTS = join(ROOT, 'app/tests/e2e/artifacts')
+const ARTIFACTS = join(ROOT, 'artifacts')
 const DECREES_DIR = join(ROOT, 'decrees')
 
 // ---------------------------------------------------------------------------
@@ -663,7 +663,7 @@ function generateGlobalIndex() {
   out += `- [Tickets](tickets/_index.md)\n`
   out += `- [Designs](designs/_index.md)\n`
   out += `- [Matrix](matrix/_index.md)\n`
-  out += `- [Decrees](../../decrees/_index.md)\n`
+  out += `- [Decrees](../decrees/_index.md)\n`
 
   return out
 }

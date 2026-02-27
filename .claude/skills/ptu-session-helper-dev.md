@@ -9,17 +9,17 @@ You are the implementation worker for the Pokemon TTRPG Session Helper project. 
 - **Components:** Auto-imported, organized by domain
 - **Styling:** SCSS with global variables (`app/assets/scss/_variables.scss`)
 - **Icons:** Phosphor Icons (`@phosphor-icons/vue`) — never use emojis in UI
-- **Plans:** Check `docs/` and `app/tests/e2e/artifacts/designs/` for implementation plans before starting work
+- **Plans:** Check `docs/` and `artifacts/designs/` for implementation plans before starting work
 
 ## Ecosystem Role
 
 This skill is part of the **Dev Ecosystem** in the 10-skill PTU testing pipeline. You receive bug, feature, UX, and PTU rule tickets from the Test ecosystem and implement fixes/features.
 
-- **Lessons:** Before starting a bug fix session, check `app/tests/e2e/artifacts/lessons/ptu-session-helper-dev.lessons.md` for recurring fix patterns (e.g., the same class of code change applied in multiple places). If the file exists, review active lessons to avoid repeating known mistakes. If it doesn't exist, skip this.
-- **Bug tickets** live in `app/tests/e2e/artifacts/tickets/open/bug/` (open) or `tickets/in-progress/bug/` (being worked on). Read them for a summary of the issue. Tickets from the matrix workflow include a `matrix_source` field linking to the rule_id and domain.
-- **Feature/UX tickets** live in `app/tests/e2e/artifacts/tickets/open/feature/` and `tickets/open/ux/`. These identify missing PTU rules and may have associated design specs in `artifacts/designs/`.
-- **PTU rule tickets** live in `app/tests/e2e/artifacts/tickets/open/ptu-rule/`. These come from the Implementation Auditor (approximations) or Game Logic Reviewer findings.
-- **Design specs** live in `app/tests/e2e/artifacts/designs/design-*/` (atomized directories). Each design has:
+- **Lessons:** Before starting a bug fix session, check `artifacts/lessons/ptu-session-helper-dev.lessons.md` for recurring fix patterns (e.g., the same class of code change applied in multiple places). If the file exists, review active lessons to avoid repeating known mistakes. If it doesn't exist, skip this.
+- **Bug tickets** live in `artifacts/tickets/open/bug/` (open) or `tickets/in-progress/bug/` (being worked on). Read them for a summary of the issue. Tickets from the matrix workflow include a `matrix_source` field linking to the rule_id and domain.
+- **Feature/UX tickets** live in `artifacts/tickets/open/feature/` and `tickets/open/ux/`. These identify missing PTU rules and may have associated design specs in `artifacts/designs/`.
+- **PTU rule tickets** live in `artifacts/tickets/open/ptu-rule/`. These come from the Implementation Auditor (approximations) or Game Logic Reviewer findings.
+- **Design specs** live in `artifacts/designs/design-*/` (atomized directories). Each design has:
   - `_index.md` — frontmatter, summary, tier summary, priority map
   - `spec-p0.md`, `spec-p1.md`, `spec-p2.md` — per-tier specifications (read only the tier you're implementing)
   - `spec.md` — full specification (for designs without priority tiers)
@@ -32,15 +32,15 @@ This skill is part of the **Dev Ecosystem** in the 10-skill PTU testing pipeline
   3. Update `.claude/skills/references/app-surface.md` with new routes/endpoints/components added by the implementation
 - **After fixing a bug**, update the bug report's "Fix Log" section AND move the ticket file from `tickets/open/<category>/` to `tickets/in-progress/<category>/` (the Slave Collector moves it to `tickets/resolved/<category>/` after both reviews approve).
 - **The Orchestrator** (in another terminal) tells the user which ticket to send you next. Follow priority: CRITICAL first, then HIGH, then MEDIUM.
-- **Review artifacts** from both reviewers live in `app/tests/e2e/artifacts/reviews/active/`. When the Orchestrator routes you a `CHANGES_REQUIRED` review, read the review artifact's "Required Changes" section and address every item. After fixing, the review cycle will re-run.
+- **Review artifacts** from both reviewers live in `artifacts/reviews/active/`. When the Orchestrator routes you a `CHANGES_REQUIRED` review, read the review artifact's "Required Changes" section and address every item. After fixing, the review cycle will re-run.
 - **After your fix is reviewed** (by Senior Reviewer + Game Logic Reviewer), the Orchestrator updates the state files. Playtesting happens externally.
-- **Refactoring tickets** from the Code Health Auditor live in `app/tests/e2e/artifacts/refactoring/refactoring-*.md`. When the Orchestrator routes you a refactoring ticket:
+- **Refactoring tickets** from the Code Health Auditor live in `artifacts/refactoring/refactoring-*.md`. When the Orchestrator routes you a refactoring ticket:
   1. Read the ticket for affected files, findings, and suggested refactoring steps
   2. Implement the refactoring following the suggested plan (the Senior Reviewer has final say on approach)
   3. Update the ticket's Resolution Log section with commit hashes, files changed, new files created, and test status
   4. Set the ticket frontmatter `status` field to `resolved`
   5. Run existing tests to confirm nothing breaks — refactoring must not change behavior
-- **State file:** `app/tests/e2e/artifacts/dev-state.md` tracks Dev ecosystem state (written by Orchestrator, read by you for context).
+- **State file:** `artifacts/state/dev-state.md` tracks Dev ecosystem state (written by Orchestrator, read by you for context).
 - See `ptu-skills-ecosystem.md` for the full pipeline architecture.
 
 ## Working Rules

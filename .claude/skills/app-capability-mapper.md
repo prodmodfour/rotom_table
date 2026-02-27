@@ -13,7 +13,7 @@ This skill is one of two entry points to the **Feature Matrix Workflow**. You an
 
 **Workflow position:** You (parallel with PTU Rule Extractor) → Coverage Analyzer → Implementation Auditor
 
-**Output location:** `app/tests/e2e/artifacts/matrix/<domain>/capabilities/` (atomized per-capability files + `_index.md`)
+**Output location:** `artifacts/matrix/<domain>/capabilities/` (atomized per-capability files + `_index.md`)
 
 See `ptu-skills-ecosystem.md` for the full architecture.
 
@@ -30,7 +30,7 @@ Before starting, read these files:
 3. **Prisma Schema** — `app/prisma/schema.prisma`
    Data model definitions. Read to understand what the domain stores.
 
-4. **Lesson files** — `app/tests/e2e/artifacts/lessons/app-capability-mapper.lessons.md` (if it exists)
+4. **Lesson files** — `artifacts/lessons/app-capability-mapper.lessons.md` (if it exists)
    Lessons from previous mapping runs. Read and apply.
 
 ## Process
@@ -98,7 +98,7 @@ Mark these as `orphan: true` in their catalog entry.
 
 ### Step 6: Write Output
 
-Write atomized output to `app/tests/e2e/artifacts/matrix/<domain>/capabilities/`:
+Write atomized output to `artifacts/matrix/<domain>/capabilities/`:
 
 1. **Per-capability files** — one file per capability: `<domain>-C<NNN>.md`
    ```

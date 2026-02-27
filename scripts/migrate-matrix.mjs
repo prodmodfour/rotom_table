@@ -20,7 +20,7 @@ import { fileURLToPath } from 'url'
 
 const __dirname = resolve(fileURLToPath(import.meta.url), '..')
 const ROOT = resolve(__dirname, '..')
-const MATRIX_DIR = join(ROOT, 'app/tests/e2e/artifacts/matrix')
+const MATRIX_DIR = join(ROOT, 'artifacts/matrix')
 
 const ALL_DOMAINS = [
   'combat', 'vtt-grid', 'pokemon-lifecycle', 'character-lifecycle',

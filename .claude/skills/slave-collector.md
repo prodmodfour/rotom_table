@@ -141,9 +141,9 @@ Append one row per merged slave:
 ### 5d. Commit State Updates
 
 ```bash
-git add app/tests/e2e/artifacts/dev-state.md
-git add app/tests/e2e/artifacts/test-state.md
-git add app/tests/e2e/artifacts/alive-agents.md
+git add artifacts/state/dev-state.md
+git add artifacts/state/test-state.md
+git add artifacts/state/alive-agents.md
 git commit -m "orchestrator: collect-slaves for plan-<plan_id>"
 ```
 
@@ -214,19 +214,19 @@ node scripts/regenerate-artifact-indexes.mjs
 ```
 
 This updates indexes in:
-- `app/tests/e2e/artifacts/_index.md` — global summary
-- `app/tests/e2e/artifacts/reviews/_index.md` — review summary
-- `app/tests/e2e/artifacts/tickets/_index.md` — ticket summary
-- `app/tests/e2e/artifacts/designs/_index.md` — design summary
-- `app/tests/e2e/artifacts/matrix/_index.md` — matrix summary
+- `artifacts/_index.md` — global summary
+- `artifacts/reviews/_index.md` — review summary
+- `artifacts/tickets/_index.md` — ticket summary
+- `artifacts/designs/_index.md` — design summary
+- `artifacts/matrix/_index.md` — matrix summary
 - `decrees/_index.md` — decree summary
 
 Stage and commit the regenerated indexes:
 
 ```bash
-git add app/tests/e2e/artifacts/_index.md app/tests/e2e/artifacts/reviews/_index.md \
-       app/tests/e2e/artifacts/tickets/_index.md app/tests/e2e/artifacts/designs/_index.md \
-       app/tests/e2e/artifacts/matrix/_index.md decrees/_index.md
+git add artifacts/_index.md artifacts/reviews/_index.md \
+       artifacts/tickets/_index.md artifacts/designs/_index.md \
+       artifacts/matrix/_index.md decrees/_index.md
 git commit -m "chore: regenerate artifact indexes after collection"
 ```
 

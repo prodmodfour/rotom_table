@@ -1,5 +1,5 @@
 ---
-generated_at: 2026-02-27T07:35:05.986Z
+generated_at: 2026-02-27T07:39:35.655Z
 ---
 
 # Artifact Ecosystem Index
@@ -117,4 +117,4 @@ generated_at: 2026-02-27T07:35:05.986Z
 - [Tickets](tickets/_index.md)
 - [Designs](designs/_index.md)
 - [Matrix](matrix/_index.md)
-- [Decrees](../../decrees/_index.md)
+- [Decrees](../decrees/_index.md)

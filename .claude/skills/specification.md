@@ -46,7 +46,7 @@ All inter-skill communication happens through persistent files on disk. No skill
 
 **Cross-ecosystem communication** uses tickets:
 ```
-app/tests/e2e/artifacts/tickets/
+artifacts/tickets/
 ├── bug/               # Orchestrator writes (from audit) → Developer reads
 ├── ptu-rule/          # Orchestrator/Game Logic Reviewer writes → Developer reads
 ├── feature/           # Orchestrator writes (from matrix) → Developer reads
@@ -55,7 +55,7 @@ app/tests/e2e/artifacts/tickets/
 
 **Ecosystem-internal artifacts:**
 ```
-app/tests/e2e/artifacts/
+artifacts/
 ├── matrix/             # Matrix: all 4 skills write sequentially
 │   ├── <domain>-rules.md          # Rule Extractor writes → Coverage Analyzer reads
 │   ├── <domain>-capabilities.md   # Capability Mapper writes → Coverage Analyzer reads
@@ -207,7 +207,7 @@ The orchestration system is split into three phases, each with its own skill:
 | **File** | `.claude/skills/ptu-rule-extractor.md` |
 | **Trigger** | Ask Claude to load the ptu-rule-extractor skill |
 | **Input** | PTU rulebook chapters (`books/markdown/core/`), errata |
-| **Output** | `app/tests/e2e/artifacts/matrix/<domain>-rules.md` |
+| **Output** | `artifacts/matrix/<domain>-rules.md` |
 | **Terminal** | Spin up per domain, can close after rules extracted |
 
 **Responsibilities:**
@@ -226,7 +226,7 @@ The orchestration system is split into three phases, each with its own skill:
 | **File** | `.claude/skills/app-capability-mapper.md` |
 | **Trigger** | Ask Claude to load the app-capability-mapper skill |
 | **Input** | App source code, `references/app-surface.md`, Prisma schema |
-| **Output** | `app/tests/e2e/artifacts/matrix/<domain>-capabilities.md` |
+| **Output** | `artifacts/matrix/<domain>-capabilities.md` |
 | **Terminal** | Spin up per domain, can close after capabilities mapped |
 
 **Responsibilities:**
@@ -244,7 +244,7 @@ The orchestration system is split into three phases, each with its own skill:
 | **File** | `.claude/skills/coverage-analyzer.md` |
 | **Trigger** | Ask Claude to load the coverage-analyzer skill |
 | **Input** | `matrix/<domain>-rules.md`, `matrix/<domain>-capabilities.md` |
-| **Output** | `app/tests/e2e/artifacts/matrix/<domain>-matrix.md` |
+| **Output** | `artifacts/matrix/<domain>-matrix.md` |
 | **Terminal** | Spin up per domain, can close after matrix produced |
 
 **Responsibilities:**
@@ -263,7 +263,7 @@ The orchestration system is split into three phases, each with its own skill:
 | **File** | `.claude/skills/implementation-auditor.md` |
 | **Trigger** | Ask Claude to load the implementation-auditor skill |
 | **Input** | `matrix/<domain>-matrix.md`, source code, PTU rulebook sections |
-| **Output** | `app/tests/e2e/artifacts/matrix/<domain>-audit.md` |
+| **Output** | `artifacts/matrix/<domain>-audit.md` |
 | **Terminal** | Spin up per domain, can close after audit complete |
 
 **Responsibilities:**
@@ -286,7 +286,7 @@ The orchestration system is split into three phases, each with its own skill:
 | **Terminal** | Persistent — primary implementation terminal |
 
 **Ecosystem additions (to existing skill):**
-- Read bug/feature/ux tickets from `app/tests/e2e/artifacts/tickets/`
+- Read bug/feature/ux tickets from `artifacts/tickets/`
 - After fixing, annotate the ticket with fix details (file changed, commit hash)
 - Follow the Orchestrator's guidance on which ticket to fix next
 - Write design specs when feature tickets need design before implementation
@@ -298,7 +298,7 @@ The orchestration system is split into three phases, each with its own skill:
 | **File** | `.claude/skills/ptu-session-helper-senior-reviewer.md` |
 | **Trigger** | Load at session start, after Dev produces changes |
 | **Input** | Dev's code changes (git diff), bug reports being addressed |
-| **Output** | `app/tests/e2e/artifacts/reviews/code-review-<NNN>.md` |
+| **Output** | `artifacts/reviews/code-review-<NNN>.md` |
 | **Terminal** | Persistent — review terminal |
 
 **Ecosystem additions (to existing skill):**
@@ -312,7 +312,7 @@ The orchestration system is split into three phases, each with its own skill:
 | **File** | `.claude/skills/game-logic-reviewer.md` |
 | **Trigger** | Ask Claude to load the game-logic-reviewer skill |
 | **Input** | Code changes, audit ambiguities, escalations from other skills |
-| **Output** | `app/tests/e2e/artifacts/reviews/rules-review-<NNN>.md` |
+| **Output** | `artifacts/reviews/rules-review-<NNN>.md` |
 | **Terminal** | Spin up when needed for PTU rule questions |
 
 **Responsibilities:**
@@ -330,7 +330,7 @@ The orchestration system is split into three phases, each with its own skill:
 | **File** | `.claude/skills/retrospective-analyst.md` |
 | **Trigger** | After a domain completes a full cycle OR on-demand by user request |
 | **Input** | All artifact directories, `dev-state.md`, `test-state.md`, git history |
-| **Output** | `app/tests/e2e/artifacts/lessons/<skill-name>.lessons.md`, `retrospective-summary.md` |
+| **Output** | `artifacts/lessons/<skill-name>.lessons.md`, `retrospective-summary.md` |
 | **Terminal** | Spin up after cycles complete or on user request |
 
 **Responsibilities:**
@@ -354,7 +354,7 @@ The orchestration system is split into three phases, each with its own skill:
 | **File** | `.claude/skills/code-health-auditor.md` |
 | **Trigger** | On-demand, after a domain completes a full pipeline cycle, or after Developer implements a FULL-scope design spec |
 | **Input** | Source code files under `app/`, `app-surface.md`, lesson files, git log |
-| **Output** | `app/tests/e2e/artifacts/refactoring/refactoring-<NNN>.md`, `audit-summary.md` |
+| **Output** | `artifacts/refactoring/refactoring-<NNN>.md`, `audit-summary.md` |
 | **Terminal** | Spin up per audit |
 
 **Responsibilities:**
@@ -507,10 +507,10 @@ updated_by: orchestrator
 # Dev Ecosystem State
 
 ## Open Tickets
-### Bug Tickets (`tickets/bug/`)
-### PTU Rule Tickets (`tickets/ptu-rule/`)
-### Feature Tickets (`tickets/feature/`)
-### UX Tickets (`tickets/ux/`)
+### Bug Tickets (`tickets/open/bug/`)
+### PTU Rule Tickets (`tickets/open/ptu-rule/`)
+### Feature Tickets (`tickets/open/feature/`)
+### UX Tickets (`tickets/open/ux/`)
 
 ## Active Developer Work
 ## Review Status
@@ -837,12 +837,12 @@ All skills that need PTU knowledge read from shared reference files rather than 
 | Skill Interfaces | `.claude/skills/references/skill-interfaces.md` | All skills (artifact format contracts) |
 | App Surface | `.claude/skills/references/app-surface.md` | Capability Mapper, Dev, Code Health Auditor |
 | Playwright Patterns | `.claude/skills/references/playwright-patterns.md` | External testing reference |
-| Lesson Files | `app/tests/e2e/artifacts/lessons/` | Retrospective Analyst (writes), all skills (read) |
-| Refactoring Tickets | `app/tests/e2e/artifacts/refactoring/` | Code Health Auditor (writes), Developer + Senior Reviewer (read) |
-| Review Artifacts | `app/tests/e2e/artifacts/reviews/` | Senior Reviewer + Game Logic Reviewer (write), Orchestrator + Developer (read) |
-| Matrix Artifacts | `app/tests/e2e/artifacts/matrix/` | All 4 matrix skills (write sequentially), Orchestrator (read for tickets) |
+| Lesson Files | `artifacts/lessons/` | Retrospective Analyst (writes), all skills (read) |
+| Refactoring Tickets | `artifacts/refactoring/` | Code Health Auditor (writes), Developer + Senior Reviewer (read) |
+| Review Artifacts | `artifacts/reviews/` | Senior Reviewer + Game Logic Reviewer (write), Orchestrator + Developer (read) |
+| Matrix Artifacts | `artifacts/matrix/` | All 4 matrix skills (write sequentially), Orchestrator (read for tickets) |
 | Design Decrees | `decrees/` | Decree Facilitator (writes), all reviewer/auditor/dev skills (read) |
-| Decree-Need Tickets | `app/tests/e2e/artifacts/tickets/decree/` | Reviewers/Auditor/Collector (write), Decree Facilitator (read) |
+| Decree-Need Tickets | `artifacts/tickets/open/decree/` | Reviewers/Auditor/Collector (write), Decree Facilitator (read) |
 | UX Session Scenarios | `ux-sessions/scenarios/` | UX Session Planner (read), UX agents (read) |
 | UX Party Profiles | `ux-sessions/party.md` | UX Session Planner (read), UX agents (read) |
 | UX Session Reports | `ux-sessions/reports/` | UX agents (write), Narrator (read/write), Ticket Creator (read) |
@@ -886,9 +886,9 @@ The master planner checks timestamps during planning:
 When a domain's matrix and audit are both complete:
 
 1. Master planner reads `matrix/<domain>-matrix.md` and `matrix/<domain>-audit.md`
-2. For each `Incorrect` audit item → creates bug ticket in `tickets/bug/`
-3. For each `Missing` matrix item → creates feature ticket in `tickets/feature/`
-4. For each `Approximation` audit item → creates ptu-rule ticket in `tickets/ptu-rule/`
+2. For each `Incorrect` audit item → creates bug ticket in `tickets/open/bug/`
+3. For each `Missing` matrix item → creates feature ticket in `tickets/open/feature/`
+4. For each `Approximation` audit item → creates ptu-rule ticket in `tickets/open/ptu-rule/`
 5. Skips `Correct`, `Out of Scope`, and `Ambiguous` items
 6. All tickets include `matrix_source` frontmatter linking back to rule_id/domain
 7. Commits tickets to master immediately, then includes them in the slave plan
@@ -948,7 +948,7 @@ Skills discover ambiguity (multiple valid interpretations of PTU rules, conflict
 ### 8.2 Decree Lifecycle
 
 1. **Discovery:** A skill encounters ambiguity during its work (review, audit, implementation)
-2. **Ticket:** The skill creates a `decree-need` ticket in `tickets/decree/`
+2. **Ticket:** The skill creates a `decree-need` ticket in `tickets/open/decree/`
 3. **Facilitation:** Human runs `/address_design_decrees` → Decree Facilitator presents options
 4. **Ruling:** Human decides → Decree Facilitator records the ruling in `decrees/decree-NNN.md`
 5. **Enforcement:** All skills check `decrees/` before acting and cite applicable decrees
@@ -978,7 +978,7 @@ Skills discover ambiguity (multiple valid interpretations of PTU rules, conflict
 | Type | Location |
 |------|----------|
 | Decrees | `decrees/decree-NNN.md` (project root) |
-| Decree-need tickets | `app/tests/e2e/artifacts/tickets/decree/decree-need-NNN.md` |
+| Decree-need tickets | `artifacts/tickets/open/decree/decree-need-NNN.md` |
 | Skill | `.claude/skills/decree-facilitator.md` |
 | Command | `.claude/commands/address-design-decrees.md` |
 

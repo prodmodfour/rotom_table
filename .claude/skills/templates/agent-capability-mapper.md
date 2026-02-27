@@ -87,7 +87,7 @@ Include these as a `## Missing Subsystems` section in the output. Each entry:
 
 ## Output Requirements
 
-Write the complete capability catalog to: {{WORKTREE_PATH}}/app/tests/e2e/artifacts/matrix/{{DOMAIN}}-capabilities.md
+Write the complete capability catalog to: {{WORKTREE_PATH}}/artifacts/matrix/{{DOMAIN}}-capabilities.md
 
 Each capability entry must include:
 - `cap_id`: `<domain>-C<NNN>` (sequential)
