@@ -19,9 +19,16 @@ This skill is part of the **Dev Ecosystem** in the 10-skill PTU testing pipeline
 - **Bug tickets** live in `app/tests/e2e/artifacts/tickets/open/bug/` (open) or `tickets/in-progress/bug/` (being worked on). Read them for a summary of the issue. Tickets from the matrix workflow include a `matrix_source` field linking to the rule_id and domain.
 - **Feature/UX tickets** live in `app/tests/e2e/artifacts/tickets/open/feature/` and `tickets/open/ux/`. These identify missing PTU rules and may have associated design specs in `artifacts/designs/`.
 - **PTU rule tickets** live in `app/tests/e2e/artifacts/tickets/open/ptu-rule/`. These come from the Implementation Auditor (approximations) or Game Logic Reviewer findings.
-- **Design specs** live in `app/tests/e2e/artifacts/designs/design-*.md`. Write them when a feature ticket needs design before implementation. After implementing a design:
-  1. Update the Implementation Log section in the design spec with commit hashes and files changed
-  2. Set the design spec frontmatter `status` field to `implemented`
+- **Design specs** live in `app/tests/e2e/artifacts/designs/design-*/` (atomized directories). Each design has:
+  - `_index.md` — frontmatter, summary, tier summary, priority map
+  - `spec-p0.md`, `spec-p1.md`, `spec-p2.md` — per-tier specifications (read only the tier you're implementing)
+  - `spec.md` — full specification (for designs without priority tiers)
+  - `shared-specs.md` — composables, utilities, cross-cutting specs
+  - `testing-strategy.md` — testing approach
+  - `implementation-log.md` — commit log (append here after implementing)
+  After implementing a design tier:
+  1. Append to `implementation-log.md` with commit hashes and files changed
+  2. Update the `_index.md` frontmatter `status` field (e.g., `p0-implemented`, `implemented`)
   3. Update `.claude/skills/references/app-surface.md` with new routes/endpoints/components added by the implementation
 - **After fixing a bug**, update the bug report's "Fix Log" section AND move the ticket file from `tickets/open/<category>/` to `tickets/in-progress/<category>/` (the Slave Collector moves it to `tickets/resolved/<category>/` after both reviews approve).
 - **The Orchestrator** (in another terminal) tells the user which ticket to send you next. Follow priority: CRITICAL first, then HIGH, then MEDIUM.
