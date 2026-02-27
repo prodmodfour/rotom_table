@@ -88,6 +88,8 @@ export function serializeCharacter(character: CharacterWithPokemon) {
     skills: JSON.parse(character.skills),
     features: JSON.parse(character.features),
     edges: JSON.parse(character.edges),
+    // Trainer capabilities (e.g. Naturewalk from Survivalist)
+    capabilities: JSON.parse(character.capabilities || '[]'),
     // Equipment
     equipment: JSON.parse(character.equipment || '{}'),
     // Inventory
@@ -154,6 +156,8 @@ export function serializeCharacterSummary(character: CharacterWithPokemonSummary
     skills: JSON.parse(character.skills),
     features: JSON.parse(character.features),
     edges: JSON.parse(character.edges),
+    // Trainer capabilities
+    capabilities: JSON.parse(character.capabilities || '[]'),
     // Equipment
     equipment: JSON.parse(character.equipment || '{}'),
     // Inventory

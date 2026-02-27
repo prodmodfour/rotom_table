@@ -38,6 +38,7 @@ export default defineEventHandler(async (event) => {
         skills: JSON.stringify(body.skills || {}),
         features: JSON.stringify(body.features || []),
         edges: JSON.stringify(body.edges || []),
+        capabilities: JSON.stringify(body.capabilities || []),
         // Inventory
         inventory: JSON.stringify(body.inventory || []),
         money: body.money || 0,

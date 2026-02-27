@@ -39,6 +39,7 @@ export default defineEventHandler(async (event) => {
     if (body.skills !== undefined) updateData.skills = JSON.stringify(body.skills)
     if (body.features !== undefined) updateData.features = JSON.stringify(body.features)
     if (body.edges !== undefined) updateData.edges = JSON.stringify(body.edges)
+    if (body.capabilities !== undefined) updateData.capabilities = JSON.stringify(body.capabilities)
     if (body.equipment !== undefined) updateData.equipment = JSON.stringify(body.equipment)
     if (body.inventory !== undefined) updateData.inventory = JSON.stringify(body.inventory)
     if (body.statusConditions !== undefined) updateData.statusConditions = JSON.stringify(body.statusConditions)

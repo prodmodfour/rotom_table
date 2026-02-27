@@ -623,6 +623,7 @@ export function buildHumanEntityFromRecord(record: PrismaHumanRecord): HumanChar
     skills: JSON.parse(record.skills),
     features: JSON.parse(record.features),
     edges: JSON.parse(record.edges),
+    capabilities: JSON.parse(record.capabilities || '[]'),
     pokemonIds: [],
     statusConditions: JSON.parse(record.statusConditions),
     stageModifiers: JSON.parse(record.stageModifiers),
