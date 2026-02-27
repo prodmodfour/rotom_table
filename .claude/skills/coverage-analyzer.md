@@ -13,11 +13,15 @@ This skill requires both entry-point skills to have completed for the domain. Yo
 
 **Workflow position:** PTU Rule Extractor + App Capability Mapper → **You** → Implementation Auditor
 
-**Input locations:**
+**Input locations (atomized — preferred):**
+- `app/tests/e2e/artifacts/matrix/<domain>/rules/_index.md` + individual `<domain>-R<NNN>.md` files
+- `app/tests/e2e/artifacts/matrix/<domain>/capabilities/_index.md` + individual `<domain>-C<NNN>.md` files
+
+**Input locations (monolithic — fallback):**
 - `app/tests/e2e/artifacts/matrix/<domain>-rules.md`
 - `app/tests/e2e/artifacts/matrix/<domain>-capabilities.md`
 
-**Output location:** `app/tests/e2e/artifacts/matrix/<domain>-matrix.md`
+**Output location:** `app/tests/e2e/artifacts/matrix/<domain>/matrix.md`
 
 See `ptu-skills-ecosystem.md` for the full architecture.
 
@@ -25,11 +29,13 @@ See `ptu-skills-ecosystem.md` for the full architecture.
 
 Before starting, read these files:
 
-1. **Rule Catalog** — `artifacts/matrix/<domain>-rules.md`
-   Every PTU rule for this domain.
+1. **Rule Catalog** — `artifacts/matrix/<domain>/rules/_index.md` (summary + listing table)
+   Read the index first for overview, then individual `<domain>-R<NNN>.md` files as needed.
+   Fallback: `artifacts/matrix/<domain>-rules.md` (monolithic, if atomized files don't exist)
 
-2. **Capability Catalog** — `artifacts/matrix/<domain>-capabilities.md`
-   Every app capability for this domain.
+2. **Capability Catalog** — `artifacts/matrix/<domain>/capabilities/_index.md` (summary + listing table)
+   Read the index first for overview, then individual `<domain>-C<NNN>.md` files as needed.
+   Fallback: `artifacts/matrix/<domain>-capabilities.md` (monolithic, if atomized files don't exist)
 
 3. **Skill Interfaces** — `.claude/skills/references/skill-interfaces.md`
    Defines the exact output format for the matrix.
@@ -127,7 +133,7 @@ Order by:
 
 ### Step 7: Write Output
 
-Write the matrix to `app/tests/e2e/artifacts/matrix/<domain>-matrix.md` using the format defined in `references/skill-interfaces.md`.
+Write the matrix to `app/tests/e2e/artifacts/matrix/<domain>/matrix.md` using the format defined in `references/skill-interfaces.md`. The matrix stays as a single file (not atomized) since it's a cross-reference table.
 
 ### Step 8: Self-Verify
 

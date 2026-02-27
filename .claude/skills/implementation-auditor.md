@@ -13,14 +13,19 @@ This skill requires the Coverage Analyzer to have completed the domain matrix. Y
 
 **Workflow position:** PTU Rule Extractor + App Capability Mapper → Coverage Analyzer → **You**
 
-**Input locations:**
-- `app/tests/e2e/artifacts/matrix/<domain>-matrix.md` (Auditor Queue section)
-- `app/tests/e2e/artifacts/matrix/<domain>-rules.md` (rule quotes and references)
-- `app/tests/e2e/artifacts/matrix/<domain>-capabilities.md` (file locations)
+**Input locations (atomized — preferred):**
+- `app/tests/e2e/artifacts/matrix/<domain>/matrix.md` (Auditor Queue section)
+- `app/tests/e2e/artifacts/matrix/<domain>/rules/<domain>-R<NNN>.md` (individual rule files)
+- `app/tests/e2e/artifacts/matrix/<domain>/capabilities/<domain>-C<NNN>.md` (individual capability files)
 - Actual source code files (deep-read)
 - Actual PTU rulebook sections (deep-read)
 
-**Output location:** `app/tests/e2e/artifacts/matrix/<domain>-audit.md`
+**Input locations (monolithic — fallback):**
+- `app/tests/e2e/artifacts/matrix/<domain>-matrix.md`
+- `app/tests/e2e/artifacts/matrix/<domain>-rules.md`
+- `app/tests/e2e/artifacts/matrix/<domain>-capabilities.md`
+
+**Output location:** `app/tests/e2e/artifacts/matrix/<domain>/audit/` (tiered files + `_index.md`)
 
 See `ptu-skills-ecosystem.md` for the full architecture.
 
@@ -28,14 +33,16 @@ See `ptu-skills-ecosystem.md` for the full architecture.
 
 Before starting, read these files:
 
-1. **Domain Matrix** — `artifacts/matrix/<domain>-matrix.md`
+1. **Domain Matrix** — `artifacts/matrix/<domain>/matrix.md`
    The Auditor Queue tells you what to check and in what order.
 
-2. **Rule Catalog** — `artifacts/matrix/<domain>-rules.md`
-   Exact rule quotes and PTU references for each rule.
+2. **Rule Catalog** — `artifacts/matrix/<domain>/rules/_index.md` (summary) + `<domain>-R<NNN>.md` (individual rules)
+   Read the index for the rule list, then individual rule files for quotes and references.
+   Fallback: `artifacts/matrix/<domain>-rules.md` if atomized files don't exist.
 
-3. **Capability Catalog** — `artifacts/matrix/<domain>-capabilities.md`
-   File locations and function names for each capability.
+3. **Capability Catalog** — `artifacts/matrix/<domain>/capabilities/_index.md` (summary) + `<domain>-C<NNN>.md` (individual capabilities)
+   Read the index for the capability list, then individual files for locations.
+   Fallback: `artifacts/matrix/<domain>-capabilities.md` if atomized files don't exist.
 
 4. **PTU Chapter Index** — `.claude/skills/references/ptu-chapter-index.md`
    For looking up rulebook sections.
@@ -129,7 +136,43 @@ Calculate:
 
 ### Step 6: Write Output
 
-Write the audit report to `app/tests/e2e/artifacts/matrix/<domain>-audit.md` using the format defined in `references/skill-interfaces.md`.
+Write the audit report to `app/tests/e2e/artifacts/matrix/<domain>/audit/` using the atomized format:
+
+1. **Tier files** — one file per tier: `tier-<N>-<slug>.md`
+   Group audit entries by verification tier (Core Formulas, Core Constraints, etc.)
+
+2. **`correct-items.md`** — table of all verified-correct items (COLD storage, rarely re-read)
+
+3. **`_index.md`** — summary with action items table and tier file links
+   ```
+   ---
+   domain: <domain>
+   type: audit
+   total_audited: <count>
+   correct: <count>
+   incorrect: <count>
+   approximation: <count>
+   ambiguous: <count>
+   audited_at: <ISO timestamp>
+   audited_by: implementation-auditor
+   ---
+
+   # Audit: <domain>
+
+   ## Audit Summary
+   <summary table>
+
+   ## Action Items
+   | Rule ID | Name | Classification | Tier |
+   <non-correct items only>
+
+   ## Tier Files
+   - [Tier 1: Core Formulas](tier-1-core-formulas.md)
+   - ...
+   - [Verified Correct Items](correct-items.md)
+   ```
+
+See `references/skill-interfaces.md` for full format details.
 
 ### Step 7: Self-Verify
 

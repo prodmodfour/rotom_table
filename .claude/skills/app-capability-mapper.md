@@ -13,7 +13,7 @@ This skill is one of two entry points to the **Feature Matrix Workflow**. You an
 
 **Workflow position:** You (parallel with PTU Rule Extractor) → Coverage Analyzer → Implementation Auditor
 
-**Output location:** `app/tests/e2e/artifacts/matrix/<domain>-capabilities.md`
+**Output location:** `app/tests/e2e/artifacts/matrix/<domain>/capabilities/` (atomized per-capability files + `_index.md`)
 
 See `ptu-skills-ecosystem.md` for the full architecture.
 
@@ -98,7 +98,55 @@ Mark these as `orphan: true` in their catalog entry.
 
 ### Step 6: Write Output
 
-Write the complete capability catalog to `app/tests/e2e/artifacts/matrix/<domain>-capabilities.md` using the format defined in `references/skill-interfaces.md`.
+Write atomized output to `app/tests/e2e/artifacts/matrix/<domain>/capabilities/`:
+
+1. **Per-capability files** — one file per capability: `<domain>-C<NNN>.md`
+   ```
+   ---
+   cap_id: <domain>-C<NNN>
+   name: <name>
+   type: <type>
+   domain: <domain>
+   ---
+
+   ### <domain>-C<NNN>: <name>
+   - **cap_id**: <domain>-C<NNN>
+   - **name**: <name>
+   - **type**: <type>
+   - **location**: `<location>`
+   - **game_concept**: <game_concept>
+   - **description**: <description>
+   - **inputs**: <inputs>
+   - **outputs**: <outputs>
+   - **accessible_from**: <accessible_from>
+   ```
+
+2. **`_index.md`** — summary with capability listing table and chains
+   ```
+   ---
+   domain: <domain>
+   type: capabilities
+   total_capabilities: <count>
+   mapped_at: <ISO timestamp>
+   mapped_by: app-capability-mapper
+   ---
+
+   # Capabilities: <domain>
+
+   ## Capability Listing
+
+   | Cap ID | Name | Type |
+   |--------|------|------|
+   | ... | ... | ... |
+
+   ## Capability Chains
+   <chains from Step 4>
+
+   ## Orphan Capabilities
+   <orphans from Step 5>
+   ```
+
+Create the directory if it doesn't exist. If previous atomized files exist, overwrite them. See `references/skill-interfaces.md` for full format details.
 
 ### Step 7: Self-Verify
 

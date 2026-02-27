@@ -13,10 +13,21 @@ app/tests/e2e/artifacts/
 │   ├── ux/                # Orchestrator writes (from matrix) → Developer reads
 │   └── decree/            # Skills write (ambiguities) → Decree Facilitator reads
 ├── matrix/                # Feature Matrix workflow artifacts
-│   ├── <domain>-rules.md          # PTU Rule Extractor writes
-│   ├── <domain>-capabilities.md   # App Capability Mapper writes
-│   ├── <domain>-matrix.md         # Coverage Analyzer writes
-│   └── <domain>-audit.md          # Implementation Auditor writes
+│   ├── _index.md                  # Cross-domain summary (auto-generated)
+│   ├── _archive/                  # Archived monolithic originals
+│   └── <domain>/                  # Per-domain subdirectory
+│       ├── _index.md              # Domain pipeline summary (auto-generated)
+│       ├── rules/                 # PTU Rule Extractor writes
+│       │   ├── _index.md          # Rule listing + dependency graph
+│       │   └── <domain>-R<NNN>.md # Individual rule files
+│       ├── capabilities/          # App Capability Mapper writes
+│       │   ├── _index.md          # Capability listing + chains
+│       │   └── <domain>-C<NNN>.md # Individual capability files
+│       ├── matrix.md              # Coverage Analyzer writes (stays monolithic)
+│       └── audit/                 # Implementation Auditor writes
+│           ├── _index.md          # Summary + action items
+│           ├── tier-N-<slug>.md   # Grouped verifications by tier
+│           └── correct-items.md   # COLD: all verified-correct items
 ├── designs/               # Developer writes (when feature ticket needs design)
 ├── refactoring/           # Code Health Auditor writes
 ├── reviews/               # Senior Reviewer + Game Logic Reviewer write
@@ -32,10 +43,10 @@ app/tests/e2e/artifacts/
 
 ## File Naming Conventions
 
-- Rule catalogs: `<domain>-rules.md` in `matrix/` (e.g., `combat-rules.md`)
-- Capability catalogs: `<domain>-capabilities.md` in `matrix/` (e.g., `combat-capabilities.md`)
-- Coverage matrices: `<domain>-matrix.md` in `matrix/` (e.g., `combat-matrix.md`)
-- Implementation audits: `<domain>-audit.md` in `matrix/` (e.g., `combat-audit.md`)
+- Rule catalogs: `matrix/<domain>/rules/<domain>-R<NNN>.md` (atomized) with `_index.md` summary
+- Capability catalogs: `matrix/<domain>/capabilities/<domain>-C<NNN>.md` (atomized) with `_index.md` summary
+- Coverage matrices: `matrix/<domain>/matrix.md` (single file per domain)
+- Implementation audits: `matrix/<domain>/audit/tier-N-<slug>.md` (per-tier) with `_index.md` summary
 - Tickets: `<type>-<NNN>.md` in `tickets/<type>/` (e.g., `tickets/bug/bug-003.md`)
 - Designs: `design-<NNN>.md` (e.g., `design-001.md`) — per-prefix counter in `artifacts/designs/`
 - Code reviews: `code-review-<NNN>.md` (e.g., `code-review-001.md`) — per-prefix counter in `artifacts/reviews/`
@@ -46,8 +57,8 @@ app/tests/e2e/artifacts/
 ## 1. Rule Catalog
 
 **Written by:** PTU Rule Extractor
-**Read by:** Coverage Analyzer
-**Location:** `artifacts/matrix/<domain>-rules.md`
+**Read by:** Coverage Analyzer, Implementation Auditor
+**Location:** `artifacts/matrix/<domain>/rules/` (atomized: `_index.md` + `<domain>-R<NNN>.md` per rule)
 
 ```markdown
 ---
@@ -90,7 +101,7 @@ errata_applied: true | false
 ```
 
 **Constraints:**
-- One file per domain
+- One directory per domain with individual rule files + `_index.md` summary
 - Rule IDs are sequential: `<domain>-R001`, `<domain>-R002`, etc.
 - Every rule has a direct quote from the rulebook or errata
 - Cross-domain references use `scope: cross-domain-ref` and are not fully extracted
@@ -102,8 +113,8 @@ errata_applied: true | false
 ## 2. Capability Catalog
 
 **Written by:** App Capability Mapper
-**Read by:** Coverage Analyzer
-**Location:** `artifacts/matrix/<domain>-capabilities.md`
+**Read by:** Coverage Analyzer, Implementation Auditor
+**Location:** `artifacts/matrix/<domain>/capabilities/` (atomized: `_index.md` + `<domain>-C<NNN>.md` per capability)
 
 ```markdown
 ---
@@ -148,7 +159,7 @@ files_read: <count>
 ```
 
 **Constraints:**
-- One file per domain
+- One directory per domain with individual capability files + `_index.md` summary
 - Cap IDs are sequential: `<domain>-C001`, `<domain>-C002`, etc.
 - Every capability has a specific `file:function` location from actual source code reading
 - Orphan capabilities (not connected to any chain) are flagged
@@ -160,7 +171,7 @@ files_read: <count>
 
 **Written by:** Coverage Analyzer
 **Read by:** Implementation Auditor, Orchestrator (ticket creation)
-**Location:** `artifacts/matrix/<domain>-matrix.md`
+**Location:** `artifacts/matrix/<domain>/matrix.md`
 
 ```markdown
 ---
@@ -253,7 +264,7 @@ Ordered list of items for the Implementation Auditor to check:
 
 **Written by:** Implementation Auditor
 **Read by:** Orchestrator (ticket creation), Game Logic Reviewer (ambiguous items)
-**Location:** `artifacts/matrix/<domain>-audit.md`
+**Location:** `artifacts/matrix/<domain>/audit/` (atomized: `_index.md` + `tier-N-<slug>.md` per tier + `correct-items.md`)
 
 ```markdown
 ---
@@ -341,13 +352,14 @@ ambiguous: <count>
 ```
 
 **Constraints:**
-- One file per domain
+- One directory per domain with per-tier files + `_index.md` summary + `correct-items.md`
 - Every item in the Auditor Queue from the matrix has been checked
 - Source code and rulebook sections were actually read (not assumed)
 - Every Incorrect item has specific `file:line` references
 - Every Incorrect item explains expected vs. actual behavior
 - Every Ambiguous item documents multiple interpretations
 - Severity assignments are consistent across items
+- Verified-correct items go to `correct-items.md` (COLD storage, rarely re-read)
 
 ---
 

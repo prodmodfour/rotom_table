@@ -13,7 +13,7 @@ This skill is one of two entry points to the **Feature Matrix Workflow**. You an
 
 **Workflow position:** You (parallel with App Capability Mapper) → Coverage Analyzer → Implementation Auditor
 
-**Output location:** `app/tests/e2e/artifacts/matrix/<domain>-rules.md`
+**Output location:** `app/tests/e2e/artifacts/matrix/<domain>/rules/` (atomized per-rule files + `_index.md`)
 
 See `ptu-skills-ecosystem.md` for the full architecture.
 
@@ -91,7 +91,57 @@ Some rules reference mechanics from other domains. When you find one:
 
 ### Step 7: Write Output
 
-Write the complete rule catalog to `app/tests/e2e/artifacts/matrix/<domain>-rules.md` using the format defined in `references/skill-interfaces.md`.
+Write atomized output to `app/tests/e2e/artifacts/matrix/<domain>/rules/`:
+
+1. **Per-rule files** — one file per rule: `<domain>-R<NNN>.md`
+   ```
+   ---
+   rule_id: <domain>-R<NNN>
+   name: <name>
+   category: <category>
+   scope: <scope>
+   domain: <domain>
+   ---
+
+   ## <domain>-R<NNN>: <name>
+
+   - **Category:** <category>
+   - **Scope:** <scope>
+   - **PTU Ref:** `<ptu_ref>`
+   - **Quote:** "<quote>"
+   - **Dependencies:** <deps>
+   - **Errata:** <true|false>
+   ```
+
+2. **`_index.md`** — summary with rule listing table and dependency graph
+   ```
+   ---
+   domain: <domain>
+   type: rules
+   total_rules: <count>
+   extracted_at: <ISO timestamp>
+   extracted_by: ptu-rule-extractor
+   ---
+
+   # Rules: <domain>
+
+   ## Summary
+   - Total rules: <count>
+   - Categories: <breakdown>
+   - Scopes: <breakdown>
+
+   ## Dependency Graph
+   - Foundation: <list>
+   - Derived: <list>
+
+   ## Rule Listing
+
+   | Rule ID | Name | Category | Scope |
+   |---------|------|----------|-------|
+   | ... | ... | ... | ... |
+   ```
+
+Create the directory if it doesn't exist. If previous atomized files exist, overwrite them.
 
 ### Step 8: Self-Verify
 
