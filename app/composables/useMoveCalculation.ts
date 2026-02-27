@@ -34,7 +34,7 @@ export function useMoveCalculation(
   move: Ref<Move>,
   actor: Ref<Combatant>,
   targets: Ref<Combatant[]>,
-  allCombatants?: Ref<Combatant[]>
+  allCombatants: Ref<Combatant[]>
 ) {
   const {
     rollDamageBase,
@@ -106,11 +106,10 @@ export function useMoveCalculation(
    */
   /**
    * All combatants on the grid — used for grid-level properties like
-   * enemy-occupied rough terrain. Falls back to `targets` when the
-   * optional `allCombatants` param is not provided.
+   * enemy-occupied rough terrain (decree-003).
    */
   const combatantsOnGrid = computed((): Combatant[] => {
-    return allCombatants?.value ?? targets.value
+    return allCombatants.value
   })
 
   const enemyOccupiedCells = computed((): Set<string> => {

@@ -164,8 +164,9 @@ describe('useMoveCalculation — getRoughTerrainPenalty', () => {
       const target = makeCombatant({ id: 'target', side: 'enemies', position: { x: 4, y: 0 } })
       const move = ref(makeMove())
       const targets = ref([target])
+      const allCombatants = ref([actor.value, target])
 
-      const { getRoughTerrainPenalty } = useMoveCalculation(move, actor, targets)
+      const { getRoughTerrainPenalty } = useMoveCalculation(move, actor, targets, allCombatants)
 
       expect(getRoughTerrainPenalty('target')).toBe(2)
     })
@@ -179,8 +180,9 @@ describe('useMoveCalculation — getRoughTerrainPenalty', () => {
       const target = makeCombatant({ id: 'target', side: 'enemies', position: { x: 4, y: 0 } })
       const move = ref(makeMove())
       const targets = ref([target])
+      const allCombatants = ref([actor.value, target])
 
-      const { getRoughTerrainPenalty } = useMoveCalculation(move, actor, targets)
+      const { getRoughTerrainPenalty } = useMoveCalculation(move, actor, targets, allCombatants)
 
       expect(getRoughTerrainPenalty('target')).toBe(0)
     })
@@ -194,8 +196,9 @@ describe('useMoveCalculation — getRoughTerrainPenalty', () => {
       const target = makeCombatant({ id: 'target', side: 'enemies', position: { x: 3, y: 0 } })
       const move = ref(makeMove())
       const targets = ref([target])
+      const allCombatants = ref([actor.value, target])
 
-      const { getRoughTerrainPenalty } = useMoveCalculation(move, actor, targets)
+      const { getRoughTerrainPenalty } = useMoveCalculation(move, actor, targets, allCombatants)
 
       expect(getRoughTerrainPenalty('target')).toBe(0)
     })
@@ -209,8 +212,9 @@ describe('useMoveCalculation — getRoughTerrainPenalty', () => {
       const target = makeCombatant({ id: 'target', side: 'enemies', position: { x: 3, y: 0 } })
       const move = ref(makeMove())
       const targets = ref([target])
+      const allCombatants = ref([actor.value, target])
 
-      const { getRoughTerrainPenalty } = useMoveCalculation(move, actor, targets)
+      const { getRoughTerrainPenalty } = useMoveCalculation(move, actor, targets, allCombatants)
 
       expect(getRoughTerrainPenalty('target')).toBe(0)
     })
@@ -223,8 +227,9 @@ describe('useMoveCalculation — getRoughTerrainPenalty', () => {
       const target = makeCombatant({ id: 'target', side: 'enemies', position: { x: 3, y: 3 } })
       const move = ref(makeMove())
       const targets = ref([target])
+      const allCombatants = ref([actor.value, target])
 
-      const { getRoughTerrainPenalty } = useMoveCalculation(move, actor, targets)
+      const { getRoughTerrainPenalty } = useMoveCalculation(move, actor, targets, allCombatants)
 
       expect(getRoughTerrainPenalty('target')).toBe(2)
     })
@@ -237,8 +242,9 @@ describe('useMoveCalculation — getRoughTerrainPenalty', () => {
       const target = makeCombatant({ id: 'target', side: 'enemies', position: { x: 4, y: 0 } })
       const move = ref(makeMove())
       const targets = ref([target])
+      const allCombatants = ref([actor.value, target])
 
-      const { getRoughTerrainPenalty } = useMoveCalculation(move, actor, targets)
+      const { getRoughTerrainPenalty } = useMoveCalculation(move, actor, targets, allCombatants)
 
       expect(getRoughTerrainPenalty('target')).toBe(2)
     })
@@ -251,8 +257,9 @@ describe('useMoveCalculation — getRoughTerrainPenalty', () => {
       const target = makeCombatant({ id: 'target', side: 'enemies', position: { x: 4, y: 0 } })
       const move = ref(makeMove())
       const targets = ref([target])
+      const allCombatants = ref([actor.value, target])
 
-      const { getRoughTerrainPenalty } = useMoveCalculation(move, actor, targets)
+      const { getRoughTerrainPenalty } = useMoveCalculation(move, actor, targets, allCombatants)
 
       expect(getRoughTerrainPenalty('target')).toBe(0)
     })
@@ -300,8 +307,9 @@ describe('useMoveCalculation — getRoughTerrainPenalty', () => {
       const target = makeCombatant({ id: 'target', side: 'enemies', position: { x: 4, y: 0 } })
       const move = ref(makeMove())
       const targets = ref([target])
+      const allCombatants = ref([actor.value, target])
 
-      const { getRoughTerrainPenalty } = useMoveCalculation(move, actor, targets)
+      const { getRoughTerrainPenalty } = useMoveCalculation(move, actor, targets, allCombatants)
 
       expect(getRoughTerrainPenalty('target')).toBe(0)
     })
@@ -311,8 +319,9 @@ describe('useMoveCalculation — getRoughTerrainPenalty', () => {
       const target = makeCombatant({ id: 'target', side: 'enemies' })
       const move = ref(makeMove())
       const targets = ref([target])
+      const allCombatants = ref([actor.value, target])
 
-      const { getRoughTerrainPenalty } = useMoveCalculation(move, actor, targets)
+      const { getRoughTerrainPenalty } = useMoveCalculation(move, actor, targets, allCombatants)
 
       expect(getRoughTerrainPenalty('target')).toBe(0)
     })
@@ -328,8 +337,9 @@ describe('useMoveCalculation — getRoughTerrainPenalty', () => {
       const target = makeCombatant({ id: 'target', side: 'enemies', position: { x: 1, y: 0 } })
       const move = ref(makeMove())
       const targets = ref([target])
+      const allCombatants = ref([actor.value, target])
 
-      const { getRoughTerrainPenalty } = useMoveCalculation(move, actor, targets)
+      const { getRoughTerrainPenalty } = useMoveCalculation(move, actor, targets, allCombatants)
 
       // Both cells belong to actor/target, no intermediate cells to trigger penalty
       expect(getRoughTerrainPenalty('target')).toBe(0)
