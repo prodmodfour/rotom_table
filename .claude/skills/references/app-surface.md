@@ -108,6 +108,7 @@ CRUD + extensive combat actions.
 - `POST /api/encounters/:id/start` — start combat
 - `POST /api/encounters/:id/end` — end combat
 - `POST /api/encounters/:id/next-turn` — advance turn
+- `POST /api/encounters/:id/declare` — record trainer declaration (League Battle)
 - `POST /api/encounters/:id/combatants` — add combatant
 - `DELETE /api/encounters/:id/combatants/:combatantId` — remove combatant
 - `POST /api/encounters/:id/damage` — apply damage
