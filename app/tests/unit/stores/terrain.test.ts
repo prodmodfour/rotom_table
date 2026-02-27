@@ -436,6 +436,54 @@ describe('terrain store', () => {
     })
   })
 
+  describe('setPaintMode', () => {
+    it('should set paint mode to a valid terrain type', () => {
+      const store = useTerrainStore()
+
+      store.setPaintMode('blocking')
+
+      expect(store.paintMode).toBe('blocking')
+    })
+
+    it('should convert legacy difficult to normal and set slow paint flag', () => {
+      const store = useTerrainStore()
+
+      store.setPaintMode('difficult')
+
+      expect(store.paintMode).toBe('normal')
+      expect(store.paintFlags.slow).toBe(true)
+    })
+
+    it('should convert legacy rough to normal and set rough paint flag', () => {
+      const store = useTerrainStore()
+
+      store.setPaintMode('rough')
+
+      expect(store.paintMode).toBe('normal')
+      expect(store.paintFlags.rough).toBe(true)
+    })
+
+    it('should preserve existing paint flags when converting legacy difficult', () => {
+      const store = useTerrainStore()
+      store.setPaintFlags({ rough: true, slow: false })
+
+      store.setPaintMode('difficult')
+
+      expect(store.paintMode).toBe('normal')
+      expect(store.paintFlags).toEqual({ rough: true, slow: true })
+    })
+
+    it('should preserve existing paint flags when converting legacy rough', () => {
+      const store = useTerrainStore()
+      store.setPaintFlags({ rough: false, slow: true })
+
+      store.setPaintMode('rough')
+
+      expect(store.paintMode).toBe('normal')
+      expect(store.paintFlags).toEqual({ rough: true, slow: true })
+    })
+  })
+
   describe('applyTool', () => {
     it('should paint single cell with brush size 1', () => {
       const store = useTerrainStore()
