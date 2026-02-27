@@ -468,8 +468,12 @@ onUnmounted(() => {
     transition: all $transition-fast;
 
     &:hover {
-      background: rgba(currentColor, 0.1);
+      background: rgba($color-warning, 0.1);
     }
+  }
+
+  &--failed &__retry:hover {
+    background: rgba($color-danger, 0.1);
   }
 }
 
