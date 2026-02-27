@@ -130,7 +130,10 @@ export function calculateAveragedSpeed(combatant: Combatant, terrainTypes: Set<s
   // We only average distinct capabilities — if multiple terrain types
   // use the same capability (e.g., normal + hazard both use Overland),
   // they don't count twice in the average.
-  const capabilitySpeeds = new Set<number>()
+  // capabilitySpeeds is an array (not a Set) to preserve duplicate speed
+  // values from distinct capabilities (e.g., Overland 6 + Swim 6 + Burrow 3
+  // must average as (6+6+3)/3=5, not (6+3)/2=4).
+  const capabilitySpeeds: number[] = []
   const seenCapabilities = new Set<string>()
 
   for (const terrain of terrainTypes) {
@@ -152,18 +155,16 @@ export function calculateAveragedSpeed(combatant: Combatant, terrainTypes: Set<s
     // Only count each distinct capability once in the average
     if (!seenCapabilities.has(capabilityKey)) {
       seenCapabilities.add(capabilityKey)
-      capabilitySpeeds.add(speed)
+      capabilitySpeeds.push(speed)
     }
   }
 
   // Single capability — no averaging needed
-  if (capabilitySpeeds.size <= 1) {
-    const speeds = Array.from(capabilitySpeeds)
-    return speeds.length > 0 ? speeds[0] : getOverlandSpeed(combatant)
+  if (capabilitySpeeds.length <= 1) {
+    return capabilitySpeeds.length > 0 ? capabilitySpeeds[0] : getOverlandSpeed(combatant)
   }
 
   // Average and floor (PTU convention: round down)
-  const speeds = Array.from(capabilitySpeeds)
-  const sum = speeds.reduce((a, b) => a + b, 0)
-  return Math.floor(sum / speeds.length)
+  const sum = capabilitySpeeds.reduce((a, b) => a + b, 0)
+  return Math.floor(sum / capabilitySpeeds.length)
 }
