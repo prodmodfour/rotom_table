@@ -87,7 +87,12 @@ export default defineEventHandler(async (event) => {
             turnOrder = resolutionOrder
             currentTurnIndex = 0
 
-            // Reset the first resolving trainer's turn state so they can execute their declared action
+            // Reset hasActed for ALL trainers entering resolution phase.
+            // Declaration marked them as acted for turn progression, but resolution
+            // is their actual turn — clear hasActed so UI doesn't show them as already acted.
+            resetAllTrainersForResolution(combatants, resolutionOrder)
+
+            // Give the first resolving trainer full action economy
             resetResolvingTrainerTurnState(combatants, turnOrder[0])
           } else {
             // No trainers with declarations → skip to pokemon
@@ -210,6 +215,22 @@ function resetResolvingTrainerTurnState(combatants: any[], combatantId: string) 
       isHolding: false
     }
   }
+}
+
+/**
+ * Reset hasActed for all trainers entering the resolution phase.
+ * Declaration phase marked them as acted for turn progression purposes,
+ * but their actual turn is in resolution — clear hasActed so the UI
+ * doesn't show them as already acted.
+ * Acceptable mutation here because combatants are freshly parsed from JSON.
+ */
+function resetAllTrainersForResolution(combatants: any[], resolutionOrder: string[]) {
+  const trainerIds = new Set(resolutionOrder)
+  combatants.forEach((c: any) => {
+    if (trainerIds.has(c.id)) {
+      c.hasActed = false
+    }
+  })
 }
 
 /**
