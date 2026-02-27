@@ -7,6 +7,12 @@
       <h2>Create Character</h2>
     </div>
 
+    <!-- Inline Error Banner (replaces window.alert) -->
+    <div v-if="errorMessage" class="create-error-banner">
+      <span class="create-error-banner__message">{{ errorMessage }}</span>
+      <button class="create-error-banner__dismiss" @click="errorMessage = ''">&times;</button>
+    </div>
+
     <!-- Type Selection -->
     <div class="create-page__type-select">
       <button
@@ -405,6 +411,7 @@ const { getTrainerSpriteUrl } = useTrainerSprite()
 const createType = ref<'human' | 'pokemon'>('human')
 const humanCreateMode = ref<CreateMode>('quick')
 const creating = ref(false)
+const errorMessage = ref('')
 
 /** Biography section expanded state — expanded for PCs, collapsed for NPCs by default */
 const biographyExpanded = ref(false)
@@ -438,7 +445,7 @@ watch(() => creation.form.characterType, (newType) => {
 function handleSkillEdge(skill: PtuSkillName): void {
   const error = creation.addSkillEdge(skill)
   if (error) {
-    alert(error)
+    errorMessage.value = error
   }
 }
 
@@ -446,7 +453,7 @@ function handleSkillEdge(skill: PtuSkillName): void {
 function handleSetSkillRank(skill: PtuSkillName, rank: SkillRank): void {
   const error = creation.setSkillRank(skill, rank)
   if (error) {
-    alert(error)
+    errorMessage.value = error
   }
 }
 
@@ -454,7 +461,7 @@ function handleSetSkillRank(skill: PtuSkillName, rank: SkillRank): void {
 function handleRemovePatheticSkill(skill: PtuSkillName): void {
   const error = creation.removePatheticSkill(skill)
   if (error) {
-    alert(error)
+    errorMessage.value = error
   }
 }
 
@@ -480,11 +487,12 @@ const pokemonForm = ref({
 /** Quick Create submission — receives pre-built payload from QuickCreateForm */
 const createHumanQuick = async (payload: QuickCreatePayload) => {
   creating.value = true
+  errorMessage.value = ''
   try {
     await libraryStore.createHuman(payload)
     router.push('/gm/sheets')
   } catch (e) {
-    alert('Failed to create human character. Check the console for details.')
+    errorMessage.value = 'Failed to create human character. Check the console for details.'
   } finally {
     creating.value = false
   }
@@ -493,12 +501,13 @@ const createHumanQuick = async (payload: QuickCreatePayload) => {
 /** Full Create submission — uses composable payload with all sections */
 const createHuman = async () => {
   creating.value = true
+  errorMessage.value = ''
   try {
     const data = creation.buildCreatePayload()
     await libraryStore.createHuman(data)
     router.push('/gm/sheets')
   } catch (e) {
-    alert('Failed to create human character. Check the console for details.')
+    errorMessage.value = 'Failed to create human character. Check the console for details.'
   } finally {
     creating.value = false
   }
@@ -506,6 +515,7 @@ const createHuman = async () => {
 
 const createPokemon = async () => {
   creating.value = true
+  errorMessage.value = ''
   try {
     // PTU HP formula: Level + (HP Base * 3) + 10
     const maxHp = pokemonForm.value.level + (pokemonForm.value.baseHp * 3) + 10
@@ -544,265 +554,10 @@ const createPokemon = async () => {
     await libraryStore.createPokemon(data)
     router.push('/gm/sheets')
   } catch (e) {
-    alert('Failed to create Pokemon. Check the console for details.')
+    errorMessage.value = 'Failed to create Pokemon. Check the console for details.'
   } finally {
     creating.value = false
   }
 }
 </script>
 
-<style lang="scss" scoped>
-.create-page {
-  max-width: 800px;
-  margin: 0 auto;
-
-  &__header {
-    display: flex;
-    align-items: center;
-    gap: $spacing-lg;
-    margin-bottom: $spacing-xl;
-
-    h2 {
-      margin: 0;
-      color: $color-text;
-      font-weight: 600;
-    }
-  }
-
-  &__type-select {
-    display: flex;
-    gap: $spacing-md;
-    margin-bottom: $spacing-xl;
-  }
-}
-
-.mode-toggle {
-  display: flex;
-  gap: $spacing-md;
-  margin-bottom: $spacing-xl;
-
-  &__btn {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    gap: $spacing-md;
-    padding: $spacing-md $spacing-lg;
-    background: $glass-bg;
-    backdrop-filter: $glass-blur;
-    border: 2px solid $glass-border;
-    border-radius: $border-radius-md;
-    color: $color-text;
-    cursor: pointer;
-    transition: all $transition-fast;
-
-    &:hover {
-      border-color: $color-accent-teal;
-      box-shadow: 0 0 12px rgba($color-accent-teal, 0.15);
-    }
-
-    &--active {
-      border-color: $color-accent-teal;
-      background: linear-gradient(135deg, rgba($color-accent-teal, 0.1) 0%, rgba($color-accent-violet, 0.05) 100%);
-      box-shadow: $shadow-glow-teal;
-    }
-  }
-
-  &__icon {
-    width: 24px;
-    height: 24px;
-    filter: brightness(0) invert(1);
-    flex-shrink: 0;
-  }
-
-  &__text {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-  }
-
-  &__label {
-    font-weight: 600;
-    font-size: $font-size-md;
-  }
-
-  &__desc {
-    font-size: $font-size-xs;
-    color: $color-text-secondary;
-  }
-}
-
-.section-progress {
-  display: flex;
-  flex-wrap: wrap;
-  gap: $spacing-sm;
-  margin-bottom: $spacing-xl;
-  padding: $spacing-md;
-  background: $color-bg-tertiary;
-  border: 1px solid $border-color-default;
-  border-radius: $border-radius-md;
-
-  &__item {
-    display: flex;
-    align-items: center;
-    gap: $spacing-xs;
-    padding: $spacing-xs $spacing-sm;
-    border-radius: $border-radius-sm;
-    font-size: $font-size-sm;
-    color: $color-text-secondary;
-    background: $color-bg-secondary;
-    border: 1px solid $border-color-subtle;
-    transition: all $transition-fast;
-
-    &--complete {
-      color: $color-success;
-      border-color: rgba($color-success, 0.3);
-      background: rgba($color-success, 0.08);
-    }
-  }
-
-  &__check {
-    display: flex;
-    align-items: center;
-    width: 14px;
-    height: 14px;
-    flex-shrink: 0;
-  }
-
-  &__label {
-    font-weight: 500;
-  }
-
-  &__detail {
-    font-size: $font-size-xs;
-    opacity: 0.7;
-    margin-left: $spacing-xs;
-  }
-}
-
-.type-btn {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: $spacing-sm;
-  padding: $spacing-lg;
-  background: $glass-bg;
-  backdrop-filter: $glass-blur;
-  border: 2px solid $glass-border;
-  border-radius: $border-radius-lg;
-  color: $color-text;
-  cursor: pointer;
-  transition: all $transition-fast;
-
-  &:hover {
-    border-color: $color-accent-scarlet;
-    box-shadow: 0 0 15px rgba($color-accent-scarlet, 0.2);
-  }
-
-  &--active {
-    border-color: $color-accent-scarlet;
-    background: linear-gradient(135deg, rgba($color-accent-scarlet, 0.15) 0%, rgba($color-accent-violet, 0.1) 100%);
-    box-shadow: $shadow-glow-scarlet;
-  }
-
-  &__icon {
-    width: 48px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: $gradient-sv-cool;
-    border-radius: $border-radius-md;
-  }
-
-  &__svg {
-    width: 28px;
-    height: 28px;
-    filter: brightness(0) invert(1);
-
-    &--pokemon {
-      filter: brightness(0) saturate(100%) invert(33%) sepia(98%) saturate(7407%) hue-rotate(355deg) brightness(91%) contrast(118%);
-    }
-  }
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: $spacing-md;
-
-  @media (max-width: 600px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-.validation-summary {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-xs;
-}
-
-.sprite-preview {
-  display: flex;
-  align-items: center;
-  gap: $spacing-md;
-
-  &__avatar {
-    width: 64px;
-    height: 64px;
-    border-radius: $border-radius-lg;
-    overflow: hidden;
-    background: linear-gradient(135deg, $color-bg-tertiary 0%, $color-bg-secondary 100%);
-    border: 2px solid $border-color-default;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: border-color $transition-fast;
-
-    &:hover {
-      border-color: $color-accent-teal;
-    }
-  }
-
-  &__img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    image-rendering: pixelated;
-  }
-
-  &__placeholder {
-    font-size: $font-size-xl;
-    font-weight: 700;
-    background: $gradient-sv-cool;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-}
-
-.validation-item {
-  font-size: $font-size-sm;
-  padding: $spacing-xs $spacing-sm;
-  border-radius: $border-radius-sm;
-
-  &__section {
-    font-weight: 600;
-    text-transform: uppercase;
-    margin-right: $spacing-xs;
-  }
-
-  &--warning {
-    background: rgba($color-warning, 0.1);
-    border: 1px solid rgba($color-warning, 0.3);
-    color: $color-warning;
-  }
-
-  &--info {
-    background: rgba($color-info, 0.1);
-    border: 1px solid rgba($color-info, 0.3);
-    color: $color-info;
-  }
-}
-</style>
