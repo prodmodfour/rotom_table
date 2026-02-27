@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type { Encounter, Combatant, MoveLogEntry, CombatSide, TurnPhase, BattleType } from '~/types'
+import type { Encounter, Combatant, MoveLogEntry, CombatSide, TurnPhase, BattleType, TrainerDeclaration } from '~/types'
 import type { XpCalculationResult, XpApplicationResult } from '~/utils/experienceCalculation'
 import type { SignificanceTier } from '~/utils/encounterBudget'
 
@@ -92,6 +92,24 @@ export const useEncounterStore = defineStore('encounter', {
 
     moveLog: (state): MoveLogEntry[] => {
       return state.encounter?.moveLog ?? []
+    },
+
+    /** Get all declarations for the current round (League Battle) */
+    currentDeclarations: (state): TrainerDeclaration[] => {
+      if (!state.encounter) return []
+      return (state.encounter.declarations ?? []).filter(
+        d => d.round === state.encounter!.currentRound
+      )
+    },
+
+    /** Get the declaration for the currently-resolving trainer (resolution phase only) */
+    currentResolutionDeclaration: (state): TrainerDeclaration | null => {
+      if (!state.encounter) return null
+      if (state.encounter.currentPhase !== 'trainer_resolution') return null
+      const currentId = state.encounter.turnOrder[state.encounter.currentTurnIndex]
+      return (state.encounter.declarations ?? []).find(
+        d => d.combatantId === currentId && d.round === state.encounter!.currentRound
+      ) ?? null
     },
   },
 
@@ -270,6 +288,30 @@ export const useEncounterStore = defineStore('encounter', {
       }
     },
 
+    /** Submit a trainer declaration during League Battle declaration phase (decree-021) */
+    async submitDeclaration(
+      combatantId: string,
+      actionType: TrainerDeclaration['actionType'],
+      description: string,
+      targetIds?: string[]
+    ) {
+      if (!this.encounter) return
+
+      try {
+        const response = await $fetch<{ data: Encounter }>(
+          `/api/encounters/${this.encounter.id}/declare`,
+          {
+            method: 'POST',
+            body: { combatantId, actionType, description, targetIds }
+          }
+        )
+        this.encounter = response.data
+      } catch (e: any) {
+        this.error = e.message || 'Failed to submit declaration'
+        throw e
+      }
+    },
+
     // Execute move
     async executeMove(
       actorId: string,
@@ -392,6 +434,10 @@ export const useEncounterStore = defineStore('encounter', {
       // Critical: preserve isServed if not in incoming data
       if (data.isServed !== undefined) {
         this.encounter.isServed = data.isServed
+      }
+      // League Battle declarations
+      if (data.declarations !== undefined) {
+        this.encounter.declarations = data.declarations
       }
       this.encounter.moveLog = data.moveLog ?? this.encounter.moveLog
       if (data.significanceMultiplier !== undefined) {
