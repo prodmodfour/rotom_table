@@ -1,13 +1,13 @@
 ---
-generated_at: 2026-02-27T16:00:37.894Z
-total_decrees: 26
-active: 26
+generated_at: 2026-02-27T16:41:06.370Z
+total_decrees: 27
+active: 27
 superseded: 0
 ---
 
 # Decrees Index
 
-## Active Decrees (26)
+## Active Decrees (27)
 
 | Decree ID | Domain | Topic | Title |
 |-----------|--------|-------|-------|
@@ -37,3 +37,4 @@ superseded: 0
 | decree-024 | vtt-grid | diagonal-cone-includes-corner-cell | Diagonal cones include the diagonal corner cell (diamond pattern) |
 | decree-025 | vtt-grid | rough-terrain-penalty-endpoint-exclusion | Exclude endpoint cells from rough terrain accuracy penalty check |
 | decree-026 | character-lifecycle | martial-artist-not-branching | Remove Martial Artist from branching classes (align with PTU RAW) |
+| decree-027 | character-lifecycle | pathetic-skill-edge-block | Block Skill Edges from raising Pathetic skills during character creation |

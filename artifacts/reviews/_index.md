@@ -1,13 +1,13 @@
 ---
-generated_at: 2026-02-27T16:00:37.882Z
-total_reviews: 114
-active_count: 83
-approved_count: 27
+generated_at: 2026-02-27T16:41:06.359Z
+total_reviews: 120
+active_count: 84
+approved_count: 32
 ---
 
 # Reviews Index
 
-## Active Reviews (83)
+## Active Reviews (84)
 
 | Review ID | Verdict | Target | Reviewer | Date |
 |-----------|---------|--------|----------|------|
@@ -93,12 +93,16 @@ approved_count: 27
 | rules-review-169 | CHANGES_REQUIRED | ptu-rule-099+104 | game-logic-reviewer | 2026-02-27 |
 | rules-review-176 | CHANGES_REQUIRED | ptu-rule-091 | game-logic-reviewer | 2026-02-27 |
 | rules-review-179 | CHANGES_REQUIRED | ptu-rule-092 | game-logic-reviewer | 2026-02-27 |
+| rules-review-186 | CHANGES_REQUIRED | ptu-rule-114+ptu-rule-116 | game-logic-reviewer | 2026-02-27 |
 | rules-review-test-integrity-001 | CHANGES_REQUIRED | — | — | 2026-02-16 |
 
 ## Recently Approved (last 10)
 
 | Review ID | Target | Reviewer | Date |
 |-----------|--------|----------|------|
+| code-review-210 | ptu-rule-114+ptu-rule-116 | senior-reviewer | 2026-02-27 |
+| code-review-209 | refactoring-087, refactoring-088, ptu-rule-117, ux-009, ux-010 | senior-reviewer | 2026-02-27 |
+| code-review-208 | ptu-rule-094+refactoring-089+refactoring-090 | senior-reviewer | 2026-02-27 |
 | code-review-207 | refactoring-086, refactoring-002, bug-032, refactoring-091 | senior-reviewer | 2026-02-27 |
 | code-review-206 | ptu-rule-091 | senior-reviewer | 2026-02-28 |
 | code-review-205 | ptu-rule-112 | senior-reviewer | 2026-02-27 |
@@ -106,15 +110,12 @@ approved_count: 27
 | code-review-202 | ptu-rule-107 | senior-reviewer | 2026-02-27 |
 | code-review-199 | ptu-rule-086+087+088 | senior-reviewer | 2026-02-27 |
 | code-review-197 | ptu-rule-099+104 | senior-reviewer | 2026-02-27 |
-| code-review-196 | ptu-rule-089, ptu-rule-090 | senior-reviewer | 2026-02-27 |
-| code-review-195 | ptu-rule-108 | senior-reviewer | 2026-02-27 |
-| code-review-193 | ptu-rule-103 | senior-reviewer | 2026-02-27 |
 
 ## Stats
 
-- Active reviews: 114
-- Needs action: 83
-- Approved/Pass (active): 27
+- Active reviews: 120
+- Needs action: 84
+- Approved/Pass (active): 32
 - Archived: 297
-- Total (active + archived): 411
-- Unique targets reviewed: 52
+- Total (active + archived): 417
+- Unique targets reviewed: 55

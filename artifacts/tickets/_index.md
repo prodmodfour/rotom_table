@@ -1,24 +1,22 @@
 ---
-generated_at: 2026-02-27T16:00:37.889Z
-total_tickets: 175
-open: 5
-in_progress: 78
-resolved: 91
+generated_at: 2026-02-27T16:41:06.366Z
+total_tickets: 179
+open: 3
+in_progress: 80
+resolved: 92
 ---
 
 # Tickets Index
 
-## Open Tickets (5)
+## Open Tickets (3)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
-| decree-need-027 | decree | P3 | character-lifecycle | decree-need-027: Can Skill Edges raise Pathetic skills durin |
+| ptu-rule-118 | ptu-rule | P3 | character-lifecycle | ptu-rule-118: Block Skill Edges from raising Pathetic skills |
 | ptu-rule-095 | ptu-rule | P4 | vtt-grid | ptu-rule-095: Disengage maneuver missing from combatManeuver |
 | ux-006 | ux | P4 | — | ux-006: PTU injury markers may leak precise HP info in playe |
-| refactoring-092 | refactoring | P4 | encounter-tables | refactoring-092: Add partial-update merge to modification up |
-| refactoring-093 | refactoring | P4 | combat | refactoring-093: Rename evasionCalculation.ts or relocate ge |
 
-## In-Progress Tickets (78)
+## In-Progress Tickets (80)
 
 | ID | Category | Priority | Domain | Source |
 |----|----------|----------|--------|--------|
@@ -100,20 +98,20 @@ resolved: 91
 | ux-008 | ux | P4 | — | code-review-169 M1 |
 | refactoring-089 | refactoring | P4 | healing | code-review-196 M1 |
 | refactoring-090 | refactoring | P4 | healing | rules-review-173 MED-1 |
+| refactoring-092 | refactoring | P4 | encounter-tables | code-review-207 M1 |
+| refactoring-093 | refactoring | P4 | combat | code-review-207 M2 |
 
-## Open Decree-Needs (1)
+## Open Decree-Needs (0)
 
-| ID | Priority | Domain | Topic |
-|----|----------|--------|-------|
-| decree-need-027 | P3 | character-lifecycle | pathetic-skill-edge-raw-conflict |
+All decree-needs addressed.
 
 ## Summary by Category
 
 | Category | Open | In-Progress | Resolved | Total |
 |----------|------|-------------|----------|-------|
-| bug | 0 | 10 | 26 | 36 |
-| ptu-rule | 1 | 52 | 36 | 89 |
+| bug | 0 | 10 | 26 | 37 |
+| ptu-rule | 2 | 52 | 36 | 91 |
 | feature | 0 | 1 | 1 | 3 |
 | ux | 1 | 7 | 2 | 10 |
-| decree | 1 | 0 | 26 | 27 |
-| refactoring | 2 | 8 | 0 | 10 |
+| decree | 0 | 0 | 27 | 27 |
+| refactoring | 0 | 10 | 0 | 11 |
