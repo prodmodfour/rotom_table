@@ -56,3 +56,19 @@ Implementation follows decree-022: specialization suffix approach (e.g., 'Type A
 ### Verification Approach
 
 No existing class lookup code in the server or display components required changes for prefix matching — all display code simply renders the stored string array, and server code only does JSON serialize/deserialize. The `ClassFeatureSection.vue` was the only component performing class name matching, and it already had partial `startsWith` logic that was extended.
+
+### Fix Cycle 3 (re-apply after merge reversion)
+
+Collect-slaves merge at `1ff8d81` reverted all fix cycle 2 code changes. Fix cycle 3 manually re-applies
+all 5 changes to the current master HEAD. Also addresses code-review-204 M1 (Artificer naming).
+
+- `6772154` fix: remove HP from Stat Ace specializations
+  - `app/constants/trainerClasses.ts` — Removed 'HP' from Stat Ace list (5 combat stats, not 6)
+- `40dc548` fix: replace Researcher specializations with correct Fields of Study
+  - `app/constants/trainerClasses.ts` — 9 canonical fields, 'Artificer' per M1, comment about 2-field grant
+- `0d189c1` fix: remove Martial Artist from branching classes per decree-026 (resolves ptu-rule-115)
+  - `app/constants/trainerClasses.ts` — Removed isBranching, BRANCHING_CLASS_SPECIALIZATIONS entry, updated comment
+- `1967ed2` fix: disable branching class button at max class slots
+  - `app/components/create/ClassFeatureSection.vue` — isClassDisabled checks atMaxSlots for branching classes
+- `c367c25` refactor: remove unused countClassInstances from useCharacterCreation
+  - `app/composables/useCharacterCreation.ts` — Removed dead function and unused hasBaseClass import

@@ -38,8 +38,8 @@ PTU Core p.161: Martial Artist `[Class]` — no `[Branch]` tag.
 
 ## Resolution
 
-Resolved as part of ptu-rule-091 fix cycle 2.
+Resolved as part of ptu-rule-091 fix cycle 2 (commit `93eb8d3`), reverted by merge `1ff8d81`, re-applied in fix cycle 3.
 
-- `93eb8d3` fix: remove Martial Artist from branching classes per decree-026
-- decree-022 preamble already updated in prior commit (a3ca002)
+- `0d189c1` fix: remove Martial Artist from branching classes per decree-026 (fix cycle 3)
+- decree-022 preamble already notes Martial Artist removal per decree-026
 - All 3 required changes in `trainerClasses.ts` completed: isBranching removed, BRANCHING_CLASS_SPECIALIZATIONS entry removed, comment updated
