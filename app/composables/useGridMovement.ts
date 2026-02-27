@@ -383,7 +383,11 @@ export function useGridMovement(options: UseGridMovementOptions) {
       // If cell has slow flag and combatant has matching Naturewalk,
       // bypass the slow cost doubling (treat as Basic Terrain)
       if (flags.slow && naturewalkBypassesTerrain(combatant, terrain)) {
-        return TERRAIN_COSTS[terrain] // Base cost without slow doubling
+        // TERRAIN_COSTS['earth'] is Infinity (generic cost), but we already
+        // verified the combatant can burrow above, so use cost 1 for earth.
+        // Same logic as getMovementCost for capability-gated terrain types.
+        if (terrain === 'earth') return 1
+        return TERRAIN_COSTS[terrain]
       }
     }
 
