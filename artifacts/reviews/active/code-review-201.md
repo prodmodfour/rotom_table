@@ -1,131 +1,108 @@
 ---
 review_id: code-review-201
 review_type: code
-reviewer: game-logic-reviewer
-trigger: first-review
+reviewer: senior-reviewer
+trigger: bug-fix
 target_report: ptu-rule-112
 domain: vtt-grid
 commits_reviewed:
-  - 0dd3605
-  - c274156
-  - a9cedd3
-  - 3c287c8
-  - 9fd4d12
+  - c2741566cf87ffca1c043bee83566396f145f432
+  - a9cedd349218a52eb0debeac95c48bbfc675dd22
+  - 3c287c86cf136597e8a6735553032b1eeea63d82
+  - 9fd4d128ccfdc52240a175ac79f215182b467b8e
+  - 0dd3605e288f196f15a7cb5a4d6e24e0487c1ad3
 files_reviewed:
   - app/constants/naturewalk.ts
   - app/utils/combatantCapabilities.ts
   - app/composables/useGridMovement.ts
   - app/composables/useMoveCalculation.ts
-verdict: APPROVED
+  - app/stores/terrain.ts
+  - app/types/character.ts
+  - app/tests/unit/composables/useMoveCalculation.test.ts
+verdict: CHANGES_REQUIRED
 issues_found:
   critical: 0
-  high: 0
+  high: 1
   medium: 2
-reviewed_at: 2026-02-27T20:30:00Z
+reviewed_at: 2026-02-27T22:15:00Z
 follows_up: null
 ---
 
-## Files Reviewed
+## Review Scope
 
-### app/constants/naturewalk.ts (NEW -- commit c274156)
+First code review of ptu-rule-112: Naturewalk capability terrain bypass. Four implementation commits plus one preceding fix commit (0dd3605 -- painted rough terrain in accuracy penalty, which forms the base for the Naturewalk integration). The feature adds:
 
-**Purpose:** Maps PTU Naturewalk terrain category names to the app's `TerrainType` base types.
+1. `app/constants/naturewalk.ts` (NEW) -- PTU Naturewalk terrain names mapped to app terrain base types
+2. `app/utils/combatantCapabilities.ts` -- `getCombatantNaturewalks()` and `naturewalkBypassesTerrain()` utility functions
+3. `app/composables/useGridMovement.ts` -- `getTerrainCostForCombatant()` updated to bypass slow flag for matching Naturewalk
+4. `app/composables/useMoveCalculation.ts` -- `targetsThroughRoughTerrain()` updated to bypass painted rough flag for matching Naturewalk
 
-**Assessment:**
-
-- Well-documented JSDoc header explains the mapping rationale, PTU reference (p.322), and decree-003 exclusion.
-- `NaturewalkTerrain` type union covers all 9 PTU terrain categories from the Survivalist class list (p.4694): Grassland, Forest, Wetlands, Ocean, Tundra, Mountain, Cave, Urban, Desert.
-- `NATUREWALK_TERRAIN_MAP` uses `ReadonlyArray<TerrainType>` for immutability -- correct per coding style guidelines.
-- The mapping logic is sound: water-based terrains map to `'water'`, underground to `'earth'`, elevated to `'elevated'`, and ground-level terrains to `'normal'`. Multi-mappings (e.g., Wetlands -> `['water', 'normal']`) account for terrain painter ambiguity.
-- `NATUREWALK_TERRAINS` array exported for validation/parsing use -- good defensive design.
-
-**Verdict:** Clean, focused, single-responsibility constant file. No issues.
-
-### app/utils/combatantCapabilities.ts (commit a9cedd3)
-
-**Purpose:** Adds `getCombatantNaturewalks()` and `naturewalkBypassesTerrain()` utility functions.
-
-**Assessment:**
-
-- `getCombatantNaturewalks()` correctly returns early for non-Pokemon combatants (human characters cannot have Naturewalk in the current data model).
-- Dual-source extraction: checks `capabilities.naturewalk` (direct field) and parses `capabilities.otherCapabilities` (string format). This matches the actual `PokemonCapabilities` interface in `types/character.ts` (lines 42-43).
-- Deduplication via `Set` when both sources have data -- prevents double-counting if the same terrain appears in both sources.
-- `parseNaturewalksFromOtherCaps()` regex `/^Naturewalk\s*\(([^)]+)\)$/i`:
-  - Case-insensitive matching (good for data robustness).
-  - Anchored with `^` and `$` -- only matches strings that are entirely a Naturewalk entry, not substrings.
-  - Split on `/[,]|\band\b/i` handles both "Forest, Grassland" and "Forest and Grassland" formats.
-  - Trims whitespace and filters empty strings.
-- `naturewalkBypassesTerrain()` iterates the combatant's Naturewalk terrains and checks `NATUREWALK_TERRAIN_MAP` for a match against the provided base terrain type. The `as NaturewalkTerrain` cast is safe because unrecognized terrain names will simply return `undefined` from the map lookup, and the `if (mappedTypes && ...)` guard handles that case.
-
-**Verdict:** Clean utility functions with good separation of concerns. No issues.
-
-### app/composables/useGridMovement.ts (commit 3c287c8)
-
-**Purpose:** Integrates Naturewalk bypass into movement cost calculation.
-
-**Assessment:**
-
-- New imports: `naturewalkBypassesTerrain` from utils and `TERRAIN_COSTS`, `DEFAULT_FLAGS` from terrain store.
-- `getTerrainCostForCombatant()` modifications (lines 367-391):
-  - When a combatant is available, the function now performs an early check using `terrainStore.getCellAt()` to get the full cell data (type + flags).
-  - Impassable terrain checks (blocking, water without swim, earth without burrow) are evaluated BEFORE the Naturewalk check -- correct, since Naturewalk does not grant passage through impassable terrain.
-  - If `flags.slow` is true and `naturewalkBypassesTerrain()` returns true, the function returns `TERRAIN_COSTS[terrain]` (base cost without slow doubling).
-  - The fallback path (`terrainStore.getMovementCost()`) handles all other cases including non-Naturewalk combatants.
-- The approach of checking slow flag specifically (rather than bypassing all terrain effects) is correct because:
-  - Rough flag has no movement cost effect (accuracy only, per decree-010).
-  - Slow flag is the only movement-cost-relevant modifier that Naturewalk should bypass.
-  - Impassable terrain types are excluded by the earlier checks.
-- Pathfinding automatically benefits because A* uses `getTerrainCostGetter()` which delegates to `getTerrainCostForCombatant()`.
-
-**Note:** The function only checks `flags.slow` for the Naturewalk bypass. If a cell has the rough flag but NOT the slow flag, and the combatant has matching Naturewalk, no special path is taken -- the function falls through to `terrainStore.getMovementCost()`. This is correct behavior since rough has no movement cost effect, but the early-return pattern means the impassable checks are duplicated (once in the `if (combatant)` block, once inside `getMovementCost`). This is a minor redundancy, not a bug -- the results are identical.
-
-**Verdict:** Correct integration. The Naturewalk bypass is properly scoped to slow flag movement cost only.
-
-### app/composables/useMoveCalculation.ts (commit 9fd4d12)
-
-**Purpose:** Bypasses painted rough terrain accuracy penalty for Naturewalk-matching attackers.
-
-**Assessment:**
-
-- New import: `naturewalkBypassesTerrain` from utils.
-- `targetsThroughRoughTerrain()` modifications (lines 153-227):
-  - The Bresenham line trace now has two distinct checks per intermediate cell:
-    1. **Enemy-occupied check (line 200):** Returns `true` immediately if cell is enemy-occupied. No Naturewalk bypass attempted. This is correct per decree-003.
-    2. **Painted rough check (lines 205-209):** If `terrainStore.isRoughAt()` is true, gets the base terrain type and checks `naturewalkBypassesTerrain(actor.value, baseType)`. Only returns `true` (rough penalty applies) if the attacker does NOT have matching Naturewalk.
-  - The order is critical and correct: enemy-occupied is checked FIRST. Even if an enemy stands on a cell that also has painted rough terrain with a matching Naturewalk type, the enemy-occupied check triggers the penalty before the painted check can bypass it.
-  - JSDoc updated to document Naturewalk behavior, decree-003 exclusion, and decree-025 endpoint exclusion.
-
-**Verdict:** Correct implementation of the accuracy penalty bypass. The separation between enemy-occupied rough and painted rough is clean and well-ordered.
-
-## Summary
-
-The implementation across 4 commits is well-structured, following single-responsibility patterns:
-1. **Constants** (naturewalk.ts): Pure data mapping, no logic.
-2. **Utilities** (combatantCapabilities.ts): Pure functions for extraction and matching.
-3. **Movement** (useGridMovement.ts): Integrates bypass into existing movement cost function.
-4. **Accuracy** (useMoveCalculation.ts): Integrates bypass into existing rough terrain penalty function.
-
-The code is readable, well-documented with JSDoc comments citing PTU pages and decrees, and follows the immutability principle (no mutations, all pure function returns). File sizes remain well within the 800-line guideline.
+Decree compliance checked: decree-003 (enemy-occupied rough), decree-010 (multi-tag terrain), decree-025 (endpoint exclusion).
 
 ## Issues
 
-### MED-1: Duplicated impassable terrain checks in getTerrainCostForCombatant
+### HIGH
 
-The early-return block added for Naturewalk (lines 379-381) duplicates the impassable terrain checks that also exist inside `terrainStore.getMovementCost()`. When the combatant does NOT have matching Naturewalk (or the cell has no slow flag), the function falls through to `getMovementCost()` which repeats the blocking/water/earth checks. This is not a bug (both paths produce identical results), but it adds unnecessary code surface area.
+#### HIGH-1: No unit tests for Naturewalk functions
 
-**Recommendation:** Accept as-is. The duplication is a minor style issue, and the early-return approach is clearer to read. The performance impact is negligible (a few extra comparisons per cell).
+The implementation adds three new exported functions (`getCombatantNaturewalks`, `parseNaturewalksFromOtherCaps` (private but testable through the public API), `naturewalkBypassesTerrain`) and modifies two core composable functions, but no unit tests were added. The existing `useMoveCalculation.test.ts` tests rough terrain penalty behavior but does not test Naturewalk bypass of that penalty.
 
-### MED-2: No unit tests for Naturewalk bypass logic
+Required test coverage:
 
-The `useMoveCalculation.test.ts` file was added in this batch (for the rough terrain penalty feature from commit 0dd3605) but does not include test cases exercising Naturewalk bypass. No tests exist for:
-- `getCombatantNaturewalks()` with various capability data shapes
-- `naturewalkBypassesTerrain()` with matching/non-matching terrain types
-- `parseNaturewalksFromOtherCaps()` with different string formats
-- `getTerrainCostForCombatant()` with Naturewalk-enabled combatants on slow terrain
-- `targetsThroughRoughTerrain()` with Naturewalk actors attacking through painted rough
+1. **`getCombatantNaturewalks`** -- human combatant returns empty; Pokemon without capabilities returns empty; Pokemon with `capabilities.naturewalk` returns terrain names; Pokemon with otherCapabilities containing "Naturewalk (Forest, Grassland)" parses correctly; both sources present deduplicates.
 
-**Recommendation:** Create follow-up ticket for unit test coverage. The utility functions in `combatantCapabilities.ts` are pure and highly testable.
+2. **`naturewalkBypassesTerrain`** -- returns false for human; returns false for Pokemon without matching Naturewalk; returns true when Naturewalk (Forest) matches `normal` base type; returns false when Naturewalk (Ocean) does not match `normal` base type; handles multiple Naturewalk terrains.
+
+3. **`useMoveCalculation` Naturewalk rough bypass** -- actor with matching Naturewalk bypasses painted rough on the line of sight; actor with non-matching Naturewalk does NOT bypass painted rough; Naturewalk does NOT bypass enemy-occupied rough (decree-003).
+
+4. **`useGridMovement` Naturewalk slow bypass** -- combatant with matching Naturewalk on slow-flagged cell gets base cost (not doubled); combatant without matching Naturewalk still gets doubled cost; Naturewalk does not bypass blocking/impassable terrain.
+
+**Files:** New test file `app/tests/unit/utils/combatantCapabilities.test.ts` and additions to `app/tests/unit/composables/useMoveCalculation.test.ts`.
+
+### MEDIUM
+
+#### MED-1: `app-surface.md` not updated with new file and functions
+
+`app-surface.md` lists `utils/combatantCapabilities.ts` with specific functions (`combatantCanFly`, `getSkySpeed`, `combatantCanSwim`, `combatantCanBurrow`) but does not mention the new `getCombatantNaturewalks` or `naturewalkBypassesTerrain` functions. The new `constants/naturewalk.ts` file is also not mentioned anywhere in the surface document.
+
+**File:** `.claude/skills/references/app-surface.md`
+
+#### MED-2: `parseNaturewalksFromOtherCaps` regex does not handle inline Naturewalk within longer capability strings
+
+The regex `^Naturewalk\s*\(([^)]+)\)$` uses `^...$` anchors, meaning it only matches strings where Naturewalk is the ENTIRE string. If the seeder or any data source produces a capability string like `"Naturewalk (Forest), Underdog"` (multiple capabilities in one string), the regex will not match.
+
+I verified the `SpeciesData` schema stores capabilities as a JSON array where each entry is a single capability string (e.g., `["Naturewalk (Forest)", "Underdog"]`), so this is safe with current data. However, the defensive pattern would be to also handle substring matches. Since the seeder already splits correctly, this is a data format coupling rather than a bug -- but it is fragile if the data format changes.
+
+**File:** `app/utils/combatantCapabilities.ts`, line 227
+
+## What Looks Good
+
+1. **Decree compliance is exemplary.** Every function documents which decrees apply and why. The enemy-occupied rough terrain (decree-003) is explicitly separated from painted terrain rough and checked before the Naturewalk bypass, ensuring Naturewalk never circumvents the game mechanic. Per decree-003, this approach was ruled correct. Per decree-025, endpoint exclusion is preserved. Per decree-010, the multi-tag system is properly leveraged.
+
+2. **Separation of concerns is clean.** Constants in `constants/naturewalk.ts`, utility functions in `utils/combatantCapabilities.ts`, and integration in the composables. The `naturewalkBypassesTerrain` function is a pure function that takes a combatant and base terrain type, making it easily testable and reusable.
+
+3. **The two-source Naturewalk extraction** (`capabilities.naturewalk` + `capabilities.otherCapabilities`) covers both direct seeded data and parsed species data, with proper deduplication via `Set`.
+
+4. **Movement cost bypass correctly targets only the slow flag.** The rough flag has no movement cost effect (only accuracy), so bypassing only the slow doubling is correct per PTU terrain rules (p.465-474). The code returns `TERRAIN_COSTS[terrain]` (base cost without slow doubling) rather than hardcoding 1, which correctly handles edge cases like hazard terrain with slow flag.
+
+5. **Accuracy penalty bypass correctly targets only painted rough.** The `targetsThroughRoughTerrain` function checks enemy-occupied cells FIRST (returning true immediately -- no Naturewalk bypass), then checks painted rough terrain with the Naturewalk bypass. This ordering ensures decree-003 is never violated.
+
+6. **Commit granularity is appropriate.** Four small, logically sequenced commits: constants, utilities, movement integration, accuracy integration. Each commit is self-contained and produces a consistent state.
+
+7. **The known limitation** (multiple PTU terrain categories mapping to `normal` base type) is well-documented in the constants file. This is an inherent mismatch between the app's terrain painter (which uses generic base types) and PTU's terrain categories, and the documentation makes it clear the GM must set up terrain appropriately.
+
+8. **Immutability is preserved throughout.** No mutation of combatant or terrain objects. All functions return new values.
 
 ## Verdict
 
-**APPROVED** -- The code correctly implements Naturewalk terrain bypass for both movement cost and accuracy penalty. Decree compliance is thorough. The two MEDIUM issues (minor code duplication and missing unit tests) are non-blocking.
+**CHANGES_REQUIRED**
+
+The implementation logic is correct, well-documented, and decree-compliant. The single blocking issue is the lack of unit tests (HIGH-1). For a feature that modifies core movement cost and accuracy calculations, test coverage is essential to prevent regressions. The medium issues (app-surface update and regex fragility) should also be addressed in the fix cycle.
+
+## Required Changes
+
+1. **HIGH-1:** Add unit tests for the three new functions and the two composable integrations. Minimum: test `getCombatantNaturewalks` parsing from both data sources, test `naturewalkBypassesTerrain` with matching and non-matching terrains, test movement cost bypass for slow flag, test accuracy penalty bypass for painted rough (and confirm enemy-occupied rough is NOT bypassed).
+
+2. **MED-1:** Update `app-surface.md` to list `constants/naturewalk.ts` and the new functions in `utils/combatantCapabilities.ts`.
+
+3. **MED-2:** Add a code comment to `parseNaturewalksFromOtherCaps` noting the assumption that each otherCapabilities entry is a single capability string, to prevent future data format changes from silently breaking the parser.
