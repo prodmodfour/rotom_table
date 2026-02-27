@@ -87,6 +87,7 @@ export default defineEventHandler(async (event) => {
       }
     }
     const stages = entity.stageModifiers || createDefaultStageModifiers()
+    const speedCsBefore = stages.speed ?? 0
     const hadStages = Object.entries(stages).some(
       ([key, val]) => val !== (defaultStages[key as keyof typeof defaultStages] ?? 0)
     )
@@ -120,6 +121,10 @@ export default defineEventHandler(async (event) => {
     // Burn/Paralysis/Poison are persistent and survive Take a Breather.
     // Their inherent CS effects must be re-applied after the stage reset.
     reapplyActiveStatusCsEffects(combatant)
+
+    // Track whether speed CS actually changed after reset+reapply (for initiative reorder)
+    const speedCsAfter = entity.stageModifiers?.speed ?? 0
+    const speedCsChanged = speedCsBefore !== speedCsAfter
 
     // Apply Tripped and Vulnerable (temporary until next turn)
     if (!combatant.tempConditions) {
@@ -162,10 +167,11 @@ export default defineEventHandler(async (event) => {
       notes: buildBreatherNotes(result, combatant.stageSources || [])
     })
 
-    // Decree-006: Breather resets stages (potentially changing speed CS),
-    // so attempt initiative reorder if encounter is active
+    // Decree-006: Only reorder initiative if speed CS actually changed
+    // after the reset+reapply cycle (avoids spurious tie-breaker re-rolls
+    // when only non-speed stages were reset)
     let initiativeReorder = null
-    if (result.stagesReset && record.isActive) {
+    if (speedCsChanged && record.isActive) {
       const turnOrder = JSON.parse(record.turnOrder) as string[]
       const trainerTurnOrder = JSON.parse(record.trainerTurnOrder || '[]') as string[]
       const pokemonTurnOrder = JSON.parse(record.pokemonTurnOrder || '[]') as string[]
