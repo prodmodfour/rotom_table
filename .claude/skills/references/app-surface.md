@@ -226,6 +226,7 @@ Export/import for offline character management.
 | File | Purpose |
 |------|---------|
 | `server/services/pokemon-generator.service.ts` | Canonical Pokemon creation — generatePokemonData, createPokemonRecord, buildPokemonCombatant |
+| `server/services/rest-healing.service.ts` | Extended rest move refresh — refreshDailyMoves, refreshDailyMovesForOwnedPokemon |
 | `server/services/csv-import.service.ts` | CSV import parsing (trainer/pokemon sheets) and DB creation |
 | `server/services/combatant.service.ts` | Combatant builder, damage pipeline, calculateCurrentInitiative (CS-modified speed for initiative) |
 | `server/services/encounter.service.ts` | Encounter CRUD, reorderInitiativeAfterSpeedChange (decree-006), saveInitiativeReorder |
