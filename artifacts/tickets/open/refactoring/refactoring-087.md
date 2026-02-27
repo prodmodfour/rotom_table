@@ -3,7 +3,7 @@ id: refactoring-087
 title: Split terrain store test file to stay under 800-line limit
 priority: P4
 severity: LOW
-status: open
+status: in-progress
 domain: vtt-grid
 category: TEST-STALE
 source: code-review-190 MED-1
@@ -26,3 +26,11 @@ Extract the `migrateLegacyCell` tests (lines ~725-810, ~86 lines) into a separat
 ## Impact
 
 Code health only. No functional change. Improves test file organization.
+
+## Resolution Log
+
+- **Commit:** e25477f
+- **Changes:**
+  - Extracted `migrateLegacyCell` describe block (7 tests, ~86 lines) from `app/tests/unit/stores/terrain.test.ts` into new `app/tests/unit/stores/terrain-migration.test.ts`
+  - Removed unused `migrateLegacyCell` import from terrain.test.ts
+  - terrain.test.ts reduced from 811 to 773 lines (under 800-line max)

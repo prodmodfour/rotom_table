@@ -2,7 +2,7 @@
 ticket_id: refactoring-088
 ticket_type: refactoring
 priority: P4
-status: open
+status: in-progress
 category: EXT-ROBUSTNESS
 domain: vtt-grid
 source: code-review-195 MED-1
@@ -33,3 +33,12 @@ Consider making `allCombatants` required in the composable signature, or add a w
 ## Impact
 
 Edge case affecting accuracy calculations when `allCombatants` is not provided. Pre-existing issue, not introduced by the rough terrain fix.
+
+## Resolution Log
+
+- **Commit:** 35e4d04
+- **Changes:**
+  - Made `allCombatants` parameter required (was optional with `?`) in `useMoveCalculation()` signature (`app/composables/useMoveCalculation.ts`)
+  - Removed fallback `allCombatants?.value ?? targets.value` — `combatantsOnGrid` now uses `allCombatants.value` directly
+  - Updated all 11 test calls in `app/tests/unit/composables/useMoveCalculation.test.ts` to pass the required 4th argument
+  - Existing caller (MoveTargetModal.vue) already passes `targetsRef` as 4th arg (which is the full `allCombatants` prop from GMActionModal) — no change needed
