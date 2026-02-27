@@ -1,14 +1,14 @@
 ---
-generated_at: 2026-02-27T09:00:18.848Z
-total_tickets: 159
-open: 13
+generated_at: 2026-02-27T09:40:23.785Z
+total_tickets: 163
+open: 17
 in_progress: 57
 resolved: 88
 ---
 
 # Tickets Index
 
-## Open Tickets (13)
+## Open Tickets (17)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
@@ -23,8 +23,12 @@ resolved: 88
 | ux-006 | ux | P4 | — | ux-006: PTU injury markers may leak precise HP info in playe |
 | ux-009 | ux | P4 | combat | ux-009: Show type-immunity IMMUNE tags on all statuses proac |
 | ux-010 | ux | P4 | encounter-tables | ux-010: Overlapping significance tier boundary values |
+| decree-need-025 | decree | P4 | vtt-grid | Ambiguity in whether the rough terrain accuracy penalty appl |
 | refactoring-086 | refactoring | P4 | combat | `app/composables/useMoveCalculation.ts` is 801 lines, exceed |
 | refactoring-087 | refactoring | P4 | vtt-grid | `app/tests/unit/stores/terrain.test.ts` is 811 lines, exceed |
+| refactoring-088 | refactoring | P4 | vtt-grid | `combatantsOnGrid` in `useMoveCalculation.ts` falls back to  |
+| refactoring-089 | refactoring | P4 | healing | The new `rest-healing.service.ts` service file exports `refr |
+| refactoring-090 | refactoring | P4 | healing | The `refreshDailyMoves()` function only processes daily-freq |
 
 ## In-Progress Tickets (57)
 
@@ -88,9 +92,11 @@ resolved: 88
 | ux-005 | ux | P4 | pokemon-lifecycle | code-review-161 M2 |
 | ux-008 | ux | P4 | — | code-review-169 M1 |
 
-## Open Decree-Needs (0)
+## Open Decree-Needs (1)
 
-All decree-needs addressed.
+| ID | Priority | Domain | Topic |
+|----|----------|--------|-------|
+| decree-need-025 | P4 | vtt-grid | rough-terrain-penalty-endpoint-inclusion |
 
 ## Summary by Category
 
@@ -100,5 +106,5 @@ All decree-needs addressed.
 | ptu-rule | 6 | 45 | 35 | 86 |
 | feature | 0 | 1 | 1 | 3 |
 | ux | 3 | 5 | 2 | 10 |
-| decree | 0 | 0 | 24 | 24 |
-| refactoring | 3 | 1 | 0 | 4 |
+| decree | 1 | 0 | 24 | 25 |
+| refactoring | 6 | 1 | 0 | 7 |

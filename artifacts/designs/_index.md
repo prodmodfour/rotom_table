@@ -1,5 +1,5 @@
 ---
-generated_at: 2026-02-27T09:00:18.850Z
+generated_at: 2026-02-27T09:40:23.788Z
 total_designs: 12
 ---
 
@@ -11,7 +11,7 @@ total_designs: 12
 | design-density-significance-001 | encounter-tables | p1-complete | ptu-rule-058 | FULL | PTU_INCORRECT |
 | design-equipment-001 | combat | p1-complete | ptu-rule-045 | FULL | FEATURE_GAP |
 | design-isometric-grid-001 | vtt-grid | p0-implemented | feature-002 | FULL | FEATURE |
-| design-league-battle-001 | combat | design-complete | ptu-rule-107 | FULL | PTU_RULE |
+| design-league-battle-001 | combat | p0-implemented | ptu-rule-107 | FULL | PTU_RULE |
 | design-level-budget-001 | scenes | p1-complete | ptu-rule-060 | NEW_FEATURE | FEATURE_GAP |
 | design-player-view-core-001 | player-view | p0-implemented | feature-003 | FULL | FEATURE |
 | design-player-view-infra-001 | player-view | draft | feature-003 | FULL | INFRASTRUCTURE |
