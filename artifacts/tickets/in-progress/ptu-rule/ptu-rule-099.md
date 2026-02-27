@@ -59,3 +59,12 @@ Initiative is currently static — calculated once at encounter start. Per decre
 2. `reorderInitiativeAfterSpeedChange()` splits turn order into acted (frozen) + unacted (re-sortable), re-sorts unacted by new initiative with rolloff for ties
 3. Three trigger points: `stages.post.ts` (direct speed change), `status.post.ts` (Paralysis auto-CS), `breather.post.ts` (stage reset)
 4. WebSocket sync via existing `encounter_update` broadcast mechanism — updated encounter data includes new turn orders and initiative values
+
+### Fix Cycle (code-review-186 CHANGES_REQUIRED)
+
+**Commits:** 89615d4, f48c4a6, d7df3c9
+
+**Fixes:**
+- **HIGH-1** (89615d4): `stages.post.ts` — replaced `'speed' in body.changes` with `stageResult.changes.speed?.change !== 0` to only trigger reorder on actual speed CS value changes
+- **HIGH-2** (f48c4a6): `next-turn.post.ts` — added full `turnState` reset to `resetCombatantsForNewRound` (hasActed, standardActionUsed, shiftActionUsed, swiftActionUsed, canBeCommanded, isHolding)
+- **MED-3** (d7df3c9): `breather.post.ts` — track speed CS before/after reset+reapply cycle, only trigger initiative reorder when speed actually changed

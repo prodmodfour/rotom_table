@@ -59,3 +59,11 @@ Type-immunity mapping exists client-side in `useTypeChart.ts` (lines 12-20), but
 3. `override: true` parameter bypasses the check (GM override per decree-012)
 4. Client StatusConditionsModal shows IMMUNE tags on immune checkboxes, warning banner, and "Force Apply (GM Override)" button
 5. Quick add/remove in GMActionModal shows alert on rejection guiding user to full modal
+
+### Fix Cycle (code-review-186 CHANGES_REQUIRED)
+
+**Commits:** 4294073, 1d43b60
+
+**Fixes:**
+- **MED-2** (4294073): `StatusConditionsModal.vue` — replaced `.push()` and `.splice()` in `toggleStatus` with immutable patterns (`[...arr, item]` and `.filter()`)
+- **MED-1** (1d43b60): `app-surface.md` — added `typeStatusImmunity.ts` utility and new service functions (calculateCurrentInitiative, reorderInitiativeAfterSpeedChange, saveInitiativeReorder)
