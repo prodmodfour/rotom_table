@@ -208,10 +208,9 @@ export function useCharacterCreation() {
    * Remove a skill from Pathetic tracking during custom background selection.
    * Removes the skill from the tracking set and resets its rank to Untrained.
    *
-   * Blocks removal if outstanding Skill Edge entries reference this skill,
-   * because removing the Pathetic lock while edges exist creates a tracking
-   * desync — later edge removal could demote the skill to Pathetic without
-   * it being tracked in patheticSkills.
+   * Safety guard: blocks removal if outstanding Skill Edge entries reference
+   * this skill (should never happen now that addSkillEdge blocks Pathetic
+   * skills per decree-027, but kept as a defensive check).
    *
    * Returns an error string if blocked, or null on success.
    */
