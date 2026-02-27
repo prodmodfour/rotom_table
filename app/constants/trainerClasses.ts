@@ -109,8 +109,14 @@ export const BRANCHING_CLASS_SPECIALIZATIONS: Record<string, readonly string[]> 
   ],
   'Stat Ace': ['Attack', 'Defense', 'Special Attack', 'Special Defense', 'Speed'],
   'Style Expert': ['Cool', 'Beautiful', 'Cute', 'Smart', 'Tough'],
+  /**
+   * PTU Core pp.140-148 lists 9 Fields of Study. In PTU, a Researcher picks
+   * two fields per class instance, but the tool records one specialization per
+   * instance for simplicity — the GM tracks the second field outside the tool.
+   */
   'Researcher': [
-    'General Ed', 'Medicine Ed', 'Occult Ed', 'Pokemon Ed', 'Technology Ed'
+    'General Research', 'Apothecary', 'Crystal Artifice', 'Botany',
+    'Chemistry', 'Climatology', 'Occultism', 'Paleontology', 'Pokemon Caretaking'
   ],
   'Martial Artist': [
     'Aura', 'Cover', 'Elemental', 'Focused', 'Form', 'Freestyle', 'Parkour', 'Weapons'
