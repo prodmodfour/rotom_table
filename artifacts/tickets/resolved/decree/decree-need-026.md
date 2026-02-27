@@ -5,7 +5,8 @@ domain: character-lifecycle
 topic: martial-artist-branch-status
 source: rules-review-176
 created_by: slave-collector (plan-20260227-190000)
-status: open
+status: addressed
+decree_id: decree-026
 ---
 
 ## Summary

@@ -17,7 +17,7 @@ tags: [character-lifecycle, branch-classes, specialization, trainer-classes]
 
 ## The Ambiguity
 
-PTU allows `[Branch]` classes (Type Ace, Stat Ace, Style Expert, Researcher, Martial Artist) to be taken multiple times with different specializations. The codebase currently blocks duplicate class names entirely. Surfaced by character-lifecycle-audit.md (R035), decree-need-022.
+PTU allows `[Branch]` classes (Type Ace, Stat Ace, Style Expert, Researcher) to be taken multiple times with different specializations. (Note: Martial Artist was originally listed here but removed per decree-026 — it is `[Class]` only, not `[Branch]`.) The codebase currently blocks duplicate class names entirely. Surfaced by character-lifecycle-audit.md (R035), decree-need-022.
 
 ## Options Considered
 
