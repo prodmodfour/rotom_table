@@ -3,7 +3,7 @@ import { useTerrainStore } from '~/stores/terrain'
 import { useRangeParser } from '~/composables/useRangeParser'
 import {
   combatantCanSwim, combatantCanBurrow, combatantCanFly, getSkySpeed,
-  getOverlandSpeed, calculateAveragedSpeed
+  getOverlandSpeed, getSwimSpeed, getBurrowSpeed, calculateAveragedSpeed
 } from '~/utils/combatantCapabilities'
 import { ptuDiagonalDistance } from '~/utils/gridDistance'
 import { isEnemySide } from '~/utils/combatSides'
@@ -175,12 +175,10 @@ export function useGridMovement(options: UseGridMovementOptions) {
     const speeds = [overland]
 
     if (combatantCanSwim(combatant)) {
-      const pokemon = combatant.entity as Pokemon
-      speeds.push(pokemon.capabilities?.swim ?? 0)
+      speeds.push(getSwimSpeed(combatant))
     }
     if (combatantCanBurrow(combatant)) {
-      const pokemon = combatant.entity as Pokemon
-      speeds.push(pokemon.capabilities?.burrow ?? 0)
+      speeds.push(getBurrowSpeed(combatant))
     }
 
     const maxSpeed = Math.max(...speeds)
