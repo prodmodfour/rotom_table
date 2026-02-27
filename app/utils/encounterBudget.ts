@@ -87,14 +87,14 @@ export const SIGNIFICANCE_PRESETS: SignificancePreset[] = [
   {
     tier: 'significant',
     label: 'Significant',
-    multiplierRange: { min: 4.0, max: 5.0 },
+    multiplierRange: { min: 4.0, max: 4.99 },
     defaultMultiplier: 4.0,
-    description: 'Gym leaders, rival encounters, mini-bosses (PTU: x4-x5+)'
+    description: 'Gym leaders, rival encounters, mini-bosses (PTU: x4-x5)'
   },
   {
     tier: 'climactic',
     label: 'Climactic',
-    multiplierRange: { min: 5.0, max: 7.0 },
+    multiplierRange: { min: 5.0, max: 6.99 },
     defaultMultiplier: 6.0,
     description: 'Tournament finals, legendary encounters, arc finales (extended)'
   },
