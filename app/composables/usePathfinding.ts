@@ -409,6 +409,17 @@ export function usePathfinding() {
    * speed, tracks terrain types along each path, and filters cells where
    * the path cost exceeds the averaged speed for the terrain types encountered.
    *
+   * **Conservative approximation:** The flood-fill only stores the cheapest-cost
+   * path to each cell. A higher-cost path with fewer terrain types might yield a
+   * higher averaged speed, enabling further exploration from that cell. This means
+   * some cells that are technically reachable may not appear in the movement range
+   * display. The correct solution would require multi-state exploration keyed by
+   * (position, terrain-type-set), which is significantly more complex. This is
+   * acceptable because: (1) it errs conservatively (never shows unreachable cells),
+   * (2) actual move validation in isValidMove uses A* with full path analysis so
+   * no invalid moves can be executed, and (3) the edge case requires specific
+   * terrain layouts unlikely in typical play.
+   *
    * @param origin - Starting position
    * @param maxSpeed - Maximum possible movement speed (used as exploration budget)
    * @param blockedCells - Cells blocked by other tokens
