@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-02-27T13:45:00
-updated_by: slave-collector (plan-20260227-131024)
+last_updated: 2026-02-27T16:00:00
+updated_by: slave-collector (plan-20260227-153711)
 ---
 
 # Dev Ecosystem State
@@ -45,7 +45,7 @@ updated_by: slave-collector (plan-20260227-131024)
 | ptu-rule-091 | P3 | **resolved** | Branch class specialization suffix per decree-022. Fix cycle 3 re-applied all reverted changes: Stat Ace HP removal, Researcher Fields of Study (Artificer naming per M1), Martial Artist removed from branching per decree-026, max slots guard, dead code removal. code-review-206 APPROVED + rules-review-183 APPROVED (re-review by slave-1, plan-20260228-000430). All issues resolved |
 | ptu-rule-092 | P3 | **resolved** | Pathetic skill enforcement gap in custom background mode. Fix cycle complete: guarded removePatheticSkill against outstanding Skill Edges (CRITICAL-01), informational warning for level > 1 (MEDIUM-01). HIGH-01 deferred to decree-need-027. code-review-203 APPROVED. rules-review-182 APPROVED (re-review by slave-3, plan-20260227-131024). All issues resolved |
 | ptu-rule-093 | P3 | **resolved** | Rough terrain accuracy penalty — resolved by ptu-rule-108 fix. APPROVED: code-review-195 + rules-review-172 (plan-20260227-174900) |
-| ptu-rule-094 | P4 | **open** | Natural healing min(1) HP contradicts PTU for low-HP entities (from healing-audit R007) |
+| ptu-rule-094 | P4 | **in-progress** | Natural healing min(1) HP — fixed by slave-2 (plan-20260227-153711). Removed Math.max(1,...) wrapper. Needs review |
 | ptu-rule-095 | P4 | **open** | Disengage maneuver missing from combatManeuvers — defer until AoO implemented (from vtt-grid-audit R030) |
 | ptu-rule-096 | P0 | **resolved** | Range measurement switched to PTU alternating diagonal. APPROVED: code-review-189 + rules-review-166 (re-review). All 7 issues from code-review-183 resolved |
 | ptu-rule-097 | P0 | **resolved** | Token passability + enemy rough terrain -2 accuracy. APPROVED: code-review-189 + rules-review-166. isEnemySide extracted, getBlockedCells removed, unit tests added |
@@ -65,8 +65,9 @@ updated_by: slave-collector (plan-20260227-131024)
 | ptu-rule-111 | P2 | **resolved** | tempConditions Vulnerable zero evasion. APPROVED: code-review-191 + rules-review-168. Both client + server checks inspect tempConditions |
 | ptu-rule-112 | P3 | **resolved** | Naturewalk capability terrain bypass. APPROVED: code-review-205 + rules-review-181 (plan-20260227-122512 slave-5 re-review). All issues from code-review-201 resolved. 36 Naturewalk tests, decree-003/010/025 compliant. Scope note: Naturewalk status condition immunity (Slowed/Stuck) → ptu-rule-116 |
 | ptu-rule-113 | P2 | **resolved** | Burst shapes use PTU diagonal distance (per decree-023). APPROVED: code-review-189 + rules-review-166. Burst 2 = 21 cells (not 25 Chebyshev) |
-| ptu-rule-114 | P4 | **open** | Assisted breather variant not implemented (from rules-review-169 note on ptu-rule-099+104 re-review) |
-| ptu-rule-116 | P4 | **open** | Naturewalk status condition immunity (Slowed/Stuck) not implemented (from rules-review-181 scope boundary note on ptu-rule-112 re-review) |
+| ptu-rule-114 | P4 | **in-progress** | Assisted breather variant — implemented by slave-5 (plan-20260227-153711). Assisted flag, 0 evasion instead of Trip+Vulnerable. Needs review |
+| ptu-rule-116 | P4 | **in-progress** | Naturewalk status condition immunity — implemented by slave-5 (plan-20260227-153711). Slowed/Stuck blocked at application time for matching terrain. Needs review |
+| ptu-rule-117 | P4 | **in-progress** | Style Expert 'Beautiful' → 'Beauty' — fixed by slave-4 (plan-20260227-153711). One-line string fix. Needs review |
 
 ### Feature Tickets (`tickets/feature/`)
 | Ticket | Priority | Status | Summary | Design Complexity |
@@ -86,12 +87,12 @@ updated_by: slave-collector (plan-20260227-131024)
 | ux-006 | P4 | **open** | PTU injury markers may leak precise HP info in player mode (from rules-review-154 R2) |
 | ux-007 | P4 | **resolved** | Player's own tokens hidden in explored fog cells — fixed: isOwnCombatant exception in usePlayerGridView.ts. Resolved by slave-2 (plan-20260226-120000). code-review-180 APPROVED, rules-review-158 APPROVED |
 | ux-008 | P4 | **resolved** | Focus item selection — deterministic slot priority order added to equipmentBonuses.ts. Resolved by slave-2 (plan-20260226-175938) |
-| ux-009 | P4 | **open** | (from previous collection) |
-| ux-010 | P4 | **open** | Overlapping significance tier boundary values at x5.0 and x7.0 (from rules-review-171 M1) |
+| ux-009 | P4 | **in-progress** | Proactive IMMUNE tags in StatusConditionsModal — implemented by slave-4 (plan-20260227-153711). Needs review |
+| ux-010 | P4 | **in-progress** | Overlapping significance tier boundaries — fixed by slave-4 (plan-20260227-153711). Exclusive end values. Needs review |
 
 ## Active Developer Work
 
-**Current task:** Session 53 collection complete. All 4 slaves merged (12 commits). 1 reviewer slave: ptu-rule-091-rereview (slave-1, APPROVED). 3 developer slaves: refactoring-086 (slave-2, 2 commits), refactoring-002 cleanup (slave-3, 4 commits), bug-032+refactoring-091 (slave-4, 4 commits). Smoke test PASSED (all 3 views render). 5 tickets resolved (ptu-rule-091, bug-032, refactoring-086, refactoring-002 additional, refactoring-091). 1 ticket filed (ptu-rule-117).
+**Current task:** Session 54 collection complete. All 5 slaves merged (15 commits). 1 reviewer slave: code-review-207 APPROVED (session 53 batch). 4 developer slaves: healing P4 cluster (slave-2, 4 commits), multi-domain P4 (slave-4, 4 commits), VTT-grid refactoring (slave-3, 3 commits), game mechanics P4 (slave-5, 3 commits). Smoke test PASSED (all 3 views render). 2 follow-up tickets filed from code-review-207 (refactoring-092, refactoring-093). All dev work needs review.
 
 **Session 52 (2026-02-27, plan-20260227-131024):**
 - slave-1 (developer): bug-036 — 2 commits: replaced invalid `rgba(currentColor, 0.1)` with SCSS color variables in player view, ticket update → **resolved**
@@ -545,7 +546,12 @@ updated_by: slave-collector (plan-20260227-131024)
 | refactoring-002 | P3 | **resolved** | Deprecate legacy terrain types — runtime conversion added in setTerrain (commit f10cad0, ptu-rule-101 fix cycle). APPROVED as part of code-review-190. Additional cleanup by slave-3 (plan-20260228-000430): setPaintMode legacy type guard, dead legacy rendering branches removed, unit tests added |
 | refactoring-086 | P4 | **resolved** | Extract computeTargetEvasions + getEffectivenessClass from useMoveCalculation.ts into utils/evasionCalculation.ts. File reduced from 801 to ~730 lines. Resolved by slave-2 (plan-20260228-000430) |
 | refactoring-091 | P4 | **resolved** | Replace alert() calls in create.vue with inline error banner. SCSS extracted to _create-page.scss partial. Resolved by slave-4 (plan-20260228-000430) |
-| refactoring-087 | P4 | **open** | Split terrain.test.ts (811 lines > 800 limit). Extract migrateLegacyCell tests to separate file. From code-review-190 MED-1 |
+| refactoring-087 | P4 | **in-progress** | Split terrain.test.ts — extracted migrateLegacyCell tests to terrain-migration.test.ts by slave-3 (plan-20260227-153711). Needs review |
+| refactoring-088 | P4 | **in-progress** | Make allCombatants required in useMoveCalculation — fixed by slave-3 (plan-20260227-153711). Needs review |
+| refactoring-089 | P4 | **in-progress** | Add rest-healing.service.ts to app-surface.md — fixed by slave-2 (plan-20260227-153711). Needs review |
+| refactoring-090 | P4 | **in-progress** | Reset usedToday on all moves during extended rest — fixed by slave-2 (plan-20260227-153711). Needs review |
+| refactoring-092 | P4 | **open** | Add partial-update merge to modification update endpoint level range validation (from code-review-207 M1) |
+| refactoring-093 | P4 | **open** | Rename evasionCalculation.ts or relocate getEffectivenessClass (from code-review-207 M2) |
 
 ## Code Health
 
@@ -559,6 +565,18 @@ updated_by: slave-collector (plan-20260227-131024)
 | Open tickets (P4) | 10 (refactoring-060/062/076/078/079/084 + ux-002/006/007/008) |
 | Total open | 16 |
 | Total resolved | 159 (feature-002 fully resolved) |
+
+## Session Summary (2026-02-27, session 54 — plan-20260227-153711)
+
+**Slave collection plan-20260227-153711:** 5 slaves merged (15 commits total, 0 conflicts)
+- **slave-1** (reviewers): session-53 dev review — code-review-207 **APPROVED**. Reviewed refactoring-086, refactoring-002, bug-032, refactoring-091. 2 MEDIUM issues filed as follow-up tickets (refactoring-092: partial-update merge, refactoring-093: evasionCalculation naming)
+- **slave-2** (developer): ptu-rule-094+refactoring-089+090 — 4 commits: removed natural healing Math.max(1,...) minimum, reset usedToday on all moves during extended rest, added rest-healing.service.ts to app-surface.md → **needs review**
+- **slave-3** (developer): refactoring-087+088 — 3 commits: extracted migrateLegacyCell tests into terrain-migration.test.ts, made allCombatants required in useMoveCalculation → **needs review**
+- **slave-4** (developer): ptu-rule-117+ux-009+ux-010 — 4 commits: fixed Style Expert 'Beautiful' → 'Beauty', added proactive IMMUNE tags in StatusConditionsModal, fixed overlapping significance tier boundaries → **needs review**
+- **slave-5** (developer): ptu-rule-114+ptu-rule-116 — 3 commits: assisted breather variant (0 evasion instead of Trip+Vulnerable), Naturewalk status condition immunity (Slowed/Stuck blocked at application time) → **needs review**
+
+**Tickets filed:** refactoring-092 (code-review-207 M1: partial-update merge), refactoring-093 (code-review-207 M2: evasionCalculation naming)
+**Smoke test:** PASSED — all 3 views render correctly. GM view (navigation + encounter controls), Group view (waiting for encounter), Player view (character selection)
 
 ## Session Summary (2026-02-28, session 53 — plan-20260228-000430)
 
