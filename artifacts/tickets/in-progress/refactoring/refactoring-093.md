@@ -4,7 +4,7 @@ category: EXT-NAMING
 priority: P4
 severity: LOW
 domain: combat
-status: open
+status: in-progress
 source: code-review-207 M2
 created_by: slave-collector (plan-20260227-153711)
 created_at: 2026-02-27
@@ -32,3 +32,11 @@ Option 1 is preferred if more type effectiveness utilities are extracted in the 
 ## Impact
 
 Low — cosmetic naming issue. No behavioral change.
+
+## Resolution Log
+
+- **Commit:** `28fe875` — refactor: relocate getEffectivenessClass to dedicated typeEffectiveness.ts
+- **Files changed:**
+  - `app/utils/typeEffectiveness.ts` (new) — contains `getEffectivenessClass` moved from evasionCalculation.ts
+  - `app/utils/evasionCalculation.ts` — removed `getEffectivenessClass` (now only contains evasion-related code)
+  - `app/composables/useMoveCalculation.ts` — updated import path from `evasionCalculation` to `typeEffectiveness`

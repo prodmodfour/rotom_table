@@ -4,7 +4,7 @@ category: EXT-LATENT
 priority: P4
 severity: LOW
 domain: encounter-tables
-status: open
+status: in-progress
 source: code-review-207 M1
 created_by: slave-collector (plan-20260227-153711)
 created_at: 2026-02-27
@@ -37,3 +37,9 @@ Mirror the entry update pattern: merge provided values with existing DB values b
 ## Impact
 
 Low — the client currently sends the full `levelRange` object, so partial updates don't occur in practice. This is a latent risk if the API contract evolves.
+
+## Resolution Log
+
+- **Commit:** `cb5c7ba` — refactor: merge partial-update values with DB state in modification endpoint
+- **Files changed:**
+  - `app/server/api/encounter-tables/[id]/modifications/[modId].put.ts` — merged body.levelRange values with existing DB values before cross-field validation; switched to selective update data building (only write provided fields)
