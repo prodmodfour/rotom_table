@@ -63,22 +63,22 @@ Also verifying code-review-184 fixes that affect PTU correctness:
 
 ## Mechanics Verified
 
-### 1. Faint Stage Modifier DB Sync (code-review-184 H1 -> commit `0ef3152`)
+### 1. Faint Stage Modifier DB Sync (code-review-184 H1, commit `0ef3152`)
 - **Rule:** PTU p.248: "When a Pokemon becomes Fainted, they are automatically cured of all Persistent and Volatile Status Conditions." Per decree-005, curing conditions reverses their CS effects.
 - **Implementation:** Both `damage.post.ts:53-58` and `move.post.ts:94-98` now call `syncStagesToDatabase(combatant, entity.stageModifiers)` when `damageResult.fainted` is true and `entity.stageModifiers` exists. This persists the reversed stage values to the entity DB record after `applyDamageToEntity()` has reversed the status-sourced CS effects.
 - **Status:** CORRECT. The `syncStagesToDatabase` function delegates to `syncEntityToDatabase` which handles both pokemon and humanCharacter table updates. The conditional `if (damageResult.fainted && entity.stageModifiers)` correctly gates the sync to only the faint path where CS reversal occurs. The `applyDamageToEntity` function at lines 158-173 correctly iterates over conditions being cleared (persistent + volatile), calls `reverseStatusCsEffects` for each before removing them from the array, then sets `statusConditions = ['Fainted', ...survivingOtherConditions]`. The DB now receives the post-reversal stage values.
 
-### 2. ZERO_EVASION_CONDITIONS Constant Usage (code-review-184 M1 -> commit `4118ccf`)
+### 2. ZERO_EVASION_CONDITIONS Constant Usage (code-review-184 M1, commit `4118ccf`)
 - **Rule:** PTU p.246 (Frozen: "receives no bonuses from Evasion"), p.247 (Sleep: "receive no bonuses from Evasion"), p.248 (Vulnerable: "cannot apply Evasion of any sort").
-- **Implementation:** `useMoveCalculation.ts` (line 349) now imports and uses `ZERO_EVASION_CONDITIONS.includes(c)` instead of inline string comparisons. `calculate-damage.post.ts` (line 229) similarly uses `(ZERO_EVASION_CONDITIONS as readonly string[]).includes(c)`. Both check sites now reference the single source of truth at `statusConditions.ts:31-33`.
+- **Implementation:** `useMoveCalculation.ts` (line 352) now imports and uses `ZERO_EVASION_CONDITIONS.includes(c)` instead of inline string comparisons. `calculate-damage.post.ts` (line 229) similarly uses `(ZERO_EVASION_CONDITIONS as readonly string[]).includes(c)`. Both check sites now reference the single source of truth at `statusConditions.ts:31-33`.
 - **Status:** CORRECT. The constant contains exactly `['Vulnerable', 'Frozen', 'Asleep']` which matches the three conditions that PTU specifies as zeroing evasion. Using the constant prevents future divergence if the list ever changes.
 
-### 3. Encounter End Stage Reset (rules-review-161 M2 -> commit `d8c64ab`)
+### 3. Encounter End Stage Reset (rules-review-161 M2, commit `d8c64ab`)
 - **Rule:** PTU p.235: "Combat Stages remain until the Pokemon or Trainer is switched out, or until the end of the encounter." Combat stages are explicitly encounter-scoped.
-- **Implementation:** `end.post.ts` now creates `defaultStages = createDefaultStageModifiers()` (all zeros) and applies it to every combatant on encounter end. Lines 67-88 spread `stageModifiers: { ...defaultStages }` into both pokemon and non-pokemon entity updates. Line 87 clears `stageSources: []`. Line 109-112 syncs the reset stages to entity DB records via `syncEntityToDatabase(c, { statusConditions, stageModifiers: { ...defaultStages } })`.
+- **Implementation:** `end.post.ts` now creates `defaultStages = createDefaultStageModifiers()` (all zeros) and applies it to every combatant on encounter end. Lines 67-88 spread `stageModifiers: { ...defaultStages }` into both pokemon and non-pokemon entity updates. Line 87 clears `stageSources: []`. Lines 109-112 sync the reset stages to entity DB records via `syncEntityToDatabase(c, { statusConditions, stageModifiers: { ...defaultStages } })`.
 - **Status:** CORRECT. This ensures no stale combat stage values survive in the DB between encounters. The reset applies unconditionally to all combatants (not just those with changed conditions), which is correct because ALL stages are encounter-scoped per PTU p.235. The `stageSources` array is also cleared, preventing orphaned source tracking data. Combined with the defense-in-depth reset in `buildCombatantFromEntity` (commit `6357e0f`), this provides two independent guarantees against the double-application bug.
 
-### 4. Combat Entry Stage Reset (rules-review-161 HIGH-1 -> commit `6357e0f`)
+### 4. Combat Entry Stage Reset (rules-review-161 HIGH-1, commit `6357e0f`)
 - **Rule:** PTU p.235: Combat stages are encounter-scoped. A Pokemon entering a new encounter starts with default (zero) stages. Per decree-005, status condition CS effects are then re-applied fresh.
 - **Implementation:** `buildCombatantFromEntity()` at lines 715-726 now constructs `combatStages` from `createDefaultStageModifiers()` (all zeros), overlays equipment speed default CS if applicable (Heavy Armor -1, PTU p.293), then creates `combatantEntity = { ...entity, stageModifiers: combatStages }`. This replaces the previous behavior of inheriting `entity.stageModifiers` from the DB. Line 758 then calls `reapplyActiveStatusCsEffects(combatant)` to apply CS effects from any active status conditions.
 - **Scenario verification (the HIGH-1 bug):**
@@ -88,12 +88,12 @@ Also verifying code-review-184 fixes that affect PTU correctness:
   4. Even if `end.post.ts` fails to reset (e.g., app crash during encounter), `buildCombatantFromEntity` still starts from defaults, so double-application is impossible.
 - **Status:** CORRECT. The defense-in-depth approach (reset at encounter end AND reset at combat entry) guarantees correctness regardless of the DB state. Equipment speed default CS is correctly preserved for Heavy Armor wearers.
 
-### 5. TempConditions Zero-Evasion Check (rules-review-161 M3 -> commit `dff8a31`)
+### 5. TempConditions Zero-Evasion Check (rules-review-161 M3, commit `dff8a31`)
 - **Rule:** PTU p.245: Take a Breather makes the combatant "Vulnerable until the end of their next turn." PTU p.248: "A Vulnerable Pokemon or Trainer cannot apply Evasion of any sort against attacks." The Vulnerable condition from Take a Breather is stored in `combatant.tempConditions` (not `entity.statusConditions`), so evasion checks must inspect both.
 - **Implementation:** `useMoveCalculation.ts` (lines 351-355) now checks both `entity.statusConditions?.some(...)` and `target.tempConditions?.some(...)` for zero-evasion conditions. `calculate-damage.post.ts` (lines 226-232) similarly checks both `targetConditions` (from entity) and `targetTempConditions` (from combatant) arrays. Both use the `ZERO_EVASION_CONDITIONS` constant.
 - **Status:** CORRECT. The breather handler at `breather.post.ts:132-133` pushes 'Vulnerable' into `combatant.tempConditions`. The evasion check in both client and server paths now catches this. The `|| target.tempConditions?.some(...)` pattern correctly short-circuits if the first check already found a zero-evasion condition.
 
-### 6. Legendary Species List Completeness (rules-review-161 M1 -> commit `545b708`)
+### 6. Legendary Species List Completeness (rules-review-161 M1, commit `545b708`)
 - **Rule:** PTU p.214: "Legendary Pokemon subtract 30 from the Pokemon's Capture Rate." Per decree-013, using the core 1d100 system.
 - **Implementation:** `legendarySpecies.ts` now includes:
   - **Meltan** (Gen 8 section, line 107) -- Mythical Pokemon introduced in Pokemon GO/Let's Go
