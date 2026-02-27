@@ -64,6 +64,8 @@ export function useCharacterCreation() {
     isCustomBackground: false,
     // Skills
     skills: getDefaultSkills(),
+    /** Skills marked Pathetic during background selection — cannot be raised except via Skill Edges (PTU p. 41) */
+    patheticSkills: [] as PtuSkillName[],
     // Stats
     statPoints: {
       hp: 0,
@@ -150,6 +152,7 @@ export function useCharacterCreation() {
       ...Object.fromEntries(bg.patheticSkills.map(s => [s, 'Pathetic' as SkillRank]))
     }
     form.skills = skills
+    form.patheticSkills = [...bg.patheticSkills]
     form.backgroundPreset = bg
     form.backgroundName = bg.name
     form.isCustomBackground = false
@@ -157,6 +160,7 @@ export function useCharacterCreation() {
 
   function clearBackground(): void {
     form.skills = getDefaultSkills()
+    form.patheticSkills = []
     form.backgroundPreset = null
     form.backgroundName = ''
     form.isCustomBackground = false
@@ -164,16 +168,51 @@ export function useCharacterCreation() {
 
   function enableCustomBackground(): void {
     form.skills = getDefaultSkills()
+    form.patheticSkills = []
     form.backgroundPreset = null
     form.backgroundName = ''
     form.isCustomBackground = true
   }
 
-  /** Set a single skill rank in custom background mode */
-  function setSkillRank(skill: PtuSkillName, rank: SkillRank): void {
+  /**
+   * Set a single skill rank in custom background mode.
+   * Blocks raising a Pathetic-locked skill above Pathetic — use Skill Edges instead (PTU p. 41).
+   * Returns an error string if blocked, or null on success.
+   */
+  function setSkillRank(skill: PtuSkillName, rank: SkillRank): string | null {
+    if (form.patheticSkills.includes(skill) && rank !== 'Pathetic') {
+      return `${skill} is Pathetic and cannot be raised except through Skill Edges (PTU p. 41)`
+    }
     form.skills = {
       ...form.skills,
       [skill]: rank
+    }
+    return null
+  }
+
+  /**
+   * Mark a skill as Pathetic during custom background selection.
+   * Adds the skill to the Pathetic tracking set and lowers its rank.
+   */
+  function addPatheticSkill(skill: PtuSkillName): void {
+    if (!form.patheticSkills.includes(skill)) {
+      form.patheticSkills = [...form.patheticSkills, skill]
+    }
+    form.skills = {
+      ...form.skills,
+      [skill]: 'Pathetic' as SkillRank
+    }
+  }
+
+  /**
+   * Remove a skill from Pathetic tracking during custom background selection.
+   * Removes the skill from the tracking set and resets its rank to Untrained.
+   */
+  function removePatheticSkill(skill: PtuSkillName): void {
+    form.patheticSkills = form.patheticSkills.filter(s => s !== skill)
+    form.skills = {
+      ...form.skills,
+      [skill]: 'Untrained' as SkillRank
     }
   }
 
@@ -248,16 +287,15 @@ export function useCharacterCreation() {
   }
 
   /**
-   * Add a Skill Edge that raises a skill rank.
-   * Adds "Skill Edge: [Skill Name]" to edges and bumps the skill rank by one step.
-   * Cannot raise Pathetic skills (PTU p. 14) or exceed Novice at level 1 (PTU p. 13).
+   * Add a Skill Edge that raises a skill rank by one step.
+   * Adds "Skill Edge: [Skill Name]" to edges and bumps the skill rank.
+   *
+   * PTU p. 41 — Basic Skills: Pathetic → Untrained, or Untrained → Novice.
+   * Adept Skills (Lv2): Novice → Adept. Expert Skills (Lv6): Adept → Expert.
+   * Master Skills (Lv12): Expert → Master.
    */
   function addSkillEdge(skill: PtuSkillName): string | null {
     const currentRank = form.skills[skill]
-    if (currentRank === 'Pathetic') {
-      return 'Cannot raise Pathetic skills with Skill Edges (PTU p. 14)'
-    }
-
     const rankProgression: SkillRank[] = ['Pathetic', 'Untrained', 'Novice', 'Adept', 'Expert', 'Master']
     const currentIndex = rankProgression.indexOf(currentRank)
     const nextRank = rankProgression[currentIndex + 1]
@@ -395,6 +433,8 @@ export function useCharacterCreation() {
     clearBackground,
     enableCustomBackground,
     setSkillRank,
+    addPatheticSkill,
+    removePatheticSkill,
     // Classes
     addClass,
     removeClass,
