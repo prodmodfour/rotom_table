@@ -236,16 +236,21 @@ function isClassSelected(className: string): boolean {
 
 /**
  * Determine if a class button should be disabled.
- * - Non-branching: disabled when not selected and at max slots
- * - Branching: disabled when at max slots AND not selected, OR all specializations taken
+ * - Non-branching: disabled when already selected (toggle off is allowed), or not selected and at max slots
+ * - Branching: disabled when all specializations taken, OR at max slots (can't add another instance)
  */
 function isClassDisabled(cls: TrainerClassDef): boolean {
+  const atMaxSlots = props.trainerClasses.length >= props.maxClasses
   if (isClassSelected(cls.name)) {
-    // Already selected -- for branching, disabled only if all specializations taken
-    return cls.isBranching ? isFullySpecialized(cls.name) : false
+    // Already selected -- for branching, disabled if all specializations taken OR at max slots
+    if (cls.isBranching) {
+      return isFullySpecialized(cls.name) || atMaxSlots
+    }
+    // Non-branching: allow toggle-off (not disabled)
+    return false
   }
   // Not selected -- disabled if at max class slots
-  return props.trainerClasses.length >= props.maxClasses
+  return atMaxSlots
 }
 
 /**
