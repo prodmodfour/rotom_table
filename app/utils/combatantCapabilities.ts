@@ -1,4 +1,4 @@
-import type { Combatant, Pokemon, TerrainType } from '~/types'
+import type { Combatant, Pokemon, TerrainType, TerrainCell, StatusCondition } from '~/types'
 import { NATUREWALK_TERRAIN_MAP } from '~/constants/naturewalk'
 import type { NaturewalkTerrain } from '~/constants/naturewalk'
 
@@ -270,4 +270,60 @@ export function naturewalkBypassesTerrain(
   }
 
   return false
+}
+
+// =====================================
+// Naturewalk Status Immunity (PTU p.239-240)
+// =====================================
+
+/**
+ * Status conditions that Naturewalk grants immunity to when standing
+ * on matching terrain. PTU p.239-240: "cannot be Slowed or Stuck
+ * by effects related to that terrain."
+ */
+const NATUREWALK_IMMUNE_STATUSES: ReadonlyArray<StatusCondition> = ['Slowed', 'Stuck']
+
+/**
+ * Check which status conditions a combatant is immune to due to
+ * Naturewalk at their current position on the terrain grid.
+ *
+ * PTU p.239-240: "A Pokemon with Naturewalk (Terrain Type) ignores the
+ * movement costs of that terrain type and cannot be Slowed or Stuck by
+ * effects related to that terrain."
+ *
+ * @param combatant - The combatant being targeted
+ * @param statuses - The status conditions being applied
+ * @param terrainCells - Parsed terrain cell array from the encounter record
+ * @param terrainEnabled - Whether terrain is enabled for this encounter
+ * @returns Array of statuses blocked by Naturewalk immunity, empty if none
+ */
+export function findNaturewalkImmuneStatuses(
+  combatant: Combatant,
+  statuses: StatusCondition[],
+  terrainCells: TerrainCell[],
+  terrainEnabled: boolean
+): StatusCondition[] {
+  // Only Pokemon have Naturewalk
+  if (combatant.type !== 'pokemon') return []
+
+  // Terrain must be enabled and combatant must have a position
+  if (!terrainEnabled || !combatant.position) return []
+
+  // Check if any of the requested statuses are Slowed/Stuck
+  const relevantStatuses = statuses.filter(s => NATUREWALK_IMMUNE_STATUSES.includes(s))
+  if (relevantStatuses.length === 0) return []
+
+  // Get the terrain type at the combatant's position
+  const pos = combatant.position
+  const cell = terrainCells.find(
+    c => c.position.x === pos.x && c.position.y === pos.y
+  )
+  const baseTerrainType: TerrainType = cell?.type ?? 'normal'
+
+  // Check if combatant's Naturewalk matches the terrain
+  if (naturewalkBypassesTerrain(combatant, baseTerrainType)) {
+    return relevantStatuses
+  }
+
+  return []
 }

@@ -9,7 +9,8 @@ import { updateStatusConditions, validateStatusConditions } from '~/server/servi
 import { syncEntityToDatabase } from '~/server/services/entity-update.service'
 import { getStatusCsEffect } from '~/constants/statusConditions'
 import { findImmuneStatuses } from '~/utils/typeStatusImmunity'
-import type { StatusCondition, Pokemon } from '~/types'
+import { findNaturewalkImmuneStatuses, getCombatantNaturewalks } from '~/utils/combatantCapabilities'
+import type { StatusCondition, Pokemon, TerrainCell } from '~/types'
 
 export default defineEventHandler(async (event) => {
   const id = getRouterParam(event, 'id')
@@ -63,6 +64,34 @@ export default defineEventHandler(async (event) => {
           message: messages.join('; '),
           data: {
             immune: immuneStatuses,
+            hint: 'Send override: true to force application (GM override)'
+          }
+        })
+      }
+    }
+
+    // PTU p.239-240: Naturewalk grants immunity to Slowed/Stuck on matching terrain.
+    // Check if the combatant is on terrain that matches their Naturewalk.
+    // Like type immunity, this can be overridden by the GM.
+    if (addStatuses.length > 0 && combatant.type === 'pokemon') {
+      const terrainCells: TerrainCell[] = record.terrainEnabled
+        ? (JSON.parse(record.terrainState || '{}').cells ?? [])
+        : []
+      const naturewalkImmune = findNaturewalkImmuneStatuses(
+        combatant, addStatuses, terrainCells, record.terrainEnabled
+      )
+
+      if (naturewalkImmune.length > 0 && !body.override) {
+        const naturewalks = getCombatantNaturewalks(combatant)
+        const nwLabel = naturewalks.length > 0 ? naturewalks.join(', ') : 'matching terrain'
+        const messages = naturewalkImmune.map(s =>
+          `Naturewalk (${nwLabel}) grants immunity to ${s} on this terrain`
+        )
+        throw createError({
+          statusCode: 409,
+          message: messages.join('; '),
+          data: {
+            naturewalkImmune,
             hint: 'Send override: true to force application (GM override)'
           }
         })
