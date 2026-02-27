@@ -235,6 +235,9 @@ export interface HumanCharacter {
   features: string[];  // Feature names
   edges: string[];     // Edge names
 
+  // Trainer capabilities (e.g. Naturewalk from Survivalist class, PTU p.149)
+  capabilities: string[];  // ["Naturewalk (Forest)", "Naturewalk (Mountain)"]
+
   // Pokemon team
   pokemonIds: string[];
   pokemon?: Pokemon[];  // Linked Pokemon (when fetched with relation)
