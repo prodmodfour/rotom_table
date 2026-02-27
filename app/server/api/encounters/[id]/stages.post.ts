@@ -46,8 +46,8 @@ export default defineEventHandler(async (event) => {
     // Sync to database if entity has a record
     await syncStagesToDatabase(combatant, stageResult.currentStages)
 
-    // Decree-006: If speed CS changed and encounter is active, reorder initiative
-    const speedChanged = 'speed' in body.changes
+    // Decree-006: If speed CS actually changed value and encounter is active, reorder initiative
+    const speedChanged = stageResult.changes.speed?.change !== 0
     let initiativeReorder = null
 
     if (speedChanged && record.isActive) {
