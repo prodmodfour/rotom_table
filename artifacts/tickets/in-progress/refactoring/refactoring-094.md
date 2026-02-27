@@ -30,3 +30,10 @@ Replace `combatantsOnGrid` usage with `allCombatants.value` directly, or rename 
 ## Impact
 
 Code clarity only. No behavioral change.
+
+## Fix Log
+
+- **Commit:** 7b255f6
+- **Branch:** slave/2-dev-bug-037-20260228-010000
+- **Files changed:** `app/composables/useMoveCalculation.ts`
+- **Fix:** Removed the `combatantsOnGrid` computed (was `computed(() => allCombatants.value)`) and replaced its single usage in `enemyOccupiedCells` with direct `allCombatants.value`.
