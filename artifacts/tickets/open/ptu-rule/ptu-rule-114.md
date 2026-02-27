@@ -2,7 +2,7 @@
 ticket_id: ptu-rule-114
 priority: P4
 severity: low
-status: open
+status: in-progress
 domain: combat
 source: rules-review-169 (ptu-rule-099+104 re-review, note on breather mechanics)
 created_by: slave-collector (plan-20260227-083657)
@@ -36,3 +36,17 @@ Add an `assisted: boolean` parameter to the breather endpoint. When true:
 ## Impact
 
 Low — this is a rarely-used variant of an already-implemented mechanic. The standard breather works correctly.
+
+## Resolution Log
+
+**Commit:** b05eb21 (slave/5-dev-mechanics-p4-20260227-153711)
+
+**Files changed:**
+- `app/server/api/encounters/[id]/breather.post.ts` — accept `assisted` body param; apply `ZeroEvasion` synthetic tempCondition instead of Tripped+Vulnerable when assisted
+- `app/utils/evasionCalculation.ts` — recognize `ZeroEvasion` tempCondition in zero-evasion check
+- `app/server/api/encounters/[id]/calculate-damage.post.ts` — same ZeroEvasion recognition for server-side damage calc
+- `app/stores/encounterCombat.ts` — pass `assisted` flag through store action
+- `app/composables/useEncounterActions.ts` — handle `take-a-breather-assisted` maneuver ID, skip breather shift prompt for assisted variant
+- `app/constants/combatManeuvers.ts` — add "Take a Breather (Assisted)" maneuver entry
+
+**Approach:** The `ZeroEvasion` synthetic tempCondition is automatically cleared at end of next turn (same lifecycle as Tripped/Vulnerable tempConditions). The assistant's Standard Action consumption is left to the GM to manage manually (consistent with how other multi-character interactions work).

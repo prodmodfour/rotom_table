@@ -3,7 +3,7 @@ id: ptu-rule-116
 title: "Naturewalk status condition immunity (Slowed/Stuck) not implemented"
 priority: P4
 severity: LOW
-status: open
+status: in-progress
 domain: vtt-grid
 source: rules-review-181 (scope boundary note)
 created_by: slave-collector (plan-20260227-122512)
@@ -33,3 +33,13 @@ This requires tracking the combatant's current grid position and checking if the
 ## Impact
 
 Low — Slowed/Stuck conditions from terrain are relatively rare in typical encounters. The terrain flag bypass (movement cost and accuracy) from ptu-rule-112 covers the most common Naturewalk interactions.
+
+## Resolution Log
+
+**Commit:** 657430b (slave/5-dev-mechanics-p4-20260227-153711)
+
+**Files changed:**
+- `app/utils/combatantCapabilities.ts` — add `findNaturewalkImmuneStatuses()` utility that checks combatant position against terrain grid cells and Naturewalk capabilities
+- `app/server/api/encounters/[id]/status.post.ts` — add Naturewalk terrain immunity check after type immunity check; rejects Slowed/Stuck with 409 when Pokemon has matching Naturewalk on current terrain cell; GM can override with `override: true`
+
+**Approach:** Follows the same pattern as decree-012 type immunity: server-side enforcement with informative 409 response and GM override. Parses encounter `terrainState` JSON to resolve cell type at combatant position. Reuses existing `naturewalkBypassesTerrain()` for terrain matching and `getCombatantNaturewalks()` for capability extraction (covers both `capabilities.naturewalk` and `otherCapabilities` parsing).
