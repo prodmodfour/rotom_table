@@ -62,7 +62,8 @@ export function calculateRestHealing(params: {
   }
 
   // Healing amount: 1/16th of REAL max HP (PTU p.250: "use the real maximum")
-  const healAmount = Math.max(1, Math.floor(maxHp / 16))
+  // PTU p.31: floor rounding, no minimum — entities with maxHp < 16 heal 0
+  const healAmount = Math.floor(maxHp / 16)
   // Healing cap: injury-reduced effective max (PTU p.250: "could only heal up to")
   const actualHeal = Math.min(healAmount, effectiveMax - currentHp)
 
@@ -170,7 +171,8 @@ export function getRestHealingInfo(params: {
 
   const canRestHeal = injuries < 5 && restMinutesToday < 480
   const restMinutesRemaining = Math.max(0, 480 - restMinutesToday)
-  const hpPerRest = Math.max(1, Math.floor(maxHp / 16))
+  // PTU p.31: floor rounding, no minimum — entities with maxHp < 16 heal 0
+  const hpPerRest = Math.floor(maxHp / 16)
 
   let hoursSinceLastInjury: number | null = null
   let hoursUntilNaturalHeal: number | null = null

@@ -113,8 +113,9 @@ describe('calculateRestHealing', () => {
     expect(result.reason).toBe('Already rested maximum 8 hours today')
   })
 
-  it('heals minimum 1 HP even for very low maxHp', () => {
-    // 10 maxHp, 0 injuries: healAmount = floor(10/16) = 0 → clamped to 1
+  it('heals 0 HP for very low maxHp (PTU floor rounding, no minimum)', () => {
+    // 10 maxHp, 0 injuries: healAmount = floor(10/16) = 0
+    // PTU p.31: no minimum specified — low-HP entities heal 0 per rest
     const result = calculateRestHealing({
       currentHp: 0,
       maxHp: 10,
@@ -122,7 +123,7 @@ describe('calculateRestHealing', () => {
       restMinutesToday: 0
     })
     expect(result.canHeal).toBe(true)
-    expect(result.hpHealed).toBe(1)
+    expect(result.hpHealed).toBe(0)
   })
 })
 
