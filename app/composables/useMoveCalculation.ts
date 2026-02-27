@@ -89,7 +89,7 @@ export function useMoveCalculation(
   }
 
   // =====================================
-  // Enemy-Occupied Rough Terrain (decree-003)
+  // Rough Terrain Accuracy Penalty (PTU p.231)
   // =====================================
 
   /**
@@ -134,7 +134,8 @@ export function useMoveCalculation(
 
   /**
    * Check if targeting from attacker to a specific target passes through
-   * any enemy-occupied squares (which count as rough terrain).
+   * any rough terrain — either enemy-occupied squares (decree-003) or
+   * painted terrain cells with the rough flag (decree-010, TerrainPainter).
    *
    * Uses Bresenham's line algorithm to trace intermediate cells.
    * Only intermediate cells are checked — the attacker's and target's
@@ -143,7 +144,7 @@ export function useMoveCalculation(
    * Per PTU p.231: "-2 penalty to Accuracy Rolls" when targeting through
    * rough terrain. This is a flat penalty (not cumulative per cell).
    */
-  const targetsThroughEnemyRoughTerrain = (targetId: string): boolean => {
+  const targetsThroughRoughTerrain = (targetId: string): boolean => {
     const actorPos = actor.value.position
     if (!actorPos) return false
 
@@ -188,7 +189,12 @@ export function useMoveCalculation(
       // Check intermediate cells (exclude actor and target own cells)
       const key = `${x0},${y0}`
       if (!actorCells.has(key) && !targetCells.has(key)) {
+        // Enemy-occupied squares count as rough terrain (decree-003)
         if (enemyOccupiedCells.value.has(key)) {
+          return true
+        }
+        // Painted terrain cells with rough flag (decree-010, TerrainPainter)
+        if (terrainStore.isRoughAt(x0, y0)) {
           return true
         }
       }
@@ -212,15 +218,16 @@ export function useMoveCalculation(
   /**
    * Get the rough terrain accuracy penalty for targeting a specific combatant.
    *
-   * Per decree-003 (PTU p.231): "Squares occupied by enemies always count
-   * as Rough Terrain" and "When targeting through Rough Terrain, you take
-   * a -2 penalty to Accuracy Rolls."
+   * Per PTU p.231: "When targeting through Rough Terrain, you take a -2
+   * penalty to Accuracy Rolls." This applies to ALL rough terrain sources:
+   * - Enemy-occupied squares (decree-003: enemies always count as rough)
+   * - Painted terrain cells with rough flag (decree-010: multi-tag system)
    *
-   * Returns 2 if the line of sight passes through enemy-occupied squares,
+   * Returns 2 if the line of sight passes through any rough terrain cell,
    * 0 otherwise. The penalty increases the accuracy threshold (harder to hit).
    */
   const getRoughTerrainPenalty = (targetId: string): number => {
-    if (targetsThroughEnemyRoughTerrain(targetId)) {
+    if (targetsThroughRoughTerrain(targetId)) {
       return 2
     }
     return 0
@@ -426,8 +433,8 @@ export function useMoveCalculation(
 
     const evasion = getTargetEvasion(targetId)
     const effectiveEvasion = Math.min(9, evasion)
-    // Rough terrain penalty (decree-003, PTU p.231): +2 to threshold when
-    // targeting through enemy-occupied squares (which count as rough terrain)
+    // Rough terrain penalty (PTU p.231): +2 to threshold when targeting
+    // through rough terrain (enemy-occupied per decree-003, or painted rough per decree-010)
     const roughPenalty = getRoughTerrainPenalty(targetId)
     return Math.max(1, move.value.ac + effectiveEvasion - attackerAccuracyStage.value + roughPenalty)
   }
