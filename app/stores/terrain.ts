@@ -208,8 +208,19 @@ export const useTerrainStore = defineStore('terrain', {
       this.enabled = enabled
     },
 
-    // Set the paint mode (base terrain type to paint)
+    // Set the paint mode (base terrain type to paint).
+    // Legacy types 'difficult'/'rough' are converted to 'normal' + appropriate paint flag.
     setPaintMode(mode: TerrainType) {
+      if (mode === 'difficult') {
+        this.paintMode = 'normal'
+        this.paintFlags = { ...this.paintFlags, slow: true }
+        return
+      }
+      if (mode === 'rough') {
+        this.paintMode = 'normal'
+        this.paintFlags = { ...this.paintFlags, rough: true }
+        return
+      }
       this.paintMode = mode
     },
 
