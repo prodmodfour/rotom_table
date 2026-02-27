@@ -2,7 +2,7 @@
 ticket_id: refactoring-089
 ticket_type: refactoring
 priority: P4
-status: open
+status: in-progress
 category: EXT-DOCUMENTATION
 domain: healing
 source: code-review-196 M1
@@ -24,3 +24,9 @@ Add a row for `server/services/rest-healing.service.ts` to the services section 
 ## Impact
 
 Other skills and reviewers may not discover the service via the surface manifest. Documentation-only fix.
+
+## Resolution Log
+
+- **Commit:** `ee00288` — docs: add rest-healing.service.ts to app-surface manifest
+- **Files changed:**
+  - `.claude/skills/references/app-surface.md` — added row for `server/services/rest-healing.service.ts` listing refreshDailyMoves and refreshDailyMovesForOwnedPokemon

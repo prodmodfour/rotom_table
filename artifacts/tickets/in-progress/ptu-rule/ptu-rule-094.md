@@ -3,7 +3,7 @@ id: ptu-rule-094
 title: Natural healing minimum 1 HP contradicts PTU for low-HP entities
 priority: P4
 severity: LOW
-status: open
+status: in-progress
 domain: healing
 source: healing-audit.md (R007)
 created_by: slave-collector (plan-20260226-175938)
@@ -31,3 +31,11 @@ Either remove the `Math.max(1, ...)` to follow PTU strictly, or keep it as inten
 ## Impact
 
 Affects level-1 Pokemon with low base HP (maxHp < 16). Generous deviation favoring players.
+
+## Resolution Log
+
+- **Commit:** `ac5b40b` — fix: remove minimum 1 HP from natural healing per PTU rules
+- **Files changed:**
+  - `app/utils/restHealing.ts` — removed `Math.max(1, ...)` from `calculateRestHealing()` (line 65) and `getRestHealingInfo()` (line 173)
+  - `app/tests/unit/utils/restHealing.test.ts` — updated test to expect 0 HP for low-HP entities
+- **Approach:** Strict PTU compliance. `Math.floor(maxHp / 16)` with no minimum.

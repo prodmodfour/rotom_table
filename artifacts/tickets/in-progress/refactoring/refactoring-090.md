@@ -2,7 +2,7 @@
 ticket_id: refactoring-090
 ticket_type: refactoring
 priority: P4
-status: open
+status: in-progress
 category: CODE-HYGIENE
 domain: healing
 source: rules-review-173 MED-1
@@ -27,3 +27,10 @@ Optionally reset `usedToday: 0` on all moves (not just daily) during extended re
 ## Impact
 
 No gameplay impact. Cosmetic data hygiene only.
+
+## Resolution Log
+
+- **Commit:** `87f9f64` — refactor: reset usedToday on all moves during extended rest
+- **Files changed:**
+  - `app/server/services/rest-healing.service.ts` — added non-daily move `usedToday` clearing with `cleanedNonDaily` counter; updated write-back condition in `refreshDailyMovesForOwnedPokemon`
+  - `app/tests/unit/services/restHealing.service.test.ts` — added test for non-daily cleaning, updated existing test assertions
