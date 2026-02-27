@@ -183,3 +183,7 @@
 | plan-20260227-190000/slave-2 | developer | ptu-rule-092 | success | 2026-02-27T19:11:00Z | 86c5731d, 4b306b93, 34818328 |
 | plan-20260227-190000/slave-3 | reviewers | ptu-rule-091 | CHANGES_REQUIRED | 2026-02-27T19:13:00Z | 6633d4c9, da43c056 |
 | plan-20260227-190000/slave-4 | reviewers | ptu-rule-112 | CHANGES_REQUIRED | 2026-02-27T19:12:00Z | 432999174857, 5f79b143063 |
+| plan-20260227-210000/slave-1 | developer | ptu-rule-091-fix | success | 2026-02-27T21:45:00Z | bcfb4660, 60a15209, 93eb8d32, 558601f1, 82dbd2e6, ed275e56 |
+| plan-20260227-210000/slave-2 | developer | ptu-rule-112-fix | success | 2026-02-27T21:13:00Z | fc948b7, 84c04ac, 8b2612f, 0ca2657, 0ac087f, bd05f40, 934ad6b |
+| plan-20260227-210000/slave-3 | reviewers | ptu-rule-107 | APPROVED | 2026-02-27T21:17:00Z | 2127c505, 1e1ee87a |
+| plan-20260227-210000/slave-4 | reviewers | ptu-rule-092 | CHANGES_REQUIRED | 2026-02-27T21:16:00Z | a7b884e4, 1f8791c1 |

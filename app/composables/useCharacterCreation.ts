@@ -23,7 +23,7 @@ import {
   getExpectedFeaturesForLevel,
   isSkillRankAboveCap
 } from '~/constants/trainerStats'
-import { MAX_TRAINER_CLASSES } from '~/constants/trainerClasses'
+import { MAX_TRAINER_CLASSES, hasBaseClass } from '~/constants/trainerClasses'
 import { validateStatAllocation, validateSkillBackground, validateEdgesAndFeatures } from '~/utils/characterCreationValidation'
 import type { CreationWarning } from '~/utils/characterCreationValidation'
 
@@ -233,6 +233,14 @@ export function useCharacterCreation() {
     form.trainerClasses = form.trainerClasses.filter(c => c !== className)
   }
 
+  /**
+   * Count how many times a base class appears in the current selection.
+   * Useful for branching classes that can appear multiple times.
+   */
+  function countClassInstances(baseName: string): number {
+    return form.trainerClasses.filter(c => hasBaseClass(c, baseName)).length
+  }
+
   // --- Features ---
   /** All features combined: class features + training feature */
   const allFeatures = computed((): string[] =>
@@ -430,6 +438,7 @@ export function useCharacterCreation() {
     // Classes
     addClass,
     removeClass,
+    countClassInstances,
     // Features
     allFeatures,
     addFeature,

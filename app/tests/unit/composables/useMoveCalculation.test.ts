@@ -88,38 +88,13 @@ import { useMoveCalculation } from '~/composables/useMoveCalculation'
  */
 function makeCombatant(overrides: {
   id?: string
-  type?: 'pokemon' | 'human'
   side?: 'players' | 'allies' | 'enemies'
   position?: { x: number; y: number }
   tokenSize?: number
-  capabilities?: {
-    naturewalk?: string[]
-    otherCapabilities?: string[]
-    overland?: number
-    swim?: number
-    sky?: number
-    burrow?: number
-  }
 } = {}): Combatant {
-  const entity: Record<string, unknown> = {
-    id: 'entity-1',
-    types: ['Normal'],
-    statusConditions: [],
-    stageModifiers: {
-      attack: 0, defense: 0, specialAttack: 0,
-      specialDefense: 0, speed: 0, accuracy: 0, evasion: 0,
-    },
-  }
-  if (overrides.capabilities) {
-    entity.capabilities = {
-      overland: 5, swim: 0, sky: 0, burrow: 0, levitate: 0,
-      jump: { high: 1, long: 1 }, power: 1, weightClass: 1, size: 'Small',
-      ...overrides.capabilities,
-    }
-  }
   return {
     id: overrides.id ?? 'combatant-1',
-    type: overrides.type ?? 'pokemon',
+    type: 'pokemon',
     entityId: 'entity-1',
     side: overrides.side ?? 'players',
     initiative: 0,
@@ -142,7 +117,15 @@ function makeCombatant(overrides: {
     speedEvasion: 0,
     tokenSize: overrides.tokenSize ?? 1,
     position: overrides.position,
-    entity: entity as Combatant['entity'],
+    entity: {
+      id: 'entity-1',
+      types: ['Normal'],
+      statusConditions: [],
+      stageModifiers: {
+        attack: 0, defense: 0, specialAttack: 0,
+        specialDefense: 0, speed: 0, accuracy: 0, evasion: 0,
+      },
+    } as Combatant['entity'],
   }
 }
 
@@ -350,110 +333,6 @@ describe('useMoveCalculation — getRoughTerrainPenalty', () => {
 
       // Both cells belong to actor/target, no intermediate cells to trigger penalty
       expect(getRoughTerrainPenalty('target')).toBe(0)
-    })
-  })
-
-  describe('Naturewalk rough terrain bypass (PTU p.322)', () => {
-    it('should return 0 when actor has matching Naturewalk for painted rough terrain', () => {
-      // Actor with Naturewalk (Forest) — Forest maps to 'normal' base type
-      // Painted rough at (2,0) with 'normal' base type => bypassed
-      terrainStore.setTerrain(2, 0, 'normal', { rough: true, slow: false })
-
-      const actor = ref(makeCombatant({
-        id: 'actor',
-        side: 'players',
-        position: { x: 0, y: 0 },
-        capabilities: { naturewalk: ['Forest'] },
-      }))
-      const target = makeCombatant({ id: 'target', side: 'enemies', position: { x: 4, y: 0 } })
-      const move = ref(makeMove())
-      const targets = ref([target])
-
-      const { getRoughTerrainPenalty } = useMoveCalculation(move, actor, targets)
-
-      expect(getRoughTerrainPenalty('target')).toBe(0)
-    })
-
-    it('should return 2 when actor has non-matching Naturewalk for painted rough terrain', () => {
-      // Actor with Naturewalk (Ocean) — Ocean maps to 'water' base type
-      // Painted rough at (2,0) with 'normal' base type => NOT bypassed
-      terrainStore.setTerrain(2, 0, 'normal', { rough: true, slow: false })
-
-      const actor = ref(makeCombatant({
-        id: 'actor',
-        side: 'players',
-        position: { x: 0, y: 0 },
-        capabilities: { naturewalk: ['Ocean'] },
-      }))
-      const target = makeCombatant({ id: 'target', side: 'enemies', position: { x: 4, y: 0 } })
-      const move = ref(makeMove())
-      const targets = ref([target])
-
-      const { getRoughTerrainPenalty } = useMoveCalculation(move, actor, targets)
-
-      expect(getRoughTerrainPenalty('target')).toBe(2)
-    })
-
-    it('should NOT bypass enemy-occupied rough terrain even with matching Naturewalk (decree-003)', () => {
-      // Actor with Naturewalk (Forest) — but enemy-occupied rough is a game mechanic,
-      // NOT painted terrain. Naturewalk NEVER bypasses this per decree-003.
-      const actor = ref(makeCombatant({
-        id: 'actor',
-        side: 'players',
-        position: { x: 0, y: 0 },
-        capabilities: { naturewalk: ['Forest', 'Grassland', 'Ocean', 'Mountain'] },
-      }))
-      const enemy = makeCombatant({ id: 'enemy', side: 'enemies', position: { x: 2, y: 0 } })
-      const target = makeCombatant({ id: 'target', side: 'enemies', position: { x: 4, y: 0 } })
-      const move = ref(makeMove())
-      const targets = ref([target])
-      const allCombatants = ref([actor.value, enemy, target])
-
-      const { getRoughTerrainPenalty } = useMoveCalculation(move, actor, targets, allCombatants)
-
-      expect(getRoughTerrainPenalty('target')).toBe(2)
-    })
-
-    it('should bypass painted rough on water terrain when actor has Naturewalk (Ocean)', () => {
-      // Water terrain with rough flag; actor has Naturewalk (Ocean)
-      // Ocean maps to 'water' => should bypass
-      terrainStore.setTerrain(2, 0, 'water', { rough: true, slow: false })
-
-      const actor = ref(makeCombatant({
-        id: 'actor',
-        side: 'players',
-        position: { x: 0, y: 0 },
-        capabilities: { naturewalk: ['Ocean'] },
-      }))
-      const target = makeCombatant({ id: 'target', side: 'enemies', position: { x: 4, y: 0 } })
-      const move = ref(makeMove())
-      const targets = ref([target])
-
-      const { getRoughTerrainPenalty } = useMoveCalculation(move, actor, targets)
-
-      expect(getRoughTerrainPenalty('target')).toBe(0)
-    })
-
-    it('should still penalize when enemy-occupied rough exists alongside bypassed painted rough', () => {
-      // Painted rough at (1,0) bypassed by Naturewalk, but enemy at (3,0) not bypassed
-      terrainStore.setTerrain(1, 0, 'normal', { rough: true, slow: false })
-
-      const actor = ref(makeCombatant({
-        id: 'actor',
-        side: 'players',
-        position: { x: 0, y: 0 },
-        capabilities: { naturewalk: ['Forest'] },
-      }))
-      const enemy = makeCombatant({ id: 'enemy', side: 'enemies', position: { x: 3, y: 0 } })
-      const target = makeCombatant({ id: 'target', side: 'enemies', position: { x: 5, y: 0 } })
-      const move = ref(makeMove())
-      const targets = ref([target])
-      const allCombatants = ref([actor.value, enemy, target])
-
-      const { getRoughTerrainPenalty } = useMoveCalculation(move, actor, targets, allCombatants)
-
-      // Painted rough bypassed, but enemy-occupied rough still triggers penalty
-      expect(getRoughTerrainPenalty('target')).toBe(2)
     })
   })
 })

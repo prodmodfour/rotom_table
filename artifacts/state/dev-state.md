@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-02-27T19:57:00
-updated_by: slave-collector (plan-20260227-190000)
+last_updated: 2026-02-27T21:50:00
+updated_by: slave-collector (plan-20260227-210000)
 ---
 
 # Dev Ecosystem State
@@ -38,8 +38,8 @@ updated_by: slave-collector (plan-20260227-190000)
 | ptu-rule-088 | P3 | **resolved** | Significance tier presets realigned. code-review-199 APPROVED (re-review of fix cycle). rules-review-171 APPROVED (M1: overlapping tier boundaries → ux-010) |
 | ptu-rule-089 | P3 | **resolved** | Extended rest daily move refresh. APPROVED: code-review-196 + rules-review-173 (plan-20260227-174900). M1: app-surface.md → refactoring-089. M2: ticket status → resolved |
 | ptu-rule-090 | P3 | **resolved** | Scene-end AP restoration already implemented (confirmed by code-review-196 + rules-review-173). No code changes needed. APPROVED |
-| ptu-rule-091 | P3 | **CHANGES_REQUIRED** | Branch class specialization suffix per decree-022. code-review-200 CHANGES_REQUIRED (C1: Martial Artist not [Branch], H1: branching picker at max slots). rules-review-176 CHANGES_REQUIRED (CRITICAL-001: HP in Stat Ace, HIGH-001: Researcher fields wrong, HIGH-002: Martial Artist not branching). Fix cycle needed. Blocked on decree-need-026 (Martial Artist) |
-| ptu-rule-092 | P3 | **implemented, needs review** | Pathetic skill enforcement gap in custom background mode. 3 commits (plan-20260227-190000 slave-2): Pathetic tracking in composable, UI wiring, ticket update |
+| ptu-rule-091 | P3 | **fix-cycle-2-done, needs re-review** | Branch class specialization suffix per decree-022. Fix cycle 2 complete (6 commits, plan-20260227-210000 slave-1): removed HP from Stat Ace, replaced Researcher specs with Fields of Study, removed Martial Artist from branching per decree-026, disabled branching at max slots, removed dead countClassInstances. ptu-rule-115 resolved. Needs re-review |
+| ptu-rule-092 | P3 | **CHANGES_REQUIRED** | Pathetic skill enforcement gap in custom background mode. code-review-203 APPROVED (M1: alert() pattern → refactoring-091, M2: create.vue at 800 lines). rules-review-179 CHANGES_REQUIRED (CRITICAL-01: removeEdge/removePatheticSkill desync, HIGH-01: Pathetic+Skill Edge RAW conflict → decree-need-027, MEDIUM-01: higher-level enforcement). Fix cycle needed |
 | ptu-rule-093 | P3 | **resolved** | Rough terrain accuracy penalty — resolved by ptu-rule-108 fix. APPROVED: code-review-195 + rules-review-172 (plan-20260227-174900) |
 | ptu-rule-094 | P4 | **open** | Natural healing min(1) HP contradicts PTU for low-HP entities (from healing-audit R007) |
 | ptu-rule-095 | P4 | **open** | Disengage maneuver missing from combatManeuvers — defer until AoO implemented (from vtt-grid-audit R030) |
@@ -54,12 +54,12 @@ updated_by: slave-collector (plan-20260227-190000)
 | ptu-rule-104 | P1 | **resolved** | Type-immunity enforcement. code-review-197 APPROVED + rules-review-174 APPROVED (re-review of fix cycle 2). All type-immunity pairs correct per PTU p.239 |
 | ptu-rule-105 | P2 | **resolved** | Extended rest preserves Bound AP (clears only Drained AP) per decree-016. code-review-188 APPROVED, rules-review-165 APPROVED |
 | ptu-rule-106 | P2 | **resolved** | Extended rest duration parameter (4-8h, default 4). Scalable healing periods with 8h daily cap. Per decree-018. code-review-188 APPROVED, rules-review-165 APPROVED |
-| ptu-rule-107 | P2 | **P0-fix-cycle-done, needs re-review** | League Battle two-phase trainer system. P0 fix cycle complete (5 commits, plan-20260227-190000 slave-1): C1 tempConditions skip during declaration, H1 reset all trainers at phase transition, H2 app-surface.md updated, M2 unit tests added. Needs re-review |
+| ptu-rule-107 | P2 | **resolved** | League Battle two-phase trainer system. P0 fix cycle APPROVED: code-review-202 APPROVED + rules-review-178 APPROVED (re-review of fix cycle, plan-20260227-210000 slave-3). All 4 issues from code-review-198 resolved. No further action needed |
 | ptu-rule-108 | P2 | **resolved** | Rough terrain accuracy penalty for painted terrain. APPROVED: code-review-195 + rules-review-172 (plan-20260227-174900). MED-1: Naturewalk gap → ptu-rule-112 (existing). MED-2: "through" ambiguity → decree-need-025 |
 | ptu-rule-109 | P3 | **resolved** | Legendary species list complete. APPROVED: code-review-191 + rules-review-168. 100 total species (Meltan/Melmetal/Zarude/Enamorus added) |
 | ptu-rule-110 | P2 | **resolved** | Encounter end resets combat stages. APPROVED: code-review-191 + rules-review-168. stageModifiers + stageSources reset to defaults |
 | ptu-rule-111 | P2 | **resolved** | tempConditions Vulnerable zero evasion. APPROVED: code-review-191 + rules-review-168. Both client + server checks inspect tempConditions |
-| ptu-rule-112 | P3 | **CHANGES_REQUIRED** | Naturewalk capability terrain bypass. code-review-201 CHANGES_REQUIRED (HIGH-1: no unit tests, MED-1: app-surface.md, MED-2: regex fragility comment). rules-review-177 APPROVED (all PTU mechanics correct, decree-003/010/025 compliant). Fix cycle needed |
+| ptu-rule-112 | P3 | **fix-cycle-done, needs re-review** | Naturewalk capability terrain bypass. Fix cycle complete (7 commits, plan-20260227-210000 slave-2): unit tests for getCombatantNaturewalks/naturewalkBypassesTerrain/movement/accuracy, app-surface.md updated, regex comment added, earth terrain base cost fix. Needs re-review |
 | ptu-rule-113 | P2 | **resolved** | Burst shapes use PTU diagonal distance (per decree-023). APPROVED: code-review-189 + rules-review-166. Burst 2 = 21 cells (not 25 Chebyshev) |
 | ptu-rule-114 | P4 | **open** | Assisted breather variant not implemented (from rules-review-169 note on ptu-rule-099+104 re-review) |
 
@@ -86,7 +86,17 @@ updated_by: slave-collector (plan-20260227-190000)
 
 ## Active Developer Work
 
-**Current task:** Session 49 collection complete. All 4 slaves merged (12 commits). 2 developer slaves: ptu-rule-107-fix (slave-1, 5 commits), ptu-rule-092 (slave-2, 3 commits). 2 reviewer slaves: slave-3 CHANGES_REQUIRED (ptu-rule-091), slave-4 CHANGES_REQUIRED (code-review-201) + APPROVED (rules-review-177) for ptu-rule-112. 0 tickets resolved. 1 ticket filed (decree-need-026).
+**Current task:** Session 50 collection complete. All 4 slaves merged (17 commits). 2 developer slaves: ptu-rule-091-fix (slave-1, 6 commits), ptu-rule-112-fix (slave-2, 7 commits). 2 reviewer slaves: slave-3 APPROVED (ptu-rule-107), slave-4 CHANGES_REQUIRED (ptu-rule-092). Smoke test FAILED (pre-existing bugs: bug-033/034/035). 1 ticket resolved (ptu-rule-107). 3 tickets filed (decree-need-027, refactoring-091, ptu-rule-115 resolved).
+
+**Session 50 (2026-02-27, plan-20260227-210000):**
+- slave-1 (developer): ptu-rule-091-fix — 6 commits: removed HP from Stat Ace specializations (CRITICAL-001), replaced Researcher specs with Fields of Study (HIGH-001), removed Martial Artist from branching per decree-026 (HIGH-002/C1), disabled branching at max slots (H1), removed dead countClassInstances (M2), resolved ptu-rule-115 → **fix-cycle-2-done, needs re-review**
+- slave-2 (developer): ptu-rule-112-fix — 7 commits: unit tests for Naturewalk functions (HIGH-1), app-surface.md updated (MED-1), regex fragility comment (MED-2), earth terrain base cost fix, ticket update → **fix-cycle-done, needs re-review**
+- slave-3 (reviewers): ptu-rule-107 re-review — code-review-202 **APPROVED** + rules-review-178 **APPROVED**. All 4 issues from code-review-198 resolved. ptu-rule-107 → **resolved**
+- slave-4 (reviewers): ptu-rule-092 first review — code-review-203 **APPROVED** (M1: alert() → refactoring-091, M2: create.vue at 800 lines). rules-review-179 **CHANGES_REQUIRED** (CRITICAL-01: removeEdge/removePatheticSkill desync, HIGH-01: Pathetic+Skill Edge RAW conflict → decree-need-027)
+- **Smoke test:** FAILED — pre-existing P0 bugs (bug-033: SCSS @use scoping, bug-034: @phosphor-icons/vue not installed, bug-035: missing phosphor SVGs). Not introduced by this collection.
+- **Merge notes:** 0 conflicts. All 4 rebased cleanly. 17 commits total
+- **Tickets filed:** decree-need-027 (Pathetic skill + Skill Edge RAW conflict), refactoring-091 (alert() replacement in create.vue)
+- **Tickets resolved:** ptu-rule-107 (APPROVED by both reviewers), ptu-rule-115 (resolved by slave-1 as part of decree-026 implementation)
 
 **Session 49 (2026-02-27, plan-20260227-190000):**
 - slave-1 (developer): ptu-rule-107-fix — 5 commits: C1 skip tempConditions clearing during declaration phase, H1 reset hasActed for all trainers at declaration→resolution transition, H2 declare endpoint in app-surface.md, M2 unit tests for three-phase flow, ticket resolution log → **P0-fix-cycle-done, needs re-review**

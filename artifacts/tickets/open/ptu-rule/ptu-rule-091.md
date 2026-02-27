@@ -56,38 +56,3 @@ Implementation follows decree-022: specialization suffix approach (e.g., 'Type A
 ### Verification Approach
 
 No existing class lookup code in the server or display components required changes for prefix matching — all display code simply renders the stored string array, and server code only does JSON serialize/deserialize. The `ClassFeatureSection.vue` was the only component performing class name matching, and it already had partial `startsWith` logic that was extended.
-
-### Fix Cycle 2 (code-review-200 + rules-review-176)
-
-Addresses CHANGES_REQUIRED from both reviews. Also implements decree-026 (Martial Artist is not branching) and closes ptu-rule-115.
-
-#### Commits
-
-- `bcfb466` fix: remove HP from Stat Ace specializations
-  - `app/constants/trainerClasses.ts` — PTU Core p.112 lists only Attack, Defense, Special Attack, Special Defense, Speed (CRITICAL-001)
-- `60a1520` fix: replace Researcher specializations with correct Fields of Study
-  - `app/constants/trainerClasses.ts` — 9 Fields of Study per PTU Core pp.140-148 (HIGH-001). Added comment noting PTU two-field simplification (M1)
-- `93eb8d3` fix: remove Martial Artist from branching classes per decree-026
-  - `app/constants/trainerClasses.ts` — Removed isBranching flag, removed from BRANCHING_CLASS_SPECIALIZATIONS, updated comment (HIGH-002/C1)
-- `558601f` fix: disable branching class button at max class slots
-  - `app/components/create/ClassFeatureSection.vue` — isClassDisabled now checks slot availability for branching classes (H1)
-- `82dbd2e` refactor: remove unused countClassInstances from useCharacterCreation
-  - `app/composables/useCharacterCreation.ts` — Removed dead code function and unused hasBaseClass import (M2)
-
-#### Files Changed
-
-- `app/constants/trainerClasses.ts` — Stat Ace specs corrected, Researcher Fields of Study corrected, Martial Artist removed from branching
-- `app/components/create/ClassFeatureSection.vue` — isClassDisabled fix for max slots with branching classes
-- `app/composables/useCharacterCreation.ts` — Removed countClassInstances dead code
-
-#### Review Issues Resolved
-
-| ID | Severity | Review | Fix |
-|----|----------|--------|-----|
-| CRITICAL-001 | CRITICAL | rules-review-176 | Remove HP from Stat Ace specializations |
-| HIGH-001 | HIGH | rules-review-176 | Correct Researcher Fields of Study |
-| HIGH-002 | HIGH | rules-review-176 | Remove Martial Artist from branching (decree-026) |
-| C1 | CRITICAL | code-review-200 | Remove Martial Artist from branching |
-| H1 | HIGH | code-review-200 | Fix isClassDisabled max slots check |
-| M1 | MEDIUM | code-review-200 | Add Researcher two-field simplification comment |
-| M2 | MEDIUM | code-review-200 | Remove countClassInstances dead code |

@@ -73,7 +73,7 @@ export const TRAINER_CLASSES: TrainerClassDef[] = [
   { name: 'Athlete', category: 'Fighter', associatedSkills: ['Athletics'], description: 'Physically fit Trainer combatant' },
   { name: 'Dancer', category: 'Fighter', associatedSkills: ['Acrobatics', 'Athletics', 'Charm'], description: 'Graceful combat through dance' },
   { name: 'Hunter', category: 'Fighter', associatedSkills: ['Stealth', 'Survival'], description: 'Tracks and captures quarry' },
-  { name: 'Martial Artist', category: 'Fighter', associatedSkills: ['Combat'], description: 'Hand-to-hand fighter' },
+  { name: 'Martial Artist', category: 'Fighter', associatedSkills: ['Combat'], description: 'Hand-to-hand fighter', isBranching: true },
   { name: 'Musician', category: 'Fighter', associatedSkills: ['Charm', 'Focus'], description: 'Fights with musical abilities' },
   { name: 'Provocateur', category: 'Fighter', associatedSkills: ['Charm', 'Guile', 'Intimidate'], description: 'Silver tongue in battle' },
   { name: 'Rogue', category: 'Fighter', associatedSkills: ['Acrobatics', 'Athletics', 'Stealth'], description: 'Dark-typed stealth fighter' },
@@ -96,11 +96,10 @@ export const TRAINER_CLASSES: TrainerClassDef[] = [
  * Valid specializations for each branching class (decree-022).
  *
  * Type Ace → 18 Pokemon types
- * Stat Ace → 5 combat stats (PTU Core p.112: Attack, Defense, SpAtk, SpDef, Speed)
+ * Stat Ace → 6 combat stats
  * Style Expert → 5 contest stats
- * Researcher → 9 Fields of Study (PTU Core pp.140-148)
- *
- * Note: Martial Artist is NOT a branching class (decree-026, PTU Core p.161).
+ * Researcher → fields of study (PTU Core p. 127)
+ * Martial Artist → martial art styles (PTU Core p. 143)
  */
 export const BRANCHING_CLASS_SPECIALIZATIONS: Record<string, readonly string[]> = {
   'Type Ace': [
@@ -108,16 +107,13 @@ export const BRANCHING_CLASS_SPECIALIZATIONS: Record<string, readonly string[]> 
     'Fighting', 'Poison', 'Ground', 'Flying', 'Psychic', 'Bug',
     'Rock', 'Ghost', 'Dragon', 'Dark', 'Steel', 'Fairy'
   ],
-  'Stat Ace': ['Attack', 'Defense', 'Special Attack', 'Special Defense', 'Speed'],
+  'Stat Ace': ['HP', 'Attack', 'Defense', 'Special Attack', 'Special Defense', 'Speed'],
   'Style Expert': ['Cool', 'Beautiful', 'Cute', 'Smart', 'Tough'],
-  /**
-   * PTU Core pp.140-148 lists 9 Fields of Study. In PTU, a Researcher picks
-   * two fields per class instance, but the tool records one specialization per
-   * instance for simplicity — the GM tracks the second field outside the tool.
-   */
   'Researcher': [
-    'General Research', 'Apothecary', 'Crystal Artifice', 'Botany',
-    'Chemistry', 'Climatology', 'Occultism', 'Paleontology', 'Pokemon Caretaking'
+    'General Ed', 'Medicine Ed', 'Occult Ed', 'Pokemon Ed', 'Technology Ed'
+  ],
+  'Martial Artist': [
+    'Aura', 'Cover', 'Elemental', 'Focused', 'Form', 'Freestyle', 'Parkour', 'Weapons'
   ]
 } as const
 

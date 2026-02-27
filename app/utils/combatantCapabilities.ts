@@ -217,12 +217,6 @@ export function getCombatantNaturewalks(combatant: Combatant): ReadonlyArray<str
  * - "Naturewalk (Forest and Grassland)"
  * - "Naturewalk (Ocean)"
  *
- * NOTE: The regex uses ^...$ anchors, assuming each otherCapabilities entry
- * is a single, complete capability string. This matches the current seeder
- * behavior (split-pokedex parser emits one capability per array element).
- * If the data format changes to include multiple capabilities per string
- * (e.g., "Naturewalk (Forest), Glow"), this parser will need updating.
- *
  * @param otherCaps - Array of capability strings from otherCapabilities
  * @returns Array of terrain names extracted from Naturewalk entries
  */
