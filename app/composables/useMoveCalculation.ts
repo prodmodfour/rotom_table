@@ -105,19 +105,11 @@ export function useMoveCalculation(
    * A combatant on 'enemies' considers 'players' and 'allies' as enemies.
    * A combatant on 'players' or 'allies' considers 'enemies' as enemies.
    */
-  /**
-   * All combatants on the grid — used for grid-level properties like
-   * enemy-occupied rough terrain (decree-003).
-   */
-  const combatantsOnGrid = computed((): Combatant[] => {
-    return allCombatants.value
-  })
-
   const enemyOccupiedCells = computed((): Set<string> => {
     const cells = new Set<string>()
     const actorSide = actor.value.side
 
-    for (const combatant of combatantsOnGrid.value) {
+    for (const combatant of allCombatants.value) {
       if (combatant.id === actor.value.id) continue
       if (!combatant.position) continue
       if (!isEnemySide(actorSide, combatant.side)) continue
