@@ -61,7 +61,8 @@ export default defineEventHandler(async (event) => {
         record.currentTurnIndex,
         record.battleType,
         trainerTurnOrder,
-        pokemonTurnOrder
+        pokemonTurnOrder,
+        record.currentPhase
       )
 
       if (reorder.changed) {

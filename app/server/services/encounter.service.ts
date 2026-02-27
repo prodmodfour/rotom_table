@@ -323,7 +323,8 @@ export function reorderInitiativeAfterSpeedChange(
   currentTurnIndex: number,
   battleType: string,
   trainerTurnOrder: string[],
-  pokemonTurnOrder: string[]
+  pokemonTurnOrder: string[],
+  currentPhase?: string
 ): InitiativeReorderResult {
   // Step 1: Recalculate initiative for all combatants (mutates combatant.initiative)
   for (const c of combatants) {
@@ -366,20 +367,26 @@ export function reorderInitiativeAfterSpeedChange(
 
   if (battleType === 'trainer') {
     // League battle: reorder trainer and pokemon orders separately
-    // For trainer declaration: low→high speed (ascending)
-    // For pokemon: high→low speed (descending)
-    //
-    // We use index -1 for the sub-lists that are not currently active
-    // so all combatants in inactive phases get fully re-sorted
-    const isTrainerPhase = currentTurnOrder.length > 0 &&
-      trainerTurnOrder.length > 0 &&
-      currentTurnOrder[0] === trainerTurnOrder[0]
+    // Phase determines sort direction:
+    //   trainer_declaration: ascending (low→high speed)
+    //   trainer_resolution: descending (high→low speed)
+    //   pokemon: descending (high→low speed)
+    const phase = currentPhase || 'pokemon'
+    const isDeclarationPhase = phase === 'trainer_declaration'
+    const isResolutionPhase = phase === 'trainer_resolution'
+    const isTrainerPhase = isDeclarationPhase || isResolutionPhase
+
+    // Trainer sort direction: ascending for declaration, descending for resolution
+    const trainerDescending = isResolutionPhase
 
     let newTurnOrder: string[]
     let newTurnIndex: number
 
-    // Reorder trainer list
-    const trainerIndex = isTrainerPhase ? currentTurnIndex : -1
+    // We use index -1 for the sub-lists that are not currently active
+    // so all combatants in inactive phases get fully re-sorted
+
+    // Reorder the stored trainer declaration order (always ascending for storage)
+    const trainerIndex = isDeclarationPhase ? currentTurnIndex : -1
     const { newOrder: newTrainerOrder } = reorderSingleList(
       trainerTurnOrder, trainerIndex, false
     )
@@ -390,9 +397,9 @@ export function reorderInitiativeAfterSpeedChange(
       pokemonTurnOrder, pokemonIndex, true
     )
 
-    // Determine active turn order and index
+    // Determine active turn order and index based on current phase
     if (isTrainerPhase) {
-      const result = reorderSingleList(currentTurnOrder, currentTurnIndex, false)
+      const result = reorderSingleList(currentTurnOrder, currentTurnIndex, trainerDescending)
       newTurnOrder = result.newOrder
       newTurnIndex = result.newIndex
     } else {
