@@ -385,6 +385,7 @@ export async function createPokemonFromCSV(
     skills: pokemon.skills,
     eggGroups: [],
     size: speciesData?.size ?? 'Medium',
+    tutorPoints: 1 + Math.floor(pokemon.level / 5),
     nature: pokemon.nature,
     shiny: pokemon.shiny,
     heldItem: pokemon.heldItem
