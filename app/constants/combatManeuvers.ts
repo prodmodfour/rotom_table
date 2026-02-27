@@ -112,7 +112,7 @@ export const COMBAT_MANEUVERS: Maneuver[] = [
     actionLabel: 'Full Action',
     ac: null,
     icon: '/icons/phosphor/heart-half.svg',
-    shortDesc: 'Assisted breather: reset stages, cure volatile status, 0 Evasion (no Trip). Adjacent ally must spend Standard Action.',
+    shortDesc: 'Assisted breather: reset stages, cure volatile status, Tripped + 0 Evasion (no Vulnerable). Adjacent ally must spend Standard Action.',
     requiresTarget: false
   }
 ]

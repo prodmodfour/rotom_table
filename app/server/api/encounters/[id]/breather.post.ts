@@ -5,8 +5,8 @@
  * - Cure all Volatile status conditions + Slowed and Stuck (except Cursed — requires GM adjudication)
  * - Standard: Apply Tripped + Vulnerable until next turn (stored as tempConditions)
  * - Assisted: Another character uses their Standard Action to help — breather character
- *   gets 0 Evasion (via ZeroEvasion tempCondition) instead of Tripped+Vulnerable.
- *   The assistant's Standard Action must be consumed separately by the GM.
+ *   becomes Tripped with 0 Evasion (via Tripped + ZeroEvasion tempConditions) instead
+ *   of Tripped+Vulnerable. The assistant's Standard Action must be consumed separately by the GM.
  */
 import { prisma } from '~/server/utils/prisma'
 import {
@@ -45,7 +45,7 @@ function buildBreatherNotes(
     parts.push(`re-applied CS: ${sourceDescs.join(', ')}`)
   }
   if (result.assisted) {
-    parts.push('ASSISTED: Evasion set to 0 (no Trip/Vulnerable)')
+    parts.push('ASSISTED: Tripped + Evasion set to 0 (no Vulnerable)')
   } else {
     parts.push('SHIFT REQUIRED: Move away from all enemies using full movement.')
   }
@@ -143,8 +143,13 @@ export default defineEventHandler(async (event) => {
     }
 
     if (assisted) {
-      // Assisted breather: 0 Evasion instead of Tripped+Vulnerable (PTU p.245)
+      // Assisted breather: Tripped + 0 Evasion instead of Tripped+Vulnerable (PTU p.245)
+      // "They then both become Tripped and are treated as having 0 Evasion"
       // ZeroEvasion is a synthetic tempCondition recognized by evasionCalculation.ts
+      if (!combatant.tempConditions.includes('Tripped')) {
+        combatant.tempConditions = [...combatant.tempConditions, 'Tripped']
+        result.trippedApplied = true
+      }
       if (!combatant.tempConditions.includes('ZeroEvasion')) {
         combatant.tempConditions = [...combatant.tempConditions, 'ZeroEvasion']
         result.zeroEvasionApplied = true
