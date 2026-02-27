@@ -17,6 +17,7 @@ updated_by: slave-collector (plan-20260227-122512)
 | bug-033 | P0 | **resolved** | SCSS @use module scoping breaks variable resolution in mixin files. Fixed: added `@use 'variables' as *` to _modal, _pokemon-sheet, _difficulty, _sheet. Resolved by slave-1 (plan-20260227-122512) |
 | bug-034 | P0 | **resolved** | @phosphor-icons/vue not installed. Fixed: added dependency to app/package.json. Resolved by slave-2 (plan-20260227-122512) |
 | bug-035 | P0 | **resolved** | LevelUpNotification missing phosphor SVGs. Fixed: converted to @phosphor-icons/vue Vue components. Resolved by slave-2 (plan-20260227-122512) |
+| bug-036 | P0 | **open** | Player view 500 error: SCSS `rgba(currentColor, 0.1)` rejected by Sass compiler. Pre-existing, discovered by smoke test (plan-20260227-122512) |
 
 ### PTU Rule Tickets (`tickets/ptu-rule/`)
 | Ticket | Priority | Status | Summary |
@@ -90,7 +91,7 @@ updated_by: slave-collector (plan-20260227-122512)
 
 ## Active Developer Work
 
-**Current task:** Session 51 collection complete. All 5 slaves merged (12 commits). 3 developer slaves: bug-033 (slave-1, 2 commits), bug-034+035 (slave-2, 3 commits), ptu-rule-092-fix (slave-3, 3 commits). 2 reviewer slaves: ptu-rule-091-rereview slave-4 BLOCKED, ptu-rule-112-rereview slave-5 APPROVED. Smoke test PASSED. 4 tickets resolved (bug-033, bug-034, bug-035, ptu-rule-112). 1 ticket filed (ptu-rule-116).
+**Current task:** Session 51 collection complete. All 5 slaves merged (12 commits). 3 developer slaves: bug-033 (slave-1, 2 commits), bug-034+035 (slave-2, 3 commits), ptu-rule-092-fix (slave-3, 3 commits). 2 reviewer slaves: ptu-rule-091-rereview slave-4 BLOCKED, ptu-rule-112-rereview slave-5 APPROVED. Smoke test PARTIAL PASS (GM+Group OK, Player 500 from pre-existing SCSS bug → bug-036). 4 tickets resolved (bug-033, bug-034, bug-035, ptu-rule-112). 2 tickets filed (ptu-rule-116, bug-036).
 
 **Session 51 (2026-02-27, plan-20260227-122512):**
 - slave-1 (developer): bug-033 — 2 commits: added `@use 'variables' as *` to 4 SCSS mixin files (_difficulty, _modal, _pokemon-sheet, _sheet). Build-blocking SCSS variable resolution fixed → **resolved**
@@ -98,9 +99,9 @@ updated_by: slave-collector (plan-20260227-122512)
 - slave-3 (developer): ptu-rule-092-fix — 3 commits: guarded removePatheticSkill against outstanding Skill Edges (CRITICAL-01), added informational warning for level > 1 Pathetic enforcement (MEDIUM-01), ticket update. HIGH-01 skipped per decree-need-027 → **fix-cycle-done, needs re-review**
 - slave-4 (reviewers): ptu-rule-091-rereview — code-review-204 **CHANGES_REQUIRED** (C1 CRITICAL: prior collect-slaves merge 1ff8d81 reverted ALL fix cycle 2 code changes, M1: Crystal Artifice→Artificer naming). rules-review-180 **BLOCKED** (all fixes reverted, decree-026 violated). Fix cycle 2 commits were correct but merge process undid them.
 - slave-5 (reviewers): ptu-rule-112-rereview — code-review-205 **APPROVED** + rules-review-181 **APPROVED**. All issues from code-review-201 resolved. 36 Naturewalk tests, decree compliance verified. ptu-rule-112 → **resolved**
-- **Smoke test:** PASSED — all three views (GM, Group, Player) return 200 with Nuxt content after bug-033/034/035 fixes
+- **Smoke test:** PARTIAL PASS (Playwright) — GM view renders fully (navigation, encounter controls, group view buttons). Group view renders (lobby state). Player view FAILED: 500 error from SCSS `rgba(currentColor, 0.1)` at player/index.vue:471. Pre-existing bug, not introduced by this collection → bug-036 filed
 - **Merge notes:** 0 conflicts. 3 untracked file conflicts (bug-033/034/035.md) resolved by removing pre-existing untracked copies. All 5 rebased cleanly. 12 commits total
-- **Tickets filed:** ptu-rule-116 (Naturewalk status condition immunity — from rules-review-181 scope boundary)
+- **Tickets filed:** ptu-rule-116 (Naturewalk status condition immunity — from rules-review-181 scope boundary), bug-036 (Player view 500 SCSS error — pre-existing, from smoke test)
 - **Tickets resolved:** bug-033 (SCSS @use fix), bug-034 (@phosphor-icons/vue installed), bug-035 (LevelUpNotification icons converted), ptu-rule-112 (APPROVED by both reviewers)
 - **Notable:** ptu-rule-091 needs fix cycle 3 — re-apply reverted trainerClasses.ts/ClassFeatureSection.vue changes + Crystal Artifice→Artificer rename. ptu-rule-115 open copy remains until ptu-rule-091 reversion is resolved.
 
