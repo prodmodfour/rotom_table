@@ -1,20 +1,18 @@
 ---
-generated_at: 2026-02-27T09:40:23.785Z
+generated_at: 2026-02-27T10:28:33.170Z
 total_tickets: 163
-open: 17
-in_progress: 57
-resolved: 88
+open: 14
+in_progress: 59
+resolved: 89
 ---
 
 # Tickets Index
 
-## Open Tickets (17)
+## Open Tickets (14)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
-| ptu-rule-091 | ptu-rule | P3 | character-lifecycle | ptu-rule-091: Branch class blocked by duplicate check |
 | ptu-rule-092 | ptu-rule | P3 | character-lifecycle | ptu-rule-092: Pathetic skill enforcement gap in custom backg |
-| ptu-rule-112 | ptu-rule | P3 | vtt-grid | Pokemon with Naturewalk capabilities should treat listed ter |
 | refactoring-002 | refactoring | P3 | vtt-grid | Legacy terrain types `'difficult'` and `'rough'` are still v |
 | bug-032 | bug | P4 | encounter-tables | bug-032: No levelMin <= levelMax validation in encounter tab |
 | ptu-rule-094 | ptu-rule | P4 | healing | ptu-rule-094: Natural healing minimum 1 HP contradicts PTU f |
@@ -23,14 +21,13 @@ resolved: 88
 | ux-006 | ux | P4 | — | ux-006: PTU injury markers may leak precise HP info in playe |
 | ux-009 | ux | P4 | combat | ux-009: Show type-immunity IMMUNE tags on all statuses proac |
 | ux-010 | ux | P4 | encounter-tables | ux-010: Overlapping significance tier boundary values |
-| decree-need-025 | decree | P4 | vtt-grid | Ambiguity in whether the rough terrain accuracy penalty appl |
 | refactoring-086 | refactoring | P4 | combat | `app/composables/useMoveCalculation.ts` is 801 lines, exceed |
 | refactoring-087 | refactoring | P4 | vtt-grid | `app/tests/unit/stores/terrain.test.ts` is 811 lines, exceed |
 | refactoring-088 | refactoring | P4 | vtt-grid | `combatantsOnGrid` in `useMoveCalculation.ts` falls back to  |
 | refactoring-089 | refactoring | P4 | healing | The new `rest-healing.service.ts` service file exports `refr |
 | refactoring-090 | refactoring | P4 | healing | The `refreshDailyMoves()` function only processes daily-freq |
 
-## In-Progress Tickets (57)
+## In-Progress Tickets (59)
 
 | ID | Category | Priority | Domain | Source |
 |----|----------|----------|--------|--------|
@@ -69,7 +66,9 @@ resolved: 88
 | ptu-rule-088 | ptu-rule | P3 | encounter-tables | encounter-tables-audit.md (R008) |
 | ptu-rule-089 | ptu-rule | P3 | healing | healing-audit.md (R034) |
 | ptu-rule-090 | ptu-rule | P3 | healing | healing-audit.md (R042) |
+| ptu-rule-091 | ptu-rule | P3 | character-lifecycle | character-lifecycle-audit.md (R035) |
 | ptu-rule-093 | ptu-rule | P3 | vtt-grid | vtt-grid-audit.md (R015) + scenes-audit.md (R018) |
+| ptu-rule-112 | ptu-rule | P3 | vtt-grid | rules-review-162 M2 |
 | bug-029 | bug | P3 | api-validation | code-review-079 |
 | bug-031 | bug | P3 | player-view | rules-review-149 R3 |
 | ptu-rule-055 | ptu-rule | P3 | pokemon-lifecycle | — |
@@ -92,19 +91,17 @@ resolved: 88
 | ux-005 | ux | P4 | pokemon-lifecycle | code-review-161 M2 |
 | ux-008 | ux | P4 | — | code-review-169 M1 |
 
-## Open Decree-Needs (1)
+## Open Decree-Needs (0)
 
-| ID | Priority | Domain | Topic |
-|----|----------|--------|-------|
-| decree-need-025 | P4 | vtt-grid | rough-terrain-penalty-endpoint-inclusion |
+All decree-needs addressed.
 
 ## Summary by Category
 
 | Category | Open | In-Progress | Resolved | Total |
 |----------|------|-------------|----------|-------|
 | bug | 1 | 5 | 26 | 32 |
-| ptu-rule | 6 | 45 | 35 | 86 |
+| ptu-rule | 4 | 47 | 35 | 86 |
 | feature | 0 | 1 | 1 | 3 |
 | ux | 3 | 5 | 2 | 10 |
-| decree | 1 | 0 | 24 | 25 |
+| decree | 0 | 0 | 25 | 25 |
 | refactoring | 6 | 1 | 0 | 7 |
