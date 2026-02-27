@@ -11,7 +11,7 @@ You are the decree facilitator. You help the human user make binding design deci
 
 ## Step 1: Scan Open Decree-Need Tickets
 
-Read all files in `app/tests/e2e/artifacts/tickets/decree/`. For each file:
+Read all files in `app/tests/e2e/artifacts/tickets/open/decree/`. For each file:
 1. Parse YAML frontmatter
 2. Filter for `status: open`
 3. Sort by priority (P0 first, then P1, P2)
@@ -107,7 +107,7 @@ If the ruling supersedes an existing decree:
 
 If the ruling requires code changes:
 
-1. Determine ticket type: `bug/`, `ptu-rule/`, `feature/`, `ux/`, or `refactoring/`
+1. Determine ticket type and file to `tickets/open/<category>/`: `bug/`, `ptu-rule/`, `feature/`, `ux/`, or `refactoring/`
 2. Find the next ticket number for that type
 3. Write the ticket in the standard format (per `skill-interfaces.md`)
 4. Set `source: decree-NNN` in the ticket
@@ -122,6 +122,8 @@ If the ruling confirms current behavior:
 Update the decree-need ticket frontmatter:
 - `status: addressed` (or `rejected` if reaffirming existing precedent)
 - `decree_id: decree-NNN`
+
+Move the ticket file from `tickets/open/decree/` to `tickets/resolved/decree/`.
 
 ## Step 7: Commit
 

@@ -58,16 +58,17 @@ From these indexes, extract:
 **Fallback path — scan directories directly:**
 
 If `_index.md` files don't exist, fall back to scanning directories:
-- `app/tests/e2e/artifacts/tickets/bug/`, `ptu-rule/`, `feature/`, `ux/`, `decree/`
+- `app/tests/e2e/artifacts/tickets/open/` — scan all subdirectories (`bug/`, `ptu-rule/`, `feature/`, `ux/`, `decree/`)
+- `app/tests/e2e/artifacts/tickets/in-progress/` — scan all subdirectories
 - `app/tests/e2e/artifacts/refactoring/`
-- `app/tests/e2e/artifacts/reviews/`
+- `app/tests/e2e/artifacts/reviews/active/`
 - `app/tests/e2e/artifacts/designs/`
 - `app/tests/e2e/artifacts/matrix/`
 - `app/tests/e2e/artifacts/lessons/`
 - `decrees/`
 
 For each ecosystem, determine:
-1. Open tickets (scan for `status: open`)
+1. Open tickets (files in `tickets/open/` directories)
 2. Matrix completeness per domain
 3. Unresolved reviews (CHANGES_REQUIRED without follow-up)
 4. Design spec status
@@ -76,7 +77,7 @@ For each ecosystem, determine:
 
 Read `decrees/_index.md` for active decrees. Read `app/tests/e2e/artifacts/tickets/_index.md` for open decree-need tickets (check "Open Decree-Needs" section).
 
-If indexes are missing, fall back to scanning `app/tests/e2e/artifacts/tickets/decree/` for `status: open` and `decrees/` for `status: active`.
+If indexes are missing, fall back to scanning `app/tests/e2e/artifacts/tickets/open/decree/` for open decree-needs and `decrees/` for `status: active`.
 
 Index decrees by domain for Step 5 template data gathering.
 
@@ -120,10 +121,10 @@ These categorize *what kind of work* exists. They do NOT determine priority orde
 
 | Category | Condition | Agent Type |
 |----------|-----------|-----------|
-| D1 | CRITICAL bugs — `tickets/bug/` with severity CRITICAL | Developer |
+| D1 | CRITICAL bugs — `tickets/open/bug/` with severity CRITICAL | Developer |
 | D2 | Review verdict CHANGES_REQUIRED — latest review for a target | Developer |
 | D3 | FULL-scope feature tickets — no design yet | Developer (write design) |
-| D4 | PTU rule tickets — `tickets/ptu-rule/` open | Developer |
+| D4 | PTU rule tickets — `tickets/open/ptu-rule/` open | Developer |
 | D5 | HIGH bugs + PARTIAL/MINOR gaps | Developer |
 | D6 | Developer fix without reviews — committed fix missing review artifacts | Both reviewers (parallel) |
 | D7 | Pending designs — `designs/` with `status: complete` | Developer |
@@ -418,11 +419,11 @@ Report which slaves are still running, which have completed, and any failures.
 When M2 items are in the queue (matrix + audit complete, tickets not yet created), the master planner creates tickets **before** assigning dev work from them. This is done during Step 2:
 
 1. Read `matrix/<domain>-matrix.md` and `matrix/<domain>-audit.md`
-2. Create **bug tickets** for each `Incorrect` audit item → `tickets/bug/bug-<NNN>.md`
-3. Create **feature tickets** for each `Missing` matrix item → `tickets/feature/feature-<NNN>.md`
-4. Create **feature tickets** for each `Subsystem-Missing` matrix item → `tickets/feature/feature-<NNN>.md` (one ticket per subsystem, not per rule — list all affected rules in the ticket body)
-5. Create **feature tickets** for each `Implemented-Unreachable` cluster → `tickets/feature/feature-<NNN>.md` (group by actor+view — e.g., all player-unreachable combat rules become one "Player combat interface" ticket)
-6. Create **ptu-rule tickets** for each `Approximation` audit item → `tickets/ptu-rule/ptu-rule-<NNN>.md`
+2. Create **bug tickets** for each `Incorrect` audit item → `tickets/open/bug/bug-<NNN>.md`
+3. Create **feature tickets** for each `Missing` matrix item → `tickets/open/feature/feature-<NNN>.md`
+4. Create **feature tickets** for each `Subsystem-Missing` matrix item → `tickets/open/feature/feature-<NNN>.md` (one ticket per subsystem, not per rule — list all affected rules in the ticket body)
+5. Create **feature tickets** for each `Implemented-Unreachable` cluster → `tickets/open/feature/feature-<NNN>.md` (group by actor+view — e.g., all player-unreachable combat rules become one "Player combat interface" ticket)
+6. Create **ptu-rule tickets** for each `Approximation` audit item → `tickets/open/ptu-rule/ptu-rule-<NNN>.md`
 7. Skip `Correct`, `Out of Scope`, `Ambiguous` items
 8. All tickets include `matrix_source` frontmatter
 9. Commit tickets to master immediately (they're data, not code)

@@ -160,10 +160,10 @@ For each review artifact (code-review-*, rules-review-*) merged in Step 4:
 2. Identify issues that are NOT part of the CHANGES_REQUIRED fix cycle (those get fixed by the developer responding to the review — not ticketed separately)
 3. Issues that ARE ticketable:
    - **MEDIUM/LOW code issues** flagged as "code hygiene" or "future cleanup" (→ `refactoring/refactoring-NNN.md`)
-   - **New PTU rule gaps** discovered during review (→ `tickets/ptu-rule/ptu-rule-NNN.md`)
-   - **New bugs** discovered during review (→ `tickets/bug/bug-NNN.md`)
-   - **UX concerns** noted by reviewers (→ `tickets/ux/ux-NNN.md`)
-   - **Ambiguous rulings or conflicting interpretations** (→ `tickets/decree/decree-need-NNN.md`)
+   - **New PTU rule gaps** discovered during review (→ `tickets/open/ptu-rule/ptu-rule-NNN.md`)
+   - **New bugs** discovered during review (→ `tickets/open/bug/bug-NNN.md`)
+   - **UX concerns** noted by reviewers (→ `tickets/open/ux/ux-NNN.md`)
+   - **Ambiguous rulings or conflicting interpretations** (→ `tickets/open/decree/decree-need-NNN.md`)
 4. Specifically scan for `AMBIGUOUS` flags, conflicting reviewer rulings on the same mechanic, or reviewer notes mentioning "unclear" / "multiple interpretations" → create `decree-need` tickets for each
 
 ### 6b. Scan All Dev Slave Artifacts
