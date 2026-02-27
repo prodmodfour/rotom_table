@@ -53,3 +53,18 @@ Implement the two-phase trainer system for League Battles: declare (low-to-high 
 - P0: Core declaration/resolution flow (data model, API, phase transitions)
 - P1: UI enhancements, WebSocket sync, edge cases (faint/skip/undo)
 - Status: design-complete, awaiting implementation
+
+### P0 Implementation (2026-02-27)
+- Branch: `slave/3-developer-ptu-rule-107-p0-20260227`
+- 9 commits implementing core declaration/resolution flow:
+  - `a0e2cd3` TrainerDeclaration interface
+  - `8f4cf44` declarations field on Encounter type + Prisma schema
+  - `872597a` encounter service response builder update
+  - `ae194cf` declare.post.ts endpoint (new)
+  - `a4e5202` three-phase turn progression in next-turn.post.ts
+  - `c315833` declarations initialization in start.post.ts
+  - `e8bd61e` encounter store getters + submitDeclaration action
+  - `6c66b73` PUT endpoint undo/redo compatibility
+  - `c53c70d` initiative reorder phase-awareness fix
+- **P0 status: implemented** (pending review)
+- P1 remains: UI components (DeclarationPanel, DeclarationSummary), WebSocket sync, edge cases

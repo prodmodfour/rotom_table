@@ -4,7 +4,7 @@ ticket_id: ptu-rule-107
 category: PTU_RULE
 scope: FULL
 domain: combat
-status: design-complete
+status: p0-implemented
 decree: decree-021
 affected_files:
   - app/types/combat.ts
