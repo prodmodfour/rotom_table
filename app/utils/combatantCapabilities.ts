@@ -273,13 +273,13 @@ export function naturewalkBypassesTerrain(
 }
 
 // =====================================
-// Naturewalk Status Immunity (PTU p.239-240)
+// Naturewalk Status Immunity (PTU p.276)
 // =====================================
 
 /**
  * Status conditions that Naturewalk grants immunity to when standing
- * on matching terrain. PTU p.239-240: "cannot be Slowed or Stuck
- * by effects related to that terrain."
+ * on matching terrain. PTU p.276: "Immunity to Slowed or Stuck in
+ * its appropriate Terrains."
  */
 const NATUREWALK_IMMUNE_STATUSES: ReadonlyArray<StatusCondition> = ['Slowed', 'Stuck']
 
@@ -287,9 +287,9 @@ const NATUREWALK_IMMUNE_STATUSES: ReadonlyArray<StatusCondition> = ['Slowed', 'S
  * Check which status conditions a combatant is immune to due to
  * Naturewalk at their current position on the terrain grid.
  *
- * PTU p.239-240: "A Pokemon with Naturewalk (Terrain Type) ignores the
- * movement costs of that terrain type and cannot be Slowed or Stuck by
- * effects related to that terrain."
+ * PTU p.276 + p.322: "A Pokemon with Naturewalk (Terrain Type) ignores the
+ * movement costs of that terrain type" (p.322) and has "Immunity to Slowed
+ * or Stuck in its appropriate Terrains" (p.276).
  *
  * @param combatant - The combatant being targeted
  * @param statuses - The status conditions being applied

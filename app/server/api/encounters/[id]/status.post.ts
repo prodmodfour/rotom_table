@@ -70,7 +70,7 @@ export default defineEventHandler(async (event) => {
       }
     }
 
-    // PTU p.239-240: Naturewalk grants immunity to Slowed/Stuck on matching terrain.
+    // PTU p.276: Naturewalk grants immunity to Slowed/Stuck on matching terrain.
     // Check if the combatant is on terrain that matches their Naturewalk.
     // Like type immunity, this can be overridden by the GM.
     if (addStatuses.length > 0 && combatant.type === 'pokemon') {
