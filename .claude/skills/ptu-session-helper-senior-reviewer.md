@@ -15,7 +15,7 @@ This skill is part of the **Dev Ecosystem** in the 12-skill PTU testing pipeline
 - **Lessons:** Before starting a review session, check `app/tests/e2e/artifacts/lessons/ptu-session-helper-senior-reviewer.lessons.md` for recurring code quality patterns (e.g., the worker repeating the same class of mistake across fixes). If the file exists, review active lessons to focus your review attention. If it doesn't exist, skip this.
 - **Bug/feature/ux tickets** from the Matrix ecosystem live in `app/tests/e2e/artifacts/tickets/`. Cross-check the worker's fix against the original ticket and its `matrix_source` reference.
 - **Design specs** live in `app/tests/e2e/artifacts/designs/design-*.md`. When reviewing a Developer's implementation of a design spec, check the "Questions for Senior Reviewer" section and ensure the architectural decisions are sound.
-- **Review artifacts** go to `app/tests/e2e/artifacts/reviews/code-review-<NNN>.md`. The `verdict` field determines pipeline flow: `APPROVED` allows the fix to proceed to Game Logic Reviewer, `CHANGES_REQUIRED` routes back to Developer, `BLOCKED` halts progress. The `scenarios_to_rerun` field tells the Orchestrator what to re-test (it creates retest tickets) after both reviews pass.
+- **Review artifacts** go to `app/tests/e2e/artifacts/reviews/active/code-review-<NNN>.md`. The `verdict` field determines pipeline flow: `APPROVED` allows the fix to proceed to Game Logic Reviewer, `CHANGES_REQUIRED` routes back to Developer, `BLOCKED` halts progress. The `scenarios_to_rerun` field tells the Orchestrator what to re-test (it creates retest tickets) after both reviews pass. APPROVED reviews are archived to `reviews/archive/` by the Slave Collector.
 - **Follow-up reviews:** For trivial changes after `CHANGES_REQUIRED`, update the existing artifact's verdict. For substantive re-reviews, create a new artifact with `follows_up: code-review-<NNN>` referencing the previous review.
 - **Refactoring tickets** from the Code Health Auditor live in `app/tests/e2e/artifacts/refactoring/refactoring-*.md`. When reviewing a Developer's refactoring implementation:
   - The Auditor decided *what* needs fixing — you decide *how* it gets fixed
@@ -88,7 +88,7 @@ This skill is part of the **Dev Ecosystem** in the 12-skill PTU testing pipeline
 2. **Issues by severity** — grouped CRITICAL/HIGH/MEDIUM with `file:line` references. Show the buggy code AND the fix, not just "this is wrong."
 3. **What looks good** — acknowledge solid work specifically
 4. **Recommended next steps** — ordered list
-5. **Write review artifact** — write the review to `app/tests/e2e/artifacts/reviews/code-review-<NNN>.md` using the schema from `references/skill-interfaces.md` section 9. Include all reviewed commits, files, issues, verdict, and scenarios to re-run.
+5. **Write review artifact** — write the review to `app/tests/e2e/artifacts/reviews/active/code-review-<NNN>.md` using the schema from `references/skill-interfaces.md` section 9. Include all reviewed commits, files, issues, verdict, and scenarios to re-run.
 6. **Note:** The Orchestrator is the sole writer of state files (`dev-state.md`). It will pick up your review artifact on its next scan.
 
 ### When Things Look Good

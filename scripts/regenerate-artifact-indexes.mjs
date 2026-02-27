@@ -159,7 +159,27 @@ function today() {
 
 function generateReviewsIndex() {
   const dir = join(ARTIFACTS, 'reviews')
-  const reviews = readAllFrontmatter(dir)
+  const activeDir = join(dir, 'active')
+  const archiveDir = join(dir, 'archive')
+
+  // Read from active/ subdirectory (new structure) or flat directory (fallback)
+  const activeReviewFiles = existsSync(activeDir) ? readAllFrontmatter(activeDir) : []
+  const flatReviewFiles = existsSync(activeDir) ? [] : readAllFrontmatter(dir)
+
+  // Count archived reviews
+  let archivedCount = 0
+  if (existsSync(archiveDir)) {
+    for (const subdir of readdirSync(archiveDir)) {
+      const subdirPath = join(archiveDir, subdir)
+      try {
+        if (statSync(subdirPath).isDirectory()) {
+          archivedCount += listMdFiles(subdirPath).length
+        }
+      } catch { /* skip */ }
+    }
+  }
+
+  const reviews = activeReviewFiles.length > 0 ? activeReviewFiles : flatReviewFiles
 
   const active = reviews.filter((r) => {
     const verdict = r.verdict || r.result
@@ -226,9 +246,11 @@ function generateReviewsIndex() {
   }
 
   out += `\n## Stats\n\n`
-  out += `- Total reviews: ${reviews.length}\n`
-  out += `- Active (needs action): ${active.length}\n`
-  out += `- Approved/Pass: ${approved.length}\n`
+  out += `- Active reviews: ${reviews.length}\n`
+  out += `- Needs action: ${active.length}\n`
+  out += `- Approved/Pass (active): ${approved.length}\n`
+  out += `- Archived: ${archivedCount}\n`
+  out += `- Total (active + archived): ${reviews.length + archivedCount}\n`
   out += `- Unique targets reviewed: ${latestByTarget.size}\n`
 
   return out
@@ -476,8 +498,9 @@ function generateDecreesIndex() {
 function generateGlobalIndex() {
   // Gather high-level counts from all categories
   const reviewDir = join(ARTIFACTS, 'reviews')
-  const reviewFiles = listMdFiles(reviewDir)
-  const reviewData = readAllFrontmatter(reviewDir)
+  const reviewActiveDir = join(reviewDir, 'active')
+  const reviewFiles = existsSync(reviewActiveDir) ? listMdFiles(reviewActiveDir) : listMdFiles(reviewDir)
+  const reviewData = existsSync(reviewActiveDir) ? readAllFrontmatter(reviewActiveDir) : readAllFrontmatter(reviewDir)
   const activeReviews = reviewData.filter((r) => {
     const v = r.verdict || r.result
     return v === 'CHANGES_REQUIRED' || v === 'FAIL' || v === 'MIXED'

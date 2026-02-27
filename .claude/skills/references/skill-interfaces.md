@@ -31,6 +31,9 @@ app/tests/e2e/artifacts/
 ├── designs/               # Developer writes (when feature ticket needs design)
 ├── refactoring/           # Code Health Auditor writes
 ├── reviews/               # Senior Reviewer + Game Logic Reviewer write
+│   ├── _index.md                  # Active review summary (auto-generated)
+│   ├── active/                    # Reviews requiring action or pending
+│   └── archive/                   # APPROVED reviews (organized by YYYY-MM)
 ├── lessons/               # Retrospective Analyst writes
 ├── loops/                 # Legacy: from previous Synthesizer runs
 ├── scenarios/             # Legacy: from previous Crafter runs
