@@ -82,9 +82,9 @@ const statusInputs = ref<StatusCondition[]>([...props.currentStatuses])
 const toggleStatus = (status: StatusCondition) => {
   const index = statusInputs.value.indexOf(status)
   if (index === -1) {
-    statusInputs.value.push(status)
+    statusInputs.value = [...statusInputs.value, status]
   } else {
-    statusInputs.value.splice(index, 1)
+    statusInputs.value = statusInputs.value.filter(s => s !== status)
   }
 }
 
