@@ -113,11 +113,9 @@ const isNewAndImmune = (status: StatusCondition): boolean => {
   return isNew && isImmuneToStatus(props.entityTypes, status)
 }
 
-/** Get immune label for display (returns immune type or empty string) */
+/** Get immune label for display — shown proactively so GMs see immunities at a glance */
 const getImmuneLabel = (status: StatusCondition): string => {
   if (props.entityTypes.length === 0) return ''
-  if (!statusInputs.value.includes(status)) return ''
-  if (props.currentStatuses.includes(status)) return '' // Already applied
   return isImmuneToStatus(props.entityTypes, status) ? 'immune' : ''
 }
 
