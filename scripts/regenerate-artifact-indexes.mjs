@@ -341,21 +341,61 @@ function generateDesignsIndex() {
 
 function generateMatrixIndex() {
   const dir = join(ARTIFACTS, 'matrix')
-  const files = readAllFrontmatter(dir)
 
-  // Group by domain
+  // Detect structure: atomized (domain subdirectories) or monolithic (flat files)
+  const entries = existsSync(dir) ? readdirSync(dir) : []
+  const domainDirs = entries.filter((e) => {
+    try { return statSync(join(dir, e)).isDirectory() && e !== '_archive' }
+    catch { return false }
+  })
+
   const domains = new Map()
-  for (const f of files) {
-    const domain = f.domain
-    if (!domain) continue
-    if (!domains.has(domain)) {
-      domains.set(domain, { rules: null, capabilities: null, matrix: null, audit: null })
+
+  if (domainDirs.length > 0) {
+    // Atomized structure: read _index.md from each domain subdirectory
+    for (const domain of domainDirs) {
+      const domainPath = join(dir, domain)
+      const info = { rules: null, capabilities: null, matrix: false, audit: null }
+
+      // Read rules _index.md
+      const rulesIdx = join(domainPath, 'rules', '_index.md')
+      if (existsSync(rulesIdx)) info.rules = parseFrontmatter(join(domainPath, 'rules', '_index.md'))
+
+      // Read capabilities _index.md
+      const capsIdx = join(domainPath, 'capabilities', '_index.md')
+      if (existsSync(capsIdx)) info.capabilities = parseFrontmatter(join(domainPath, 'capabilities', '_index.md'))
+
+      // Check matrix.md existence
+      info.matrix = existsSync(join(domainPath, 'matrix.md'))
+
+      // Read audit _index.md
+      const auditIdx = join(domainPath, 'audit', '_index.md')
+      if (existsSync(auditIdx)) info.audit = parseFrontmatter(join(domainPath, 'audit', '_index.md'))
+
+      // Read matrix.md for coverage
+      if (info.matrix) {
+        try {
+          const content = readFileSync(join(domainPath, 'matrix.md'), 'utf-8')
+          const scoreMatch = content.match(/(?:Coverage|Score)[:\s]*(\d+(?:\.\d+)?)\s*%/i)
+          if (scoreMatch) info.coverage = `${scoreMatch[1]}%`
+        } catch { /* skip */ }
+      }
+
+      domains.set(domain, info)
     }
-    const d = domains.get(domain)
-    if (f.file.endsWith('-rules.md')) d.rules = f
-    else if (f.file.endsWith('-capabilities.md')) d.capabilities = f
-    else if (f.file.endsWith('-matrix.md')) d.matrix = f
-    else if (f.file.endsWith('-audit.md')) d.audit = f
+  } else {
+    // Fallback: monolithic flat files (pre-migration)
+    const files = readAllFrontmatter(dir)
+    for (const f of files) {
+      const domain = f.domain
+      if (!domain) continue
+      if (!domains.has(domain)) domains.set(domain, { rules: null, capabilities: null, matrix: false, audit: null })
+      const d = domains.get(domain)
+      if (f.file.endsWith('-rules.md')) d.rules = f
+      else if (f.file.endsWith('-capabilities.md')) d.capabilities = f
+      else if (f.file.endsWith('-matrix.md')) d.matrix = true
+      else if (f.file.endsWith('-audit.md')) d.audit = f
+    }
   }
 
   let out = `---\ngenerated_at: ${new Date().toISOString()}\ntotal_domains: ${domains.size}\n---\n\n`
@@ -367,17 +407,7 @@ function generateMatrixIndex() {
   for (const [domain, d] of [...domains.entries()].sort()) {
     const ruleCount = d.rules?.total_rules ?? '—'
     const capCount = d.capabilities?.total_capabilities ?? '—'
-
-    // Extract coverage from matrix frontmatter or body
-    let coverage = '—'
-    if (d.matrix) {
-      const matrixPath = join(dir, d.matrix.file)
-      try {
-        const content = readFileSync(matrixPath, 'utf-8')
-        const scoreMatch = content.match(/(?:Coverage|Score)[:\s]*(\d+(?:\.\d+)?)\s*%/i)
-        if (scoreMatch) coverage = `${scoreMatch[1]}%`
-      } catch { /* skip */ }
-    }
+    const coverage = d.coverage ?? '—'
 
     // Audit stats
     let auditSummary = '—'
@@ -388,7 +418,7 @@ function generateMatrixIndex() {
       if (total > 0) {
         auditSummary = `${correct}/${total} correct${incorrect > 0 ? `, ${incorrect} incorrect` : ''}`
       } else {
-        auditSummary = 'audited (no counts)'
+        auditSummary = 'audited'
       }
     }
 
@@ -396,26 +426,18 @@ function generateMatrixIndex() {
     const timestamps = [
       d.rules?.extracted_at,
       d.capabilities?.mapped_at,
-      d.matrix?.analyzed_at,
       d.audit?.audited_at,
     ].filter(Boolean)
     const latest = timestamps.length > 0
       ? timestamps.sort().pop().toString().slice(0, 10)
       : '—'
 
-    // Staleness: if capabilities mapped before latest git changes
-    const hasAll = d.rules && d.capabilities && d.matrix && d.audit
-    const pipelineStatus = hasAll ? 'complete' : 'partial'
+    const hasRules = d.rules != null
+    const hasCaps = d.capabilities != null
+    const hasAudit = d.audit != null
+    const pipelineStatus = (hasRules && hasCaps && d.matrix && hasAudit) ? 'complete' : 'partial'
 
     out += `| ${domain} | ${ruleCount} rules | ${capCount} caps | ${pipelineStatus} | ${auditSummary} | ${coverage} | ${latest} |\n`
-  }
-
-  // Player-view special case (capabilities only, not already in domains map)
-  if (!domains.has('player-view')) {
-    const pvCap = files.find((f) => f.file === 'player-view-capabilities.md')
-    if (pvCap) {
-      out += `| player-view | — | ${pvCap.total_capabilities ?? '?'} caps | — | — | — | ${(pvCap.mapped_at || '—').toString().slice(0, 10)} |\n`
-    }
   }
 
   return out
