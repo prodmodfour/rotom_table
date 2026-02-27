@@ -39,24 +39,37 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    // Validate level range: levelMin must be <= levelMax
-    const modLevelMin = body.levelRange?.min ?? null
-    const modLevelMax = body.levelRange?.max ?? null
-    if (modLevelMin !== null && modLevelMax !== null && modLevelMin > modLevelMax) {
+    // Validate level range cross-field: levelMin must be <= levelMax
+    // Merge provided values with existing DB values to catch partial updates
+    const modLevelMin = body.levelRange?.min !== undefined ? body.levelRange.min : existing.levelMin
+    const modLevelMax = body.levelRange?.max !== undefined ? body.levelRange.max : existing.levelMax
+    if (modLevelMin !== null && modLevelMax !== null &&
+        typeof modLevelMin === 'number' && typeof modLevelMax === 'number' &&
+        modLevelMin > modLevelMax) {
       throw createError({
         statusCode: 400,
         message: 'levelMin must be less than or equal to levelMax'
       })
     }
 
+    // Build update data — only include fields that were provided
+    const updateData: Record<string, unknown> = {}
+    if (body.name !== undefined) {
+      updateData.name = body.name
+    }
+    if (body.description !== undefined) {
+      updateData.description = body.description ?? null
+    }
+    if (body.levelRange?.min !== undefined) {
+      updateData.levelMin = body.levelRange.min
+    }
+    if (body.levelRange?.max !== undefined) {
+      updateData.levelMax = body.levelRange.max
+    }
+
     const modification = await prisma.tableModification.update({
       where: { id: modId },
-      data: {
-        name: body.name,
-        description: body.description ?? null,
-        levelMin: body.levelRange?.min ?? null,
-        levelMax: body.levelRange?.max ?? null
-      },
+      data: updateData,
       include: {
         entries: true
       }
