@@ -73,7 +73,7 @@ export const TRAINER_CLASSES: TrainerClassDef[] = [
   { name: 'Athlete', category: 'Fighter', associatedSkills: ['Athletics'], description: 'Physically fit Trainer combatant' },
   { name: 'Dancer', category: 'Fighter', associatedSkills: ['Acrobatics', 'Athletics', 'Charm'], description: 'Graceful combat through dance' },
   { name: 'Hunter', category: 'Fighter', associatedSkills: ['Stealth', 'Survival'], description: 'Tracks and captures quarry' },
-  { name: 'Martial Artist', category: 'Fighter', associatedSkills: ['Combat'], description: 'Hand-to-hand fighter', isBranching: true },
+  { name: 'Martial Artist', category: 'Fighter', associatedSkills: ['Combat'], description: 'Hand-to-hand fighter' },
   { name: 'Musician', category: 'Fighter', associatedSkills: ['Charm', 'Focus'], description: 'Fights with musical abilities' },
   { name: 'Provocateur', category: 'Fighter', associatedSkills: ['Charm', 'Guile', 'Intimidate'], description: 'Silver tongue in battle' },
   { name: 'Rogue', category: 'Fighter', associatedSkills: ['Acrobatics', 'Athletics', 'Stealth'], description: 'Dark-typed stealth fighter' },
@@ -94,12 +94,12 @@ export const TRAINER_CLASSES: TrainerClassDef[] = [
 
 /**
  * Valid specializations for each branching class (decree-022).
+ * Only 4 canonical branching classes per PTU [Branch] tag (decree-026):
  *
  * Type Ace → 18 Pokemon types
- * Stat Ace → 6 combat stats
+ * Stat Ace → 5 combat stats (Attack, Defense, SpAtk, SpDef, Speed — NOT HP)
  * Style Expert → 5 contest stats
- * Researcher → fields of study (PTU Core p. 127)
- * Martial Artist → martial art styles (PTU Core p. 143)
+ * Researcher → 9 Fields of Study (PTU Core pp. 4169-4623)
  */
 export const BRANCHING_CLASS_SPECIALIZATIONS: Record<string, readonly string[]> = {
   'Type Ace': [
@@ -116,9 +116,6 @@ export const BRANCHING_CLASS_SPECIALIZATIONS: Record<string, readonly string[]> 
     'General Research', 'Apothecary', 'Artificer', 'Botany', 'Chemistry',
     'Climatology', 'Occultism', 'Paleontology', 'Pokemon Caretaking'
   ],
-  'Martial Artist': [
-    'Aura', 'Cover', 'Elemental', 'Focused', 'Form', 'Freestyle', 'Parkour', 'Weapons'
-  ]
 } as const
 
 /**
