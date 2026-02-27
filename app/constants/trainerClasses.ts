@@ -107,7 +107,7 @@ export const BRANCHING_CLASS_SPECIALIZATIONS: Record<string, readonly string[]> 
     'Fighting', 'Poison', 'Ground', 'Flying', 'Psychic', 'Bug',
     'Rock', 'Ghost', 'Dragon', 'Dark', 'Steel', 'Fairy'
   ],
-  'Stat Ace': ['HP', 'Attack', 'Defense', 'Special Attack', 'Special Defense', 'Speed'],
+  'Stat Ace': ['Attack', 'Defense', 'Special Attack', 'Special Defense', 'Speed'],
   'Style Expert': ['Cool', 'Beautiful', 'Cute', 'Smart', 'Tough'],
   'Researcher': [
     'General Ed', 'Medicine Ed', 'Occult Ed', 'Pokemon Ed', 'Technology Ed'
