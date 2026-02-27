@@ -366,7 +366,27 @@ function generateTicketsIndex() {
 
 function generateDesignsIndex() {
   const dir = join(ARTIFACTS, 'designs')
-  const designs = readAllFrontmatter(dir)
+  const designs = []
+
+  // Detect atomized structure: design directories with _index.md
+  const entries = existsSync(dir) ? readdirSync(dir) : []
+  const designDirs = entries.filter((e) => {
+    try {
+      return e.startsWith('design-') && statSync(join(dir, e)).isDirectory() && existsSync(join(dir, e, '_index.md'))
+    } catch { return false }
+  })
+
+  if (designDirs.length > 0) {
+    // Atomized: read _index.md from each design directory
+    for (const d of designDirs) {
+      const fm = parseFrontmatter(join(dir, d, '_index.md'))
+      designs.push({ ...fm, _id: d, file: d })
+    }
+  } else {
+    // Fallback: flat design files
+    const flat = readAllFrontmatter(dir)
+    designs.push(...flat)
+  }
 
   let out = `---\ngenerated_at: ${new Date().toISOString()}\ntotal_designs: ${designs.length}\n---\n\n`
   out += `# Designs Index\n\n`
@@ -375,7 +395,7 @@ function generateDesignsIndex() {
   out += `|-----------|--------|--------|--------|-------|----------|\n`
 
   for (const d of designs) {
-    const id = d.design_id || d.file.replace('.md', '')
+    const id = d.design_id || d._id || d.file.replace('.md', '')
     out += `| ${id} | ${d.domain || '—'} | ${d.status || '—'} | ${d.ticket_id || '—'} | ${d.scope || '—'} | ${d.category || '—'} |\n`
   }
 
@@ -570,7 +590,14 @@ function generateGlobalIndex() {
     }
   }
 
-  const designFiles = listMdFiles(join(ARTIFACTS, 'designs'))
+  // Designs: count atomized directories or flat files
+  const designsDir = join(ARTIFACTS, 'designs')
+  const designEntries = existsSync(designsDir) ? readdirSync(designsDir) : []
+  const designDirCount = designEntries.filter((e) => {
+    try { return e.startsWith('design-') && statSync(join(designsDir, e)).isDirectory() }
+    catch { return false }
+  }).length
+  const designCount = designDirCount > 0 ? designDirCount : listMdFiles(designsDir).length
   const decreeFiles = listMdFiles(DECREES_DIR)
   const refactoringFiles = listMdFiles(join(ARTIFACTS, 'refactoring'))
 
@@ -626,7 +653,7 @@ function generateGlobalIndex() {
   out += `|-----------|-------|\n`
   out += `| reviews/ | ${reviewFiles.length} |\n`
   out += `| tickets/ (all) | ${totalTickets} |\n`
-  out += `| designs/ | ${designFiles.length} |\n`
+  out += `| designs/ | ${designCount} |\n`
   out += `| matrix/ | ${matrixCount}${matrixDomainDirs.length > 0 ? ' domains' : ''} |\n`
   out += `| refactoring/ | ${refactoringFiles.length} |\n`
   out += `| decrees/ | ${decreeFiles.length} |\n`
