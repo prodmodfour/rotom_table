@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-02-27T21:50:00
-updated_by: slave-collector (plan-20260227-210000)
+last_updated: 2026-02-27T12:45:00
+updated_by: slave-collector (plan-20260227-122512)
 ---
 
 # Dev Ecosystem State
@@ -14,6 +14,9 @@ updated_by: slave-collector (plan-20260227-210000)
 | bug-030 | P2 | **resolved** | Player grid touch event support — fix cycle complete (4 commits: touch handlers added to useIsometricInteraction, threshold deduped). code-review-166 CHANGES_REQUIRED → fixed. code-review-170 CHANGES_REQUIRED (H1: file size) → resolved by refactoring-082 (touch extraction). rules-review-153 APPROVED |
 | bug-031 | P3 | **resolved** | Explored fog cells show tokens — 1-line fix in usePlayerGridView.ts. code-review-168 APPROVED, rules-review-155 APPROVED |
 | bug-032 | P4 | **open** | No levelMin <= levelMax validation in encounter table APIs (from encounter-tables-audit R008-OBS) |
+| bug-033 | P0 | **resolved** | SCSS @use module scoping breaks variable resolution in mixin files. Fixed: added `@use 'variables' as *` to _modal, _pokemon-sheet, _difficulty, _sheet. Resolved by slave-1 (plan-20260227-122512) |
+| bug-034 | P0 | **resolved** | @phosphor-icons/vue not installed. Fixed: added dependency to app/package.json. Resolved by slave-2 (plan-20260227-122512) |
+| bug-035 | P0 | **resolved** | LevelUpNotification missing phosphor SVGs. Fixed: converted to @phosphor-icons/vue Vue components. Resolved by slave-2 (plan-20260227-122512) |
 
 ### PTU Rule Tickets (`tickets/ptu-rule/`)
 | Ticket | Priority | Status | Summary |
@@ -38,8 +41,8 @@ updated_by: slave-collector (plan-20260227-210000)
 | ptu-rule-088 | P3 | **resolved** | Significance tier presets realigned. code-review-199 APPROVED (re-review of fix cycle). rules-review-171 APPROVED (M1: overlapping tier boundaries → ux-010) |
 | ptu-rule-089 | P3 | **resolved** | Extended rest daily move refresh. APPROVED: code-review-196 + rules-review-173 (plan-20260227-174900). M1: app-surface.md → refactoring-089. M2: ticket status → resolved |
 | ptu-rule-090 | P3 | **resolved** | Scene-end AP restoration already implemented (confirmed by code-review-196 + rules-review-173). No code changes needed. APPROVED |
-| ptu-rule-091 | P3 | **fix-cycle-2-done, needs re-review** | Branch class specialization suffix per decree-022. Fix cycle 2 complete (6 commits, plan-20260227-210000 slave-1): removed HP from Stat Ace, replaced Researcher specs with Fields of Study, removed Martial Artist from branching per decree-026, disabled branching at max slots, removed dead countClassInstances. ptu-rule-115 resolved. Needs re-review |
-| ptu-rule-092 | P3 | **CHANGES_REQUIRED** | Pathetic skill enforcement gap in custom background mode. code-review-203 APPROVED (M1: alert() pattern → refactoring-091, M2: create.vue at 800 lines). rules-review-179 CHANGES_REQUIRED (CRITICAL-01: removeEdge/removePatheticSkill desync, HIGH-01: Pathetic+Skill Edge RAW conflict → decree-need-027, MEDIUM-01: higher-level enforcement). Fix cycle needed |
+| ptu-rule-091 | P3 | **CHANGES_REQUIRED (merge reversion)** | Branch class specialization suffix per decree-022. Fix cycle 2 code was correct but reverted by prior collect-slaves merge (1ff8d81). code-review-204 CHANGES_REQUIRED (C1: re-apply all fix cycle 2 changes, M1: Crystal Artifice→Artificer naming). rules-review-180 BLOCKED (decree-026 violated on master — Martial Artist still branching). Needs fix cycle 3: re-apply trainerClasses.ts + ClassFeatureSection.vue changes + Crystal Artifice rename. ptu-rule-115 open copy still exists (was resolved then reverted) |
+| ptu-rule-092 | P3 | **fix-cycle-done, needs re-review** | Pathetic skill enforcement gap in custom background mode. Fix cycle complete (3 commits, plan-20260227-122512 slave-3): guarded removePatheticSkill against outstanding Skill Edges (CRITICAL-01), added informational warning for Pathetic enforcement at level > 1 (MEDIUM-01). HIGH-01 skipped per decree-need-027 (blocked). code-review-203 APPROVED. rules-review-179 CHANGES_REQUIRED → fix applied. Needs re-review |
 | ptu-rule-093 | P3 | **resolved** | Rough terrain accuracy penalty — resolved by ptu-rule-108 fix. APPROVED: code-review-195 + rules-review-172 (plan-20260227-174900) |
 | ptu-rule-094 | P4 | **open** | Natural healing min(1) HP contradicts PTU for low-HP entities (from healing-audit R007) |
 | ptu-rule-095 | P4 | **open** | Disengage maneuver missing from combatManeuvers — defer until AoO implemented (from vtt-grid-audit R030) |
@@ -59,9 +62,10 @@ updated_by: slave-collector (plan-20260227-210000)
 | ptu-rule-109 | P3 | **resolved** | Legendary species list complete. APPROVED: code-review-191 + rules-review-168. 100 total species (Meltan/Melmetal/Zarude/Enamorus added) |
 | ptu-rule-110 | P2 | **resolved** | Encounter end resets combat stages. APPROVED: code-review-191 + rules-review-168. stageModifiers + stageSources reset to defaults |
 | ptu-rule-111 | P2 | **resolved** | tempConditions Vulnerable zero evasion. APPROVED: code-review-191 + rules-review-168. Both client + server checks inspect tempConditions |
-| ptu-rule-112 | P3 | **fix-cycle-done, needs re-review** | Naturewalk capability terrain bypass. Fix cycle complete (7 commits, plan-20260227-210000 slave-2): unit tests for getCombatantNaturewalks/naturewalkBypassesTerrain/movement/accuracy, app-surface.md updated, regex comment added, earth terrain base cost fix. Needs re-review |
+| ptu-rule-112 | P3 | **resolved** | Naturewalk capability terrain bypass. APPROVED: code-review-205 + rules-review-181 (plan-20260227-122512 slave-5 re-review). All issues from code-review-201 resolved. 36 Naturewalk tests, decree-003/010/025 compliant. Scope note: Naturewalk status condition immunity (Slowed/Stuck) → ptu-rule-116 |
 | ptu-rule-113 | P2 | **resolved** | Burst shapes use PTU diagonal distance (per decree-023). APPROVED: code-review-189 + rules-review-166. Burst 2 = 21 cells (not 25 Chebyshev) |
 | ptu-rule-114 | P4 | **open** | Assisted breather variant not implemented (from rules-review-169 note on ptu-rule-099+104 re-review) |
+| ptu-rule-116 | P4 | **open** | Naturewalk status condition immunity (Slowed/Stuck) not implemented (from rules-review-181 scope boundary note on ptu-rule-112 re-review) |
 
 ### Feature Tickets (`tickets/feature/`)
 | Ticket | Priority | Status | Summary | Design Complexity |
@@ -86,7 +90,19 @@ updated_by: slave-collector (plan-20260227-210000)
 
 ## Active Developer Work
 
-**Current task:** Session 50 collection complete. All 4 slaves merged (17 commits). 2 developer slaves: ptu-rule-091-fix (slave-1, 6 commits), ptu-rule-112-fix (slave-2, 7 commits). 2 reviewer slaves: slave-3 APPROVED (ptu-rule-107), slave-4 CHANGES_REQUIRED (ptu-rule-092). Smoke test FAILED (pre-existing bugs: bug-033/034/035). 1 ticket resolved (ptu-rule-107). 3 tickets filed (decree-need-027, refactoring-091, ptu-rule-115 resolved).
+**Current task:** Session 51 collection complete. All 5 slaves merged (12 commits). 3 developer slaves: bug-033 (slave-1, 2 commits), bug-034+035 (slave-2, 3 commits), ptu-rule-092-fix (slave-3, 3 commits). 2 reviewer slaves: ptu-rule-091-rereview slave-4 BLOCKED, ptu-rule-112-rereview slave-5 APPROVED. Smoke test PASSED. 4 tickets resolved (bug-033, bug-034, bug-035, ptu-rule-112). 1 ticket filed (ptu-rule-116).
+
+**Session 51 (2026-02-27, plan-20260227-122512):**
+- slave-1 (developer): bug-033 — 2 commits: added `@use 'variables' as *` to 4 SCSS mixin files (_difficulty, _modal, _pokemon-sheet, _sheet). Build-blocking SCSS variable resolution fixed → **resolved**
+- slave-2 (developer): bug-034+035 — 3 commits: added @phosphor-icons/vue dependency to package.json (bug-034), converted LevelUpNotification from missing SVG img tags to Vue icon components (bug-035) → **resolved**
+- slave-3 (developer): ptu-rule-092-fix — 3 commits: guarded removePatheticSkill against outstanding Skill Edges (CRITICAL-01), added informational warning for level > 1 Pathetic enforcement (MEDIUM-01), ticket update. HIGH-01 skipped per decree-need-027 → **fix-cycle-done, needs re-review**
+- slave-4 (reviewers): ptu-rule-091-rereview — code-review-204 **CHANGES_REQUIRED** (C1 CRITICAL: prior collect-slaves merge 1ff8d81 reverted ALL fix cycle 2 code changes, M1: Crystal Artifice→Artificer naming). rules-review-180 **BLOCKED** (all fixes reverted, decree-026 violated). Fix cycle 2 commits were correct but merge process undid them.
+- slave-5 (reviewers): ptu-rule-112-rereview — code-review-205 **APPROVED** + rules-review-181 **APPROVED**. All issues from code-review-201 resolved. 36 Naturewalk tests, decree compliance verified. ptu-rule-112 → **resolved**
+- **Smoke test:** PASSED — all three views (GM, Group, Player) return 200 with Nuxt content after bug-033/034/035 fixes
+- **Merge notes:** 0 conflicts. 3 untracked file conflicts (bug-033/034/035.md) resolved by removing pre-existing untracked copies. All 5 rebased cleanly. 12 commits total
+- **Tickets filed:** ptu-rule-116 (Naturewalk status condition immunity — from rules-review-181 scope boundary)
+- **Tickets resolved:** bug-033 (SCSS @use fix), bug-034 (@phosphor-icons/vue installed), bug-035 (LevelUpNotification icons converted), ptu-rule-112 (APPROVED by both reviewers)
+- **Notable:** ptu-rule-091 needs fix cycle 3 — re-apply reverted trainerClasses.ts/ClassFeatureSection.vue changes + Crystal Artifice→Artificer rename. ptu-rule-115 open copy remains until ptu-rule-091 reversion is resolved.
 
 **Session 50 (2026-02-27, plan-20260227-210000):**
 - slave-1 (developer): ptu-rule-091-fix — 6 commits: removed HP from Stat Ace specializations (CRITICAL-001), replaced Researcher specs with Fields of Study (HIGH-001), removed Martial Artist from branching per decree-026 (HIGH-002/C1), disabled branching at max slots (H1), removed dead countClassInstances (M2), resolved ptu-rule-115 → **fix-cycle-2-done, needs re-review**
