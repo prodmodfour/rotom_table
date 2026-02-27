@@ -3,7 +3,7 @@ id: ptu-rule-091
 title: Branch class blocked by duplicate check
 priority: P3
 severity: MEDIUM
-status: open
+status: in-progress
 domain: character-lifecycle
 source: character-lifecycle-audit.md (R035)
 created_by: slave-collector (plan-20260226-175938)
@@ -32,3 +32,27 @@ Requires decree-need-022 to determine implementation approach (see decree ticket
 ## Impact
 
 Players cannot take branching classes multiple times with different specializations during character creation.
+
+## Resolution Log
+
+Implementation follows decree-022: specialization suffix approach (e.g., 'Type Ace: Fire').
+
+### Commits
+
+- `69f53a0` feat: add branching class specialization constants and helpers
+  - `app/constants/trainerClasses.ts` — Added `BRANCHING_CLASS_SPECIALIZATIONS` with valid options per class, `getBranchingSpecializations()`, `hasBaseClass()`, `getBaseClassName()`, `getSpecialization()` helpers
+- `572f99f` fix: allow branching classes with different specializations in addClass
+  - `app/composables/useCharacterCreation.ts` — Updated duplicate check to block exact duplicates only (not different specializations). Added `countClassInstances()` helper.
+- `ef9b512` feat: add specialization selection dropdown for branching classes
+  - `app/components/create/ClassFeatureSection.vue` — Replaced free-text input with select dropdown. Fixed toggle behavior so branching classes always open picker. Added `isClassDisabled()` and `availableSpecializations` computed.
+- `57c0aee` chore: remove unused getBaseClassName import from useCharacterCreation
+
+### Files Changed
+
+- `app/constants/trainerClasses.ts` — specialization data + helper functions
+- `app/composables/useCharacterCreation.ts` — addClass fix + countClassInstances
+- `app/components/create/ClassFeatureSection.vue` — UI specialization picker
+
+### Verification Approach
+
+No existing class lookup code in the server or display components required changes for prefix matching — all display code simply renders the stored string array, and server code only does JSON serialize/deserialize. The `ClassFeatureSection.vue` was the only component performing class name matching, and it already had partial `startsWith` logic that was extended.
