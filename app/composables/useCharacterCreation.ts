@@ -265,8 +265,18 @@ export function useCharacterCreation() {
   }
 
   // --- Edges ---
-  function addEdge(edgeName: string): void {
+  /**
+   * Add a generic (non-skill) edge to the character.
+   * Rejects edge strings matching "Skill Edge: ..." (case-insensitive) to prevent
+   * bypassing the patheticSkills check in addSkillEdge() (decree-027).
+   * Returns an error string if blocked, or null on success.
+   */
+  function addEdge(edgeName: string): string | null {
+    if (/^skill edge:/i.test(edgeName)) {
+      return 'Skill Edges must be added through the Skill Edge selector, not typed directly'
+    }
     form.edges = [...form.edges, edgeName]
+    return null
   }
 
   function removeEdge(index: number): void {
