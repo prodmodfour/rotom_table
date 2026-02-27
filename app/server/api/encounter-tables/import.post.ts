@@ -67,6 +67,40 @@ function validateImportData(data: unknown): ImportData {
     throw new Error('Invalid import data: level range must have min and max numbers')
   }
 
+  if (levelRange.min > levelRange.max) {
+    throw new Error('Invalid import data: levelMin must be less than or equal to levelMax')
+  }
+
+  // Validate entry-level and modification-level ranges
+  const entries = (table.entries || []) as Array<Record<string, unknown>>
+  for (const entry of entries) {
+    const entryRange = entry.levelRange as Record<string, unknown> | null | undefined
+    if (entryRange && typeof entryRange.min === 'number' && typeof entryRange.max === 'number') {
+      if (entryRange.min > entryRange.max) {
+        throw new Error(`Invalid import data: entry levelMin must be less than or equal to levelMax`)
+      }
+    }
+  }
+
+  const modifications = (table.modifications || []) as Array<Record<string, unknown>>
+  for (const mod of modifications) {
+    const modRange = mod.levelRange as Record<string, unknown> | null | undefined
+    if (modRange && typeof modRange.min === 'number' && typeof modRange.max === 'number') {
+      if (modRange.min > modRange.max) {
+        throw new Error(`Invalid import data: modification levelMin must be less than or equal to levelMax`)
+      }
+    }
+    const modEntries = (mod.entries || []) as Array<Record<string, unknown>>
+    for (const modEntry of modEntries) {
+      const meRange = modEntry.levelRange as Record<string, unknown> | null | undefined
+      if (meRange && typeof meRange.min === 'number' && typeof meRange.max === 'number') {
+        if (meRange.min > meRange.max) {
+          throw new Error(`Invalid import data: modification entry levelMin must be less than or equal to levelMax`)
+        }
+      }
+    }
+  }
+
   return data as ImportData
 }
 

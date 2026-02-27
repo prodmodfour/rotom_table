@@ -54,6 +54,16 @@ export default defineEventHandler(async (event) => {
       })
     }
 
+    // Validate level range: levelMin must be <= levelMax
+    const entryLevelMin = body.levelRange?.min ?? null
+    const entryLevelMax = body.levelRange?.max ?? null
+    if (entryLevelMin !== null && entryLevelMax !== null && entryLevelMin > entryLevelMax) {
+      throw createError({
+        statusCode: 400,
+        message: 'levelMin must be less than or equal to levelMax'
+      })
+    }
+
     // Check if entry already exists for this species in this modification
     const existingEntry = await prisma.modificationEntry.findFirst({
       where: {

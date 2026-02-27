@@ -55,6 +55,19 @@ export default defineEventHandler(async (event) => {
       })
     }
 
+    // Validate level range cross-field: levelMin must be <= levelMax
+    // Merge provided values with existing values to catch partial updates
+    const effectiveLevelMin = body.levelMin !== undefined ? body.levelMin : existing.levelMin
+    const effectiveLevelMax = body.levelMax !== undefined ? body.levelMax : existing.levelMax
+    if (effectiveLevelMin !== null && effectiveLevelMax !== null &&
+        typeof effectiveLevelMin === 'number' && typeof effectiveLevelMax === 'number' &&
+        effectiveLevelMin > effectiveLevelMax) {
+      throw createError({
+        statusCode: 400,
+        message: 'levelMin must be less than or equal to levelMax'
+      })
+    }
+
     // Build update data
     const updateData: Record<string, unknown> = {}
     if (body.weight !== undefined) {

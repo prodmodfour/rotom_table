@@ -12,6 +12,16 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
+    // Validate level range: levelMin must be <= levelMax
+    const levelMin = body.levelRange?.min ?? 1
+    const levelMax = body.levelRange?.max ?? 10
+    if (typeof levelMin === 'number' && typeof levelMax === 'number' && levelMin > levelMax) {
+      throw createError({
+        statusCode: 400,
+        message: 'levelMin must be less than or equal to levelMax'
+      })
+    }
+
     // Validate density if provided
     const validDensities = ['sparse', 'moderate', 'dense', 'abundant']
     const density = body.density && validDensities.includes(body.density)
@@ -24,8 +34,8 @@ export default defineEventHandler(async (event) => {
         name: body.name,
         description: body.description ?? null,
         imageUrl: body.imageUrl ?? null,
-        levelMin: body.levelRange?.min ?? 1,
-        levelMax: body.levelRange?.max ?? 10,
+        levelMin,
+        levelMax,
         ...(density && { density })
       },
       include: {

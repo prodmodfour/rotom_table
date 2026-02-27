@@ -39,6 +39,16 @@ export default defineEventHandler(async (event) => {
       })
     }
 
+    // Validate level range: levelMin must be <= levelMax
+    const modLevelMin = body.levelRange?.min ?? null
+    const modLevelMax = body.levelRange?.max ?? null
+    if (modLevelMin !== null && modLevelMax !== null && modLevelMin > modLevelMax) {
+      throw createError({
+        statusCode: 400,
+        message: 'levelMin must be less than or equal to levelMax'
+      })
+    }
+
     const modification = await prisma.tableModification.update({
       where: { id: modId },
       data: {
