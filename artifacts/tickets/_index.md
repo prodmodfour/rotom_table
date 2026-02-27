@@ -1,19 +1,20 @@
 ---
-generated_at: 2026-02-27T17:07:20.937Z
-total_tickets: 179
-open: 2
+generated_at: 2026-02-27T21:24:01.962Z
+total_tickets: 180
+open: 3
 in_progress: 81
 resolved: 92
 ---
 
 # Tickets Index
 
-## Open Tickets (2)
+## Open Tickets (3)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
 | ptu-rule-095 | ptu-rule | P4 | vtt-grid | ptu-rule-095: Disengage maneuver missing from combatManeuver |
 | ux-006 | ux | P4 | — | ux-006: PTU injury markers may leak precise HP info in playe |
+| refactoring-095 | refactoring | P4 | character-lifecycle | refactoring-095: Guard addEdge() against Skill Edge string i |
 
 ## In-Progress Tickets (81)
 
@@ -114,4 +115,4 @@ All decree-needs addressed.
 | feature | 0 | 1 | 1 | 3 |
 | ux | 1 | 7 | 2 | 10 |
 | decree | 0 | 0 | 27 | 27 |
-| refactoring | 0 | 10 | 0 | 11 |
+| refactoring | 1 | 10 | 0 | 12 |
