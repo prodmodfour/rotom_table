@@ -87,23 +87,23 @@ export const SIGNIFICANCE_PRESETS: SignificancePreset[] = [
   {
     tier: 'significant',
     label: 'Significant',
-    multiplierRange: { min: 3.0, max: 4.0 },
-    defaultMultiplier: 3.5,
-    description: 'Gym leaders, rival encounters, mini-bosses'
+    multiplierRange: { min: 4.0, max: 5.0 },
+    defaultMultiplier: 4.0,
+    description: 'Gym leaders, rival encounters, mini-bosses (PTU: x4-x5+)'
   },
   {
     tier: 'climactic',
     label: 'Climactic',
-    multiplierRange: { min: 4.0, max: 5.0 },
-    defaultMultiplier: 4.5,
-    description: 'Tournament finals, legendary encounters, arc finales'
+    multiplierRange: { min: 5.0, max: 7.0 },
+    defaultMultiplier: 6.0,
+    description: 'Tournament finals, legendary encounters, arc finales (extended)'
   },
   {
     tier: 'legendary',
     label: 'Legendary',
-    multiplierRange: { min: 5.0, max: 5.0 },
-    defaultMultiplier: 5.0,
-    description: 'Campaign-defining battles, one-of-a-kind showdowns'
+    multiplierRange: { min: 7.0, max: 10.0 },
+    defaultMultiplier: 8.0,
+    description: 'Campaign-defining battles, one-of-a-kind showdowns (extended)'
   }
 ]
 

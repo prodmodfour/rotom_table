@@ -59,7 +59,7 @@ export const MAX_EXPERIENCE = EXPERIENCE_CHART[MAX_LEVEL]
  * PTU Core p.460: GM-assigned based on narrative significance.
  *
  * Object format for template v-for="(value, key)" iteration:
- * { insignificant: 1.0, everyday: 2.0, significant: 3.5, climactic: 4.5, legendary: 5.0 }
+ * { insignificant: 1.0, everyday: 2.0, significant: 4.0, climactic: 6.0, legendary: 8.0 }
  */
 export const SIGNIFICANCE_PRESETS = Object.fromEntries(
   BUDGET_PRESETS.map(p => [p.tier, p.defaultMultiplier])
