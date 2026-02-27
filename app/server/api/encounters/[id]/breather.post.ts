@@ -45,7 +45,7 @@ function buildBreatherNotes(
     parts.push(`re-applied CS: ${sourceDescs.join(', ')}`)
   }
   if (result.assisted) {
-    parts.push('ASSISTED: Tripped + Evasion set to 0 (no Vulnerable)')
+    parts.push('ASSISTED: Tripped + Evasion set to 0 (no Vulnerable). SHIFT REQUIRED: Both must shift away using lower speed.')
   } else {
     parts.push('SHIFT REQUIRED: Move away from all enemies using full movement.')
   }

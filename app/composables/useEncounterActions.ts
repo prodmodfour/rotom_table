@@ -169,10 +169,10 @@ export function useEncounterActions(options: EncounterActionsOptions) {
           encounterStore.encounter.id, combatantId, assisted
         )
         // Signal that the GM needs to shift this combatant away from enemies (PTU p.245)
-        // Only for unassisted breather — assisted variant doesn't require the shift
-        if (!assisted) {
-          breatherShift = { combatantId, combatantName: name }
-        }
+        // Both standard and assisted variants require the shift — "both the assisting
+        // Trainer and their target must Shift as far away from enemies as possible,
+        // using the lower of the two's maximum movement for a single Shift."
+        breatherShift = { combatantId, combatantName: name }
       }
     } else {
       // Handle standard actions
