@@ -68,3 +68,16 @@ Implement the two-phase trainer system for League Battles: declare (low-to-high 
   - `c53c70d` initiative reorder phase-awareness fix
 - **P0 status: implemented** (pending review)
 - P1 remains: UI components (DeclarationPanel, DeclarationSummary), WebSocket sync, edge cases
+
+### P0 Fix Cycle (code-review-198) (2026-02-27)
+- Branch: `slave/1-developer-ptu-rule-107-fix-20260227`
+- Addresses all issues from code-review-198 CHANGES_REQUIRED:
+  - `11a42f3` **CRITICAL C1**: Skip tempConditions clearing during declaration phase; clear in resetResolvingTrainerTurnState instead
+    - Files: `app/server/api/encounters/[id]/next-turn.post.ts`
+  - `8a3e507` **HIGH H1**: Reset hasActed for ALL trainers at declaration->resolution transition (not just first)
+    - Files: `app/server/api/encounters/[id]/next-turn.post.ts`
+  - `b90f089` **HIGH H2**: Add POST /api/encounters/:id/declare to app-surface.md
+    - Files: `.claude/skills/references/app-surface.md`
+  - `06bcb11` **MEDIUM M2**: Unit tests for three-phase flow, tempConditions, hasActed, and declare validation
+    - Files: `app/tests/unit/api/league-battle-phases.test.ts`
+- **P0 fix status: complete** (ready for re-review)
