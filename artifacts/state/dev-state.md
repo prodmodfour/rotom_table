@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-02-27T10:00:00
-updated_by: slave-collector (plan-20260227-083657)
+last_updated: 2026-02-27T18:15:00
+updated_by: slave-collector (plan-20260227-174900)
 ---
 
 # Dev Ecosystem State
@@ -33,28 +33,29 @@ updated_by: slave-collector (plan-20260227-083657)
 | ptu-rule-083 | P4 | **resolved** | Measurement store uses Chebyshev distance instead of PTU alternating diagonal (from rules-review-144 RULING-1). Fix applied + APPROVED (code-review-161, rules-review-151). M1 → refactoring-080 |
 | ptu-rule-084 | P2 | **resolved** | Vulnerable/Frozen/Asleep zero evasion. APPROVED: code-review-191 + rules-review-168 (re-review of fix cycle). All issues resolved |
 | ptu-rule-085 | P2 | **resolved** | Legendary auto-detection -30 capture. APPROVED: code-review-191 + rules-review-168. Meltan/Melmetal/Zarude/Enamorus added |
-| ptu-rule-086 | P3 | **CHANGES_REQUIRED** | Capture modifier sign convention fixed. code-review-194 CHANGES_REQUIRED (C1: csv-import tutorPoints — shared review). rules-review-171 APPROVED. Fix cycle needed for C1 |
-| ptu-rule-087 | P3 | **CHANGES_REQUIRED** | Tutor point calculation added. code-review-194 CHANGES_REQUIRED (C1: csv-import.service.ts missing tutorPoints field). rules-review-171 APPROVED. Fix: add tutorPoints to csv-import GeneratedPokemonData |
-| ptu-rule-088 | P3 | **CHANGES_REQUIRED** | Significance tier presets realigned. code-review-194 CHANGES_REQUIRED (C1 from 087 in shared review). rules-review-171 APPROVED (M1: overlapping tier boundaries → ux-010) |
-| ptu-rule-089 | P3 | **fix-cycle-done, needs review** | Extended rest daily move refresh implemented (slave-6, plan-20260227-083657). Extracted refreshDailyMoves service, wired into character + Pokemon extended-rest endpoints |
-| ptu-rule-090 | P3 | **fix-cycle-done, needs review** | Scene-end AP restoration implemented (slave-6, plan-20260227-083657). Shares implementation with ptu-rule-089 |
+| ptu-rule-086 | P3 | **fix-cycle-done, needs re-review** | Capture modifier sign convention fixed. code-review-194 C1 fixed (slave-2, plan-20260227-174900). rules-review-171 APPROVED |
+| ptu-rule-087 | P3 | **fix-cycle-done, needs re-review** | Tutor point calculation added. code-review-194 C1 fixed: tutorPoints added to csv-import GeneratedPokemonData (slave-2, plan-20260227-174900). rules-review-171 APPROVED |
+| ptu-rule-088 | P3 | **fix-cycle-done, needs re-review** | Significance tier presets realigned. code-review-194 C1 fixed (shared review with 086/087). rules-review-171 APPROVED (M1: overlapping tier boundaries → ux-010) |
+| ptu-rule-089 | P3 | **resolved** | Extended rest daily move refresh. APPROVED: code-review-196 + rules-review-173 (plan-20260227-174900). M1: app-surface.md → refactoring-089. M2: ticket status → resolved |
+| ptu-rule-090 | P3 | **resolved** | Scene-end AP restoration already implemented (confirmed by code-review-196 + rules-review-173). No code changes needed. APPROVED |
 | ptu-rule-091 | P3 | **open** | Branch class blocked by duplicate check — isBranching flag is dead code (from character-lifecycle-audit R035). Blocked by decree-need-022 |
 | ptu-rule-092 | P3 | **open** | Pathetic skill enforcement gap in custom background mode (from character-lifecycle-audit R024) |
-| ptu-rule-093 | P3 | **fix-cycle-done, needs review** | Rough terrain accuracy penalty — resolved by ptu-rule-108 fix (slave-4, plan-20260227-083657). Overlapping scope with ptu-rule-108 |
+| ptu-rule-093 | P3 | **resolved** | Rough terrain accuracy penalty — resolved by ptu-rule-108 fix. APPROVED: code-review-195 + rules-review-172 (plan-20260227-174900) |
 | ptu-rule-094 | P4 | **open** | Natural healing min(1) HP contradicts PTU for low-HP entities (from healing-audit R007) |
 | ptu-rule-095 | P4 | **open** | Disengage maneuver missing from combatManeuvers — defer until AoO implemented (from vtt-grid-audit R030) |
 | ptu-rule-096 | P0 | **resolved** | Range measurement switched to PTU alternating diagonal. APPROVED: code-review-189 + rules-review-166 (re-review). All 7 issues from code-review-183 resolved |
 | ptu-rule-097 | P0 | **resolved** | Token passability + enemy rough terrain -2 accuracy. APPROVED: code-review-189 + rules-review-166. isEnemySide extracted, getBlockedCells removed, unit tests added |
 | ptu-rule-098 | P1 | **resolved** | Status CS auto-tracking (Burn/Paralysis/Poison) with source tracking. APPROVED: code-review-191 + rules-review-168. Defense-in-depth: reset at encounter end AND combat entry |
-| ptu-rule-099 | P1 | **CHANGES_REQUIRED** | Dynamic initiative reorder. code-review-192 CHANGES_REQUIRED (C1: stages.post.ts `?.change !== 0` evaluates true for non-speed changes). rules-review-169 CHANGES_REQUIRED (H1: same issue). Fix: `stageResult.changes.speed != null && .change !== 0` |
+| ptu-rule-099 | P1 | **fix-cycle-done, needs re-review** | Dynamic initiative reorder. code-review-192 C1 fixed: speedChanged check corrected (slave-1, plan-20260227-174900). rules-review-169 H1 fixed. 2 commits |
 | ptu-rule-100 | P1 | **resolved** | Cone shapes fixed to 3m-wide rows. APPROVED: code-review-189 + rules-review-166. Diagonal cone diamond pattern per decree-024 |
 | ptu-rule-101 | P1 | **resolved** | Water cost 1 + terrain multi-tag. APPROVED: code-review-190 + rules-review-167. All 5 issues from code-review-185 resolved |
 | ptu-rule-102 | P1 | **resolved** | Diagonal Line attacks shortened. APPROVED: code-review-189 + rules-review-166. Unit tests for grid distance, combat sides, AoE shapes |
 | ptu-rule-103 | P1 | **resolved** | Mixed-terrain speed averaging. APPROVED: code-review-193 + rules-review-170 (re-review). All 4 issues from code-review-187 resolved. decree-011 compliant |
-| ptu-rule-104 | P1 | **CHANGES_REQUIRED** | Type-immunity enforcement. Shares fix cycle with ptu-rule-099. code-review-192 C1 affects stages.post.ts (shared endpoint) |
+| ptu-rule-104 | P1 | **fix-cycle-done, needs re-review** | Type-immunity enforcement. Shares fix cycle with ptu-rule-099. code-review-192 C1 fixed (slave-1, plan-20260227-174900) |
 | ptu-rule-105 | P2 | **resolved** | Extended rest preserves Bound AP (clears only Drained AP) per decree-016. code-review-188 APPROVED, rules-review-165 APPROVED |
 | ptu-rule-106 | P2 | **resolved** | Extended rest duration parameter (4-8h, default 4). Scalable healing periods with 8h daily cap. Per decree-018. code-review-188 APPROVED, rules-review-165 APPROVED |
-| ptu-rule-108 | P2 | **fix-cycle-done, needs review** | Rough terrain accuracy penalty for painted terrain cells implemented (slave-4, plan-20260227-083657). Bresenham line trace checks terrainStore.isRoughAt(). Also resolves ptu-rule-093 |
+| ptu-rule-107 | P2 | **P0-implemented, needs review** | League Battle two-phase trainer system. P0 implemented (slave-3, plan-20260227-174900): 10 commits — TrainerDeclaration types, Prisma schema, declaration endpoint, three-phase turn progression, store actions, undo/redo persistence, phase-aware initiative. Design spec at design-league-battle-001/ |
+| ptu-rule-108 | P2 | **resolved** | Rough terrain accuracy penalty for painted terrain. APPROVED: code-review-195 + rules-review-172 (plan-20260227-174900). MED-1: Naturewalk gap → ptu-rule-112 (existing). MED-2: "through" ambiguity → decree-need-025 |
 | ptu-rule-109 | P3 | **resolved** | Legendary species list complete. APPROVED: code-review-191 + rules-review-168. 100 total species (Meltan/Melmetal/Zarude/Enamorus added) |
 | ptu-rule-110 | P2 | **resolved** | Encounter end resets combat stages. APPROVED: code-review-191 + rules-review-168. stageModifiers + stageSources reset to defaults |
 | ptu-rule-111 | P2 | **resolved** | tempConditions Vulnerable zero evasion. APPROVED: code-review-191 + rules-review-168. Both client + server checks inspect tempConditions |
@@ -85,7 +86,17 @@ updated_by: slave-collector (plan-20260227-083657)
 
 ## Active Developer Work
 
-**Current task:** Session 46 collection complete. All 6 slaves merged (16 commits). 3 developer slaves: ptu-rule-108+093 (slave-4, 4 commits), ptu-rule-089+090 (slave-6, 5 commits), ptu-rule-107-design (slave-5, 1 commit). 3 reviewer slaves: slave-1 CHANGES_REQUIRED (ptu-rule-099+104), slave-2 APPROVED (ptu-rule-103), slave-3 CHANGES_REQUIRED (ptu-rule-086+087+088). 1 ticket resolved (ptu-rule-103). 2 tickets filed (ux-010, ptu-rule-114).
+**Current task:** Session 47 collection complete. All 5 slaves merged (17 commits). 3 developer slaves: ptu-rule-099+104-fix (slave-1, 2 commits), ptu-rule-086+087+088-fix (slave-2, 2 commits), ptu-rule-107-p0 (slave-3, 10 commits). 2 reviewer slaves: slave-4 APPROVED (ptu-rule-108+093), slave-5 APPROVED (ptu-rule-089+090). 4 tickets resolved (ptu-rule-089, 090, 093, 108). 4 tickets filed (decree-need-025, refactoring-088, 089, 090).
+
+**Session 47 (2026-02-27, plan-20260227-174900):**
+- slave-1 (developer): ptu-rule-099+104-fix — 2 commits: corrected speedChanged check `speed != null && .change !== 0` (CRITICAL-1 from code-review-192). Grepped for other instances, none found → **fix-cycle-done, needs re-review**
+- slave-2 (developer): ptu-rule-086+087+088-fix — 2 commits: added tutorPoints to csv-import GeneratedPokemonData (CRITICAL-1 from code-review-194). Ticket updated → **fix-cycle-done, needs re-review**
+- slave-3 (developer): ptu-rule-107-p0 — 10 commits: League Battle two-phase trainer system P0. TrainerDeclaration types, Prisma schema, declaration endpoint, three-phase turn progression (declaration→resolution→pokemon), store actions, undo/redo persistence, phase-aware initiative reorder → **P0-implemented, needs review**
+- slave-4 (reviewers): ptu-rule-108+093 — code-review-195 **APPROVED** (MED-1: allCombatants fallback → refactoring-088). rules-review-172 **APPROVED** (MED-1: Naturewalk → ptu-rule-112, MED-2: "through" ambiguity → decree-need-025)
+- slave-5 (reviewers): ptu-rule-089+090 — code-review-196 **APPROVED** (M1: app-surface.md → refactoring-089, M2: ticket status process nit). rules-review-173 **APPROVED** (MED-1: usedToday hygiene → refactoring-090)
+- **Merge notes:** 0 conflicts. All 5 rebased cleanly. 17 commits total. Slave 3 rebased onto slave 1 (shared stages.post.ts) without conflict.
+- **Tickets filed:** decree-need-025 (rough terrain "through" ambiguity), refactoring-088 (allCombatants fallback), refactoring-089 (app-surface.md rest-healing), refactoring-090 (non-daily usedToday hygiene)
+- **Tickets resolved:** ptu-rule-089 (APPROVED), ptu-rule-090 (APPROVED), ptu-rule-093 (APPROVED), ptu-rule-108 (APPROVED)
 
 **Session 46 (2026-02-27, plan-20260227-083657):**
 - slave-4 (developer): ptu-rule-108+093 — 4 commits: painted rough terrain accuracy penalty via terrainStore.isRoughAt() in Bresenham line trace, unit tests, ticket updates → **fix-cycle-done, needs review**
