@@ -61,17 +61,18 @@ artifacts/
 │   ├── <domain>-capabilities.md   # Capability Mapper writes → Coverage Analyzer reads
 │   ├── <domain>-matrix.md         # Coverage Analyzer writes → Auditor reads, Orchestrator reads
 │   └── <domain>-audit.md          # Implementation Auditor writes → Orchestrator reads
-├── designs/            # Shared: Developer writes → shared read zone
+├── designs/            # Shared: Developer writes → shared read zone (atomized per-design dirs)
 ├── refactoring/        # Dev: Code Health Auditor writes → Developer reads
-├── reviews/            # Dev: Reviewers write → Orchestrator/Developer read
+├── reviews/            # Dev: Reviewers write → Orchestrator/Developer read (active/ + archive/)
 ├── lessons/            # Shared: Retrospective Analyst writes → all read
-├── loops/              # Legacy: from previous Synthesizer runs
-├── scenarios/          # Legacy: from previous Crafter runs
-├── verifications/      # Legacy: from previous Verifier runs
-├── results/            # Legacy: from previous Playtester runs
-├── reports/            # Legacy: from previous Result Verifier runs
-├── dev-state.md        # Orchestrator writes → Dev skills read
-└── test-state.md       # Orchestrator writes → Matrix skills read
+├── tickets/            # Cross-ecosystem: open/ + in-progress/ + resolved/ status dirs
+│   ├── open/           # New tickets by category (bug/, ptu-rule/, feature/, ux/, decree/)
+│   ├── in-progress/    # Being worked on
+│   └── resolved/       # Completed
+└── state/              # Ecosystem state files
+    ├── dev-state.md    # Orchestrator writes → Dev skills read
+    ├── test-state.md   # Orchestrator writes → Matrix skills read
+    └── alive-agents.md # Slave Collector writes → Master Planner reads
 ```
 
 ### 2.4 Ticket System

@@ -28,20 +28,30 @@ artifacts/
 │           ├── _index.md          # Summary + action items
 │           ├── tier-N-<slug>.md   # Grouped verifications by tier
 │           └── correct-items.md   # COLD: all verified-correct items
-├── designs/               # Developer writes (when feature ticket needs design)
+├── designs/               # Developer writes (atomized per-design dirs)
+│   ├── design-NAME/       # Per-design directory
+│   │   ├── _index.md      # Frontmatter + summary + tier status
+│   │   ├── spec-p0.md     # P0 tier specification
+│   │   ├── spec-p1.md     # P1 tier specification
+│   │   ├── spec-p2.md     # P2 tier specification
+│   │   ├── shared-specs.md # Cross-cutting specs
+│   │   ├── testing-strategy.md
+│   │   └── implementation-log.md
+│   └── _archive/          # Original monolithic files
 ├── refactoring/           # Code Health Auditor writes
 ├── reviews/               # Senior Reviewer + Game Logic Reviewer write
-│   ├── _index.md                  # Active review summary (auto-generated)
-│   ├── active/                    # Reviews requiring action or pending
-│   └── archive/                   # APPROVED reviews (organized by YYYY-MM)
+│   ├── _index.md          # Active review summary (auto-generated)
+│   ├── active/            # Reviews requiring action or pending
+│   └── archive/           # APPROVED reviews (organized by YYYY-MM)
+├── tickets/               # Cross-ecosystem ticket system
+│   ├── open/              # New tickets (bug/, ptu-rule/, feature/, ux/, decree/)
+│   ├── in-progress/       # Being worked on
+│   └── resolved/          # Completed
 ├── lessons/               # Retrospective Analyst writes
-├── loops/                 # Legacy: from previous Synthesizer runs
-├── scenarios/             # Legacy: from previous Crafter runs
-├── verifications/         # Legacy: from previous Verifier runs
-├── results/               # Legacy: from previous Playtester runs
-├── reports/               # Legacy: from previous Result Verifier runs
-├── dev-state.md           # Orchestrator writes (sole writer)
-└── test-state.md          # Orchestrator writes (sole writer)
+└── state/                 # Ecosystem state files
+    ├── dev-state.md       # Orchestrator writes (sole writer)
+    ├── test-state.md      # Orchestrator writes (sole writer)
+    └── alive-agents.md    # Slave Collector writes
 ```
 
 ## File Naming Conventions
