@@ -524,20 +524,6 @@ function onAddFeature(): void {
 }
 
 // .selected-tags, .tag base, .tag__remove — in _create-form-shared.scss
-
-.tag {
-  &--class {
-    background: rgba($color-accent-violet, 0.15);
-    border: 1px solid rgba($color-accent-violet, 0.3);
-    color: $color-accent-violet;
-  }
-
-  &--feature {
-    background: rgba($color-accent-teal, 0.15);
-    border: 1px solid rgba($color-accent-teal, 0.3);
-    color: $color-accent-teal;
-  }
-}
-
+// .tag--class, .tag--feature — in _tags.scss
 // .warning-item — in _create-form-shared.scss
 </style>
