@@ -6,7 +6,7 @@ severity: MEDIUM
 category: ptu-rule
 source: decree-029
 created_at: 2026-02-28
-status: open
+status: in-progress
 ---
 
 ## Summary
@@ -29,4 +29,19 @@ Rest healing uses `Math.floor(maxHp / 16)` which produces 0 for Pokemon with max
 
 - `app/utils/restHealing.ts`
 - `app/server/api/characters/[id]/rest.post.ts`
-- Related unit tests
+- `app/server/api/pokemon/[id]/rest.post.ts`
+- `app/server/api/characters/[id]/extended-rest.post.ts`
+- `app/server/api/pokemon/[id]/extended-rest.post.ts`
+- `app/tests/unit/utils/restHealing.test.ts`
+
+## Resolution Log
+
+### 9f03df5 — fix: apply minimum 1 HP floor to rest healing per decree-029
+
+**Files changed:**
+- `app/utils/restHealing.ts` — Applied `Math.max(1, Math.floor(maxHp / 16))` in both `calculateRestHealing()` (line 66) and `getRestHealingInfo()` (line 175)
+- `app/tests/unit/utils/restHealing.test.ts` — Updated existing "heals 0 HP" test to expect 1 HP; added 4 new test cases: Shedinja-level maxHp, maxHp of 1, over-heal prevention, and `getRestHealingInfo` display value
+
+**Verification:**
+- All 4 rest API endpoints (character/pokemon rest + extended-rest) delegate to `calculateRestHealing()`, so the fix propagates to all rest types automatically
+- No other code paths compute `maxHp / 16` outside of `restHealing.ts`
