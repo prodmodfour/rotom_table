@@ -7,6 +7,7 @@
  */
 import { prisma } from '~/server/utils/prisma'
 import { buildEncounterResponse } from '~/server/services/encounter.service'
+import type { TrainerDeclaration } from '~/types/combat'
 
 export default defineEventHandler(async (event) => {
   const id = getRouterParam(event, 'id')
@@ -74,9 +75,22 @@ export default defineEventHandler(async (event) => {
 
     const isLeagueBattle = encounter.battleType === 'trainer'
 
+    // Parse declarations for edge case handling (fainted trainers, missing declarations)
+    const declarations: TrainerDeclaration[] = JSON.parse(encounter.declarations || '[]')
+
     if (isLeagueBattle) {
       // League Battle: three-phase turn progression (decree-021)
       // trainer_declaration (low→high) → trainer_resolution (high→low) → pokemon (high→low) → new round
+
+      // Auto-skip fainted trainers during declaration phase (edge case H1)
+      if (currentPhase === 'trainer_declaration') {
+        currentTurnIndex = skipFaintedTrainers(currentTurnIndex, turnOrder, combatants)
+      }
+      // Auto-skip trainers with no declaration during resolution phase (edge case H1)
+      if (currentPhase === 'trainer_resolution') {
+        currentTurnIndex = skipUndeclaredTrainers(currentTurnIndex, turnOrder, declarations, currentRound)
+      }
+
       if (currentTurnIndex >= turnOrder.length) {
         if (currentPhase === 'trainer_declaration') {
           // Declaration phase done → transition to RESOLUTION phase
@@ -92,8 +106,27 @@ export default defineEventHandler(async (event) => {
             // is their actual turn — clear hasActed so UI doesn't show them as already acted.
             resetAllTrainersForResolution(combatants, resolutionOrder)
 
-            // Give the first resolving trainer full action economy
-            resetResolvingTrainerTurnState(combatants, turnOrder[0])
+            // Skip trainers with no declaration at the start of resolution phase
+            currentTurnIndex = skipUndeclaredTrainers(currentTurnIndex, turnOrder, declarations, currentRound)
+
+            if (currentTurnIndex >= turnOrder.length) {
+              // All trainers skipped (all fainted) → go straight to pokemon phase
+              if (pokemonTurnOrder.length > 0) {
+                currentPhase = 'pokemon'
+                turnOrder = [...pokemonTurnOrder]
+                currentTurnIndex = 0
+              } else {
+                // No pokemon either → new round
+                currentRound++
+                currentTurnIndex = 0
+                clearDeclarations = true
+                resetCombatantsForNewRound(combatants)
+                ;({ weather, weatherDuration, weatherSource } = decrementWeather(weather, weatherDuration, weatherSource))
+              }
+            } else {
+              // Give the first resolving trainer full action economy
+              resetResolvingTrainerTurnState(combatants, turnOrder[currentTurnIndex])
+            }
           } else {
             // No trainers with declarations → skip to pokemon
             if (pokemonTurnOrder.length > 0) {
@@ -124,6 +157,11 @@ export default defineEventHandler(async (event) => {
             clearDeclarations = true
             resetCombatantsForNewRound(combatants)
             ;({ weather, weatherDuration, weatherSource } = decrementWeather(weather, weatherDuration, weatherSource))
+
+            // If starting a new declaration phase, skip fainted trainers at the start
+            if (currentPhase === 'trainer_declaration') {
+              currentTurnIndex = skipFaintedTrainers(currentTurnIndex, turnOrder, combatants)
+            }
           }
         } else {
           // Pokemon phase done → new round starts with trainer declarations
@@ -138,6 +176,11 @@ export default defineEventHandler(async (event) => {
           } else {
             currentPhase = 'pokemon'
             turnOrder = [...pokemonTurnOrder]
+          }
+
+          // Skip fainted trainers at the start of a new declaration phase
+          if (currentPhase === 'trainer_declaration') {
+            currentTurnIndex = skipFaintedTrainers(currentTurnIndex, turnOrder, combatants)
           }
 
           ;({ weather, weatherDuration, weatherSource } = decrementWeather(weather, weatherDuration, weatherSource))
@@ -252,6 +295,51 @@ function resetCombatantsForNewRound(combatants: any[]) {
       isHolding: false
     }
   })
+}
+
+/**
+ * Auto-skip fainted trainers during declaration phase (edge case H1).
+ * A fainted trainer cannot declare actions. Advances currentTurnIndex
+ * past any fainted trainers. Returns the updated index.
+ */
+function skipFaintedTrainers(
+  startIndex: number,
+  turnOrder: string[],
+  combatants: any[]
+): number {
+  let index = startIndex
+  while (index < turnOrder.length) {
+    const combatantId = turnOrder[index]
+    const combatant = combatants.find((c: any) => c.id === combatantId)
+    // Stop at the first non-fainted trainer (HP > 0)
+    if (combatant && combatant.entity.currentHp > 0) break
+    index++
+  }
+  return index
+}
+
+/**
+ * Auto-skip trainers with no declaration during resolution phase (edge case H1).
+ * If a trainer was fainted during declaration (or otherwise has no declaration),
+ * they have nothing to resolve. Advances currentTurnIndex past them.
+ * Returns the updated index.
+ */
+function skipUndeclaredTrainers(
+  startIndex: number,
+  turnOrder: string[],
+  declarations: TrainerDeclaration[],
+  currentRound: number
+): number {
+  let index = startIndex
+  while (index < turnOrder.length) {
+    const combatantId = turnOrder[index]
+    const hasDeclaration = declarations.some(
+      d => d.combatantId === combatantId && d.round === currentRound
+    )
+    if (hasDeclaration) break
+    index++
+  }
+  return index
 }
 
 /**
