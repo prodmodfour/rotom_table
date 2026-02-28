@@ -212,12 +212,12 @@ const charactersWithPokemon = computed(() => {
     .filter(char => char.pokemon.length > 0)
 })
 
-// Budget info for StartEncounterModal (PTU p.473)
+// Budget info for StartEncounterModal (PTU Encounter Creation Guide, Chapter 11)
 const budgetInfo = computed(() => {
   if (!scene.value) return undefined
   if (scene.value.pokemon.length === 0 || scene.value.characters.length === 0) return undefined
 
-  // Filter to PC trainers only -- PTU p.473 uses 'number of player trainers', not all characters
+  // Filter to PC trainers only -- PTU Encounter Creation Guide uses 'number of Trainers' (players)
   const sceneCharIds = scene.value.characters.map(c => c.characterId)
   const playerCharIds = sceneCharIds.filter(id =>
     allCharacters.value.find(c => c.id === id)?.characterType === 'player'
