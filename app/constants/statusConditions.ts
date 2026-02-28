@@ -14,7 +14,7 @@ export const VOLATILE_CONDITIONS: StatusCondition[] = [
 ]
 
 export const OTHER_CONDITIONS: StatusCondition[] = [
-  'Fainted', 'Stuck', 'Slowed', 'Trapped', 'Tripped', 'Vulnerable'
+  'Fainted', 'Dead', 'Stuck', 'Slowed', 'Trapped', 'Tripped', 'Vulnerable'
 ]
 
 export const ALL_STATUS_CONDITIONS: StatusCondition[] = [
@@ -75,6 +75,7 @@ export function getConditionClass(condition: StatusCondition): string {
     'Bad Sleep': 'condition--sleep',
     'Confused': 'condition--confusion',
     'Fainted': 'condition--fainted',
+    'Dead': 'condition--dead',
     'Flinched': 'condition--flinch',
     'Infatuated': 'condition--infatuation'
   }

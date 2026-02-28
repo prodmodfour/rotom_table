@@ -5,7 +5,7 @@ export type StatusCondition =
   | 'Burned' | 'Frozen' | 'Paralyzed' | 'Poisoned' | 'Badly Poisoned'
   | 'Asleep' | 'Bad Sleep' | 'Confused' | 'Flinched' | 'Infatuated' | 'Cursed'
   | 'Disabled' | 'Enraged' | 'Suppressed'
-  | 'Stuck' | 'Slowed' | 'Trapped' | 'Fainted'
+  | 'Stuck' | 'Slowed' | 'Trapped' | 'Fainted' | 'Dead'
   | 'Tripped' | 'Vulnerable';
 
 // PTU Action Types
