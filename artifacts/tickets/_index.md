@@ -1,20 +1,22 @@
 ---
-generated_at: 2026-02-28T07:08:42.871Z
-total_tickets: 180
-open: 3
+generated_at: 2026-02-28T07:53:45.002Z
+total_tickets: 182
+open: 5
 in_progress: 81
 resolved: 92
 ---
 
 # Tickets Index
 
-## Open Tickets (3)
+## Open Tickets (5)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
 | ptu-rule-095 | ptu-rule | P4 | vtt-grid | ptu-rule-095: Disengage maneuver missing from combatManeuver |
+| ptu-rule-120 | ptu-rule | P4 | combat+character-lifecycle | Trainers can gain Naturewalk from equipped items (Snow Boots |
 | ux-006 | ux | P4 | — | ux-006: PTU injury markers may leak precise HP info in playe |
 | refactoring-095 | refactoring | P4 | character-lifecycle | refactoring-095: Guard addEdge() against Skill Edge string i |
+| refactoring-096 | refactoring | P4 | character-lifecycle | Tag styles (`.tag--class`, `.tag--feature`, `.tag--edge`, `. |
 
 ## In-Progress Tickets (81)
 
@@ -111,8 +113,8 @@ All decree-needs addressed.
 | Category | Open | In-Progress | Resolved | Total |
 |----------|------|-------------|----------|-------|
 | bug | 0 | 10 | 26 | 37 |
-| ptu-rule | 1 | 53 | 36 | 91 |
+| ptu-rule | 2 | 53 | 36 | 92 |
 | feature | 0 | 1 | 1 | 3 |
 | ux | 1 | 7 | 2 | 10 |
 | decree | 0 | 0 | 27 | 27 |
-| refactoring | 1 | 10 | 0 | 12 |
+| refactoring | 2 | 10 | 0 | 13 |
