@@ -100,3 +100,18 @@ Implement the two-phase trainer system for League Battles: declare (low-to-high 
   - `d6d69f3` Update phase labels with turn order direction (H6)
     - Files: `app/components/gm/EncounterHeader.vue`, `app/components/gm/CombatantSides.vue`, `app/components/group/InitiativeTracker.vue`
 - **P1 status: implemented** (pending review)
+
+### P1 Fix Cycle (code-review-217) (2026-02-28)
+- Branch: `slave/2-developer-ptu-rule-107-fix-20260228`
+- Addresses all issues from code-review-217 CHANGES_REQUIRED (1 HIGH, 3 MEDIUM):
+  - `2230040` **HIGH-1**: Add unit tests for skipFaintedTrainers and skipUndeclaredTrainers
+    - Files: `app/tests/unit/api/league-battle-phases.test.ts`
+    - Added skip helper functions mirroring next-turn.post.ts, updated simulateNextTurn with skip logic and declarations parameter, added 7 test cases
+  - `505ee87` **MEDIUM-2**: Replace hardcoded color values with SCSS variables
+    - Files: `app/assets/scss/_variables.scss`, `app/components/encounter/DeclarationPanel.vue`, `app/components/encounter/DeclarationSummary.vue`, `app/components/gm/EncounterHeader.vue`, `app/components/gm/CombatantSides.vue`
+    - Defined $color-accent-violet-light, replaced all raw #7c3aed and #a78bfa
+  - `2339d1b` **MEDIUM-3**: Filter fainted trainers from declaration progress denominator
+    - Files: `app/components/encounter/DeclarationPanel.vue`
+  - `1f1d10b` **MEDIUM-1**: Update app-surface.md with new components and WebSocket events
+    - Files: `.claude/skills/references/app-surface.md`
+- **P1 fix status: complete** (awaiting re-review)
