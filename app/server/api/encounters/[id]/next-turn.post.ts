@@ -6,7 +6,7 @@
  * For Full Contact: standard linear turn progression
  *
  * Also applies Heavily Injured HP penalty when a combatant ends their turn
- * after taking a Standard Action (PTU p.250).
+ * IF they used a Standard Action this turn (PTU p.250).
  *
  * Tick damage (Burn, Poison, Badly Poisoned, Cursed) is processed at turn end
  * before advancing to the next combatant (PTU p.246-247, decree-032).
@@ -88,9 +88,12 @@ export default defineEventHandler(async (event) => {
       }
 
       // --- Heavily Injured penalty on Standard Action (PTU p.250) ---
-      // Applies when a combatant ends their actual turn (not declaration phase).
-      // The combatant loses HP equal to their injury count if they have 5+ injuries.
-      if (currentPhase !== 'trainer_declaration') {
+      // "Whenever a Heavily Injured Trainer or Pokemon takes a Standard Action
+      // during combat... they lose HP equal to the number of Injuries they
+      // currently have." Only applies when a Standard Action was actually used
+      // this turn (not just any turn end). Skip declaration phase entirely.
+      const standardActionUsed = currentCombatant.turnState?.standardActionUsed === true
+      if (currentPhase !== 'trainer_declaration' && standardActionUsed) {
         const entity = currentCombatant.entity
         const injuries = entity?.injuries || 0
         const hiCheck = checkHeavilyInjured(injuries)

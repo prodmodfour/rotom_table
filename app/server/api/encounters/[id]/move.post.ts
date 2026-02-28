@@ -204,9 +204,14 @@ export default defineEventHandler(async (event) => {
 
     moveLog.push(logEntry)
 
-    // Use an action
+    // Use a Standard Action — executing a move consumes the Standard Action (PTU p.233)
     if (actor.actionsRemaining > 0) {
       actor.actionsRemaining--
+    }
+    // Mark Standard Action as used for heavily injured penalty tracking (PTU p.250)
+    actor.turnState = {
+      ...actor.turnState,
+      standardActionUsed: true
     }
 
     await prisma.encounter.update({
