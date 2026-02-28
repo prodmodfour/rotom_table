@@ -80,4 +80,23 @@ Implement the two-phase trainer system for League Battles: declare (low-to-high 
     - Files: `.claude/skills/references/app-surface.md`
   - `06bcb11` **MEDIUM M2**: Unit tests for three-phase flow, tempConditions, hasActed, and declare validation
     - Files: `app/tests/unit/api/league-battle-phases.test.ts`
-- **P0 fix status: complete** (ready for re-review)
+- **P0 fix status: complete** (APPROVED: code-review-202 + rules-review-178)
+
+### P1 Implementation (2026-02-28)
+- Branch: `slave/3-developer-ptu-rule-107-p1-20260228`
+- 7 commits implementing P1 UI, WebSocket sync, and edge cases:
+  - `4faef76` DeclarationPanel component (GM form during declaration phase)
+    - Files: `app/components/encounter/DeclarationPanel.vue`
+  - `c46ad18` DeclarationSummary component (read-only declaration list)
+    - Files: `app/components/encounter/DeclarationSummary.vue`
+  - `2e47c3a` WebSocket sync for declaration events (trainer_declared, declaration_update)
+    - Files: `app/server/routes/ws.ts`
+  - `904c765` Auto-skip fainted trainers and undeclared resolvers (edge case H1)
+    - Files: `app/server/api/encounters/[id]/next-turn.post.ts`
+  - `1f8aec1` Integrate DeclarationPanel + DeclarationSummary into GM page
+    - Files: `app/pages/gm/index.vue`, `app/components/encounter/DeclarationPanel.vue`
+  - `3bae724` Integrate DeclarationSummary into Group encounter view
+    - Files: `app/pages/group/_components/EncounterView.vue`
+  - `d6d69f3` Update phase labels with turn order direction (H6)
+    - Files: `app/components/gm/EncounterHeader.vue`, `app/components/gm/CombatantSides.vue`, `app/components/group/InitiativeTracker.vue`
+- **P1 status: implemented** (pending review)

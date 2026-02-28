@@ -51,9 +51,57 @@
 - During `trainer_resolution`, trainers sort descending (high-to-low) instead of ascending
 - Updated all three callers (stages.post.ts, status.post.ts, breather.post.ts)
 
-### Remaining for P1
-- DeclarationPanel.vue (GM UI for entering declarations)
-- DeclarationSummary.vue (read-only view of declarations)
-- WebSocket broadcast for declaration events
-- Auto-skip fainted trainers during declaration/resolution
-- Speed change mid-declaration reorder edge cases
+### P0 Fix Cycle (code-review-198)
+- Branch: `slave/1-developer-ptu-rule-107-fix-20260227`
+- Fixed CRITICAL C1 (tempConditions), HIGH H1 (hasActed reset), HIGH H2 (app-surface), MEDIUM M2 (unit tests)
+- **Status: APPROVED** (code-review-202 + rules-review-178)
+
+---
+
+## P1 Implementation
+
+**Branch:** `slave/3-developer-ptu-rule-107-p1-20260228`
+**Date:** 2026-02-28
+
+### Commits
+
+| Hash | Message | Files |
+|------|---------|-------|
+| `4faef76` | feat: add DeclarationPanel component for League Battle declaration phase | `app/components/encounter/DeclarationPanel.vue` (new) |
+| `c46ad18` | feat: add DeclarationSummary component for viewing trainer declarations | `app/components/encounter/DeclarationSummary.vue` (new) |
+| `2e47c3a` | feat: add WebSocket sync for League Battle declarations | `app/server/routes/ws.ts` |
+| `904c765` | feat: auto-skip fainted trainers and undeclared resolvers in League Battle | `app/server/api/encounters/[id]/next-turn.post.ts` |
+| `1f8aec1` | feat: integrate DeclarationPanel and DeclarationSummary into GM page | `app/pages/gm/index.vue`, `app/components/encounter/DeclarationPanel.vue` |
+| `3bae724` | feat: integrate DeclarationSummary into Group encounter view | `app/pages/group/_components/EncounterView.vue` |
+| `d6d69f3` | refactor: update phase labels to show turn order direction | `app/components/gm/EncounterHeader.vue`, `app/components/gm/CombatantSides.vue`, `app/components/group/InitiativeTracker.vue` |
+
+### Summary of Changes
+
+#### E. Declaration UI Panel
+- Created `app/components/encounter/DeclarationPanel.vue`
+- GM-facing form visible during `trainer_declaration` phase
+- Shows declaring trainer name, speed, progress indicator
+- Action type dropdown + description textarea
+- "Declare & Next" submits declaration then auto-advances turn
+- Emits `declared` event for parent to broadcast via WebSocket
+
+#### F. Resolution Summary Display
+- Created `app/components/encounter/DeclarationSummary.vue`
+- Collapsible read-only list of declarations for current round
+- Highlights currently-resolving trainer, marks resolved with checkmark
+- Color-coded action badges per type
+- Integrated into GM page and Group encounter view
+
+#### G. WebSocket Sync
+- Added `trainer_declared` and `declaration_update` event types to ws.ts
+- Updated `sendEncounterState` to include league battle fields
+- GM page broadcasts `encounter_update` after declaration
+
+#### H. Edge Cases
+- H1: Auto-skip fainted/undeclared trainers via `skipFaintedTrainers()` and `skipUndeclaredTrainers()`
+- H2: Already handled by existing `reorderInitiativeAfterSpeedChange` (P0)
+- H3-H5: No additional code needed (handled by existing systems)
+- H6: Updated phase labels to directional format across all components
+
+### Status
+- **P1: implemented** (pending review)
