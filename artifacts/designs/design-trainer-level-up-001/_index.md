@@ -4,7 +4,7 @@ ticket_id: feature-008
 category: FEATURE_GAP
 scope: FULL
 domain: character-lifecycle
-status: designed
+status: p0-implemented
 affected_files:
   - app/components/character/CharacterModal.vue
   - app/pages/gm/characters/[id].vue
@@ -141,6 +141,34 @@ Per PTU 1.05 Core Chapter 2 (pp. 19-21):
 
 ---
 
+
+## Implementation Log
+
+### P0 — Implemented 2026-02-28
+
+Branch: `slave/3-dev-feature-008-p0-20260228-205826` (8 commits)
+
+| Commit | Description | Files |
+|--------|-------------|-------|
+| `258cda2` | Pure utility: trainerAdvancement.ts | `app/utils/trainerAdvancement.ts` (new) |
+| `e0f32bb` | Composable: useTrainerLevelUp.ts | `app/composables/useTrainerLevelUp.ts` (new) |
+| `739fa4e` | LevelUpStatSection.vue | `app/components/levelup/LevelUpStatSection.vue` (new) |
+| `864bac1` | LevelUpSkillSection.vue | `app/components/levelup/LevelUpSkillSection.vue` (new) |
+| `a2f4a75` | LevelUpSummary.vue | `app/components/levelup/LevelUpSummary.vue` (new) |
+| `8bc7e87` | LevelUpModal.vue | `app/components/levelup/LevelUpModal.vue` (new) |
+| `541420d` | Standalone character sheet integration | `app/pages/gm/characters/[id].vue` (modified) |
+| `af10309` | CharacterModal integration | `app/components/character/CharacterModal.vue` (modified) |
+
+**P0 deliverables:**
+- Pure advancement logic with per-level deltas and multi-level jump support
+- 3-step wizard: stat allocation -> skill rank allocation -> summary
+- Level input interception (revert + modal pattern) in both character views
+- Skill rank cap enforcement per target level
+- MaxHP recalculation preview
+- Soft warnings for unallocated points
+- P1 indicators in summary (edges, features, milestones shown as future items)
+
+---
 
 ## Implementation Order
 
