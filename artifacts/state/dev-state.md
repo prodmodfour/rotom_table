@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-02-28T10:30:00
-updated_by: slave-collector (plan-20260228-101738)
+last_updated: 2026-02-28T11:25:00
+updated_by: slave-collector (plan-20260228-110000)
 ---
 
 # Dev Ecosystem State
@@ -19,8 +19,8 @@ updated_by: slave-collector (plan-20260228-101738)
 | bug-035 | P0 | **resolved** | LevelUpNotification missing phosphor SVGs. Fixed: converted to @phosphor-icons/vue Vue components. Resolved by slave-2 (plan-20260227-122512) |
 | bug-036 | P0 | **resolved** | Player view 500 error: SCSS `rgba(currentColor, 0.1)` rejected by Sass compiler. Fixed: replaced with SCSS color variables. Resolved by slave-1 (plan-20260227-131024) |
 | bug-037 | P3 | **resolved** | MoveTargetModal passes targets as allCombatants — fix applied, APPROVED (code-review-213 + rules-review-189, plan-20260228-020000). Full encounter combatant list now passed correctly |
-| bug-038 | P0 | **fix-cycle-needs-rereview** | CRITICAL decree-016 violation: new-day endpoint cleared boundAp. Refactored from batch updateMany to per-character updates preserving boundAp. Per-character new-day endpoint also fixed. Unit tests added (6 tests). Reviewed: code-review-216 **CHANGES_REQUIRED** (H1: per-character endpoint lacks tests, M1: Math.max(0,...) safety clamp), rules-review-192 **APPROVED**. Fix cycle needed |
-| bug-039 | P2 | **fix-cycle-needs-rereview** | Capture attempt endpoint allowed stealing owned Pokemon. Added ownership validation (reject if pokemon.ownerId non-null). Rate endpoint confirmed safe (read-only). Unit tests added (6 tests). Reviewed as part of code-review-216 **CHANGES_REQUIRED** (H1+M1 affect bug-038 files, bug-039 portion approved), rules-review-192 **APPROVED** |
+| bug-038 | P0 | **fix-cycle-done-needs-rereview** | CRITICAL decree-016 violation: new-day endpoint cleared boundAp. Refactored from batch updateMany to per-character updates preserving boundAp. Per-character new-day endpoint also fixed. Unit tests added (6 tests). code-review-216 CHANGES_REQUIRED → fix cycle by slave-1 (plan-20260228-110000): added per-character new-day unit tests (H1), Math.max(0,...) safety clamp on both endpoints + extended-rest (M1). Needs re-review |
+| bug-039 | P2 | **resolved** | Capture attempt endpoint allowed stealing owned Pokemon. Added ownership validation (reject if pokemon.ownerId non-null). Rate endpoint confirmed safe (read-only). Unit tests added (6 tests). Reviewed as part of code-review-216 (bug-039 portion approved), rules-review-192 **APPROVED** |
 | bug-040 | P4 | **open** | Extended-rest endpoint lacks Math.max(0,...) safety clamp on currentAp calculation. Follow-up from code-review-216 M1. Filed by slave-collector (plan-20260228-101738) |
 
 ### PTU Rule Tickets (`tickets/ptu-rule/`)
@@ -62,7 +62,7 @@ updated_by: slave-collector (plan-20260228-101738)
 | ptu-rule-104 | P1 | **resolved** | Type-immunity enforcement. code-review-197 APPROVED + rules-review-174 APPROVED (re-review of fix cycle 2). All type-immunity pairs correct per PTU p.239 |
 | ptu-rule-105 | P2 | **resolved** | Extended rest preserves Bound AP (clears only Drained AP) per decree-016. code-review-188 APPROVED, rules-review-165 APPROVED |
 | ptu-rule-106 | P2 | **resolved** | Extended rest duration parameter (4-8h, default 4). Scalable healing periods with 8h daily cap. Per decree-018. code-review-188 APPROVED, rules-review-165 APPROVED |
-| ptu-rule-107 | P2 | **P1-fix-cycle-needed** | League Battle two-phase trainer system. P0 APPROVED (code-review-202 + rules-review-178). P1 reviewed: code-review-217 **CHANGES_REQUIRED** (H1: no tests for skip functions, M1: app-surface.md gaps, M2: hardcoded violet hex, M3: progress counter denominator), rules-review-193 **APPROVED**. Fix cycle needed |
+| ptu-rule-107 | P2 | **P1-fix-cycle-done-needs-rereview** | League Battle two-phase trainer system. P0 APPROVED (code-review-202 + rules-review-178). P1 code-review-217 CHANGES_REQUIRED → fix cycle by slave-2 (plan-20260228-110000): added skipFaintedTrainers/skipUndeclaredTrainers unit tests (H1), replaced hardcoded violet with SCSS vars (M2), fixed fainted-trainer denominator (M3), updated app-surface.md (M1). Needs re-review |
 | ptu-rule-108 | P2 | **resolved** | Rough terrain accuracy penalty for painted terrain. APPROVED: code-review-195 + rules-review-172 (plan-20260227-174900). MED-1: Naturewalk gap → ptu-rule-112 (existing). MED-2: "through" ambiguity → decree-need-025 |
 | ptu-rule-109 | P3 | **resolved** | Legendary species list complete. APPROVED: code-review-191 + rules-review-168. 100 total species (Meltan/Melmetal/Zarude/Enamorus added) |
 | ptu-rule-110 | P2 | **resolved** | Encounter end resets combat stages. APPROVED: code-review-191 + rules-review-168. stageModifiers + stageSources reset to defaults |
@@ -74,8 +74,8 @@ updated_by: slave-collector (plan-20260228-101738)
 | ptu-rule-118 | P3 | **resolved** | Block Skill Edges from raising Pathetic skills during creation — APPROVED (code-review-212 + rules-review-188, plan-20260228-020000). Three-layer defense: addSkillEdge guard, validation warning, UI disable. decree-027 compliant |
 | ptu-rule-117 | P4 | **resolved** | Style Expert 'Beautiful' → 'Beauty' — fixed by slave-4 (plan-20260227-153711). code-review-209 APPROVED + rules-review-185 APPROVED (plan-20260227-162300 slave-2) |
 | ptu-rule-119 | P4 | **resolved** | Trainer Naturewalk support for Survivalist class. Fix cycle APPROVED: code-review-218 **APPROVED** (M1: border-color no-op, non-blocking, tracked in refactoring-096) + rules-review-194 **APPROVED**. All 5 code-review-215 issues addressed |
-| ptu-rule-122 | P3 | **needs review** | Rest healing minimum 1 HP floor per decree-029. Implemented by slave-4 (plan-20260228-101738). 2 commits |
-| ptu-rule-123 | P3 | **needs review** | Significance presets capped at x5 per decree-030. Removed climactic (x6) and legendary (x8) presets. Implemented by slave-5 (plan-20260228-101738). 5 commits |
+| ptu-rule-122 | P3 | **resolved** | Rest healing minimum 1 HP floor per decree-029. Implemented by slave-4 (plan-20260228-101738). code-review-219 **APPROVED** + rules-review-195 **APPROVED** (plan-20260228-110000 slave-3). 0 issues |
+| ptu-rule-123 | P3 | **resolved** | Significance presets capped at x5 per decree-030. Removed climactic (x6) and legendary (x8) presets. Implemented by slave-5 (plan-20260228-101738). code-review-219 **APPROVED** + rules-review-195 **APPROVED** (plan-20260228-110000 slave-3). 0 issues |
 | ptu-rule-120 | P4 | **open** | Equipment-granted Naturewalk not auto-derived from equipped items. Filed from rules-review-191 MED-01 (plan-20260228-072000) |
 
 ### Feature Tickets (`tickets/feature/`)
@@ -101,7 +101,17 @@ updated_by: slave-collector (plan-20260228-101738)
 
 ## Active Developer Work
 
-**Current task:** Session 61 collection complete. 5 slaves merged (13 commits: 2 dev + 3 reviewer). ptu-rule-122 (rest healing min 1 HP), ptu-rule-123 (significance presets cap x5), bug-038+039 reviews (CHANGES_REQUIRED), ptu-rule-107-p1 review (CHANGES_REQUIRED), ptu-rule-119+refactoring-095 re-review (APPROVED). Smoke test PASSED. ptu-rule-119 resolved, bug-038+039 and ptu-rule-107 need fix cycles. ptu-rule-122+123 need review.
+**Current task:** Session 62 collection complete. 3 slaves merged (10 commits: 2 dev + 1 reviewer). bug-038+039 fix cycle (Math.max(0,...) + per-character new-day tests), ptu-rule-107 P1 fix cycle (skip tests + SCSS vars + denominator fix + app-surface), ptu-rule-122+123 review (both APPROVED). Smoke test PASSED. ptu-rule-122+123+bug-039 resolved. bug-038+ptu-rule-107 need re-review.
+
+**Session 62 (2026-02-28, plan-20260228-110000):**
+- slave-1 (developer): bug-038+bug-039-fix — 3 commits: Math.max(0,...) safety clamp on currentAp in new-day + extended-rest (M1), per-character new-day unit tests (H1), ticket resolution log → **fix-cycle-done, needs re-review**
+- slave-2 (developer): ptu-rule-107-p1-fix — 5 commits: skipFaintedTrainers/skipUndeclaredTrainers unit tests (H1), hardcoded violet → SCSS vars (M2), fainted-trainer denominator fix (M3), app-surface.md update (M1), ticket resolution log → **fix-cycle-done, needs re-review**
+- slave-3 (reviewers): ptu-rule-122+ptu-rule-123 — code-review-219 **APPROVED** (0 issues) + rules-review-195 **APPROVED** (0 issues). Both decree-029 and decree-030 implementations fully compliant → ptu-rule-122+ptu-rule-123 **resolved**
+- **Smoke test:** PASSED (Playwright) — GM view renders (full nav, encounter controls, group view buttons). Group view renders ("Waiting for Encounter" idle state). Player view renders (character selection: Ash Lv30, Aurora, Clara, Hassan, Marilena).
+- **Merge notes:** 0 conflicts. All 3 rebased cleanly. 10 commits total (merge order: 1→2→3)
+- **Tickets filed:** none (both reviews APPROVED with 0 issues)
+- **Tickets resolved:** ptu-rule-122 (APPROVED), ptu-rule-123 (APPROVED), bug-039 (APPROVED)
+- **Tickets needing re-review:** bug-038 (fix cycle for code-review-216 H1+M1), ptu-rule-107 P1 (fix cycle for code-review-217 H1+M1+M2+M3)
 
 **Session 61 (2026-02-28, plan-20260228-101738):**
 - slave-4 (developer): ptu-rule-122 — 2 commits: applied Math.max(1, ...) floor to rest healing 1/16th formula per decree-029 → **implemented, needs review**
