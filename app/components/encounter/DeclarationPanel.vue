@@ -75,8 +75,9 @@ const currentTrainerSpeed = computed(() => {
 
 const declarationProgress = computed(() => {
   const trainers = encounterStore.trainersByTurnOrder
+  const aliveTrainers = trainers.filter(t => (t.entity as { currentHp: number }).currentHp > 0)
   const declared = encounterStore.currentDeclarations.length
-  return `${declared + 1} of ${trainers.length}`
+  return `${declared + 1} of ${aliveTrainers.length}`
 })
 
 const canDeclare = computed(() =>
