@@ -4,7 +4,7 @@
 **Feature Ticket:** feature-007
 **Priority:** P1
 **Domain:** pokemon-lifecycle
-**Status:** design-complete
+**Status:** p0-implemented
 **Created:** 2026-02-28
 
 ## Scope
@@ -86,8 +86,18 @@ The `validateBaseRelations()` function is identical for both. If evolution ships
 
 ## Implementation Log
 
-(Updated during implementation)
+### P0: Stat Point Allocation (2026-02-28)
 
 | Date | Commit | Description |
 |------|--------|-------------|
-| | | |
+| 2026-02-28 | 4dd592e | `app/utils/baseRelations.ts` — shared utility: buildStatTiers, validateBaseRelations, getValidAllocationTargets, extractStatPoints, formatStatName |
+| 2026-02-28 | 5130701 | `app/utils/evolutionCheck.ts` — refactor to delegate validateBaseRelations to shared utility |
+| 2026-02-28 | 43b7f52 | `app/server/api/pokemon/[id]/allocate-stats.post.ts` — stat allocation endpoint with Base Relations enforcement |
+| 2026-02-28 | e8b6b0c | `app/composables/useLevelUpAllocation.ts` — reactive allocation state management |
+| 2026-02-28 | 09e6025 | `app/components/pokemon/StatAllocationPanel.vue` — interactive stat allocator UI |
+| 2026-02-28 | 1460447 | `app/components/pokemon/PokemonLevelUpPanel.vue` + `app/pages/gm/pokemon/[id].vue` — integration with "Allocate Stats" button |
+| 2026-02-28 | b546d5b | `app/components/encounter/LevelUpNotification.vue` + SCSS — allocation navigation link |
+
+**Files created:** 4 new files
+**Files modified:** 4 existing files
+**All P0 acceptance criteria addressed.**

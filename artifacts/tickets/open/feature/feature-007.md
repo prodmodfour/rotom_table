@@ -67,3 +67,10 @@ Full design spec: [`design-level-up-allocation-001`](../../../designs/design-lev
 | Date | Commit | Description |
 |------|--------|-------------|
 | 2026-02-28 | a873c1a | Design spec created (5 files in design-level-up-allocation-001/) |
+| 2026-02-28 | 4dd592e | P0: baseRelations.ts shared utility (validation, extraction, targets) |
+| 2026-02-28 | 5130701 | P0: refactor evolutionCheck to delegate to shared baseRelations |
+| 2026-02-28 | 43b7f52 | P0: POST /api/pokemon/:id/allocate-stats endpoint |
+| 2026-02-28 | e8b6b0c | P0: useLevelUpAllocation composable |
+| 2026-02-28 | 09e6025 | P0: StatAllocationPanel.vue component |
+| 2026-02-28 | 1460447 | P0: Integrate StatAllocationPanel into PokemonLevelUpPanel |
+| 2026-02-28 | b546d5b | P0: Add allocation navigation link to LevelUpNotification |
