@@ -122,6 +122,8 @@ export interface EquippedItem {
     damageReduction: number;
     appliesSlowed: boolean;
   };
+  // Granted capabilities (e.g., Snow Boots → Naturewalk (Tundra), PTU p.293)
+  grantedCapabilities?: string[];  // ["Naturewalk (Tundra)"], ["Naturewalk (Forest)"]
   // General
   description?: string;
   cost?: number;

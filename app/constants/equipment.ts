@@ -85,8 +85,16 @@ export const EQUIPMENT_CATALOG: Record<string, EquippedItem> = {
   'Snow Boots': {
     name: 'Snow Boots',
     slot: 'feet',
+    grantedCapabilities: ['Naturewalk (Tundra)'],
     cost: 1500,
     description: 'Naturewalk (Tundra), -1 Overland on ice/deep snow.',
+  },
+  'Jungle Boots': {
+    name: 'Jungle Boots',
+    slot: 'feet',
+    grantedCapabilities: ['Naturewalk (Forest)'],
+    cost: 1500,
+    description: 'Naturewalk (Forest).',
   },
 
   // === Accessory Slot ===
