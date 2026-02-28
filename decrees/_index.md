@@ -1,13 +1,13 @@
 ---
-generated_at: 2026-02-28T13:35:59.333Z
-total_decrees: 31
-active: 31
+generated_at: 2026-02-28T20:47:07.872Z
+total_decrees: 36
+active: 36
 superseded: 0
 ---
 
 # Decrees Index
 
-## Active Decrees (31)
+## Active Decrees (36)
 
 | Decree ID | Domain | Topic | Title |
 |-----------|--------|-------|-------|
@@ -42,3 +42,8 @@ superseded: 0
 | decree-029 | rest | rest-healing-minimum | Rest healing has a minimum of 1 HP |
 | decree-030 | encounter | significance-preset-cap | Cap significance presets at x5 per PTU RAW |
 | decree-031 | encounter | encounter-budget-formula | Replace bogus encounter budget formula with PTU-sourced guidance |
+| decree-032 | combat | cursed-tick-standard-action-only | Cursed tick fires only on actual Standard Action use, not when prevented |
+| decree-033 | combat | fainted-switch-on-turn-only | Fainted Pokemon switch happens on trainer's next turn, not as immediate reaction |
+| decree-034 | combat | roar-recall-range-and-whirlwind-push | Roar uses its own 6m recall range; Whirlwind is a push, not a forced switch |
+| decree-035 | pokemon-lifecycle | base-relations-nature-adjusted | Use nature-adjusted base stats for Base Relations ordering |
+| decree-036 | pokemon-lifecycle | stone-evolution-move-learning | Stone evolutions learn new-form moves at or below current level |

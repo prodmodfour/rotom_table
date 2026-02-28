@@ -1,6 +1,6 @@
 ---
-generated_at: 2026-02-28T13:35:59.330Z
-total_designs: 17
+generated_at: 2026-02-28T20:47:07.854Z
+total_designs: 19
 ---
 
 # Designs Index
@@ -13,6 +13,7 @@ total_designs: 17
 | design-isometric-grid-001 | vtt-grid | p0-implemented | feature-002 | FULL | FEATURE |
 | design-league-battle-001 | combat | p1-implemented | ptu-rule-107 | FULL | PTU_RULE |
 | design-level-budget-001 | scenes | p1-complete | ptu-rule-060 | NEW_FEATURE | FEATURE_GAP |
+| design-level-up-allocation-001 | — | — | — | — | — |
 | design-living-weapon-001 | combat | design-complete | feature-005 | FULL | FEATURE_GAP |
 | design-mounting-001 | combat | design-complete | feature-004 | FULL | FEATURE |
 | design-player-view-core-001 | player-view | p0-implemented | feature-003 | FULL | FEATURE |
@@ -20,7 +21,8 @@ total_designs: 17
 | design-player-view-integration-001 | player-view | designed | feature-003 | FULL | FEATURE |
 | design-pokemon-evolution-001 | — | — | — | — | — |
 | design-pokemon-switching-001 | combat | design-complete | feature-011 | FULL | FEATURE |
-| design-status-automation-001 | combat | design-complete | feature-010 | FULL | FEATURE |
+| design-status-automation-001 | combat | p0-implemented | feature-010 | FULL | FEATURE |
 | design-testability-001 | combat | implemented | — | PARTIAL | FEATURE_GAP |
+| design-trainer-level-up-001 | character-lifecycle | designed | feature-008 | FULL | FEATURE_GAP |
 | design-trainer-sprites-001 | character-lifecycle | implemented | feature-001 | SINGLE_PHASE | FEATURE_GAP |
 | design-xp-system-001 | pokemon-lifecycle | implemented | ptu-rule-055 | FULL | FEATURE_GAP |

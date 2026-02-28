@@ -1,19 +1,17 @@
 ---
-generated_at: 2026-02-28T13:35:59.328Z
-total_tickets: 223
-open: 19
-in_progress: 95
-resolved: 97
+generated_at: 2026-02-28T20:47:07.846Z
+total_tickets: 224
+open: 18
+in_progress: 97
+resolved: 102
 ---
 
 # Tickets Index
 
-## Open Tickets (19)
+## Open Tickets (18)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
-| feature-007 | feature | P1 | pokemon-lifecycle | feature-007: Pokemon Level-Up Allocation UI |
-| feature-008 | feature | P1 | character-lifecycle | feature-008: Trainer Level-Up Milestone Workflow |
 | feature-009 | feature | P1 | character-lifecycle | feature-009: Trainer XP & Advancement Tracking |
 | feature-013 | feature | P1 | vtt-grid | feature-013: Multi-Tile Token System |
 | feature-014 | feature | P1 | vtt-grid+combat | feature-014: VTT Flanking Detection |
@@ -31,8 +29,9 @@ resolved: 97
 | ptu-rule-126 | ptu-rule | P4 | combat | ptu-rule-126: Snow Boots conditional Overland speed penalty  |
 | ux-006 | ux | P4 | — | ux-006: PTU injury markers may leak precise HP info in playe |
 | ux-011 | ux | P4 | character-lifecycle | ux-011: Custom item form missing grantedCapabilities input f |
+| refactoring-099 | refactoring | P4 | — | refactoring-099: Extract XP actions from encounter.ts store  |
 
-## In-Progress Tickets (95)
+## In-Progress Tickets (97)
 
 | ID | Category | Priority | Domain | Source |
 |----|----------|----------|--------|--------|
@@ -44,6 +43,8 @@ resolved: 97
 | bug-034 | bug | P0 | build | dev-server-error-log |
 | bug-035 | bug | P0 | build | dev-server-error-log |
 | feature-006 | feature | P1 | pokemon-lifecycle | matrix-gap (GAP-PLC-1) |
+| feature-007 | feature | P1 | pokemon-lifecycle | matrix-gap (GAP-PLC-2) |
+| feature-008 | feature | P1 | character-lifecycle | matrix-gap (SG-1) |
 | feature-010 | feature | P1 | combat | matrix-gap (Gap 1, remaining automation) |
 | feature-011 | feature | P1 | combat | matrix-gap (Gap 3) |
 | feature-012 | feature | P1 | combat | matrix-gap (combat R076, R080, R081 + healing R016, R030) |
@@ -132,15 +133,9 @@ resolved: 97
 | refactoring-092 | refactoring | P4 | encounter-tables | code-review-207 M1 |
 | refactoring-093 | refactoring | P4 | combat | code-review-207 M2 |
 
-## Open Decree-Needs (5)
+## Open Decree-Needs (0)
 
-| ID | Priority | Domain | Topic |
-|----|----------|--------|-------|
-| decree-need-032 | P1 | combat | — |
-| decree-need-033 | P1 | combat | — |
-| decree-need-034 | P2 | combat | — |
-| decree-need-035 | P1 | pokemon-lifecycle | — |
-| decree-need-036 | P1 | pokemon-lifecycle | — |
+All decree-needs addressed.
 
 ## Summary by Category
 
@@ -148,7 +143,7 @@ resolved: 97
 |----------|------|-------------|----------|-------|
 | bug | 0 | 12 | 26 | 40 |
 | ptu-rule | 3 | 58 | 36 | 98 |
-| feature | 14 | 6 | 2 | 23 |
+| feature | 12 | 8 | 2 | 23 |
 | ux | 2 | 7 | 2 | 11 |
-| decree | 0 | 0 | 31 | 36 |
-| refactoring | 0 | 12 | 0 | 15 |
+| decree | 0 | 0 | 36 | 36 |
+| refactoring | 1 | 12 | 0 | 16 |
