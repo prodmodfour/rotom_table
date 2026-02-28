@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import type { Encounter, Combatant, MoveLogEntry, CombatSide, TurnPhase, BattleType, TrainerDeclaration } from '~/types'
-import type { XpCalculationResult, XpApplicationResult } from '~/utils/experienceCalculation'
 import type { SignificanceTier } from '~/utils/encounterBudget'
 
 // History composable for undo/redo
@@ -753,85 +752,6 @@ export const useEncounterStore = defineStore('encounter', {
         this.error = e.message || 'Failed to update significance'
         throw e
       }
-    },
-
-    // ===========================================
-    // XP Distribution Actions
-    // ===========================================
-
-    /** Preview XP calculation for current encounter */
-    async calculateXp(params: {
-      significanceMultiplier: number
-      playerCount: number
-      isBossEncounter?: boolean
-      trainerEnemyIds?: string[]
-    }): Promise<{
-      totalXpPerPlayer: number
-      breakdown: XpCalculationResult['breakdown']
-      participatingPokemon: Array<{
-        id: string
-        species: string
-        nickname: string | null
-        currentLevel: number
-        currentExperience: number
-        ownerId: string | null
-        ownerName: string | null
-      }>
-    }> {
-      if (!this.encounter) {
-        throw new Error('No active encounter')
-      }
-
-      const response = await $fetch<{
-        success: boolean
-        data: {
-          totalXpPerPlayer: number
-          breakdown: XpCalculationResult['breakdown']
-          participatingPokemon: Array<{
-            id: string
-            species: string
-            nickname: string | null
-            currentLevel: number
-            currentExperience: number
-            ownerId: string | null
-            ownerName: string | null
-          }>
-        }
-      }>(`/api/encounters/${this.encounter.id}/xp-calculate`, {
-        method: 'POST',
-        body: params
-      })
-
-      return response.data
-    },
-
-    /** Distribute XP to Pokemon after GM approval */
-    async distributeXp(params: {
-      significanceMultiplier: number
-      playerCount: number
-      isBossEncounter?: boolean
-      trainerEnemyIds?: string[]
-      distribution: Array<{ pokemonId: string; xpAmount: number }>
-    }): Promise<{
-      results: XpApplicationResult[]
-      totalXpDistributed: number
-    }> {
-      if (!this.encounter) {
-        throw new Error('No active encounter')
-      }
-
-      const response = await $fetch<{
-        success: boolean
-        data: {
-          results: XpApplicationResult[]
-          totalXpDistributed: number
-        }
-      }>(`/api/encounters/${this.encounter.id}/xp-distribute`, {
-        method: 'POST',
-        body: params
-      })
-
-      return response.data
     },
 
   }

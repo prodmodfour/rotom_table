@@ -173,6 +173,7 @@ const emit = defineEmits<{
 }>()
 
 const encounterStore = useEncounterStore()
+const encounterXpStore = useEncounterXpStore()
 const { send } = useWebSocket()
 
 // Guard: suppress watcher-triggered recalculations during init
@@ -245,7 +246,8 @@ const recalculate = async () => {
   calculationError.value = null
 
   try {
-    const result = await encounterStore.calculateXp({
+    const result = await encounterXpStore.calculateXp({
+      encounterId: encounterStore.encounter!.id,
       significanceMultiplier: finalSignificance.value,
       playerCount: safePlayerCount.value,
       isBossEncounter: isBossEncounter.value

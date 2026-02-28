@@ -267,6 +267,7 @@ const emit = defineEmits<{
 }>()
 
 const encounterStore = useEncounterStore()
+const encounterXpStore = useEncounterXpStore()
 
 // Phase: 'configure' or 'results'
 const phase = ref<'configure' | 'results'>('configure')
@@ -426,7 +427,8 @@ const recalculate = async () => {
   calculationError.value = null
 
   try {
-    const result = await encounterStore.calculateXp({
+    const result = await encounterXpStore.calculateXp({
+      encounterId: encounterStore.encounter!.id,
       significanceMultiplier: effectiveMultiplier.value,
       playerCount: safePlayerCount.value,
       isBossEncounter: isBossEncounter.value
@@ -468,7 +470,8 @@ const handleApply = async () => {
       .filter(([, xp]) => xp > 0)
       .map(([pokemonId, xpAmount]) => ({ pokemonId, xpAmount }))
 
-    const result = await encounterStore.distributeXp({
+    const result = await encounterXpStore.distributeXp({
+      encounterId: encounterStore.encounter!.id,
       significanceMultiplier: effectiveMultiplier.value,
       playerCount: safePlayerCount.value,
       isBossEncounter: isBossEncounter.value,
