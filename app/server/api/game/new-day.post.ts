@@ -36,28 +36,23 @@ export default defineEventHandler(async () => {
       }
     }
 
-    // Reset all Character daily counters (including drained and bound AP)
-    // Group by level so we can batch updateMany per level (L+1 instead of N+1)
+    // Reset all Character daily counters
+    // Per-character updates required: each character may have different boundAp
+    // Bound AP persists until binding effect ends (decree-016), NOT cleared on new day (decree-019)
     const characters = await prisma.humanCharacter.findMany({
-      select: { id: true, level: true }
+      select: { id: true, level: true, boundAp: true }
     })
 
-    const charactersByLevel = new Map<number, string[]>()
-    for (const char of characters) {
-      const ids = charactersByLevel.get(char.level) || []
-      charactersByLevel.set(char.level, [...ids, char.id])
-    }
-
     await prisma.$transaction(
-      [...charactersByLevel.entries()].map(([level, ids]) =>
-        prisma.humanCharacter.updateMany({
-          where: { id: { in: ids } },
+      characters.map((char) =>
+        prisma.humanCharacter.update({
+          where: { id: char.id },
           data: {
             restMinutesToday: 0,
             injuriesHealedToday: 0,
             drainedAp: 0,
-            boundAp: 0,
-            currentAp: calculateMaxAp(level),
+            // boundAp intentionally NOT reset — persists until binding effect ends (decree-016)
+            currentAp: calculateMaxAp(char.level) - char.boundAp,
             lastRestReset: now
           }
         })
