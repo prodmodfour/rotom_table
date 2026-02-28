@@ -6,13 +6,20 @@
  * - EOT (Every Other Turn): cannot use on consecutive rounds
  * - Daily / Daily x2 / Daily x3: limited uses per day
  * - At-Will: unlimited
+ *
+ * After damage, applies:
+ * - Heavily Injured penalty (PTU p.250): 5+ injuries = extra HP loss on taking damage
+ * - Death check (PTU p.251): 10+ injuries or HP below threshold
+ * - League Battle exemption: HP-based death suppressed (decree-021)
  */
 import { prisma } from '~/server/utils/prisma'
 import { loadEncounter, findCombatant, buildEncounterResponse, getEntityName } from '~/server/services/encounter.service'
 import { calculateDamage, applyDamageToEntity } from '~/server/services/combatant.service'
 import { syncDamageToDatabase, syncStagesToDatabase } from '~/server/services/entity-update.service'
 import { checkMoveFrequency, incrementMoveUsage } from '~/utils/moveFrequency'
+import { checkHeavilyInjured, applyHeavilyInjuredPenalty, checkDeath } from '~/utils/injuryMechanics'
 import type { Move } from '~/types/character'
+import type { StatusCondition } from '~/types'
 
 export default defineEventHandler(async (event) => {
   const id = getRouterParam(event, 'id')
@@ -28,6 +35,7 @@ export default defineEventHandler(async (event) => {
   try {
     const { record, combatants } = await loadEncounter(id)
     const moveLog = JSON.parse(record.moveLog)
+    const isLeagueBattle = record.battleType === 'trainer'
 
     // Find actor
     const actor = findCombatant(combatants, body.actorId)
@@ -72,9 +80,11 @@ export default defineEventHandler(async (event) => {
       // Apply damage using PTU mechanics (temp HP, injuries, faint + status clearing)
       if (targetDamage > 0) {
         const entity = target.entity
+        const hpBeforeDamage = entity.currentHp
+
         const damageResult = calculateDamage(
           targetDamage,
-          entity.currentHp,
+          hpBeforeDamage,
           entity.maxHp,
           entity.temporaryHp || 0,
           entity.injuries || 0
@@ -82,9 +92,48 @@ export default defineEventHandler(async (event) => {
 
         applyDamageToEntity(target, damageResult)
 
+        // Unclamped HP after damage (before heavily injured penalty)
+        const unclampedAfterDamage = hpBeforeDamage - damageResult.hpDamage
+
+        // --- Heavily Injured penalty (PTU p.250) ---
+        // "takes Damage from an attack, they lose Hit Points equal to the number of Injuries"
+        let heavilyInjuredHpLoss = 0
+        const hiCheck = checkHeavilyInjured(damageResult.newInjuries)
+
+        if (hiCheck.isHeavilyInjured && entity.currentHp > 0) {
+          const penalty = applyHeavilyInjuredPenalty(entity.currentHp, damageResult.newInjuries)
+          heavilyInjuredHpLoss = penalty.hpLost
+          entity.currentHp = penalty.newHp
+
+          // Check if heavily injured penalty caused fainting
+          if (penalty.newHp === 0 && !damageResult.fainted) {
+            const conditions: StatusCondition[] = entity.statusConditions || []
+            if (!conditions.includes('Fainted')) {
+              entity.statusConditions = ['Fainted', ...conditions]
+            }
+          }
+        }
+
+        // --- Death check (PTU p.251) ---
+        const finalUnclampedHp = unclampedAfterDamage - heavilyInjuredHpLoss
+        const deathResult = checkDeath(
+          entity.currentHp,
+          entity.maxHp,
+          damageResult.newInjuries,
+          isLeagueBattle,
+          finalUnclampedHp
+        )
+
+        if (deathResult.isDead) {
+          const conditions: StatusCondition[] = entity.statusConditions || []
+          if (!conditions.includes('Dead')) {
+            entity.statusConditions = ['Dead', ...conditions.filter((s: StatusCondition) => s !== 'Dead')]
+          }
+        }
+
         dbUpdates.push(syncDamageToDatabase(
           target,
-          damageResult.newHp,
+          entity.currentHp,
           damageResult.newTempHp,
           damageResult.newInjuries,
           entity.statusConditions || [],
