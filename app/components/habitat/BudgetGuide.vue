@@ -36,6 +36,7 @@
     <template v-if="effectivePartyContext">
       <p class="budget-guide__formula">
         Lv.{{ effectivePartyContext.averagePokemonLevel }} x 2 x {{ effectivePartyContext.playerCount }} players = <strong>{{ budgetTotal }}</strong> levels
+        <span class="budget-guide__source">(PTU guideline)</span>
       </p>
       <BudgetIndicator
         v-if="budgetAnalysis"
@@ -148,6 +149,12 @@ const budgetAnalysis = computed((): BudgetAnalysis | null => {
       padding: $spacing-xs $spacing-sm;
       font-size: $font-size-sm;
     }
+  }
+
+  &__source {
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+    font-style: italic;
   }
 
   &__hint {
