@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-02-28T16:55:00
-updated_by: slave-collector (plan-20260228-153856)
+last_updated: 2026-02-28T18:25:00
+updated_by: slave-collector (plan-20260228-173500)
 ---
 
 # Dev Ecosystem State
@@ -107,7 +107,7 @@ updated_by: slave-collector (plan-20260228-153856)
 
 ## Active Developer Work
 
-**Current task:** Session 64 collection complete. 5 slaves merged (7 commits: 3 dev + 2 reviewer). Design specs for feature-004 (Mounting) and feature-005 (Living Weapon). bug-040 resolved (already fixed). ptu-rule-120 CHANGES_REQUIRED (H1: missing tests). ptu-rule-124 APPROVED. refactoring-096 CHANGES_REQUIRED (H1: CSS specificity regression). 3 follow-up tickets filed (ux-011, ptu-rule-125, ptu-rule-126).
+**Current task:** Session 65 collection complete. 5 slaves merged (26 commits + 1 collector fix). 3 design specs (feature-010 Status Automation, feature-011 Pokemon Switching, feature-006 Pokemon Evolution). 1 code implementation (feature-012 Death & Heavily Injured — 10 commits, 11 files). feature-015 resolved (already implemented). Build error fixed (duplicate isLeagueBattle). Smoke test PASSED. 7 tickets filed (2 refactoring, 5 decree-need).
 
 **Session 64 (2026-02-28, plan-20260228-153856):**
 - slave-3 (developer): bug-040 — 1 commit: discovered bug was already fixed in commit 3d6a238 (bug-038 fix cycle). Moved ticket to resolved → bug-040 **resolved**
@@ -690,6 +690,22 @@ updated_by: slave-collector (plan-20260228-153856)
 | Open tickets (P4) | 10 (refactoring-060/062/076/078/079/084 + ux-002/006/007/008) |
 | Total open | 16 |
 | Total resolved | 159 (feature-002 fully resolved) |
+
+## Session Summary (2026-02-28, session 65 — plan-20260228-173500)
+
+**Slave collection plan-20260228-173500:** 5 slaves merged (26 commits + 1 collector fix, 0 conflicts)
+- **slave-3** (developer): feature-015 — 2 commits: discovered Speed CS movement integration already implemented. Updated vtt-grid matrix R026/R027 from Missing to Implemented. Moved ticket to resolved → **resolved (already implemented)**
+- **slave-4** (developer): feature-012 — 10 commits: Death & Heavily Injured Automation. Pure utility functions (`injuryMechanics.ts`), 'Dead' status condition, hooks in damage/next-turn/move endpoints, CombatantCard warnings, GM alerts, unit tests (266 lines). Build conflict: duplicate `isLeagueBattle` declaration fixed by collector → **implemented, needs review**
+- **slave-1** (developer): feature-010 — 6 commits: full multi-tier design spec for Status Condition Automation Engine. 6 files in design-status-automation-001/ (P0: tick damage for Burn/Poison/Badly Poisoned/Cursed, P1: save checks for Frozen/Paralysis/Sleep/Confused, P2: auto-cure/weather/ability interactions) → **design-complete**
+- **slave-2** (developer): feature-011 — 6 commits: full multi-tier design spec for Pokemon Switching Workflow. 6 files in design-pokemon-switching-001/ (P0: Standard Action switch with 8m range check + initiative handling, P1: League restrictions + fainted switch + forced switch, P2: immediate-act + separate recall/release + player view) → **design-complete**
+- **slave-5** (developer): feature-006 — 2 commits: full multi-tier design spec for Pokemon Evolution System. 6 files in design-pokemon-evolution-001/ (P0: species change + stat recalc + base relations, P1: ability remap + move learning + capability update, P2: evolution items/trade/happiness/cancellation) → **design-complete**
+
+**Build fix:** Collector fixed duplicate `isLeagueBattle` declaration in `next-turn.post.ts` (slave-4 added it at line 67, pre-existing one at line 139). 1 commit.
+**Smoke test:** PASSED (Playwright) — GM view renders (full nav, encounter controls, group view buttons). Group view renders ("Waiting for Encounter" idle state). Player view renders (character selection: Ash Lv30, Aurora, Clara, Hassan, Marilena).
+**Merge notes:** 0 conflicts. All 5 rebased cleanly. 26 commits total (merge order: 3→4→1→2→5).
+**Tickets filed:** refactoring-097 (replace alert() with toast for injury/death), refactoring-098 (immutable patterns in damage/death paths), decree-need-032 (Cursed tick trigger), decree-need-033 (fainted switch timing), decree-need-034 (forced switch range), decree-need-035 (Base Relations raw vs nature-adjusted), decree-need-036 (stone evolution move learning)
+**Tickets resolved:** feature-015 (already implemented)
+**Tickets needing review:** feature-012 (first implementation, no review yet)
 
 ## Session Summary (2026-02-28, session 59 — plan-20260228-072000)
 
