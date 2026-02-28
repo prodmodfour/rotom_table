@@ -11,17 +11,17 @@ analyzed_by: coverage-analyzer
 ## Coverage Score
 
 ```
-Implemented:             19
+Implemented:             21
 Implemented-Unreachable:  0
 Partial:                  9
-Missing:                  8
+Missing:                  6
 Subsystem-Missing:        0
 Out of Scope:             6
 
 Total:                   42
 Scoreable (Total - OoS): 36
 
-Coverage = (19 + 0.5*9) / 36 * 100 = 65.3%
+Coverage = (21 + 0.5*9) / 36 * 100 = 70.8%
 ```
 
 ## Matrix Table
@@ -53,8 +53,8 @@ Coverage = (19 + 0.5*9) / 36 * 100 = 65.3%
 | R023 | Ghost Type Stuck/Trapped Immunity | modifier | situational | system | Missing | — | — | P3 | No Ghost type immunity to Stuck/Trapped in movement validation. |
 | R024 | Slowed Condition (Half Movement) | condition | core | system | Partial | gm | Combat domain (Slowed status trackable), C014 (useGridMovement) | P2 | **Present:** Slowed status trackable. **Missing:** Movement range not halved when Slowed status active. |
 | R025 | Tripped Condition (Stand Up Cost) | condition | core | system | Partial | gm | Combat domain (Tripped status trackable) | P2 | **Present:** Tripped status trackable. **Missing:** No enforced shift-action-to-stand-up before movement. |
-| R026 | Speed CS Affect Movement | formula | core | system | Missing | — | — | P1 | No Speed Combat Stage integration into movement range. CS+6 should give +3 movement. |
-| R027 | Speed CS Movement Floor | constraint | core | system | Missing | — | — | P1 | No minimum 2 movement floor when Speed CS negative. Depends on R026. |
+| R026 | Speed CS Affect Movement | formula | core | system | Implemented | gm | C014 (useGridMovement — applyMovementModifiers) | — | Speed CS integrated via applyMovementModifiers: Math.trunc(stage/2) additive bonus. CS+6=+3m, CS-6=-3m. Applied in all movement paths (getSpeed, getMaxPossibleSpeed, buildSpeedAveragingFn). |
+| R027 | Speed CS Movement Floor | constraint | core | system | Implemented | gm | C014 (useGridMovement — applyMovementModifiers) | — | Minimum 2m floor enforced when negative CS applied: Math.max(modifiedSpeed, 2). Stuck overrides floor (returns 0). |
 | R028 | Sprint Maneuver | modifier | core | gm | Implemented | gm | Combat domain (Sprint maneuver in combat maneuvers constant) | — | Sprint exists as combat maneuver. Movement speed +50% is GM-applied. |
 | R029 | Push Maneuver | interaction | core | gm | Implemented | gm | Combat domain (Push maneuver with opposed check) | — | Push exists as combat maneuver. Grid position change is manual. |
 | R030 | Disengage Maneuver | modifier | core | gm | Implemented | gm | Combat domain (Disengage maneuver) | — | Disengage exists. No AoO tracking to suppress. |
@@ -95,11 +95,10 @@ Note: VTT rules are primarily system-automatic (grid engine) or gm-initiated (mo
 - **Priority:** P1
 - **Suggested ticket:** "feat: flanking detection with -2 evasion penalty"
 
-### SG-3: No Speed Combat Stage Movement Integration
-- **Missing subsystem:** Speed CS effect on movement range with minimum floor
-- **Affected rules:** R026, R027 (2 rules)
-- **Priority:** P1
-- **Suggested ticket:** "feat: integrate Speed Combat Stages into movement range calculation"
+### ~~SG-3: No Speed Combat Stage Movement Integration~~ (RESOLVED)
+- **Status:** Already implemented in `applyMovementModifiers` (useGridMovement.ts). Incorrectly classified as Missing by matrix analysis.
+- **Affected rules:** R026, R027 (2 rules — now Implemented)
+- **Resolution:** Audit report confirmed implementation. Matrix updated 2026-02-28.
 
 ### SG-4: No Status-Movement Integration
 - **Missing subsystem:** Stuck/Slowed/Tripped conditions affecting movement validation
@@ -117,7 +116,7 @@ Note: VTT rules are primarily system-automatic (grid engine) or gm-initiated (mo
 
 | Priority | Count | Rules |
 |----------|-------|-------|
-| P1 | 6 | R003, R018, R019, R020, R026, R027 |
+| P1 | 4 | R003, R018, R019, R020 |
 | P2 | 7 | R008, R013, R015, R017, R022, R024, R025, R031 |
 | P3 | 6 | R009, R011, R023, R037, R038, R040 |
 
