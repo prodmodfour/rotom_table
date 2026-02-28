@@ -141,7 +141,7 @@ describe('checkDeath', () => {
       expect(result.cause).toBe('hp_threshold')
     })
 
-    it('does NOT declare death at exactly the threshold (100 HP Pokemon at -200)', () => {
+    it('declares death at exactly the threshold (100 HP Pokemon at -200)', () => {
       // At exactly -200, which is <= -200, so death
       const result = checkDeath(0, 100, 3, false, -200)
       expect(result.isDead).toBe(true)
