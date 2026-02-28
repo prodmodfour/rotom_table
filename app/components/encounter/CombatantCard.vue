@@ -73,10 +73,10 @@
         </button>
       </div>
 
-      <!-- Status Conditions -->
-      <div v-if="statusConditions.length > 0" class="combatant-card__status">
+      <!-- Status Conditions (Dead/Fainted filtered — they have dedicated UI) -->
+      <div v-if="displayStatusConditions.length > 0" class="combatant-card__status">
         <span
-          v-for="status in statusConditions"
+          v-for="status in displayStatusConditions"
           :key="status"
           class="status-badge"
           :class="`status-badge--${status.toLowerCase().replace(' ', '-')}`"
@@ -271,6 +271,12 @@ const isFainted = computed(() => entity.value.currentHp <= 0)
 const isDead = computed(() => (entity.value.statusConditions || []).includes('Dead'))
 const isHeavilyInjured = computed(() => injuries.value >= 5)
 const statusConditions = computed(() => entity.value.statusConditions || [])
+// Filter out Dead and Fainted from badge display — they have dedicated UI sections
+const displayStatusConditions = computed(() =>
+  statusConditions.value.filter(
+    (s: StatusCondition) => s !== 'Dead' && s !== 'Fainted'
+  )
+)
 
 const stages = computed<StageModifiers>(() => entity.value.stageModifiers || {
   attack: 0,
