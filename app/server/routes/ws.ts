@@ -346,6 +346,13 @@ export default defineWebSocketHandler({
           }
           break
 
+        case 'status_tick':
+          // Tick damage applied at turn end (Burn, Poison, Badly Poisoned, Cursed)
+          if (clientInfo?.encounterId) {
+            broadcastToEncounter(clientInfo.encounterId, event, peer)
+          }
+          break
+
         case 'trainer_declared':
           // A trainer declared an action during League Battle declaration phase
           if (clientInfo?.role === 'gm' && clientInfo.encounterId) {
