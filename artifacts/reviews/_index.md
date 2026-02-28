@@ -1,13 +1,13 @@
 ---
-generated_at: 2026-02-28T21:31:19.192Z
-total_reviews: 154
-active_count: 93
-approved_count: 57
+generated_at: 2026-02-28T22:29:13.763Z
+total_reviews: 160
+active_count: 98
+approved_count: 58
 ---
 
 # Reviews Index
 
-## Active Reviews (93)
+## Active Reviews (98)
 
 | Review ID | Verdict | Target | Reviewer | Date |
 |-----------|---------|--------|----------|------|
@@ -83,6 +83,9 @@ approved_count: 57
 | code-review-225 | CHANGES_REQUIRED | feature-012 | senior-reviewer | 2026-02-28 |
 | code-review-226 | CHANGES_REQUIRED | feature-006 | senior-reviewer | 2026-02-28 |
 | code-review-227 | CHANGES_REQUIRED | feature-010 | senior-reviewer | 2026-02-28 |
+| code-review-228 | CHANGES_REQUIRED | feature-012 | senior-reviewer | 2026-02-28 |
+| code-review-229 | CHANGES_REQUIRED | feature-007 | senior-reviewer | 2026-02-28 |
+| code-review-230 | CHANGES_REQUIRED | feature-008 | senior-reviewer | 2026-02-28 |
 | rules-review-034 | CHANGES_REQUIRED | bug-002 | game-logic-reviewer | 2026-02-18 |
 | rules-review-039 | CHANGES_REQUIRED | ptu-rule-034, ptu-rule-035 | game-logic-reviewer | 2026-02-18 |
 | rules-review-047 | MIXED | — | game-logic-reviewer | 2026-02-19 |
@@ -103,6 +106,8 @@ approved_count: 57
 | rules-review-179 | CHANGES_REQUIRED | ptu-rule-092 | game-logic-reviewer | 2026-02-27 |
 | rules-review-186 | CHANGES_REQUIRED | ptu-rule-114+ptu-rule-116 | game-logic-reviewer | 2026-02-27 |
 | rules-review-201 | CHANGES_REQUIRED | feature-012 | game-logic-reviewer | 2026-02-28 |
+| rules-review-204 | CHANGES_REQUIRED | feature-012 | game-logic-reviewer | 2026-02-28 |
+| rules-review-206 | CHANGES_REQUIRED | feature-008 | game-logic-reviewer | 2026-02-28 |
 | rules-review-test-integrity-001 | CHANGES_REQUIRED | — | — | 2026-02-16 |
 
 ## Recently Approved (last 10)
@@ -122,9 +127,9 @@ approved_count: 57
 
 ## Stats
 
-- Active reviews: 154
-- Needs action: 93
-- Approved/Pass (active): 57
+- Active reviews: 160
+- Needs action: 98
+- Approved/Pass (active): 58
 - Archived: 297
-- Total (active + archived): 451
-- Unique targets reviewed: 68
+- Total (active + archived): 457
+- Unique targets reviewed: 70

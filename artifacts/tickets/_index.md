@@ -1,20 +1,21 @@
 ---
-generated_at: 2026-02-28T21:31:19.201Z
-total_tickets: 226
-open: 20
-in_progress: 97
-resolved: 102
+generated_at: 2026-02-28T22:29:13.772Z
+total_tickets: 227
+open: 21
+in_progress: 96
+resolved: 103
 ---
 
 # Tickets Index
 
-## Open Tickets (20)
+## Open Tickets (21)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
 | feature-009 | feature | P1 | character-lifecycle | feature-009: Trainer XP & Advancement Tracking |
 | feature-013 | feature | P1 | vtt-grid | feature-013: Multi-Tile Token System |
 | feature-014 | feature | P1 | vtt-grid+combat | feature-014: VTT Flanking Detection |
+| decree-need-028 | decree | P1 | character-lifecycle | decree-need-028: Automatic Skill Rank Per Level vs Edge-Base |
 | feature-016 | feature | P2 | combat+vtt-grid | feature-016: Priority / Interrupt / Attack of Opportunity Sy |
 | feature-017 | feature | P2 | capture | feature-017: Poke Ball Type System |
 | feature-018 | feature | P2 | scenes | feature-018: Weather Effect Automation |
@@ -33,7 +34,7 @@ resolved: 102
 | refactoring-099 | refactoring | P4 | — | refactoring-099: Extract XP actions from encounter.ts store  |
 | refactoring-100 | refactoring | P4 | — | When a combatant faints from any damage source, `applyDamage |
 
-## In-Progress Tickets (97)
+## In-Progress Tickets (96)
 
 | ID | Category | Priority | Domain | Source |
 |----|----------|----------|--------|--------|
@@ -47,7 +48,6 @@ resolved: 102
 | feature-006 | feature | P1 | pokemon-lifecycle | matrix-gap (GAP-PLC-1) |
 | feature-007 | feature | P1 | pokemon-lifecycle | matrix-gap (GAP-PLC-2) |
 | feature-008 | feature | P1 | character-lifecycle | matrix-gap (SG-1) |
-| feature-010 | feature | P1 | combat | matrix-gap (Gap 1, remaining automation) |
 | feature-011 | feature | P1 | combat | matrix-gap (Gap 3) |
 | feature-012 | feature | P1 | combat | matrix-gap (combat R076, R080, R081 + healing R016, R030) |
 | bug-002 | bug | P1 | — | code-review-035 |
@@ -135,9 +135,11 @@ resolved: 102
 | refactoring-092 | refactoring | P4 | encounter-tables | code-review-207 M1 |
 | refactoring-093 | refactoring | P4 | combat | code-review-207 M2 |
 
-## Open Decree-Needs (0)
+## Open Decree-Needs (1)
 
-All decree-needs addressed.
+| ID | Priority | Domain | Topic |
+|----|----------|--------|-------|
+| decree-need-028 | P1 | character-lifecycle | automatic-skill-rank-per-level |
 
 ## Summary by Category
 
@@ -145,7 +147,7 @@ All decree-needs addressed.
 |----------|------|-------------|----------|-------|
 | bug | 0 | 12 | 26 | 40 |
 | ptu-rule | 3 | 58 | 36 | 98 |
-| feature | 12 | 8 | 2 | 23 |
+| feature | 12 | 7 | 3 | 23 |
 | ux | 3 | 7 | 2 | 12 |
-| decree | 0 | 0 | 36 | 36 |
+| decree | 1 | 0 | 36 | 37 |
 | refactoring | 2 | 12 | 0 | 17 |

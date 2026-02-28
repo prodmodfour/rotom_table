@@ -1,5 +1,5 @@
 ---
-generated_at: 2026-02-28T21:31:19.204Z
+generated_at: 2026-02-28T22:29:13.779Z
 total_designs: 19
 ---
 
@@ -20,7 +20,7 @@ total_designs: 19
 | design-player-view-infra-001 | player-view | draft | feature-003 | FULL | INFRASTRUCTURE |
 | design-player-view-integration-001 | player-view | designed | feature-003 | FULL | FEATURE |
 | design-pokemon-evolution-001 | — | — | — | — | — |
-| design-pokemon-switching-001 | combat | design-complete | feature-011 | FULL | FEATURE |
+| design-pokemon-switching-001 | combat | p0-implemented | feature-011 | FULL | FEATURE |
 | design-status-automation-001 | combat | p0-implemented | feature-010 | FULL | FEATURE |
 | design-testability-001 | combat | implemented | — | PARTIAL | FEATURE_GAP |
 | design-trainer-level-up-001 | character-lifecycle | p0-implemented | feature-008 | FULL | FEATURE_GAP |
