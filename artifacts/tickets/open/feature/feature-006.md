@@ -54,3 +54,14 @@ This is a FULL-scope feature requiring a multi-tier design spec before implement
 | Date | Commit | Description |
 |------|--------|-------------|
 | 2026-02-28 | 200b3b3 | Design spec complete: `artifacts/designs/design-pokemon-evolution-001/` (6 files, 3 tiers: P0 core mechanics, P1 ability/move/capability updates, P2 items/undo/special conditions) |
+| 2026-02-28 | 5453baf | P0: Schema — add `evolutionTriggers` column to SpeciesData, add EvolutionTrigger interface |
+| 2026-02-28 | 8e35417 | P0: Seed — enhance parser to extract evolution triggers (level/stone/held-item patterns) |
+| 2026-02-28 | cb5615a | P0: Utility — `evolutionCheck.ts` with eligibility check + getEvolutionLevels |
+| 2026-02-28 | dada60b | P0: Service — `evolution.service.ts` with extractStatPoints, recalculateStats, performEvolution |
+| 2026-02-28 | 82cb467 | P0: Endpoint — POST /api/pokemon/:id/evolution-check |
+| 2026-02-28 | b1ae35a | P0: Endpoint — POST /api/pokemon/:id/evolve |
+| 2026-02-28 | fe4a5ec | P0: Integration — feed evolution levels into calculateLevelUps (canEvolve flag) |
+| 2026-02-28 | 912692e | P0: UI — EvolutionConfirmModal with stat redistribution + Base Relations validation |
+| 2026-02-28 | 4d2cc37 | P0: UI — clickable evolution entries in LevelUpNotification |
+| 2026-02-28 | 2849aec | P0: UI — manual Evolve button on Pokemon sheet page |
+| 2026-02-28 | 5ce760c | P0: Refactor — move validateBaseRelations to shared utils for client use |

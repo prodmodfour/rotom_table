@@ -4,7 +4,7 @@
 **Feature Ticket:** feature-006
 **Priority:** P1
 **Domain:** pokemon-lifecycle
-**Status:** design-complete
+**Status:** p0-implemented
 **Created:** 2026-02-28
 
 ## Scope
@@ -83,8 +83,16 @@ Full PTU 1.05 Pokemon evolution mechanics: detection, species change, stat recal
 
 ## Implementation Log
 
-(Updated during implementation)
-
 | Date | Commit | Description |
 |------|--------|-------------|
-| | | |
+| 2026-02-28 | 5453baf | P0: Schema — `evolutionTriggers` column on SpeciesData + EvolutionTrigger type |
+| 2026-02-28 | 8e35417 | P0: Seed — parser extracts evolution triggers from pokedex files |
+| 2026-02-28 | cb5615a | P0: Utility — `evolutionCheck.ts` eligibility check + getEvolutionLevels |
+| 2026-02-28 | dada60b | P0: Service — `evolution.service.ts` stat recalc + performEvolution |
+| 2026-02-28 | 82cb467 | P0: Endpoint — POST /api/pokemon/:id/evolution-check |
+| 2026-02-28 | b1ae35a | P0: Endpoint — POST /api/pokemon/:id/evolve |
+| 2026-02-28 | fe4a5ec | P0: Integration — evolution levels fed to calculateLevelUps |
+| 2026-02-28 | 912692e | P0: UI — EvolutionConfirmModal with stat redistribution |
+| 2026-02-28 | 4d2cc37 | P0: UI — clickable evolution entries in LevelUpNotification |
+| 2026-02-28 | 2849aec | P0: UI — Evolve button on Pokemon sheet page |
+| 2026-02-28 | 5ce760c | P0: Refactor — shared validateBaseRelations + EvolutionStats type |
