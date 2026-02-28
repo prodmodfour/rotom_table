@@ -3,7 +3,7 @@ id: feature-006
 title: Pokemon Evolution System
 priority: P1
 severity: HIGH
-status: open
+status: in-progress
 domain: pokemon-lifecycle
 source: matrix-gap (GAP-PLC-1)
 matrix_source: pokemon-lifecycle R029, R031, R032, R033, R034
@@ -48,3 +48,9 @@ This is a FULL-scope feature requiring a multi-tier design spec before implement
 - `app/components/pokemon/` — evolution UI (confirmation modal, species change)
 - `app/server/api/pokemon/` — evolution endpoint
 - `books/markdown/pokedexes/` — evolution data source
+
+## Resolution Log
+
+| Date | Commit | Description |
+|------|--------|-------------|
+| 2026-02-28 | 200b3b3 | Design spec complete: `artifacts/designs/design-pokemon-evolution-001/` (6 files, 3 tiers: P0 core mechanics, P1 ability/move/capability updates, P2 items/undo/special conditions) |
