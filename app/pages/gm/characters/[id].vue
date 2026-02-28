@@ -640,6 +640,7 @@ const saveChanges = async () => {
 
   &--capability {
     background: rgba($color-success, 0.15);
+    border-color: rgba($color-success, 0.3);
     color: $color-success;
   }
 }
