@@ -1,14 +1,14 @@
 ---
-generated_at: 2026-02-28T20:47:07.846Z
-total_tickets: 224
-open: 18
+generated_at: 2026-02-28T21:31:19.201Z
+total_tickets: 226
+open: 20
 in_progress: 97
 resolved: 102
 ---
 
 # Tickets Index
 
-## Open Tickets (18)
+## Open Tickets (20)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
@@ -24,12 +24,14 @@ resolved: 102
 | feature-022 | feature | P2 | pokemon-lifecycle | feature-022: Pokemon Loyalty System |
 | feature-023 | feature | P2 | player-view+capture+healing | feature-023: Player Capture & Healing Interfaces |
 | feature-004 | feature | P3 | combat | feature-004: Pokemon Mounting / Rider System |
+| ux-012 | ux | P3 | — | The server broadcasts `status_tick` WebSocket events when ti |
 | ptu-rule-095 | ptu-rule | P4 | vtt-grid | ptu-rule-095: Disengage maneuver missing from combatManeuver |
 | ptu-rule-125 | ptu-rule | P4 | character-lifecycle | ptu-rule-125: Populate grantedCapabilities on all capability |
 | ptu-rule-126 | ptu-rule | P4 | combat | ptu-rule-126: Snow Boots conditional Overland speed penalty  |
 | ux-006 | ux | P4 | — | ux-006: PTU injury markers may leak precise HP info in playe |
 | ux-011 | ux | P4 | character-lifecycle | ux-011: Custom item form missing grantedCapabilities input f |
 | refactoring-099 | refactoring | P4 | — | refactoring-099: Extract XP actions from encounter.ts store  |
+| refactoring-100 | refactoring | P4 | — | When a combatant faints from any damage source, `applyDamage |
 
 ## In-Progress Tickets (97)
 
@@ -144,6 +146,6 @@ All decree-needs addressed.
 | bug | 0 | 12 | 26 | 40 |
 | ptu-rule | 3 | 58 | 36 | 98 |
 | feature | 12 | 8 | 2 | 23 |
-| ux | 2 | 7 | 2 | 11 |
+| ux | 3 | 7 | 2 | 12 |
 | decree | 0 | 0 | 36 | 36 |
-| refactoring | 1 | 12 | 0 | 16 |
+| refactoring | 2 | 12 | 0 | 17 |
