@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-02-28T18:25:00
-updated_by: slave-collector (plan-20260228-173500)
+last_updated: 2026-02-28T22:50:00
+updated_by: slave-collector (plan-20260228-221811)
 ---
 
 # Dev Ecosystem State
@@ -89,6 +89,11 @@ updated_by: slave-collector (plan-20260228-173500)
 | feature-003 | P1 | **Track-A-P2-APPROVED + Track-B-P1-APPROVED + Track-C-P1-APPROVED** | Player View — Track A P2 APPROVED: code-review-188 APPROVED (`:deep()` fix complete). Track B P1 APPROVED (code-review-162). Track C P1 APPROVED (code-review-163 + rules-review-152). All tracks P0+P1+P2 complete | multi-phase-parallel |
 | feature-004 | P3 | **design-complete** | Pokemon Mounting / Rider System — design spec created by slave-1 (plan-20260228-153856). 7 files in design-mounting-001/: _index.md, spec-p0.md (mount relationship, APIs, combat state), spec-p1.md (VTT linked tokens, dismount checks, Mounted Prowess), spec-p2.md (Rider class features), shared-specs.md, testing-strategy.md | multi-phase |
 | feature-005 | P3 | **design-complete** | Living Weapon System (Honedge Line) — design spec created by slave-2 (plan-20260228-153856). 7 files in design-living-weapon-001/: _index.md, spec-p0.md (wield relationship, Living Weapon capability), spec-p1.md (equipment integration, Doublade/Aegislash bonuses), spec-p2.md (shared movement, No Guard suppression, Weaponize/Soulstealer), shared-specs.md, testing-strategy.md | multi-phase |
+| feature-006 | P1 | **P0-implemented** | Pokemon Evolution System — P0 implemented by slave-2 (plan-20260228-221811). 12 commits: schema migration (evolutionTriggers), seed parser enhancement, evolution eligibility utility, evolution service with stat recalculation, check+evolve API endpoints, EvolutionConfirmModal, LevelUpNotification integration, manual Evolve button. Needs review | multi-phase |
+| feature-007 | P1 | **design-complete** | Pokemon Level-Up Allocation UI — design spec created by slave-4 (plan-20260228-221811). 5 files in design-level-up-allocation-001/: _index.md, shared-specs.md, spec-p0.md (stat point allocation + Base Relations), spec-p1.md (ability assignment + move learning), testing-strategy.md | multi-phase |
+| feature-008 | P1 | **design-complete** | Trainer Level-Up Milestone Workflow — design spec created by slave-5 (plan-20260228-221811). 5 files in design-trainer-level-up-001/: _index.md, shared-specs.md, spec-p0.md (stat/skill allocation per level), spec-p1.md (Edge/Feature selection, class choice), testing-strategy.md | multi-phase |
+| feature-010 | P1 | **P0-implemented** | Status Condition Automation Engine — P0 implemented by slave-1 (plan-20260228-221811). 9 commits: status-automation service with tick damage pure functions, badlyPoisonedRound field, combatant builder init, TICK_DAMAGE_CONDITIONS constant, next-turn endpoint integration, WebSocket status_tick event, unit tests. Needs review | multi-phase |
+| feature-012 | P1 | **CHANGES_REQUIRED** | Death & Heavily Injured Automation — implemented in session 65. code-review-225 **CHANGES_REQUIRED** (C1: unconditional heavily injured penalty, H1: missing move.post death alerts, H2: store discards penalty data, M1: duplicate Dead badge, M2: defeated enemy tracking gaps, M3→refactoring-099). rules-review-201 **CHANGES_REQUIRED** (HIGH-001: Standard Action guard, MEDIUM-001: misleading test name). Needs fix cycle | single-phase |
 
 ### UX Tickets (`tickets/ux/`)
 | Ticket | Priority | Status | Summary |
@@ -107,7 +112,20 @@ updated_by: slave-collector (plan-20260228-173500)
 
 ## Active Developer Work
 
-**Current task:** Session 65 collection complete. 5 slaves merged (26 commits + 1 collector fix). 3 design specs (feature-010 Status Automation, feature-011 Pokemon Switching, feature-006 Pokemon Evolution). 1 code implementation (feature-012 Death & Heavily Injured — 10 commits, 11 files). feature-015 resolved (already implemented). Build error fixed (duplicate isLeagueBattle). Smoke test PASSED. 7 tickets filed (2 refactoring, 5 decree-need).
+**Current task:** Session 66 collection complete. 5 slaves merged (26 commits, 0 conflicts). 2 P0 implementations (feature-010-p0 Status Automation tick damage, feature-006-p0 Pokemon Evolution). 2 design specs (feature-007 Level-Up Allocation, feature-008 Trainer Level-Up). 1 review (feature-012 CHANGES_REQUIRED). Smoke test PASSED. 1 ticket filed (refactoring-099).
+
+**Session 66 (2026-02-28, plan-20260228-221811):**
+- **slave-1** (developer): feature-010-p0 — 9 commits: Status Automation P0 tick damage. Pure service (`status-automation.service.ts`), badlyPoisonedRound field on Combatant, combatant builder init, TICK_DAMAGE_CONDITIONS constant, next-turn endpoint integration (fires before turn advance), WebSocket status_tick event, Badly Poisoned round management on status add/remove, unit tests. → **P0-implemented, needs review**
+- **slave-2** (developer): feature-006-p0 — 12 commits: Pokemon Evolution P0. Schema migration (evolutionTriggers on SpeciesData), seed parser enhancement for evolution trigger extraction, evolution eligibility check utility, evolution service with stat recalculation (Base Relations per decree-035), check+evolve API endpoints, calculateLevelUps integration with evolution levels, EvolutionConfirmModal with stat redistribution UI, LevelUpNotification clickable evolution entries, manual Evolve button on Pokemon sheet, validateBaseRelations extracted to shared utils. → **P0-implemented, needs review**
+- **slave-3** (reviewers): feature-012 — code-review-225 **CHANGES_REQUIRED** (C1: unconditional heavily injured penalty at turn end — must gate behind Standard Action check; H1: move.post.ts missing death/injury alert metadata; H2: store nextTurn() discards heavilyInjuredPenalty response; M1: Dead duplicate badge; M2: defeated enemy tracking gaps in move+next-turn; M3→refactoring-099: encounter.ts 806 lines). rules-review-201 **CHANGES_REQUIRED** (HIGH-001: Standard Action guard — same as C1; MEDIUM-001: misleading test name). → **needs fix cycle**
+- **slave-4** (developer): feature-007-design — 2 commits: full multi-tier design spec for Pokemon Level-Up Allocation UI. 5 files in design-level-up-allocation-001/ (P0: stat point allocation with Base Relations validation per decree-035, P1: ability assignment at levels 20/40 + move learning UI). → **design-complete**
+- **slave-5** (developer): feature-008-design — 1 commit: full multi-tier design spec for Trainer Level-Up Milestone Workflow. 5 files in design-trainer-level-up-001/ (P0: stat/skill allocation per level, P1: Edge/Feature selection at even levels + class choice at 5/10 per decree-022/026/027). → **design-complete**
+
+**Smoke test:** PASSED (Playwright) — GM view renders (full nav, encounter controls, group view buttons). Group view renders (initiative list with Pokemon). Player view renders (character selection: Ash Lv30, Aurora, Clara, Hassan, Marilena).
+**Merge notes:** 0 conflicts. All 5 rebased cleanly. 26 commits total (merge order: 3→4→5→1→2). Schema push required (evolutionTriggers column).
+**Tickets filed:** refactoring-099 (encounter.ts 806 lines, code-review-225 M3)
+**Tickets needing review:** feature-010-p0 (first implementation), feature-006-p0 (first implementation)
+**Tickets needing fix cycle:** feature-012 (code-review-225 CHANGES_REQUIRED: C1+H1+H2+M1+M2, rules-review-201 CHANGES_REQUIRED: HIGH-001+MEDIUM-001)
 
 **Session 64 (2026-02-28, plan-20260228-153856):**
 - slave-3 (developer): bug-040 — 1 commit: discovered bug was already fixed in commit 3d6a238 (bug-038 fix cycle). Moved ticket to resolved → bug-040 **resolved**
