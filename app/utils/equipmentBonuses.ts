@@ -81,3 +81,28 @@ export function computeEquipmentBonuses(equipment: EquipmentSlots): EquipmentCom
 
   return { damageReduction, evasionBonus, statBonuses, speedDefaultCS, conditionalDR }
 }
+
+/**
+ * Collect all capabilities granted by equipped items.
+ *
+ * Equipment can grant capabilities via the `grantedCapabilities` field
+ * (e.g., Snow Boots → "Naturewalk (Tundra)", Jungle Boots → "Naturewalk (Forest)").
+ * PTU Reference: 09-gear-and-items.md p.293.
+ *
+ * Returns deduplicated array of capability strings.
+ * Pure function. No side effects.
+ */
+export function getEquipmentGrantedCapabilities(equipment: EquipmentSlots): string[] {
+  const capabilities = new Set<string>()
+
+  for (const slot of FOCUS_SLOT_PRIORITY) {
+    const item = equipment[slot]
+    if (!item?.grantedCapabilities) continue
+
+    for (const cap of item.grantedCapabilities) {
+      capabilities.add(cap)
+    }
+  }
+
+  return Array.from(capabilities)
+}
