@@ -16,8 +16,10 @@
         v-model="newEdge"
         type="text"
         class="form-input"
+        :class="{ 'form-input--error': edgeError }"
         placeholder="Enter edge name..."
         @keydown.enter.prevent="onAddEdge"
+        @input="edgeError = ''"
       />
       <button
         class="btn btn--primary btn--sm"
@@ -27,6 +29,7 @@
         Add Edge
       </button>
     </div>
+    <p v-if="edgeError" class="edge-error">{{ edgeError }}</p>
 
     <!-- Skill Edge Shortcut -->
     <div class="skill-edge-shortcut">
@@ -109,6 +112,8 @@ interface Props {
   startingEdges: number
   level: number
   warnings: CreationWarning[]
+  /** Validation function for adding edges. Returns error string if blocked, null on success. */
+  addEdgeFn?: (edgeName: string) => string | null
 }
 
 const props = defineProps<Props>()
@@ -122,6 +127,7 @@ const emit = defineEmits<{
 // --- Local State ---
 const newEdge = ref('')
 const showSkillEdgeDropdown = ref(false)
+const edgeError = ref('')
 
 // --- Computed ---
 const filteredWarnings = computed((): CreationWarning[] =>
@@ -131,7 +137,19 @@ const filteredWarnings = computed((): CreationWarning[] =>
 // --- Methods ---
 function onAddEdge(): void {
   if (!newEdge.value.trim()) return
-  emit('addEdge', newEdge.value.trim())
+  edgeError.value = ''
+
+  // If a validation function is provided, check it before emitting
+  if (props.addEdgeFn) {
+    const error = props.addEdgeFn(newEdge.value.trim())
+    if (error) {
+      edgeError.value = error
+      return
+    }
+  } else {
+    emit('addEdge', newEdge.value.trim())
+  }
+
   newEdge.value = ''
 }
 
@@ -213,7 +231,17 @@ function onAddSkillEdge(skill: PtuSkillName): void {
 
   .form-input {
     flex: 1;
+
+    &--error {
+      border-color: $color-danger;
+    }
   }
+}
+
+.edge-error {
+  font-size: $font-size-xs;
+  color: $color-danger;
+  margin: 0 0 $spacing-sm 0;
 }
 
 .skill-edge-shortcut {

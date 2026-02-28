@@ -183,7 +183,7 @@
             :starting-edges="creation.STARTING_EDGES"
             :level="creation.form.level"
             :warnings="creation.classFeatureEdgeWarnings.value"
-            @add-edge="creation.addEdge"
+            :add-edge-fn="creation.addEdge"
             @remove-edge="creation.removeEdge"
             @add-skill-edge="handleSkillEdge"
           />
