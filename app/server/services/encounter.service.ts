@@ -7,7 +7,7 @@ import { prisma } from '~/server/utils/prisma'
 import { rollDie } from '~/utils/diceRoller'
 import { calculateCurrentInitiative } from '~/server/services/combatant.service'
 import type { Combatant, Encounter, GridConfig } from '~/types'
-import type { TrainerDeclaration } from '~/types/combat'
+import type { TrainerDeclaration, SwitchAction } from '~/types/combat'
 import type { SignificanceTier } from '~/utils/encounterBudget'
 
 // Prisma encounter record type (matches Prisma schema)
@@ -41,6 +41,7 @@ interface EncounterRecord {
   fogOfWarEnabled: boolean
   fogOfWarState: string
   declarations: string
+  switchActions: string
   terrainEnabled: boolean
   terrainState: string
   gridIsometric: boolean
@@ -76,6 +77,7 @@ export interface ParsedEncounter {
   pokemonTurnOrder: string[]
   currentPhase: 'trainer_declaration' | 'trainer_resolution' | 'pokemon'
   declarations: TrainerDeclaration[]
+  switchActions: SwitchAction[]
   createdAt: Date
   updatedAt: Date
 }
@@ -202,6 +204,8 @@ export function buildEncounterResponse(
     currentPhase?: 'trainer_declaration' | 'trainer_resolution' | 'pokemon'
     // League Battle declarations
     declarations?: TrainerDeclaration[]
+    // Per-round switch actions
+    switchActions?: SwitchAction[]
   }
 ): ParsedEncounter {
   const turnOrder = options?.turnOrder ?? JSON.parse(record.turnOrder) as string[]
@@ -244,6 +248,7 @@ export function buildEncounterResponse(
     pokemonTurnOrder: options?.pokemonTurnOrder ?? JSON.parse(record.pokemonTurnOrder || '[]'),
     currentPhase: (options?.currentPhase ?? record.currentPhase ?? 'pokemon') as 'trainer_declaration' | 'trainer_resolution' | 'pokemon',
     declarations: options?.declarations ?? JSON.parse(record.declarations || '[]'),
+    switchActions: options?.switchActions ?? JSON.parse(record.switchActions || '[]'),
     createdAt: record.createdAt,
     updatedAt: record.updatedAt
   }

@@ -137,7 +137,8 @@ export default defineEventHandler(async (event) => {
         trainerTurnOrder: JSON.stringify(trainerTurnOrder),
         pokemonTurnOrder: JSON.stringify(pokemonTurnOrder),
         combatants: JSON.stringify(readyCombatants),
-        declarations: JSON.stringify([])
+        declarations: JSON.stringify([]),
+        switchActions: JSON.stringify([])
       }
     })
 
@@ -150,7 +151,8 @@ export default defineEventHandler(async (event) => {
       trainerTurnOrder,
       pokemonTurnOrder,
       currentPhase,
-      declarations: []
+      declarations: [],
+      switchActions: []
     })
 
     return { success: true, data: response }

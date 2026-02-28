@@ -372,6 +372,7 @@ export default defineEventHandler(async (event) => {
 
     if (clearDeclarations) {
       updateData.declarations = JSON.stringify([])
+      updateData.switchActions = JSON.stringify([])
     }
 
     // Add tick damage events to move log
@@ -422,7 +423,7 @@ export default defineEventHandler(async (event) => {
     }
 
     const response = buildEncounterResponse(updatedRecord, combatants, {
-      ...(clearDeclarations && { declarations: [] }),
+      ...(clearDeclarations && { declarations: [], switchActions: [] }),
       ...(tickResults.length > 0 && { moveLog: JSON.parse(updateData.moveLog as string) }),
       defeatedEnemies
     })
