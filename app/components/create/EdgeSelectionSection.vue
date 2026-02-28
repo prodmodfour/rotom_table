@@ -337,19 +337,6 @@ function onAddSkillEdge(skill: PtuSkillName): void {
 }
 
 // .selected-tags, .tag base, .tag__remove — in _create-form-shared.scss
-
-.tag {
-  &--edge {
-    background: rgba($color-warning, 0.15);
-    border: 1px solid rgba($color-warning, 0.3);
-    color: $color-warning;
-  }
-
-  &--skill-edge {
-    background: rgba($color-warning, 0.2);
-    border-color: rgba($color-warning, 0.4);
-  }
-}
-
+// .tag--edge, .tag--skill-edge — in _tags.scss
 // .warning-item — in _create-form-shared.scss
 </style>
