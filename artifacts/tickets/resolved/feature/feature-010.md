@@ -3,7 +3,7 @@ id: feature-010
 title: Status Condition Automation Engine
 priority: P1
 severity: HIGH
-status: in-progress
+status: resolved
 design_spec: design-status-automation-001
 domain: combat
 source: matrix-gap (Gap 1, remaining automation)

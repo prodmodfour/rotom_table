@@ -239,6 +239,7 @@ Export/import for offline character management.
 | `server/services/csv-import.service.ts` | CSV import parsing (trainer/pokemon sheets) and DB creation |
 | `server/services/combatant.service.ts` | Combatant builder, damage pipeline, calculateCurrentInitiative (CS-modified speed for initiative) |
 | `server/services/encounter.service.ts` | Encounter CRUD, reorderInitiativeAfterSpeedChange (decree-006), saveInitiativeReorder |
+| `server/services/status-automation.service.ts` | Tick damage calculation for status conditions (Burned, Poisoned, Badly Poisoned, Cursed). Pure functions: calculateTickDamage, calculateBadlyPoisonedDamage, getTickDamageEntries. TICK_DAMAGE_CONDITIONS constant in `constants/statusConditions.ts`. Integrated into `next-turn.post.ts` (fires before turn advance). WebSocket event: `status_tick` (server → all clients). `badlyPoisonedRound` field on Combatant model tracks escalation. |
 | `server/services/entity-update.service.ts` | Entity update broadcasting |
 | `server/services/grid-placement.service.ts` | VTT grid placement and size-to-token mapping |
 | `server/utils/csv-parser.ts` | Reusable CSV parser (parseCSV, getCell, parseNumber) |
