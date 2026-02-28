@@ -145,6 +145,14 @@
           <PhWarning :size="14" weight="bold" />
           <span>{{ cdr.amount }} DR vs {{ cdr.condition }}</span>
         </div>
+        <div
+          v-for="cap in grantedCapabilities"
+          :key="cap"
+          class="bonus-tag bonus-tag--capability"
+        >
+          <PhTree :size="14" weight="bold" />
+          <span>{{ cap }}</span>
+        </div>
       </div>
       <p v-else class="empty-state">No equipment bonuses active</p>
     </div>
@@ -152,9 +160,9 @@
 </template>
 
 <script setup lang="ts">
-import { PhX, PhShield, PhEye, PhSpeedometer, PhTarget, PhWarning, PhList } from '@phosphor-icons/vue'
+import { PhX, PhShield, PhEye, PhSpeedometer, PhTarget, PhWarning, PhList, PhTree } from '@phosphor-icons/vue'
 import { EQUIPMENT_CATALOG, EQUIPMENT_SLOTS, SLOT_LABELS, SLOT_ICONS, STAT_LABELS } from '~/constants/equipment'
-import { computeEquipmentBonuses } from '~/utils/equipmentBonuses'
+import { computeEquipmentBonuses, getEquipmentGrantedCapabilities } from '~/utils/equipmentBonuses'
 import type { EquipmentSlots, EquipmentSlot, EquippedItem } from '~/types/character'
 
 const props = defineProps<{
@@ -196,6 +204,7 @@ const slotDefinitions = EQUIPMENT_SLOTS.map(key => ({
 }))
 
 const bonuses = computed(() => computeEquipmentBonuses(props.equipment))
+const grantedCapabilities = computed(() => getEquipmentGrantedCapabilities(props.equipment))
 
 const hasBonuses = computed(() => {
   const b = bonuses.value
@@ -204,7 +213,8 @@ const hasBonuses = computed(() => {
     b.evasionBonus > 0 ||
     b.speedDefaultCS < 0 ||
     Object.keys(b.statBonuses).length > 0 ||
-    b.conditionalDR.length > 0
+    b.conditionalDR.length > 0 ||
+    grantedCapabilities.value.length > 0
   )
 })
 
@@ -541,6 +551,12 @@ function onCatalogEquipped(equipment: EquipmentSlots) {
     background: rgba($color-accent-pink, 0.1);
     border-color: rgba($color-accent-pink, 0.25);
     color: $color-accent-pink;
+  }
+
+  &--capability {
+    background: rgba($color-success, 0.1);
+    border-color: rgba($color-success, 0.25);
+    color: $color-success;
   }
 }
 
