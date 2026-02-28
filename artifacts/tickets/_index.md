@@ -1,17 +1,30 @@
 ---
-generated_at: 2026-02-28T12:20:18.805Z
-total_tickets: 198
-open: 6
-in_progress: 91
-resolved: 96
+generated_at: 2026-02-28T13:35:59.328Z
+total_tickets: 223
+open: 19
+in_progress: 95
+resolved: 97
 ---
 
 # Tickets Index
 
-## Open Tickets (6)
+## Open Tickets (19)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
+| feature-007 | feature | P1 | pokemon-lifecycle | feature-007: Pokemon Level-Up Allocation UI |
+| feature-008 | feature | P1 | character-lifecycle | feature-008: Trainer Level-Up Milestone Workflow |
+| feature-009 | feature | P1 | character-lifecycle | feature-009: Trainer XP & Advancement Tracking |
+| feature-013 | feature | P1 | vtt-grid | feature-013: Multi-Tile Token System |
+| feature-014 | feature | P1 | vtt-grid+combat | feature-014: VTT Flanking Detection |
+| feature-016 | feature | P2 | combat+vtt-grid | feature-016: Priority / Interrupt / Attack of Opportunity Sy |
+| feature-017 | feature | P2 | capture | feature-017: Poke Ball Type System |
+| feature-018 | feature | P2 | scenes | feature-018: Weather Effect Automation |
+| feature-019 | feature | P2 | vtt-grid | feature-019: VTT Status-Movement Integration |
+| feature-020 | feature | P2 | healing | feature-020: Healing Item System |
+| feature-021 | feature | P2 | character-lifecycle | feature-021: Derived Capability Calculations |
+| feature-022 | feature | P2 | pokemon-lifecycle | feature-022: Pokemon Loyalty System |
+| feature-023 | feature | P2 | player-view+capture+healing | feature-023: Player Capture & Healing Interfaces |
 | feature-004 | feature | P3 | combat | feature-004: Pokemon Mounting / Rider System |
 | ptu-rule-095 | ptu-rule | P4 | vtt-grid | ptu-rule-095: Disengage maneuver missing from combatManeuver |
 | ptu-rule-125 | ptu-rule | P4 | character-lifecycle | ptu-rule-125: Populate grantedCapabilities on all capability |
@@ -19,7 +32,7 @@ resolved: 96
 | ux-006 | ux | P4 | — | ux-006: PTU injury markers may leak precise HP info in playe |
 | ux-011 | ux | P4 | character-lifecycle | ux-011: Custom item form missing grantedCapabilities input f |
 
-## In-Progress Tickets (91)
+## In-Progress Tickets (95)
 
 | ID | Category | Priority | Domain | Source |
 |----|----------|----------|--------|--------|
@@ -30,6 +43,10 @@ resolved: 96
 | bug-033 | bug | P0 | build | dev-server-error-log |
 | bug-034 | bug | P0 | build | dev-server-error-log |
 | bug-035 | bug | P0 | build | dev-server-error-log |
+| feature-006 | feature | P1 | pokemon-lifecycle | matrix-gap (GAP-PLC-1) |
+| feature-010 | feature | P1 | combat | matrix-gap (Gap 1, remaining automation) |
+| feature-011 | feature | P1 | combat | matrix-gap (Gap 3) |
+| feature-012 | feature | P1 | combat | matrix-gap (combat R076, R080, R081 + healing R016, R030) |
 | bug-002 | bug | P1 | — | code-review-035 |
 | ptu-rule-038 | ptu-rule | P1 | healing | — |
 | ptu-rule-098 | ptu-rule | P1 | combat | decree-005 |
@@ -115,9 +132,15 @@ resolved: 96
 | refactoring-092 | refactoring | P4 | encounter-tables | code-review-207 M1 |
 | refactoring-093 | refactoring | P4 | combat | code-review-207 M2 |
 
-## Open Decree-Needs (0)
+## Open Decree-Needs (5)
 
-All decree-needs addressed.
+| ID | Priority | Domain | Topic |
+|----|----------|--------|-------|
+| decree-need-032 | P1 | combat | — |
+| decree-need-033 | P1 | combat | — |
+| decree-need-034 | P2 | combat | — |
+| decree-need-035 | P1 | pokemon-lifecycle | — |
+| decree-need-036 | P1 | pokemon-lifecycle | — |
 
 ## Summary by Category
 
@@ -125,7 +148,7 @@ All decree-needs addressed.
 |----------|------|-------------|----------|-------|
 | bug | 0 | 12 | 26 | 40 |
 | ptu-rule | 3 | 58 | 36 | 98 |
-| feature | 1 | 2 | 1 | 5 |
+| feature | 14 | 6 | 2 | 23 |
 | ux | 2 | 7 | 2 | 11 |
-| decree | 0 | 0 | 31 | 31 |
-| refactoring | 0 | 12 | 0 | 13 |
+| decree | 0 | 0 | 31 | 36 |
+| refactoring | 0 | 12 | 0 | 15 |

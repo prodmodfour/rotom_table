@@ -1,6 +1,6 @@
 ---
-generated_at: 2026-02-28T12:20:18.806Z
-total_designs: 14
+generated_at: 2026-02-28T13:35:59.330Z
+total_designs: 17
 ---
 
 # Designs Index
@@ -18,6 +18,9 @@ total_designs: 14
 | design-player-view-core-001 | player-view | p0-implemented | feature-003 | FULL | FEATURE |
 | design-player-view-infra-001 | player-view | draft | feature-003 | FULL | INFRASTRUCTURE |
 | design-player-view-integration-001 | player-view | designed | feature-003 | FULL | FEATURE |
+| design-pokemon-evolution-001 | — | — | — | — | — |
+| design-pokemon-switching-001 | combat | design-complete | feature-011 | FULL | FEATURE |
+| design-status-automation-001 | combat | design-complete | feature-010 | FULL | FEATURE |
 | design-testability-001 | combat | implemented | — | PARTIAL | FEATURE_GAP |
 | design-trainer-sprites-001 | character-lifecycle | implemented | feature-001 | SINGLE_PHASE | FEATURE_GAP |
 | design-xp-system-001 | pokemon-lifecycle | implemented | ptu-rule-055 | FULL | FEATURE_GAP |
