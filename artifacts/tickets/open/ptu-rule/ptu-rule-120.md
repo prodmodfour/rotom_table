@@ -6,7 +6,7 @@ priority: P4
 domain: combat+character-lifecycle
 source: rules-review-191 MED-01
 created_by: slave-collector (plan-20260228-072000)
-status: open
+status: in-progress
 ---
 
 ## Summary
@@ -36,3 +36,28 @@ The equipment system already tracks equipped items with stat bonuses and DR, but
 ## Impact
 
 Low — current manual approach works. This is a convenience/consistency improvement.
+
+## Resolution Log
+
+### Implementation (slave/4-developer-ptu-rule-120-20260228)
+
+**Commits:**
+- `22429c8` feat: add grantedCapabilities field to equipment and catalog entries
+- `d388ed9` feat: add getEquipmentGrantedCapabilities utility function
+- `fa4b842` feat: merge equipment-derived Naturewalks into getCombatantNaturewalks
+- `ee35329` fix: accept grantedCapabilities in equipment PUT validation schema
+- `88c420a` feat: expose grantedCapabilities in equipment GET and PUT responses
+- `053fb4b` feat: display equipment-granted capabilities in equipment tab UI
+- `58092ed` fix: extend Naturewalk immunity check to human combatants
+
+**Files changed:**
+- `app/types/character.ts` — added `grantedCapabilities?: string[]` to EquippedItem type
+- `app/constants/equipment.ts` — added grantedCapabilities to Snow Boots, added Jungle Boots entry
+- `app/utils/equipmentBonuses.ts` — added `getEquipmentGrantedCapabilities()` pure function
+- `app/utils/combatantCapabilities.ts` — merged equipment-derived capabilities in `getCombatantNaturewalks`
+- `app/server/api/characters/[id]/equipment.put.ts` — Zod schema + response includes grantedCapabilities
+- `app/server/api/characters/[id]/equipment.get.ts` — response includes grantedCapabilities
+- `app/components/character/tabs/HumanEquipmentTab.vue` — displays granted capabilities in bonuses section
+- `app/server/api/encounters/[id]/status.post.ts` — extended Naturewalk immunity to human combatants
+
+**Additional fix:** The Naturewalk Slowed/Stuck immunity check in the status endpoint was previously gated to Pokemon only. Extended to all combatant types since trainers can also have Naturewalk (Survivalist class or equipment).
