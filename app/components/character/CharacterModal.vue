@@ -236,6 +236,15 @@
         </button>
       </div>
     </div>
+
+    <!-- Level-Up Modal (Human characters only) -->
+    <LevelUpModal
+      v-if="showLevelUpModal && !isPokemon"
+      :character="humanData"
+      :target-level="levelUpTargetLevel"
+      @complete="onLevelUpComplete"
+      @cancel="onLevelUpCancel"
+    />
   </div>
 </template>
 
@@ -327,6 +336,34 @@ watch(() => props.character, () => {
 
 const save = () => {
   emit('save', editData.value)
+}
+
+// --- Level-Up Modal State (Human characters only) ---
+const showLevelUpModal = ref(false)
+const levelUpTargetLevel = ref(0)
+
+// Watch for level increase in edit mode on human characters
+watch(() => editData.value.level, (newVal: number | undefined, oldVal: number | undefined) => {
+  if (isPokemon.value || !isEditing.value) return
+  if (typeof newVal !== 'number' || typeof oldVal !== 'number') return
+  if (newVal <= oldVal) return
+
+  // Revert the raw input change — the modal will handle it
+  editData.value = { ...editData.value, level: oldVal }
+  levelUpTargetLevel.value = newVal
+  showLevelUpModal.value = true
+})
+
+function onLevelUpComplete(updatedData: Record<string, unknown>) {
+  editData.value = {
+    ...editData.value,
+    ...updatedData
+  }
+  showLevelUpModal.value = false
+}
+
+function onLevelUpCancel() {
+  showLevelUpModal.value = false
 }
 
 // Equipment state (tracked locally for reactivity on equip/unequip)
