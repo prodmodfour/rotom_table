@@ -3,7 +3,7 @@ id: refactoring-095
 title: "Guard addEdge() against Skill Edge string injection bypassing patheticSkills check"
 priority: P4
 severity: LOW
-status: open
+status: in-progress
 domain: character-lifecycle
 source: rules-review-188 MED-01
 created_at: 2026-02-28
@@ -29,3 +29,13 @@ Either:
 ## Affected Files
 
 - `app/composables/useCharacterCreation.ts` — `addEdge()` function (line ~268)
+
+## Resolution Log
+
+Fix cycle addressing code-review-215 CHANGES_REQUIRED:
+
+- `a922d48` fix: show error feedback when addEdge blocks Skill Edge string (MED-01)
+  - `app/components/create/EdgeSelectionSection.vue` — addEdgeFn prop, error display, input preservation
+  - `app/pages/gm/create.vue` — pass addEdgeFn prop instead of emit
+- `8899e68` test: add addEdge guard unit tests (decree-027)
+  - `app/tests/unit/composables/useCharacterCreation.test.ts` — blocks Skill Edge strings, allows normal edges

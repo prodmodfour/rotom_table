@@ -7,6 +7,7 @@ domain: combat+vtt-grid
 source: rules-review-186 (noted limitation)
 created_by: slave-collector (plan-20260227-162300)
 created_at: 2026-02-27
+status: in-progress
 ---
 
 ## Summary
@@ -27,3 +28,20 @@ When trainer capabilities are added to the data model, extend `findNaturewalkImm
 ## Impact
 
 Trainers with Survivalist's Naturewalk will not get automatic Slowed/Stuck immunity on matching terrain. GM must apply manually via override. Low impact — Survivalist is uncommon.
+
+## Resolution Log
+
+Fix cycle addressing code-review-215 CHANGES_REQUIRED (5 issues):
+
+- `c9d442c` fix: use parentheses-aware split for capabilities input parser (HIGH-01)
+  - `app/pages/gm/characters/[id].vue` — onCapabilitiesChange uses `/,(?![^(]*\))/` regex
+- `e507367` fix: add border-color to --capability tag in character sheet (MED-03)
+  - `app/pages/gm/characters/[id].vue` — `border-color: rgba($color-success, 0.3)`
+- `a922d48` fix: show error feedback when addEdge blocks Skill Edge string (MED-01)
+  - `app/components/create/EdgeSelectionSection.vue` — addEdgeFn prop, error display, input preservation
+  - `app/pages/gm/create.vue` — pass addEdgeFn prop instead of emit
+- `8899e68` test: add trainer Naturewalk and addEdge guard unit tests (HIGH-02)
+  - `app/tests/unit/utils/combatantCapabilities.test.ts` — trainer capabilities, findNaturewalkImmuneStatuses
+  - `app/tests/unit/composables/useCharacterCreation.test.ts` — addEdge guard (decree-027)
+- `1ccbc71` docs: add capabilities field to app-surface.md (MED-02)
+  - `.claude/skills/references/app-surface.md` — HumanCharacter.capabilities documentation
