@@ -66,37 +66,7 @@ defineProps<{
   gap: $spacing-xs;
 }
 
-.tag {
-  font-size: $font-size-sm;
-  padding: $spacing-xs $spacing-sm;
-  background: $color-bg-tertiary;
-  border: 1px solid $border-color-default;
-  border-radius: $border-radius-sm;
-
-  &--class {
-    background: rgba($color-accent-violet, 0.15);
-    border-color: rgba($color-accent-violet, 0.3);
-    color: $color-accent-violet;
-  }
-
-  &--feature {
-    background: rgba($color-accent-teal, 0.15);
-    border-color: rgba($color-accent-teal, 0.3);
-    color: $color-accent-teal;
-  }
-
-  &--edge {
-    background: rgba($color-warning, 0.15);
-    border-color: rgba($color-warning, 0.3);
-    color: $color-warning;
-  }
-
-  &--capability {
-    background: rgba($color-success, 0.15);
-    border-color: rgba($color-success, 0.3);
-    color: $color-success;
-  }
-}
+// Tag base + variant modifiers provided by global _tags.scss partial
 
 .empty-state {
   color: $color-text-muted;
