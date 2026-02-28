@@ -101,6 +101,8 @@ CRUD + link/unlink + healing/rest + bulk.
 - `POST /api/pokemon/:id/heal-injury` — heal injury
 - `POST /api/pokemon/:id/new-day` — reset daily limits
 - `POST /api/pokemon/:id/add-experience` — manual/training XP grant with level-up detection
+- `POST /api/pokemon/:id/evolution-check` — check evolution eligibility (level/item/triggers)
+- `POST /api/pokemon/:id/evolve` — perform evolution (species, stats, HP recalc, encounter-active guard)
 - `POST /api/pokemon/bulk-action` — bulk archive/delete
 
 ### Encounters (`/api/encounters`)
@@ -133,7 +135,9 @@ CRUD + extensive combat actions.
 - `POST /api/encounters/:id/xp-calculate` — preview XP calculation (read-only breakdown + participating Pokemon)
 - `POST /api/encounters/:id/xp-distribute` — apply XP to Pokemon (updates experience, level, tutorPoints)
 
-**Key encounter components:** `SignificancePanel.vue` (significance preset selector, difficulty adjustment, XP breakdown), `XpDistributionModal.vue` (post-combat XP allocation per player/Pokemon), `LevelUpNotification.vue` (aggregated level-up details shown after XP distribution), `BudgetIndicator.vue` (encounter difficulty bar/label based on level budget ratio), `DeclarationPanel.vue` (GM declaration form for League Battle trainer_declaration phase — action type select, description input, submit + next turn), `DeclarationSummary.vue` (declaration list display for Group View — collapsible round declarations with resolving/resolved state indicators).
+**Key encounter components:** `SignificancePanel.vue` (significance preset selector, difficulty adjustment, XP breakdown), `XpDistributionModal.vue` (post-combat XP allocation per player/Pokemon), `LevelUpNotification.vue` (aggregated level-up details shown after XP distribution), `EvolutionConfirmModal.vue` (stat redistribution + confirmation for Pokemon evolution — Base Relations validation, HP preview, GM override), `BudgetIndicator.vue` (encounter difficulty bar/label based on level budget ratio), `DeclarationPanel.vue` (GM declaration form for League Battle trainer_declaration phase — action type select, description input, submit + next turn), `DeclarationSummary.vue` (declaration list display for Group View — collapsible round declarations with resolving/resolved state indicators).
+
+**Evolution utilities:** `utils/evolutionCheck.ts` (pure eligibility check — level/item/trigger validation, getEvolutionLevels, EvolutionStats type, validateBaseRelations re-export), `types/species.ts` (EvolutionTrigger interface — toSpecies, targetStage, minimumLevel, requiredItem, itemMustBeHeld).
 
 **Budget system:** `utils/encounterBudget.ts` (pure PTU level budget calculator — budget formula, difficulty assessment, XP calculation, SIGNIFICANCE_PRESETS), `composables/useEncounterBudget.ts` (reactive wrapper for active encounter budget analysis).
 
@@ -230,6 +234,7 @@ Export/import for offline character management.
 | File | Purpose |
 |------|---------|
 | `server/services/pokemon-generator.service.ts` | Canonical Pokemon creation — generatePokemonData, createPokemonRecord, buildPokemonCombatant |
+| `server/services/evolution.service.ts` | Pokemon evolution — extractStatPoints, recalculateStats, performEvolution (species, types, stats, HP, spriteUrl) |
 | `server/services/rest-healing.service.ts` | Extended rest move refresh — refreshDailyMoves, refreshDailyMovesForOwnedPokemon |
 | `server/services/csv-import.service.ts` | CSV import parsing (trainer/pokemon sheets) and DB creation |
 | `server/services/combatant.service.ts` | Combatant builder, damage pipeline, calculateCurrentInitiative (CS-modified speed for initiative) |
