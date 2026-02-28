@@ -204,6 +204,14 @@ interface LearnsetEntry {
   move: string
 }
 
+interface EvolutionTrigger {
+  toSpecies: string
+  targetStage: number
+  minimumLevel: number | null
+  requiredItem: string | null
+  itemMustBeHeld: boolean
+}
+
 interface SpeciesRow {
   name: string
   type1: string
@@ -218,6 +226,7 @@ interface SpeciesRow {
   numBasicAbilities: number
   evolutionStage: number
   maxEvolutionStage: number
+  evolutionTriggers: EvolutionTrigger[]
   overland: number
   swim: number
   sky: number
@@ -232,6 +241,108 @@ interface SpeciesRow {
   skills: Record<string, string>
   capabilities: string[]
   size: string
+}
+
+/**
+ * Parse an evolution line to separate the species name from trigger text.
+ * Examples:
+ *   "Charmeleon Minimum 15" -> { speciesName: "Charmeleon", triggerText: "Minimum 15" }
+ *   "Vaporeon Water Stone" -> { speciesName: "Vaporeon", triggerText: "Water Stone" }
+ *   "Scizor Holding Metal Coat Minimum 30" -> { speciesName: "Scizor", triggerText: "Holding Metal Coat Minimum 30" }
+ *   "Froslass Dawn Stone Female Minimum 30" -> { speciesName: "Froslass", triggerText: "Dawn Stone Female Minimum 30" }
+ *   "Charmander" -> { speciesName: "Charmander", triggerText: "" }
+ */
+function parseEvoLineSpeciesAndTrigger(lineText: string): { speciesName: string; triggerText: string } {
+  // Known trigger keywords that mark the boundary between species name and trigger
+  const triggerKeywords = /\b(Minimum|Holding|Water Stone|Fire Stone|Thunderstone|Leaf Stone|Moon Stone|Sun Stone|Shiny Stone|Dusk Stone|Dawn Stone|Ice Stone|Oval Stone|Prism Scale|Deepseatooth|Deepseascale|King's Rock|Metal Coat|Electirizer|Magmarizer|Protector|Reaper Cloth|Razor Claw|Razor Fang|Dragon Scale|Up-Grade|Dubious Disc|Sachet|Whipped Dream|Link Cable Stone)\b/i
+
+  const triggerMatch = lineText.match(triggerKeywords)
+  if (triggerMatch && triggerMatch.index !== undefined) {
+    const speciesName = lineText.slice(0, triggerMatch.index).trim()
+    const triggerText = lineText.slice(triggerMatch.index).trim()
+    return { speciesName: speciesName || lineText.trim(), triggerText }
+  }
+
+  // No trigger keyword found — the whole line is the species name
+  return { speciesName: lineText.trim(), triggerText: '' }
+}
+
+/**
+ * Parse trigger text into an EvolutionTrigger object.
+ * Trigger text patterns (ordered by specificity):
+ * 1. "Holding <Item> Minimum <N>" -> held item + level
+ * 2. "<StoneName> [Gender] Minimum <N>" -> stone + level
+ * 3. "Minimum <N>" -> level only
+ * 4. "<StoneName>" -> stone only (no level)
+ * 5. "" (empty) -> base stage, no trigger (shouldn't be called for base)
+ */
+function parseEvolutionTriggerText(triggerText: string, toSpecies: string, targetStage: number): EvolutionTrigger {
+  if (!triggerText) {
+    return { toSpecies, targetStage, minimumLevel: null, requiredItem: null, itemMustBeHeld: false }
+  }
+
+  // Pattern 1: "Holding <Item> Minimum <N>"
+  const holdingWithLevel = triggerText.match(/^Holding\s+(.+?)\s+Minimum\s+(\d+)\s*$/i)
+  if (holdingWithLevel) {
+    return {
+      toSpecies,
+      targetStage,
+      minimumLevel: parseInt(holdingWithLevel[2], 10),
+      requiredItem: holdingWithLevel[1].trim(),
+      itemMustBeHeld: true
+    }
+  }
+
+  // Pattern 1b: "Holding <Item>" (no level requirement)
+  const holdingNoLevel = triggerText.match(/^Holding\s+(.+?)$/i)
+  if (holdingNoLevel) {
+    return {
+      toSpecies,
+      targetStage,
+      minimumLevel: null,
+      requiredItem: holdingNoLevel[1].trim(),
+      itemMustBeHeld: true
+    }
+  }
+
+  // Pattern 2: "<StoneName> [Gender] Minimum <N>"
+  // The stone name can be multi-word. Gender (Male/Female) may appear between stone and Minimum.
+  const stoneWithLevel = triggerText.match(/^(.+?)\s+(?:Male\s+|Female\s+)?Minimum\s+(\d+)\s*$/i)
+  if (stoneWithLevel) {
+    const itemName = stoneWithLevel[1].trim()
+    // Only treat as stone if it's not just "Minimum" (level-only)
+    if (itemName && !/^minimum$/i.test(itemName)) {
+      return {
+        toSpecies,
+        targetStage,
+        minimumLevel: parseInt(stoneWithLevel[2], 10),
+        requiredItem: itemName,
+        itemMustBeHeld: false
+      }
+    }
+  }
+
+  // Pattern 3: "Minimum <N>" (level only)
+  const levelOnly = triggerText.match(/^Minimum\s+(\d+)\s*$/i)
+  if (levelOnly) {
+    return {
+      toSpecies,
+      targetStage,
+      minimumLevel: parseInt(levelOnly[1], 10),
+      requiredItem: null,
+      itemMustBeHeld: false
+    }
+  }
+
+  // Pattern 4: "<StoneName>" (stone only, no level requirement)
+  // Any remaining text is treated as an item name
+  return {
+    toSpecies,
+    targetStage,
+    minimumLevel: null,
+    requiredItem: triggerText.trim(),
+    itemMustBeHeld: false
+  }
 }
 
 function parsePokedexContent(content: string): SpeciesRow[] {
@@ -314,10 +425,15 @@ function parsePokedexContent(content: string): SpeciesRow[] {
       }
     }
 
-    // Parse evolution stage and max evolution stage from the full evolution block
+    // Parse evolution stage, max evolution stage, and evolution triggers from the full evolution block
     let evolutionStage = 1
     let maxEvolutionStage = 1
+    const evolutionTriggers: EvolutionTrigger[] = []
     const evoSectionMatch = pageText.match(/Evolution:\s*\n((?:\s*\d+\s*-\s*[^\n]+\n?)+)/i)
+
+    // Parsed evolution lines for trigger extraction: { stage, speciesName, triggerText }
+    const parsedEvoLines: Array<{ stage: number; speciesName: string; triggerText: string }> = []
+
     if (evoSectionMatch) {
       const evoLines = [...evoSectionMatch[1].matchAll(/(\d+)\s*-\s*([^\n]+)/g)]
       for (const evoLine of evoLines) {
@@ -333,6 +449,31 @@ function parsePokedexContent(content: string): SpeciesRow[] {
         if (ltLC === nameLC || ltLC.startsWith(nameLC + ' ')) {
           evolutionStage = stageNum
         }
+
+        // Extract species name and trigger text from the evo line
+        // Format: "<SpeciesName> [trigger text]"
+        // Species name is the first word(s) before a known trigger keyword or end of line
+        const evoSpeciesAndTrigger = parseEvoLineSpeciesAndTrigger(lineText)
+        parsedEvoLines.push({
+          stage: stageNum,
+          speciesName: evoSpeciesAndTrigger.speciesName,
+          triggerText: evoSpeciesAndTrigger.triggerText
+        })
+      }
+
+      // Build evolution triggers for the current species
+      // Look at evolution lines at the NEXT stage(s) from this species
+      for (const evoEntry of parsedEvoLines) {
+        // Only consider entries at a stage higher than this species
+        if (evoEntry.stage <= evolutionStage) continue
+
+        // For direct evolution: this species at stage N can evolve into species at stage N+1
+        // For 3-stage lines, stage-1 species gets triggers for stage-2 only,
+        // stage-2 species gets triggers for stage-3 only
+        if (evoEntry.stage !== evolutionStage + 1) continue
+
+        const trigger = parseEvolutionTriggerText(evoEntry.triggerText, evoEntry.speciesName, evoEntry.stage)
+        evolutionTriggers.push(trigger)
       }
     }
     // Mega forms are at their final evolution stage
@@ -437,6 +578,7 @@ function parsePokedexContent(content: string): SpeciesRow[] {
       numBasicAbilities,
       evolutionStage,
       maxEvolutionStage,
+      evolutionTriggers,
       overland: parseInt(overlandMatch?.[1] || '5', 10),
       swim: parseInt(swimMatch?.[1] || '0', 10),
       sky: parseInt(skyMatch?.[1] || '0', 10),
@@ -513,6 +655,7 @@ async function seedSpecies() {
         jumpLong: s.jumpLong,
         weightClass: s.weightClass,
         learnset: JSON.stringify(s.learnset),
+        evolutionTriggers: JSON.stringify(s.evolutionTriggers),
         skills: JSON.stringify(s.skills),
         capabilities: JSON.stringify(s.capabilities),
         size: s.size
