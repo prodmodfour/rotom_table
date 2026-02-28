@@ -40,6 +40,12 @@
         @dismiss="pendingBreatherShift = null"
       />
 
+      <!-- League Battle: Declaration Panel (GM form during trainer_declaration phase) -->
+      <DeclarationPanel @declared="handleDeclarationBroadcast" />
+
+      <!-- League Battle: Declaration Summary (visible during resolution and pokemon phases) -->
+      <DeclarationSummary />
+
       <!-- Main Content -->
       <div class="encounter-content">
         <!-- Grid View -->
@@ -430,6 +436,18 @@ const nextTurn = async () => {
       data: encounterStore.encounter
     })
   }
+}
+
+// Handle WebSocket broadcast after a declaration is submitted (League Battle)
+const handleDeclarationBroadcast = async () => {
+  await nextTick()
+  if (encounterStore.encounter) {
+    send({
+      type: 'encounter_update',
+      data: encounterStore.encounter
+    })
+  }
+  refreshUndoRedoState()
 }
 
 const handleSetWeather = async (weather: string | null, source: string) => {

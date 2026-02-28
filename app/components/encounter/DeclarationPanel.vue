@@ -46,6 +46,10 @@
 <script setup lang="ts">
 import { PhTextAlignLeft, PhCheck } from '@phosphor-icons/vue'
 
+const emit = defineEmits<{
+  declared: []
+}>()
+
 const encounterStore = useEncounterStore()
 
 const actionType = ref('')
@@ -91,6 +95,9 @@ async function submitDeclaration() {
       description.value.trim()
     )
     await encounterStore.nextTurn()
+
+    // Notify parent to broadcast via WebSocket
+    emit('declared')
 
     // Reset form for next declaration
     actionType.value = ''
