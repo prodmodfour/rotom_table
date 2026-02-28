@@ -69,3 +69,36 @@ PARTIAL-scope — checks and warnings can be added without a full design spec. C
 - `app/components/encounter/CombatantCard.vue` — Heavily Injured warning, Dead badge, GM override button
 - `app/stores/encounter.ts` — applyDamage returns death/injury result data
 - `app/composables/useEncounterActions.ts` — GM alert notifications for death and heavily injured
+
+### Fix Cycle: Branch slave/1-dev-feature-012-fix-20260228-205826
+
+Reviews: code-review-225 (CHANGES_REQUIRED: 1C/2H/3M), rules-review-201 (CHANGES_REQUIRED: 0C/1H/1M)
+
+| Commit | Issue | Description |
+|--------|-------|-------------|
+| 8475361 | C1 (CRITICAL) | Gate heavily injured penalty behind standardActionUsed flag in next-turn.post.ts; set flag in move.post.ts |
+| 1445474 | H1 (HIGH) | Return per-target death/injury metadata from move.post.ts; add GM alerts in useEncounterActions |
+| 27309d2 | H2 (HIGH) | Surface heavilyInjuredPenalty from nextTurn store action; add GM alert in gm/index.vue |
+| bd4e927 | M1 (MEDIUM) | Filter Dead/Fainted from status badge display in CombatantCard (dedicated UI exists) |
+| 66d58e0 | M2 (MEDIUM) | Track defeated enemies in move.post.ts and next-turn.post.ts death paths for XP |
+| b84b2ea | M3 (MEDIUM) | Extract XP actions from encounter.ts (838→758 lines) to encounterXp.ts store |
+| d2e41ed | MEDIUM-001 | Fix misleading test name in injuryMechanics.test.ts line 144 |
+| 0eec328 | Decree-005 | Reverse CS effects on heavily-injured-penalty faint via applyFaintStatus() |
+
+### Fix Cycle Files Changed
+
+**New files:**
+- `app/stores/encounterXp.ts` — Extracted XP calculation/distribution store
+
+**Modified files:**
+- `app/server/api/encounters/[id]/next-turn.post.ts` — Gate penalty behind standardActionUsed, defeated enemies, decree-005 faint
+- `app/server/api/encounters/[id]/move.post.ts` — Set standardActionUsed, return targetResults, defeated enemies, decree-005 faint
+- `app/server/api/encounters/[id]/damage.post.ts` — Decree-005 faint via applyFaintStatus, sync stageModifiers
+- `app/server/services/combatant.service.ts` — Extract applyFaintStatus(), refactor applyDamageToEntity
+- `app/stores/encounter.ts` — Return data from executeMove/nextTurn, extract XP actions
+- `app/composables/useEncounterActions.ts` — GM alerts for move-caused deaths
+- `app/pages/gm/index.vue` — GM alerts for turn-end heavily injured penalty
+- `app/components/encounter/CombatantCard.vue` — Filter Dead/Fainted from status badge display
+- `app/components/encounter/XpDistributionModal.vue` — Use encounterXpStore
+- `app/components/encounter/SignificancePanel.vue` — Use encounterXpStore
+- `app/tests/unit/utils/injuryMechanics.test.ts` — Fix misleading test name
