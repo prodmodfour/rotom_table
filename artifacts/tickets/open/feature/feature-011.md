@@ -45,10 +45,19 @@ Design complete: `artifacts/designs/design-pokemon-switching-001/`
 
 | Tier | Scope | Status |
 |------|-------|--------|
-| P0 | Core switch as Standard Action, 8m range check, initiative insertion, encounter store | design-complete |
+| P0 | Core switch as Standard Action, 8m range check, initiative insertion, encounter store | implemented |
 | P1 | League restriction, fainted switch as Shift Action, forced switch exemption | design-complete |
 | P2 | Immediate-act logic, separate recall/release, player view switch request | design-complete |
 
 ## Resolution Log
 
 - Design spec created by slave-2 (2026-02-28)
+- 2026-02-28: P0 implemented — full switch as Standard Action with 8m range check, initiative insertion, encounter store integration, GM UI
+  - d80e0eb: SwitchAction type + switchActions on Encounter model/schema
+  - 0998d41: switching.service.ts (validateSwitch, checkRecallRange, insertIntoTurnOrder, removeCombatantFromEncounter, markActionUsed, buildSwitchAction)
+  - 9a7190a: switch.post.ts endpoint (10-step validation, execution, WebSocket broadcast)
+  - b038f85: useSwitching composable (getBenchPokemon, canSwitch, executeSwitch)
+  - 2eba7b0: SwitchPokemonModal.vue (bench selection UI)
+  - 664b574: encounter store switchPokemon action + Switch button on CombatantCard
+  - b22102f: switchActions lifecycle (clear on new round, init on start)
+  - 4fdd15d: app-surface.md updated

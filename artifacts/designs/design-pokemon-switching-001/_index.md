@@ -4,7 +4,7 @@ ticket_id: feature-011
 category: FEATURE
 scope: FULL
 domain: combat
-status: design-complete
+status: p0-implemented
 decrees:
   - decree-006
   - decree-021
