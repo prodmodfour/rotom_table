@@ -113,41 +113,23 @@ export interface EvolutionStats {
 }
 
 // ============================================
-// BASE RELATIONS VALIDATION (shared pure function)
+// BASE RELATIONS VALIDATION — re-exported from shared utility
 // ============================================
 
+import { validateBaseRelations as _validateBaseRelations } from '~/utils/baseRelations'
+import type { Stats } from '~/types/character'
+
 /**
- * Validate that stat point allocation preserves Base Relations ordering.
- *
- * PTU Core p.198: stats must maintain the same relative ordering as base stats.
- * Equal base stats are in the same tier and need not maintain order relative to each other.
- * Decree-035: Uses nature-adjusted base stats for ordering.
- *
- * Returns array of violation messages. Empty array = valid.
+ * Legacy wrapper: accepts EvolutionStats and returns string[] for backward compatibility.
+ * New code should use validateBaseRelations from ~/utils/baseRelations directly.
  */
 export function validateBaseRelations(
   natureAdjustedBase: EvolutionStats,
   statPoints: EvolutionStats
 ): string[] {
-  const statKeys = ['hp', 'attack', 'defense', 'specialAttack', 'specialDefense', 'speed'] as const
-  const violations: string[] = []
-
-  for (const a of statKeys) {
-    for (const b of statKeys) {
-      if (a === b) continue
-      // If base[a] > base[b], then final[a] must >= final[b]
-      if (natureAdjustedBase[a] > natureAdjustedBase[b]) {
-        const finalA = natureAdjustedBase[a] + statPoints[a]
-        const finalB = natureAdjustedBase[b] + statPoints[b]
-        if (finalA < finalB) {
-          violations.push(
-            `${a} (base ${natureAdjustedBase[a]}) must be >= ${b} (base ${natureAdjustedBase[b]}), ` +
-            `but final ${a}=${finalA} < ${b}=${finalB}`
-          )
-        }
-      }
-    }
-  }
-
-  return violations
+  const result = _validateBaseRelations(
+    natureAdjustedBase as Stats,
+    statPoints as Stats
+  )
+  return result.violations
 }
