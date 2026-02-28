@@ -6,7 +6,7 @@ severity: LOW
 category: ptu-rule
 source: decree-031
 created_at: 2026-02-28
-status: open
+status: in-progress
 ---
 
 ## Summary
@@ -34,3 +34,26 @@ The encounter budget uses `avgPokemonLevel * 2 * playerCount` citing "Core p.473
 
 - Encounter budget calculation (find via searching for the formula or "p.473")
 - Encounter table / template UI showing budget recommendations
+
+## Resolution Log
+
+### Research Finding
+
+PTU Chapter 11 (p.473, "Basic Encounter Creation Guidelines") DOES contain the formula described in the code. The PTU text states: "One good guideline here for an everyday encounter is to multiply the average Pokemon Level of your PCs by 2... From there, simply multiply the Experience drop by your number of Trainers." The formula `avgPokemonLevel * 2 * playerCount` accurately implements this. However, the PTU text frames it as a **GM guideline** for everyday encounters (not a hard formula), with caveats about adjusting for low-level parties and scaling for significant encounters. The difficulty thresholds (trivial/easy/balanced/hard/deadly) are app-specific heuristics with no PTU source.
+
+### Changes Made
+
+| Commit | Description | Files |
+|--------|-------------|-------|
+| `46b4e12` | Remove all 'Core p.473' citations from encounterBudget.ts, reframe as PTU Chapter 11 guideline | `app/utils/encounterBudget.ts` |
+| `ae33f25` | Remove 'PTU p.473' from scene page budget comments | `app/pages/gm/scenes/[id].vue` |
+| `291b0b5` | Add '(PTU guideline)' label to BudgetGuide formula display | `app/components/habitat/BudgetGuide.vue` |
+| `1b4dbf8` | Update matrix capability artifacts to remove p.473 citations | `artifacts/matrix/combat/capabilities/combat-C070.md`, `artifacts/matrix/encounter-tables/encounter-tables-capabilities.md`, `artifacts/matrix/scenes/audit/audit-report.md` |
+| `e9154d1` | Update design specs to remove p.473 citations | `artifacts/designs/design-level-budget-001/spec-p0.md`, `artifacts/designs/_archive/design-level-budget-001.md` |
+
+### Verification
+
+- No remaining 'p.473' references in `app/` directory (verified via grep)
+- Formula unchanged (same calculation, only documentation/attribution corrected)
+- No existing unit tests for encounterBudget.ts — no test updates needed
+- UI now shows '(PTU guideline)' to clarify the formula is advisory, not prescriptive
