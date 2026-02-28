@@ -336,15 +336,28 @@ export const useEncounterStore = defineStore('encounter', {
     },
 
     // Apply damage to combatant
-    async applyDamage(combatantId: string, damage: number) {
-      if (!this.encounter) return
+    // Returns damage result with heavily injured and death check info
+    async applyDamage(combatantId: string, damage: number, suppressDeath: boolean = false) {
+      if (!this.encounter) return null
 
       try {
-        const response = await $fetch<{ data: Encounter }>(`/api/encounters/${this.encounter.id}/damage`, {
+        const response = await $fetch<{
+          data: Encounter
+          damageResult?: {
+            heavilyInjured?: boolean
+            heavilyInjuredHpLoss?: number
+            deathCheck?: {
+              isDead: boolean
+              cause: string | null
+              leagueSuppressed: boolean
+            }
+          }
+        }>(`/api/encounters/${this.encounter.id}/damage`, {
           method: 'POST',
-          body: { combatantId, damage }
+          body: { combatantId, damage, suppressDeath }
         })
         this.encounter = response.data
+        return response.damageResult ?? null
       } catch (e: any) {
         this.error = e.message || 'Failed to apply damage'
         throw e
