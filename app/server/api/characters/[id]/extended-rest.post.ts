@@ -94,7 +94,7 @@ export default defineEventHandler(async (event) => {
       lastRestReset: new Date(),
       statusConditions: JSON.stringify(newStatusConditions),
       drainedAp: 0, // Restore all drained AP
-      currentAp: maxAp - character.boundAp // Bound AP remains off-limits (decree-016)
+      currentAp: Math.max(0, maxAp - character.boundAp) // Bound AP remains off-limits (decree-016)
     }
   })
 

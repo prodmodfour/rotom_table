@@ -37,7 +37,7 @@ export default defineEventHandler(async (event) => {
         injuriesHealedToday: 0,
         drainedAp: 0,
         // boundAp intentionally NOT reset — persists until binding effect ends (decree-016)
-        currentAp: maxAp - character.boundAp,
+        currentAp: Math.max(0, maxAp - character.boundAp),
         lastRestReset: now
       }
     })
