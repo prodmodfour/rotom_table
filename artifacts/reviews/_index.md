@@ -1,8 +1,8 @@
 ---
-generated_at: 2026-02-28T10:23:37.063Z
-total_reviews: 138
+generated_at: 2026-02-28T11:19:24.614Z
+total_reviews: 142
 active_count: 87
-approved_count: 47
+approved_count: 51
 ---
 
 # Reviews Index
@@ -103,6 +103,8 @@ approved_count: 47
 
 | Review ID | Target | Reviewer | Date |
 |-----------|--------|----------|------|
+| code-review-221 | ptu-rule-107 | senior-reviewer | 2026-02-28 |
+| code-review-220 | bug-038 | senior-reviewer | 2026-02-28 |
 | code-review-219 | ptu-rule-122+ptu-rule-123 | senior-reviewer | 2026-02-28 |
 | code-review-218 | refactoring-095+ptu-rule-119 | senior-reviewer | 2026-02-28 |
 | code-review-214 | ptu-rule-114+ptu-rule-116 | senior-reviewer | 2026-02-28 |
@@ -111,14 +113,12 @@ approved_count: 47
 | code-review-211 | refactoring-092+093 | senior-reviewer | 2026-02-28 |
 | code-review-210 | ptu-rule-114+ptu-rule-116 | senior-reviewer | 2026-02-27 |
 | code-review-209 | refactoring-087, refactoring-088, ptu-rule-117, ux-009, ux-010 | senior-reviewer | 2026-02-27 |
-| code-review-208 | ptu-rule-094+refactoring-089+refactoring-090 | senior-reviewer | 2026-02-27 |
-| code-review-207 | refactoring-086, refactoring-002, bug-032, refactoring-091 | senior-reviewer | 2026-02-27 |
 
 ## Stats
 
-- Active reviews: 138
+- Active reviews: 142
 - Needs action: 87
-- Approved/Pass (active): 47
+- Approved/Pass (active): 51
 - Archived: 297
-- Total (active + archived): 435
-- Unique targets reviewed: 61
+- Total (active + archived): 439
+- Unique targets reviewed: 62
