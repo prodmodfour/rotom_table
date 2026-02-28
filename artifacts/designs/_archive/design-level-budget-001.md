@@ -179,7 +179,7 @@ export const DIFFICULTY_THRESHOLDS = {
 ```typescript
 /**
  * Calculate the level budget for an encounter.
- * PTU Core p.473: average Pokemon level * 2 * player count
+ * PTU Encounter Creation Guide (Chapter 11): average Pokemon level * 2 * player count
  */
 export function calculateEncounterBudget(input: BudgetCalcInput): BudgetCalcResult {
   const baselinePerPlayer = input.averagePokemonLevel * 2
