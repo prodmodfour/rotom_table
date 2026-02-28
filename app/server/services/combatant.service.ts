@@ -745,6 +745,7 @@ export function buildCombatantFromEntity(options: BuildCombatantOptions): Combat
       isHolding: false
     },
     stageSources: [],
+    badlyPoisonedRound: 0,
     injuries: { count: 0, sources: [] },
     physicalEvasion: calculateEvasion(stats.defense || 0, 0, equipmentEvasionBonus, equipmentStatBonuses.defense ?? 0),
     specialEvasion: calculateEvasion(stats.specialDefense || 0, 0, equipmentEvasionBonus, equipmentStatBonuses.specialDefense ?? 0),
