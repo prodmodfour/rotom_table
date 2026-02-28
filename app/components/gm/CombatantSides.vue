@@ -123,8 +123,8 @@
 import type { Combatant, CombatSide, StageModifiers, StatusCondition, TurnPhase } from '~/types'
 
 const PHASE_LABELS: Record<string, string> = {
-  trainer_declaration: 'Trainer Phase',
-  trainer_resolution: 'Trainer Resolution',
+  trainer_declaration: 'Declaration (Low \u2192 High)',
+  trainer_resolution: 'Resolution (High \u2192 Low)',
   pokemon: 'Pokemon Phase'
 }
 

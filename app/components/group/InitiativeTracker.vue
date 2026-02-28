@@ -55,8 +55,8 @@ import type { Combatant, Pokemon, HumanCharacter } from '~/types'
 import { getEffectiveMaxHp } from '~/utils/restHealing'
 
 const PHASE_TITLES: Record<string, string> = {
-  trainer_declaration: 'Trainer Phase',
-  trainer_resolution: 'Trainer Resolution',
+  trainer_declaration: 'Declaration (Low \u2192 High)',
+  trainer_resolution: 'Resolution (High \u2192 Low)',
   pokemon: 'Pokemon Phase'
 }
 

@@ -187,14 +187,14 @@ const emit = defineEmits<{
 }>()
 
 const PHASE_LABELS: Record<string, string> = {
-  trainer_declaration: 'Trainer Phase',
-  trainer_resolution: 'Trainer Resolution',
+  trainer_declaration: 'Declaration (Low \u2192 High)',
+  trainer_resolution: 'Resolution (High \u2192 Low)',
   pokemon: 'Pokemon Phase'
 }
 
 const PHASE_TOOLTIPS: Record<string, string> = {
-  trainer_declaration: 'Trainers declare actions (slowest first, fastest reacts)',
-  trainer_resolution: 'Trainer actions resolve (fastest first)',
+  trainer_declaration: 'Trainers declare actions from lowest to highest speed (decree-021)',
+  trainer_resolution: 'Declared actions resolve from highest to lowest speed (decree-021)',
   pokemon: 'Pokemon act in initiative order (fastest first)'
 }
 
