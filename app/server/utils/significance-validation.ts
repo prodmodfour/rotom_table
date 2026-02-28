@@ -1,14 +1,13 @@
 /**
  * Server-side validation for significance tier values.
  * Whitelist matches the SignificanceTier union type in ~/utils/encounterBudget.ts.
+ * Capped at 'significant' per decree-030 (PTU Core p.460: x1 to about x5).
  */
 
 export const VALID_SIGNIFICANCE_TIERS = [
   'insignificant',
   'everyday',
-  'significant',
-  'climactic',
-  'legendary'
+  'significant'
 ] as const
 
 export type ValidSignificanceTier = typeof VALID_SIGNIFICANCE_TIERS[number]
