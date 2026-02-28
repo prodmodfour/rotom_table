@@ -35,11 +35,16 @@
       <!-- Main Content -->
       <main class="encounter-main">
         <!-- Initiative Tracker -->
-        <InitiativeTracker
-          :combatants="sortedCombatants"
-          :current-turn-id="currentCombatant?.id"
-          :current-phase="encounter?.battleType === 'trainer' ? encounter?.currentPhase : undefined"
-        />
+        <div class="initiative-sidebar">
+          <InitiativeTracker
+            :combatants="sortedCombatants"
+            :current-turn-id="currentCombatant?.id"
+            :current-phase="encounter?.battleType === 'trainer' ? encounter?.currentPhase : undefined"
+          />
+
+          <!-- League Battle: Declaration Summary (visible when declarations exist) -->
+          <DeclarationSummary />
+        </div>
 
         <!-- Grid View -->
         <div class="grid-view-panel" data-testid="group-grid-panel">
@@ -347,6 +352,18 @@ const weatherTooltip = computed(() => {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   font-weight: 700;
+}
+
+.initiative-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  flex-shrink: 0;
+  width: 280px;
+
+  @media (min-width: 3000px) {
+    width: 400px;
+  }
 }
 
 .encounter-main {
