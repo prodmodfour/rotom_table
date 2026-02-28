@@ -201,6 +201,7 @@
         <XpDistributionResults
           :results="distributionResults"
           :total-xp-distributed="totalDistributed"
+          @pokemon-evolved="handlePokemonEvolved"
         />
       </div>
 
@@ -264,6 +265,7 @@ const emit = defineEmits<{
   skip: []
   complete: []
   close: []
+  'pokemon-evolved': [result: Record<string, unknown>]
 }>()
 
 const encounterStore = useEncounterStore()
@@ -506,6 +508,16 @@ const handleClose = () => {
   } else {
     emit('close')
   }
+}
+
+// Handle pokemon-evolved event from XpDistributionResults
+const handlePokemonEvolved = async (result: Record<string, unknown>) => {
+  // Refresh encounter data so parent has fresh state
+  if (encounterStore.encounter) {
+    await encounterStore.fetchEncounter(encounterStore.encounter.id)
+  }
+  // Emit upward so the parent page can react (e.g., refresh combatant list)
+  emit('pokemon-evolved', result)
 }
 
 // Watch multiplier/playerCount/boss and recalculate (guarded by initialized flag)
