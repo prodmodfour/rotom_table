@@ -70,6 +70,23 @@ export default defineEventHandler(async (event) => {
       evolutionTriggers: triggers
     })
 
+    // Fetch target species base stats for available evolutions (used by the UI modal)
+    const targetSpeciesNames = [
+      ...result.available.map(a => a.toSpecies),
+      ...result.ineligible.map(i => i.toSpecies)
+    ]
+    const targetSpeciesRecords = targetSpeciesNames.length > 0
+      ? await prisma.speciesData.findMany({
+          where: { name: { in: targetSpeciesNames } },
+          select: {
+            name: true, type1: true, type2: true,
+            baseHp: true, baseAttack: true, baseDefense: true,
+            baseSpAtk: true, baseSpDef: true, baseSpeed: true
+          }
+        })
+      : []
+    const targetSpeciesMap = new Map(targetSpeciesRecords.map(s => [s.name, s]))
+
     return {
       success: true,
       data: {
@@ -77,13 +94,21 @@ export default defineEventHandler(async (event) => {
         currentSpecies: pokemon.species,
         currentLevel: pokemon.level,
         heldItem: pokemon.heldItem,
-        available: result.available.map(a => ({
-          toSpecies: a.toSpecies,
-          targetStage: a.trigger.targetStage,
-          minimumLevel: a.trigger.minimumLevel,
-          requiredItem: a.trigger.requiredItem,
-          itemMustBeHeld: a.trigger.itemMustBeHeld
-        })),
+        available: result.available.map(a => {
+          const target = targetSpeciesMap.get(a.toSpecies)
+          return {
+            toSpecies: a.toSpecies,
+            targetStage: a.trigger.targetStage,
+            minimumLevel: a.trigger.minimumLevel,
+            requiredItem: a.trigger.requiredItem,
+            itemMustBeHeld: a.trigger.itemMustBeHeld,
+            targetBaseStats: target ? {
+              hp: target.baseHp, attack: target.baseAttack, defense: target.baseDefense,
+              specialAttack: target.baseSpAtk, specialDefense: target.baseSpDef, speed: target.baseSpeed
+            } : null,
+            targetTypes: target ? [target.type1, target.type2].filter(Boolean) : []
+          }
+        }),
         ineligible: result.ineligible.map(i => ({
           toSpecies: i.toSpecies,
           reason: i.reason
