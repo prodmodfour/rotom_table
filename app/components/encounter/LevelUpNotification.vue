@@ -25,6 +25,14 @@
           <div class="levelup-detail-item levelup-detail-item--stat">
             <PhChartBar :size="14" class="detail-icon" />
             <span>+{{ entry.totalStatPoints }} Stat {{ entry.totalStatPoints === 1 ? 'Point' : 'Points' }}</span>
+            <NuxtLink
+              :to="`/gm/pokemon/${entry.pokemonId}?edit=true`"
+              class="allocate-link"
+            >
+              <PhSliders :size="12" />
+              Allocate
+              <PhCaretRight :size="10" />
+            </NuxtLink>
           </div>
 
           <!-- Tutor Points -->
@@ -83,6 +91,7 @@ import {
   PhLightning,
   PhArrowCircleUp,
   PhCaretRight,
+  PhSliders,
 } from '@phosphor-icons/vue'
 import type { XpApplicationResult } from '~/utils/experienceCalculation'
 
