@@ -1,8 +1,9 @@
 import { describe, it, expect } from 'vitest'
-import type { Combatant, Pokemon, PokemonCapabilities, TerrainType } from '~/types'
+import type { Combatant, Pokemon, HumanCharacter, PokemonCapabilities, TerrainType, TerrainCell, StatusCondition } from '~/types'
 import {
   getCombatantNaturewalks,
   naturewalkBypassesTerrain,
+  findNaturewalkImmuneStatuses,
 } from '~/utils/combatantCapabilities'
 
 /**
@@ -59,7 +60,7 @@ function makePokemonCombatant(capabilities?: Partial<PokemonCapabilities>): Comb
   }
 }
 
-function makeHumanCombatant(): Combatant {
+function makeHumanCombatant(overrides?: { capabilities?: string[]; position?: { x: number; y: number } }): Combatant {
   return {
     id: 'human-1',
     type: 'human',
@@ -84,6 +85,7 @@ function makeHumanCombatant(): Combatant {
     specialEvasion: 0,
     speedEvasion: 0,
     tokenSize: 1,
+    ...(overrides?.position ? { position: overrides.position } : {}),
     entity: {
       id: 'entity-2',
       statusConditions: [],
@@ -91,6 +93,7 @@ function makeHumanCombatant(): Combatant {
         attack: 0, defense: 0, specialAttack: 0,
         specialDefense: 0, speed: 0, accuracy: 0, evasion: 0,
       },
+      ...(overrides?.capabilities ? { capabilities: overrides.capabilities } : {}),
     } as Combatant['entity'],
   }
 }
@@ -286,5 +289,206 @@ describe('naturewalkBypassesTerrain', () => {
     })
     expect(naturewalkBypassesTerrain(pokemon, 'normal')).toBe(false)
     expect(naturewalkBypassesTerrain(pokemon, 'water')).toBe(false)
+  })
+})
+
+// =========================================================
+// Trainer Naturewalk (PTU p.149 — Survivalist class feature)
+// =========================================================
+
+describe('getCombatantNaturewalks — trainer with capabilities', () => {
+  it('should return terrain names from trainer capabilities', () => {
+    const human = makeHumanCombatant({ capabilities: ['Naturewalk (Forest)'] })
+    const result = getCombatantNaturewalks(human)
+    expect(result).toEqual(['Forest'])
+  })
+
+  it('should return multiple terrains from trainer capabilities', () => {
+    const human = makeHumanCombatant({
+      capabilities: ['Naturewalk (Forest)', 'Naturewalk (Mountain)'],
+    })
+    const result = getCombatantNaturewalks(human)
+    expect(result).toContain('Forest')
+    expect(result).toContain('Mountain')
+    expect(result).toHaveLength(2)
+  })
+
+  it('should parse multi-terrain Naturewalk from trainer capabilities', () => {
+    const human = makeHumanCombatant({
+      capabilities: ['Naturewalk (Forest, Grassland)'],
+    })
+    const result = getCombatantNaturewalks(human)
+    expect(result).toContain('Forest')
+    expect(result).toContain('Grassland')
+    expect(result).toHaveLength(2)
+  })
+
+  it('should return empty array for trainer with non-Naturewalk capabilities', () => {
+    const human = makeHumanCombatant({ capabilities: ['Glow', 'Firestarter'] })
+    expect(getCombatantNaturewalks(human)).toEqual([])
+  })
+
+  it('should return empty array for trainer with empty capabilities', () => {
+    const human = makeHumanCombatant({ capabilities: [] })
+    expect(getCombatantNaturewalks(human)).toEqual([])
+  })
+})
+
+describe('naturewalkBypassesTerrain — trainer with capabilities', () => {
+  it('should return true when trainer Naturewalk (Forest) matches normal terrain', () => {
+    const human = makeHumanCombatant({ capabilities: ['Naturewalk (Forest)'] })
+    expect(naturewalkBypassesTerrain(human, 'normal')).toBe(true)
+  })
+
+  it('should return true when trainer Naturewalk (Ocean) matches water terrain', () => {
+    const human = makeHumanCombatant({ capabilities: ['Naturewalk (Ocean)'] })
+    expect(naturewalkBypassesTerrain(human, 'water')).toBe(true)
+  })
+
+  it('should return false when trainer Naturewalk (Forest) does not match water terrain', () => {
+    const human = makeHumanCombatant({ capabilities: ['Naturewalk (Forest)'] })
+    expect(naturewalkBypassesTerrain(human, 'water')).toBe(false)
+  })
+
+  it('should return false for trainer without Naturewalk on any terrain', () => {
+    const human = makeHumanCombatant({ capabilities: ['Glow'] })
+    expect(naturewalkBypassesTerrain(human, 'normal')).toBe(false)
+  })
+})
+
+// =========================================================
+// findNaturewalkImmuneStatuses — trainer + terrain
+// =========================================================
+
+describe('findNaturewalkImmuneStatuses', () => {
+  const forestCell: TerrainCell = {
+    position: { x: 3, y: 5 },
+    type: 'normal',
+    rough: true,
+    slow: false,
+    elevation: 0,
+  }
+
+  const waterCell: TerrainCell = {
+    position: { x: 1, y: 1 },
+    type: 'water',
+    rough: false,
+    slow: true,
+    elevation: 0,
+  }
+
+  it('should return Slowed and Stuck for trainer on matching terrain', () => {
+    const human = makeHumanCombatant({
+      capabilities: ['Naturewalk (Forest)'],
+      position: { x: 3, y: 5 },
+    })
+    const result = findNaturewalkImmuneStatuses(
+      human,
+      ['Slowed', 'Stuck'],
+      [forestCell],
+      true
+    )
+    expect(result).toContain('Slowed')
+    expect(result).toContain('Stuck')
+    expect(result).toHaveLength(2)
+  })
+
+  it('should return only Slowed when only Slowed is applied on matching terrain', () => {
+    const human = makeHumanCombatant({
+      capabilities: ['Naturewalk (Forest)'],
+      position: { x: 3, y: 5 },
+    })
+    const result = findNaturewalkImmuneStatuses(
+      human,
+      ['Slowed'],
+      [forestCell],
+      true
+    )
+    expect(result).toEqual(['Slowed'])
+  })
+
+  it('should return empty array for trainer on non-matching terrain', () => {
+    const human = makeHumanCombatant({
+      capabilities: ['Naturewalk (Ocean)'],
+      position: { x: 3, y: 5 },
+    })
+    const result = findNaturewalkImmuneStatuses(
+      human,
+      ['Slowed', 'Stuck'],
+      [forestCell],
+      true
+    )
+    expect(result).toEqual([])
+  })
+
+  it('should return empty array when terrain is disabled', () => {
+    const human = makeHumanCombatant({
+      capabilities: ['Naturewalk (Forest)'],
+      position: { x: 3, y: 5 },
+    })
+    const result = findNaturewalkImmuneStatuses(
+      human,
+      ['Slowed', 'Stuck'],
+      [forestCell],
+      false
+    )
+    expect(result).toEqual([])
+  })
+
+  it('should return empty array when combatant has no position', () => {
+    const human = makeHumanCombatant({
+      capabilities: ['Naturewalk (Forest)'],
+    })
+    const result = findNaturewalkImmuneStatuses(
+      human,
+      ['Slowed', 'Stuck'],
+      [forestCell],
+      true
+    )
+    expect(result).toEqual([])
+  })
+
+  it('should return empty array for non-Naturewalk-immune statuses', () => {
+    const human = makeHumanCombatant({
+      capabilities: ['Naturewalk (Forest)'],
+      position: { x: 3, y: 5 },
+    })
+    const result = findNaturewalkImmuneStatuses(
+      human,
+      ['Paralysis', 'Burned'] as StatusCondition[],
+      [forestCell],
+      true
+    )
+    expect(result).toEqual([])
+  })
+
+  it('should work for Pokemon on matching terrain', () => {
+    const pokemon = makePokemonCombatant({ naturewalk: ['Ocean'] })
+    // Add position to the pokemon combatant
+    const positionedPokemon = { ...pokemon, position: { x: 1, y: 1 } }
+    const result = findNaturewalkImmuneStatuses(
+      positionedPokemon,
+      ['Slowed', 'Stuck'],
+      [waterCell],
+      true
+    )
+    expect(result).toContain('Slowed')
+    expect(result).toContain('Stuck')
+  })
+
+  it('should default to normal terrain when combatant is not on a terrain cell', () => {
+    const human = makeHumanCombatant({
+      capabilities: ['Naturewalk (Forest)'],
+      position: { x: 99, y: 99 },
+    })
+    // Forest maps to ['normal'], and default terrain is 'normal'
+    const result = findNaturewalkImmuneStatuses(
+      human,
+      ['Slowed'],
+      [forestCell], // cell at (3,5), not (99,99)
+      true
+    )
+    // Position (99,99) has no cell -> defaults to 'normal' -> Forest matches 'normal'
+    expect(result).toEqual(['Slowed'])
   })
 })
