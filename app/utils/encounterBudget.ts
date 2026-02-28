@@ -1,11 +1,18 @@
 /**
- * PTU 1.05 Encounter Budget Calculator
+ * Encounter Budget & XP Calculator
  *
- * Level Budget formula (Core p.473):
- * - Multiply the average Pokemon Level of PCs by 2 = level budget per player
- * - Multiply baseline by number of trainers = total level budget
+ * Budget guideline (PTU Encounter Creation Guide, Chapter 11):
+ * PTU suggests working backwards from a desired XP drop to determine
+ * the total enemy levels for an encounter. The guideline for an everyday
+ * encounter: multiply the average Pokemon Level of PCs by 2 for a baseline
+ * XP drop per player, then multiply by the number of trainers to get the
+ * total levels to distribute among enemies.
  *
- * XP Calculation (Core p.460):
+ * This is a GM guideline, not a hard formula. PTU notes it should be
+ * decreased for very low-level parties and increased for significant
+ * encounters. The difficulty thresholds below are app-specific heuristics.
+ *
+ * XP Calculation (PTU Core p.460):
  * 1. Total the Level of enemy combatants defeated (Trainer levels count as double)
  * 2. Multiply by Significance Multiplier (x1 to x5)
  * 3. Divide by number of players gaining XP
@@ -26,16 +33,16 @@ export interface BudgetCalcInput {
 }
 
 export interface BudgetCalcResult {
-  /** Total level budget available to spend on enemies */
+  /** Total level budget (guideline) for distributing among enemies */
   totalBudget: number
-  /** Level budget per player: averagePokemonLevel * 2 */
+  /** Per-player baseline: averagePokemonLevel * 2 (PTU Encounter Creation Guide) */
   levelBudgetPerPlayer: number
   breakdown: {
     averagePokemonLevel: number
     playerCount: number
-    /** averagePokemonLevel * 2 = baseline per player */
+    /** averagePokemonLevel * 2 = baseline per player (PTU guideline for everyday encounters) */
     baselinePerPlayer: number
-    /** baselinePerPlayer * playerCount = total budget */
+    /** baselinePerPlayer * playerCount = total levels to distribute */
     totalBudget: number
   }
 }
@@ -114,8 +121,10 @@ export const DIFFICULTY_THRESHOLDS = {
 // ============================================
 
 /**
- * Calculate the level budget for an encounter.
- * PTU Core p.473: average Pokemon level * 2 * player count
+ * Calculate the suggested level budget for an encounter.
+ * Based on PTU Encounter Creation Guide (Chapter 11) guideline:
+ * average Pokemon level * 2 = baseline per player, * player count = total levels.
+ * This is a guideline for everyday encounters — adjust for significance and party strength.
  */
 export function calculateEncounterBudget(input: BudgetCalcInput): BudgetCalcResult {
   const avgLevel = Math.max(0, input.averagePokemonLevel)
