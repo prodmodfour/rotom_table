@@ -75,6 +75,10 @@ async function sendEncounterState(peer: Parameters<typeof safeSend>[0], encounte
         currentRound: encounter.currentRound,
         currentTurnIndex: encounter.currentTurnIndex,
         turnOrder: JSON.parse(encounter.turnOrder),
+        currentPhase: encounter.currentPhase ?? 'pokemon',
+        trainerTurnOrder: JSON.parse(encounter.trainerTurnOrder || '[]'),
+        pokemonTurnOrder: JSON.parse(encounter.pokemonTurnOrder || '[]'),
+        declarations: JSON.parse(encounter.declarations || '[]'),
         isActive: encounter.isActive,
         isPaused: encounter.isPaused,
         isServed: encounter.isServed,
@@ -338,6 +342,20 @@ export default defineWebSocketHandler({
         case 'combatant_removed':
           // A combatant was removed from encounter
           if (clientInfo?.encounterId) {
+            broadcastToEncounter(clientInfo.encounterId, event, peer)
+          }
+          break
+
+        case 'trainer_declared':
+          // A trainer declared an action during League Battle declaration phase
+          if (clientInfo?.role === 'gm' && clientInfo.encounterId) {
+            broadcastToEncounter(clientInfo.encounterId, event, peer)
+          }
+          break
+
+        case 'declaration_update':
+          // Declarations array updated (after declare or phase transition)
+          if (clientInfo?.role === 'gm' && clientInfo.encounterId) {
             broadcastToEncounter(clientInfo.encounterId, event, peer)
           }
           break
