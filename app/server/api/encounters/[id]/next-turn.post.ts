@@ -4,10 +4,16 @@
  * Advances the encounter to the next combatant's turn.
  * For League Battles (decree-021): declaration -> resolution -> pokemon -> new round
  * For Full Contact: standard linear turn progression
+ *
+ * Also applies Heavily Injured HP penalty when a combatant ends their turn
+ * after taking a Standard Action (PTU p.250).
  */
 import { prisma } from '~/server/utils/prisma'
 import { buildEncounterResponse } from '~/server/services/encounter.service'
+import { syncEntityToDatabase } from '~/server/services/entity-update.service'
+import { checkHeavilyInjured, applyHeavilyInjuredPenalty, checkDeath } from '~/utils/injuryMechanics'
 import type { TrainerDeclaration } from '~/types/combat'
+import type { StatusCondition } from '~/types'
 
 export default defineEventHandler(async (event) => {
   const id = getRouterParam(event, 'id')
@@ -58,6 +64,10 @@ export default defineEventHandler(async (event) => {
     // During declaration phase, trainers are just declaring — still mark as acted for turn progression
     const currentCombatantId = turnOrder[currentTurnIndex]
     const currentCombatant = combatants.find((c: any) => c.id === currentCombatantId)
+    const isLeagueBattle = encounter.battleType === 'trainer'
+    // Track heavily injured data for response
+    let heavilyInjuredPenalty: { combatantId: string; hpLost: number; isDead: boolean; deathCause: string | null } | null = null
+
     if (currentCombatant) {
       currentCombatant.hasActed = true
       currentCombatant.actionsRemaining = 0
@@ -67,6 +77,59 @@ export default defineEventHandler(async (event) => {
       // Temp conditions persist through declaration and are cleared during resolution.
       if (currentPhase !== 'trainer_declaration') {
         currentCombatant.tempConditions = []
+      }
+
+      // --- Heavily Injured penalty on Standard Action (PTU p.250) ---
+      // Applies when a combatant ends their actual turn (not declaration phase).
+      // The combatant loses HP equal to their injury count if they have 5+ injuries.
+      if (currentPhase !== 'trainer_declaration') {
+        const entity = currentCombatant.entity
+        const injuries = entity?.injuries || 0
+        const hiCheck = checkHeavilyInjured(injuries)
+
+        if (hiCheck.isHeavilyInjured && entity && entity.currentHp > 0) {
+          const penalty = applyHeavilyInjuredPenalty(entity.currentHp, injuries)
+          entity.currentHp = penalty.newHp
+
+          // Check if this caused fainting
+          if (penalty.newHp === 0) {
+            const conditions: StatusCondition[] = entity.statusConditions || []
+            if (!conditions.includes('Fainted')) {
+              entity.statusConditions = ['Fainted', ...conditions]
+            }
+          }
+
+          // Death check after heavily injured penalty
+          const deathResult = checkDeath(
+            entity.currentHp,
+            entity.maxHp,
+            injuries,
+            isLeagueBattle,
+            penalty.unclampedHp
+          )
+
+          if (deathResult.isDead) {
+            const conditions: StatusCondition[] = entity.statusConditions || []
+            if (!conditions.includes('Dead')) {
+              entity.statusConditions = ['Dead', ...conditions.filter((s: StatusCondition) => s !== 'Dead')]
+            }
+          }
+
+          // Sync HP and status changes to database
+          if (penalty.hpLost > 0 && currentCombatant.entityId) {
+            await syncEntityToDatabase(currentCombatant, {
+              currentHp: entity.currentHp,
+              statusConditions: entity.statusConditions
+            })
+          }
+
+          heavilyInjuredPenalty = {
+            combatantId: currentCombatantId,
+            hpLost: penalty.hpLost,
+            isDead: deathResult.isDead,
+            deathCause: deathResult.cause
+          }
+        }
       }
     }
 
@@ -224,7 +287,11 @@ export default defineEventHandler(async (event) => {
       ...(clearDeclarations && { declarations: [] })
     })
 
-    return { success: true, data: response }
+    return {
+      success: true,
+      data: response,
+      ...(heavilyInjuredPenalty && { heavilyInjuredPenalty })
+    }
   } catch (error: unknown) {
     if (error && typeof error === 'object' && 'statusCode' in error) throw error
     const message = error instanceof Error ? error.message : 'Failed to advance turn'
