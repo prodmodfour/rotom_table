@@ -284,6 +284,15 @@
         </div>
       </div>
     </div>
+
+    <!-- Level-Up Modal -->
+    <LevelUpModal
+      v-if="showLevelUpModal && character"
+      :character="character"
+      :target-level="levelUpTargetLevel"
+      @complete="onLevelUpComplete"
+      @cancel="onLevelUpCancel"
+    />
   </div>
 </template>
 
@@ -314,6 +323,35 @@ const saving = ref(false)
 const editData = ref<Partial<HumanCharacter>>({})
 const activeTab = ref('stats')
 const showSpritePicker = ref(false)
+
+// --- Level-Up Modal State ---
+const showLevelUpModal = ref(false)
+const levelUpTargetLevel = ref(0)
+
+// Watch for level increase in edit mode — intercept and open level-up modal
+watch(() => editData.value.level, (newVal, oldVal) => {
+  if (!isEditing.value) return
+  if (typeof newVal !== 'number' || typeof oldVal !== 'number') return
+  if (newVal <= oldVal) return
+
+  // Revert the raw input change — the modal will handle it
+  editData.value = { ...editData.value, level: oldVal }
+  levelUpTargetLevel.value = newVal
+  showLevelUpModal.value = true
+})
+
+// Handle level-up completion
+function onLevelUpComplete(updatedData: Partial<HumanCharacter>) {
+  editData.value = {
+    ...editData.value,
+    ...updatedData
+  }
+  showLevelUpModal.value = false
+}
+
+function onLevelUpCancel() {
+  showLevelUpModal.value = false
+}
 
 // Resolved avatar URL — uses editData when editing for live preview, else character
 const avatarBroken = ref(false)
