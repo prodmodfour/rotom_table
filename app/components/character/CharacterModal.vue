@@ -269,6 +269,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   close: []
   save: [data: Partial<Pokemon> | Partial<HumanCharacter>]
+  refresh: []
 }>()
 
 const { getSpriteUrl } = usePokemonSprite()
@@ -353,9 +354,15 @@ function handleXpLevelUp(payload: { oldLevel: number; newLevel: number; characte
   showLevelUpModal.value = true
 }
 
-function handleXpChanged(_payload: { newXp: number; newLevel: number }) {
-  // Refresh character data by re-assigning from updated props
-  editData.value = { ...props.character }
+function handleXpChanged(payload: { newXp: number; newLevel: number }) {
+  // Update editData with the known new values from the XP operation
+  editData.value = {
+    ...editData.value,
+    trainerXp: payload.newXp,
+    level: payload.newLevel
+  }
+  // Ask the parent to re-fetch full character data for fresh props
+  emit('refresh')
 }
 
 // --- Level-Up Modal State (Human characters only) ---
