@@ -90,12 +90,22 @@ export default defineEventHandler(async (event) => {
     const holdQueue = JSON.parse(record.holdQueue || '[]')
     const updatedHoldQueue = [...holdQueue, holdQueueEntry]
 
+    // Advance the turn — the holding combatant's turn is skipped (spec A2 step 5)
+    let currentTurnIndex = record.currentTurnIndex + 1
+    const currentRound = record.currentRound
+
+    // Handle round wrap-around for Full Contact battles
+    if (currentTurnIndex >= turnOrder.length && record.battleType !== 'trainer') {
+      currentTurnIndex = 0
+    }
+
     // Save to database
     await prisma.encounter.update({
       where: { id },
       data: {
         combatants: JSON.stringify(updatedCombatants),
-        holdQueue: JSON.stringify(updatedHoldQueue)
+        holdQueue: JSON.stringify(updatedHoldQueue),
+        currentTurnIndex
       }
     })
 
@@ -110,7 +120,8 @@ export default defineEventHandler(async (event) => {
     })
 
     const response = buildEncounterResponse(record, updatedCombatants, {
-      holdQueue: updatedHoldQueue
+      holdQueue: updatedHoldQueue,
+      currentTurnIndex
     })
 
     return {
