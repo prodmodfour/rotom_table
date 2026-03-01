@@ -14,6 +14,7 @@ import { prisma } from '~/server/utils/prisma'
 import { loadEncounter, buildEncounterResponse } from '~/server/services/encounter.service'
 import { detectAoOTriggers } from '~/server/services/out-of-turn.service'
 import { broadcastToEncounter } from '~/server/utils/websocket'
+import { AOO_TRIGGER_MAP } from '~/constants/aooTriggers'
 import type { AoOTrigger } from '~/types/combat'
 import type { GridPosition } from '~/types'
 
@@ -48,6 +49,15 @@ export default defineEventHandler(async (event) => {
     throw createError({
       statusCode: 400,
       message: 'actorId and triggerType are required'
+    })
+  }
+
+  // Validate triggerType against known AoO triggers (HIGH-001)
+  const validTriggerTypes = Object.keys(AOO_TRIGGER_MAP)
+  if (!validTriggerTypes.includes(triggerType)) {
+    throw createError({
+      statusCode: 400,
+      message: `Invalid triggerType "${triggerType}". Must be one of: ${validTriggerTypes.join(', ')}`
     })
   }
 
