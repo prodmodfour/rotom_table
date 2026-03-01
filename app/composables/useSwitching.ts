@@ -88,6 +88,48 @@ export function useSwitching() {
   }
 
   /**
+   * Check if a trainer can perform a fainted switch on this turn.
+   * PTU p.229: "Trainers may Switch out Fainted Pokemon as a Shift Action."
+   *
+   * Requirements:
+   * - Must be the trainer's turn
+   * - Trainer must have Shift Action available
+   * - The Pokemon must be fainted
+   */
+  function canFaintedSwitch(trainerId: string, pokemonCombatantId: string): {
+    allowed: boolean
+    reason?: string
+  } {
+    const encounter = encounterStore.encounter
+    if (!encounter) return { allowed: false, reason: 'No active encounter' }
+    if (!encounter.isActive) return { allowed: false, reason: 'Encounter is not active' }
+
+    const trainer = encounter.combatants.find(c => c.id === trainerId)
+    if (!trainer) return { allowed: false, reason: 'Trainer not found' }
+
+    const pokemon = encounter.combatants.find(c => c.id === pokemonCombatantId)
+    if (!pokemon) return { allowed: false, reason: 'Pokemon not found' }
+
+    // Must be fainted
+    if (pokemon.entity.currentHp > 0) {
+      return { allowed: false, reason: 'Pokemon is not fainted' }
+    }
+
+    // Must be the trainer's turn
+    const currentId = encounter.turnOrder[encounter.currentTurnIndex]
+    if (currentId !== trainerId) {
+      return { allowed: false, reason: 'Not the trainer\'s turn' }
+    }
+
+    // Trainer must have Shift Action
+    if (trainer.turnState.shiftActionUsed) {
+      return { allowed: false, reason: 'Shift Action already used' }
+    }
+
+    return { allowed: true }
+  }
+
+  /**
    * Execute a full switch via the API.
    */
   async function executeSwitch(
@@ -120,6 +162,7 @@ export function useSwitching() {
     error: readonly(error),
     getBenchPokemon,
     canSwitch,
+    canFaintedSwitch,
     executeSwitch
   }
 }
