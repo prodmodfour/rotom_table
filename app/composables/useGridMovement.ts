@@ -9,6 +9,7 @@ import {
 import { TERRAIN_COSTS, DEFAULT_FLAGS } from '~/stores/terrain'
 import { ptuDiagonalDistance } from '~/utils/gridDistance'
 import { isEnemySide } from '~/utils/combatSides'
+import { getFootprintCells, isFootprintInBounds } from '~/utils/sizeCategory'
 
 interface TokenData {
   combatantId: string
@@ -307,14 +308,8 @@ export function useGridMovement(options: UseGridMovementOptions) {
     const occupied: GridPosition[] = []
     options.tokens.value.forEach(token => {
       if (token.combatantId === excludeCombatantId) return
-      for (let dx = 0; dx < token.size; dx++) {
-        for (let dy = 0; dy < token.size; dy++) {
-          occupied.push({
-            x: token.position.x + dx,
-            y: token.position.y + dy
-          })
-        }
-      }
+      const cells = getFootprintCells(token.position.x, token.position.y, token.size)
+      cells.forEach(cell => occupied.push(cell))
     })
     return occupied
   }
@@ -345,14 +340,8 @@ export function useGridMovement(options: UseGridMovementOptions) {
     options.tokens.value.forEach(token => {
       if (token.combatantId === combatantId) return
       if (!isEnemy(token.combatantId)) return
-      for (let dx = 0; dx < token.size; dx++) {
-        for (let dy = 0; dy < token.size; dy++) {
-          enemyCells.push({
-            x: token.position.x + dx,
-            y: token.position.y + dy
-          })
-        }
-      }
+      const cells = getFootprintCells(token.position.x, token.position.y, token.size)
+      cells.forEach(cell => enemyCells.push(cell))
     })
     return enemyCells
   }
@@ -497,21 +486,14 @@ export function useGridMovement(options: UseGridMovementOptions) {
     const movingToken = options.tokens.value.find(t => t.combatantId === combatantId)
     const tokenSize = movingToken?.size || 1
 
-    const inBounds = toPos.x >= 0 && toPos.x + tokenSize - 1 < gridWidth &&
-                     toPos.y >= 0 && toPos.y + tokenSize - 1 < gridHeight
+    const inBounds = isFootprintInBounds(toPos.x, toPos.y, tokenSize, gridWidth, gridHeight)
 
     // No-stacking rule: cannot end movement on any occupied square
-    // Check ALL cells the moving token would occupy at the destination (HIGH-1)
+    // Check ALL cells the moving token would occupy at the destination
     const occupiedCells = getOccupiedCells(combatantId)
     const occupiedSet = new Set(occupiedCells.map(c => `${c.x},${c.y}`))
-    let isOccupied = false
-    for (let dx = 0; dx < tokenSize && !isOccupied; dx++) {
-      for (let dy = 0; dy < tokenSize && !isOccupied; dy++) {
-        if (occupiedSet.has(`${toPos.x + dx},${toPos.y + dy}`)) {
-          isOccupied = true
-        }
-      }
-    }
+    const destCells = getFootprintCells(toPos.x, toPos.y, tokenSize)
+    const isOccupied = destCells.some(cell => occupiedSet.has(`${cell.x},${cell.y}`))
 
     if (isOccupied || !inBounds) {
       const geometricDistance = calculateMoveDistance(fromPos, toPos)
