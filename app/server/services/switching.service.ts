@@ -286,6 +286,7 @@ export function markActionUsed(
 
 /**
  * Build a SwitchAction record for the switch log.
+ * Supports full_switch (Standard), fainted_switch (Shift), and forced_switch (no cost).
  */
 export function buildSwitchAction(params: {
   trainerId: string
@@ -295,15 +296,27 @@ export function buildSwitchAction(params: {
   releasedEntityId: string
   round: number
   forced: boolean
+  faintedSwitch?: boolean
 }): SwitchAction {
+  let actionType: SwitchAction['actionType'] = 'full_switch'
+  let actionCost: SwitchAction['actionCost'] = 'standard'
+
+  if (params.forced) {
+    actionType = 'forced_switch'
+    actionCost = 'shift' // Recorded for logging, but not actually consumed
+  } else if (params.faintedSwitch) {
+    actionType = 'fainted_switch'
+    actionCost = 'shift'
+  }
+
   return {
     trainerId: params.trainerId,
     recalledCombatantId: params.recalledCombatantId,
     recalledEntityId: params.recalledEntityId,
     releasedCombatantId: params.releasedCombatantId,
     releasedEntityId: params.releasedEntityId,
-    actionType: 'full_switch',
-    actionCost: 'standard',
+    actionType,
+    actionCost,
     round: params.round,
     forced: params.forced
   }
@@ -439,4 +452,164 @@ export function validateActionAvailability(
   }
 
   return { valid: true }
+}
+
+// ============================================
+// FAINTED SWITCH VALIDATION (P1 — Section H)
+// ============================================
+
+/**
+ * Validate a fainted switch request.
+ * PTU p.229: "Trainers may Switch out Fainted Pokemon as a Shift Action."
+ *
+ * Requirements:
+ * - Recalled Pokemon must actually be fainted (currentHp <= 0)
+ * - Trainer must have a Shift Action available
+ * - It must be the trainer's turn (fainted Pokemon can't initiate)
+ */
+export function validateFaintedSwitch(
+  recalledCombatant: Combatant,
+  trainerCombatant: Combatant,
+  encounter: {
+    turnOrder: string[]
+    currentTurnIndex: number
+  },
+  trainerId: string
+): SwitchValidationResult {
+  // Recalled Pokemon must be fainted
+  if (recalledCombatant.entity.currentHp > 0) {
+    return {
+      valid: false,
+      error: 'Cannot use fainted switch: Pokemon is not fainted',
+      statusCode: 400
+    }
+  }
+
+  // Must be the trainer's turn (fainted Pokemon can't act)
+  const currentTurnCombatantId = encounter.turnOrder[encounter.currentTurnIndex]
+  if (currentTurnCombatantId !== trainerId) {
+    return {
+      valid: false,
+      error: 'Fainted switch can only be performed on the trainer\'s turn',
+      statusCode: 400
+    }
+  }
+
+  // Trainer must have Shift Action available
+  if (trainerCombatant.turnState.shiftActionUsed) {
+    return {
+      valid: false,
+      error: 'No Shift Action available for fainted switch',
+      statusCode: 400
+    }
+  }
+
+  return { valid: true }
+}
+
+// ============================================
+// FORCED SWITCH VALIDATION (P1 — Section I)
+// ============================================
+
+/**
+ * Validate a forced switch request (Roar, Whirlwind, etc.).
+ * PTU p.229: Forced switches bypass action cost and League restriction.
+ *
+ * Per decree-034: only moves with explicit recall text qualify.
+ * - No action cost check (forced doesn't consume an action)
+ * - No turn check (can happen on any combatant's turn)
+ * - Range check still applies in Full Contact mode
+ * - Trapped check is bypassed for forced switches (the move overrides it)
+ */
+export function validateForcedSwitch(params: {
+  encounter: {
+    isActive: boolean
+    combatants: Combatant[]
+    battleType: string
+  }
+  trainerId: string
+  recallCombatantId: string
+  releaseEntityId: string
+  releasedPokemonRecord: { id: string; ownerId: string | null; currentHp: number } | null
+}): SwitchValidationResult {
+  const { encounter, trainerId, recallCombatantId, releaseEntityId, releasedPokemonRecord } = params
+
+  // 1. Encounter must be active
+  if (!encounter.isActive) {
+    return { valid: false, error: 'Encounter is not active', statusCode: 400 }
+  }
+
+  // 2. Trainer combatant exists
+  const trainer = encounter.combatants.find(c => c.id === trainerId)
+  if (!trainer || trainer.type !== 'human') {
+    return { valid: false, error: 'Trainer combatant not found', statusCode: 404 }
+  }
+
+  // 3. Recalled Pokemon exists
+  const recalled = encounter.combatants.find(c => c.id === recallCombatantId)
+  if (!recalled || recalled.type !== 'pokemon') {
+    return { valid: false, error: 'Recalled Pokemon combatant not found', statusCode: 404 }
+  }
+
+  // NOTE: Trapped check is SKIPPED for forced switches — the move overrides it
+
+  // 4. Recalled Pokemon belongs to trainer
+  const recalledEntity = recalled.entity as { ownerId?: string }
+  if (recalledEntity.ownerId !== trainer.entityId) {
+    return { valid: false, error: 'Recalled Pokemon does not belong to this trainer', statusCode: 400 }
+  }
+
+  // 5. Released Pokemon exists
+  if (!releasedPokemonRecord) {
+    return { valid: false, error: 'Released Pokemon not found', statusCode: 404 }
+  }
+
+  // 6. Released Pokemon belongs to trainer
+  if (releasedPokemonRecord.ownerId !== trainer.entityId) {
+    return { valid: false, error: 'Released Pokemon does not belong to this trainer', statusCode: 400 }
+  }
+
+  // 7. Released Pokemon not already in encounter
+  const alreadyInEncounter = encounter.combatants.some(c => c.entityId === releaseEntityId)
+  if (alreadyInEncounter) {
+    return { valid: false, error: 'Released Pokemon is already in the encounter', statusCode: 400 }
+  }
+
+  // 8. Released Pokemon not fainted
+  if (releasedPokemonRecord.currentHp <= 0) {
+    return { valid: false, error: 'Released Pokemon is fainted and cannot battle', statusCode: 400 }
+  }
+
+  return { valid: true }
+}
+
+// ============================================
+// LEAGUE RESTRICTION CHECK (P1 — Section G)
+// ============================================
+
+/**
+ * Determine if a switched-in Pokemon can be commanded this round.
+ * PTU p.229: "they cannot command the Pokemon that was Released as part
+ * of the Switch for the remainder of the Round unless the Switch was
+ * forced by a Move such as Roar or if they were Recalling and replacing
+ * a Fainted Pokemon."
+ *
+ * Returns true if the Pokemon CAN be commanded (no restriction).
+ */
+export function canSwitchedPokemonBeCommanded(
+  isLeagueBattle: boolean,
+  isFaintedSwitch: boolean,
+  isForcedSwitch: boolean
+): boolean {
+  // Non-League battles: no restriction
+  if (!isLeagueBattle) return true
+
+  // Fainted switch exemption
+  if (isFaintedSwitch) return true
+
+  // Forced switch exemption (Roar, Whirlwind, etc.)
+  if (isForcedSwitch) return true
+
+  // League Battle standard switch: cannot be commanded this round
+  return false
 }
