@@ -208,12 +208,6 @@ export interface OutOfTurnUsage {
 // ============================================================
 
 /**
- * Size category for flanking requirement lookup.
- * Maps to PTU size categories (p.232).
- */
-export type FlankingSize = 'small' | 'medium' | 'large' | 'huge' | 'gigantic'
-
-/**
  * Result of flanking detection for a single combatant.
  */
 export interface FlankingStatus {
