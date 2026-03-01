@@ -14,7 +14,8 @@ import type {
   TrainerDeclaration,
   SwitchAction,
   OutOfTurnAction,
-  OutOfTurnUsage
+  OutOfTurnUsage,
+  HoldActionState
 } from './combat';
 import type { Pokemon, HumanCharacter, PokemonType } from './character';
 import type { SignificanceTier } from '~/utils/encounterBudget';
@@ -71,6 +72,10 @@ export interface Combatant {
   outOfTurnUsage?: OutOfTurnUsage;
   /** Whether this combatant used Disengage this turn (prevents AoO on their shift) */
   disengaged?: boolean;
+  /** Hold Action state (P1 scope) */
+  holdAction?: HoldActionState;
+  /** Whether this combatant forfeits their next round turn (Advanced Priority penalty) */
+  skipNextRound?: boolean;
 
   // Reference to actual data
   entity: Pokemon | HumanCharacter;

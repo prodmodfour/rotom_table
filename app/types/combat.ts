@@ -158,6 +158,20 @@ export const AOO_BLOCKING_CONDITIONS: readonly string[] = [
 ] as const;
 
 /**
+ * Hold Action state for a combatant (P1 scope).
+ * PTU p.227: "Combatants can choose to hold their action until a
+ * specified lower Initiative value once per round."
+ */
+export interface HoldActionState {
+  /** Whether this combatant is currently holding their action */
+  isHolding: boolean;
+  /** The initiative value they are holding until (null = holding indefinitely until triggered) */
+  holdUntilInitiative: number | null;
+  /** Whether the hold has been consumed this round (can only hold once per round) */
+  holdUsedThisRound: boolean;
+}
+
+/**
  * Represents a pending out-of-turn action that has been detected/offered
  * but not yet resolved. The GM sees these as prompts and decides whether
  * to execute them.
