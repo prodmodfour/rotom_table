@@ -3,7 +3,7 @@ ticket_id: ptu-rule-132
 category: ptu-rule
 priority: P3
 severity: MEDIUM
-status: in-progress
+status: resolved
 source: rules-review-233 HIGH-1
 created_by: slave-collector (plan-20260301-184039)
 created_at: 2026-03-01
@@ -39,3 +39,4 @@ The app under-awards trainer XP when a Pokemon evolves into a species the traine
 - **Commit:** c0dc34bd — `feat: hook evolution species XP into capturedSpecies tracking`
 - **Files changed:** `app/server/api/pokemon/[id]/evolve.post.ts`
 - **Approach:** Added species XP logic after successful evolution, following the exact pattern from `attempt.post.ts` lines 120-155. Imports `applyTrainerXp` and `isNewSpecies` from `trainerExperience.ts`. Loads owning trainer's `capturedSpecies`, checks if evolved species is new, awards +1 XP, appends normalized species name, broadcasts `character_update` on level-up. Returns `speciesXp` in response data.
+- **Review fix (code-review-263 M2):** Commit 883a1cbd — Updated `.claude/skills/references/app-surface.md` to document species XP behavior on the evolve endpoint.
