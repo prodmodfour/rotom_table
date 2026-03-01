@@ -196,6 +196,14 @@ export function useWebSocket() {
         getEncounterStore().updateFromWebSocket(message.data.encounter)
         break
 
+      case 'pokemon_recalled':
+        getEncounterStore().updateFromWebSocket(message.data.encounter)
+        break
+
+      case 'pokemon_released':
+        getEncounterStore().updateFromWebSocket(message.data.encounter)
+        break
+
       case 'encounter_served':
         getEncounterStore().updateFromWebSocket(message.data.encounter)
         break
