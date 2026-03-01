@@ -74,6 +74,7 @@
 <script setup lang="ts">
 import type { Stats } from '~/types/character'
 import type { StatPoints } from '~/composables/useCharacterCreation'
+import { STAT_DEFINITIONS } from '~/constants/trainerStats'
 
 interface Props {
   /** Current stat values (from the character's existing stats) */
@@ -98,8 +99,6 @@ defineEmits<{
   incrementStat: [stat: keyof StatPoints]
   decrementStat: [stat: keyof StatPoints]
 }>()
-
-import { STAT_DEFINITIONS } from '~/constants/trainerStats'
 
 const statDefinitions = STAT_DEFINITIONS
 
