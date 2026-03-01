@@ -58,11 +58,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
 import { PhLightning, PhArrowRight } from '@phosphor-icons/vue'
 import type { Combatant } from '~/types/encounter'
 
-const props = defineProps<{
+const encounterStore = useEncounterStore()
+
+defineProps<{
   combatants: Combatant[]
 }>()
 
@@ -72,21 +73,11 @@ const emit = defineEmits<{
 }>()
 
 /**
- * Eligible combatants: alive and haven't used Priority this round.
+ * Eligible combatants from store getter (MED-005).
  * Standard/Limited require !hasActed, but Advanced can be used even if acted.
  * We show all non-Priority-used combatants and let the buttons handle the hasActed check.
  */
-const eligibleCombatants = computed(() => {
-  return props.combatants.filter(c => {
-    // Must be alive
-    if (c.entity.currentHp <= 0) return false
-    // Must not have used Priority this round
-    if (c.outOfTurnUsage?.priorityUsed) return false
-    // Must not be holding an action (F2)
-    if (c.holdAction?.isHolding) return false
-    return true
-  })
-})
+const eligibleCombatants = computed(() => encounterStore.priorityEligibleCombatants)
 
 function getName(combatant: Combatant): string {
   if (combatant.type === 'pokemon') {

@@ -156,6 +156,17 @@ export const useEncounterStore = defineStore('encounter', {
       return (state.encounter?.pendingOutOfTurnActions ?? [])
         .filter(a => a.category === 'interrupt' && a.status === 'pending')
     },
+
+    /** Combatants eligible for Priority actions (alive, not used Priority, not holding) */
+    priorityEligibleCombatants: (state): Combatant[] => {
+      if (!state.encounter) return []
+      return state.encounter.combatants.filter(c => {
+        if (c.entity.currentHp <= 0) return false
+        if (c.outOfTurnUsage?.priorityUsed) return false
+        if (c.holdAction?.isHolding) return false
+        return true
+      })
+    },
   },
 
   actions: {
