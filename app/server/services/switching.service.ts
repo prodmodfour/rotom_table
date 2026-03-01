@@ -10,6 +10,7 @@
 
 import { ptuDiagonalDistance } from '~/utils/gridDistance'
 import { sortByInitiativeWithRollOff } from '~/server/services/encounter.service'
+import { findPlacementPosition } from '~/server/services/grid-placement.service'
 import { prisma } from '~/server/utils/prisma'
 import { RECALL_CLEARED_CONDITIONS } from '~/constants/statusConditions'
 import type { Combatant } from '~/types'
@@ -667,6 +668,7 @@ export function canSwitchedPokemonBeCommanded(
 /**
  * Find a grid position adjacent to the trainer for releasing a Pokemon.
  * Checks all 8 surrounding cells (and further if all adjacent are occupied).
+ * Falls back to findPlacementPosition (grid-wide search) to avoid overlapping tokens.
  *
  * PTU p.229: Released Pokemon is placed adjacent to the trainer
  * when no recalled Pokemon position is available to inherit.
@@ -676,7 +678,8 @@ export function findAdjacentPosition(
   occupiedCells: Set<string>,
   tokenSize: number,
   gridWidth: number,
-  gridHeight: number
+  gridHeight: number,
+  side: string = 'players'
 ): GridPosition {
   // Check adjacent cells in priority order: right, below, left, above, then diagonals
   const offsets = [
@@ -694,7 +697,7 @@ export function findAdjacentPosition(
     }
   }
 
-  // Expand search: try radius 2
+  // Expand search: try radius 2-5 around trainer
   for (let radius = 2; radius <= 5; radius++) {
     for (let dx = -radius; dx <= radius; dx++) {
       for (let dy = -radius; dy <= radius; dy++) {
@@ -710,8 +713,9 @@ export function findAdjacentPosition(
     }
   }
 
-  // Absolute fallback: trainer's position
-  return { x: trainerPosition.x, y: trainerPosition.y }
+  // Grid-wide fallback: use findPlacementPosition to search the entire grid
+  // instead of overlapping with the trainer's token
+  return findPlacementPosition(occupiedCells, side, tokenSize, gridWidth, gridHeight)
 }
 
 /**

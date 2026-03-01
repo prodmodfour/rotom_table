@@ -183,13 +183,14 @@ export default defineEventHandler(async (event) => {
       // Determine placement position
       let releasePosition = positions?.[i] ?? null
       if (!releasePosition && trainer.position) {
-        // Auto-place adjacent to trainer
+        // Auto-place adjacent to trainer (falls back to grid-wide search)
         releasePosition = findAdjacentPosition(
           trainer.position,
           occupiedCells,
           tokenSize,
           record.gridWidth,
-          record.gridHeight
+          record.gridHeight,
+          trainer.side
         )
       }
 
