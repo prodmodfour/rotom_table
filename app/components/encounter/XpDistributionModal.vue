@@ -308,6 +308,9 @@ const xpAllocations = ref<Map<string, number>>(new Map())
 // Trainer XP allocation state
 const trainerXpAllocations = ref<Map<string, number>>(new Map())
 
+// Fresh trainer data fetched from API (avoids stale combatant entity snapshots)
+const freshTrainerData = ref<Map<string, { level: number; trainerXp: number }>>(new Map())
+
 // Defeated enemies from encounter
 const defeatedEnemies = computed(() => props.encounter.defeatedEnemies)
 
@@ -343,15 +346,19 @@ const effectiveMultiplier = computed(() => {
 const xpPerPlayer = computed(() => calculationResult.value?.totalXpPerPlayer ?? 0)
 
 // Participating trainers (player-side human combatants)
+// Uses fresh API data when available, falls back to combatant entity snapshot
 const participatingTrainers = computed(() => {
   return props.encounter.combatants
     .filter(c => c.side === 'players' && c.type === 'human')
-    .map(c => ({
-      id: c.entityId,
-      name: c.name,
-      level: (c.entity as { level?: number }).level ?? 1,
-      trainerXp: (c.entity as { trainerXp?: number }).trainerXp ?? 0
-    }))
+    .map(c => {
+      const fresh = freshTrainerData.value.get(c.entityId)
+      return {
+        id: c.entityId,
+        name: c.name,
+        level: fresh?.level ?? (c.entity as { level?: number }).level ?? 1,
+        trainerXp: fresh?.trainerXp ?? (c.entity as { trainerXp?: number }).trainerXp ?? 0
+      }
+    })
 })
 
 // Suggested trainer XP based on encounter significance tier
@@ -588,11 +595,43 @@ watch(customMultiplier, () => {
   if (initialized.value && selectedPreset.value === 'custom') recalculate()
 })
 
+// Fetch fresh trainer XP data from API (avoids stale combatant entity snapshots)
+const fetchFreshTrainerData = async () => {
+  const trainerCombatants = props.encounter.combatants.filter(
+    c => c.side === 'players' && c.type === 'human'
+  )
+  if (trainerCombatants.length === 0) return
+
+  const newMap = new Map<string, { level: number; trainerXp: number }>()
+
+  await Promise.all(
+    trainerCombatants.map(async (c) => {
+      try {
+        const response = await $fetch<{
+          success: boolean
+          data: { trainerXp: number; level: number }
+        }>(`/api/characters/${c.entityId}/xp-history`)
+        if (response.success) {
+          newMap.set(c.entityId, {
+            level: response.data.level,
+            trainerXp: response.data.trainerXp
+          })
+        }
+      } catch {
+        // Silently fall back to combatant snapshot on fetch failure
+      }
+    })
+  )
+
+  freshTrainerData.value = newMap
+}
+
 // Initial calculation on mount
 onMounted(async () => {
   // Set detected player count before first API call to avoid double-fetch
   playerCount.value = detectedPlayerCount.value
-  await recalculate()
+  // Fetch fresh trainer data in parallel with XP recalculation
+  await Promise.all([recalculate(), fetchFreshTrainerData()])
   initialized.value = true
 })
 </script>
