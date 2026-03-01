@@ -74,3 +74,8 @@ Full design spec: [`design-level-up-allocation-001`](../../../designs/design-lev
 | 2026-02-28 | 09e6025 | P0: StatAllocationPanel.vue component |
 | 2026-02-28 | 1460447 | P0: Integrate StatAllocationPanel into PokemonLevelUpPanel |
 | 2026-02-28 | b546d5b | P0: Add allocation navigation link to LevelUpNotification |
+| 2026-03-01 | 24b84d1 | Fix: add warnings field to extractStatPoints for negative clamping visibility |
+| 2026-03-01 | abb33a1 | Fix: replace hardcoded gap with $spacing-xs in allocate-link SCSS |
+| 2026-03-01 | bb3422e | Fix: allow partial stat allocation with confirmation dialog |
+| 2026-03-01 | a1b4337 | Test: 37 unit tests for baseRelations.ts (all 4 functions + integration) |
+| 2026-03-01 | 44e0d46 | Docs: add level-up allocation files to app-surface.md |

@@ -101,3 +101,15 @@ The `validateBaseRelations()` function is identical for both. If evolution ships
 **Files created:** 4 new files
 **Files modified:** 4 existing files
 **All P0 acceptance criteria addressed.**
+
+### P0 Fix Cycle (2026-03-01, code-review-229)
+
+| Date | Commit | Description |
+|------|--------|-------------|
+| 2026-03-01 | 24b84d1 | `app/utils/baseRelations.ts` — add warnings field to extractStatPoints for negative clamping |
+| 2026-03-01 | abb33a1 | `app/assets/scss/components/_level-up-notification.scss` — replace hardcoded 4px with $spacing-xs |
+| 2026-03-01 | bb3422e | `app/components/pokemon/StatAllocationPanel.vue` — allow partial allocation, add confirmation dialog |
+| 2026-03-01 | a1b4337 | `app/tests/unit/utils/baseRelations.test.ts` — 37 unit tests for all baseRelations functions |
+| 2026-03-01 | 44e0d46 | `.claude/skills/references/app-surface.md` — add 4 new level-up allocation file entries |
+
+**Addressed:** H1 (unit tests), H2 (docs), M1 (warnings), M2 (partial allocation), M3 (SCSS)
