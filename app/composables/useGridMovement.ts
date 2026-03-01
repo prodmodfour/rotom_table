@@ -112,7 +112,10 @@ export function applyMovementModifiers(combatant: Combatant, speed: number): num
   // Since the Shift Action IS movement in PTU, a Tripped combatant cannot move
   // on the grid. The GM removes Tripped via the status system when the combatant
   // uses their Shift to stand up.
-  if (conditions.includes('Tripped')) {
+  // Tripped can come from two sources:
+  //   - statusConditions (Trip maneuver, Blindness, etc.)
+  //   - tempConditions (Take a Breather — cleared at next turn)
+  if (conditions.includes('Tripped') || tempConditions.includes('Tripped')) {
     return 0
   }
 

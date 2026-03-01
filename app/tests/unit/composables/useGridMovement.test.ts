@@ -166,6 +166,19 @@ describe('applyMovementModifiers', () => {
       })
       expect(applyMovementModifiers(combatant, 5)).toBe(0)
     })
+
+    it('should block movement when Tripped is a tempCondition (Take a Breather)', () => {
+      const combatant = makeCombatant({ tempConditions: ['Tripped'] })
+      expect(applyMovementModifiers(combatant, 5)).toBe(0)
+    })
+
+    it('should block movement when Tripped is both status and temp condition', () => {
+      const combatant = makeCombatant({
+        statusConditions: ['Tripped'],
+        tempConditions: ['Tripped']
+      })
+      expect(applyMovementModifiers(combatant, 5)).toBe(0)
+    })
   })
 
   describe('Slowed condition', () => {
