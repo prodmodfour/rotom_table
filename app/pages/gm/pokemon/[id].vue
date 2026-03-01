@@ -6,6 +6,13 @@
       </NuxtLink>
       <div class="sheet-header__actions">
         <template v-if="!isEditing">
+          <button
+            v-if="pokemon && canUndo(pokemon.id)"
+            class="btn btn--secondary"
+            @click="handleUndoEvolution"
+          >
+            Undo Evolution
+          </button>
           <button class="btn btn--warning" @click="checkEvolution" :disabled="checkingEvolution">
             <PhArrowCircleUp :size="16" />
             Evolve
@@ -207,6 +214,7 @@
       :current-moves="evolutionModal.currentMoves"
       :ability-remap="evolutionModal.abilityRemap"
       :evolution-moves="evolutionModal.evolutionMoves"
+      :owner-id="pokemon.ownerId"
       @close="evolutionModal.visible = false"
       @evolved="handleEvolved"
     />
@@ -379,6 +387,7 @@ const checkEvolution = async () => {
       success: boolean
       data: {
         currentMoves: Array<Record<string, unknown>>
+        preventedByItem: string | null
         available: EvolutionOption[]
         ineligible: Array<{
           toSpecies: string
@@ -389,6 +398,12 @@ const checkEvolution = async () => {
 
     if (!response.success) {
       alert('Failed to check evolution eligibility.')
+      return
+    }
+
+    // P2: Check for prevention items (Everstone/Eviolite)
+    if (response.data.preventedByItem) {
+      alert(`This Pokemon cannot evolve while holding an ${response.data.preventedByItem}.`)
       return
     }
 
@@ -423,9 +438,28 @@ const checkEvolution = async () => {
   }
 }
 
-const handleEvolved = async () => {
+// P2: Evolution undo support
+const { recordEvolution, canUndo, undoEvolution } = useEvolutionUndo()
+
+const handleEvolved = async (result: Record<string, unknown>) => {
+  // P2: Record undo snapshot if available
+  if (result?.undoSnapshot && pokemon.value) {
+    recordEvolution(
+      pokemon.value.id,
+      result.undoSnapshot as Record<string, unknown> as import('~/server/services/evolution.service').PokemonSnapshot
+    )
+  }
   // Reload Pokemon data after evolution
   await loadPokemon()
+}
+
+const handleUndoEvolution = async () => {
+  if (!pokemon.value) return
+  if (!confirm('Undo this evolution? The Pokemon will be reverted to its previous form.')) return
+  const success = await undoEvolution(pokemon.value.id)
+  if (success) {
+    await loadPokemon()
+  }
 }
 
 const saveChanges = async () => {

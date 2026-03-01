@@ -190,6 +190,8 @@ const props = defineProps<{
   currentMoves: MoveDetail[]
   abilityRemap: AbilityRemapResult
   evolutionMoves: EnrichedEvolutionMoves
+  // P2 props
+  ownerId?: string | null
 }>()
 
 const emit = defineEmits<{
@@ -366,7 +368,17 @@ async function handleEvolve(): Promise<void> {
           abilities: finalAbilities.value,
           moves: addedMoves.value.length > 0 || removedMoves.value.length > 0
             ? selectedMoveList.value
-            : undefined
+            : undefined,
+          // P2: Item consumption
+          ...(props.requiredItem && !props.itemMustBeHeld && props.ownerId ? {
+            consumeItem: {
+              ownerId: props.ownerId,
+              itemName: props.requiredItem,
+              skipInventoryCheck: false
+            }
+          } : {}),
+          // P2: Held item consumption (default true for held-item evolutions)
+          ...(props.itemMustBeHeld ? { consumeHeldItem: true } : {})
         }
       }
     )
