@@ -220,6 +220,7 @@ Export/import for offline character management.
 |-------|--------|---------------|
 | `encounter` | Active encounter | encounters (combat actions) |
 | `encounterCombat` | Status/stages | encounters (status, stages) |
+| `encounterXp` | XP calculation/distribution | encounters (xp-calculate, xp-distribute) |
 | `encounterGrid` | VTT grid | encounters (position, grid-config, background) |
 | `encounterLibrary` | Templates | encounter-templates |
 | `encounterTables` | Encounter tables | encounter-tables |
@@ -240,6 +241,7 @@ Export/import for offline character management.
 | `server/services/evolution.service.ts` | Pokemon evolution — extractStatPoints, recalculateStats, performEvolution (species, types, stats, HP, spriteUrl) |
 | `server/services/rest-healing.service.ts` | Extended rest move refresh — refreshDailyMoves, refreshDailyMovesForOwnedPokemon |
 | `server/services/csv-import.service.ts` | CSV import parsing (trainer/pokemon sheets) and DB creation |
+| `server/services/entity-builder.service.ts` | Prisma record → typed entity (buildPokemonEntityFromRecord, buildHumanEntityFromRecord) |
 | `server/services/combatant.service.ts` | Combatant builder, damage pipeline, calculateCurrentInitiative (CS-modified speed for initiative) |
 | `server/services/encounter.service.ts` | Encounter CRUD, reorderInitiativeAfterSpeedChange (decree-006), saveInitiativeReorder |
 | `server/services/status-automation.service.ts` | Tick damage calculation for status conditions (Burned, Poisoned, Badly Poisoned, Cursed). Pure functions: calculateTickDamage, calculateBadlyPoisonedDamage, getTickDamageEntries. TICK_DAMAGE_CONDITIONS constant in `constants/statusConditions.ts`. Integrated into `next-turn.post.ts` (fires before turn advance). WebSocket event: `status_tick` (server → all clients). `badlyPoisonedRound` field on Combatant model tracks escalation. |
