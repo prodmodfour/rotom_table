@@ -211,6 +211,34 @@
           :total-xp-distributed="totalDistributed"
           @pokemon-evolved="handlePokemonEvolved"
         />
+
+        <!-- Trainer XP Results -->
+        <div v-if="trainerDistributionResults.length > 0" class="trainer-xp-results">
+          <h3 class="section__title">Trainer XP Applied</h3>
+          <div class="trainer-xp-results__list">
+            <div
+              v-for="result in trainerDistributionResults"
+              :key="result.characterId"
+              class="trainer-xp-result-row"
+              :class="{ 'trainer-xp-result-row--leveled': result.levelsGained > 0 }"
+            >
+              <span class="trainer-xp-result-row__name">{{ result.characterName }}</span>
+              <span class="trainer-xp-result-row__xp">
+                +{{ result.newXp - result.previousXp + (result.levelsGained * 10) }} XP
+                (Bank: {{ result.previousXp }} -> {{ result.newXp }})
+              </span>
+              <span v-if="result.levelsGained > 0" class="trainer-xp-result-row__levelup">
+                Lv.{{ result.previousLevel }} -> Lv.{{ result.newLevel }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trainer XP Error (partial failure: Pokemon XP succeeded, trainer XP failed) -->
+        <div v-if="trainerXpError" class="trainer-xp-error">
+          <img src="/icons/phosphor/warning.svg" alt="" class="warning-icon" />
+          <span>Trainer XP distribution failed: {{ trainerXpError }}</span>
+        </div>
       </div>
 
       <!-- Footer -->
@@ -248,6 +276,7 @@ import {
   type XpApplicationResult
 } from '~/utils/experienceCalculation'
 import { SIGNIFICANCE_TO_TRAINER_XP } from '~/utils/trainerExperience'
+import type { TrainerXpDistributionResult } from '~/stores/encounterXp'
 import type { Encounter } from '~/types'
 
 interface ParticipatingPokemon {
@@ -302,6 +331,8 @@ const calculationResult = ref<{
   participatingPokemon: ParticipatingPokemon[]
 } | null>(null)
 const distributionResults = ref<XpApplicationResult[]>([])
+const trainerDistributionResults = ref<TrainerXpDistributionResult[]>([])
+const trainerXpError = ref<string | null>(null)
 const totalDistributed = ref(0)
 const xpAllocations = ref<Map<string, number>>(new Map())
 
@@ -533,17 +564,23 @@ const handleApply = async () => {
       })
     }
 
-    // Distribute trainer XP (if any allocated)
+    // Distribute trainer XP (if any allocated) — handled separately for partial failure
     if (trainerXpAllocations.value.size > 0) {
       const trainerDistribution = Array.from(trainerXpAllocations.value.entries())
         .filter(([, xp]) => xp > 0)
         .map(([characterId, xpAmount]) => ({ characterId, xpAmount }))
 
       if (trainerDistribution.length > 0) {
-        await encounterXpStore.distributeTrainerXp({
-          encounterId: encounterStore.encounter!.id,
-          distribution: trainerDistribution
-        })
+        try {
+          const trainerResult = await encounterXpStore.distributeTrainerXp({
+            encounterId: encounterStore.encounter!.id,
+            distribution: trainerDistribution
+          })
+          trainerDistributionResults.value = trainerResult.results
+        } catch (e: unknown) {
+          const msg = e instanceof Error ? e.message : 'Failed to distribute trainer XP'
+          trainerXpError.value = msg
+        }
       }
     }
 
@@ -908,5 +945,72 @@ onMounted(async () => {
     color: $color-success;
     animation: pulse 1.5s ease-in-out infinite;
   }
+}
+
+// Trainer XP Results (results phase)
+.trainer-xp-results {
+  margin-top: $spacing-lg;
+  padding-top: $spacing-lg;
+  border-top: 1px solid $border-color-default;
+
+  .section__title {
+    font-size: $font-size-md;
+    font-weight: 600;
+    color: $color-text;
+    margin-bottom: $spacing-md;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+  }
+}
+
+.trainer-xp-result-row {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  padding: $spacing-sm $spacing-md;
+  background: $color-bg-tertiary;
+  border: 1px solid $border-color-default;
+  border-radius: $border-radius-md;
+
+  &--leveled {
+    border-color: rgba($color-success, 0.4);
+    background: linear-gradient(135deg, rgba($color-success, 0.05) 0%, $color-bg-tertiary 100%);
+  }
+
+  &__name {
+    font-weight: 600;
+    color: $color-text;
+    flex: 1;
+  }
+
+  &__xp {
+    font-size: $font-size-sm;
+    color: $color-accent-teal;
+    font-weight: 500;
+  }
+
+  &__levelup {
+    font-weight: 700;
+    color: $color-success;
+    font-size: $font-size-sm;
+  }
+}
+
+// Trainer XP Error Banner
+.trainer-xp-error {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: $spacing-sm $spacing-md;
+  margin-top: $spacing-lg;
+  background: rgba($color-danger, 0.15);
+  border: 1px solid rgba($color-danger, 0.3);
+  border-radius: $border-radius-md;
+  color: $color-danger;
+  font-size: $font-size-sm;
 }
 </style>
