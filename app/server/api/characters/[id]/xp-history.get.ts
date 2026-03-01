@@ -8,7 +8,7 @@
  */
 
 import { prisma } from '~/server/utils/prisma'
-import { TRAINER_XP_PER_LEVEL } from '~/utils/trainerExperience'
+import { TRAINER_XP_PER_LEVEL, TRAINER_MAX_LEVEL } from '~/utils/trainerExperience'
 
 export default defineEventHandler(async (event) => {
   const id = getRouterParam(event, 'id')
@@ -30,12 +30,14 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 404, message: 'Character not found' })
   }
 
+  const isMaxLevel = character.level >= TRAINER_MAX_LEVEL
+
   return {
     success: true,
     data: {
       trainerXp: character.trainerXp,
       level: character.level,
-      xpToNextLevel: TRAINER_XP_PER_LEVEL - character.trainerXp,
+      xpToNextLevel: isMaxLevel ? null : TRAINER_XP_PER_LEVEL - character.trainerXp,
       capturedSpecies: JSON.parse(character.capturedSpecies || '[]')
     }
   }
