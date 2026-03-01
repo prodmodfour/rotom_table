@@ -92,3 +92,14 @@ FULL-scope feature. Tightly coupled with feature-008 (Level-Up Workflow) — whe
   - Section E: capture/attempt.post.ts extended with species XP logic
   - Section F: TrainerXpSection.vue, trainer-xp-distribute.post.ts, encounterXp store, XpDistributionModal integration
   - Section G: QuestXpDialog.vue, scenes/[id].vue extended with Award Quest XP
+- 2026-03-01: P1 fix cycle (code-review-257 CHANGES_REQUIRED, rules-review-233 APPROVED)
+  - `088bc70a` fix: validate encounter exists in trainer-xp-distribute endpoint (HIGH-01)
+  - `c31f9213` fix: fetch fresh trainer XP data when XpDistributionModal opens (MED-02)
+  - `041187ea` fix: display trainer XP distribution results in XpDistributionModal (MED-01)
+  - `0c6bdf09` docs: add P1 trainer XP additions to app-surface.md (HIGH-02)
+  - Files changed: 3 (trainer-xp-distribute.post.ts, XpDistributionModal.vue, app-surface.md)
+  - HIGH-01: Added loadEncounter() call to match sibling endpoint pattern
+  - HIGH-02: Documented endpoint, TrainerXpSection, QuestXpDialog, SIGNIFICANCE_TO_TRAINER_XP, distributeTrainerXp
+  - MED-01: Store+display trainer XP results in results phase, handle partial failure gracefully
+  - MED-02: Fetch fresh trainerXp/level from API on modal open instead of stale combatant entity snapshot
+  - MED-03: Already filed as refactoring-116, no action needed

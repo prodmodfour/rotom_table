@@ -208,6 +208,17 @@ model HumanCharacter {
 - Encounter XP: TrainerXpSection in XpDistributionModal with per-trainer input, level-up preview, quick-set, significance-based suggestion
 - Quest XP: QuestXpDialog component in scene detail with per-character preview, sequential API calls
 
+### P1 Fix Cycle — code-review-257 (2026-03-01)
+
+**Branch:** `slave/1-dev-feature-009-p1-fix-20260301`
+
+| Issue | Severity | Fix | Commit |
+|-------|----------|-----|--------|
+| Endpoint missing encounter validation | HIGH | Add loadEncounter(encounterId) call | `088bc70a` |
+| app-surface.md missing P1 entries | HIGH | Document 5 missing items (endpoint, components, mapping, store action) | `0c6bdf09` |
+| Trainer XP result discarded, no feedback | MEDIUM | Store + display trainer XP results in results phase, partial failure handling | `041187ea` |
+| Stale trainerXp from combatant snapshot | MEDIUM | Fetch fresh data from /api/characters/:id/xp-history on modal open | `c31f9213` |
+
 ---
 
 ## Implementation Order
