@@ -1,26 +1,23 @@
 ---
-generated_at: 2026-03-01T21:23:20.153Z
+generated_at: 2026-03-01T22:15:05.591Z
 total_tickets: 257
-open: 34
-in_progress: 104
-resolved: 105
+open: 31
+in_progress: 105
+resolved: 106
 ---
 
 # Tickets Index
 
-## Open Tickets (34)
+## Open Tickets (31)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
 | ptu-rule-127 | ptu-rule | P1 | character-lifecycle | Per decree-037, trainers should NOT receive an automatic +1  |
 | feature-017 | feature | P2 | capture | feature-017: Poke Ball Type System |
 | feature-018 | feature | P2 | scenes | feature-018: Weather Effect Automation |
-| feature-019 | feature | P2 | vtt-grid | feature-019: VTT Status-Movement Integration |
-| feature-020 | feature | P2 | healing | feature-020: Healing Item System |
 | feature-021 | feature | P2 | character-lifecycle | feature-021: Derived Capability Calculations |
 | feature-022 | feature | P2 | pokemon-lifecycle | feature-022: Pokemon Loyalty System |
 | feature-023 | feature | P2 | player-view+capture+healing | feature-023: Player Capture & Healing Interfaces |
-| decree-need-039 | decree | P2 | combat | Decree-Need-039: Flanking evasion penalty application order  |
 | ptu-rule-131 | ptu-rule | P2 | combat |  |
 | ptu-rule-129 | ptu-rule | P3 | combat | ptu-rule-129: Roar's forced recall must respect the Trapped  |
 | feature-004 | feature | P3 | combat | feature-004: Pokemon Mounting / Rider System |
@@ -47,7 +44,7 @@ resolved: 105
 | refactoring-116 | refactoring | P4 | — | refactoring-116: XpDistributionModal.vue exceeds 800-line fi |
 | refactoring-118 | refactoring | P4 | — | refactoring-118: Remove unused flankingMap destructure in Gr |
 
-## In-Progress Tickets (104)
+## In-Progress Tickets (105)
 
 | ID | Category | Priority | Domain | Source |
 |----|----------|----------|--------|--------|
@@ -80,6 +77,7 @@ resolved: 105
 | ptu-rule-107 | ptu-rule | P2 | combat | decree-021 |
 | ptu-rule-108 | ptu-rule | P2 | vtt-grid | rules-review-160 M2 + rules-review-162 M1 |
 | feature-016 | feature | P2 | combat+vtt-grid | matrix-gap (combat Gap 2 + VTT SG-5) |
+| feature-019 | feature | P2 | vtt-grid | matrix-gap (VTT SG-4) |
 | refactoring-106 | refactoring | P2 | combat | decree-038 |
 | bug-001 | bug | P2 | csv-import | code-review-034 |
 | bug-030 | bug | P2 | player-view | code-review-159 M3 |
@@ -156,11 +154,9 @@ resolved: 105
 | refactoring-092 | refactoring | P4 | encounter-tables | code-review-207 M1 |
 | refactoring-093 | refactoring | P4 | combat | code-review-207 M2 |
 
-## Open Decree-Needs (1)
+## Open Decree-Needs (0)
 
-| ID | Priority | Domain | Topic |
-|----|----------|--------|-------|
-| decree-need-039 | P2 | combat | — |
+All decree-needs addressed.
 
 ## Summary by Category
 
@@ -168,7 +164,7 @@ resolved: 105
 |----------|------|-------------|----------|-------|
 | bug | 0 | 13 | 26 | 41 |
 | ptu-rule | 7 | 60 | 36 | 104 |
-| feature | 8 | 11 | 3 | 23 |
+| feature | 6 | 12 | 3 | 23 |
 | ux | 5 | 7 | 2 | 15 |
-| decree | 1 | 0 | 38 | 39 |
+| decree | 0 | 0 | 39 | 39 |
 | refactoring | 13 | 13 | 0 | 35 |

@@ -1,6 +1,6 @@
 ---
-generated_at: 2026-03-01T21:23:20.157Z
-total_designs: 23
+generated_at: 2026-03-01T22:15:05.594Z
+total_designs: 24
 ---
 
 # Designs Index
@@ -11,6 +11,7 @@ total_designs: 23
 | design-density-significance-001 | encounter-tables | p1-complete | ptu-rule-058 | FULL | PTU_INCORRECT |
 | design-equipment-001 | combat | p1-complete | ptu-rule-045 | FULL | FEATURE_GAP |
 | design-flanking-001 | vtt-grid+combat | designed | feature-014 | FULL | FEATURE |
+| design-healing-items-001 | healing | design-complete | feature-020 | FULL | FEATURE |
 | design-isometric-grid-001 | vtt-grid | p0-implemented | feature-002 | FULL | FEATURE |
 | design-league-battle-001 | combat | p1-implemented | ptu-rule-107 | FULL | PTU_RULE |
 | design-level-budget-001 | scenes | p1-complete | ptu-rule-060 | NEW_FEATURE | FEATURE_GAP |

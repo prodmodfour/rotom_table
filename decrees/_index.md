@@ -1,13 +1,13 @@
 ---
-generated_at: 2026-03-01T21:23:20.162Z
-total_decrees: 39
-active: 39
+generated_at: 2026-03-01T22:15:05.598Z
+total_decrees: 40
+active: 40
 superseded: 0
 ---
 
 # Decrees Index
 
-## Active Decrees (39)
+## Active Decrees (40)
 
 | Decree ID | Domain | Topic | Title |
 |-----------|--------|-------|-------|
@@ -50,3 +50,4 @@ superseded: 0
 | decree-037 | character-lifecycle | skill-ranks-via-edges-only | Skill ranks come from Edge slots only, not automatic per-level grants |
 | decree-038 | combat | sleep-classification-and-condition-behavior-decoupling | Decouple condition behaviors from categories; Sleep is volatile but persists through recall and encounter end |
 | decree-039 | combat | roar-blocked-by-trapped | Roar's forced recall does not override the Trapped condition |
+| decree-040 | combat | flanking-penalty-after-evasion-cap | Flanking -2 evasion penalty applies after the evasion cap, not before |
