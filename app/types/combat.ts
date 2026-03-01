@@ -127,3 +127,78 @@ export interface InjuryState {
   count: number;
   sources: string[]; // Description of what caused each injury
 }
+
+// ============================================================
+// Out-of-Turn Action System Types (feature-016)
+// ============================================================
+
+/** Categories of out-of-turn actions in PTU */
+export type OutOfTurnCategory = 'aoo' | 'priority' | 'priority_limited' | 'priority_advanced' | 'interrupt';
+
+/** Specific trigger events that can provoke an AoO (PTU p.241) */
+export type AoOTrigger =
+  | 'shift_away'        // Adjacent foe shifts out of adjacent square
+  | 'ranged_attack'     // Adjacent foe uses ranged attack not targeting adjacent combatant
+  | 'stand_up'          // Adjacent foe stands up (clears Tripped)
+  | 'maneuver_other'    // Adjacent foe uses Push/Grapple/Disarm/Trip/Dirty Trick not targeting you
+  | 'retrieve_item';    // Adjacent foe uses Standard Action to pick up/retrieve item
+
+/** Trigger events for Interrupt actions (extensible, P1 scope) */
+export type InterruptTrigger =
+  | 'ally_hit_melee'    // Ally within movement range hit by adjacent melee foe (Intercept Melee)
+  | 'ranged_in_range'   // Ranged X-target attack passes within movement range (Intercept Ranged)
+  | 'custom';           // Feature-defined Interrupt trigger
+
+/**
+ * Conditions that prevent AoO usage (PTU p.241).
+ * "Attacks of Opportunity cannot be made by Sleeping, Flinched, or Paralyzed targets."
+ */
+export const AOO_BLOCKING_CONDITIONS: readonly string[] = [
+  'Asleep', 'Bad Sleep', 'Flinched', 'Paralyzed'
+] as const;
+
+/**
+ * Represents a pending out-of-turn action that has been detected/offered
+ * but not yet resolved. The GM sees these as prompts and decides whether
+ * to execute them.
+ */
+export interface OutOfTurnAction {
+  /** Unique ID for this pending action */
+  id: string;
+  /** Category of out-of-turn action */
+  category: OutOfTurnCategory;
+  /** Combatant ID who CAN take this action (the reactor) */
+  actorId: string;
+  /** Combatant ID who triggered this action */
+  triggerId: string;
+  /** Specific trigger type */
+  triggerType: AoOTrigger | InterruptTrigger;
+  /** Human-readable description of what triggered this */
+  triggerDescription: string;
+  /** Round in which this was triggered */
+  round: number;
+  /** Whether this action has been resolved (accepted, declined, or expired) */
+  status: 'pending' | 'accepted' | 'declined' | 'expired';
+  /** For Intercept: the attack that triggered it */
+  triggerContext?: {
+    /** The move/attack being used */
+    moveName?: string;
+    /** The original target of the attack */
+    originalTargetId?: string;
+    /** The attacker ID */
+    attackerId?: string;
+  };
+}
+
+/**
+ * Tracks per-round usage of once-per-round out-of-turn actions.
+ * Stored on each Combatant to enforce the 1/round limit.
+ */
+export interface OutOfTurnUsage {
+  /** Whether this combatant has used their AoO this round */
+  aooUsed: boolean;
+  /** Whether this combatant has used a Priority action this round */
+  priorityUsed: boolean;
+  /** Whether this combatant has used an Interrupt action this round */
+  interruptUsed: boolean;
+}

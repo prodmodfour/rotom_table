@@ -12,7 +12,9 @@ import type {
   InjuryState,
   StageSource,
   TrainerDeclaration,
-  SwitchAction
+  SwitchAction,
+  OutOfTurnAction,
+  OutOfTurnUsage
 } from './combat';
 import type { Pokemon, HumanCharacter, PokemonType } from './character';
 import type { SignificanceTier } from '~/utils/encounterBudget';
@@ -63,6 +65,12 @@ export interface Combatant {
   // VTT Position (grid coordinates)
   position?: GridPosition;
   tokenSize: number; // 1 = 1x1, 2 = 2x2 (for large Pokemon)
+
+  // Out-of-turn action tracking (feature-016)
+  /** Per-round usage of once-per-round out-of-turn actions */
+  outOfTurnUsage?: OutOfTurnUsage;
+  /** Whether this combatant used Disengage this turn (prevents AoO on their shift) */
+  disengaged?: boolean;
 
   // Reference to actual data
   entity: Pokemon | HumanCharacter;
@@ -146,6 +154,13 @@ export interface Encounter {
 
   // Scene tracking (for Scene-frequency moves)
   sceneNumber: number;
+
+  // Out-of-turn action system (feature-016)
+  /** Pending out-of-turn actions awaiting GM resolution */
+  pendingOutOfTurnActions: OutOfTurnAction[];
+
+  /** Hold action queue -- combatants who held and their target initiative (P1 scope) */
+  holdQueue: Array<{ combatantId: string; holdUntilInitiative: number | null }>;
 
   // History
   moveLog: MoveLogEntry[];
