@@ -33,6 +33,7 @@ import {
   checkRecallRange,
   removeCombatantFromEncounter,
   insertIntoTurnOrder,
+  hasInitiativeAlreadyPassed,
   markActionUsed,
   buildSwitchAction,
   canSwitchedPokemonBeCommanded
@@ -263,6 +264,17 @@ export default defineEventHandler(async (event) => {
     // 5. Add new combatant to combatants array
     const updatedCombatants = [...removalResult.combatants, newCombatant]
 
+    // 5b. Section K: Determine immediate-act eligibility (Full Contact only)
+    // PTU p.229: Released Pokemon whose initiative has already passed may act immediately.
+    // Does NOT apply to: fainted switches, League battles, or forced switches.
+    const isFullContact = record.battleType === 'full_contact'
+    const currentCombatantForInit = removalResult.turnOrder[removalResult.currentTurnIndex]
+      ? updatedCombatants.find(c => c.id === removalResult.turnOrder[removalResult.currentTurnIndex])
+      : null
+    const canActImmediately = isFullContact
+      && !isFaintedSwitch
+      && hasInitiativeAlreadyPassed(newCombatant, currentCombatantForInit ?? null)
+
     // 6. Insert into turn order at correct initiative position
     const insertResult = insertIntoTurnOrder(
       newCombatant,
@@ -272,7 +284,8 @@ export default defineEventHandler(async (event) => {
       removalResult.pokemonTurnOrder,
       removalResult.currentTurnIndex,
       record.battleType,
-      currentPhase
+      currentPhase,
+      canActImmediately
     )
 
     // 7. Build switch action record
@@ -340,6 +353,11 @@ export default defineEventHandler(async (event) => {
       currentTurnIndex: insertResult.currentTurnIndex
     })
 
+    // Section K: canActThisRound combines League command permission with immediate-act
+    // Full Contact: canActImmediately means the Pokemon acts right away this round
+    // League: canBeCommanded determines if the Pokemon can act during pokemon phase
+    const canActThisRound = canBeCommanded || canActImmediately
+
     // 12. Broadcast WebSocket event
     broadcastToEncounter(id, {
       type: 'pokemon_switched',
@@ -351,7 +369,8 @@ export default defineEventHandler(async (event) => {
         releasedName,
         releasedCombatantId: newCombatant.id,
         actionCost,
-        canActThisRound: canBeCommanded,
+        canActThisRound,
+        canActImmediately,
         encounter: responseEncounter
       }
     })
@@ -367,7 +386,8 @@ export default defineEventHandler(async (event) => {
           actionCost,
           rangeToRecalled: 0, // Range already validated above
           releasedInitiative: newCombatant.initiative,
-          canActThisRound: canBeCommanded
+          canActThisRound,
+          canActImmediately
         }
       }
     }

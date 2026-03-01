@@ -114,6 +114,28 @@ export function removeCombatantFromEncounter(
 }
 
 // ============================================
+// IMMEDIATE-ACT DETECTION (P2 — Section K)
+// ============================================
+
+/**
+ * Check whether a newly released Pokemon's initiative has already passed
+ * this round. If so, it can act immediately (Full Contact only).
+ *
+ * "Already passed" means: the new Pokemon's initiative is higher than the
+ * current combatant's initiative, so its turn slot was earlier in the round.
+ *
+ * PTU p.229: "If the Pokemon's Initiative Count has already passed, then
+ * this means they may act immediately."
+ */
+export function hasInitiativeAlreadyPassed(
+  newCombatant: Combatant,
+  currentCombatant: Combatant | null
+): boolean {
+  if (!currentCombatant) return false
+  return newCombatant.initiative > currentCombatant.initiative
+}
+
+// ============================================
 // INITIATIVE INSERTION
 // ============================================
 
@@ -132,6 +154,7 @@ export interface TurnOrderInsertResult {
  * - Position determined by initiative value (high-to-low)
  * - Ties broken by initiativeRollOff
  * - In League mode, inserted into pokemonTurnOrder only (decree-021)
+ * - In Full Contact mode with canActImmediately=true, inserted as next-to-act (Section K)
  */
 export function insertIntoTurnOrder(
   newCombatant: Combatant,
@@ -141,7 +164,8 @@ export function insertIntoTurnOrder(
   pokemonTurnOrder: string[],
   currentTurnIndex: number,
   battleType: string,
-  currentPhase: string
+  currentPhase: string,
+  canActImmediately: boolean = false
 ): TurnOrderInsertResult {
   if (battleType === 'trainer') {
     return insertIntoLeagueTurnOrder(
@@ -151,24 +175,44 @@ export function insertIntoTurnOrder(
   }
 
   return insertIntoFullContactTurnOrder(
-    newCombatant, allCombatants, currentTurnOrder, currentTurnIndex
+    newCombatant, allCombatants, currentTurnOrder, currentTurnIndex, canActImmediately
   )
 }
 
 /**
  * Insert into full contact turn order (single list, high-to-low initiative).
+ *
+ * When canActImmediately is true (Section K), the new combatant is inserted
+ * as the next-to-act (immediately after currentTurnIndex) rather than being
+ * sorted into the unacted portion by initiative.
+ *
+ * PTU p.229: "If the Pokemon's Initiative Count has already passed, then
+ * this means they may act immediately."
  */
 function insertIntoFullContactTurnOrder(
   newCombatant: Combatant,
   allCombatants: Combatant[],
   turnOrder: string[],
-  currentTurnIndex: number
+  currentTurnIndex: number,
+  canActImmediately: boolean = false
 ): TurnOrderInsertResult {
   // Split into acted (frozen) and unacted (sortable)
   const actedSlots = turnOrder.slice(0, currentTurnIndex + 1)
   const unactedIds = turnOrder.slice(currentTurnIndex + 1)
 
-  // Add the new combatant to unacted, then re-sort by initiative
+  if (canActImmediately) {
+    // Section K: Insert as next-to-act (immediately after current combatant)
+    // The new Pokemon gets an immediate turn before the remaining unacted combatants
+    const newTurnOrder = [...actedSlots, newCombatant.id, ...unactedIds]
+    return {
+      turnOrder: newTurnOrder,
+      trainerTurnOrder: [],
+      pokemonTurnOrder: [],
+      currentTurnIndex // Unchanged — new Pokemon acts on next "next-turn" call
+    }
+  }
+
+  // Standard insertion: add to unacted, re-sort by initiative
   const unactedWithNew = [...unactedIds, newCombatant.id]
   const unactedCombatants = unactedWithNew
     .map(id => allCombatants.find(c => c.id === id))
