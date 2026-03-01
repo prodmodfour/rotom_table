@@ -95,6 +95,14 @@
         </div>
       </div>
 
+      <!-- Trainer XP Panel -->
+      <TrainerXpPanel
+        :character="character"
+        :disabled="isCharacterInEncounter"
+        @level-up="handleXpLevelUp"
+        @xp-changed="handleXpChanged"
+      />
+
       <!-- Tabs -->
       <div class="sheet__tabs">
         <button
@@ -341,6 +349,17 @@ watch(() => editData.value.level, (newVal, oldVal) => {
   levelUpTargetLevel.value = newVal
   showLevelUpModal.value = true
 })
+
+// Handle XP-triggered level-up
+function handleXpLevelUp(payload: { oldLevel: number; newLevel: number; character: HumanCharacter }) {
+  levelUpTargetLevel.value = payload.newLevel
+  showLevelUpModal.value = true
+}
+
+// Handle XP change (refresh character data)
+async function handleXpChanged(_payload: { newXp: number; newLevel: number }) {
+  await loadCharacter()
+}
 
 // Handle level-up completion
 async function onLevelUpComplete(updatedData: Partial<HumanCharacter>) {

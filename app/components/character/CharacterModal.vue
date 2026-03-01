@@ -162,6 +162,15 @@
               </div>
             </div>
 
+            <!-- Trainer XP Panel (view mode only) -->
+            <TrainerXpPanel
+              v-if="!isEditing"
+              :character="humanData"
+              :disabled="isInEncounter"
+              @level-up="handleXpLevelUp"
+              @xp-changed="handleXpChanged"
+            />
+
             <!-- Tabs -->
             <div class="sheet__tabs">
               <button
@@ -336,6 +345,17 @@ watch(() => props.character, () => {
 
 const save = () => {
   emit('save', editData.value)
+}
+
+// --- XP Panel Handlers ---
+function handleXpLevelUp(payload: { oldLevel: number; newLevel: number; character: HumanCharacter }) {
+  levelUpTargetLevel.value = payload.newLevel
+  showLevelUpModal.value = true
+}
+
+function handleXpChanged(_payload: { newXp: number; newLevel: number }) {
+  // Refresh character data by re-assigning from updated props
+  editData.value = { ...props.character }
 }
 
 // --- Level-Up Modal State (Human characters only) ---
