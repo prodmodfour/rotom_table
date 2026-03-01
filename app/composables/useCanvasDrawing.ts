@@ -323,6 +323,47 @@ export function useCanvasDrawing() {
     ctx.fill()
   }
 
+  /**
+   * Draw a flanking indicator around a token.
+   *
+   * Renders a pulsing red-orange dashed border around flanked combatants
+   * to provide immediate visual feedback on the VTT grid.
+   *
+   * @param ctx - Canvas 2D rendering context
+   * @param x - Pixel X of the token's top-left cell
+   * @param y - Pixel Y of the token's top-left cell
+   * @param cellSize - Size of one grid cell in pixels
+   * @param tokenSize - Token footprint (1=1x1, 2=2x2)
+   * @param pulse - Animation value 0-1 for pulsing effect
+   */
+  const drawFlankingIndicator = (
+    ctx: CanvasRenderingContext2D,
+    x: number,
+    y: number,
+    cellSize: number,
+    tokenSize: number,
+    pulse: number
+  ) => {
+    const width = cellSize * tokenSize
+    const height = cellSize * tokenSize
+    const alpha = 0.4 + 0.3 * Math.sin(pulse * Math.PI * 2)
+
+    ctx.save()
+    ctx.strokeStyle = `rgba(255, 100, 50, ${alpha})`
+    ctx.lineWidth = 3
+    ctx.setLineDash([6, 3])
+
+    // Draw dashed border around the token
+    ctx.strokeRect(
+      x + 1.5,
+      y + 1.5,
+      width - 3,
+      height - 3
+    )
+
+    ctx.restore()
+  }
+
   return {
     drawArrow,
     drawDistanceLabel,
@@ -332,6 +373,7 @@ export function useCanvasDrawing() {
     drawSpeedBadge,
     drawTerrainPattern,
     drawCrossPattern,
-    drawCenterDot
+    drawCenterDot,
+    drawFlankingIndicator
   }
 }
