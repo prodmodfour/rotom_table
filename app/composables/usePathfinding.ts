@@ -33,6 +33,8 @@ export function usePathfinding() {
    * @param getElevationCost - Optional function to get elevation transition cost
    * @param getTerrainElevation - Optional function to get ground elevation at a position
    * @param originElevation - Starting elevation level (default 0)
+   * @param tokenSize - Token footprint size (default 1). For multi-cell tokens, each step checks all NxN cells.
+   * @param gridBounds - Optional grid bounds. When provided, footprints extending beyond bounds are skipped.
    */
   function getMovementRangeCells(
     origin: GridPosition,
@@ -41,10 +43,13 @@ export function usePathfinding() {
     getTerrainCost?: TerrainCostGetter,
     getElevationCost?: ElevationCostGetter,
     getTerrainElevation?: TerrainElevationGetter,
-    originElevation: number = 0
+    originElevation: number = 0,
+    tokenSize: number = 1,
+    gridBounds?: { width: number; height: number }
   ): GridPosition[] {
     const reachable: GridPosition[] = []
     const blockedSet = new Set(blockedCells.map(c => `${c.x},${c.y}`))
+    const size = tokenSize ?? 1
 
     // Cost map: stores the minimum cost to reach each cell
     // We track cost, diagonal parity, and current elevation
@@ -83,18 +88,34 @@ export function usePathfinding() {
         const ny = y + dy
         const neighborKey = `${nx},${ny}`
 
-        // Skip if blocked by token
-        if (blockedSet.has(neighborKey)) {
-          continue
+        // Skip if footprint would extend beyond grid bounds
+        if (gridBounds) {
+          if (nx < 0 || ny < 0 || nx + size > gridBounds.width || ny + size > gridBounds.height) {
+            continue
+          }
         }
 
-        // Get terrain cost multiplier for the destination cell
-        const terrainMultiplier = getTerrainCost ? getTerrainCost(nx, ny) : 1
-
-        // Skip impassable terrain (Infinity cost)
-        if (!isFinite(terrainMultiplier)) {
-          continue
+        // Verify all footprint cells are passable
+        let isPassable = true
+        let maxTerrainMultiplier = 1
+        for (let fx = 0; fx < size && isPassable; fx++) {
+          for (let fy = 0; fy < size && isPassable; fy++) {
+            const footprintKey = `${nx + fx},${ny + fy}`
+            if (blockedSet.has(footprintKey)) {
+              isPassable = false
+              break
+            }
+            if (getTerrainCost) {
+              const cost = getTerrainCost(nx + fx, ny + fy)
+              if (!isFinite(cost)) {
+                isPassable = false
+                break
+              }
+              maxTerrainMultiplier = Math.max(maxTerrainMultiplier, cost)
+            }
+          }
         }
+        if (!isPassable) continue
 
         // Calculate XY movement cost based on PTU diagonal rules
         let baseCost: number
@@ -107,9 +128,9 @@ export function usePathfinding() {
           newParity = currentParity
         }
 
-        let moveCost = baseCost * terrainMultiplier
+        let moveCost = baseCost * maxTerrainMultiplier
 
-        // Calculate elevation cost for this step
+        // Calculate elevation cost for this step (uses origin cell elevation)
         const neighborElev = getTerrainElevation ? getTerrainElevation(nx, ny) : 0
         if (getElevationCost && currentElev !== neighborElev) {
           moveCost += getElevationCost(currentElev, neighborElev)
@@ -453,6 +474,8 @@ export function usePathfinding() {
    * @param getElevationCost - Optional elevation transition cost function
    * @param getTerrainElevation - Optional ground elevation lookup
    * @param originElevation - Starting elevation level (default 0)
+   * @param tokenSize - Token footprint size (default 1). For multi-cell tokens, each step checks all NxN cells.
+   * @param gridBounds - Optional grid bounds. When provided, footprints extending beyond bounds are skipped.
    */
   function getMovementRangeCellsWithAveraging(
     origin: GridPosition,
@@ -463,10 +486,13 @@ export function usePathfinding() {
     getAveragedSpeed: SpeedAveragingFn,
     getElevationCost?: ElevationCostGetter,
     getTerrainElevation?: TerrainElevationGetter,
-    originElevation: number = 0
+    originElevation: number = 0,
+    tokenSize: number = 1,
+    gridBounds?: { width: number; height: number }
   ): GridPosition[] {
     const reachable: GridPosition[] = []
     const blockedSet = new Set(blockedCells.map(c => `${c.x},${c.y}`))
+    const size = tokenSize ?? 1
 
     // Extended cost map: tracks cost, diagonal parity, elevation, AND terrain types on path
     const costMap = new Map<string, {
@@ -484,8 +510,7 @@ export function usePathfinding() {
       terrainTypes: new Set([originTerrainType]),
     })
 
-    // Priority queue entries: [x, y, cost, diagonalParity, elevation, terrainTypesEncoded]
-    // We encode terrain types as a sorted comma-joined string for the queue
+    // Priority queue entries
     const queue: Array<{
       x: number; y: number; cost: number; parity: number
       elevation: number; terrainTypes: Set<string>
@@ -518,10 +543,32 @@ export function usePathfinding() {
         const ny = current.y + dy
         const neighborKey = `${nx},${ny}`
 
-        if (blockedSet.has(neighborKey)) continue
+        // Skip if footprint would extend beyond grid bounds
+        if (gridBounds) {
+          if (nx < 0 || ny < 0 || nx + size > gridBounds.width || ny + size > gridBounds.height) {
+            continue
+          }
+        }
 
-        const terrainMultiplier = getTerrainCost(nx, ny)
-        if (!isFinite(terrainMultiplier)) continue
+        // Verify all footprint cells are passable and collect terrain info
+        let isPassable = true
+        let maxTerrainMultiplier = 1
+        for (let fx = 0; fx < size && isPassable; fx++) {
+          for (let fy = 0; fy < size && isPassable; fy++) {
+            const footprintKey = `${nx + fx},${ny + fy}`
+            if (blockedSet.has(footprintKey)) {
+              isPassable = false
+              break
+            }
+            const cellTerrainCost = getTerrainCost(nx + fx, ny + fy)
+            if (!isFinite(cellTerrainCost)) {
+              isPassable = false
+              break
+            }
+            maxTerrainMultiplier = Math.max(maxTerrainMultiplier, cellTerrainCost)
+          }
+        }
+        if (!isPassable) continue
 
         // PTU diagonal rules
         let baseCost: number
@@ -534,9 +581,9 @@ export function usePathfinding() {
           newParity = current.parity
         }
 
-        let moveCost = baseCost * terrainMultiplier
+        let moveCost = baseCost * maxTerrainMultiplier
 
-        // Elevation cost
+        // Elevation cost (uses origin cell elevation)
         const neighborElev = getTerrainElevation ? getTerrainElevation(nx, ny) : 0
         if (getElevationCost && current.elevation !== neighborElev) {
           moveCost += getElevationCost(current.elevation, neighborElev)
@@ -547,10 +594,13 @@ export function usePathfinding() {
         // Skip if exceeds maximum possible speed budget
         if (totalCost > maxSpeed) continue
 
-        // Build terrain types set for this path
-        const neighborTerrainType = getTerrainType(nx, ny)
+        // Build terrain types set for this path, including ALL footprint cells
         const pathTerrainTypes = new Set(current.terrainTypes)
-        pathTerrainTypes.add(neighborTerrainType)
+        for (let fx = 0; fx < size; fx++) {
+          for (let fy = 0; fy < size; fy++) {
+            pathTerrainTypes.add(getTerrainType(nx + fx, ny + fy))
+          }
+        }
 
         // Check if path cost fits within the averaged speed for this terrain set
         const averagedSpeed = getAveragedSpeed(pathTerrainTypes)
