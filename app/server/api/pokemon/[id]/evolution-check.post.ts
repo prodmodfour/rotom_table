@@ -134,6 +134,28 @@ export default defineEventHandler(async (event) => {
           // Pre-compute ability remapping for the modal
           const abilityRemap = remapAbilities(currentAbilities, oldSpeciesAbilities, targetAbilities)
 
+          // Enrich resolution options with ability effects
+          if (abilityRemap.needsResolution.length > 0) {
+            const optionNames = [...new Set(
+              abilityRemap.needsResolution.flatMap(nr => nr.options.map(o => o.name))
+            )]
+            const abilityRecords = optionNames.length > 0
+              ? await prisma.abilityData.findMany({
+                  where: { name: { in: optionNames } },
+                  select: { name: true, effect: true }
+                })
+              : []
+            const effectMap = new Map(
+              abilityRecords.map(r => [r.name.toLowerCase(), r.effect])
+            )
+            for (const nr of abilityRemap.needsResolution) {
+              nr.options = nr.options.map(opt => ({
+                name: opt.name,
+                effect: effectMap.get(opt.name.toLowerCase()) || ''
+              }))
+            }
+          }
+
           // Pre-compute evolution moves
           const evolutionMovesResult = getEvolutionMoves({
             oldLearnset,

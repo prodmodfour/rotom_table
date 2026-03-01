@@ -54,7 +54,7 @@
             v-for="opt in item.options"
             :key="opt.name"
             :value="opt.name"
-          >{{ opt.name }}</option>
+          >{{ opt.name }}{{ opt.effect ? ' — ' + truncateEffect(opt.effect) : '' }}</option>
         </select>
       </div>
     </div>
@@ -83,6 +83,11 @@ const noChanges = computed(() => {
     && props.abilityRemap.preservedAbilities.length === 0
     && props.abilityRemap.needsResolution.length === 0
 })
+
+function truncateEffect(effect: string, maxLength = 80): string {
+  if (effect.length <= maxLength) return effect
+  return effect.slice(0, maxLength) + '...'
+}
 
 function handleResolutionChange(idx: number, value: string): void {
   const updated = [...props.abilityResolutions]

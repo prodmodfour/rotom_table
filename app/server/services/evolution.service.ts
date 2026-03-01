@@ -196,7 +196,7 @@ export interface AbilityRemapResult {
   needsResolution: Array<{
     oldAbility: string
     reason: string
-    options: Array<{ name: string }>
+    options: Array<{ name: string; effect: string }>
   }>
   /** Non-species abilities preserved as-is (not found in old species list) */
   preservedAbilities: Array<{ name: string; effect: string }>
@@ -245,7 +245,7 @@ export function remapAbilities(
       needsResolution.push({
         oldAbility: ability.name,
         reason: `Ability slot ${oldIndex + 1} does not exist in the new species' ability list`,
-        options: newSpeciesAbilities.map(name => ({ name }))
+        options: newSpeciesAbilities.map(name => ({ name, effect: '' }))
       })
     }
   }
