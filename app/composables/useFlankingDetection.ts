@@ -45,8 +45,10 @@ export function useFlankingDetection(combatants: Ref<Combatant[]>) {
       .filter(c => {
         // Exclude fainted/dead combatants -- they cannot flank or be flanked
         const hp = c.entity.currentHp ?? 0
-        const isDead = (c.entity.statusConditions ?? []).includes('Dead')
-        return hp > 0 && !isDead
+        const conditions = c.entity.statusConditions ?? []
+        const isDead = conditions.includes('Dead')
+        const isFainted = conditions.includes('Fainted')
+        return hp > 0 && !isDead && !isFainted
       })
       .map(c => ({
         id: c.id,
