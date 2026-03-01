@@ -154,6 +154,12 @@ export const useFogOfWarStore = defineStore('fogOfWar', {
      *
      * This effectively reveals a larger area because a large token
      * "sees" from every cell it occupies.
+     *
+     * NOTE: Not yet wired into token movement handlers. The caller
+     * (encounter-level auto-reveal on movement) requires fog vision
+     * radius configuration that is outside the P1 multi-tile scope.
+     * Follow-up: wire into encounter page token move handler when
+     * fog-of-war auto-reveal is implemented.
      */
     revealFootprintArea(
       originX: number,
