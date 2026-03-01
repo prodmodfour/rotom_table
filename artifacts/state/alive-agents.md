@@ -327,3 +327,8 @@
 | plan-20260301-184039/slave-2 | developer | feature-016-p1+ptu-rule-131 | success | 2026-03-01T18:54:00Z | 062b217a, 62c6822c, b68aa39c, 60a3cf82, 92e7314b, 837a443e, e3c0fb04, a123f31d, efdfae5b, a8a5579f, 0c4b0972, b46e5e64 |
 | plan-20260301-184039/slave-3 | reviewers | feature-009-p1-review | CHANGES_REQUIRED | 2026-03-01T19:00:00Z | cc96948b, c1a95f3e |
 | plan-20260301-184039/slave-4 | reviewers | feature-013-p1-rereview | APPROVED | 2026-03-01T18:50:30Z | 16ae7062, 74650315 |
+| plan-20260301-204809/slave-1 | developer | feature-009-p1-fix | success | 2026-03-01T21:00:00Z | 088bc70a, c31f9213, 041187ea, 0c6bdf09, c7f245fd |
+| plan-20260301-204809/slave-2 | developer | feature-013-p2 | success | 2026-03-01T21:03:30Z | 380c916e, 9e74b813, 42114b5e, 58e93651, 96fedddc, 2fe55451, 1ff0f2da |
+| plan-20260301-204809/slave-3 | developer | ptu-rule-132+bug-041 | success | 2026-03-01T21:00:00Z | c0dc34bd, 4e1254f4, 6565e04a |
+| plan-20260301-204809/slave-4 | reviewers | feature-016-p1-review | CHANGES_REQUIRED | 2026-03-01T21:15:00Z | 01873f82, e17d03e9 |
+| plan-20260301-204809/slave-5 | reviewers | feature-014-p0-rereview | APPROVED | 2026-03-01T21:13:00Z | 32ab55f5, 9665304c |

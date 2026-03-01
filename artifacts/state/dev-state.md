@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-03-01T20:10:00
-updated_by: slave-collector (plan-20260301-184039)
+last_updated: 2026-03-01T21:20:00
+updated_by: slave-collector (plan-20260301-204809)
 ---
 
 # Dev Ecosystem State
@@ -22,6 +22,7 @@ updated_by: slave-collector (plan-20260301-184039)
 | bug-038 | P0 | **resolved** | CRITICAL decree-016 violation: new-day endpoint cleared boundAp. Refactored from batch updateMany to per-character updates preserving boundAp. Per-character new-day endpoint also fixed. Unit tests added (6 tests). Fix cycle: Math.max(0,...) safety clamp, per-character new-day tests (9 tests). code-review-220 **APPROVED** + rules-review-196 **APPROVED** (plan-20260228-131955 slave-1). All issues from code-review-216 resolved |
 | bug-039 | P2 | **resolved** | Capture attempt endpoint allowed stealing owned Pokemon. Added ownership validation (reject if pokemon.ownerId non-null). Rate endpoint confirmed safe (read-only). Unit tests added (6 tests). Reviewed as part of code-review-216 (bug-039 portion approved), rules-review-192 **APPROVED** |
 | bug-040 | P4 | **resolved** | Extended-rest endpoint lacks Math.max(0,...) safety clamp on currentAp calculation. Already fixed in commit 3d6a238 (bug-038 fix cycle). Ticket moved to resolved by slave-3 (plan-20260228-153856) |
+| bug-041 | P3 | **implemented** | Remove Whirlwind references from Force Switch UI per decree-034. Fixed by slave-3 (plan-20260301-204809): CombatantCard tooltip, switching.service.ts comments, design spec Section I updated. Commit 4e1254f4. Needs review |
 
 ### PTU Rule Tickets (`tickets/ptu-rule/`)
 | Ticket | Priority | Status | Summary |
@@ -84,6 +85,7 @@ updated_by: slave-collector (plan-20260301-184039)
 | ptu-rule-128 | P3 | **resolved** | Sleep does not clear on recall or encounter end. Resolved by slave-6 (plan-20260301-110550). Asleep and Bad Sleep set to clearsOnRecall: false, clearsOnEncounterEnd: false. Part of decree-038 compliance |
 | ptu-rule-130 | P4 | **open** | Fainted recall+release pair should not apply League switch restriction — pair detection hardcodes isFaintedSwitch: false. Source: rules-review-225 M1. Filed by slave-collector (plan-20260301-143720) |
 | ptu-rule-131 | P2 | **resolved** | Expert+ Combat skill AoO Struggle Attack — fixed by slave-2 (plan-20260301-184039). AC 3/DB 5 for Expert+ Combat instead of hardcoded AC 4/DB 4. Commit 62c6822c. Part of feature-016 P1 implementation |
+| ptu-rule-132 | P3 | **implemented** | Evolution species XP not hooked into capturedSpecies tracking. Fixed by slave-3 (plan-20260301-204809): evolve.post.ts now checks capturedSpecies, awards +1 XP on new species, broadcasts character_update on level-up. Commit c0dc34bd. Needs review |
 
 ### Feature Tickets (`tickets/feature/`)
 | Ticket | Priority | Status | Summary | Design Complexity |
@@ -99,10 +101,10 @@ updated_by: slave-collector (plan-20260301-184039)
 | feature-010 | P1 | **resolved** | Status Condition Automation Engine — P0 implemented. Fix cycle completed: M1 (app-surface.md) fixed by slave-2 (plan-20260228-214159). Ticket moved to resolved. code-review-227 all issues resolved, rules-review-203 APPROVED | multi-phase |
 | feature-011 | P1 | **P2-APPROVED** | Pokemon Switching Workflow — P0 APPROVED. P1 APPROVED. P2 APPROVED: code-review-256 **APPROVED** (MED-001: switching.service.ts at 811 lines → refactoring-115) + rules-review-232 **APPROVED** (re-review by slave-5, plan-20260301-170000). All code-review-249 issues verified resolved. Feature complete | multi-phase |
 | feature-012 | P1 | **APPROVED** | Death & Heavily Injured Automation — fix cycle 3 APPROVED. code-review-233 **APPROVED** + rules-review-209 **APPROVED** (re-review by slave-3, plan-20260301-084803). All code-review-228 + rules-review-204 issues resolved. Feature complete | single-phase |
-| feature-009 | P1 | **P1-CHANGES_REQUIRED** | Trainer XP & Advancement Tracking — P0 APPROVED. P1 implemented by slave-2 (plan-20260301-170000). P1 reviewed by slave-3 (plan-20260301-184039): code-review-257 **CHANGES_REQUIRED** (HIGH-01: endpoint missing encounter validation, HIGH-02: app-surface.md, MED-01: partial failure feedback, MED-02: stale trainerXp snapshot, MED-03→refactoring-116) + rules-review-233 **APPROVED** (HIGH-1: evolution XP deferred→ptu-rule-132, MED-1: xpAmount upper bound, MED-2: app-surface.md). Needs fix cycle | multi-phase |
-| feature-013 | P1 | **P1-APPROVED** | Multi-Tile Token System — P0 APPROVED. P1 fix cycle complete. Re-reviewed by slave-4 (plan-20260301-184039): code-review-258 **APPROVED** (0 issues, all 10 issues from code-review-250+rules-review-226 verified resolved) + rules-review-234 **APPROVED** (0 issues, 8 mechanics verified, all 3 decrees compliant). P2 pending | multi-phase |
-| feature-014 | P1 | **P0-fix-cycle-done** | VTT Flanking Detection — P0 fix cycle by slave-1 (plan-20260301-184039): 8 commits — removed duplicate canvas flanking indicators (HIGH-1/2), used FLANKING_EVASION_PENALTY constant (MED-1), removed FlankingSize dead type (MED-2), documented MoveTargetModal dual instantiation (MED-4), updated app-surface.md (MED-3), added Fainted defense-in-depth check (rules MED-1), documented decree-need-039 (rules MED-2), ticket updates. All code-review-254 + rules-review-230 issues addressed. Needs re-review. P1 depends on feature-013 | multi-phase |
-| feature-016 | P2 | **P1-implemented** | Priority / Interrupt / Attack of Opportunity System — P0 APPROVED. P1 implemented by slave-2 (plan-20260301-184039): 12 commits — Hold Action endpoints+queue+turn integration (Section A), Priority Action standard/limited/advanced endpoint (Section B), Interrupt Action endpoint+framework (Section C), betweenTurns state + store actions (Section D), WebSocket events for all P1 actions, HoldActionButton + PriorityActionPanel UI, encounter start initialization, design index update. Also fixed ptu-rule-131 (Expert+ Combat AoO AC 3/DB 5). Needs review | multi-phase |
+| feature-009 | P1 | **P1-fix-cycle-done** | Trainer XP & Advancement Tracking — P0 APPROVED. P1 fix cycle by slave-1 (plan-20260301-204809): 5 commits — validated encounter exists in trainer-xp-distribute (HIGH-01), fetched fresh trainer XP data in XpDistributionModal (MED-02), display trainer XP distribution results (MED-01), app-surface.md P1 additions (HIGH-02), ticket/design updates. All code-review-257 issues addressed. Needs re-review | multi-phase |
+| feature-013 | P1 | **P2-implemented** | Multi-Tile Token System — P0 APPROVED. P1 APPROVED. P2 implemented by slave-2 (plan-20260301-204809): 7 commits — isTargetHitByAoE + getBlastEdgeOrigin for multi-tile AoE (Section K), isFlankingTarget for multi-cell flanking geometry (Section L), ptuDistanceTokensBBox extracted to gridDistance utility, token-aware edge-to-edge measurement store + metadata passing + footprint highlight overlay (Section M), ticket/design updates. Needs review | multi-phase |
+| feature-014 | P1 | **P0-APPROVED** | VTT Flanking Detection — P0 APPROVED. Re-reviewed by slave-5 (plan-20260301-204809): code-review-260 **APPROVED** (MED-1: unused flankingMap destructure → refactoring-118, non-blocking) + rules-review-236 **APPROVED** (7 mechanics verified, 0 issues, all code-review-254 + rules-review-230 issues confirmed resolved). P1 depends on feature-013 P2 (multi-tile flanking) | multi-phase |
+| feature-016 | P2 | **P1-CHANGES_REQUIRED** | Priority / Interrupt / Attack of Opportunity System — P0 APPROVED. P1 reviewed by slave-4 (plan-20260301-204809): code-review-259 **CHANGES_REQUIRED** (CRIT-1: betweenTurns never set to true — PriorityActionPanel unreachable, CRIT-2: Standard Priority duplicate turnOrder without skip, HIGH-1/2/3/4, MED-1/2/3/4/5) + rules-review-235 **CHANGES_REQUIRED** (HIGH-1: Advanced Priority missing standardActionUsed, HIGH-2: Interrupt skipNextRound scope too broad for League Battles, MED-2: app-surface.md). Needs fix cycle. MED-002→refactoring-117 | multi-phase |
 
 ### UX Tickets (`tickets/ux/`)
 | Ticket | Priority | Status | Summary |
@@ -125,7 +127,22 @@ updated_by: slave-collector (plan-20260301-184039)
 
 ## Active Developer Work
 
-**Current task:** Session 78 collection complete. 4 slaves merged (23 commits + 3 fixup commits). 2 dev slaves (feature-014-p0-fix 8 commits, feature-016-p1+ptu-rule-131 12 commits). 2 reviewer slaves (feature-009-p1-review CHANGES_REQUIRED, feature-013-p1-rereview APPROVED). Smoke test PASSED. 2 follow-up tickets filed (ptu-rule-132, refactoring-116). ptu-rule-131 resolved.
+**Current task:** Session 79 collection complete. 5 slaves merged (19 commits). 3 dev slaves (feature-009-p1-fix 5 commits, feature-013-p2 7 commits, ptu-rule-132+bug-041 3 commits). 2 reviewer slaves (feature-016-p1-review CHANGES_REQUIRED, feature-014-p0-rereview APPROVED). Smoke test PASSED. 2 follow-up tickets filed (refactoring-117, refactoring-118). feature-014 P0 APPROVED. ptu-rule-132 + bug-041 implemented.
+
+**Session 79 (2026-03-01, plan-20260301-204809):**
+- **slave-1** (developer): feature-009-p1-fix — 5 commits: Fix cycle for Trainer XP P1 (code-review-257). Validated encounter exists in trainer-xp-distribute (HIGH-01), fetched fresh trainer XP data when XpDistributionModal opens (MED-02), display trainer XP distribution results (MED-01), app-surface.md P1 additions (HIGH-02), ticket/design updates. All code-review-257 issues addressed. → **P1-fix-cycle-done, needs re-review**
+- **slave-2** (developer): feature-013-p2 — 7 commits: P2 implementation (Sections K/L/M). isTargetHitByAoE + getBlastEdgeOrigin for multi-tile AoE coverage (Section K), isFlankingTarget for multi-cell flanking geometry (Section L), ptuDistanceTokensBBox extracted to gridDistance.ts, token-aware edge-to-edge measurement store + metadata passing + footprint highlight overlay (Section M), ticket/design updates. → **P2-implemented, needs review**
+- **slave-3** (developer): ptu-rule-132+bug-041 — 3 commits: Hook evolution species XP into capturedSpecies tracking in evolve.post.ts (ptu-rule-132), removed Whirlwind from forced switch references per decree-034 (bug-041), ticket/design status updates. → **implemented, needs review**
+- **slave-4** (reviewers): feature-016-p1-review — code-review-259 **CHANGES_REQUIRED** (2C: betweenTurns never set, duplicate turnOrder entry; 4H: holdReleaseTriggered dropped, hold doesn't advance turn, Advanced Priority missing standardActionUsed, dead import; 5M) + rules-review-235 **CHANGES_REQUIRED** (2H: Advanced Priority missing standardActionUsed, Interrupt skipNextRound scope too broad; MED-2: app-surface.md). → feature-016 **P1-CHANGES_REQUIRED**
+- **slave-5** (reviewers): feature-014-p0-rereview — code-review-260 **APPROVED** (MED-1: unused flankingMap destructure → refactoring-118, non-blocking) + rules-review-236 **APPROVED** (7 mechanics verified, 0 issues, all code-review-254 + rules-review-230 issues confirmed resolved). → feature-014 **P0-APPROVED**
+
+**Smoke test:** PASSED (Playwright) — GM view renders (full nav + encounter controls + group view buttons). Group view renders (initiative list, Smoliv/Alolan Grimer/Misdreavus). Player view renders (character selection: Ash, Aurora, Clara, Hassan, Marilena).
+**Merge notes:** All merges clean — no conflicts. 19 commits total across 5 slaves (merge order: 4→5→3→1→2). All disjoint domains.
+**Tickets filed:** refactoring-117 (encounter.ts store >800 lines, code-review-259 MED-002), refactoring-118 (unused flankingMap GridCanvas.vue, code-review-260 MED-1)
+**Tickets approved:** feature-014 P0 (APPROVED by code-review-260 + rules-review-236)
+**Tickets with fix-cycle-done:** feature-009 P1 (all code-review-257 issues addressed)
+**Tickets needing fix cycle:** feature-016 P1 (code-review-259 2C+4H+5M, rules-review-235 2H+1M)
+**Tickets needing review:** feature-013 P2 (first P2 implementation), feature-009 P1 (re-review after fix cycle), ptu-rule-132 + bug-041 (implemented, need review)
 
 **Session 78 (2026-03-01, plan-20260301-184039):**
 - **slave-1** (developer): feature-014-p0-fix — 8 commits: Fix cycle for VTT Flanking Detection P0. Removed duplicate canvas flanking indicators in favor of CSS-only (HIGH-1/2), used FLANKING_EVASION_PENALTY constant (MED-1), removed unused FlankingSize type (MED-2), documented dual useFlankingDetection instantiation in MoveTargetModal (MED-4), updated app-surface.md (MED-3), added Fainted defense-in-depth check (rules MED-1), documented pending decree-need-039 (rules MED-2), ticket updates. All code-review-254 + rules-review-230 issues addressed. → **P0-fix-cycle-done, needs re-review**
@@ -579,6 +596,14 @@ updated_by: slave-collector (plan-20260301-184039)
 5. Remaining open: ptu-rule-086-095 (various P3-P4), bug-032 (P4), ux-006 (P4), ux-009 (P4)
 
 ## Review Status
+
+### Session 79 Reviews (plan-20260301-204809)
+| Review ID | Target | Verdict | Reviewer | Date |
+|-----------|--------|---------|----------|------|
+| code-review-259 | feature-016 P1 (Priority/Interrupt/Hold Action) | CHANGES_REQUIRED (2C: betweenTurns dead, duplicate turnOrder; 4H: holdRelease dropped, hold no advance, Advanced Priority no standardAction, dead import; 5M) | senior-reviewer | 2026-03-01 |
+| rules-review-235 | feature-016 P1 (Priority/Interrupt/Hold Action) | CHANGES_REQUIRED (2H: Advanced Priority missing standardActionUsed, Interrupt skipNextRound too broad; MED-2: app-surface.md) | game-logic-reviewer | 2026-03-01 |
+| code-review-260 | feature-014 P0 re-review (VTT Flanking Detection fix cycle) | APPROVED (MED-1: unused flankingMap → refactoring-118) | senior-reviewer | 2026-03-01 |
+| rules-review-236 | feature-014 P0 re-review (VTT Flanking Detection fix cycle) | APPROVED (7 mechanics verified, 0 issues, all prior issues confirmed resolved) | game-logic-reviewer | 2026-03-01 |
 
 ### Session 75 Reviews (plan-20260301-143720)
 | Review ID | Target | Verdict | Reviewer | Date |
