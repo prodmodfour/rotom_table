@@ -12,7 +12,7 @@
 
 import type { Combatant, CombatSide } from '~/types'
 import type { FlankingMap, FlankingStatus } from '~/types/combat'
-import { checkFlanking } from '~/utils/flankingGeometry'
+import { checkFlanking, FLANKING_EVASION_PENALTY } from '~/utils/flankingGeometry'
 import { isEnemySide } from '~/utils/combatSides'
 
 /**
@@ -109,7 +109,7 @@ export function useFlankingDetection(combatants: Ref<Combatant[]>) {
    * PTU p.232: -2 to Physical, Special, and Speed evasion.
    */
   const getFlankingPenalty = (combatantId: string): number => {
-    return isTargetFlanked(combatantId) ? 2 : 0
+    return isTargetFlanked(combatantId) ? FLANKING_EVASION_PENALTY : 0
   }
 
   return {
