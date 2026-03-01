@@ -65,15 +65,6 @@ export default defineEventHandler(async (event) => {
     broadcast({ type: 'character_update', data: { characterId: id } })
   }
 
-  // Log for audit trail
-  if (body.reason) {
-    console.log(
-      `[Trainer XP] ${character.name}: ${body.amount > 0 ? '+' : ''}${body.amount} XP` +
-      ` (${body.reason}). Bank: ${result.previousXp} -> ${result.newXp},` +
-      ` Level: ${result.previousLevel} -> ${result.newLevel}`
-    )
-  }
-
   return {
     success: true,
     data: {
