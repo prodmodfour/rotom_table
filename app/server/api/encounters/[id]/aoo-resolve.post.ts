@@ -18,7 +18,7 @@
 import { prisma } from '~/server/utils/prisma'
 import { v4 as uuidv4 } from 'uuid'
 import { loadEncounter, buildEncounterResponse, getEntityName } from '~/server/services/encounter.service'
-import { resolveAoOAction, canUseAoO, autoDeclineFaintedReactor } from '~/server/services/out-of-turn.service'
+import { resolveAoOAction, canUseAoO, autoDeclineFaintedReactor, getStruggleAttackStats } from '~/server/services/out-of-turn.service'
 import { calculateDamage, applyDamageToEntity, applyFaintStatus } from '~/server/services/combatant.service'
 import { syncEntityToDatabase } from '~/server/services/entity-update.service'
 import { broadcastToEncounter } from '~/server/utils/websocket'
@@ -199,6 +199,12 @@ export default defineEventHandler(async (event) => {
           }
         }
 
+        // Determine Struggle Attack stats based on Combat skill (PTU p.240)
+        const struggleStats = getStruggleAttackStats(reactor)
+        const statsNote = struggleStats.isExpert
+          ? 'AC 3, DB 5 (Expert+ Combat)'
+          : 'AC 4, DB 4'
+
         // Add move log entry for the AoO
         const logEntry: MoveLogEntry = {
           id: uuidv4(),
@@ -216,7 +222,7 @@ export default defineEventHandler(async (event) => {
             damage: damageAmount > 0 ? damageAmount : undefined,
             injury: damageAmount > 0 ? undefined : undefined
           }],
-          notes: `Triggered by: ${action.triggerDescription}`
+          notes: `Struggle Attack (${statsNote}). Triggered by: ${action.triggerDescription}`
         }
 
         moveLog.push(logEntry)

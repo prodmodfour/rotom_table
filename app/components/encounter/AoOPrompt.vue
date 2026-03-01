@@ -25,7 +25,7 @@
           </span>
         </div>
         <div class="aoo-prompt__reactor-note">
-          Struggle Attack (AC 4)
+          {{ getStruggleAttackLabel(action) }}
         </div>
       </div>
 
@@ -118,6 +118,31 @@ function getHpClass(action: OutOfTurnAction): string {
   if (ratio <= 0.25) return 'aoo-prompt__reactor-hp--critical'
   if (ratio <= 0.5) return 'aoo-prompt__reactor-hp--low'
   return ''
+}
+
+/**
+ * Get the Struggle Attack label showing AC and damage info.
+ * PTU p.240: Expert+ Combat skill uses AC 3/DB 5 instead of AC 4/DB 4.
+ */
+function getStruggleAttackLabel(action: OutOfTurnAction): string {
+  const reactor = props.combatants.find(c => c.id === action.actorId)
+  if (!reactor) return 'Struggle Attack (AC 4)'
+  const isExpert = hasExpertCombat(reactor)
+  if (isExpert) {
+    return 'Struggle Attack (AC 3, DB 5 — Expert+ Combat)'
+  }
+  return 'Struggle Attack (AC 4, DB 4)'
+}
+
+/**
+ * Check if a combatant has Expert+ Combat skill rank.
+ */
+function hasExpertCombat(combatant: Combatant): boolean {
+  if (combatant.type !== 'human') return false
+  const entity = combatant.entity as { skills?: Record<string, string> }
+  if (!entity.skills) return false
+  const combatRank = entity.skills.Combat || entity.skills.combat
+  return combatRank === 'Expert' || combatRank === 'Master'
 }
 
 function startResolve(actionId: string) {

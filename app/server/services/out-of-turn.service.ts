@@ -345,6 +345,42 @@ export function getDefaultOutOfTurnUsage(): OutOfTurnUsage {
 }
 
 // ============================================
+// STRUGGLE ATTACK STATS
+// ============================================
+
+/**
+ * Get the Struggle Attack stats for a combatant based on their Combat skill.
+ * PTU p.240: "if a Trainer or Pokemon has a Combat Skill Rank of Expert or
+ * higher, Struggle Attacks instead have an AC of 3 and a Damage Base of 5."
+ *
+ * Returns { ac, setDamage, isExpert } where setDamage is the set damage avg.
+ */
+export function getStruggleAttackStats(combatant: Combatant): {
+  ac: number
+  setDamage: number
+  isExpert: boolean
+} {
+  const hasExpertCombat = checkExpertCombatSkill(combatant)
+  if (hasExpertCombat) {
+    return { ac: 3, setDamage: 13, isExpert: true }
+  }
+  return { ac: 4, setDamage: 11, isExpert: false }
+}
+
+/**
+ * Check if a combatant has Expert+ Combat skill rank.
+ * Only applicable to human combatants (trainers).
+ * Pokemon don't have named skill ranks in the PTU skill system.
+ */
+function checkExpertCombatSkill(combatant: Combatant): boolean {
+  if (combatant.type !== 'human') return false
+  const entity = combatant.entity as { skills?: Record<string, string> }
+  if (!entity.skills) return false
+  const combatRank = entity.skills.Combat || entity.skills.combat
+  return combatRank === 'Expert' || combatRank === 'Master'
+}
+
+// ============================================
 // HELPERS
 // ============================================
 
