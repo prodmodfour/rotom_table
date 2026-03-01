@@ -113,7 +113,7 @@ export default defineEventHandler(async (event) => {
 
     // Track defeated enemies for XP
     let defeatedEnemies = JSON.parse(record.defeatedEnemies)
-    const isDefeated = damageResult.fainted || deathCheck.isDead
+    const isDefeated = faintedFromAnySource || deathCheck.isDead
     if (isDefeated && combatant.side === 'enemies') {
       const entityName = combatant.type === 'pokemon'
         ? (entity as { species: string }).species
