@@ -1,14 +1,14 @@
 ---
-generated_at: 2026-03-01T18:00:59.406Z
-total_tickets: 253
-open: 32
+generated_at: 2026-03-01T20:11:40.627Z
+total_tickets: 255
+open: 34
 in_progress: 102
 resolved: 105
 ---
 
 # Tickets Index
 
-## Open Tickets (32)
+## Open Tickets (34)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
@@ -24,6 +24,7 @@ resolved: 105
 | decree-need-039 | decree | P2 | combat | Decree-Need-039: Flanking evasion penalty application order  |
 | bug-041 | bug | P3 | — | bug-041: Remove Whirlwind references from Force Switch UI pe |
 | ptu-rule-129 | ptu-rule | P3 | combat | ptu-rule-129: Roar's forced recall must respect the Trapped  |
+| ptu-rule-132 | ptu-rule | P3 | — | ptu-rule-132: Evolution species XP not hooked into capturedS |
 | feature-004 | feature | P3 | combat | feature-004: Pokemon Mounting / Rider System |
 | ux-012 | ux | P3 | — | The server broadcasts `status_tick` WebSocket events when ti |
 | refactoring-108 | refactoring | P3 | — | refactoring-108: Extract switch button computeds from Combat |
@@ -44,6 +45,7 @@ resolved: 105
 | refactoring-102 | refactoring | P4 | pokemon-lifecycle | Extract EvolutionSelectionModal from duplicated branching ev |
 | refactoring-105 | refactoring | P4 | combat | Remove Spurious 'Bound' Condition Check from Trapped Validat |
 | refactoring-115 | refactoring | P4 | combat | Refactoring-115: switching.service.ts exceeds 800-line limit |
+| refactoring-116 | refactoring | P4 | — | refactoring-116: XpDistributionModal.vue exceeds 800-line fi |
 
 ## In-Progress Tickets (102)
 
@@ -163,8 +165,8 @@ resolved: 105
 | Category | Open | In-Progress | Resolved | Total |
 |----------|------|-------------|----------|-------|
 | bug | 1 | 12 | 26 | 41 |
-| ptu-rule | 7 | 59 | 36 | 103 |
+| ptu-rule | 8 | 59 | 36 | 104 |
 | feature | 8 | 11 | 3 | 23 |
 | ux | 5 | 7 | 2 | 15 |
 | decree | 1 | 0 | 38 | 39 |
-| refactoring | 10 | 13 | 0 | 32 |
+| refactoring | 11 | 13 | 0 | 33 |
