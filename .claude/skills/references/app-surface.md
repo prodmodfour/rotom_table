@@ -159,7 +159,7 @@ CRUD + extensive combat actions.
 
 **VTT Grid components:** `VTTContainer.vue` (2D/isometric mode switch), `GridCanvas.vue` (2D canvas), `IsometricCanvas.vue` (isometric canvas + elevation wiring), `CameraControls.vue` (rotation buttons), `ElevationToolbar.vue` (token/terrain elevation editing toolbar), `TerrainPainter.vue` (terrain type selector, brush size, elevation brush for isometric), `VTTToken.vue` (token display), `ZoomControls.vue`, `CoordinateDisplay.vue`, `GridSettingsPanel.vue`, `FogToolbar.vue`, `TerrainToolbar.vue`.
 
-**VTT Grid utilities:** `utils/combatantCapabilities.ts` (shared combatantCanFly, getSkySpeed, combatantCanSwim, combatantCanBurrow), `utils/gridDistance.ts` (PTU diagonal distance calculation — alternating 1m/2m diagonal movement cost formula).
+**VTT Grid utilities:** `utils/combatantCapabilities.ts` (shared combatantCanFly, getSkySpeed, combatantCanSwim, combatantCanBurrow), `utils/gridDistance.ts` (PTU diagonal distance calculation — alternating 1m/2m diagonal movement cost formula), `utils/sizeCategory.ts` (PTU size category to grid footprint — SizeCategory type, SIZE_FOOTPRINT_MAP, sizeToFootprint, getFootprintCells, isFootprintInBounds; used by useGridMovement for multi-cell occupation and bounds checks).
 
 **Type immunity utility:** `utils/typeStatusImmunity.ts` (shared between server and client — TYPE_STATUS_IMMUNITIES map, isImmuneToStatus, getImmuneType, findImmuneStatuses; per decree-012, PTU p.239 type-based status immunities).
 
