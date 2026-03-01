@@ -95,6 +95,7 @@
       :current-moves="evolutionModal.currentMoves"
       :ability-remap="evolutionModal.abilityRemap"
       :evolution-moves="evolutionModal.evolutionMoves"
+      :owner-id="evolutionModal.ownerId"
       @close="evolutionModal.visible = false"
       @evolved="handleEvolved"
     />
@@ -147,7 +148,8 @@ const evolutionModal = reactive({
   itemMustBeHeld: false,
   currentMoves: [] as Array<Record<string, unknown>>,
   abilityRemap: emptyAbilityRemap as AbilityRemapResult,
-  evolutionMoves: emptyEvolutionMoves as EvolutionMoveResult
+  evolutionMoves: emptyEvolutionMoves as EvolutionMoveResult,
+  ownerId: null as string | null
 })
 
 // Evolution selection state (branching evolutions)
@@ -169,6 +171,7 @@ const pendingPokemonData = ref<{
   id: string; species: string; nickname: string | null
   types: string[]; level: number; maxHp: number
   baseStats: Stats; nature: { name: string }
+  ownerId?: string | null
 } | null>(null)
 
 // Stash check data for branching evolution selection
@@ -200,6 +203,7 @@ function openEvolutionConfirmModal(
   evolutionModal.currentMoves = lastCheckData.value?.currentMoves || []
   evolutionModal.abilityRemap = evo.abilityRemap || emptyAbilityRemap
   evolutionModal.evolutionMoves = evo.evolutionMoves || emptyEvolutionMoves
+  evolutionModal.ownerId = pokemon.ownerId || null
   evolutionModal.visible = true
 }
 
@@ -221,10 +225,17 @@ async function handleEvolveClick(payload: { pokemonId: string; species: string }
         currentSpecies: string
         currentLevel: number
         heldItem: string | null
+        preventedByItem: string | null
         currentMoves: Array<Record<string, unknown>>
         available: EvolutionOptionData[]
       }
     }>(`/api/pokemon/${payload.pokemonId}/evolution-check`, { method: 'POST' })
+
+    // P2: Check for prevention items
+    if (checkResponse.data.preventedByItem) {
+      alert(`This Pokemon cannot evolve while holding an ${checkResponse.data.preventedByItem}.`)
+      return
+    }
 
     if (!checkResponse.success || checkResponse.data.available.length === 0) {
       alert('No evolutions currently available for this Pokemon.')
@@ -245,6 +256,7 @@ async function handleEvolveClick(payload: { pokemonId: string; species: string }
         level: number; maxHp: number
         baseStats: Stats
         nature: { name: string }
+        ownerId?: string | null
       }
     }>(`/api/pokemon/${payload.pokemonId}`)
 
