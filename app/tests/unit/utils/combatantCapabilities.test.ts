@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import type { Combatant, Pokemon, HumanCharacter, PokemonCapabilities, TerrainType, TerrainCell, StatusCondition } from '~/types'
+import type { EquipmentSlots } from '~/types/character'
 import {
   getCombatantNaturewalks,
   naturewalkBypassesTerrain,
@@ -60,7 +61,11 @@ function makePokemonCombatant(capabilities?: Partial<PokemonCapabilities>): Comb
   }
 }
 
-function makeHumanCombatant(overrides?: { capabilities?: string[]; position?: { x: number; y: number } }): Combatant {
+function makeHumanCombatant(overrides?: {
+  capabilities?: string[]
+  position?: { x: number; y: number }
+  equipment?: EquipmentSlots
+}): Combatant {
   return {
     id: 'human-1',
     type: 'human',
@@ -94,6 +99,7 @@ function makeHumanCombatant(overrides?: { capabilities?: string[]; position?: { 
         specialDefense: 0, speed: 0, accuracy: 0, evasion: 0,
       },
       ...(overrides?.capabilities ? { capabilities: overrides.capabilities } : {}),
+      ...(overrides?.equipment ? { equipment: overrides.equipment } : {}),
     } as Combatant['entity'],
   }
 }
@@ -490,5 +496,351 @@ describe('findNaturewalkImmuneStatuses', () => {
     )
     // Position (99,99) has no cell -> defaults to 'normal' -> Forest matches 'normal'
     expect(result).toEqual(['Slowed'])
+  })
+})
+
+// =========================================================
+// Equipment-derived Naturewalk (PTU p.293 — Snow Boots, Jungle Boots)
+// =========================================================
+
+describe('getCombatantNaturewalks — equipment-derived capabilities', () => {
+  it('should return Naturewalk terrain from equipped Snow Boots', () => {
+    const human = makeHumanCombatant({
+      equipment: {
+        feet: {
+          name: 'Snow Boots',
+          slot: 'feet',
+          grantedCapabilities: ['Naturewalk (Tundra)'],
+        },
+      },
+    })
+    const result = getCombatantNaturewalks(human)
+    expect(result).toEqual(['Tundra'])
+  })
+
+  it('should return Naturewalk terrain from equipped Jungle Boots', () => {
+    const human = makeHumanCombatant({
+      equipment: {
+        feet: {
+          name: 'Jungle Boots',
+          slot: 'feet',
+          grantedCapabilities: ['Naturewalk (Forest)'],
+        },
+      },
+    })
+    const result = getCombatantNaturewalks(human)
+    expect(result).toEqual(['Forest'])
+  })
+
+  it('should return empty array when equipment has no grantedCapabilities', () => {
+    const human = makeHumanCombatant({
+      equipment: {
+        body: {
+          name: 'Light Armor',
+          slot: 'body',
+          damageReduction: 5,
+        },
+      },
+    })
+    expect(getCombatantNaturewalks(human)).toEqual([])
+  })
+
+  it('should return empty array when equipment has non-Naturewalk capabilities', () => {
+    const human = makeHumanCombatant({
+      equipment: {
+        head: {
+          name: 'Night Goggles',
+          slot: 'head',
+          grantedCapabilities: ['Darkvision'],
+        },
+      },
+    })
+    expect(getCombatantNaturewalks(human)).toEqual([])
+  })
+
+  it('should merge manual and equipment-derived Naturewalk terrains', () => {
+    const human = makeHumanCombatant({
+      capabilities: ['Naturewalk (Forest)'],
+      equipment: {
+        feet: {
+          name: 'Snow Boots',
+          slot: 'feet',
+          grantedCapabilities: ['Naturewalk (Tundra)'],
+        },
+      },
+    })
+    const result = getCombatantNaturewalks(human)
+    expect(result).toContain('Forest')
+    expect(result).toContain('Tundra')
+    expect(result).toHaveLength(2)
+  })
+
+  it('should deduplicate when manual and equipment grant the same Naturewalk terrain', () => {
+    const human = makeHumanCombatant({
+      capabilities: ['Naturewalk (Forest)'],
+      equipment: {
+        feet: {
+          name: 'Jungle Boots',
+          slot: 'feet',
+          grantedCapabilities: ['Naturewalk (Forest)'],
+        },
+      },
+    })
+    const result = getCombatantNaturewalks(human)
+    expect(result).toEqual(['Forest'])
+  })
+
+  it('should merge capabilities from multiple equipment slots', () => {
+    const human = makeHumanCombatant({
+      equipment: {
+        feet: {
+          name: 'Snow Boots',
+          slot: 'feet',
+          grantedCapabilities: ['Naturewalk (Tundra)'],
+        },
+        accessory: {
+          name: 'Forest Charm',
+          slot: 'accessory',
+          grantedCapabilities: ['Naturewalk (Forest)'],
+        },
+      },
+    })
+    const result = getCombatantNaturewalks(human)
+    expect(result).toContain('Tundra')
+    expect(result).toContain('Forest')
+    expect(result).toHaveLength(2)
+  })
+
+  it('should handle equipment item with multiple Naturewalk capabilities', () => {
+    const human = makeHumanCombatant({
+      equipment: {
+        feet: {
+          name: 'All-Terrain Boots',
+          slot: 'feet',
+          grantedCapabilities: ['Naturewalk (Tundra)', 'Naturewalk (Forest)'],
+        },
+      },
+    })
+    const result = getCombatantNaturewalks(human)
+    expect(result).toContain('Tundra')
+    expect(result).toContain('Forest')
+    expect(result).toHaveLength(2)
+  })
+})
+
+describe('naturewalkBypassesTerrain — equipment-derived capabilities', () => {
+  it('should return true when Snow Boots Naturewalk (Tundra) matches normal terrain', () => {
+    // Tundra maps to ['normal'] in NATUREWALK_TERRAIN_MAP
+    const human = makeHumanCombatant({
+      equipment: {
+        feet: {
+          name: 'Snow Boots',
+          slot: 'feet',
+          grantedCapabilities: ['Naturewalk (Tundra)'],
+        },
+      },
+    })
+    expect(naturewalkBypassesTerrain(human, 'normal')).toBe(true)
+  })
+
+  it('should return true when Jungle Boots Naturewalk (Forest) matches normal terrain', () => {
+    // Forest maps to ['normal'] in NATUREWALK_TERRAIN_MAP
+    const human = makeHumanCombatant({
+      equipment: {
+        feet: {
+          name: 'Jungle Boots',
+          slot: 'feet',
+          grantedCapabilities: ['Naturewalk (Forest)'],
+        },
+      },
+    })
+    expect(naturewalkBypassesTerrain(human, 'normal')).toBe(true)
+  })
+
+  it('should return false when equipment Naturewalk does not match terrain type', () => {
+    const human = makeHumanCombatant({
+      equipment: {
+        feet: {
+          name: 'Snow Boots',
+          slot: 'feet',
+          grantedCapabilities: ['Naturewalk (Tundra)'],
+        },
+      },
+    })
+    // Tundra maps to ['normal'], not 'water'
+    expect(naturewalkBypassesTerrain(human, 'water')).toBe(false)
+  })
+
+  it('should return true when either manual or equipment Naturewalk matches', () => {
+    const human = makeHumanCombatant({
+      capabilities: ['Naturewalk (Ocean)'],
+      equipment: {
+        feet: {
+          name: 'Snow Boots',
+          slot: 'feet',
+          grantedCapabilities: ['Naturewalk (Tundra)'],
+        },
+      },
+    })
+    // Manual Ocean maps to ['water'], equipment Tundra maps to ['normal']
+    expect(naturewalkBypassesTerrain(human, 'water')).toBe(true)
+    expect(naturewalkBypassesTerrain(human, 'normal')).toBe(true)
+  })
+
+  it('should return false for blocking terrain even with equipment Naturewalk', () => {
+    const human = makeHumanCombatant({
+      equipment: {
+        feet: {
+          name: 'Snow Boots',
+          slot: 'feet',
+          grantedCapabilities: ['Naturewalk (Tundra)'],
+        },
+      },
+    })
+    expect(naturewalkBypassesTerrain(human, 'blocking')).toBe(false)
+  })
+})
+
+describe('findNaturewalkImmuneStatuses — equipment-derived capabilities', () => {
+  const normalCell: TerrainCell = {
+    position: { x: 5, y: 5 },
+    type: 'normal',
+    rough: true,
+    slow: false,
+    elevation: 0,
+  }
+
+  const waterCell: TerrainCell = {
+    position: { x: 2, y: 2 },
+    type: 'water',
+    rough: false,
+    slow: true,
+    elevation: 0,
+  }
+
+  it('should grant Slowed/Stuck immunity from equipment-derived Naturewalk on matching terrain', () => {
+    const human = makeHumanCombatant({
+      equipment: {
+        feet: {
+          name: 'Snow Boots',
+          slot: 'feet',
+          grantedCapabilities: ['Naturewalk (Tundra)'],
+        },
+      },
+      position: { x: 5, y: 5 },
+    })
+    // Tundra maps to ['normal'], cell at (5,5) is 'normal'
+    const result = findNaturewalkImmuneStatuses(
+      human,
+      ['Slowed', 'Stuck'],
+      [normalCell],
+      true
+    )
+    expect(result).toContain('Slowed')
+    expect(result).toContain('Stuck')
+    expect(result).toHaveLength(2)
+  })
+
+  it('should not grant immunity from equipment Naturewalk on non-matching terrain', () => {
+    const human = makeHumanCombatant({
+      equipment: {
+        feet: {
+          name: 'Snow Boots',
+          slot: 'feet',
+          grantedCapabilities: ['Naturewalk (Tundra)'],
+        },
+      },
+      position: { x: 2, y: 2 },
+    })
+    // Tundra maps to ['normal'], but cell at (2,2) is 'water'
+    const result = findNaturewalkImmuneStatuses(
+      human,
+      ['Slowed', 'Stuck'],
+      [waterCell],
+      true
+    )
+    expect(result).toEqual([])
+  })
+
+  it('should grant immunity when manual OR equipment Naturewalk matches terrain', () => {
+    // Manual has Ocean (water), equipment has Tundra (normal)
+    // Standing on water cell -> Ocean matches
+    const human = makeHumanCombatant({
+      capabilities: ['Naturewalk (Ocean)'],
+      equipment: {
+        feet: {
+          name: 'Snow Boots',
+          slot: 'feet',
+          grantedCapabilities: ['Naturewalk (Tundra)'],
+        },
+      },
+      position: { x: 2, y: 2 },
+    })
+    const result = findNaturewalkImmuneStatuses(
+      human,
+      ['Slowed'],
+      [waterCell],
+      true
+    )
+    expect(result).toEqual(['Slowed'])
+  })
+
+  it('should not grant immunity for non-Naturewalk-immune statuses from equipment', () => {
+    const human = makeHumanCombatant({
+      equipment: {
+        feet: {
+          name: 'Snow Boots',
+          slot: 'feet',
+          grantedCapabilities: ['Naturewalk (Tundra)'],
+        },
+      },
+      position: { x: 5, y: 5 },
+    })
+    const result = findNaturewalkImmuneStatuses(
+      human,
+      ['Paralysis', 'Burned'] as StatusCondition[],
+      [normalCell],
+      true
+    )
+    expect(result).toEqual([])
+  })
+
+  it('should not grant immunity when terrain is disabled even with equipment Naturewalk', () => {
+    const human = makeHumanCombatant({
+      equipment: {
+        feet: {
+          name: 'Snow Boots',
+          slot: 'feet',
+          grantedCapabilities: ['Naturewalk (Tundra)'],
+        },
+      },
+      position: { x: 5, y: 5 },
+    })
+    const result = findNaturewalkImmuneStatuses(
+      human,
+      ['Slowed', 'Stuck'],
+      [normalCell],
+      false
+    )
+    expect(result).toEqual([])
+  })
+
+  it('should not grant immunity when equipment-equipped combatant has no position', () => {
+    const human = makeHumanCombatant({
+      equipment: {
+        feet: {
+          name: 'Snow Boots',
+          slot: 'feet',
+          grantedCapabilities: ['Naturewalk (Tundra)'],
+        },
+      },
+    })
+    const result = findNaturewalkImmuneStatuses(
+      human,
+      ['Slowed', 'Stuck'],
+      [normalCell],
+      true
+    )
+    expect(result).toEqual([])
   })
 })
