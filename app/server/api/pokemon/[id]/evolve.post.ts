@@ -28,7 +28,8 @@
 import { performEvolution } from '~/server/services/evolution.service'
 import type { Stats } from '~/server/services/evolution.service'
 import { prisma } from '~/server/utils/prisma'
-import { notifyPokemonEvolved } from '~/server/utils/websocket'
+import { notifyPokemonEvolved, broadcast } from '~/server/utils/websocket'
+import { applyTrainerXp, isNewSpecies } from '~/utils/trainerExperience'
 
 export default defineEventHandler(async (event) => {
   const id = getRouterParam(event, 'id')
@@ -203,12 +204,62 @@ export default defineEventHandler(async (event) => {
       changes: result.changes
     })
 
+    // Check for new species -> +1 trainer XP (PTU Core p.461)
+    // "Whenever a Trainer catches, hatches, or evolves a Pokemon species
+    // they did not previously own, they gain +1 Experience."
+    let speciesXpAwarded = false
+    let speciesXpResult = null
+
+    if (ownerId) {
+      const trainerRecord = await prisma.humanCharacter.findUnique({
+        where: { id: ownerId },
+        select: { capturedSpecies: true, trainerXp: true, level: true, name: true }
+      })
+
+      if (trainerRecord) {
+        const existingSpecies: string[] = JSON.parse(trainerRecord.capturedSpecies || '[]')
+        const evolvedSpecies = result.changes.newSpecies
+        const normalizedSpecies = evolvedSpecies.toLowerCase().trim()
+
+        if (isNewSpecies(evolvedSpecies, existingSpecies)) {
+          const updatedSpecies = [...existingSpecies, normalizedSpecies]
+
+          const xpCalc = applyTrainerXp({
+            currentXp: trainerRecord.trainerXp,
+            currentLevel: trainerRecord.level,
+            xpToAdd: 1
+          })
+
+          await prisma.humanCharacter.update({
+            where: { id: ownerId },
+            data: {
+              capturedSpecies: JSON.stringify(updatedSpecies),
+              trainerXp: xpCalc.newXp,
+              level: xpCalc.newLevel
+            }
+          })
+
+          speciesXpAwarded = true
+          speciesXpResult = xpCalc
+
+          if (xpCalc.levelsGained > 0) {
+            broadcast({ type: 'character_update', data: { characterId: ownerId } })
+          }
+        }
+      }
+    }
+
     return {
       success: true,
       data: {
         pokemon: result.pokemon,
         changes: result.changes,
-        undoSnapshot: result.undoSnapshot
+        undoSnapshot: result.undoSnapshot,
+        speciesXp: ownerId ? {
+          awarded: speciesXpAwarded,
+          species: result.changes.newSpecies,
+          xpResult: speciesXpResult
+        } : undefined
       }
     }
   } catch (error: unknown) {
