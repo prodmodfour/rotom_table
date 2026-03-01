@@ -145,6 +145,10 @@ export const useMeasurementStore = defineStore('measurement', {
 
     endMeasurement() {
       this.isActive = false
+      this.startTokenOrigin = null
+      this.startTokenSize = 1
+      this.endTokenOrigin = null
+      this.endTokenSize = 1
     },
 
     clearMeasurement() {
