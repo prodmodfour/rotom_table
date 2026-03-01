@@ -87,3 +87,8 @@ This is a FULL-scope feature requiring a multi-tier design spec before implement
 | 2026-03-01 | 339a0d9 | P2: UI — prevention alert, undo button, item consumption in evolve request |
 | 2026-03-01 | 4d4651e | P2: XpDistributionResults updated for P2 features |
 | 2026-03-01 | 35cb1af | P2: Expose requiredGender/requiredMove in evolution check response |
+| 2026-03-01 | d332a04 | P2 Fix: CRITICAL — include notes + consumedStone in PokemonSnapshot, restore on undo (code-review-248 C1, H2) |
+| 2026-03-01 | 1d2d261 | P2 Fix: CRITICAL — add Learn/Male/Female keywords to seed parser trigger regex (rules-review-224 C1) |
+| 2026-03-01 | afa5c26 | P2 Fix: HIGH — combine dual Pokemon update into single atomic transaction (code-review-248 H1) |
+| 2026-03-01 | d266984 | P2 Fix: HIGH — add GM override UI for missing stone in inventory (code-review-248 H3) |
+| 2026-03-01 | c6cdb08 | P2 Fix: MEDIUM — update app-surface.md with P2 additions (code-review-248 M1) |

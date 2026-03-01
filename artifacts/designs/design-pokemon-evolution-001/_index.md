@@ -115,3 +115,8 @@ Full PTU 1.05 Pokemon evolution mechanics: detection, species change, stat recal
 | 2026-03-01 | 339a0d9 | P2: UI — prevention alert, undo button, item consumption props |
 | 2026-03-01 | 4d4651e | P2: XpDistributionResults updated for P2 features |
 | 2026-03-01 | 35cb1af | P2: Expose requiredGender/requiredMove in evolution check response |
+| 2026-03-01 | d332a04 | P2 Fix: include notes + consumedStone in PokemonSnapshot for undo |
+| 2026-03-01 | 1d2d261 | P2 Fix: add Learn/Male/Female keywords to seed parser trigger regex |
+| 2026-03-01 | afa5c26 | P2 Fix: combine dual Pokemon update into single atomic transaction |
+| 2026-03-01 | d266984 | P2 Fix: add GM override UI for missing stone in inventory |
+| 2026-03-01 | c6cdb08 | P2 Fix: update app-surface.md with P2 additions |
