@@ -33,7 +33,7 @@ export interface SwitchAction {
   actionCost: 'standard' | 'shift'
   /** Round number */
   round: number
-  /** Whether forced by a move (Roar, Whirlwind, etc.) */
+  /** Whether forced by a move (Roar, etc.) */
   forced: boolean
 }
 ```

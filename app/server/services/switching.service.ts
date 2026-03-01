@@ -559,10 +559,11 @@ export function validateFaintedSwitch(
 // ============================================
 
 /**
- * Validate a forced switch request (Roar, Whirlwind, etc.).
+ * Validate a forced switch request (Roar, etc.).
  * PTU p.229: Forced switches bypass action cost and League restriction.
  *
- * Per decree-034: only moves with explicit recall text qualify.
+ * Per decree-034: Whirlwind is a push, not a forced switch.
+ * Only moves with explicit recall text qualify (e.g., Roar).
  * - No action cost check (forced doesn't consume an action)
  * - No turn check (can happen on any combatant's turn)
  * - Range check still applies in Full Contact mode
@@ -654,7 +655,7 @@ export function canSwitchedPokemonBeCommanded(
   // Fainted switch exemption
   if (isFaintedSwitch) return true
 
-  // Forced switch exemption (Roar, Whirlwind, etc.)
+  // Forced switch exemption (Roar, etc. — Whirlwind is a push per decree-034)
   if (isForcedSwitch) return true
 
   // League Battle standard switch: cannot be commanded this round

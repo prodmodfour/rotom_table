@@ -28,7 +28,7 @@ const isFaintedSwitch = body.faintedSwitch === true
 const isForcedSwitch = body.forced === true
 
 // League restriction: switched Pokemon cannot act this round
-// Exceptions: fainted switch, forced switch (Roar, Whirlwind, etc.)
+// Exceptions: fainted switch, forced switch (Roar, etc.)
 if (isLeagueBattle && !isFaintedSwitch && !isForcedSwitch) {
   newCombatant.turnState.canBeCommanded = false
 }
@@ -185,7 +185,7 @@ Future consideration (P2 or later): Allow fainted switch as an immediate reactio
 
 > "...unless the Switch was forced by a Move such as Roar or if they were Recalling and replacing a Fainted Pokemon."
 
-Moves like Roar, Whirlwind, Dragon Tail, and Circle Throw force the target to switch Pokemon. These forced switches:
+Moves like Roar force the target to switch Pokemon. (Note: Whirlwind is a push, not a forced switch per decree-034. Dragon Tail and Circle Throw forced switch behavior is TBD — no decree yet.) These forced switches:
 - Are NOT initiated by the trainer (the opponent forces it)
 - Do NOT cost the trainer an action
 - In League Battles, the replacement Pokemon CAN be commanded this round
@@ -219,8 +219,8 @@ if (body.forced) {
 When a move with a forced switch effect is executed, the GM clicks a "Force Switch" button on the target trainer. This opens the SwitchPokemonModal in "forced" mode, where:
 - The recalled Pokemon is pre-selected (the move target)
 - The replacement is random or chosen by the target's player (depending on the move)
-- For Roar/Whirlwind: random replacement (GM picks)
-- For Dragon Tail/Circle Throw: same as Roar (random)
+- For Roar: random replacement (GM picks)
+- For Dragon Tail/Circle Throw: TBD (no decree yet, likely same as Roar)
 
 ---
 

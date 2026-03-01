@@ -205,11 +205,11 @@
         Fainted Switch
       </button>
 
-      <!-- Force Switch Button (GM-triggered, for move effects like Roar/Whirlwind) -->
+      <!-- Force Switch Button (GM-triggered, for move effects like Roar) -->
       <button
         v-if="canShowForceSwitchButton"
         class="btn btn--sm btn--accent"
-        title="Force Switch (Roar, Whirlwind, etc.)"
+        title="Force Switch (Roar, etc.)"
         @click="$emit('forceSwitch', combatant.id)"
       >
         <img src="/icons/phosphor/arrow-clockwise.svg" alt="" class="btn-icon" />
@@ -486,8 +486,9 @@ const isFaintedSwitchDisabled = computed(() => {
 
 /**
  * Show force switch button for Pokemon that are owned by a trainer.
- * GM can trigger this on any Pokemon to simulate Roar/Whirlwind effects.
+ * GM can trigger this on any Pokemon to simulate Roar effects.
  * Only shown on Pokemon combatants (not trainers).
+ * Note: Whirlwind is a push, not a forced switch (decree-034).
  */
 const canShowForceSwitchButton = computed(() => {
   if (props.combatant.type !== 'pokemon') return false
