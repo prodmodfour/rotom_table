@@ -97,20 +97,26 @@ describe('calculatePathCost with tokenSize', () => {
 
   it('should route 2x2 token around obstacle that blocks footprint', () => {
     const { calculatePathCost } = createPathfinding()
+    // Start at (0,0), destination (4,0). Block (2,1) so the 2x2 footprint
+    // at origin (2,0) is blocked (covers (2,0), (3,0), (2,1), (3,1)).
+    // The token must route north first to avoid (2,1), then continue east.
     const from: GridPosition = { x: 0, y: 0 }
-    const to: GridPosition = { x: 2, y: 0 }
-    // Block (1,1) — this blocks the 2x2 footprint at origin (1,0)
-    // Token must go around
-    const blocked: GridPosition[] = [{ x: 1, y: 1 }]
-    // With 2x2 token, moving east to (1,0) would occupy (1,0), (2,0), (1,1), (2,1)
-    // (1,1) is blocked, so direct path is blocked
-    const result = calculatePathCost(from, to, blocked, undefined, undefined, undefined, 0, 2)
-    // Should still find a path (going north or another route)
-    // But it depends on grid constraints. Might be null if there's no valid path
-    // with the footprint always covering (y: 0, y: 1)
-    // Actually, the 2x2 at (0,0) occupies (0,0), (1,0), (0,1), (1,1) — but (1,1) is blocked
-    // So even the start is problematic. Let's use a different setup.
-    // Skip this test — it requires a larger grid to work properly
+    const to: GridPosition = { x: 4, y: 0 }
+    const blocked: GridPosition[] = [{ x: 2, y: 1 }]
+
+    // Direct path for 1x1 is unaffected
+    const result1x1 = calculatePathCost(from, to, blocked, undefined, undefined, undefined, 0, 1)
+    expect(result1x1).not.toBeNull()
+    expect(result1x1!.cost).toBe(4) // Straight line east
+
+    // 2x2 token must detour around the obstacle
+    const result2x2 = calculatePathCost(from, to, blocked, undefined, undefined, undefined, 0, 2)
+    expect(result2x2).not.toBeNull()
+    // Detour path costs more than the direct 4-cell straight line
+    expect(result2x2!.cost).toBeGreaterThan(4)
+    // Verify start and end positions in the path
+    expect(result2x2!.path[0]).toEqual({ x: 0, y: 0 })
+    expect(result2x2!.path[result2x2!.path.length - 1]).toEqual({ x: 4, y: 0 })
   })
 
   it('should find path for 3x3 token on open terrain', () => {
