@@ -263,17 +263,28 @@ export async function lookupAbilityEffect(abilityName: string): Promise<string> 
 
 /**
  * Enrich ability entries with their effect text from AbilityData.
+ * Uses a single batch query instead of N sequential lookups.
  * Returns new array (does not mutate input).
  */
 export async function enrichAbilityEffects(
   abilities: Array<{ name: string; effect: string }>
 ): Promise<Array<{ name: string; effect: string }>> {
-  const enriched: Array<{ name: string; effect: string }> = []
-  for (const ability of abilities) {
-    const effect = await lookupAbilityEffect(ability.name)
-    enriched.push({ name: ability.name, effect: effect || ability.effect })
-  }
-  return enriched
+  if (abilities.length === 0) return []
+
+  const names = abilities.map(a => a.name)
+  const abilityRecords = await prisma.abilityData.findMany({
+    where: { name: { in: names } },
+    select: { name: true, effect: true }
+  })
+
+  const effectMap = new Map(
+    abilityRecords.map(r => [r.name.toLowerCase(), r.effect])
+  )
+
+  return abilities.map(ability => ({
+    name: ability.name,
+    effect: effectMap.get(ability.name.toLowerCase()) || ability.effect
+  }))
 }
 
 // ============================================
