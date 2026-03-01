@@ -190,6 +190,8 @@ export function usePathfinding() {
    * @param getElevationCost - Optional elevation transition cost function
    * @param getTerrainElevation - Optional ground elevation lookup
    * @param fromElevation - Starting elevation (default 0)
+   * @param tokenSize - Token footprint size (default 1). Checks all NxN cells at destination.
+   * @param gridBounds - Optional grid bounds for footprint boundary enforcement.
    */
   function validateMovement(
     from: GridPosition,
@@ -199,29 +201,48 @@ export function usePathfinding() {
     getTerrainCost?: TerrainCostGetter,
     getElevationCost?: ElevationCostGetter,
     getTerrainElevation?: TerrainElevationGetter,
-    fromElevation: number = 0
+    fromElevation: number = 0,
+    tokenSize: number = 1,
+    gridBounds?: { width: number; height: number }
   ): { valid: boolean; distance: number; cost: number; reason?: string } {
     const distance = calculateMoveCost(from, to)
+    const size = tokenSize ?? 1
 
-    // Check blocked
-    const isBlocked = blockedCells.some(c => c.x === to.x && c.y === to.y)
-    if (isBlocked) {
-      return { valid: false, distance, cost: Infinity, reason: 'Destination is blocked' }
-    }
+    // Check all footprint cells at destination for blocked/impassable
+    const blockedSet = new Set(blockedCells.map(c => `${c.x},${c.y}`))
+    for (let fx = 0; fx < size; fx++) {
+      for (let fy = 0; fy < size; fy++) {
+        const cellX = to.x + fx
+        const cellY = to.y + fy
 
-    // Check terrain at destination
-    if (getTerrainCost) {
-      const terrainCost = getTerrainCost(to.x, to.y)
-      if (!isFinite(terrainCost)) {
-        return { valid: false, distance, cost: Infinity, reason: 'Destination is impassable terrain' }
+        // Check grid bounds
+        if (gridBounds) {
+          if (cellX < 0 || cellY < 0 || cellX >= gridBounds.width || cellY >= gridBounds.height) {
+            return { valid: false, distance, cost: Infinity, reason: 'Destination footprint extends beyond grid bounds' }
+          }
+        }
+
+        // Check blocked
+        if (blockedSet.has(`${cellX},${cellY}`)) {
+          return { valid: false, distance, cost: Infinity, reason: 'Destination is blocked' }
+        }
+
+        // Check terrain at destination
+        if (getTerrainCost) {
+          const terrainCost = getTerrainCost(cellX, cellY)
+          if (!isFinite(terrainCost)) {
+            return { valid: false, distance, cost: Infinity, reason: 'Destination is impassable terrain' }
+          }
+        }
       }
     }
 
     // For simple validation, calculate minimum path cost using flood-fill
-    // with full elevation support
+    // with full elevation support and multi-cell awareness
     const reachable = getMovementRangeCells(
       from, speed, blockedCells, getTerrainCost,
-      getElevationCost, getTerrainElevation, fromElevation
+      getElevationCost, getTerrainElevation, fromElevation,
+      size, gridBounds
     )
     const canReach = reachable.some(c => c.x === to.x && c.y === to.y)
 
