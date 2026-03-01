@@ -93,7 +93,19 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    // Validate eligibility
+    // Handle decline before eligibility check (MED-003)
+    // Declining an interrupt doesn't require eligibility — it just acknowledges the decline
+    if (resolution === 'decline') {
+      return {
+        success: true,
+        data: {
+          encounter: buildEncounterResponse(record, combatants),
+          interruptResolved: true
+        }
+      }
+    }
+
+    // Validate eligibility (only needed for accept or new pending)
     const eligibility = canUseInterrupt(reactor)
     if (!eligibility.allowed) {
       throw createError({
@@ -163,17 +175,6 @@ export default defineEventHandler(async (event) => {
         success: true,
         data: {
           encounter: response,
-          interruptResolved: true
-        }
-      }
-    }
-
-    if (resolution === 'decline') {
-      // No state changes, just acknowledge the decline
-      return {
-        success: true,
-        data: {
-          encounter: buildEncounterResponse(record, combatants),
           interruptResolved: true
         }
       }
