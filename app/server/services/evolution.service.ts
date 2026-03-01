@@ -78,6 +78,12 @@ export interface PokemonSnapshot {
   capabilities: string
   skills: string
   heldItem: string | null
+  notes: string | null
+  /** P2 fix: Track consumed stone details for undo restoration */
+  consumedStone?: {
+    ownerId: string
+    itemName: string
+  } | null
 }
 
 export interface EvolutionResult {
@@ -371,6 +377,43 @@ export async function consumeStoneFromInventory(ownerId: string, itemName: strin
   })
 }
 
+/**
+ * Restore a stone (or other item) to a trainer's inventory.
+ * Increments quantity by 1, or adds a new entry if the item is not in inventory.
+ * Used during evolution undo to reverse stone consumption.
+ */
+export async function restoreStoneToInventory(ownerId: string, itemName: string): Promise<void> {
+  const trainer = await prisma.humanCharacter.findUnique({
+    where: { id: ownerId },
+    select: { inventory: true }
+  })
+  if (!trainer) {
+    throw new Error(`Trainer not found: ${ownerId}`)
+  }
+
+  const inventory: InventoryItem[] = JSON.parse(trainer.inventory || '[]')
+  const itemIndex = inventory.findIndex(
+    item => item.name.toLowerCase() === itemName.toLowerCase()
+  )
+
+  let newInventory: InventoryItem[]
+  if (itemIndex >= 0) {
+    // Item exists — increment quantity
+    newInventory = inventory.map((item, idx) => {
+      if (idx !== itemIndex) return item
+      return { ...item, quantity: item.quantity + 1 }
+    })
+  } else {
+    // Item not in inventory — add new entry
+    newInventory = [...inventory, { name: itemName, quantity: 1 }]
+  }
+
+  await prisma.humanCharacter.update({
+    where: { id: ownerId },
+    data: { inventory: JSON.stringify(newInventory) }
+  })
+}
+
 // ============================================
 // EVOLUTION EXECUTION
 // ============================================
@@ -458,7 +501,9 @@ export async function performEvolution(input: PerformEvolutionInput): Promise<Ev
     moves: pokemon.moves,
     capabilities: pokemon.capabilities,
     skills: pokemon.skills,
-    heldItem: pokemon.heldItem
+    heldItem: pokemon.heldItem,
+    notes: pokemon.notes,
+    consumedStone: null
   }
 
   // 4. Fetch the target species data

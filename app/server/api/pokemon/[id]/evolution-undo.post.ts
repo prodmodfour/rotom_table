@@ -13,6 +13,7 @@
  * P2 feature: Evolution undo/cancellation
  */
 import type { PokemonSnapshot } from '~/server/services/evolution.service'
+import { restoreStoneToInventory } from '~/server/services/evolution.service'
 import { prisma } from '~/server/utils/prisma'
 import { notifyPokemonEvolved } from '~/server/utils/websocket'
 
@@ -20,7 +21,8 @@ const SNAPSHOT_FIELDS = [
   'species', 'type1', 'type2',
   'baseHp', 'baseAttack', 'baseDefense', 'baseSpAtk', 'baseSpDef', 'baseSpeed',
   'currentAttack', 'currentDefense', 'currentSpAtk', 'currentSpDef', 'currentSpeed',
-  'maxHp', 'currentHp', 'spriteUrl', 'abilities', 'moves', 'capabilities', 'skills', 'heldItem'
+  'maxHp', 'currentHp', 'spriteUrl', 'abilities', 'moves', 'capabilities', 'skills', 'heldItem',
+  'notes'
 ] as const
 
 export default defineEventHandler(async (event) => {
@@ -44,7 +46,7 @@ export default defineEventHandler(async (event) => {
   // Validate snapshot has required fields
   const snapshot = body.snapshot as PokemonSnapshot
   for (const field of SNAPSHOT_FIELDS) {
-    if (field === 'type2' || field === 'spriteUrl' || field === 'heldItem') continue // nullable
+    if (field === 'type2' || field === 'spriteUrl' || field === 'heldItem' || field === 'notes') continue // nullable
     if (snapshot[field] === undefined || snapshot[field] === null) {
       throw createError({
         statusCode: 400,
@@ -83,7 +85,7 @@ export default defineEventHandler(async (event) => {
       }
     }
 
-    // Restore the Pokemon to pre-evolution state
+    // Restore the Pokemon to pre-evolution state (including notes for history revert)
     const restored = await prisma.pokemon.update({
       where: { id },
       data: {
@@ -108,9 +110,15 @@ export default defineEventHandler(async (event) => {
         moves: snapshot.moves,
         capabilities: snapshot.capabilities,
         skills: snapshot.skills,
-        heldItem: snapshot.heldItem
+        heldItem: snapshot.heldItem,
+        notes: snapshot.notes ?? null
       }
     })
+
+    // Restore consumed stone to trainer inventory if tracked in snapshot
+    if (snapshot.consumedStone?.ownerId && snapshot.consumedStone?.itemName) {
+      await restoreStoneToInventory(snapshot.consumedStone.ownerId, snapshot.consumedStone.itemName)
+    }
 
     // Broadcast the revert
     notifyPokemonEvolved({
