@@ -16,15 +16,18 @@ import {
 import { syncEntityToDatabase } from '~/server/services/entity-update.service'
 import { createDefaultStageModifiers, reapplyActiveStatusCsEffects } from '~/server/services/combatant.service'
 import { computeEquipmentBonuses } from '~/utils/equipmentBonuses'
-import { VOLATILE_CONDITIONS } from '~/constants/statusConditions'
+import { STATUS_CONDITION_DEFS } from '~/constants/statusConditions'
 import type { StatusCondition, StageSource, HumanCharacter } from '~/types'
 
 // Take a Breather cures all volatile conditions + Slowed and Stuck (PTU 1.05 p.245)
 // Exception: Cursed requires the curse source to be KO'd or >12m away (p.245).
 // Since the app does not track curse sources, Cursed is excluded from auto-clearing
 // and left for the GM to remove manually when the prerequisite is met.
+// Uses volatile category from STATUS_CONDITION_DEFS for base set (decree-038).
 const BREATHER_CURED_CONDITIONS: StatusCondition[] = [
-  ...VOLATILE_CONDITIONS.filter(c => c !== 'Cursed'),
+  ...Object.values(STATUS_CONDITION_DEFS)
+    .filter(d => d.category === 'volatile' && d.name !== 'Cursed')
+    .map(d => d.name),
   'Slowed',
   'Stuck'
 ]
