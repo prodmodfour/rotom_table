@@ -172,6 +172,16 @@
         </button>
       </div>
 
+      <!-- Use Item Button -->
+      <button
+        class="btn btn--sm btn--success use-item-btn"
+        title="Use Healing Item"
+        @click="showUseItemModal = true"
+      >
+        <PhFirstAidKit :size="14" weight="bold" />
+        Item
+      </button>
+
       <!-- Actions Button -->
       <button
         class="btn btn--sm btn--primary"
@@ -245,10 +255,18 @@
       @close="showStatusModal = false"
       @save="handleStatusSave"
     />
+
+    <UseItemModal
+      v-if="showUseItemModal"
+      :user-id="combatant.id"
+      @close="showUseItemModal = false"
+      @item-used="showUseItemModal = false"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
+import { PhFirstAidKit } from '@phosphor-icons/vue'
 import type { Combatant, Pokemon, HumanCharacter, StatusCondition, StageModifiers } from '~/types'
 
 const props = defineProps<{
@@ -282,6 +300,7 @@ const healInput = ref(0)
 const showTempHpModal = ref(false)
 const showStagesModal = ref(false)
 const showStatusModal = ref(false)
+const showUseItemModal = ref(false)
 
 // Computed properties
 const entity = computed(() => props.combatant.entity)
@@ -790,6 +809,13 @@ const handleActClick = () => {
     color: $color-danger;
     background: rgba($color-danger, 0.2);
   }
+}
+
+// Use Item button with icon alignment
+.use-item-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
 }
 
 // Button icon (inline SVG in buttons)
