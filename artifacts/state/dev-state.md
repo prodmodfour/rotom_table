@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-03-01T10:50:00
-updated_by: slave-collector (plan-20260301-093000)
+last_updated: 2026-03-01T11:40:00
+updated_by: slave-collector (plan-20260301-110550)
 ---
 
 # Dev Ecosystem State
@@ -81,6 +81,7 @@ updated_by: slave-collector (plan-20260301-093000)
 | ptu-rule-125 | P4 | **open** | Populate grantedCapabilities on all capability-granting catalog entries (Dark Vision Goggles, Re-Breather, Gas Mask). Follow-up from code-review-222 M-02 + rules-review-198 MED-02. Filed by slave-collector (plan-20260228-153856) |
 | ptu-rule-126 | P4 | **open** | Snow Boots conditional Overland speed penalty not mechanically enforced (-1 on ice/deep snow). Follow-up from rules-review-198 MED-01. Filed by slave-collector (plan-20260228-153856) |
 | ptu-rule-127 | P1 | **resolved** | Remove automatic skill rank per level per decree-037. Resolved by slave-3 (plan-20260228-233710) as part of feature-008 fix cycle. skillRanksGained removed from trainerAdvancement.ts, LevelUpSkillSection disabled, skills step removed from wizard |
+| ptu-rule-128 | P3 | **resolved** | Sleep does not clear on recall or encounter end. Resolved by slave-6 (plan-20260301-110550). Asleep and Bad Sleep set to clearsOnRecall: false, clearsOnEncounterEnd: false. Part of decree-038 compliance |
 
 ### Feature Tickets (`tickets/feature/`)
 | Ticket | Priority | Status | Summary | Design Complexity |
@@ -90,14 +91,14 @@ updated_by: slave-collector (plan-20260301-093000)
 | feature-003 | P1 | **Track-A-P2-APPROVED + Track-B-P1-APPROVED + Track-C-P1-APPROVED** | Player View — Track A P2 APPROVED: code-review-188 APPROVED (`:deep()` fix complete). Track B P1 APPROVED (code-review-162). Track C P1 APPROVED (code-review-163 + rules-review-152). All tracks P0+P1+P2 complete | multi-phase-parallel |
 | feature-004 | P3 | **design-complete** | Pokemon Mounting / Rider System — design spec created by slave-1 (plan-20260228-153856). 7 files in design-mounting-001/: _index.md, spec-p0.md (mount relationship, APIs, combat state), spec-p1.md (VTT linked tokens, dismount checks, Mounted Prowess), spec-p2.md (Rider class features), shared-specs.md, testing-strategy.md | multi-phase |
 | feature-005 | P3 | **design-complete** | Living Weapon System (Honedge Line) — design spec created by slave-2 (plan-20260228-153856). 7 files in design-living-weapon-001/: _index.md, spec-p0.md (wield relationship, Living Weapon capability), spec-p1.md (equipment integration, Doublade/Aegislash bonuses), spec-p2.md (shared movement, No Guard suppression, Weaponize/Soulstealer), shared-specs.md, testing-strategy.md | multi-phase |
-| feature-006 | P1 | **P1-needs-fix-cycle** | Pokemon Evolution System — P0 APPROVED. P1 implemented. code-review-237 **CHANGES_REQUIRED** (C1: getEvolutionMoves level comparison off-by-one, H1: getOldAbilityName index mismatch, H2: N+1 query in enrichAbilityEffects, M1-M3). rules-review-213 **CHANGES_REQUIRED** (CRITICAL: same level comparison bug, MEDIUM: ability display). Needs fix cycle | multi-phase |
-| feature-007 | P1 | **P1-implemented** | Pokemon Level-Up Allocation UI — P0 APPROVED. P1 implemented by slave-3 (plan-20260301-093000): 13 commits — getAbilityPool(), batch ability/move endpoints, assign-ability/learn-move endpoints, AbilityAssignmentPanel, MoveLearningPanel, species endpoint, extended useLevelUpAllocation/LevelUpNotification/PokemonLevelUpPanel/XpDistributionResults. Needs P1 review | multi-phase |
-| feature-008 | P1 | **P1-implemented** | Trainer Level-Up Milestone Workflow — P0 APPROVED. P1 implemented by slave-4 (plan-20260301-093000): 11 commits — extended useTrainerLevelUp, LevelUpMilestoneSection, LevelUpEdgeSection, LevelUpFeatureSection, LevelUpClassSection, updated LevelUpSummary + LevelUpModal step navigation, milestone-aware totals fix, step index guard. Needs P1 review | multi-phase |
+| feature-006 | P1 | **P1-fix-cycle-done** | Pokemon Evolution System — P0 APPROVED. P1 fix cycle done by slave-1 (plan-20260301-110550): 7 commits — strict < for level-based evolution moves, oldName tracking in remapped abilities, batch enrichAbilityEffects, extracted buildSelectedMoveList, ability effect descriptions in dropdown, app-surface.md + ticket/design updates. All code-review-237 + rules-review-213 issues resolved. Needs P1 re-review | multi-phase |
+| feature-007 | P1 | **P1-needs-fix-cycle** | Pokemon Level-Up Allocation UI — P0 APPROVED. P1 reviewed. code-review-238 **CHANGES_REQUIRED** (C1: categorizeAbilities misclassifies last ability for species with numBasicAbilities+1 abilities, H1: MoveLearningPanel double-cast Move, H2: alert() error handling, M1-M3). rules-review-214 **APPROVED** (H1: milestone ordering check missing). Needs fix cycle | multi-phase |
+| feature-008 | P1 | **P1-needs-fix-cycle** | Trainer Level-Up Milestone Workflow — P0 APPROVED. P1 reviewed. code-review-239 **CHANGES_REQUIRED** (C1: regular Skill Edges don't update skill ranks in payload/effectiveSkills, H1: app-surface.md not updated, M1-M2). rules-review-215 **APPROVED** (MED-01: stacked bonus Skill Edge display cosmetic → ux-013). Needs fix cycle | multi-phase |
 | feature-010 | P1 | **resolved** | Status Condition Automation Engine — P0 implemented. Fix cycle completed: M1 (app-surface.md) fixed by slave-2 (plan-20260228-214159). Ticket moved to resolved. code-review-227 all issues resolved, rules-review-203 APPROVED | multi-phase |
-| feature-011 | P1 | **P0-APPROVED** | Pokemon Switching Workflow — P0 fix cycle APPROVED. code-review-236 **APPROVED** (M1: spurious Bound check → refactoring-105) + rules-review-212 **APPROVED** (M1: Sleep classification → decree-need-037). All 11 issues from code-review-232 + rules-review-208 resolved. P1 pending (League restriction, fainted switch, forced switch) | multi-phase |
+| feature-011 | P1 | **P1-implemented** | Pokemon Switching Workflow — P0 APPROVED. P1 implemented by slave-2 (plan-20260301-110550): 13 commits — fainted/forced switch validation + League restriction helpers, extended switch endpoint, auto-skip uncommandable Pokemon in League phase, dimmed initiative entry, canFaintedSwitch in useSwitching, extended SwitchPokemonModal with fainted/forced modes, Fainted Switch + Force Switch buttons on CombatantCard, League switch restriction indicator. Needs P1 review | multi-phase |
 | feature-012 | P1 | **APPROVED** | Death & Heavily Injured Automation — fix cycle 3 APPROVED. code-review-233 **APPROVED** + rules-review-209 **APPROVED** (re-review by slave-3, plan-20260301-084803). All code-review-228 + rules-review-204 issues resolved. Feature complete | single-phase |
 | feature-009 | P1 | **design-complete** | Trainer XP & Advancement Tracking — design spec created by slave-5 (plan-20260301-093000). 5 files in design-trainer-xp-001/: _index.md, shared-specs.md, spec-p0.md (XP model, award/deduct, auto-level trigger), spec-p1.md (capture XP, batch distribution, quest XP), testing-strategy.md. Tightly coupled with feature-008 | multi-phase |
-| feature-013 | P1 | **design-complete** | Multi-Tile Token System — design spec created by slave-6 (plan-20260301-093000). 6 files in design-multi-tile-tokens-001/: _index.md, shared-specs.md, spec-p0.md (size rendering, cell occupation, collision), spec-p1.md (multi-cell pathfinding, fog, terrain), spec-p2.md (AoE coverage, flanking geometry), testing-strategy.md | multi-phase |
+| feature-013 | P1 | **P0-implemented** | Multi-Tile Token System — P0 implemented by slave-3 (plan-20260301-110550): 5 commits — sizeCategory.ts utility (SIZE_FOOTPRINT_MAP, sizeToFootprint, getFootprintCells, isFootprintInBounds), 2D movement preview full NxN footprint highlight, isometric multi-cell token positioning + sprite scaling + depth sorting, verification comments on existing code. Needs P0 review | multi-phase |
 | feature-014 | P1 | **design-complete** | VTT Flanking Detection — design spec created by slave-7 (plan-20260301-093000). 7 files in design-flanking-001/: _index.md, shared-specs.md, spec-p0.md (flanking geometry, visual indicator, +2 accuracy), spec-p1.md (multi-tile, diagonal, 3+ attackers), spec-p2.md (auto-detect, auto-apply), testing-strategy.md. P1 depends on feature-013 | multi-phase |
 
 ### UX Tickets (`tickets/ux/`)
@@ -115,10 +116,27 @@ updated_by: slave-collector (plan-20260301-093000)
 | ux-010 | P4 | **resolved** | Overlapping significance tier boundaries — fixed by slave-4 (plan-20260227-153711). Exclusive end values. code-review-209 APPROVED + rules-review-185 APPROVED (plan-20260227-162300 slave-2) |
 | ux-011 | P4 | **open** | Custom item form missing grantedCapabilities input field. Follow-up from code-review-222 M-01. Filed by slave-collector (plan-20260228-153856) |
 | ux-012 | P3 | **open** | Client-side status_tick WebSocket handler for tick damage notifications. Follow-up from code-review-227 M2. Filed by slave-collector (plan-20260228-205826) |
+| ux-013 | P4 | **open** | LevelUpSummary stacked bonus Skill Edge display shows each rank-up from base rank instead of cumulative progression. Cosmetic only — actual payload is correct. Source: rules-review-215 MED-01. Filed by slave-collector (plan-20260301-110550) |
 
 ## Active Developer Work
 
-**Current task:** Session 70 collection complete. 7 slaves merged (31 commits, 0 conflicts). 2 dev slaves (feature-007-p1 13 commits, feature-008-p1 11 commits). 2 reviewer slaves (feature-011 re-review APPROVED, feature-006-p1 review CHANGES_REQUIRED). 3 design slaves (feature-009, feature-013, feature-014). Smoke test PASSED. 2 follow-up tickets filed (refactoring-105, decree-need-037).
+**Current task:** Session 71 collection complete. 6 slaves merged (37 commits, 0 conflicts). 4 dev slaves (feature-006-p1-fix 7 commits, feature-011-p1 13 commits, feature-013-p0 5 commits, decree-038 conditions 8 commits). 2 reviewer slaves (feature-007-p1 CHANGES_REQUIRED, feature-008-p1 CHANGES_REQUIRED). Smoke test PASSED. 3 follow-up tickets filed (refactoring-107, ux-013).
+
+**Session 71 (2026-03-01, plan-20260301-110550):**
+- **slave-4** (reviewers): feature-007-p1-review — code-review-238 **CHANGES_REQUIRED** (C1: categorizeAbilities misclassifies last ability for species with numBasicAbilities+1 abilities, H1: MoveLearningPanel double-cast Move, H2: alert() error handling, M1: emit conflation, M2: watchEffect re-sync, M3: duplicate keyframes). rules-review-214 **APPROVED** (H1: milestone ordering check — should be fixed in fix cycle). → feature-007 **P1-needs-fix-cycle**
+- **slave-5** (reviewers): feature-008-p1-review — code-review-239 **CHANGES_REQUIRED** (C1: regular Skill Edges don't update skill ranks in payload/effectiveSkills/summary/cap checks, H1: app-surface.md not updated for P1, M1: duplicated SCSS → refactoring-107, M2: missing class choice warning). rules-review-215 **APPROVED** (MED-01: stacked bonus Skill Edge display cosmetic → ux-013). → feature-008 **P1-needs-fix-cycle**
+- **slave-1** (developer): feature-006-p1-fix — 7 commits: Fix cycle for Pokemon Evolution P1 (code-review-237 + rules-review-213). Strict < for level-based evolution moves (C1), oldName tracking in remapped abilities (H1), batch enrichAbilityEffects (H2), extracted buildSelectedMoveList (M1), ability effect descriptions in dropdown (M3), app-surface.md (M2), ticket/design spec update. → **fix-cycle-done, needs re-review**
+- **slave-6** (developer): refactoring-106+ptu-rule-128 — 8 commits: Decoupled condition behaviors from category arrays per decree-038 (6 refactoring commits: StatusConditionDef type with per-condition flags, updated encounter-end/faint/breather/captureRate/restHealing consumers). Then fixed Sleep persistence (1 commit: Asleep + Bad Sleep persist through recall and encounter end). Both tickets resolved.
+- **slave-2** (developer): feature-011-p1 — 13 commits: Pokemon Switching P1 implementation. Fainted/forced switch validation + League restriction helpers, extended switch endpoint, auto-skip uncommandable Pokemon in League pokemon phase, dimmed initiative entry, canFaintedSwitch in useSwitching, extended SwitchPokemonModal, Fainted Switch + Force Switch buttons on CombatantCard, League switch restriction indicator on CombatantCard, ticket/design update. → **P1-implemented, needs review**
+- **slave-3** (developer): feature-013-p0 — 5 commits: Multi-Tile Token System P0. sizeCategory.ts utility (SIZE_FOOTPRINT_MAP, sizeToFootprint, getFootprintCells, isFootprintInBounds), 2D movement preview full NxN footprint highlight in useGridRendering, isometric multi-cell token positioning + sprite scaling + depth sorting in useIsometricRendering, verification comments on existing code. → **P0-implemented, needs review**
+
+**Smoke test:** PASSED (Playwright) — GM view renders (full nav + encounter controls + weather + combatants with HP/capture rate). Group view renders (initiative list with 8 combatants). Player view renders (character selection: Ash Lv30, Aurora, Clara, Hassan, Marilena, Test Trainer).
+**Merge notes:** 0 conflicts. All 6 rebased cleanly. 37 commits total (merge order: 4→5→1→6→2→3). Slaves 6→2 shared switch.post.ts — rebased without conflict due to non-overlapping changes (slave-6 refactored condition imports, slave-2 extended switch logic).
+**Tickets filed:** refactoring-107 (duplicated SCSS in level-up components, code-review-239 M1), ux-013 (stacked bonus Skill Edge display, rules-review-215 MED-01)
+**Tickets resolved:** refactoring-106 (decree-038 compliance), ptu-rule-128 (Sleep persistence)
+**Tickets needing review:** feature-011 P1 (first implementation), feature-013 P0 (first implementation)
+**Tickets needing fix cycle:** feature-007 P1 (code-review-238 C1+H1+H2+M1-M3, rules-review-214 H1), feature-008 P1 (code-review-239 C1+H1+M1-M2)
+**Tickets needing re-review:** feature-006 P1 (fix cycle done)
 
 **Session 70 (2026-03-01, plan-20260301-093000):**
 - **slave-1** (reviewers): feature-011-rereview — code-review-236 **APPROVED** (M1: spurious 'Bound' check → refactoring-105) + rules-review-212 **APPROVED** (M1: Sleep/Asleep classification → decree-need-037). All 11 issues from code-review-232 + rules-review-208 resolved. → feature-011 **P0-APPROVED**
@@ -484,6 +502,14 @@ updated_by: slave-collector (plan-20260301-093000)
 
 ## Review Status
 
+### Session 71 Reviews (plan-20260301-110550)
+| Review ID | Target | Verdict | Reviewer | Date |
+|-----------|--------|---------|----------|------|
+| code-review-238 | feature-007 P1 (Pokemon Level-Up Allocation: abilities + moves) | CHANGES_REQUIRED (1C: categorizeAbilities edge case, 2H: Move double-cast + alert(), 3M) | senior-reviewer | 2026-03-01 |
+| rules-review-214 | feature-007 P1 (Pokemon Level-Up Allocation: abilities + moves) | APPROVED (1H: milestone ordering check, 1M informational) | game-logic-reviewer | 2026-03-01 |
+| code-review-239 | feature-008 P1 (Trainer Level-Up Milestones: edges/features/classes) | CHANGES_REQUIRED (1C: regular Skill Edge rank-ups not applied, 1H: app-surface.md, 2M) | senior-reviewer | 2026-03-01 |
+| rules-review-215 | feature-008 P1 (Trainer Level-Up Milestones: edges/features/classes) | APPROVED (1M cosmetic: stacked rank-up display) | game-logic-reviewer | 2026-03-01 |
+
 ### Session 69 Reviews (plan-20260228-233710)
 | Review ID | Target | Verdict | Reviewer | Date |
 |-----------|--------|---------|----------|------|
@@ -769,6 +795,8 @@ updated_by: slave-collector (plan-20260301-093000)
 | refactoring-094 | P4 | **resolved** | Remove trivial combatantsOnGrid passthrough — APPROVED (code-review-213 + rules-review-189, plan-20260228-020000) |
 | refactoring-095 | P4 | **fix-cycle-needs-rereview** | Guard addEdge() against Skill Edge string injection. Fix cycle by slave-4 (plan-20260228-093200): addEdge error feedback added, unit tests for addEdge guard, app-surface.md updated. Bundled with ptu-rule-119 fix cycle. Needs re-review |
 | refactoring-096 | P4 | **needs-fix-cycle** | Tag color styles harmonized: extracted shared _tags.scss partial. code-review-224 **CHANGES_REQUIRED** (H1: CSS specificity regression in player sheet, M1: stale comment in _create-form-shared.scss). rules-review-200 **APPROVED**. Needs fix cycle |
+| refactoring-106 | P2 | **resolved** | Decouple condition behaviors from category arrays per decree-038. Per-condition behavior flags (clearsOnRecall, clearsOnEncounterEnd, clearsOnFaint). Resolved by slave-6 (plan-20260301-110550): 6 refactoring commits + 1 Sleep fix commit. All 7 consumer files updated |
+| refactoring-107 | P4 | **open** | Duplicated `.btn` / `.counter` / `.tag` / `.selected-tags` SCSS across LevelUpEdgeSection, LevelUpFeatureSection, LevelUpClassSection, LevelUpModal (~40-50 lines each). Extract to shared SCSS partial. Source: code-review-239 M1. Filed by slave-collector (plan-20260301-110550) |
 
 ## Code Health
 
