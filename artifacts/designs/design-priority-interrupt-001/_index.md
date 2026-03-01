@@ -106,3 +106,4 @@ All new fields use optional types with defaults. Existing encounters work withou
 |------|------|--------|---------|-------|
 | 2026-03-01 | ALL | Design complete | N/A | Full design spec written |
 | 2026-03-01 | P0 | Implementation complete | 77f08598..416039c2 (8 commits) | 6 new files, 5 modified files. AoO trigger detection, out-of-turn engine, VTT grid integration, GM prompt UI, encounter store, WebSocket events |
+| 2026-03-01 | P0 | Fix cycle (code-review-247) | 40a1bfda..e43fe165 (8 commits) | CRIT-001: reactor eligibility re-validation. H1-H3: input validation, DB4 damage base, app-surface. M1-M4: client preview eligibility, auto-decline on faint, stale record, action cleanup |
