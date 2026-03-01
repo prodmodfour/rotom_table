@@ -473,6 +473,66 @@ export function useRangeParser() {
     )
   }
 
+  /**
+   * Check if a multi-cell target is hit by an AoE.
+   *
+   * A target is hit if ANY cell of its NxN footprint overlaps with the
+   * set of affected cells. For 1x1 tokens this is a simple membership check;
+   * for multi-cell tokens it scans the full footprint.
+   *
+   * @param targetPosition - Top-left anchor of the target token
+   * @param targetSize - Token footprint (1=1x1, 2=2x2, etc.)
+   * @param affectedCells - Cells covered by the AoE
+   * @returns true if the target is hit
+   */
+  function isTargetHitByAoE(
+    targetPosition: GridPosition,
+    targetSize: number,
+    affectedCells: GridPosition[]
+  ): boolean {
+    const affectedSet = new Set(
+      affectedCells.map(c => `${c.x},${c.y}`)
+    )
+
+    for (let dx = 0; dx < targetSize; dx++) {
+      for (let dy = 0; dy < targetSize; dy++) {
+        if (affectedSet.has(`${targetPosition.x + dx},${targetPosition.y + dy}`)) {
+          return true
+        }
+      }
+    }
+
+    return false
+  }
+
+  /**
+   * Get the edge cell of a multi-cell attacker's footprint for Close Blast origin.
+   *
+   * Close Blast originates adjacent to the attacker. For multi-cell attackers,
+   * "adjacent" means adjacent to the nearest edge cell in the blast direction.
+   * This function returns the corner cell of the footprint closest to the
+   * blast direction, so the blast is placed adjacent to the correct edge.
+   *
+   * @param attackerPosition - Top-left anchor of the attacker token
+   * @param attackerSize - Token footprint (1=1x1, 2=2x2, etc.)
+   * @param direction - Direction vector of the blast ({ dx, dy } with values -1, 0, or 1)
+   * @returns The edge cell position to use as blast origin
+   */
+  function getBlastEdgeOrigin(
+    attackerPosition: GridPosition,
+    attackerSize: number,
+    direction: { dx: number; dy: number }
+  ): GridPosition {
+    return {
+      x: direction.dx > 0
+        ? attackerPosition.x + attackerSize - 1
+        : attackerPosition.x,
+      y: direction.dy > 0
+        ? attackerPosition.y + attackerSize - 1
+        : attackerPosition.y,
+    }
+  }
+
   return {
     parseRange,
     isInRange,
@@ -481,6 +541,8 @@ export function useRangeParser() {
     ptuDistanceTokens,
     closestCellPair,
     getAffectedCells,
+    isTargetHitByAoE,
+    getBlastEdgeOrigin,
     // Re-exported from usePathfinding for backwards compatibility
     getMovementRangeCells: pathfinding.getMovementRangeCells,
     getMovementRangeCellsWithAveraging: pathfinding.getMovementRangeCellsWithAveraging,
