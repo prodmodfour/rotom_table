@@ -23,10 +23,8 @@ import {
   buildEncounterResponse,
   getEntityName
 } from '~/server/services/encounter.service'
-import {
-  buildPokemonEntityFromRecord,
-  buildCombatantFromEntity
-} from '~/server/services/combatant.service'
+import { buildPokemonEntityFromRecord } from '~/server/services/entity-builder.service'
+import { buildCombatantFromEntity } from '~/server/services/combatant.service'
 import { sizeToTokenSize } from '~/server/services/grid-placement.service'
 import {
   validateSwitch,

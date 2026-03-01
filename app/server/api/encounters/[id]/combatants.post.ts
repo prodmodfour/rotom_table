@@ -1,11 +1,8 @@
 import { prisma } from '~/server/utils/prisma'
 import { buildEncounterResponse } from '~/server/services/encounter.service'
 import { sizeToTokenSize, buildOccupiedCellsSet, findPlacementPosition } from '~/server/services/grid-placement.service'
-import {
-  buildPokemonEntityFromRecord,
-  buildHumanEntityFromRecord,
-  buildCombatantFromEntity
-} from '~/server/services/combatant.service'
+import { buildPokemonEntityFromRecord, buildHumanEntityFromRecord } from '~/server/services/entity-builder.service'
+import { buildCombatantFromEntity } from '~/server/services/combatant.service'
 import type { Pokemon, HumanCharacter } from '~/types'
 
 export default defineEventHandler(async (event) => {
