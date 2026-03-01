@@ -470,8 +470,8 @@ export function useIsometricRendering(options: UseIsometricRenderingOptions) {
       const elevation = options.getTokenElevation
         ? options.getTokenElevation(token.combatantId)
         : (token.elevation ?? 0)
-      const centerX = token.position.x + (token.size - 1) / 2
-      const centerY = token.position.y + (token.size - 1) / 2
+      const centerX = token.position.x + token.size / 2
+      const centerY = token.position.y + token.size / 2
       const { rx, ry } = rotateCoords(centerX, centerY, angle, gridW, gridH)
       return { token, depth: rx + ry + elevation, elevation }
     })
