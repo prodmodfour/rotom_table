@@ -4,7 +4,7 @@ ticket_id: feature-011
 category: FEATURE
 scope: FULL
 domain: combat
-status: p1-implemented
+status: p2-implemented
 decrees:
   - decree-006
   - decree-021
@@ -91,11 +91,11 @@ PTU Core p.229-230 (Switching section):
 | G | League switch restriction (cannot command rest of round) | IMPLEMENTED | canBeCommanded set by switch endpoint, auto-skip in next-turn | **P1** |
 | H | Fainted switch as Shift Action | IMPLEMENTED | Fainted switch with Shift Action cost enforcement | **P1** |
 | I | Forced switch exemption (Roar, etc.) | IMPLEMENTED | Force Switch button, no action cost, bypasses Trapped | **P1** |
-| J | Standard Action to recall/release two at once | NOT_IMPLEMENTED | No batch recall/release | **P1** |
-| K | Released Pokemon immediate-act logic | NOT_IMPLEMENTED | No check for passed initiative count | **P2** |
-| L | Recall/Release as separate tracked Shift Actions | NOT_IMPLEMENTED | No individual recall/release endpoints | **P2** |
-| M | Player View switch request (via WebSocket) | NOT_IMPLEMENTED | Players can't request switches | **P2** |
-| N | Recall+Release same round = Switch detection | NOT_IMPLEMENTED | No per-round recall/release tracking | **P2** |
+| J | Standard Action to recall/release two at once | IMPLEMENTED | Recall/release endpoints accept 1-2 Pokemon | **P1** |
+| K | Released Pokemon immediate-act logic | IMPLEMENTED | hasInitiativeAlreadyPassed + immediate-act insertion | **P2** |
+| L | Recall/Release as separate tracked Shift Actions | IMPLEMENTED | recall.post.ts + release.post.ts with SwitchAction tracking | **P2** |
+| M | Player View switch request (via WebSocket) | IMPLEMENTED | Enhanced requestSwitchPokemon with recall/release context | **P2** |
+| N | Recall+Release same round = Switch detection | IMPLEMENTED | checkRecallReleasePair + League restriction in both endpoints | **P2** |
 
 ## Atomized Files
 

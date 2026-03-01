@@ -47,7 +47,7 @@ Design complete: `artifacts/designs/design-pokemon-switching-001/`
 |------|-------|--------|
 | P0 | Core switch as Standard Action, 8m range check, initiative insertion, encounter store | implemented |
 | P1 | League restriction, fainted switch as Shift Action, forced switch exemption | implemented |
-| P2 | Immediate-act logic, separate recall/release, player view switch request | design-complete |
+| P2 | Immediate-act logic, separate recall/release, player view switch request | implemented |
 
 ## Resolution Log
 
@@ -82,3 +82,11 @@ Design complete: `artifacts/designs/design-pokemon-switching-001/`
   - 47386599: pages/gm/index.vue — wire handleFaintedSwitch and handleForceSwitch handlers
   - 66d46579: pages/gm/index.vue — resolve fainted Pokemon for fainted switch modal
   - cbbca0ff: CombatantCard.vue — show "Cannot Act (Switched In)" badge on uncommandable Pokemon
+- 2026-03-01: P2 implemented — immediate-act, separate recall/release, player view switch, pair detection
+  - 93286305: Section K — hasInitiativeAlreadyPassed() + immediate-act insertion in insertIntoFullContactTurnOrder (switching.service.ts, switch.post.ts)
+  - fe8fbf14: findAdjacentPosition + checkRecallReleasePair utilities (switching.service.ts)
+  - cb167783: Section L — recall.post.ts endpoint (1=Shift, 2=Standard, Trapped check, volatile clear, recall_only tracking)
+  - ce09517a: Section L — release.post.ts endpoint (auto-place adjacent, Section K immediate-act, Section N pair detection)
+  - 9b68b2a3: recallPokemon/releasePokemon store actions + executeRecall/executeRelease composable methods
+  - 5b2b4a89: Section N — recall-after-release League restriction in recall.post.ts
+  - 5952f702: Section M — enhanced requestSwitchPokemon with recall combatant ID + release name
