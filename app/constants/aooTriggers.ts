@@ -63,7 +63,7 @@ export const AOO_STRUGGLE_ATTACK_AC = 4
 
 /**
  * Base damage for a Struggle Attack.
- * PTU: 1d8+6 (Physical, Typeless, Melee).
- * In set damage mode, average = 10.
+ * PTU: DB4 = 1d8+6 (Physical, Typeless, Melee).
+ * In set damage mode, DB4 avg = 11 (per DAMAGE_BASE_CHART).
  */
-export const AOO_STRUGGLE_ATTACK_DAMAGE_BASE = 10
+export const AOO_STRUGGLE_ATTACK_DAMAGE_BASE = 11
