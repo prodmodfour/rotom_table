@@ -1,11 +1,12 @@
 ---
 ticket_id: decree-need-037
 priority: P3
-status: open
+status: addressed
 domain: combat
 source: rules-review-212 MEDIUM-001
 created_by: slave-collector (plan-20260301-093000)
 created_at: 2026-03-01
+decree_id: decree-038
 ---
 
 # Decree Needed: Sleep/Asleep Classification — Volatile or Persistent?
@@ -38,3 +39,7 @@ Affects multiple systems:
 ## Requesting
 
 Human ruling on whether `Asleep`/`Bad Sleep` should be classified as persistent (PTU RAW) or volatile (gameplay convenience) in this system.
+
+## Resolution
+
+Addressed by decree-038. Sleep stays volatile (per p.247 structural placement) but does NOT clear on recall or encounter end (per video game behavior). Condition behaviors decoupled from category arrays via refactoring-106. Sleep-specific fix in ptu-rule-128.
