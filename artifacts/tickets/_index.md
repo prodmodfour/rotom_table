@@ -1,8 +1,8 @@
 ---
-generated_at: 2026-03-01T09:18:32.421Z
-total_tickets: 231
+generated_at: 2026-03-01T10:47:26.938Z
+total_tickets: 233
 open: 23
-in_progress: 96
+in_progress: 98
 resolved: 103
 ---
 
@@ -13,9 +13,7 @@ resolved: 103
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
 | ptu-rule-127 | ptu-rule | P1 | character-lifecycle | Per decree-037, trainers should NOT receive an automatic +1  |
-| feature-009 | feature | P1 | character-lifecycle | feature-009: Trainer XP & Advancement Tracking |
 | feature-013 | feature | P1 | vtt-grid | feature-013: Multi-Tile Token System |
-| feature-014 | feature | P1 | vtt-grid+combat | feature-014: VTT Flanking Detection |
 | feature-016 | feature | P2 | combat+vtt-grid | feature-016: Priority / Interrupt / Attack of Opportunity Sy |
 | feature-017 | feature | P2 | capture | feature-017: Poke Ball Type System |
 | feature-018 | feature | P2 | scenes | feature-018: Weather Effect Automation |
@@ -26,6 +24,7 @@ resolved: 103
 | feature-023 | feature | P2 | player-view+capture+healing | feature-023: Player Capture & Healing Interfaces |
 | feature-004 | feature | P3 | combat | feature-004: Pokemon Mounting / Rider System |
 | ux-012 | ux | P3 | — | The server broadcasts `status_tick` WebSocket events when ti |
+| decree-need-037 | decree | P3 | combat | Decree Needed: Sleep/Asleep Classification — Volatile or Per |
 | ptu-rule-095 | ptu-rule | P4 | vtt-grid | ptu-rule-095: Disengage maneuver missing from combatManeuver |
 | ptu-rule-125 | ptu-rule | P4 | character-lifecycle | ptu-rule-125: Populate grantedCapabilities on all capability |
 | ptu-rule-126 | ptu-rule | P4 | combat | ptu-rule-126: Snow Boots conditional Overland speed penalty  |
@@ -35,8 +34,9 @@ resolved: 103
 | refactoring-100 | refactoring | P4 | — | When a combatant faints from any damage source, `applyDamage |
 | refactoring-101 | refactoring | P4 | pokemon-lifecycle | Deduplicate type-badge SCSS across evolution components |
 | refactoring-102 | refactoring | P4 | pokemon-lifecycle | Extract EvolutionSelectionModal from duplicated branching ev |
+| refactoring-105 | refactoring | P4 | combat | Remove Spurious 'Bound' Condition Check from Trapped Validat |
 
-## In-Progress Tickets (96)
+## In-Progress Tickets (98)
 
 | ID | Category | Priority | Domain | Source |
 |----|----------|----------|--------|--------|
@@ -50,8 +50,10 @@ resolved: 103
 | feature-006 | feature | P1 | pokemon-lifecycle | matrix-gap (GAP-PLC-1) |
 | feature-007 | feature | P1 | pokemon-lifecycle | matrix-gap (GAP-PLC-2) |
 | feature-008 | feature | P1 | character-lifecycle | matrix-gap (SG-1) |
+| feature-009 | feature | P1 | character-lifecycle | matrix-gap (SG-2) |
 | feature-011 | feature | P1 | combat | matrix-gap (Gap 3) |
 | feature-012 | feature | P1 | combat | matrix-gap (combat R076, R080, R081 + healing R016, R030) |
+| feature-014 | feature | P1 | vtt-grid+combat | matrix-gap (combat Gap 4 + VTT SG-2) |
 | bug-002 | bug | P1 | — | code-review-035 |
 | ptu-rule-038 | ptu-rule | P1 | healing | — |
 | ptu-rule-098 | ptu-rule | P1 | combat | decree-005 |
@@ -137,9 +139,11 @@ resolved: 103
 | refactoring-092 | refactoring | P4 | encounter-tables | code-review-207 M1 |
 | refactoring-093 | refactoring | P4 | combat | code-review-207 M2 |
 
-## Open Decree-Needs (0)
+## Open Decree-Needs (1)
 
-All decree-needs addressed.
+| ID | Priority | Domain | Topic |
+|----|----------|--------|-------|
+| decree-need-037 | P3 | combat | — |
 
 ## Summary by Category
 
@@ -147,7 +151,7 @@ All decree-needs addressed.
 |----------|------|-------------|----------|-------|
 | bug | 0 | 12 | 26 | 40 |
 | ptu-rule | 4 | 58 | 36 | 99 |
-| feature | 12 | 7 | 3 | 23 |
+| feature | 10 | 9 | 3 | 23 |
 | ux | 3 | 7 | 2 | 12 |
-| decree | 0 | 0 | 36 | 36 |
-| refactoring | 4 | 12 | 0 | 21 |
+| decree | 1 | 0 | 36 | 37 |
+| refactoring | 5 | 12 | 0 | 22 |

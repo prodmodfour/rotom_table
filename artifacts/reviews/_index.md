@@ -1,13 +1,13 @@
 ---
-generated_at: 2026-03-01T09:18:32.416Z
-total_reviews: 170
-active_count: 100
-approved_count: 66
+generated_at: 2026-03-01T10:47:26.931Z
+total_reviews: 174
+active_count: 102
+approved_count: 68
 ---
 
 # Reviews Index
 
-## Active Reviews (100)
+## Active Reviews (102)
 
 | Review ID | Verdict | Target | Reviewer | Date |
 |-----------|---------|--------|----------|------|
@@ -87,6 +87,7 @@ approved_count: 66
 | code-review-229 | CHANGES_REQUIRED | feature-007 | senior-reviewer | 2026-02-28 |
 | code-review-230 | CHANGES_REQUIRED | feature-008 | senior-reviewer | 2026-02-28 |
 | code-review-232 | CHANGES_REQUIRED | feature-011 | senior-reviewer | 2026-03-01 |
+| code-review-237 | CHANGES_REQUIRED | feature-006 | senior-reviewer | 2026-03-01 |
 | rules-review-034 | CHANGES_REQUIRED | bug-002 | game-logic-reviewer | 2026-02-18 |
 | rules-review-039 | CHANGES_REQUIRED | ptu-rule-034, ptu-rule-035 | game-logic-reviewer | 2026-02-18 |
 | rules-review-047 | MIXED | — | game-logic-reviewer | 2026-02-19 |
@@ -110,12 +111,14 @@ approved_count: 66
 | rules-review-204 | CHANGES_REQUIRED | feature-012 | game-logic-reviewer | 2026-02-28 |
 | rules-review-206 | CHANGES_REQUIRED | feature-008 | game-logic-reviewer | 2026-02-28 |
 | rules-review-208 | CHANGES_REQUIRED | feature-011 | game-logic-reviewer | 2026-03-01 |
+| rules-review-213 | CHANGES_REQUIRED | feature-006 | game-logic-reviewer | 2026-03-01 |
 | rules-review-test-integrity-001 | CHANGES_REQUIRED | — | — | 2026-02-16 |
 
 ## Recently Approved (last 10)
 
 | Review ID | Target | Reviewer | Date |
 |-----------|--------|----------|------|
+| code-review-236 | feature-011 | senior-reviewer | 2026-03-01 |
 | code-review-235 | feature-008 | senior-reviewer | 2026-03-01 |
 | code-review-234 | feature-007 | senior-reviewer | 2026-03-01 |
 | code-review-233 | feature-012 | senior-reviewer | 2026-03-01 |
@@ -125,13 +128,12 @@ approved_count: 66
 | code-review-220 | bug-038 | senior-reviewer | 2026-02-28 |
 | code-review-219 | ptu-rule-122+ptu-rule-123 | senior-reviewer | 2026-02-28 |
 | code-review-218 | refactoring-095+ptu-rule-119 | senior-reviewer | 2026-02-28 |
-| code-review-214 | ptu-rule-114+ptu-rule-116 | senior-reviewer | 2026-02-28 |
 
 ## Stats
 
-- Active reviews: 170
-- Needs action: 100
-- Approved/Pass (active): 66
+- Active reviews: 174
+- Needs action: 102
+- Approved/Pass (active): 68
 - Archived: 297
-- Total (active + archived): 467
+- Total (active + archived): 471
 - Unique targets reviewed: 71
