@@ -3,11 +3,13 @@ ticket_id: decree-need-039
 category: AMBIGUOUS
 priority: P2
 severity: MEDIUM
-status: open
+status: addressed
+decree_id: decree-040
 domain: combat
 source: rules-review-230 MED-2
 created_by: slave-collector (plan-20260301-170000)
 created_at: 2026-03-01
+resolved_at: 2026-03-01
 ---
 
 # Decree-Need-039: Flanking evasion penalty application order relative to evasion cap
@@ -33,14 +35,6 @@ const effectiveEvasion = Math.min(9, evasion)
 return Math.max(1, move.value.ac + effectiveEvasion - attackerAccuracyStage.value - flankingPenalty + roughPenalty)
 ```
 
-## Impact
+## Resolution
 
-Affects all accuracy calculations against flanked targets with evasion > 9. If Option A is chosen, high-evasion targets would be immune to flanking penalty when at the cap.
-
-## Affected Files
-
-- `app/composables/useMoveCalculation.ts`
-
-## Recommendation
-
-Option B (current) is arguably more correct because flanking should always have a meaningful tactical effect. The rules-review-230 reviewer approved with this interpretation but flagged it as needing a decree if contested.
+Addressed by **decree-040**: Flanking -2 evasion penalty applies after the evasion cap, not before. Confirms current implementation (Option B). No code changes needed.
