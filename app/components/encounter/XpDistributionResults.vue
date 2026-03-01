@@ -31,6 +31,8 @@
       v-if="hasLevelUps"
       :results="results"
       @evolve-click="handleEvolveClick"
+      @assign-ability="navigateToPokemonSheet"
+      @learn-move="navigateToPokemonSheet"
     />
 
     <!-- Evolution Selection Modal (branching evolutions) -->
@@ -114,6 +116,7 @@ const emit = defineEmits<{
   'pokemon-evolved': [result: Record<string, unknown>]
 }>()
 
+const router = useRouter()
 const { getSpriteUrl } = usePokemonSprite()
 
 const hasLevelUps = computed(() =>
@@ -273,6 +276,11 @@ async function handleEvolveClick(payload: { pokemonId: string; species: string }
 
 function handleEvolved(result: Record<string, unknown>): void {
   emit('pokemon-evolved', result)
+}
+
+/** Navigate to the Pokemon sheet in edit mode for ability/move actions */
+function navigateToPokemonSheet(payload: { pokemonId: string }): void {
+  router.push(`/gm/pokemon/${payload.pokemonId}?edit=true`)
 }
 </script>
 
