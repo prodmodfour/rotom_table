@@ -581,6 +581,19 @@ export async function performEvolution(input: PerformEvolutionInput): Promise<Ev
     await consumeStoneFromInventory(input.consumeItem.ownerId, input.consumeItem.itemName)
   }
 
+  // 13. Log evolution in Pokemon notes (P2)
+  const dateStr = new Date().toISOString().split('T')[0]
+  const evolutionNote = `[Evolved from ${pokemon.species} at Level ${pokemon.level} on ${dateStr}]`
+  const existingNotes = pokemon.notes || ''
+  const updatedNotes = existingNotes
+    ? `${evolutionNote}\n${existingNotes}`
+    : evolutionNote
+
+  await prisma.pokemon.update({
+    where: { id: pokemonId },
+    data: { notes: updatedNotes }
+  })
+
   const changes: EvolutionChanges = {
     previousSpecies: pokemon.species,
     newSpecies: targetSpecies,
