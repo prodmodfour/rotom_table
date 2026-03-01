@@ -167,10 +167,9 @@ const replacingMoveIndex = ref<number | null>(null)
 // Live tracking of current moves (updates after each learn)
 const currentMoves = ref<Move[]>([])
 
-// Initialize from props
-watchEffect(() => {
-  currentMoves.value = [...(props.pokemon.moves || [])]
-})
+// currentMoves is initialized once on mount (see onMounted below).
+// Not using watchEffect to prevent overwriting local optimistic state
+// when parent re-renders during the replace-move workflow.
 
 /** Display slots (always show 6 rows) */
 const displayMoves = computed(() => {
@@ -283,8 +282,9 @@ function handleSkip() {
   emit('skipped')
 }
 
-// Load on mount
+// Initialize on mount: set current moves from props and load available move details
 onMounted(() => {
+  currentMoves.value = [...(props.pokemon.moves || [])]
   loadMoveDetails()
 })
 </script>
