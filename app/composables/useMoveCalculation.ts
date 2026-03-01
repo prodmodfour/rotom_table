@@ -35,7 +35,11 @@ export function useMoveCalculation(
   move: Ref<Move>,
   actor: Ref<Combatant>,
   targets: Ref<Combatant[]>,
-  allCombatants: Ref<Combatant[]>
+  allCombatants: Ref<Combatant[]>,
+  options?: {
+    /** PTU p.232: flanking penalty getter. Returns -2 evasion penalty if target is flanked, 0 otherwise. */
+    getFlankingPenalty?: (targetId: string) => number
+  }
 ) {
   const {
     rollDamageBase,
@@ -393,7 +397,9 @@ export function useMoveCalculation(
     // Rough terrain penalty (PTU p.231): +2 to threshold when targeting
     // through rough terrain (enemy-occupied per decree-003, or painted rough per decree-010)
     const roughPenalty = getRoughTerrainPenalty(targetId)
-    return Math.max(1, move.value.ac + effectiveEvasion - attackerAccuracyStage.value + roughPenalty)
+    // Flanking penalty (PTU p.232): -2 to evasion when flanked, reducing threshold (easier to hit)
+    const flankingPenalty = options?.getFlankingPenalty?.(targetId) ?? 0
+    return Math.max(1, move.value.ac + effectiveEvasion - attackerAccuracyStage.value - flankingPenalty + roughPenalty)
   }
 
   const rollAccuracy = () => {
