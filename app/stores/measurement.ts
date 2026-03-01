@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import type { GridPosition, RangeType, ParsedRange } from '~/types'
-import { ptuDiagonalDistance, maxDiagonalCells } from '~/utils/gridDistance'
+import { ptuDiagonalDistance, ptuDistanceTokensBBox, maxDiagonalCells } from '~/utils/gridDistance'
 
 export type MeasurementMode = 'none' | 'distance' | 'burst' | 'cone' | 'line' | 'close-blast'
 
@@ -9,6 +9,11 @@ export interface MeasurementState {
   isActive: boolean
   startPosition: GridPosition | null
   endPosition: GridPosition | null
+  // Token metadata for edge-to-edge distance (multi-cell tokens)
+  startTokenOrigin: GridPosition | null
+  startTokenSize: number
+  endTokenOrigin: GridPosition | null
+  endTokenSize: number
   // For AoE shapes
   aoeSize: number
   aoeDirection: 'north' | 'south' | 'east' | 'west' | 'northeast' | 'northwest' | 'southeast' | 'southwest'
@@ -27,14 +32,37 @@ export const useMeasurementStore = defineStore('measurement', {
     isActive: false,
     startPosition: null,
     endPosition: null,
+    startTokenOrigin: null,
+    startTokenSize: 1,
+    endTokenOrigin: null,
+    endTokenSize: 1,
     aoeSize: 2,
     aoeDirection: 'north',
   }),
 
   getters: {
-    // Calculate distance between start and end positions using PTU alternating diagonal rule
+    // Calculate distance between start and end positions using PTU alternating diagonal rule.
+    // When multi-cell token metadata is available, uses edge-to-edge distance via
+    // ptuDistanceTokens for accurate measurement between large tokens.
     distance: (state): number => {
       if (!state.startPosition || !state.endPosition) return 0
+
+      // Use token-aware edge-to-edge distance when either endpoint has a multi-cell token
+      const hasStartToken = state.startTokenOrigin !== null && state.startTokenSize > 1
+      const hasEndToken = state.endTokenOrigin !== null && state.endTokenSize > 1
+
+      if (hasStartToken || hasEndToken) {
+        const startFootprint = {
+          position: state.startTokenOrigin ?? state.startPosition,
+          size: state.startTokenSize,
+        }
+        const endFootprint = {
+          position: state.endTokenOrigin ?? state.endPosition,
+          size: state.endTokenSize,
+        }
+        return ptuDistanceTokensBBox(startFootprint, endFootprint)
+      }
+
       return ptuDiagonalDistance(
         state.endPosition.x - state.startPosition.x,
         state.endPosition.y - state.startPosition.y
@@ -89,15 +117,29 @@ export const useMeasurementStore = defineStore('measurement', {
       }
     },
 
-    startMeasurement(position: GridPosition) {
+    startMeasurement(
+      position: GridPosition,
+      tokenOrigin?: GridPosition,
+      tokenSize?: number
+    ) {
       this.isActive = true
       this.startPosition = { ...position }
       this.endPosition = { ...position }
+      this.startTokenOrigin = tokenOrigin ? { ...tokenOrigin } : null
+      this.startTokenSize = tokenSize ?? 1
+      this.endTokenOrigin = null
+      this.endTokenSize = 1
     },
 
-    updateMeasurement(position: GridPosition) {
+    updateMeasurement(
+      position: GridPosition,
+      tokenOrigin?: GridPosition,
+      tokenSize?: number
+    ) {
       if (this.isActive) {
         this.endPosition = { ...position }
+        this.endTokenOrigin = tokenOrigin ? { ...tokenOrigin } : null
+        this.endTokenSize = tokenSize ?? 1
       }
     },
 
@@ -109,6 +151,10 @@ export const useMeasurementStore = defineStore('measurement', {
       this.isActive = false
       this.startPosition = null
       this.endPosition = null
+      this.startTokenOrigin = null
+      this.startTokenSize = 1
+      this.endTokenOrigin = null
+      this.endTokenSize = 1
     },
 
     setAoeSize(size: number) {
