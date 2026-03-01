@@ -1,14 +1,14 @@
 ---
-generated_at: 2026-03-01T14:24:55.249Z
-total_tickets: 244
-open: 23
+generated_at: 2026-03-01T15:19:42.055Z
+total_tickets: 248
+open: 27
 in_progress: 102
 resolved: 105
 ---
 
 # Tickets Index
 
-## Open Tickets (23)
+## Open Tickets (27)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
@@ -25,11 +25,15 @@ resolved: 105
 | feature-004 | feature | P3 | combat | feature-004: Pokemon Mounting / Rider System |
 | ux-012 | ux | P3 | — | The server broadcasts `status_tick` WebSocket events when ti |
 | refactoring-108 | refactoring | P3 | — | refactoring-108: Extract switch button computeds from Combat |
+| refactoring-112 | refactoring | P3 | combat | Refactoring-112: Decompose encounter store into focused sub- |
 | ptu-rule-095 | ptu-rule | P4 | vtt-grid | ptu-rule-095: Disengage maneuver missing from combatManeuver |
 | ptu-rule-125 | ptu-rule | P4 | character-lifecycle | ptu-rule-125: Populate grantedCapabilities on all capability |
 | ptu-rule-126 | ptu-rule | P4 | combat | ptu-rule-126: Snow Boots conditional Overland speed penalty  |
+| ptu-rule-130 | ptu-rule | P4 | combat | PTU-Rule-130: Fainted recall+release pair should not apply L |
 | ux-006 | ux | P4 | — | ux-006: PTU injury markers may leak precise HP info in playe |
 | ux-011 | ux | P4 | character-lifecycle | ux-011: Custom item form missing grantedCapabilities input f |
+| ux-014 | ux | P4 | pokemon-lifecycle | UX-014: Evolution undo snapshot staleness warning |
+| ux-015 | ux | P4 | pokemon-lifecycle | UX-015: Replace alert() with inline UI for evolution prevent |
 | refactoring-099 | refactoring | P4 | — | refactoring-099: Extract XP actions from encounter.ts store  |
 | refactoring-100 | refactoring | P4 | — | When a combatant faints from any damage source, `applyDamage |
 | refactoring-101 | refactoring | P4 | pokemon-lifecycle | Deduplicate type-badge SCSS across evolution components |
@@ -152,8 +156,8 @@ All decree-needs addressed.
 | Category | Open | In-Progress | Resolved | Total |
 |----------|------|-------------|----------|-------|
 | bug | 1 | 12 | 26 | 41 |
-| ptu-rule | 5 | 59 | 36 | 101 |
+| ptu-rule | 6 | 59 | 36 | 102 |
 | feature | 8 | 11 | 3 | 23 |
-| ux | 3 | 7 | 2 | 13 |
+| ux | 5 | 7 | 2 | 15 |
 | decree | 0 | 0 | 38 | 38 |
-| refactoring | 6 | 13 | 0 | 28 |
+| refactoring | 7 | 13 | 0 | 29 |
