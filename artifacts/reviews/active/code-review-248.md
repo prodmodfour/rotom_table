@@ -1,212 +1,154 @@
 ---
 review_id: code-review-248
-review_type: code + game-logic
+review_type: code
 reviewer: senior-reviewer
 trigger: design-implementation
-target_report: feature-006
-domain: pokemon-lifecycle
+target_report: feature-011
+domain: combat
 commits_reviewed:
-  - e36f5b11
-  - 52878c55
-  - f82bc48f
-  - 1de3db6e
-  - 63633ee8
-  - 339a0d90
-  - 4d4651e1
-  - 35cb1af5
-  - 4353f7a2
+  - 5540937d
+  - 3f948f94
+  - 99796267
+  - 0712e99a
+  - 43382731
+  - e6fbf256
+  - f90d9ae5
 files_reviewed:
-  - app/utils/evolutionCheck.ts
-  - app/server/services/evolution.service.ts
-  - app/server/api/pokemon/[id]/evolve.post.ts
-  - app/server/api/pokemon/[id]/evolution-check.post.ts
-  - app/server/api/pokemon/[id]/evolution-undo.post.ts
-  - app/composables/useEvolutionUndo.ts
-  - app/components/pokemon/EvolutionConfirmModal.vue
-  - app/components/encounter/XpDistributionResults.vue
-  - app/pages/gm/pokemon/[id].vue
-  - app/types/species.ts
-  - app/prisma/seed.ts
+  - app/server/services/switching.service.ts
+  - app/server/api/encounters/[id]/switch.post.ts
+  - app/server/api/encounters/[id]/recall.post.ts
+  - app/server/api/encounters/[id]/release.post.ts
+  - app/composables/useSwitching.ts
+  - app/composables/usePlayerCombat.ts
+  - app/stores/encounter.ts
+  - app/components/player/PlayerCombatActions.vue
+  - app/types/combat.ts
+  - app/types/player-sync.ts
 verdict: CHANGES_REQUIRED
 issues_found:
   critical: 1
-  high: 3
+  high: 2
   medium: 3
-reviewed_at: 2026-03-01T15:30:00Z
-follows_up: code-review-243
+reviewed_at: 2026-03-01T15:10:00Z
+follows_up: code-review-236
 ---
 
 ## Review Scope
 
-P2 tier of feature-006 (Pokemon Evolution System). 9 commits implementing:
-1. Everstone/Eviolite prevention in eligibility check
-2. Stone consumption from trainer inventory + held item consumption
-3. Post-evolution undo (snapshot, endpoint, composable)
-4. Evolution history logging in Pokemon notes
-5. Gender-specific + move-specific evolution triggers (type, seed parser, eligibility check, service validation)
-6. UI wiring: prevention alert, undo button, item consumption in evolve request
-7. XpDistributionResults updated for P2 features (ownerId, preventedByItem)
-8. requiredGender/requiredMove exposed in evolution check response
-9. Docs: implementation log + ticket update
+P2 implementation of feature-011 (Pokemon Switching Workflow -- Polish). 7 commits covering:
+- **Section K**: Immediate-act logic for released Pokemon in Full Contact battles
+- **Section L**: Standalone recall and release endpoints (1 = Shift, 2 = Standard)
+- **Section N**: Recall+release pair detection for League restriction
+- **Section M**: Enhanced player switch request with recall/release details
 
-Design spec: `artifacts/designs/design-pokemon-evolution-001/spec-p2.md`
-Decrees checked: decree-035 (nature-adjusted Base Relations -- respected), decree-036 (stone evolution move learning -- respected, P1 implementation unchanged).
+946 lines added across 10 files. All source files read in full. Decree-034 (Roar/Whirlwind) and decree-038 (Sleep condition decoupling) checked -- no violations found.
 
 ## Issues
 
 ### CRITICAL
 
-**C1: Evolution undo does not revert the evolution history note**
+#### CRITICAL-001: Missing WebSocket event handlers for `pokemon_recalled` and `pokemon_released`
 
-File: `app/server/services/evolution.service.ts` (step 13) + `app/server/api/pokemon/[id]/evolution-undo.post.ts`
+**Files:** `app/composables/useWebSocket.ts` (not changed but affected), `app/server/api/encounters/[id]/recall.post.ts` (line 244), `app/server/api/encounters/[id]/release.post.ts` (line 295)
 
-When evolution occurs, step 13 prepends `[Evolved from X at Level Y on Z]` to the Pokemon's `notes` field. However, `PokemonSnapshot` does NOT capture `notes`, and the undo endpoint does NOT restore `notes`. After an undo, the evolution note remains in the Pokemon's notes, creating a false record of an evolution that was reverted.
+The recall endpoint broadcasts `type: 'pokemon_recalled'` and the release endpoint broadcasts `type: 'pokemon_released'`. However, `useWebSocket.ts` only handles `pokemon_switched` (added in P0 review fix). The two new event types are not handled in the client WebSocket handler's switch statement.
 
-This is a data correctness bug. If the GM undoes an evolution, the historical note saying the evolution happened is a lie.
+**Impact:** Group View and Player View will NOT update when a standalone recall or release happens. The GM gets the updated state via the REST response, but all other connected clients will show stale encounter data until the next event that triggers a full sync (e.g., `encounter_update`). This is a real-time sync breakage in a multi-view application.
 
-**Fix required:** Either:
-- (A) Add `notes` to `PokemonSnapshot` and capture/restore it during undo, OR
-- (B) Have the undo endpoint strip the most recent `[Evolved from ...]` line from the Pokemon's notes after restoring, OR
-- (C) Move the notes update from step 13 into a separate, later operation and skip it if the undo happens before any other action
-
-Option (A) is simplest and most reliable.
+**Fix:** Add `case 'pokemon_recalled':` and `case 'pokemon_released':` handlers to `useWebSocket.ts` that call `getEncounterStore().updateFromWebSocket(message.data.encounter)`, identical to the existing `pokemon_switched` handler.
 
 ### HIGH
 
-**H1: Two separate `prisma.pokemon.update()` calls for the same record in `performEvolution()`**
+#### HIGH-001: `app-surface.md` not updated with new endpoints
 
-File: `app/server/services/evolution.service.ts` lines 566 and 608
+**File:** `.claude/skills/references/app-surface.md`
 
-The evolution update (step 11) and the notes update (step 13) are two separate DB round trips to update the same Pokemon record. These should be combined into a single `prisma.pokemon.update()` call. This eliminates an extra DB round trip and avoids the narrow window where the Pokemon has been evolved but the notes haven't been updated yet.
+Two new REST API endpoints were added (`POST /api/encounters/:id/recall`, `POST /api/encounters/:id/release`) and two new WebSocket events (`pokemon_recalled`, `pokemon_released`). The Switching system description also needs to mention the new composable methods (`executeRecall`, `executeRelease`) and store actions (`recallPokemon`, `releasePokemon`). None of these appear in app-surface.md.
 
-Additionally, the stone consumption (step 12) and the Pokemon update (step 11) are not wrapped in a transaction. If stone consumption fails (item not found), the evolution has already been committed but the error is thrown, which creates a confusing UX: the Pokemon is evolved but the user sees an error.
+This file is the primary reference for all skill agents discovering the application surface. Missing entries cause downstream skills (planner, developer, reviewer, auditor) to miss these capabilities, leading to incorrect plans and incomplete reviews.
 
-**Fix required:** Combine the notes update into step 11's `prisma.pokemon.update()` call. Also wrap steps 11 + 12 in a `prisma.$transaction()` so that if stone consumption fails, the evolution is rolled back.
+**Fix:** Add the two new endpoints to the Encounters API list, add the two new WS events to the broadcast events section, and update the Switching system description to include `executeRecall`, `executeRelease`, `recallPokemon`, `releasePokemon`, `findAdjacentPosition`, `checkRecallReleasePair`, `hasInitiativeAlreadyPassed`.
 
-**H2: Stone consumption not reversed on evolution undo**
+#### HIGH-002: No turn validation on recall/release endpoints -- design gap needs documentation
 
-File: `app/server/api/pokemon/[id]/evolution-undo.post.ts`
+**Files:** `app/server/api/encounters/[id]/recall.post.ts`, `app/server/api/encounters/[id]/release.post.ts`
 
-When the GM undoes an evolution that consumed a stone from the trainer's inventory, the stone is NOT restored to the trainer's inventory. The `heldItem` on the Pokemon IS restored (via snapshot), but the stone consumed from the HumanCharacter inventory is permanently lost.
+Neither the recall nor release endpoint validates whose turn it is. The full switch endpoint (switch.post.ts) validates that it must be the trainer's or their Pokemon's turn (via `validateActionAvailability`). The standalone recall/release endpoints only check that the trainer's Shift/Standard action is available, but not whether it is actually the trainer's or their Pokemon's turn.
 
-The design spec (section 3.3) says undo "restores the Pokemon to its pre-evolution state" and the acceptance criteria says "Undo restores all pre-evolution state (species, stats, abilities, moves, capabilities, skills)." Inventory is arguably outside "Pokemon state" since it belongs to the trainer, but from a UX perspective, an undo that doesn't restore the consumed stone is surprising and frustrating.
+PTU p.229 states: "A Trainer may recall a Pokemon to its Poke Ball or release a Pokemon from its Poke Ball as a Standard Action on either the Trainer's or the Pokemon's Initiative." This implies the trainer or their Pokemon must be the active combatant.
 
-**Fix required:** Either:
-- (A) Track consumed item details in the snapshot so the undo endpoint can restore the stone to the trainer's inventory, OR
-- (B) Display a warning in the undo confirmation dialog: "Note: consumed items (stones) will not be restored. Undo anyway?"
+The spec (Section L) lists validation steps that do NOT include a turn check, so the developer followed the spec. However, without turn validation, a GM could (via API) recall/release Pokemon during another trainer's turn. While the GM has broad authority, this is inconsistent with the full switch endpoint's behavior, and it means the action cost (marking shift/standard as used) applies to a turn that may not be this trainer's.
 
-Option (A) is preferred for correctness. Option (B) is acceptable as a minimum.
-
-**H3: No GM override UI for missing stone in inventory**
-
-File: `app/components/pokemon/EvolutionConfirmModal.vue` line 377
-
-The design spec (section 1.1, step 5) explicitly requires: "If trainer does not have it, show warning but allow GM override ('Use stone anyway?')". The modal always sends `skipInventoryCheck: false`. If the stone is not in the trainer's inventory, `consumeStoneFromInventory()` throws, and the evolution fails with an error.
-
-The GM has no path to override this. The `skipInventoryCheck` field exists in the API contract but is inaccessible from the UI.
-
-**Fix required:** Before sending the evolve request with `consumeItem`, check whether the stone exists in the trainer's inventory. If it does not, show a confirmation dialog: "Water Stone not found in inventory. Evolve anyway?" If confirmed, send `skipInventoryCheck: true`.
+**Fix:** Add turn validation matching the full switch endpoint pattern: the current combatant must be the trainer or one of their Pokemon. Alternatively, if this omission is intentional (GM-only action that bypasses turn order), add a code comment documenting the design decision.
 
 ### MEDIUM
 
-**M1: `app-surface.md` not updated for P2 additions**
+#### MEDIUM-001: `encounter.ts` store exceeds 800-line limit (970 lines)
 
-File: `.claude/skills/references/app-surface.md`
+**File:** `app/stores/encounter.ts`
 
-P2 added a new endpoint (`POST /api/pokemon/:id/evolution-undo`), a new composable (`useEvolutionUndo`), and new fields on the evolve/evolution-check endpoints (`consumeItem`, `consumeHeldItem`, `preventedByItem`, `requiredGender`, `requiredMove`, `undoSnapshot`). None of these are reflected in `app-surface.md`.
+The encounter store is now at 970 lines, exceeding the project's 800-line maximum. It was already at 907 lines before P2 (pre-existing debt), and P2 added 63 lines for `recallPokemon` and `releasePokemon` store actions.
 
-The P1 review (code-review-237/M3) already flagged this pattern and it was fixed for P1 in commit 3e0b77e. The same update is needed for P2.
+This is not a P2 regression -- the file was already over the limit. However, each addition compounds the problem. The store mixes encounter CRUD, combat actions, undo/redo, serve/unserve, weather, AoO, wild spawn, significance, and now switching. It has at least 5 distinct responsibility clusters that could be extracted.
 
-**Fix required:** Update `app-surface.md` with the new endpoint, composable, and field additions from P2.
+**Fix:** File a refactoring ticket to extract the encounter store into focused sub-modules (e.g., `useCombatActions`, `useEncounterCrud`, `useUndoRedo`). Do not block P2 on this, but the ticket must exist.
 
-**M2: Undo button has no undo-window expiry**
+#### MEDIUM-002: Recall/release endpoints duplicate recall side-effect logic from `switch.post.ts`
 
-File: `app/composables/useEvolutionUndo.ts`
+**Files:** `app/server/api/encounters/[id]/recall.post.ts` (lines 167-182), `app/server/api/encounters/[id]/switch.post.ts` (lines 224-239)
 
-The design spec (section 3.3) says the undo should be "Only valid within a reasonable window (e.g., same session, before the next combat action)." The current implementation stores the snapshot in `useState` (survives navigation but not page refresh) but has no expiry mechanism. The undo button remains available indefinitely within the same session.
+The recall side-effect code (fetch DB record, filter conditions via `RECALL_CLEARED_CONDITIONS`, clear temp HP, reset stage modifiers) is duplicated verbatim between `recall.post.ts` and `switch.post.ts`. This is 15 lines of identical logic that includes DB queries and JSON parsing.
 
-This isn't broken -- it's actually more permissive than the spec -- but it could lead to confusing behavior if the GM undoes an evolution much later, after the Pokemon has participated in combat or had other changes applied. The undo would revert ALL stats/moves/abilities to the pre-evolution snapshot, discarding any post-evolution modifications.
+This violates DRY and creates a maintenance risk: if recall side-effects change (e.g., decree-038 decoupling condition behaviors), both files must be updated independently. The switching service already centralizes other logic (range checks, turn order insertion, etc.), so extracting `applyRecallSideEffects(entityId: string)` to the service layer is a natural fit.
 
-**Recommendation:** File a ticket. Add a timestamp to each snapshot entry and either auto-clear after N minutes or warn the GM if the snapshot is stale. Alternatively, clear the snapshot when the Pokemon enters an encounter (the endpoint already rejects undo for Pokemon in active encounters, but the button would still show).
+**Fix:** Extract a `applyRecallSideEffects(entityId: string): Promise<void>` function to `switching.service.ts` and call it from both endpoints.
 
-**M3: `alert()` used for prevention item messaging instead of proper UI notification**
+#### MEDIUM-003: Release endpoint fallback placement returns trainer position on grid full
 
-Files: `app/pages/gm/pokemon/[id].vue` line 406, `app/components/encounter/XpDistributionResults.vue` line 237
+**File:** `app/server/services/switching.service.ts` (line 712)
 
-Both the Pokemon sheet page and XpDistributionResults use `alert()` to display the Everstone/Eviolite prevention message. This is inconsistent with the design spec's requirement for "clear user message" in the evolution check UI. The evolution check response already includes `preventedByItem` -- this could be displayed inline in the UI rather than via a browser alert.
+`findAdjacentPosition` falls back to the trainer's own position when no free cell is found within radius 5. This places the released Pokemon token directly on top of the trainer token, creating overlapping tokens on the VTT grid. The VTT grid uses token positions for click targeting, measurement, and pathfinding -- overlapping tokens will cause incorrect interactions.
 
-The P1 reviews accepted `alert()` usage elsewhere (it's common in this codebase), so this is not blocking, but it should be a ticket for UX improvement.
+The design spec mentions `findPlacementPosition` as a fallback (line 212 of spec), but the implementation uses a static trainer-position fallback instead.
 
-**Recommendation:** File a ticket for replacing alert() calls with inline UI feedback for evolution prevention.
-
-## Game Logic Review
-
-### Mechanics Verified (Correct)
-
-1. **Everstone prevention (PTU p.291):** Correctly blocks ALL evolution paths when held. Case-insensitive matching. Returns `preventedByItem` field with clear reason message. Per decree-035, this is checked before any trigger evaluation.
-
-2. **Eviolite prevention (PTU p.291):** Same prevention mechanic as Everstone, correctly implemented identically. The stat bonus aspect is correctly deferred as out-of-scope per spec section 2.3.
-
-3. **Stone consumption from trainer inventory:** Correctly decrements quantity and removes entry when quantity reaches 0. Immutable inventory transformation (`.map().filter()` pattern). Case-insensitive item matching.
-
-4. **Held item consumption:** Correctly clears `heldItem` when `itemMustBeHeld` is true and `consumeHeldItem !== false`. Default behavior (consume) matches spec section 1.2.
-
-5. **Gender-specific evolution triggers:** Correctly checks Pokemon's gender against `requiredGender` field. Case-insensitive comparison. Gender extracted from seed data patterns like "Minimum 20 Female", "Dawn Stone Male Minimum 30". Tested against actual pokedex entries: Combee->Vespiquen (Female), Burmy->Wormadam (Female)/Mothim (Male), Ralts->Gallade (Male + Dawn Stone).
-
-6. **Move-specific evolution triggers:** Correctly checks Pokemon's current moves against `requiredMove` field. Case-insensitive comparison. Seed parser handles "Learn <MoveName>" and "Minimum Learn <MoveName>" (Bonsly/Sudowoodo edge case) patterns.
-
-7. **Evolution history logging:** Correctly prepends `[Evolved from X at Level Y on Z]` to Pokemon notes. Date format is ISO (YYYY-MM-DD). Existing notes are preserved below.
-
-8. **Post-evolution undo snapshot:** Captures all stat, type, ability, move, capability, skill, and held item fields. The snapshot is complete for Pokemon state restoration.
-
-9. **Undo active encounter guard:** Correctly rejects undo for Pokemon in active encounters (same guard pattern as the evolve endpoint).
-
-10. **decree-035 compliance:** Base Relations ordering uses nature-adjusted base stats. P2 did not modify this logic (P0 implementation).
-
-11. **decree-036 compliance:** Stone evolution move learning uses `entry.level <= currentLevel`. P2 did not modify this logic (P1 implementation).
-
-### Seed Parser Verification
-
-The parser correctly handles these real pokedex patterns:
-- `"Minimum 20 Female"` -> `{ minimumLevel: 20, requiredGender: 'Female' }`
-- `"Minimum 20 Male"` -> `{ minimumLevel: 20, requiredGender: 'Male' }`
-- `"Dawn Stone Male Minimum 30"` -> `{ requiredItem: 'Dawn Stone', minimumLevel: 30, requiredGender: 'Male' }`
-- `"Learn Double Hit"` -> `{ requiredMove: 'Double Hit', minimumLevel: null }`
-- `"Learn Ancient Power"` -> `{ requiredMove: 'Ancient Power', minimumLevel: null }`
-- `"Minimum Learn Mimic"` -> `{ requiredMove: 'Mimic', minimumLevel: null }` (Bonsly edge case handled)
-
-Gender is extracted first and consumed from the remaining text before item/level parsing. The approach is correct and handles the ordering ambiguity well.
+**Fix:** Either use the existing `findPlacementPosition` function (from grid-placement.service.ts) as the fallback, or throw a validation error informing the GM that no valid placement position exists. Overlapping tokens should never be the silent default.
 
 ## What Looks Good
 
-1. **Immutability discipline in useEvolutionUndo:** Every mutation creates a new `Map` instance. The composable follows project immutability patterns perfectly.
+**Section K (Immediate-Act):** The `hasInitiativeAlreadyPassed` function is clean and simple. The immediate-act insertion at `currentTurnIndex + 1` correctly models the PTU rule. The exclusion conditions (not for fainted switches, not for League battles) are correctly applied. The `canActImmediately` flag is properly surfaced in the switch response for client display.
 
-2. **Clean separation of concerns:** Prevention check is in the shared utility (client-side), gender/move validation is duplicated in the service (server-side) as a defense-in-depth pattern, and item consumption is a separate service function.
+**Section N (Pair Detection):** `checkRecallReleasePair` is a clean pure function with clear logic. The bidirectional pair detection (checking after both recall and release) correctly handles either ordering. The same-Pokemon-in-same-round validation is correctly applied in both endpoints. The League restriction application on detected pairs is correct.
 
-3. **Seed parser refactoring:** The trigger text parser was cleanly refactored to extract gender and move requirements as first-class concerns, with the remaining text flowing into the existing item/level patterns. The edge case handling for "Minimum Learn Mimic" shows attention to real data.
+**Section M (Player Switch Request):** The enhancement to `requestSwitchPokemon` adding the recall combatant ID and release name is minimal and well-integrated. The `handleRequestSwitch` in `PlayerCombatActions.vue` correctly identifies the active Pokemon combatant to recall. Using `targetIds` for the recall combatant follows the existing `PlayerActionRequest` structure without adding new fields.
 
-4. **P2 props properly threaded:** `ownerId` is correctly passed through the component chain (XpDistributionResults -> EvolutionConfirmModal) for stone consumption context.
+**Service layer organization:** The new utility functions (`hasInitiativeAlreadyPassed`, `findAdjacentPosition`, `checkRecallReleasePair`, `canFitAt`) are properly colocated in `switching.service.ts`. The file is at 775 lines (under 800), well-documented with JSDoc and PTU rule citations. Pure function design enables testing.
 
-5. **WebSocket broadcast on undo:** The undo endpoint correctly broadcasts a `pokemon_evolved` event with `undone: true` so Group View clients can update.
+**Type safety:** The `SwitchAction` interface was correctly extended in P1 to support `recall_only` and `release_only` action types, and P2 uses these types correctly. Nullable fields (`recalledCombatantId: null` for release-only, `releasedCombatantId: null` for recall-only) are consistently applied.
 
-6. **Commit granularity:** 8 feature commits + 1 docs commit is appropriate for the P2 scope. Each commit is focused and builds logically.
+**Composable layer:** `useSwitching.ts` follows the established pattern (loading state, error handling, delegation to store). The new `executeRecall` and `executeRelease` methods are symmetrical and clean.
 
-7. **File sizes:** All files remain well under the 800-line limit. `evolution.service.ts` at 638 lines is the largest and still reasonable.
+**Commit granularity:** 7 commits for 7 distinct pieces of functionality. Each commit produces a compilable state. The ordering follows the spec's recommended implementation order (K -> L -> N -> M).
 
 ## Verdict
 
 **CHANGES_REQUIRED**
 
-One critical data correctness bug (C1: undo doesn't revert evolution notes) and three high-severity issues (H1: non-atomic multi-step DB writes, H2: stone not restored on undo, H3: no GM override UI for missing stone) must be fixed before approval.
+CRITICAL-001 (missing WebSocket handlers) is a real-time sync breakage that will cause stale state on Group View and Player View. This must be fixed before merge.
+
+HIGH-001 (app-surface) and HIGH-002 (turn validation) should be addressed now -- the developer is already in these files and both are straightforward fixes.
+
+MEDIUM-001 (encounter store size) predates P2 and should be addressed via a new refactoring ticket, not by blocking this PR.
 
 ## Required Changes
 
-| ID | Severity | File(s) | Description |
-|----|----------|---------|-------------|
-| C1 | CRITICAL | `evolution.service.ts`, `evolution-undo.post.ts` | Add `notes` to `PokemonSnapshot` and restore it on undo |
-| H1 | HIGH | `evolution.service.ts` | Combine notes update into main Pokemon update; wrap evolution + stone consumption in `prisma.$transaction()` |
-| H2 | HIGH | `evolution-undo.post.ts` | Either restore consumed stone on undo, or warn user that items will not be restored |
-| H3 | HIGH | `EvolutionConfirmModal.vue` | Add GM override dialog when stone is not in trainer's inventory |
-| M1 | MEDIUM | `.claude/skills/references/app-surface.md` | Update with P2 endpoint, composable, and field additions |
-| M2 | MEDIUM | -- | File ticket: add undo-window expiry or staleness warning to `useEvolutionUndo` |
-| M3 | MEDIUM | -- | File ticket: replace `alert()` with inline UI for evolution prevention messages |
+1. **CRITICAL-001:** Add `pokemon_recalled` and `pokemon_released` handlers to `useWebSocket.ts` (2 new case statements mirroring the existing `pokemon_switched` handler).
+
+2. **HIGH-001:** Update `app-surface.md` with the two new endpoints, two new WS events, and expanded switching system description.
+
+3. **HIGH-002:** Either add turn validation to recall/release endpoints (checking `turnOrder[currentTurnIndex]` is the trainer or their Pokemon), OR add explicit code comments documenting why turn validation is intentionally omitted (e.g., "GM-initiated action that can happen at any time").
+
+4. **MEDIUM-002:** Extract `applyRecallSideEffects(entityId)` to `switching.service.ts` and call from both `recall.post.ts` and `switch.post.ts`.
+
+5. **MEDIUM-003:** Replace the trainer-position fallback in `findAdjacentPosition` with either `findPlacementPosition` or a validation error.
+
+6. **MEDIUM-001:** File a refactoring ticket for encounter store decomposition (do not block merge on this).
