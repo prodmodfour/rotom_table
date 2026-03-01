@@ -102,3 +102,26 @@ Reviews: code-review-225 (CHANGES_REQUIRED: 1C/2H/3M), rules-review-201 (CHANGES
 - `app/components/encounter/XpDistributionModal.vue` — Use encounterXpStore
 - `app/components/encounter/SignificancePanel.vue` — Use encounterXpStore
 - `app/tests/unit/utils/injuryMechanics.test.ts` — Fix misleading test name
+
+### Fix Cycle 3: Branch slave/1-dev-feature-012-fix-20260228-233710
+
+Reviews: code-review-228 (CHANGES_REQUIRED: 0C/0H/2M), rules-review-204 (CHANGES_REQUIRED: 0C/1H/0M)
+
+| Commit | Issue | Description |
+|--------|-------|-------------|
+| da39521 | H1-NEW (HIGH) | Use faintedFromAnySource in isDefeated check for XP tracking in damage.post.ts |
+| b9137fe | M1-NEW (MEDIUM) | Extract entity builders to entity-builder.service.ts (809→685 lines) |
+| 2d98cf9 | M2-NEW (MEDIUM) | Add encounterXp store and entity-builder service to app-surface.md |
+
+### Fix Cycle 3 Files Changed
+
+**New files:**
+- `app/server/services/entity-builder.service.ts` — Entity builders extracted from combatant.service.ts
+
+**Modified files:**
+- `app/server/api/encounters/[id]/damage.post.ts` — Use faintedFromAnySource in isDefeated
+- `app/server/services/combatant.service.ts` — Remove entity builders (809→685 lines)
+- `app/server/api/encounters/[id]/combatants.post.ts` — Update entity builder imports
+- `app/server/api/encounters/from-scene.post.ts` — Update entity builder imports
+- `app/server/api/encounters/[id]/switch.post.ts` — Update entity builder imports
+- `.claude/skills/references/app-surface.md` — Add encounterXp store and entity-builder service
