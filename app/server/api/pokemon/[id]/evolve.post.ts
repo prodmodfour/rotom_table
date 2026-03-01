@@ -10,7 +10,9 @@
  *   statPoints: { hp, attack, defense, specialAttack, specialDefense, speed },
  *   skipBaseRelations?: boolean,  // GM override
  *   abilities?: Array<{ name: string; effect: string }>,  // GM-resolved ability selection
- *   moves?: Array<MoveDetail>  // Final move list after learning/replacing (max 6)
+ *   moves?: Array<MoveDetail>,  // Final move list after learning/replacing (max 6)
+ *   consumeItem?: { ownerId, itemName, skipInventoryCheck? },  // P2: stone consumption
+ *   consumeHeldItem?: boolean  // P2: consume held item (default true for held-item triggers)
  * }
  *
  * Validation:
@@ -129,6 +131,39 @@ export default defineEventHandler(async (event) => {
     moves = body.moves
   }
 
+  // Validate optional consumeItem
+  let consumeItem: { ownerId: string; itemName: string; skipInventoryCheck?: boolean } | undefined
+  if (body.consumeItem !== undefined) {
+    if (typeof body.consumeItem !== 'object' || !body.consumeItem) {
+      throw createError({
+        statusCode: 400,
+        message: 'consumeItem must be an object'
+      })
+    }
+    if (!body.consumeItem.ownerId || typeof body.consumeItem.ownerId !== 'string') {
+      throw createError({
+        statusCode: 400,
+        message: 'consumeItem.ownerId is required'
+      })
+    }
+    if (!body.consumeItem.itemName || typeof body.consumeItem.itemName !== 'string') {
+      throw createError({
+        statusCode: 400,
+        message: 'consumeItem.itemName is required'
+      })
+    }
+    consumeItem = {
+      ownerId: body.consumeItem.ownerId,
+      itemName: body.consumeItem.itemName,
+      skipInventoryCheck: body.consumeItem.skipInventoryCheck === true
+    }
+  }
+
+  // Parse optional consumeHeldItem (boolean)
+  const consumeHeldItem = body.consumeHeldItem !== undefined
+    ? body.consumeHeldItem === true
+    : undefined
+
   try {
     // Guard: reject evolution if Pokemon is in an active encounter
     const activeEncounters = await prisma.encounter.findMany({
@@ -153,7 +188,9 @@ export default defineEventHandler(async (event) => {
       statPoints,
       skipBaseRelations: body.skipBaseRelations === true,
       abilities,
-      moves
+      moves,
+      consumeItem,
+      consumeHeldItem
     })
 
     // Broadcast evolution to all connected clients

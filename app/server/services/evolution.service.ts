@@ -60,6 +60,15 @@ export interface EvolutionResult {
   changes: EvolutionChanges
 }
 
+export interface ConsumeItemInput {
+  /** Trainer whose inventory to consume from */
+  ownerId: string
+  /** Item name to consume (e.g., "Water Stone") */
+  itemName: string
+  /** GM override: skip inventory check, allow evolution without the item */
+  skipInventoryCheck?: boolean
+}
+
 export interface PerformEvolutionInput {
   pokemonId: string
   targetSpecies: string
@@ -69,6 +78,10 @@ export interface PerformEvolutionInput {
   abilities?: Array<{ name: string; effect: string }>
   /** P1: Final move list after learning/replacing (if not provided, keep current moves) */
   moves?: Array<Record<string, unknown>>
+  /** P2: Stone consumption from trainer inventory */
+  consumeItem?: ConsumeItemInput
+  /** P2: Whether to consume the held item after evolution (default true for held-item triggers) */
+  consumeHeldItem?: boolean
 }
 
 // ============================================
@@ -288,6 +301,49 @@ export async function enrichAbilityEffects(
 }
 
 // ============================================
+// ITEM CONSUMPTION (P2)
+// ============================================
+
+interface InventoryItem {
+  name: string
+  quantity: number
+  [key: string]: unknown
+}
+
+/**
+ * Consume a stone (or other item) from a trainer's inventory.
+ * Decrements quantity by 1, removes entry if quantity reaches 0.
+ * Throws if the item is not found in inventory.
+ */
+export async function consumeStoneFromInventory(ownerId: string, itemName: string): Promise<void> {
+  const trainer = await prisma.humanCharacter.findUnique({
+    where: { id: ownerId },
+    select: { inventory: true }
+  })
+  if (!trainer) {
+    throw new Error(`Trainer not found: ${ownerId}`)
+  }
+
+  const inventory: InventoryItem[] = JSON.parse(trainer.inventory || '[]')
+  const itemIndex = inventory.findIndex(
+    item => item.name.toLowerCase() === itemName.toLowerCase()
+  )
+  if (itemIndex === -1) {
+    throw new Error(`${itemName} not found in trainer's inventory`)
+  }
+
+  const newInventory = inventory.map((item, idx) => {
+    if (idx !== itemIndex) return item
+    return { ...item, quantity: item.quantity - 1 }
+  }).filter(item => item.quantity > 0)
+
+  await prisma.humanCharacter.update({
+    where: { id: ownerId },
+    data: { inventory: JSON.stringify(newInventory) }
+  })
+}
+
+// ============================================
 // EVOLUTION EXECUTION
 // ============================================
 
@@ -431,7 +487,12 @@ export async function performEvolution(input: PerformEvolutionInput): Promise<Ev
   const newSkills: Record<string, string> = JSON.parse(targetSpeciesData.skills || '{}')
   const newSize = targetSpeciesData.size || 'Medium'
 
-  // 10. Write the update
+  // 10. Determine whether to consume held item
+  // Default: consume held item for held-item triggers unless explicitly overridden
+  const shouldConsumeHeldItem = trigger.itemMustBeHeld && trigger.requiredItem !== null
+    && (input.consumeHeldItem !== false)
+
+  // 11. Write the Pokemon update
   const updated = await prisma.pokemon.update({
     where: { id: pokemonId },
     data: {
@@ -455,9 +516,16 @@ export async function performEvolution(input: PerformEvolutionInput): Promise<Ev
       abilities: JSON.stringify(finalAbilities),
       moves: finalMoves,
       capabilities: JSON.stringify(newCapabilities),
-      skills: JSON.stringify(newSkills)
+      skills: JSON.stringify(newSkills),
+      // P2: Clear held item if consumed for held-item evolution
+      ...(shouldConsumeHeldItem ? { heldItem: null } : {})
     }
   })
+
+  // 12. Consume stone from trainer inventory (if requested)
+  if (input.consumeItem && !input.consumeItem.skipInventoryCheck) {
+    await consumeStoneFromInventory(input.consumeItem.ownerId, input.consumeItem.itemName)
+  }
 
   const changes: EvolutionChanges = {
     previousSpecies: pokemon.species,
