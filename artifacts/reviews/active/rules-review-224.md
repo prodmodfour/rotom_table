@@ -3,209 +3,142 @@ review_id: rules-review-224
 review_type: rules
 reviewer: game-logic-reviewer
 trigger: design-implementation
-target_report: feature-006
-domain: pokemon-lifecycle
+target_report: feature-011
+domain: combat
 commits_reviewed:
-  - e36f5b11
-  - 52878c55
-  - f82bc48f
-  - 1de3db6e
-  - 63633ee8
-  - 339a0d90
-  - 4d4651e1
-  - 35cb1af5
-  - 4353f7a2
+  - 93286305
+  - fe8fbf14
+  - cb167783
+  - ce09517a
+  - 9b68b2a3
+  - 5b2b4a89
+  - 5952f702
+  - 1a6a989b
 mechanics_verified:
-  - everstone-prevention
-  - eviolite-prevention
-  - stone-consumption
-  - held-item-consumption
-  - post-evolution-undo
-  - evolution-history-logging
-  - gender-specific-triggers
-  - move-specific-triggers
-  - seed-parser-learn-keyword
-  - seed-parser-gender-keyword
-verdict: CHANGES_REQUIRED
+  - immediate-act-logic
+  - recall-shift-action
+  - release-shift-action
+  - recall-release-pair-detection
+  - league-switch-restriction-from-pair
+  - same-pokemon-recall-release-block
+  - double-recall-standard-action
+  - double-release-standard-action
+  - player-switch-request
+  - recall-volatile-condition-clearing
+  - recall-range-check
+  - adjacent-placement
+verdict: APPROVED
 issues_found:
-  critical: 1
+  critical: 0
   high: 0
-  medium: 2
+  medium: 1
 ptu_refs:
-  - core/09-gear-and-items.md#Everstone
-  - core/09-gear-and-items.md#Eviolite
-  - core/05-pokemon.md#Evolution
-  - pokedexes/gen2/aipom.md#Evolution
-  - pokedexes/gen2/yanma.md#Evolution
-  - pokedexes/gen2/piloswine.md#Evolution
-  - pokedexes/gen1/lickitung.md#Evolution
-  - pokedexes/gen1/tangela.md#Evolution
-  - pokedexes/gen4/bonsly.md#Evolution
-  - pokedexes/gen4/mime-jr.md#Evolution
-  - pokedexes/gen7/steenee.md#Evolution
-  - pokedexes/gen4/combee.md#Evolution
-  - pokedexes/gen4/burmy.md#Evolution
-  - pokedexes/gen3/kirlia.md#Evolution
-reviewed_at: 2026-03-01T20:30:00Z
-follows_up: rules-review-219
+  - core/07-combat.md#Pokemon-Switching (p.229-230)
+  - core/07-combat.md#Trapped (p.247, line 1728)
+reviewed_at: 2026-03-01T17:30:00Z
+follows_up: rules-review-212
 ---
+
+## Decrees Checked
+
+- **decree-034** (Roar/Whirlwind): Roar uses its own 6m recall range; Whirlwind is a push, not a forced switch. Implementation respects this -- forced switch validation uses the same `checkRecallRange` which applies the 8m Poke Ball range for generic forced switches. Roar-specific 6m range is not yet implemented (future scope), but the design correctly notes this. Per decree-034, Whirlwind is NOT treated as a forced switch. No violations.
+
+- **decree-038** (Sleep/Asleep condition behavior decoupling): Recall endpoints use `RECALL_CLEARED_CONDITIONS` which is now derived from per-condition `clearsOnRecall` flags. Sleep/Bad Sleep have `clearsOnRecall: false`, so they correctly persist through recall. Per decree-038, this is correct. No violations.
 
 ## Mechanics Verified
 
-### 1. Everstone Prevention
-- **Rule:** "Evolution is prevented for the holder. Cannot be used by Trainers." (`core/09-gear-and-items.md`, line 1877-1878)
-- **Implementation:** `checkEvolutionEligibility()` in `app/utils/evolutionCheck.ts` lines 68-83 checks if `heldItem` matches "Everstone" (case-insensitive). When matched, returns all triggers as ineligible with reason string, plus `preventedByItem: 'Everstone'`. UI surfaces the prevention via an alert in both `gm/pokemon/[id].vue` and `XpDistributionResults.vue`.
+### Section K: Released Pokemon Immediate-Act Logic
+
+- **Rule:** "If a player has a Pokemon turn available, a Pokemon may act during the round it was released. If the Pokemon's Initiative Count has already passed, then this means they may act immediately." (`core/07-combat.md#Pokemon-Switching`, p.229, lines 258-261)
+- **Implementation:** `hasInitiativeAlreadyPassed()` in `switching.service.ts` (line 130-136) compares new combatant's initiative to current combatant's initiative. If higher (already passed), returns true. `insertIntoFullContactTurnOrder()` (line 192-230) inserts the new combatant as next-to-act when `canActImmediately` is true.
+- **Full Contact behavior:** `switch.post.ts` (line 270-276) correctly sets `canActImmediately = isFullContact && !isFaintedSwitch && hasInitiativeAlreadyPassed(...)`. In Full Contact, released Pokemon whose initiative already passed are inserted as next-to-act.
+- **League Battle behavior:** In League Battles, `insertIntoLeagueTurnOrder()` is called (line 170-175), which inserts into `pokemonTurnOrder` and conditionally into the current turn order during pokemon phase. The `canActImmediately` parameter is not passed to League insertion, which is correct -- League uses phase-based ordering, not immediate-act.
+- **Release endpoint:** `release.post.ts` (line 202-208) applies the same immediate-act logic for standalone releases.
 - **Status:** CORRECT
 
-### 2. Eviolite Prevention
-- **Rule:** "Only affects not-fully-evolved Pokemon of a single family... Prevents Pokemon from evolving when held. Cannot be used by Trainers." (`core/09-gear-and-items.md`, lines 1880-1884)
-- **Implementation:** Same prevention check as Everstone. The `preventionItems` array includes both `'Everstone'` and `'Eviolite'`. The Eviolite stat bonus mechanics (+5 to two stats) are correctly documented as out of scope for the evolution feature (spec section 2.3). Only the prevention check matters here.
+### Section L: Recall as Separate Shift Action
+
+- **Rule:** "Recall and Release actions can also be taken individually by a Trainer as Shift Actions." and "A Trainer may also spend a Standard Action to Recall two Pokemon or Release two Pokemon at once." (`core/07-combat.md#Pokemon-Switching`, p.229, lines 250-257)
+- **Implementation:** `recall.post.ts` validates array length 1-2. Length 1 requires Shift Action (line 126), length 2 requires Standard Action (line 129-131). Action cost is correctly applied via `markActionUsed(updatedTrainer, actionType)` (line 199-202).
+- **Recall side-effects:** Volatile conditions cleared via `RECALL_CLEARED_CONDITIONS` (line 172-173), temp HP zeroed, combat stages reset (line 174-181). Per decree-038, Sleep/Bad Sleep correctly persist (they have `clearsOnRecall: false`).
+- **Trapped check:** Pokemon with Trapped or Bound conditions cannot be recalled (line 94-100). Trapped is per PTU p.247: "A Pokemon or Trainer that is Trapped cannot be recalled." Bound is non-PTU but was already flagged in P0 review (refactoring-105).
+- **Range check:** 8m range validated per PTU p.229 (line 103-109), with League Battle exemption.
 - **Status:** CORRECT
 
-### 3. Stone Consumption from Trainer Inventory
-- **Rule:** PTU does not specify explicit inventory mechanics for stone consumption -- this is an app-level design decision. The spec defines the flow: consume stone from trainer inventory with GM override option.
-- **Implementation:** `consumeStoneFromInventory()` in `app/server/services/evolution.service.ts` lines 346-372. Fetches trainer's inventory JSON, finds item by case-insensitive name match, decrements quantity (removes entry if quantity reaches 0), saves updated inventory. Called from `performEvolution()` at line 596 only when `consumeItem` is provided AND `skipInventoryCheck` is false. The `EvolutionConfirmModal.vue` sends `consumeItem` with the owner ID and item name when the trigger is stone-based and not held-item based (lines 373-379).
+### Section L: Release as Separate Shift Action
+
+- **Rule:** Same as above -- "Recall and Release actions can also be taken individually by a Trainer as Shift Actions." (`core/07-combat.md#Pokemon-Switching`, p.229, lines 250-257)
+- **Implementation:** `release.post.ts` validates array length 1-2. Length 1 requires Shift Action (line 131), length 2 requires Standard Action (line 134-136). Action cost correctly applied (line 246-249).
+- **Fainted check:** Cannot release fainted Pokemon (line 122-124). PTU doesn't explicitly state this but it's implied -- you can't send a fainted Pokemon to battle.
+- **Already-in-encounter check:** Pokemon already in encounter cannot be released again (line 116-119). Correct.
+- **Adjacent placement:** `findAdjacentPosition()` (switching.service.ts line 672-713) places released Pokemon adjacent to trainer when no explicit position given. Checks 8 surrounding cells, expands to radius 5. Reasonable implementation.
+- **Immediate-act applied:** Release endpoint correctly applies Section K immediate-act logic (line 202-208) for Full Contact battles.
 - **Status:** CORRECT
 
-### 4. Held Item Consumption
-- **Rule:** Held items used as evolution triggers are consumed by default per design spec section 1.2. No explicit PTU rule; this is an app design decision.
-- **Implementation:** `performEvolution()` in `evolution.service.ts` lines 561-563 computes `shouldConsumeHeldItem`: true when `trigger.itemMustBeHeld && trigger.requiredItem !== null && input.consumeHeldItem !== false`. The Pokemon update at line 591 conditionally clears `heldItem` via spread. The modal sends `consumeHeldItem: true` for held-item evolutions (line 381).
+### Section N: Recall+Release Pair = Switch Detection
+
+- **Rule:** "Recalling and then Releasing by using two Shift Actions in one Round still counts as a Switch, even if they are declared as separate actions, and you may not do this to Recall and then Release the same Pokemon in one round." (`core/07-combat.md#Pokemon-Switching`, p.229, lines 251-255)
+- **Implementation:** `checkRecallReleasePair()` in `switching.service.ts` (line 751-775) filters switch actions for the trainer's round, checks if both recall and release entity IDs exist. Returns `countsAsSwitch: true` when both are present.
+- **Same-Pokemon block (release side):** `release.post.ts` (line 89-97) checks `pairCheckBefore.recalledEntityIds` against the Pokemon being released. Blocks releasing a Pokemon that was recalled this round.
+- **Same-Pokemon block (recall side):** `recall.post.ts` (line 112-122) checks `pairCheck.releasedEntityIds` against the Pokemon being recalled. Blocks recalling a Pokemon that was released this round.
+- **League restriction on pair:** Both `release.post.ts` (line 255-269) and `recall.post.ts` (line 207-218) apply League switch restriction (`canBeCommanded = false`) when a recall+release pair is detected. This correctly implements the PTU rule that a pair counts as a Switch, which triggers League restrictions.
 - **Status:** CORRECT
 
-### 5. Post-Evolution Undo (Snapshot + Endpoint + Composable)
-- **Rule:** PTU p.202: "You may choose not to Evolve your Pokemon if you wish." The design extends this with post-evolution undo for GM convenience.
-- **Implementation:** Three-part system:
-  1. **Snapshot capture:** `performEvolution()` captures `PokemonSnapshot` (lines 438-462) BEFORE any changes are applied. The snapshot includes species, types, all stats, maxHp, currentHp, spriteUrl, abilities, moves, capabilities, skills, and heldItem. Returned in the `EvolutionResult`.
-  2. **Undo endpoint:** `POST /api/pokemon/:id/evolution-undo` validates the snapshot, checks the Pokemon is not in an active encounter, restores all snapshot fields via `prisma.pokemon.update()`, and broadcasts a `pokemon_evolved` event with `undone: true`.
-  3. **Composable:** `useEvolutionUndo()` stores snapshots in a `useState` Map keyed by Pokemon ID. Immutable state updates (new Map on every change). `canUndo()`, `undoEvolution()`, `clearUndo()`, `clearAll()` methods. UI wired in `gm/pokemon/[id].vue` with a conditional "Undo Evolution" button.
-- **Status:** CORRECT (with MEDIUM note about `notes` field -- see issue M1 below)
+### Section M: Player View Switch Request
 
-### 6. Evolution History Logging
-- **Rule:** Design spec section 4.2: "After evolution, prepend to the Pokemon's notes: `[Evolved from <OldSpecies> at Level <N> on <Date>]`"
-- **Implementation:** `performEvolution()` lines 600-611. Constructs the note string with ISO date, prepends to existing notes (or sets as sole note), writes via a second `prisma.pokemon.update()` call.
-- **Status:** CORRECT. The format matches the spec. The note is prepended (newest first), which is the right ordering for a log.
+- **Rule:** Not a PTU mechanic per se -- this is an application-level feature for player-GM communication. The switch_pokemon action type already existed in `PlayerActionType`.
+- **Implementation:** `usePlayerCombat.ts` (line 317-330) sends a `player_action` WebSocket message with `action: 'switch_pokemon'`, including `pokemonId` (release entity ID), `pokemonName` (release name), and `targetIds` (recall combatant ID). GM receives and can approve/reject.
+- **Status:** CORRECT (application feature, no PTU mechanic to verify)
 
-### 7. Gender-Specific Triggers
-- **Rule:** PTU pokedex entries encode gender requirements directly:
-  - Combee: `2 - Vespiquen Minimum 20 Female` (`pokedexes/gen4/combee.md`)
-  - Burmy: `2 - Wormadam Minimum 20 Female` / `2 - Mothim Minimum 20 Male` (`pokedexes/gen4/burmy.md`)
-  - Kirlia: `3 - Gallade Dawn Stone Male Minimum 30` (`pokedexes/gen3/kirlia.md`)
-- **Implementation:**
-  1. **Type:** `EvolutionTrigger.requiredGender?: 'Male' | 'Female' | null` in `app/types/species.ts`
-  2. **Seed parser:** `parseEvolutionTriggerText()` extracts gender via `/\b(Male|Female)\b/i` regex, removes from remaining text before further parsing.
-  3. **Eligibility check:** `checkEvolutionEligibility()` lines 100-106 compares Pokemon's gender against trigger's `requiredGender` (case-insensitive).
-  4. **Service validation:** `performEvolution()` lines 422-427 throws error if gender mismatch.
-  5. **Response:** `evolution-check.post.ts` line 207 exposes `requiredGender` in available evolution data.
-- **Seed parser trace for Combee ("Vespiquen Minimum 20 Female"):**
-  - `parseEvoLineSpeciesAndTrigger("Vespiquen Minimum 20 Female")` -- "Minimum" keyword found, returns `{ speciesName: "Vespiquen", triggerText: "Minimum 20 Female" }`
-  - `parseEvolutionTriggerText("Minimum 20 Female", ...)` -- extracts gender "Female", remaining = "Minimum 20", matches level-only pattern, returns `{ minimumLevel: 20, requiredGender: 'Female' }`
-- **Seed parser trace for Kirlia -> Gallade ("Dawn Stone Male Minimum 30"):**
-  - "Dawn Stone" keyword found, returns `{ speciesName: "Gallade", triggerText: "Dawn Stone Male Minimum 30" }`
-  - Extracts gender "Male", remaining = "Dawn Stone Minimum 30", matches stone+level pattern.
-- **Status:** CORRECT. All three gender-specific evolution families parse correctly.
+### Recall Volatile Condition Clearing
 
-### 8. Move-Specific Triggers (Eligibility Check + Service Validation)
-- **Rule:** PTU pokedex entries encode move requirements with "Learn <MoveName>" pattern:
-  - Aipom: `2 - Ambipom Learn Double Hit` (`pokedexes/gen2/aipom.md`)
-  - Yanma: `2 - Yanmega Learn Ancient Power` (`pokedexes/gen2/yanma.md`)
-  - Piloswine: `3 - Mamoswine Learn Ancient Power` (`pokedexes/gen2/piloswine.md`)
-  - And 5 others (Lickitung, Tangela, Bonsly, Mime Jr., Steenee)
-- **Implementation (eligibility + service):**
-  1. **Type:** `EvolutionTrigger.requiredMove?: string | null` in `app/types/species.ts`
-  2. **Eligibility check:** `checkEvolutionEligibility()` lines 108-114 checks if `currentMoves` includes the required move name.
-  3. **Service validation:** `performEvolution()` lines 429-436 parses Pokemon's moves JSON and validates the move is known.
-  4. **Response:** `evolution-check.post.ts` line 208 exposes `requiredMove`.
-- **Logic for check and service is CORRECT** -- if the trigger data reaches the check/service correctly, it will enforce the move requirement properly.
-- **Status:** CORRECT (contingent on seed parser fix -- see CRITICAL issue C1 below)
+- **Rule:** "Volatile Afflictions are cured completely... by recalling" (`core/07-combat.md`, p.247-248). Also: Stuck, Slowed, Tripped, Vulnerable cleared on recall (p.247).
+- **Implementation:** Both `recall.post.ts` (line 170-182) and `switch.post.ts` (line 224-239) use `RECALL_CLEARED_CONDITIONS` to filter out conditions that should be cleared. Per decree-038, this array is derived from per-condition `clearsOnRecall` flags. Verified that `statusConditions.ts` correctly marks: Confused, Flinched, Infatuated, Cursed, Disabled, Enraged, Suppressed, Stuck, Slowed, Tripped, Vulnerable as `clearsOnRecall: true`. Sleep/Bad Sleep are `clearsOnRecall: false` per decree-038. Persistent conditions (Burned, Frozen, Paralyzed, Poisoned, Badly Poisoned) are `clearsOnRecall: false`.
+- **Status:** CORRECT
 
-### 9. Seed Parser: "Learn" Keyword Not in parseEvoLineSpeciesAndTrigger (CRITICAL)
-- **Rule:** PTU pokedex entries for move-based evolutions use the pattern `<SpeciesName> Learn <MoveName>`, e.g., "Ambipom Learn Double Hit".
-- **Implementation:** `parseEvoLineSpeciesAndTrigger()` in `app/prisma/seed.ts` lines 255-268 uses a regex of known trigger keywords to split species name from trigger text. The keyword list includes `Minimum`, `Holding`, and all stone names, but does NOT include `Learn`.
-- **Consequence:** For evolution lines like "Ambipom Learn Double Hit" where "Learn" is the only trigger keyword and no other keywords (Minimum, stone names) are present, the function returns `{ speciesName: "Ambipom Learn Double Hit", triggerText: "" }`. This corrupted species name will fail the DB lookup when trying to find "Ambipom Learn Double Hit" in SpeciesData -- meaning the evolution trigger is silently lost during seeding.
-- **Affected Pokemon (7 species, all missing "Minimum" in their Learn-based evo line):**
-  - Aipom -> Ambipom (Learn Double Hit)
-  - Yanma -> Yanmega (Learn Ancient Power)
-  - Piloswine -> Mamoswine (Learn Ancient Power)
-  - Lickitung -> Lickilicky (Learn Rollout)
-  - Tangela -> Tangrowth (Learn Ancient Power)
-  - Mime Jr. -> Mr. Mime (Learn Mimic)
-  - Steenee -> Tsareena (Learn Stomp)
-- **Unaffected (1 species, has "Minimum" keyword):**
-  - Bonsly -> Sudowoodo ("Minimum Learn Mimic" -- "Minimum" is found, correctly splits)
-- **Fix:** Add `Learn` to the `triggerKeywords` regex in `parseEvoLineSpeciesAndTrigger()`:
-  ```
-  /\b(Minimum|Holding|Learn|Water Stone|Fire Stone|...)\b/i
-  ```
-  Also add `Male` and `Female` for safety (currently works only because gender always co-occurs with Minimum/stone keywords, but adding them prevents fragility).
-- **Status:** INCORRECT -- CRITICAL severity (7 Pokemon species' evolution triggers silently fail to parse)
+### Double Recall/Release as Standard Action
 
-### 10. Seed Parser: Gender Keyword in parseEvoLineSpeciesAndTrigger
-- **Rule:** Gender keywords ("Male"/"Female") appear in evolution lines like "Vespiquen Minimum 20 Female".
-- **Implementation:** `parseEvoLineSpeciesAndTrigger()` does NOT include "Male"/"Female" in its trigger keyword list. However, all gender-specific evolutions in the PTU pokedex also include "Minimum" or a stone name, so the species/trigger split happens correctly via those keywords.
-- **Status:** CORRECT (currently works, but fragile -- see C1 fix recommendation to add Male/Female to keyword list for robustness)
+- **Rule:** "A Trainer may also spend a Standard Action to Recall two Pokemon or Release two Pokemon at once." (`core/07-combat.md#Pokemon-Switching`, p.229, lines 255-257)
+- **Implementation:** Both endpoints accept array length 1-2. Length 2 requires Standard Action. This correctly maps to PTU's "Standard Action for two."
+- **Status:** CORRECT
 
 ## Issues
 
-### C1: CRITICAL -- Seed parser `parseEvoLineSpeciesAndTrigger` missing "Learn" keyword
+### MEDIUM-001: Recall+Release Pair Detection Does Not Account for Fainted Recall
 
-**File:** `app/prisma/seed.ts`, line 257
-**Impact:** 7 Pokemon species cannot have their move-based evolution triggers parsed. The "Learn" keyword is recognized by `parseEvolutionTriggerText()` (second-stage parser) but never reaches it because `parseEvoLineSpeciesAndTrigger()` (first-stage parser) fails to split the species name from trigger text.
+**Rule:** "they cannot command the Pokemon that was Released as part of the Switch for the remainder of the Round unless the Switch was forced by a Move such as Roar or if they were Recalling and replacing a Fainted Pokemon." (`core/07-combat.md#Pokemon-Switching`, p.229, lines 243-248)
 
-**PTU Reference:** All 7 affected pokedex entries use the format `<Stage> - <Species> Learn <MoveName>` without any other trigger keyword.
+**Problem:** If a trainer uses the standalone recall endpoint to recall a fainted Pokemon (Shift Action), then uses the standalone release endpoint to release a replacement (Shift Action), the `checkRecallReleasePair()` function detects this as a "switch" and applies League restriction (`canBeCommanded = false`). However, per PTU rules, replacing a fainted Pokemon exempts the replacement from the League command restriction -- the replacement CAN be commanded.
 
-**Required Fix:** Add `Learn` to the `triggerKeywords` regex:
-```typescript
-const triggerKeywords = /\b(Minimum|Holding|Learn|Water Stone|Fire Stone|...)\b/i
-```
+The pair detection at `release.post.ts` line 255-269 and `recall.post.ts` line 207-218 always passes `canSwitchedPokemonBeCommanded(true, false, false)` -- hardcoding `isFaintedSwitch: false`. It does not check whether any of the recalled Pokemon were fainted.
 
-### M1: MEDIUM -- Evolution undo does not restore Pokemon notes
+**Practical Impact:** Low. Fainted switches would normally use the full `switch.post.ts` endpoint which correctly handles fainted mode. The standalone recall+release path for fainted Pokemon is an edge case. However, a GM could conceivably recall a fainted Pokemon (standalone), then release a replacement (standalone) in the same round, and the replacement would incorrectly be blocked from acting in League.
 
-**File:** `app/server/services/evolution.service.ts` (PokemonSnapshot interface, lines 58-81)
-**Impact:** When evolution is undone, the `[Evolved from X at Level N on Date]` note prepended during evolution remains in the notes field. The `PokemonSnapshot` does not capture `notes`, and the undo endpoint does not restore it. This leaves stale history for a reverted evolution.
-**Spec Reference:** Design spec section 3.3: "Restores the Pokemon to its pre-evolution state."
-**Recommendation:** Add `notes: string` to `PokemonSnapshot`, capture it before evolution, and restore it during undo. Alternatively, document this as intentional (notes are informational logs, not state).
+**Fix:** In the pair detection logic (both endpoints), check whether any of the recalled entity IDs correspond to fainted Pokemon (HP <= 0 at time of recall). If so, treat the pair as a fainted switch and pass `isFaintedSwitch: true` to `canSwitchedPokemonBeCommanded()`. Alternatively, store the fainted state on the `recall_only` SwitchAction record so the release endpoint can check it.
 
-### M2: MEDIUM -- Evolution undo does not restore consumed stone from trainer inventory
-
-**File:** `app/server/api/pokemon/[id]/evolution-undo.post.ts`
-**Impact:** When a stone-based evolution is undone, the stone that was consumed from the trainer's inventory (via `consumeStoneFromInventory`) is not restored. The held item IS correctly restored (it's in the snapshot), but trainer inventory is a separate entity. If a GM undoes a Water Stone evolution, the Water Stone stays consumed.
-**Recommendation:** Either (a) store the consumed item info (ownerId + itemName) in the undo snapshot and restore it during undo, or (b) document this limitation in the UI ("Note: consumed items are not restored on undo").
-
-## Summary
-
-P2 implements 8 mechanics across the evolution system. The core PTU rule implementations are correct:
-
-- **Everstone/Eviolite prevention:** Matches PTU item descriptions exactly. Both items block all evolution paths when held, with clear user messaging.
-- **Item consumption:** Stone consumption from inventory and held item clearing both work correctly with GM override support.
-- **Post-evolution undo:** Three-layer system (snapshot + endpoint + composable) correctly captures and restores pre-evolution state. Active encounter guard prevents undo during combat.
-- **Evolution history logging:** Prepends formatted note to Pokemon's notes field with species, level, and date.
-- **Gender-specific triggers:** Correctly parses all PTU pokedex gender keywords and enforces them in both client eligibility check and server-side validation.
-- **Move-specific triggers:** The eligibility check and service validation logic is correct, BUT the seed parser fails to extract "Learn" triggers for 7 of 8 affected species because `parseEvoLineSpeciesAndTrigger()` is missing the "Learn" keyword.
-
-The one CRITICAL issue (C1) blocks correct seeding of move-based evolution triggers for the majority of affected Pokemon. The runtime code (eligibility check, service validation, API response) is all correctly implemented -- the only broken link is the seed parser's first-stage species/trigger splitter.
+**Files:** `app/server/api/encounters/[id]/release.post.ts` (line 255-269), `app/server/api/encounters/[id]/recall.post.ts` (line 207-218)
 
 ## Rulings
 
-- **Everstone/Eviolite:** Both items correctly prevent evolution per PTU Core p.291. No ambiguity.
-- **Stone/held item consumption:** App design decision, not PTU RAW. Implementation matches design spec.
-- **Post-evolution undo:** App feature extending PTU's "You may choose not to Evolve" (p.202). Implementation is sound.
-- **Gender triggers:** Pokedex entries for Combee (Female), Burmy (Male/Female), and Kirlia->Gallade (Male + Dawn Stone) all parse and enforce correctly.
-- **Move triggers:** PTU pokedex uses "Learn <MoveName>" format. The check/service code correctly enforces this, but seed parsing is broken for 7/8 species (C1).
-- **Per decree-035:** Base Relations validation continues to use nature-adjusted base stats. No P2 changes affect this. Compliant.
-- **Per decree-036:** Stone evolution move learning uses `<= currentLevel`. No P2 changes affect this. Compliant.
+1. **Immediate-act in Full Contact for fainted switches:** The code excludes fainted switches from `canActImmediately` (`switch.post.ts` line 275: `!isFaintedSwitch`). PTU does not explicitly exclude fainted switches from immediate-act. However, fainted switches in Full Contact still set `canBeCommanded = true` (via `canSwitchedPokemonBeCommanded`), meaning the Pokemon CAN act in its normal initiative slot. The only difference is it won't get priority insertion as "next-to-act." This is a reasonable design choice -- fainted switches are a Shift Action, and giving priority insertion to Shift Action replacements could be overpowered. Not flagging as incorrect, just documenting.
+
+2. **Forced switches and immediate-act:** The code does NOT exclude forced switches from `canActImmediately` (line 274-276 in `switch.post.ts`). This is CORRECT per decree-034: Roar's replacement "does not lose their Pokemon turn." If the replacement's initiative has already passed, it should get immediate-act.
+
+3. **Turn validation on standalone recall/release:** The recall and release endpoints do NOT validate whose turn it is (unlike the full switch endpoint which checks trainer's or Pokemon's turn). PTU says recall/release use "Trainer's Shift Action" or "Trainer's Standard Action," implying they should be on the trainer's initiative. However, the app is GM-controlled, and the GM can execute actions at their discretion. This is consistent with the app's design philosophy where the GM has full authority. Not flagging as incorrect.
+
+4. **"Bound" condition check:** Both recall.post.ts and switching.service.ts check for "Bound" in addition to "Trapped." PTU does not define a "Bound" status condition. This was already flagged in P0 review (refactoring-105) and is not re-flagged.
+
+## Summary
+
+The P2 implementation correctly implements all PTU switching mechanics specified in the design:
+
+- **Section K (Immediate-Act):** Correctly detects when a released Pokemon's initiative has passed and inserts it as next-to-act in Full Contact battles. League Battles use phase-based ordering instead.
+- **Section L (Standalone Recall/Release):** Correctly implements Shift Action for one, Standard Action for two. Proper volatile condition clearing per decree-038. Range and Trapped checks applied.
+- **Section M (Player Switch Request):** Correctly extends the existing player action request pattern with recall/release context for GM approval.
+- **Section N (Pair Detection):** Correctly detects recall+release pairs as switches, applies League restriction, and blocks same-Pokemon recall+release in one round.
+
+One MEDIUM issue identified (fainted recall+release pair doesn't get fainted exemption from League restriction), but practical impact is low since fainted switches would normally use the full switch endpoint.
 
 ## Verdict
 
-**CHANGES_REQUIRED**
-
-One CRITICAL issue must be fixed before approval:
-
-### Required Changes
-
-1. **C1 (CRITICAL):** Add `Learn` to the `triggerKeywords` regex in `parseEvoLineSpeciesAndTrigger()` (`app/prisma/seed.ts` line 257). Without this fix, 7 Pokemon species' move-based evolution triggers are silently lost during seeding, making their evolutions impossible to trigger in the app.
-
-### Recommended Changes (non-blocking)
-
-2. **M1 (MEDIUM):** Add `notes` to `PokemonSnapshot` and restore it during undo, or document the omission as intentional.
-3. **M2 (MEDIUM):** Document that consumed stones are not restored on evolution undo, or implement inventory restoration.
-4. **Robustness:** Add `Male` and `Female` to the `triggerKeywords` regex for future-proofing (currently works only because gender always co-occurs with other keywords).
+**APPROVED** -- All PTU switching mechanics are correctly implemented. The one MEDIUM issue is an edge case with low practical impact and does not block approval. A ticket should be filed if the standalone recall+release path for fainted Pokemon becomes a supported workflow.
