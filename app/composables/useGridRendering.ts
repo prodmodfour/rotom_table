@@ -463,35 +463,40 @@ export function useGridRendering(options: UseGridRenderingOptions) {
 
     const distance = moveResult.distance
 
-    // Token center
+    // Token center (accounts for multi-cell footprint)
     const startX = token.position.x * cellSize + (token.size * cellSize) / 2
     const startY = token.position.y * cellSize + (token.size * cellSize) / 2
 
-    // Target center
-    const endX = target.x * cellSize + cellSize / 2
-    const endY = target.y * cellSize + cellSize / 2
+    // Destination center — center of full NxN footprint at target position
+    const tokenSize = token.size
+    const destCenterX = target.x * cellSize + (tokenSize * cellSize) / 2
+    const destCenterY = target.y * cellSize + (tokenSize * cellSize) / 2
 
     // Choose colors based on validity
     const arrowColor = moveResult.valid ? MOVEMENT_VALID_COLOR : MOVEMENT_INVALID_COLOR
     const bgColor = moveResult.valid ? MOVEMENT_VALID_BG : MOVEMENT_INVALID_BG
 
-    // Highlight target cell
+    // Highlight ALL cells the token would occupy at the destination (NxN footprint)
     if (distance > 0) {
-      drawCellHighlight(ctx, {
-        x: target.x,
-        y: target.y,
-        cellSize,
-        fillColor: bgColor,
-        strokeColor: arrowColor
-      })
+      for (let dx = 0; dx < tokenSize; dx++) {
+        for (let dy = 0; dy < tokenSize; dy++) {
+          drawCellHighlight(ctx, {
+            x: target.x + dx,
+            y: target.y + dy,
+            cellSize,
+            fillColor: bgColor,
+            strokeColor: arrowColor
+          })
+        }
+      }
 
-      // Draw arrow
-      drawArrow(ctx, { startX, startY, endX, endY, color: arrowColor })
+      // Draw arrow from token center to destination footprint center
+      drawArrow(ctx, { startX, startY, endX: destCenterX, endY: destCenterY, color: arrowColor })
 
-      // Draw distance indicator (shows terrain-aware path cost)
+      // Draw distance indicator above destination footprint
       const labelY = target.y * cellSize - 12
       drawDistanceLabel(ctx, {
-        x: endX,
+        x: destCenterX,
         y: labelY,
         text: `${distance}m`,
         color: arrowColor
@@ -501,7 +506,7 @@ export function useGridRendering(options: UseGridRenderingOptions) {
       if (!moveResult.valid) {
         const message = moveResult.blocked ? 'Occupied' : 'Out of range'
         drawMessageLabel(ctx, {
-          x: endX,
+          x: destCenterX,
           y: labelY - 20,
           message,
           color: MOVEMENT_INVALID_COLOR
@@ -578,33 +583,37 @@ export function useGridRendering(options: UseGridRenderingOptions) {
       drawSpeedBadge(ctx, badgeX, badgeY, displaySpeed)
     }
 
-    // Token center
+    // Token center (accounts for multi-cell footprint)
     const startX = preview.fromPosition.x * cellSize + (tokenSize * cellSize) / 2
     const startY = preview.fromPosition.y * cellSize + (tokenSize * cellSize) / 2
 
-    // Target center
-    const endX = preview.toPosition.x * cellSize + cellSize / 2
-    const endY = preview.toPosition.y * cellSize + cellSize / 2
+    // Destination center — center of full NxN footprint at target position
+    const destCenterX = preview.toPosition.x * cellSize + (tokenSize * cellSize) / 2
+    const destCenterY = preview.toPosition.y * cellSize + (tokenSize * cellSize) / 2
 
     // Choose colors based on validity
     const arrowColor = preview.isValid ? MOVEMENT_VALID_COLOR : MOVEMENT_INVALID_COLOR
     const bgColor = preview.isValid ? MOVEMENT_VALID_BG : MOVEMENT_INVALID_BG
 
-    // Highlight target cell and draw arrow
+    // Highlight ALL cells the token would occupy at the destination (NxN footprint)
     if (preview.distance > 0) {
-      drawCellHighlight(ctx, {
-        x: preview.toPosition.x,
-        y: preview.toPosition.y,
-        cellSize,
-        fillColor: bgColor,
-        strokeColor: arrowColor
-      })
+      for (let dx = 0; dx < tokenSize; dx++) {
+        for (let dy = 0; dy < tokenSize; dy++) {
+          drawCellHighlight(ctx, {
+            x: preview.toPosition.x + dx,
+            y: preview.toPosition.y + dy,
+            cellSize,
+            fillColor: bgColor,
+            strokeColor: arrowColor
+          })
+        }
+      }
 
-      drawArrow(ctx, { startX, startY, endX, endY, color: arrowColor })
+      drawArrow(ctx, { startX, startY, endX: destCenterX, endY: destCenterY, color: arrowColor })
 
-      // Draw distance indicator
+      // Draw distance indicator above destination footprint
       drawDistanceLabel(ctx, {
-        x: endX,
+        x: destCenterX,
         y: preview.toPosition.y * cellSize - 12,
         text: `${preview.distance}m`,
         color: arrowColor
