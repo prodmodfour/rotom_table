@@ -361,6 +361,14 @@ export function validateSwitch(params: {
     return { valid: false, error: 'Specified combatant is not a Pokemon', statusCode: 400 }
   }
 
+  // 3b. Recalled Pokemon must not be Trapped (PTU p.247: "Trapped... cannot be recalled")
+  const recalledStatuses: string[] = (recalled.entity as { statusConditions?: string[] })?.statusConditions || []
+  const recalledTempConditions: string[] = (recalled.entity as { tempConditions?: string[] })?.tempConditions || []
+  const allRecalledConditions = [...recalledStatuses, ...recalledTempConditions]
+  if (allRecalledConditions.includes('Trapped') || allRecalledConditions.includes('Bound')) {
+    return { valid: false, error: 'Pokemon is Trapped and cannot be recalled', statusCode: 400 }
+  }
+
   // 4. Recalled Pokemon belongs to trainer (ownerId check)
   const recalledEntity = recalled.entity as { ownerId?: string }
   if (recalledEntity.ownerId !== trainer.entityId) {
