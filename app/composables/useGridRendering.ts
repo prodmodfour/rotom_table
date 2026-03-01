@@ -1,4 +1,5 @@
 import type { GridConfig, GridPosition, MovementPreview } from '~/types'
+import type { FlankingMap } from '~/types/combat'
 import { useMeasurementStore } from '~/stores/measurement'
 import { useFogOfWarStore } from '~/stores/fogOfWar'
 import { useTerrainStore, TERRAIN_COLORS, FLAG_COLORS } from '~/stores/terrain'
@@ -33,6 +34,8 @@ interface UseGridRenderingOptions {
   getTerrainCostAt: (x: number, y: number) => number
   getTerrainCostForCombatant?: (x: number, y: number, combatantId: string) => number
   isValidMove: (from: GridPosition, to: GridPosition, combatantId: string, gridWidth: number, gridHeight: number) => { valid: boolean; distance: number; blocked: boolean }
+  // Flanking detection (P0: optional, provided when flanking system is active)
+  flankingMap?: Ref<FlankingMap>
 }
 
 // Constants
@@ -57,7 +60,8 @@ export function useGridRendering(options: UseGridRenderingOptions) {
     drawSpeedBadge,
     drawTerrainPattern,
     drawCrossPattern,
-    drawCenterDot
+    drawCenterDot,
+    drawFlankingIndicator
   } = useCanvasDrawing()
 
   // Background image
@@ -143,6 +147,11 @@ export function useGridRendering(options: UseGridRenderingOptions) {
     // Draw external movement preview (from WebSocket, for group view)
     if (options.externalMovementPreview.value && !options.isGm.value) {
       drawExternalMovementPreview(ctx, options.externalMovementPreview.value)
+    }
+
+    // Draw flanking indicators on flanked tokens
+    if (options.flankingMap?.value) {
+      drawFlankingIndicators(ctx)
     }
 
     // Draw measurement overlay
@@ -362,6 +371,38 @@ export function useGridRendering(options: UseGridRenderingOptions) {
           drawCenterDot(ctx, x, y, cellSize, 'rgba(245, 158, 11, 0.4)')
         }
       }
+    }
+  }
+
+  /**
+   * Draw flanking indicators on all flanked tokens.
+   *
+   * Renders a pulsing dashed border around each flanked combatant's
+   * grid cell(s). Uses time-based animation for the pulse effect.
+   */
+  const drawFlankingIndicators = (ctx: CanvasRenderingContext2D) => {
+    const flankingMap = options.flankingMap?.value
+    if (!flankingMap) return
+
+    const { cellSize } = options.config.value
+    // Time-based pulse: cycles every 1.5 seconds
+    const pulse = (Date.now() % 1500) / 1500
+
+    for (const token of options.tokens.value) {
+      const status = flankingMap[token.combatantId]
+      if (!status?.isFlanked) continue
+
+      const tokenX = token.position.x * cellSize
+      const tokenY = token.position.y * cellSize
+
+      drawFlankingIndicator(
+        ctx,
+        tokenX,
+        tokenY,
+        cellSize,
+        token.size,
+        pulse
+      )
     }
   }
 

@@ -35,6 +35,7 @@
         :is-gm="isGm"
         :is-own-token="playerMode ? isOwnTokenCheck(token.combatantId) : false"
         :is-pending-move="token.combatantId === pendingMoveCombatantId"
+        :is-flanked="isTargetFlanked(token.combatantId)"
         :display-hp-override="getDisplayHpOverride(token.combatantId)"
         @select="(id, evt) => handleTokenSelectWithPlayerMode(id, evt)"
       />
@@ -73,6 +74,7 @@ import { useMeasurementStore } from '~/stores/measurement'
 import { useGridMovement } from '~/composables/useGridMovement'
 import { useGridRendering } from '~/composables/useGridRendering'
 import { useGridInteraction, TOUCH_TAP_THRESHOLD } from '~/composables/useGridInteraction'
+import { useFlankingDetection } from '~/composables/useFlankingDetection'
 import { roundToDisplayTier } from '~/utils/displayHp'
 
 interface TokenData {
@@ -203,6 +205,10 @@ const handleTokenSelectWithPlayerMode = (combatantId: string, evt: MouseEvent): 
   interaction.handleTokenSelect(combatantId, evt)
 }
 
+// Flanking detection composable
+const combatantsRef = computed(() => props.combatants)
+const { flankingMap, isTargetFlanked, getFlankingPenalty } = useFlankingDetection(combatantsRef)
+
 // Movement composable
 const movement = useGridMovement({
   tokens: tokensRef,
@@ -271,7 +277,8 @@ const rendering = useGridRendering({
   calculateMoveDistance: movement.calculateMoveDistance,
   getTerrainCostAt: movement.getTerrainCostAt,
   getTerrainCostForCombatant: movement.getTerrainCostForCombatant,
-  isValidMove: movement.isValidMove
+  isValidMove: movement.isValidMove,
+  flankingMap
 })
 
 // Marquee pixel rect for visual overlay (in screen coordinates)
@@ -388,12 +395,18 @@ watch(() => props.externalMovementPreview, () => {
   rendering.render()
 }, { deep: true })
 
+// Re-render when flanking state changes
+watch(flankingMap, () => {
+  rendering.render()
+}, { deep: true })
+
 // Expose methods for parent
 defineExpose({
   zoomIn: interaction.zoomIn,
   zoomOut: interaction.zoomOut,
   resetView: interaction.resetView,
   render: rendering.render,
+  getFlankingPenalty,
 })
 </script>
 
