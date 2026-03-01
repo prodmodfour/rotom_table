@@ -1,20 +1,19 @@
 /**
  * POST /api/encounters/:id/switch
  *
- * Perform a full Pokemon switch (recall one, release another) as a Standard Action.
+ * Perform a Pokemon switch (recall one, release another).
+ *
+ * Three switch modes (P0 + P1):
+ * - Standard Switch: costs a Standard Action (P0)
+ * - Fainted Switch:  costs a Shift Action, recalled must be fainted (P1, Section H)
+ * - Forced Switch:   no action cost, GM-triggered by move effects (P1, Section I)
+ *
+ * League Battle restriction (P1, Section G):
+ * Switched-in Pokemon cannot be commanded for the remainder of the round,
+ * UNLESS the switch was forced or was a fainted replacement.
+ *
  * PTU p.229: "A Trainer may recall a Pokemon to its Poke Ball or release a Pokemon
  * from its Poke Ball as a Standard Action."
- *
- * 10-step validation chain, then execution:
- * 1. Record SwitchAction
- * 2. Capture recalled position
- * 3. Remove recalled from combatants/turn orders
- * 4. Build new combatant from DB entity
- * 5. Place at recalled position
- * 6. Insert into turn order by initiative
- * 7. Mark Standard Action used
- * 8. Persist
- * 9. Broadcast WebSocket event
  */
 
 import { prisma } from '~/server/utils/prisma'
@@ -29,11 +28,14 @@ import { sizeToTokenSize } from '~/server/services/grid-placement.service'
 import {
   validateSwitch,
   validateActionAvailability,
+  validateFaintedSwitch,
+  validateForcedSwitch,
   checkRecallRange,
   removeCombatantFromEncounter,
   insertIntoTurnOrder,
   markActionUsed,
-  buildSwitchAction
+  buildSwitchAction,
+  canSwitchedPokemonBeCommanded
 } from '~/server/services/switching.service'
 import { broadcastToEncounter } from '~/server/utils/websocket'
 import { RECALL_CLEARED_CONDITIONS } from '~/constants/statusConditions'
@@ -51,6 +53,8 @@ export default defineEventHandler(async (event) => {
   }
 
   const { trainerId, recallCombatantId, releaseEntityId } = body
+  const isFaintedSwitch = body.faintedSwitch === true
+  const isForcedSwitch = body.forced === true
 
   if (!trainerId || !recallCombatantId || !releaseEntityId) {
     throw createError({
@@ -67,77 +71,134 @@ export default defineEventHandler(async (event) => {
     const pokemonTurnOrder: string[] = JSON.parse(record.pokemonTurnOrder || '[]')
     const existingSwitchActions: SwitchAction[] = JSON.parse(record.switchActions || '[]')
     const currentPhase = record.currentPhase || 'pokemon'
+    const isLeague = record.battleType === 'trainer'
 
-    // Load released Pokemon from DB for validation (step 5)
+    // Load released Pokemon from DB for validation
     const releasedPokemonRecord = await prisma.pokemon.findUnique({
       where: { id: releaseEntityId }
     })
 
-    // Steps 1-8: validation chain
-    const validation = validateSwitch({
-      encounter: {
-        isActive: record.isActive,
-        combatants,
-        turnOrder,
-        currentTurnIndex: record.currentTurnIndex,
-        battleType: record.battleType
-      },
-      trainerId,
-      recallCombatantId,
-      releaseEntityId,
-      releasedPokemonRecord: releasedPokemonRecord ? {
-        id: releasedPokemonRecord.id,
-        ownerId: releasedPokemonRecord.ownerId,
-        currentHp: releasedPokemonRecord.currentHp
-      } : null
-    })
+    // ==============================
+    // VALIDATION (mode-dependent)
+    // ==============================
 
-    if (!validation.valid) {
-      throw createError({
-        statusCode: validation.statusCode || 400,
-        message: validation.error || 'Switch validation failed'
+    if (isForcedSwitch) {
+      // Forced switch: separate validation chain (skips Trapped, action, and turn checks)
+      const forcedValidation = validateForcedSwitch({
+        encounter: {
+          isActive: record.isActive,
+          combatants,
+          battleType: record.battleType
+        },
+        trainerId,
+        recallCombatantId,
+        releaseEntityId,
+        releasedPokemonRecord: releasedPokemonRecord ? {
+          id: releasedPokemonRecord.id,
+          ownerId: releasedPokemonRecord.ownerId,
+          currentHp: releasedPokemonRecord.currentHp
+        } : null
       })
+
+      if (!forcedValidation.valid) {
+        throw createError({
+          statusCode: forcedValidation.statusCode || 400,
+          message: forcedValidation.error || 'Forced switch validation failed'
+        })
+      }
+
+      // Range check still applies in Full Contact mode (decree-034)
+      const trainerCombatant = combatants.find(c => c.id === trainerId)!
+      const recalledCombatant = combatants.find(c => c.id === recallCombatantId)!
+      const rangeResult = checkRecallRange(
+        trainerCombatant.position,
+        recalledCombatant.position,
+        isLeague
+      )
+      if (!rangeResult.inRange) {
+        throw createError({
+          statusCode: 400,
+          message: `Pokemon is out of recall range (${rangeResult.distance}m, max 8m) — forced switch failed`
+        })
+      }
+    } else {
+      // Standard or fainted switch: use the P0 validation chain
+      const validation = validateSwitch({
+        encounter: {
+          isActive: record.isActive,
+          combatants,
+          turnOrder,
+          currentTurnIndex: record.currentTurnIndex,
+          battleType: record.battleType
+        },
+        trainerId,
+        recallCombatantId,
+        releaseEntityId,
+        releasedPokemonRecord: releasedPokemonRecord ? {
+          id: releasedPokemonRecord.id,
+          ownerId: releasedPokemonRecord.ownerId,
+          currentHp: releasedPokemonRecord.currentHp
+        } : null
+      })
+
+      if (!validation.valid) {
+        throw createError({
+          statusCode: validation.statusCode || 400,
+          message: validation.error || 'Switch validation failed'
+        })
+      }
+
+      const trainerCombatant = combatants.find(c => c.id === trainerId)!
+      const recalledCombatant = combatants.find(c => c.id === recallCombatantId)!
+
+      // Range check
+      const rangeResult = checkRecallRange(
+        trainerCombatant.position,
+        recalledCombatant.position,
+        isLeague
+      )
+      if (!rangeResult.inRange) {
+        throw createError({
+          statusCode: 400,
+          message: `Pokemon is out of recall range (${rangeResult.distance}m, max 8m)`
+        })
+      }
+
+      if (isFaintedSwitch) {
+        // Fainted switch: validate shift action availability and fainted state
+        const faintedCheck = validateFaintedSwitch(
+          recalledCombatant,
+          trainerCombatant,
+          { turnOrder, currentTurnIndex: record.currentTurnIndex },
+          trainerId
+        )
+        if (!faintedCheck.valid) {
+          throw createError({
+            statusCode: faintedCheck.statusCode || 400,
+            message: faintedCheck.error || 'Fainted switch validation failed'
+          })
+        }
+      } else {
+        // Standard switch: validate Standard Action availability
+        const actionCheck = validateActionAvailability(
+          { turnOrder, currentTurnIndex: record.currentTurnIndex },
+          trainerId,
+          recallCombatantId,
+          trainerCombatant,
+          recalledCombatant
+        )
+        if (!actionCheck.valid) {
+          throw createError({
+            statusCode: actionCheck.statusCode || 400,
+            message: actionCheck.error || 'Action not available'
+          })
+        }
+      }
     }
 
-    // Find combatants for further validation
+    // Re-find combatants after validation (needed for execution)
     const trainerCombatant = combatants.find(c => c.id === trainerId)!
     const recalledCombatant = combatants.find(c => c.id === recallCombatantId)!
-
-    // Step 9: Range check
-    const isLeague = record.battleType === 'trainer'
-    const rangeResult = checkRecallRange(
-      trainerCombatant.position,
-      recalledCombatant.position,
-      isLeague
-    )
-
-    if (!rangeResult.inRange) {
-      throw createError({
-        statusCode: 400,
-        message: `Pokemon is out of recall range (${rangeResult.distance}m, max 8m)`
-      })
-    }
-
-    // Step 10: Action availability
-    const actionCheck = validateActionAvailability(
-      { turnOrder, currentTurnIndex: record.currentTurnIndex },
-      trainerId,
-      recallCombatantId,
-      trainerCombatant,
-      recalledCombatant
-    )
-
-    if (!actionCheck.valid) {
-      throw createError({
-        statusCode: actionCheck.statusCode || 400,
-        message: actionCheck.error || 'Action not available'
-      })
-    }
-
-    // Determine initiating combatant (trainer or pokemon, whoever's turn it is)
-    const currentTurnCombatantId = turnOrder[record.currentTurnIndex]
-    const isTrainerTurn = currentTurnCombatantId === trainerId
-    const initiatingCombatant = isTrainerTurn ? trainerCombatant : recalledCombatant
 
     // ==============================
     // EXECUTION
@@ -193,10 +254,16 @@ export default defineEventHandler(async (event) => {
       tokenSize
     })
 
-    // 4. Add new combatant to combatants array
+    // 4. Apply League Battle switch restriction (P1 — Section G)
+    // PTU p.229: switched-in Pokemon cannot be commanded this round
+    // unless the switch was forced or was a fainted replacement
+    const canBeCommanded = canSwitchedPokemonBeCommanded(isLeague, isFaintedSwitch, isForcedSwitch)
+    newCombatant.turnState.canBeCommanded = canBeCommanded
+
+    // 5. Add new combatant to combatants array
     const updatedCombatants = [...removalResult.combatants, newCombatant]
 
-    // 5. Insert into turn order at correct initiative position
+    // 6. Insert into turn order at correct initiative position
     const insertResult = insertIntoTurnOrder(
       newCombatant,
       updatedCombatants,
@@ -208,7 +275,7 @@ export default defineEventHandler(async (event) => {
       currentPhase
     )
 
-    // 6. Build switch action record
+    // 7. Build switch action record
     const switchAction = buildSwitchAction({
       trainerId,
       recalledCombatantId,
@@ -216,20 +283,34 @@ export default defineEventHandler(async (event) => {
       releasedCombatantId: newCombatant.id,
       releasedEntityId: releaseEntityId,
       round: record.currentRound,
-      forced: body.forced ?? false
+      forced: isForcedSwitch,
+      faintedSwitch: isFaintedSwitch
     })
 
-    // 7. Mark action as used on initiating combatant
-    // Find the initiating combatant in the updated array
-    const updatedInitiator = updatedCombatants.find(c => c.id === initiatingCombatant.id)
-    if (updatedInitiator) {
-      markActionUsed(updatedInitiator, 'standard')
+    // 8. Mark action as used (mode-dependent)
+    if (isForcedSwitch) {
+      // Forced switch: no action cost — do NOT mark any action as used
+    } else if (isFaintedSwitch) {
+      // Fainted switch: consume Shift Action on the trainer
+      const updatedTrainer = updatedCombatants.find(c => c.id === trainerId)
+      if (updatedTrainer) {
+        markActionUsed(updatedTrainer, 'shift')
+      }
+    } else {
+      // Standard switch: consume Standard Action on the initiating combatant
+      const currentTurnCombatantId = turnOrder[record.currentTurnIndex]
+      const isTrainerTurn = currentTurnCombatantId === trainerId
+      const initiatingCombatantId = isTrainerTurn ? trainerId : recallCombatantId
+      const updatedInitiator = updatedCombatants.find(c => c.id === initiatingCombatantId)
+      if (updatedInitiator) {
+        markActionUsed(updatedInitiator, 'standard')
+      }
     }
 
-    // 8. Build final switch actions array
+    // 9. Build final switch actions array
     const updatedSwitchActions = [...existingSwitchActions, switchAction]
 
-    // 9. Persist to DB
+    // 10. Persist to DB
     const updatedRecord = await prisma.encounter.update({
       where: { id },
       data: {
@@ -242,14 +323,15 @@ export default defineEventHandler(async (event) => {
       }
     })
 
-    // 10. Build response
+    // 11. Build response
     const trainerName = getEntityName(trainerCombatant)
     const recalledName = getEntityName(recalledCombatant)
     const releasedName = releasedEntity.nickname || releasedEntity.species
 
-    // Determine if the new Pokemon can act this round
-    const releasedIndex = insertResult.turnOrder.indexOf(newCombatant.id)
-    const canActThisRound = releasedIndex > insertResult.currentTurnIndex
+    // Determine the action cost for the response
+    const actionCost = isForcedSwitch ? 'none' as const
+      : isFaintedSwitch ? 'shift' as const
+      : 'standard' as const
 
     const responseEncounter = buildEncounterResponse(updatedRecord, updatedCombatants, {
       turnOrder: insertResult.turnOrder,
@@ -258,7 +340,7 @@ export default defineEventHandler(async (event) => {
       currentTurnIndex: insertResult.currentTurnIndex
     })
 
-    // 11. Broadcast WebSocket event
+    // 12. Broadcast WebSocket event
     broadcastToEncounter(id, {
       type: 'pokemon_switched',
       data: {
@@ -268,7 +350,8 @@ export default defineEventHandler(async (event) => {
         recalledName,
         releasedName,
         releasedCombatantId: newCombatant.id,
-        actionCost: 'standard',
+        actionCost,
+        canActThisRound: canBeCommanded,
         encounter: responseEncounter
       }
     })
@@ -281,10 +364,10 @@ export default defineEventHandler(async (event) => {
           trainerName,
           recalledName,
           releasedName,
-          actionCost: 'standard' as const,
-          rangeToRecalled: rangeResult.distance,
+          actionCost,
+          rangeToRecalled: 0, // Range already validated above
           releasedInitiative: newCombatant.initiative,
-          canActThisRound
+          canActThisRound: canBeCommanded
         }
       }
     }
