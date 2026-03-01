@@ -437,7 +437,7 @@ export function releaseHeldAction(combatant: Combatant): Combatant {
 
 /**
  * Check the hold queue to see if any held combatants should be released.
- * Returns the first combatant whose holdUntilInitiative has been reached
+ * Returns ALL combatants whose holdUntilInitiative has been reached
  * by the current initiative value.
  *
  * Per decree-006: holdUntilInitiative is an absolute initiative value,
@@ -446,13 +446,14 @@ export function releaseHeldAction(combatant: Combatant): Combatant {
 export function checkHoldQueue(
   holdQueue: Array<{ combatantId: string; holdUntilInitiative: number | null }>,
   currentInitiative: number
-): { combatantId: string } | null {
+): Array<{ combatantId: string }> {
+  const results: Array<{ combatantId: string }> = []
   for (const entry of holdQueue) {
     if (entry.holdUntilInitiative !== null && currentInitiative <= entry.holdUntilInitiative) {
-      return { combatantId: entry.combatantId }
+      results.push({ combatantId: entry.combatantId })
     }
   }
-  return null
+  return results
 }
 
 /**

@@ -431,7 +431,7 @@ export const useEncounterStore = defineStore('encounter', {
     // Returns heavily injured penalty and tick damage data for GM alerts
     async nextTurn(): Promise<{
       heavilyInjuredPenalty: { combatantId: string; hpLost: number; isDead: boolean; deathCause: string | null } | null
-      holdReleaseTriggered: { combatantId: string } | null
+      holdReleaseTriggered: Array<{ combatantId: string }>
     } | null> {
       if (!this.encounter) return null
 
@@ -439,7 +439,7 @@ export const useEncounterStore = defineStore('encounter', {
         const response = await $fetch<{
           data: Encounter
           heavilyInjuredPenalty?: { combatantId: string; hpLost: number; isDead: boolean; deathCause: string | null }
-          holdReleaseTriggered?: { combatantId: string }
+          holdReleaseTriggered?: Array<{ combatantId: string }>
         }>(`/api/encounters/${this.encounter.id}/next-turn`, {
           method: 'POST'
         })
@@ -448,7 +448,7 @@ export const useEncounterStore = defineStore('encounter', {
         this.betweenTurns = true
         return {
           heavilyInjuredPenalty: response.heavilyInjuredPenalty ?? null,
-          holdReleaseTriggered: response.holdReleaseTriggered ?? null
+          holdReleaseTriggered: response.holdReleaseTriggered ?? []
         }
       } catch (e: any) {
         this.error = e.message || 'Failed to advance turn'

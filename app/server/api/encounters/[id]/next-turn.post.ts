@@ -213,17 +213,14 @@ export default defineEventHandler(async (event) => {
     let holdQueue = JSON.parse(encounter.holdQueue || '[]') as Array<{
       combatantId: string; holdUntilInitiative: number | null
     }>
-    let holdReleaseTriggered: { combatantId: string } | null = null
+    let holdReleaseTriggered: Array<{ combatantId: string }> = []
 
     if (holdQueue.length > 0 && currentTurnIndex < turnOrder.length) {
       const nextCombatantId = turnOrder[currentTurnIndex]
       const nextCombatant = combatants.find((c: any) => c.id === nextCombatantId)
       const nextInit = nextCombatant?.initiative ?? 0
 
-      const releaseCheck = checkHoldQueue(holdQueue, nextInit)
-      if (releaseCheck) {
-        holdReleaseTriggered = releaseCheck
-      }
+      holdReleaseTriggered = checkHoldQueue(holdQueue, nextInit)
     }
 
     // Parse declarations for edge case handling (fainted trainers, missing declarations)
@@ -483,7 +480,7 @@ export default defineEventHandler(async (event) => {
       data: response,
       ...(heavilyInjuredPenalty && { heavilyInjuredPenalty }),
       ...(tickResults.length > 0 && { tickDamage: tickResults }),
-      ...(holdReleaseTriggered && { holdReleaseTriggered })
+      ...(holdReleaseTriggered.length > 0 && { holdReleaseTriggered })
     }
   } catch (error: unknown) {
     if (error && typeof error === 'object' && 'statusCode' in error) throw error
