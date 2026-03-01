@@ -44,6 +44,14 @@ export interface EvolutionChanges {
   newBaseStats: Stats
   previousMaxHp: number
   newMaxHp: number
+  previousAbilities: Array<{ name: string; effect: string }>
+  newAbilities: Array<{ name: string; effect: string }>
+  previousCapabilities: Record<string, unknown>
+  newCapabilities: Record<string, unknown>
+  previousSkills: Record<string, string>
+  newSkills: Record<string, string>
+  previousSize: string
+  newSize: string
 }
 
 export interface EvolutionResult {
@@ -57,6 +65,10 @@ export interface PerformEvolutionInput {
   targetSpecies: string
   statPoints: Stats
   skipBaseRelations?: boolean
+  /** P1: GM-resolved abilities override (if not provided, auto-remap positionally) */
+  abilities?: Array<{ name: string; effect: string }>
+  /** P1: Final move list after learning/replacing (if not provided, keep current moves) */
+  moves?: Array<Record<string, unknown>>
 }
 
 // ============================================
@@ -361,7 +373,53 @@ export async function performEvolution(input: PerformEvolutionInput): Promise<Ev
   const previousTypes = [pokemon.type1, pokemon.type2].filter(Boolean) as string[]
   const newTypes = [targetSpeciesData.type1, targetSpeciesData.type2].filter(Boolean) as string[]
 
-  // 7. Write the update
+  // 7. Ability remapping (R032)
+  const previousAbilities: Array<{ name: string; effect: string }> = JSON.parse(pokemon.abilities || '[]')
+  let finalAbilities: Array<{ name: string; effect: string }>
+
+  if (input.abilities) {
+    // GM provided explicit ability selection
+    finalAbilities = input.abilities
+  } else {
+    // Auto-remap positionally
+    const oldSpeciesAbilities: string[] = JSON.parse(currentSpecies.abilities || '[]')
+    const newSpeciesAbilities: string[] = JSON.parse(targetSpeciesData.abilities || '[]')
+    const abilityResult = remapAbilities(previousAbilities, oldSpeciesAbilities, newSpeciesAbilities)
+    finalAbilities = [...abilityResult.remappedAbilities, ...abilityResult.preservedAbilities]
+  }
+
+  // Enrich ability effects from AbilityData
+  finalAbilities = await enrichAbilityEffects(finalAbilities)
+
+  // 8. Move updates (R033)
+  const previousMoves = pokemon.moves
+  const finalMoves = input.moves
+    ? JSON.stringify(input.moves)
+    : previousMoves // Keep current moves if not overridden
+
+  // 9. Capability and skill updates (R034)
+  const previousCapabilities: Record<string, unknown> = JSON.parse(pokemon.capabilities || '{}')
+  const previousSkills: Record<string, string> = JSON.parse(pokemon.skills || '{}')
+  const previousSize = (previousCapabilities.size as string) || 'Medium'
+
+  const newCapabilities: Record<string, unknown> = {
+    overland: targetSpeciesData.overland,
+    swim: targetSpeciesData.swim,
+    sky: targetSpeciesData.sky,
+    burrow: targetSpeciesData.burrow,
+    levitate: targetSpeciesData.levitate,
+    teleport: targetSpeciesData.teleport,
+    power: targetSpeciesData.power,
+    jump: { high: targetSpeciesData.jumpHigh, long: targetSpeciesData.jumpLong },
+    weightClass: targetSpeciesData.weightClass,
+    size: targetSpeciesData.size || 'Medium',
+    otherCapabilities: JSON.parse(targetSpeciesData.capabilities || '[]')
+  }
+
+  const newSkills: Record<string, string> = JSON.parse(targetSpeciesData.skills || '{}')
+  const newSize = targetSpeciesData.size || 'Medium'
+
+  // 10. Write the update
   const updated = await prisma.pokemon.update({
     where: { id: pokemonId },
     data: {
@@ -381,8 +439,11 @@ export async function performEvolution(input: PerformEvolutionInput): Promise<Ev
       currentSpeed: recalc.calculatedStats.speed,
       maxHp: recalc.maxHp,
       currentHp: newCurrentHp,
-      spriteUrl: null
-      // P1 handles: abilities, moves, capabilities, skills
+      spriteUrl: null,
+      abilities: JSON.stringify(finalAbilities),
+      moves: finalMoves,
+      capabilities: JSON.stringify(newCapabilities),
+      skills: JSON.stringify(newSkills)
     }
   })
 
@@ -394,7 +455,15 @@ export async function performEvolution(input: PerformEvolutionInput): Promise<Ev
     previousBaseStats,
     newBaseStats: recalc.natureAdjustedBase,
     previousMaxHp: oldMaxHp,
-    newMaxHp: recalc.maxHp
+    newMaxHp: recalc.maxHp,
+    previousAbilities,
+    newAbilities: finalAbilities,
+    previousCapabilities,
+    newCapabilities,
+    previousSkills,
+    newSkills,
+    previousSize,
+    newSize
   }
 
   return {
