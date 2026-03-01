@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    // Fetch Pokemon with P1-relevant fields
+    // Fetch Pokemon with P1/P2-relevant fields
     const pokemon = await prisma.pokemon.findUnique({
       where: { id },
       select: {
@@ -40,7 +40,8 @@ export default defineEventHandler(async (event) => {
         level: true,
         heldItem: true,
         abilities: true,
-        moves: true
+        moves: true,
+        gender: true
       }
     })
 
@@ -77,11 +78,17 @@ export default defineEventHandler(async (event) => {
       triggers = []
     }
 
-    // Check eligibility
+    // Parse current moves for eligibility check
+    const currentMovesRaw: Array<{ name: string }> = JSON.parse(pokemon.moves || '[]')
+    const currentMoveNamesForCheck = currentMovesRaw.map(m => m.name)
+
+    // Check eligibility (P2: includes gender + move checks)
     const result = checkEvolutionEligibility({
       currentLevel: pokemon.level,
       heldItem: pokemon.heldItem,
-      evolutionTriggers: triggers
+      evolutionTriggers: triggers,
+      gender: pokemon.gender,
+      currentMoves: currentMoveNamesForCheck
     })
 
     // Parse current Pokemon abilities and moves
@@ -119,6 +126,9 @@ export default defineEventHandler(async (event) => {
         currentSpecies: pokemon.species,
         currentLevel: pokemon.level,
         heldItem: pokemon.heldItem,
+        gender: pokemon.gender,
+        // P2: prevention item flag
+        preventedByItem: result.preventedByItem || null,
         // P1: current Pokemon state for modal
         currentAbilities,
         currentMoves,

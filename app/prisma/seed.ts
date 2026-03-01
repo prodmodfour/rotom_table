@@ -271,77 +271,134 @@ function parseEvoLineSpeciesAndTrigger(lineText: string): { speciesName: string;
  * Parse trigger text into an EvolutionTrigger object.
  * Trigger text patterns (ordered by specificity):
  * 1. "Holding <Item> Minimum <N>" -> held item + level
- * 2. "<StoneName> [Gender] Minimum <N>" -> stone + level
- * 3. "Minimum <N>" -> level only
- * 4. "<StoneName>" -> stone only (no level)
- * 5. "" (empty) -> base stage, no trigger (shouldn't be called for base)
+ * 1b. "Holding <Item>" -> held item only
+ * 2. "Learn <Move> Minimum <N>" -> move + level
+ * 2b. "Learn <Move>" / "Minimum Learn <Move>" -> move only
+ * 3. "<StoneName> [Gender] Minimum <N>" -> stone + optional gender + level
+ * 4. "Minimum <N> [Gender]" / "[Gender] Minimum <N>" -> level + optional gender
+ * 5. "Minimum <N>" -> level only
+ * 6. "<StoneName>" -> stone only (no level)
+ * 7. "" (empty) -> base stage, no trigger
+ *
+ * Gender keywords: "Male", "Female" (case-insensitive)
+ * Move keywords: "Learn <MoveName>" (case-insensitive)
  */
 function parseEvolutionTriggerText(triggerText: string, toSpecies: string, targetStage: number): EvolutionTrigger {
   if (!triggerText) {
     return { toSpecies, targetStage, minimumLevel: null, requiredItem: null, itemMustBeHeld: false }
   }
 
+  // Extract gender from text (consumed — removed from remaining text for further parsing)
+  let requiredGender: 'Male' | 'Female' | null = null
+  let remaining = triggerText.trim()
+
+  const genderMatch = remaining.match(/\b(Male|Female)\b/i)
+  if (genderMatch) {
+    requiredGender = genderMatch[1].charAt(0).toUpperCase() + genderMatch[1].slice(1).toLowerCase() as 'Male' | 'Female'
+    remaining = remaining.replace(genderMatch[0], '').replace(/\s+/g, ' ').trim()
+  }
+
+  // Extract "Learn <MoveName>" from text (consumed)
+  let requiredMove: string | null = null
+  const learnMatch = remaining.match(/\bLearn\s+(.+?)(?:\s+Minimum\s+\d+\s*$|\s*$)/i)
+  if (learnMatch) {
+    requiredMove = learnMatch[1].trim()
+    remaining = remaining.replace(/\bLearn\s+.+?(?=\s+Minimum|\s*$)/i, '').trim()
+    // Handle "Minimum Learn X" edge case (Bonsly/Sudowoodo)
+    if (/^Minimum$/i.test(remaining)) {
+      remaining = ''
+    }
+  }
+
+  // Now parse the remaining text for item/level patterns
+
   // Pattern 1: "Holding <Item> Minimum <N>"
-  const holdingWithLevel = triggerText.match(/^Holding\s+(.+?)\s+Minimum\s+(\d+)\s*$/i)
+  const holdingWithLevel = remaining.match(/^Holding\s+(.+?)\s+Minimum\s+(\d+)\s*$/i)
   if (holdingWithLevel) {
     return {
-      toSpecies,
-      targetStage,
+      toSpecies, targetStage,
       minimumLevel: parseInt(holdingWithLevel[2], 10),
       requiredItem: holdingWithLevel[1].trim(),
-      itemMustBeHeld: true
+      itemMustBeHeld: true,
+      requiredGender,
+      requiredMove
     }
   }
 
   // Pattern 1b: "Holding <Item>" (no level requirement)
-  const holdingNoLevel = triggerText.match(/^Holding\s+(.+?)$/i)
+  const holdingNoLevel = remaining.match(/^Holding\s+(.+?)$/i)
   if (holdingNoLevel) {
     return {
-      toSpecies,
-      targetStage,
+      toSpecies, targetStage,
       minimumLevel: null,
       requiredItem: holdingNoLevel[1].trim(),
-      itemMustBeHeld: true
+      itemMustBeHeld: true,
+      requiredGender,
+      requiredMove
     }
   }
 
-  // Pattern 2: "<StoneName> [Gender] Minimum <N>"
-  // The stone name can be multi-word. Gender (Male/Female) may appear between stone and Minimum.
-  const stoneWithLevel = triggerText.match(/^(.+?)\s+(?:Male\s+|Female\s+)?Minimum\s+(\d+)\s*$/i)
+  // Pattern 2: "<StoneName> Minimum <N>"
+  // Stone name can be multi-word. Gender was already extracted.
+  const stoneWithLevel = remaining.match(/^(.+?)\s+Minimum\s+(\d+)\s*$/i)
   if (stoneWithLevel) {
     const itemName = stoneWithLevel[1].trim()
-    // Only treat as stone if it's not just "Minimum" (level-only)
     if (itemName && !/^minimum$/i.test(itemName)) {
       return {
-        toSpecies,
-        targetStage,
+        toSpecies, targetStage,
         minimumLevel: parseInt(stoneWithLevel[2], 10),
         requiredItem: itemName,
-        itemMustBeHeld: false
+        itemMustBeHeld: false,
+        requiredGender,
+        requiredMove
       }
     }
   }
 
-  // Pattern 3: "Minimum <N>" (level only)
-  const levelOnly = triggerText.match(/^Minimum\s+(\d+)\s*$/i)
+  // Pattern 3: "Minimum <N>" (level only, possibly with gender/move already extracted)
+  const levelOnly = remaining.match(/^Minimum\s+(\d+)\s*$/i)
   if (levelOnly) {
     return {
-      toSpecies,
-      targetStage,
+      toSpecies, targetStage,
       minimumLevel: parseInt(levelOnly[1], 10),
       requiredItem: null,
-      itemMustBeHeld: false
+      itemMustBeHeld: false,
+      requiredGender,
+      requiredMove
     }
   }
 
-  // Pattern 4: "<StoneName>" (stone only, no level requirement)
-  // Any remaining text is treated as an item name
+  // If only gender/move were extracted and nothing else remains
+  if (!remaining && (requiredGender || requiredMove)) {
+    return {
+      toSpecies, targetStage,
+      minimumLevel: null,
+      requiredItem: null,
+      itemMustBeHeld: false,
+      requiredGender,
+      requiredMove
+    }
+  }
+
+  // Pattern 4: Remaining text is a stone/item name (no level requirement)
+  if (remaining) {
+    return {
+      toSpecies, targetStage,
+      minimumLevel: null,
+      requiredItem: remaining,
+      itemMustBeHeld: false,
+      requiredGender,
+      requiredMove
+    }
+  }
+
   return {
-    toSpecies,
-    targetStage,
+    toSpecies, targetStage,
     minimumLevel: null,
-    requiredItem: triggerText.trim(),
-    itemMustBeHeld: false
+    requiredItem: null,
+    itemMustBeHeld: false,
+    requiredGender,
+    requiredMove
   }
 }
 

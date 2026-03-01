@@ -12,6 +12,10 @@ export interface EvolutionTrigger {
   requiredItem: string | null
   /** Whether the item must be held (vs consumed like a stone) */
   itemMustBeHeld: boolean
+  /** P2: Gender requirement for this evolution ('Male', 'Female', or null for any) */
+  requiredGender?: 'Male' | 'Female' | null
+  /** P2: Move name the Pokemon must know to evolve (null if none required) */
+  requiredMove?: string | null
 }
 
 export interface SpeciesData {

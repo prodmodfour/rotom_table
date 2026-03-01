@@ -419,6 +419,22 @@ export async function performEvolution(input: PerformEvolutionInput): Promise<Ev
     }
   }
 
+  // P2: Validate gender requirement
+  if (trigger.requiredGender) {
+    if (!pokemon.gender || pokemon.gender.toLowerCase() !== trigger.requiredGender.toLowerCase()) {
+      throw new Error(`This evolution requires ${trigger.requiredGender} gender (Pokemon is ${pokemon.gender || 'Genderless'})`)
+    }
+  }
+
+  // P2: Validate move requirement
+  if (trigger.requiredMove) {
+    const currentMoves: Array<{ name: string }> = JSON.parse(pokemon.moves || '[]')
+    const knownMoveNames = currentMoves.map(m => m.name.toLowerCase())
+    if (!knownMoveNames.includes(trigger.requiredMove.toLowerCase())) {
+      throw new Error(`Pokemon must know ${trigger.requiredMove} to evolve`)
+    }
+  }
+
   // 3b. Capture pre-evolution snapshot for undo (P2)
   const undoSnapshot: PokemonSnapshot = {
     species: pokemon.species,

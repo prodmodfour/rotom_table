@@ -19,6 +19,10 @@ export interface EvolutionCheckInput {
   currentLevel: number
   heldItem: string | null
   evolutionTriggers: EvolutionTrigger[]
+  /** P2: Pokemon's gender for gender-specific evolution checks */
+  gender?: string | null
+  /** P2: Move names the Pokemon currently knows (for move-specific evolution checks) */
+  currentMoves?: string[]
 }
 
 export interface EvolutionAvailable {
@@ -90,6 +94,22 @@ export function checkEvolutionEligibility(input: EvolutionCheckInput): Evolution
     if (trigger.requiredItem !== null && trigger.itemMustBeHeld) {
       if (!heldItem || heldItem.toLowerCase() !== trigger.requiredItem.toLowerCase()) {
         reasons.push(`Requires holding ${trigger.requiredItem}`)
+      }
+    }
+
+    // P2: Check gender requirement
+    if (trigger.requiredGender) {
+      const pokemonGender = input.gender || null
+      if (!pokemonGender || pokemonGender.toLowerCase() !== trigger.requiredGender.toLowerCase()) {
+        reasons.push(`Requires ${trigger.requiredGender} gender`)
+      }
+    }
+
+    // P2: Check move requirement
+    if (trigger.requiredMove) {
+      const knownMoves = (input.currentMoves || []).map(m => m.toLowerCase())
+      if (!knownMoves.includes(trigger.requiredMove.toLowerCase())) {
+        reasons.push(`Requires knowing ${trigger.requiredMove}`)
       }
     }
 
