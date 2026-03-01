@@ -1,19 +1,18 @@
 ---
-generated_at: 2026-03-01T11:42:21.677Z
-total_tickets: 237
-open: 21
-in_progress: 101
+generated_at: 2026-03-01T12:35:20.249Z
+total_tickets: 240
+open: 23
+in_progress: 102
 resolved: 104
 ---
 
 # Tickets Index
 
-## Open Tickets (21)
+## Open Tickets (23)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
 | ptu-rule-127 | ptu-rule | P1 | character-lifecycle | Per decree-037, trainers should NOT receive an automatic +1  |
-| feature-016 | feature | P2 | combat+vtt-grid | feature-016: Priority / Interrupt / Attack of Opportunity Sy |
 | feature-017 | feature | P2 | capture | feature-017: Poke Ball Type System |
 | feature-018 | feature | P2 | scenes | feature-018: Weather Effect Automation |
 | feature-019 | feature | P2 | vtt-grid | feature-019: VTT Status-Movement Integration |
@@ -21,8 +20,11 @@ resolved: 104
 | feature-021 | feature | P2 | character-lifecycle | feature-021: Derived Capability Calculations |
 | feature-022 | feature | P2 | pokemon-lifecycle | feature-022: Pokemon Loyalty System |
 | feature-023 | feature | P2 | player-view+capture+healing | feature-023: Player Capture & Healing Interfaces |
+| bug-041 | bug | P3 | — | bug-041: Remove Whirlwind references from Force Switch UI pe |
 | feature-004 | feature | P3 | combat | feature-004: Pokemon Mounting / Rider System |
 | ux-012 | ux | P3 | — | The server broadcasts `status_tick` WebSocket events when ti |
+| decree-need-038 | decree | P3 | — | decree-need-038: Does forced switch (Roar) override the Trap |
+| refactoring-108 | refactoring | P3 | — | refactoring-108: Extract switch button computeds from Combat |
 | ptu-rule-095 | ptu-rule | P4 | vtt-grid | ptu-rule-095: Disengage maneuver missing from combatManeuver |
 | ptu-rule-125 | ptu-rule | P4 | character-lifecycle | ptu-rule-125: Populate grantedCapabilities on all capability |
 | ptu-rule-126 | ptu-rule | P4 | combat | ptu-rule-126: Snow Boots conditional Overland speed penalty  |
@@ -34,7 +36,7 @@ resolved: 104
 | refactoring-102 | refactoring | P4 | pokemon-lifecycle | Extract EvolutionSelectionModal from duplicated branching ev |
 | refactoring-105 | refactoring | P4 | combat | Remove Spurious 'Bound' Condition Check from Trapped Validat |
 
-## In-Progress Tickets (101)
+## In-Progress Tickets (102)
 
 | ID | Category | Priority | Domain | Source |
 |----|----------|----------|--------|--------|
@@ -66,6 +68,7 @@ resolved: 104
 | bug-039 | bug | P2 | capture | capture-audit-report (R018, 2026-02-28) |
 | ptu-rule-107 | ptu-rule | P2 | combat | decree-021 |
 | ptu-rule-108 | ptu-rule | P2 | vtt-grid | rules-review-160 M2 + rules-review-162 M1 |
+| feature-016 | feature | P2 | combat+vtt-grid | matrix-gap (combat Gap 2 + VTT SG-5) |
 | refactoring-106 | refactoring | P2 | combat | decree-038 |
 | bug-001 | bug | P2 | csv-import | code-review-034 |
 | bug-030 | bug | P2 | player-view | code-review-159 M3 |
@@ -140,17 +143,19 @@ resolved: 104
 | refactoring-092 | refactoring | P4 | encounter-tables | code-review-207 M1 |
 | refactoring-093 | refactoring | P4 | combat | code-review-207 M2 |
 
-## Open Decree-Needs (0)
+## Open Decree-Needs (1)
 
-All decree-needs addressed.
+| ID | Priority | Domain | Topic |
+|----|----------|--------|-------|
+| decree-need-038 | P3 | — | — |
 
 ## Summary by Category
 
 | Category | Open | In-Progress | Resolved | Total |
 |----------|------|-------------|----------|-------|
-| bug | 0 | 12 | 26 | 40 |
+| bug | 1 | 12 | 26 | 41 |
 | ptu-rule | 4 | 59 | 36 | 100 |
-| feature | 9 | 10 | 3 | 23 |
+| feature | 8 | 11 | 3 | 23 |
 | ux | 3 | 7 | 2 | 13 |
-| decree | 0 | 0 | 37 | 37 |
-| refactoring | 5 | 13 | 0 | 24 |
+| decree | 1 | 0 | 37 | 38 |
+| refactoring | 6 | 13 | 0 | 25 |
