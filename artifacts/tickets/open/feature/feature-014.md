@@ -3,7 +3,7 @@ id: feature-014
 title: VTT Flanking Detection
 priority: P1
 severity: HIGH
-status: open
+status: in-progress
 domain: vtt-grid+combat
 source: matrix-gap (combat Gap 4 + VTT SG-2)
 matrix_source: combat R063, R064, R065, vtt-grid R018, R019, R020
@@ -39,3 +39,15 @@ No flanking detection exists. PTU flanking grants -2 evasion penalty when a targ
 ## Implementation Scope
 
 FULL-scope feature requiring design spec. Depends on multi-tile token system (feature-013) for Large+ combatant flanking.
+
+## Design Spec
+
+- **Design ID**: design-flanking-001
+- **Location**: `artifacts/designs/design-flanking-001/`
+- **Status**: designed (P0/P1/P2 specs complete)
+
+## Resolution Log
+
+| Date | Action | Details |
+|------|--------|---------|
+| 2026-03-01 | Design spec created | Full multi-tier design spec with P0 (core 1x1 flanking), P1 (multi-tile, advanced), P2 (automation, UI, WebSocket) |
