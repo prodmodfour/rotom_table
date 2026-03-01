@@ -51,3 +51,4 @@ FULL-scope feature requiring design spec. Depends on multi-tile token system (fe
 | Date | Action | Details |
 |------|--------|---------|
 | 2026-03-01 | Design spec created | Full multi-tier design spec with P0 (core 1x1 flanking), P1 (multi-tile, advanced), P2 (automation, UI, WebSocket) |
+| 2026-03-01 | P0 implemented | 8 commits: a695cfa5..0c4bd69d. Section A (flankingGeometry.ts), B (useFlankingDetection.ts), C (canvas+VTTToken visual), D (evasion penalty in accuracy). Files: types/combat.ts, utils/flankingGeometry.ts, composables/useFlankingDetection.ts, composables/useCanvasDrawing.ts, composables/useGridRendering.ts, composables/useMoveCalculation.ts, components/vtt/VTTToken.vue, components/vtt/GridCanvas.vue, components/encounter/MoveTargetModal.vue |

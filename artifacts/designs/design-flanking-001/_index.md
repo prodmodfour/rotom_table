@@ -44,7 +44,7 @@ Implement PTU flanking detection on the VTT grid. When a combatant is adjacent t
 
 | Tier | Sections | File |
 |------|----------|------|
-| P0 | A. Flanking geometry utility, B. 1x1 flanking detection composable, C. Visual indicator on VTT, D. Flanking evasion penalty in accuracy | [spec-p0.md](spec-p0.md) |
+| P0 | A. Flanking geometry utility, B. 1x1 flanking detection composable, C. Visual indicator on VTT, D. Flanking evasion penalty in accuracy | [spec-p0.md](spec-p0.md) | **IMPLEMENTED** |
 | P1 | E. Multi-tile target flanking geometry, F. Multi-tile attacker counting, G. Diagonal flanking with PTU distance, H. 3+ attacker flanking | [spec-p1.md](spec-p1.md) |
 | P2 | I. Auto-detect flanking on token placement/movement, J. Auto-apply penalty to accuracy checks, K. Flanking indicator in CombatantCard, L. WebSocket flanking sync | [spec-p2.md](spec-p2.md) |
 
@@ -58,10 +58,10 @@ Implement PTU flanking detection on the VTT grid. When a combatant is adjacent t
 
 | # | Mechanic | Current Status | Gap | Priority |
 |---|----------|---------------|-----|----------|
-| A | Flanking geometry utility (pure math) | NOT_IMPLEMENTED | No adjacency-based flanking logic | **P0** |
-| B | 1x1 flanking detection composable | NOT_IMPLEMENTED | No flanking detection | **P0** |
-| C | Visual indicator on VTT grid | NOT_IMPLEMENTED | No flanking visual feedback | **P0** |
-| D | Flanking evasion penalty in accuracy | NOT_IMPLEMENTED | No -2 evasion penalty | **P0** |
+| A | Flanking geometry utility (pure math) | IMPLEMENTED | flankingGeometry.ts | **P0** |
+| B | 1x1 flanking detection composable | IMPLEMENTED | useFlankingDetection.ts | **P0** |
+| C | Visual indicator on VTT grid | IMPLEMENTED | Canvas + VTTToken CSS | **P0** |
+| D | Flanking evasion penalty in accuracy | IMPLEMENTED | useMoveCalculation.ts | **P0** |
 | E | Multi-tile target flanking geometry | NOT_IMPLEMENTED | Depends on feature-013 | **P1** |
 | F | Multi-tile attacker counting | NOT_IMPLEMENTED | Large attackers count as multiple foes | **P1** |
 | G | Diagonal flanking with PTU distance | NOT_IMPLEMENTED | Adjacency uses Chebyshev, decree-002 applies | **P1** |
