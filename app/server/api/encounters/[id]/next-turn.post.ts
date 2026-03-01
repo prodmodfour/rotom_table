@@ -19,7 +19,7 @@ import { calculateDamage, applyDamageToEntity, applyFaintStatus } from '~/server
 import { getTickDamageEntries, getCombatantName } from '~/server/services/status-automation.service'
 import type { TickDamageResult } from '~/server/services/status-automation.service'
 import { broadcastToEncounter } from '~/server/utils/websocket'
-import { expirePendingActions, cleanupResolvedActions } from '~/server/services/out-of-turn.service'
+import { expirePendingActions, cleanupResolvedActions, checkHoldQueue, removeFromHoldQueue } from '~/server/services/out-of-turn.service'
 import { checkHeavilyInjured, applyHeavilyInjuredPenalty, checkDeath } from '~/utils/injuryMechanics'
 import type { TrainerDeclaration } from '~/types/combat'
 import type { StatusCondition } from '~/types'
@@ -207,6 +207,25 @@ export default defineEventHandler(async (event) => {
     // Move to next turn
     currentTurnIndex++
 
+    // --- Hold Queue check (P1 — PTU p.227) ---
+    // After each turn ends, check if any held combatant's target initiative has been reached.
+    // If so, flag the hold release for response (the GM can call release-hold to insert them).
+    let holdQueue = JSON.parse(encounter.holdQueue || '[]') as Array<{
+      combatantId: string; holdUntilInitiative: number | null
+    }>
+    let holdReleaseTriggered: { combatantId: string } | null = null
+
+    if (holdQueue.length > 0 && currentTurnIndex < turnOrder.length) {
+      const nextCombatantId = turnOrder[currentTurnIndex]
+      const nextCombatant = combatants.find((c: any) => c.id === nextCombatantId)
+      const nextInit = nextCombatant?.initiative ?? 0
+
+      const releaseCheck = checkHoldQueue(holdQueue, nextInit)
+      if (releaseCheck) {
+        holdReleaseTriggered = releaseCheck
+      }
+    }
+
     // Parse declarations for edge case handling (fainted trainers, missing declarations)
     const declarations: TrainerDeclaration[] = JSON.parse(encounter.declarations || '[]')
 
@@ -392,6 +411,10 @@ export default defineEventHandler(async (event) => {
       updateData.declarations = JSON.stringify([])
       updateData.switchActions = JSON.stringify([])
 
+      // Clear hold queue at round end (F5: unheld actions at round end are lost)
+      holdQueue = []
+      updateData.holdQueue = JSON.stringify([])
+
       // Expire pending out-of-turn actions from the previous round (Section D3)
       // and clean up resolved/declined/expired actions from past rounds (MED-004)
       const pendingActions = JSON.parse(encounter.pendingActions || '[]')
@@ -459,7 +482,8 @@ export default defineEventHandler(async (event) => {
       success: true,
       data: response,
       ...(heavilyInjuredPenalty && { heavilyInjuredPenalty }),
-      ...(tickResults.length > 0 && { tickDamage: tickResults })
+      ...(tickResults.length > 0 && { tickDamage: tickResults }),
+      ...(holdReleaseTriggered && { holdReleaseTriggered })
     }
   } catch (error: unknown) {
     if (error && typeof error === 'object' && 'statusCode' in error) throw error
@@ -515,15 +539,28 @@ function resetAllTrainersForResolution(combatants: any[], resolutionOrder: strin
 /**
  * Reset all combatants for a new round by mutating each object in the array.
  * Acceptable here because combatants are freshly parsed from JSON (no shared references).
+ *
+ * Handles skipNextRound (Advanced Priority penalty, P1):
+ * If a combatant has skipNextRound=true, they are pre-marked as acted
+ * and the flag is cleared for subsequent rounds.
  */
 function resetCombatantsForNewRound(combatants: any[]) {
   combatants.forEach((c: any) => {
-    c.hasActed = false
-    c.actionsRemaining = 2
-    c.shiftActionsRemaining = 1
+    // Check for Advanced Priority / Interrupt penalty (P1 spec B4, F3)
+    const shouldSkip = c.skipNextRound === true
+    if (shouldSkip) {
+      c.hasActed = true // Pre-mark as acted so they skip their turn
+      c.actionsRemaining = 0
+      c.shiftActionsRemaining = 0
+    } else {
+      c.hasActed = false
+      c.actionsRemaining = 2
+      c.shiftActionsRemaining = 1
+    }
+    c.skipNextRound = false // Always clear the flag
     c.readyAction = null
     c.turnState = {
-      hasActed: false,
+      hasActed: shouldSkip,
       standardActionUsed: false,
       shiftActionUsed: false,
       swiftActionUsed: false,
@@ -537,6 +574,12 @@ function resetCombatantsForNewRound(combatants: any[]) {
       interruptUsed: false
     }
     c.disengaged = false
+    // Reset hold action state for new round (P1)
+    c.holdAction = {
+      isHolding: false,
+      holdUntilInitiative: null,
+      holdUsedThisRound: false
+    }
   })
 }
 
