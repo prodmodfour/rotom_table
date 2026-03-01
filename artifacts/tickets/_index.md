@@ -1,18 +1,19 @@
 ---
-generated_at: 2026-03-01T15:19:42.055Z
-total_tickets: 248
-open: 27
+generated_at: 2026-03-01T16:42:26.582Z
+total_tickets: 251
+open: 30
 in_progress: 102
 resolved: 105
 ---
 
 # Tickets Index
 
-## Open Tickets (27)
+## Open Tickets (30)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
 | ptu-rule-127 | ptu-rule | P1 | character-lifecycle | Per decree-037, trainers should NOT receive an automatic +1  |
+| ptu-rule-131 | ptu-rule | P2 | combat | ptu-rule-131: Expert+ Combat skill not handled for AoO Strug |
 | feature-017 | feature | P2 | capture | feature-017: Poke Ball Type System |
 | feature-018 | feature | P2 | scenes | feature-018: Weather Effect Automation |
 | feature-019 | feature | P2 | vtt-grid | feature-019: VTT Status-Movement Integration |
@@ -26,6 +27,8 @@ resolved: 105
 | ux-012 | ux | P3 | — | The server broadcasts `status_tick` WebSocket events when ti |
 | refactoring-108 | refactoring | P3 | — | refactoring-108: Extract switch button computeds from Combat |
 | refactoring-112 | refactoring | P3 | combat | Refactoring-112: Decompose encounter store into focused sub- |
+| refactoring-113 | refactoring | P3 | combat | refactoring-113: Wire or remove autoDeclineFaintedReactor in |
+| refactoring-114 | refactoring | P3 | character-lifecycle | refactoring-114: Rename capturedSpecies to ownedSpecies for  |
 | ptu-rule-095 | ptu-rule | P4 | vtt-grid | ptu-rule-095: Disengage maneuver missing from combatManeuver |
 | ptu-rule-125 | ptu-rule | P4 | character-lifecycle | ptu-rule-125: Populate grantedCapabilities on all capability |
 | ptu-rule-126 | ptu-rule | P4 | combat | ptu-rule-126: Snow Boots conditional Overland speed penalty  |
@@ -156,8 +159,8 @@ All decree-needs addressed.
 | Category | Open | In-Progress | Resolved | Total |
 |----------|------|-------------|----------|-------|
 | bug | 1 | 12 | 26 | 41 |
-| ptu-rule | 6 | 59 | 36 | 102 |
+| ptu-rule | 7 | 59 | 36 | 103 |
 | feature | 8 | 11 | 3 | 23 |
 | ux | 5 | 7 | 2 | 15 |
 | decree | 0 | 0 | 38 | 38 |
-| refactoring | 7 | 13 | 0 | 29 |
+| refactoring | 9 | 13 | 0 | 31 |
