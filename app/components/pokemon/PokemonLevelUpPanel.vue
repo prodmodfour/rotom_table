@@ -19,17 +19,36 @@
       <div v-if="levelUpInfo.totalTutorPoints > 0" class="level-up-item">
         <strong>Tutor Points:</strong> +{{ levelUpInfo.totalTutorPoints }}
       </div>
+
+      <!-- New moves — show as actionable item -->
       <div v-if="levelUpInfo.allNewMoves.length > 0" class="level-up-item level-up-item--highlight">
         <strong>New Moves Available:</strong>
-        <ul>
-          <li v-for="move in levelUpInfo.allNewMoves" :key="move">{{ move }}</li>
-        </ul>
+        <span>{{ levelUpInfo.allNewMoves.join(', ') }}</span>
+        <button
+          v-if="pokemon && !showMovePanel"
+          class="btn btn--sm btn--accent action-btn"
+          @click="showMovePanel = true"
+        >
+          <PhSword :size="14" />
+          Learn Moves
+        </button>
       </div>
+
+      <!-- Ability milestones — show as actionable item -->
       <div v-if="levelUpInfo.abilityMilestones.length > 0" class="level-up-item level-up-item--milestone">
         <div v-for="milestone in levelUpInfo.abilityMilestones" :key="milestone.level">
           <strong>Lv. {{ milestone.level }}:</strong> {{ milestone.message }}
+          <button
+            v-if="pokemon && !showAbilityPanel && canAssignAbility(milestone.type)"
+            class="btn btn--sm btn--accent action-btn"
+            @click="openAbilityPanel(milestone.type as 'second' | 'third')"
+          >
+            <PhLightning :size="14" />
+            Assign Ability
+          </button>
         </div>
       </div>
+
       <div class="level-up-item level-up-item--reminder">
         Use the <strong>Evolve</strong> button in the header to check evolution eligibility.
       </div>
@@ -43,11 +62,31 @@
       @allocated="handleAllocated"
       @cancelled="showAllocationPanel = false"
     />
+
+    <!-- Inline ability assignment panel -->
+    <AbilityAssignmentPanel
+      v-if="showAbilityPanel && pokemon && activeMilestone && speciesData"
+      :pokemon="pokemon"
+      :milestone="activeMilestone"
+      :species-abilities="speciesData.abilities"
+      :num-basic-abilities="speciesData.numBasicAbilities"
+      @assigned="handleAbilityAssigned"
+      @cancelled="showAbilityPanel = false"
+    />
+
+    <!-- Inline move learning panel -->
+    <MoveLearningPanel
+      v-if="showMovePanel && pokemon && levelUpInfo"
+      :pokemon="pokemon"
+      :available-moves="levelUpInfo.allNewMoves"
+      @learned="handleMoveLearned"
+      @skipped="showMovePanel = false"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import { PhSliders } from '@phosphor-icons/vue'
+import { PhSliders, PhSword, PhLightning } from '@phosphor-icons/vue'
 import type { Pokemon } from '~/types'
 
 interface LevelUpSummary {
@@ -55,6 +94,11 @@ interface LevelUpSummary {
   allNewMoves: string[]
   abilityMilestones: Array<{ level: number; type: string; message: string }>
   totalTutorPoints: number
+}
+
+interface SpeciesAbilityData {
+  abilities: string[]
+  numBasicAbilities: number
 }
 
 const props = defineProps<{
@@ -71,10 +115,60 @@ const emit = defineEmits<{
 
 const levelUpInfo = ref<LevelUpSummary | null>(null)
 const showAllocationPanel = ref(false)
+const showAbilityPanel = ref(false)
+const showMovePanel = ref(false)
+const activeMilestone = ref<'second' | 'third' | null>(null)
+const speciesData = ref<SpeciesAbilityData | null>(null)
+
+/** Check if the Pokemon can still assign an ability at this milestone */
+function canAssignAbility(type: string): boolean {
+  if (!props.pokemon) return false
+  const abilities = props.pokemon.abilities || []
+  if (type === 'second') return abilities.length < 2
+  if (type === 'third') return abilities.length < 3
+  return false
+}
+
+/** Open the ability panel, fetching species data if needed */
+async function openAbilityPanel(milestone: 'second' | 'third') {
+  activeMilestone.value = milestone
+
+  // Fetch species data for ability list if not already loaded
+  if (!speciesData.value && props.pokemon) {
+    try {
+      const response = await $fetch<{
+        success: boolean
+        data: { abilities: string; numBasicAbilities: number }
+      }>(`/api/species/${props.pokemon.species}`)
+
+      if (response.success) {
+        speciesData.value = {
+          abilities: JSON.parse(response.data.abilities),
+          numBasicAbilities: response.data.numBasicAbilities
+        }
+      }
+    } catch {
+      alert('Failed to load species ability data.')
+      return
+    }
+  }
+
+  showAbilityPanel.value = true
+}
 
 function handleAllocated() {
   showAllocationPanel.value = false
   emit('allocated')
+}
+
+function handleAbilityAssigned() {
+  showAbilityPanel.value = false
+  emit('allocated') // Trigger parent refresh
+}
+
+function handleMoveLearned() {
+  // Keep panel open for learning additional moves
+  // Parent can refresh on next save
 }
 
 // Watch for level changes — fetch level-up info from server
@@ -82,6 +176,8 @@ watch(() => props.targetLevel, async (newLevel) => {
   if (!newLevel || newLevel <= props.currentLevel) {
     levelUpInfo.value = null
     showAllocationPanel.value = false
+    showAbilityPanel.value = false
+    showMovePanel.value = false
     return
   }
   try {
@@ -167,7 +263,8 @@ watch(() => props.targetLevel, async (newLevel) => {
   }
 }
 
-.allocate-btn {
+.allocate-btn,
+.action-btn {
   margin-left: $spacing-sm;
   display: inline-flex;
   align-items: center;
