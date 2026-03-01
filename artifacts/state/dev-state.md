@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-02-28T22:30:00
-updated_by: slave-collector (plan-20260228-214159)
+last_updated: 2026-03-01T08:30:00
+updated_by: slave-collector (plan-20260228-233710)
 ---
 
 # Dev Ecosystem State
@@ -80,6 +80,7 @@ updated_by: slave-collector (plan-20260228-214159)
 | ptu-rule-124 | P4 | **resolved** | Replace bogus encounter budget formula citation. Research confirmed PTU Chapter 11 p.473 DOES contain the formula — reframed as "PTU guideline". code-review-223 **APPROVED** + rules-review-199 **APPROVED**. decree-031 compliant |
 | ptu-rule-125 | P4 | **open** | Populate grantedCapabilities on all capability-granting catalog entries (Dark Vision Goggles, Re-Breather, Gas Mask). Follow-up from code-review-222 M-02 + rules-review-198 MED-02. Filed by slave-collector (plan-20260228-153856) |
 | ptu-rule-126 | P4 | **open** | Snow Boots conditional Overland speed penalty not mechanically enforced (-1 on ice/deep snow). Follow-up from rules-review-198 MED-01. Filed by slave-collector (plan-20260228-153856) |
+| ptu-rule-127 | P1 | **resolved** | Remove automatic skill rank per level per decree-037. Resolved by slave-3 (plan-20260228-233710) as part of feature-008 fix cycle. skillRanksGained removed from trainerAdvancement.ts, LevelUpSkillSection disabled, skills step removed from wizard |
 
 ### Feature Tickets (`tickets/feature/`)
 | Ticket | Priority | Status | Summary | Design Complexity |
@@ -89,12 +90,12 @@ updated_by: slave-collector (plan-20260228-214159)
 | feature-003 | P1 | **Track-A-P2-APPROVED + Track-B-P1-APPROVED + Track-C-P1-APPROVED** | Player View — Track A P2 APPROVED: code-review-188 APPROVED (`:deep()` fix complete). Track B P1 APPROVED (code-review-162). Track C P1 APPROVED (code-review-163 + rules-review-152). All tracks P0+P1+P2 complete | multi-phase-parallel |
 | feature-004 | P3 | **design-complete** | Pokemon Mounting / Rider System — design spec created by slave-1 (plan-20260228-153856). 7 files in design-mounting-001/: _index.md, spec-p0.md (mount relationship, APIs, combat state), spec-p1.md (VTT linked tokens, dismount checks, Mounted Prowess), spec-p2.md (Rider class features), shared-specs.md, testing-strategy.md | multi-phase |
 | feature-005 | P3 | **design-complete** | Living Weapon System (Honedge Line) — design spec created by slave-2 (plan-20260228-153856). 7 files in design-living-weapon-001/: _index.md, spec-p0.md (wield relationship, Living Weapon capability), spec-p1.md (equipment integration, Doublade/Aegislash bonuses), spec-p2.md (shared movement, No Guard suppression, Weaponize/Soulstealer), shared-specs.md, testing-strategy.md | multi-phase |
-| feature-006 | P1 | **fix-cycle-done** | Pokemon Evolution System — P0 fix cycle completed by slave-1 (plan-20260228-214159). 6 commits: spriteUrl reset to null (C1), pokemon-evolved event wired in XpDistributionModal (H1), branching evolution selection UI (H2), encounter-active guard on evolve (H3), app-surface.md updated (M1), PokemonLevelUpPanel text replaced (M2). Needs re-review | multi-phase |
-| feature-007 | P1 | **P0-reviewed, CHANGES_REQUIRED** | Pokemon Level-Up Allocation UI — P0 implemented. code-review-229 **CHANGES_REQUIRED** (H1: no unit tests for baseRelations.ts, H2: app-surface.md, M1: extractStatPoints clamping, M2: partial allocation blocked, M3: SCSS hardcoded pixel). rules-review-205 **APPROVED** (all PTU mechanics correct). Needs fix cycle | multi-phase |
-| feature-008 | P1 | **P0-reviewed, CHANGES_REQUIRED** | Trainer Level-Up Milestone Workflow — P0 implemented. code-review-230 **CHANGES_REQUIRED** (C1: double modal open from watcher, H1: evasion cap missing, H2: currentHp not increased at full HP, M1-M2: duplicated constants, M3: app-surface.md). rules-review-206 **CHANGES_REQUIRED** (HIGH-01: automatic skill rank per level contradicts PTU RAW → decree-need-028). Needs fix cycle + decree ruling | multi-phase |
+| feature-006 | P1 | **P0-APPROVED** | Pokemon Evolution System — P0 fix cycle APPROVED. code-review-231 **APPROVED** (0 blocking issues, M1→refactoring-101, M2→refactoring-102) + rules-review-207 **APPROVED** (all 7 mechanics verified correct, decree-035 compliant). All 7 original code-review-226 issues resolved. P1 pending (ability remap, move learning per decree-036, capabilities) | multi-phase |
+| feature-007 | P1 | **P0-fix-cycle-done** | Pokemon Level-Up Allocation UI — P0 fix cycle completed by slave-2 (plan-20260228-233710). 6 commits: unit tests for baseRelations.ts (H1), app-surface.md updated (H2), extractStatPoints warnings field (M1), partial allocation with confirmation dialog (M2), SCSS $spacing-xs (M3). Needs re-review | multi-phase |
+| feature-008 | P1 | **P0-fix-cycle-done** | Trainer Level-Up Milestone Workflow — P0 fix cycle + decree-037 compliance completed by slave-3 (plan-20260228-233710). 12 commits: double modal guard (C1), evasion cap (H1), currentHp at full HP (H2), remove skillRanksGained per decree-037 (4 commits), extract STAT_DEFINITIONS+RANK_PROGRESSION to constants/trainerStats.ts (M1-M2), app-surface.md (M3), spec-p0 Section E update. Needs re-review | multi-phase |
 | feature-010 | P1 | **resolved** | Status Condition Automation Engine — P0 implemented. Fix cycle completed: M1 (app-surface.md) fixed by slave-2 (plan-20260228-214159). Ticket moved to resolved. code-review-227 all issues resolved, rules-review-203 APPROVED | multi-phase |
-| feature-011 | P1 | **P0-implemented** | Pokemon Switching Workflow — P0 implemented by slave-2 (plan-20260228-214159). 10 commits: SwitchAction type + schema, switching.service.ts (10-step validation), switch.post.ts endpoint, useSwitching composable, SwitchPokemonModal, store actions + GM UI button, switchActions lifecycle in encounter flow, app-surface.md updated. Needs review | multi-phase |
-| feature-012 | P1 | **needs-fix-cycle** | Death & Heavily Injured Automation — re-reviewed by slave-3 (plan-20260228-214159). code-review-228 **CHANGES_REQUIRED** (H1-NEW: damage.post.ts defeated tracking misses heavily-injured-penalty faint — one-line fix, M1-NEW: combatant.service.ts 809 lines, M2-NEW: app-surface.md missing encounterXp store). rules-review-204 **CHANGES_REQUIRED** (HIGH-001: same damage.post.ts tracking gap). Needs fix cycle | single-phase |
+| feature-011 | P1 | **P0-reviewed, CHANGES_REQUIRED** | Pokemon Switching Workflow — P0 reviewed by slave-5 (plan-20260228-233710). code-review-232 **CHANGES_REQUIRED** (C1: pokemon_switched WS not handled client-side, H1: no undo/redo snapshot, H2: no encounter_update broadcast, M1-M3). rules-review-208 **CHANGES_REQUIRED** (CRITICAL-001: Trapped check missing, HIGH-001: volatile conditions not cleared on recall, HIGH-002: temporaryHp not cleared on recall, M1-M2). Needs fix cycle | multi-phase |
+| feature-012 | P1 | **fix-cycle-done** | Death & Heavily Injured Automation — fix cycle 3 completed by slave-1 (plan-20260228-233710). 4 commits: use faintedFromAnySource in isDefeated check (H1-NEW), extract entity builders to entity-builder.service.ts (M1-NEW), add encounterXp store to app-surface.md (M2-NEW), update ticket. All code-review-228 + rules-review-204 issues resolved. Needs re-review | single-phase |
 
 ### UX Tickets (`tickets/ux/`)
 | Ticket | Priority | Status | Summary |
@@ -114,7 +115,21 @@ updated_by: slave-collector (plan-20260228-214159)
 
 ## Active Developer Work
 
-**Current task:** Session 68 collection complete. 5 slaves merged (22 commits, 1 app-surface.md conflict resolved). 2 dev slaves (feature-006-fix 6 commits, feature-010-fix+feature-011-p0 10 commits). 3 reviewer slaves (feature-012 re-review CHANGES_REQUIRED, feature-007 review CHANGES_REQUIRED, feature-008 review CHANGES_REQUIRED). Smoke test PASSED. decree-need-028 filed (automatic skill ranks per level). Review artifact naming collision fixed (228/204 renumbered to 229/205 and 230/206 for slaves 4/5).
+**Current task:** Session 69 collection complete. 5 slaves merged (26 commits, 0 conflicts). 3 dev slaves (feature-012-fix 4 commits, feature-007-fix 6 commits, feature-008-fix+decree-037 12 commits). 2 reviewer slaves (feature-006 re-review APPROVED, feature-011 review CHANGES_REQUIRED). Smoke test PASSED. 2 follow-up tickets filed (refactoring-101, refactoring-102).
+
+**Session 69 (2026-03-01, plan-20260228-233710):**
+- **slave-1** (developer): feature-012-fix — 4 commits: Fix cycle 3 for Death & Heavily Injured (code-review-228 + rules-review-204). Used faintedFromAnySource in isDefeated check for XP tracking (H1-NEW), extracted entity builders to entity-builder.service.ts (M1-NEW), added encounterXp store to app-surface.md (M2-NEW), updated ticket. → **fix-cycle-done, needs re-review**
+- **slave-2** (developer): feature-007-fix — 6 commits: Fix cycle for Pokemon Level-Up Allocation (code-review-229). Added warnings field to extractStatPoints (M1), replaced hardcoded gap with $spacing-xs (M3), allowed partial stat allocation with confirmation dialog (M2), wrote comprehensive unit tests for baseRelations.ts (H1), updated app-surface.md (H2), updated ticket and design spec. → **fix-cycle-done, needs re-review**
+- **slave-3** (developer): feature-008-fix+ptu-rule-127 — 12 commits: Fix cycle for Trainer Level-Up Milestone (code-review-230 + rules-review-206) + decree-037 compliance. Double modal open guard (C1), evasion cap +6 (H1), currentHp heal at full HP (H2), removed skillRanksGained from trainerAdvancement.ts per decree-037 (4 commits: utility, composable, modal wizard, summary), updated spec-p0 Section E, extracted STAT_DEFINITIONS+RANK_PROGRESSION to constants/trainerStats.ts (M1-M2), app-surface.md (M3). ptu-rule-127 **resolved**. → **fix-cycle-done, needs re-review**
+- **slave-4** (reviewers): feature-006-rereview — code-review-231 **APPROVED** (0 blocking issues, M1: type-badge SCSS duplication → refactoring-101, M2: evolution selection modal duplication → refactoring-102). rules-review-207 **APPROVED** (all 7 mechanics verified correct, decree-035 compliant, 1M informational carried from rules-review-202). → feature-006 **P0-APPROVED**
+- **slave-5** (reviewers): feature-011-review — code-review-232 **CHANGES_REQUIRED** (C1: pokemon_switched WS not handled client-side, H1: no undo/redo snapshot for switch, H2: no encounter_update broadcast from GM page, M1: canShowSwitchButton always true for humans, M2: over-fetch from character endpoint, M3: switch button disabled logic incomplete). rules-review-208 **CHANGES_REQUIRED** (CRITICAL-001: Trapped check missing, HIGH-001: volatile conditions not cleared on recall, HIGH-002: temporaryHp not cleared on recall, MEDIUM-001: Whirlwind comment violates decree-034, MEDIUM-002: stale stageModifiers in DB). → feature-011 **needs fix cycle**
+
+**Smoke test:** PASSED (Playwright) — GM view renders (full nav + encounter controls). Group view renders (initiative list, Round 1, Smoliv/Grimer/Misdreavus/Impidimp). Player view renders (character selection: Ash Lv30, Aurora, Clara, Hassan, Marilena).
+**Merge notes:** 0 conflicts. All 5 rebased cleanly. 26 commits total (merge order: 4→5→1→2→3). app-surface.md updated by all 3 dev slaves — rebased without conflict due to non-overlapping additions.
+**Tickets filed:** refactoring-101 (type-badge SCSS duplication, code-review-231 M1), refactoring-102 (evolution selection modal extraction, code-review-231 M2)
+**Tickets resolved:** feature-006 P0 (APPROVED), ptu-rule-127 (resolved by slave-3 decree-037 compliance)
+**Tickets needing re-review:** feature-012 (fix cycle 3 done), feature-007 (fix cycle done), feature-008 (fix cycle + decree-037 done)
+**Tickets needing fix cycle:** feature-011 (code-review-232 C1+H1+H2+M1-M3, rules-review-208 CRITICAL-001+HIGH-001+HIGH-002+M1-M2)
 
 **Session 68 (2026-02-28, plan-20260228-214159):**
 - **slave-1** (developer): feature-006-fix — 6 commits: Fix cycle for Pokemon Evolution P0 (code-review-226). Reset spriteUrl to null on evolution (C1), wired pokemon-evolved event in XpDistributionModal (H1), added branching evolution selection UI with radio buttons (H2), added encounter-active guard to evolve endpoint (H3), updated app-surface.md (M1), replaced stale PokemonLevelUpPanel text (M2). → **fix-cycle-done, needs re-review**
@@ -449,6 +464,14 @@ updated_by: slave-collector (plan-20260228-214159)
 
 ## Review Status
 
+### Session 69 Reviews (plan-20260228-233710)
+| Review ID | Target | Verdict | Reviewer | Date |
+|-----------|--------|---------|----------|------|
+| code-review-231 | feature-006 re-review (evolution P0 fix cycle) | APPROVED (0 blocking, M1→refactoring-101, M2→refactoring-102) | senior-reviewer | 2026-03-01 |
+| rules-review-207 | feature-006 re-review (evolution P0 fix cycle) | APPROVED (all 7 mechanics correct, decree-035 compliant, 1M informational) | game-logic-reviewer | 2026-03-01 |
+| code-review-232 | feature-011 (Pokemon Switching P0) | CHANGES_REQUIRED (1C, 2H, 3M) | senior-reviewer | 2026-03-01 |
+| rules-review-208 | feature-011 (Pokemon Switching P0) | CHANGES_REQUIRED (1 CRITICAL, 2 HIGH, 2 MEDIUM) | game-logic-reviewer | 2026-03-01 |
+
 ### Session 44 Reviews (plan-20260226-201936)
 | Review ID | Target | Verdict | Reviewer | Date |
 |-----------|--------|---------|----------|------|
@@ -739,6 +762,22 @@ updated_by: slave-collector (plan-20260228-214159)
 | Open tickets (P4) | 10 (refactoring-060/062/076/078/079/084 + ux-002/006/007/008) |
 | Total open | 16 |
 | Total resolved | 159 (feature-002 fully resolved) |
+
+## Session Summary (2026-03-01, session 69 — plan-20260228-233710)
+
+**Slave collection plan-20260228-233710:** 5 slaves merged (26 commits, 0 conflicts)
+- **slave-1** (developer): feature-012-fix — 4 commits: fix cycle 3. Used faintedFromAnySource in isDefeated check (H1-NEW), extracted entity builders to entity-builder.service.ts (M1-NEW), added encounterXp store to app-surface.md (M2-NEW) → **fix-cycle-done, needs re-review**
+- **slave-2** (developer): feature-007-fix — 6 commits: fix cycle. Unit tests for baseRelations.ts (H1), extractStatPoints warnings (M1), partial allocation with confirmation dialog (M2), $spacing-xs (M3), app-surface.md (H2) → **fix-cycle-done, needs re-review**
+- **slave-3** (developer): feature-008-fix+ptu-rule-127 — 12 commits: fix cycle + decree-037 compliance. Double modal guard (C1), evasion cap (H1), currentHp heal (H2), skill rank removal (decree-037, 4 commits), constant extraction (M1-M2), app-surface.md (M3), spec update → **fix-cycle-done, needs re-review**. ptu-rule-127 **resolved**
+- **slave-4** (reviewers): feature-006 re-review — code-review-231 **APPROVED** (M1→refactoring-101, M2→refactoring-102) + rules-review-207 **APPROVED** → feature-006 **P0-APPROVED**
+- **slave-5** (reviewers): feature-011 review — code-review-232 **CHANGES_REQUIRED** (C1+H1+H2+M1-M3) + rules-review-208 **CHANGES_REQUIRED** (CRITICAL-001: Trapped, HIGH-001: volatile clear, HIGH-002: temp HP clear, M1-M2) → feature-011 **needs fix cycle**
+
+**Smoke test:** PASSED — GM/Group/Player all render correctly.
+**Merge notes:** 0 conflicts. 26 commits total (merge order: 4→5→1→2→3).
+**Tickets filed:** refactoring-101 (type-badge SCSS duplication), refactoring-102 (evolution selection modal extraction)
+**Tickets resolved:** feature-006 P0 (APPROVED), ptu-rule-127 (decree-037 compliance)
+**Tickets needing re-review:** feature-012 (fix cycle 3), feature-007 (fix cycle), feature-008 (fix cycle + decree-037)
+**Tickets needing fix cycle:** feature-011 (C1+H1+H2+M1-M3 code, CRITICAL+2HIGH+2M rules)
 
 ## Session Summary (2026-02-28, session 65 — plan-20260228-173500)
 
