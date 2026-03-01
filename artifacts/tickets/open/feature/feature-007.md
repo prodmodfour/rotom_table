@@ -91,3 +91,10 @@ Full design spec: [`design-level-up-allocation-001`](../../../designs/design-lev
 | 2026-03-01 | dcf67640 | P1: GET /api/species/:name endpoint for ability data |
 | 2026-03-01 | 7ea7658e | P1: PokemonLevelUpPanel inline ability/move panels |
 | 2026-03-01 | 3bbbb00d | P1: XpDistributionResults ability/move event wiring |
+| 2026-03-01 | 76831179 | Fix C1: correct categorizeAbilities boundary for species with no High ability |
+| 2026-03-01 | 2ea55977 | Fix H1: include real move ID in learn-move response, remove unsafe double-cast |
+| 2026-03-01 | 3dbe3597 | Fix H2: replace alert() with inline error display in PokemonLevelUpPanel |
+| 2026-03-01 | 025e6edd | Fix rules-H1: enforce milestone ordering for third ability assignment |
+| 2026-03-01 | 1b451beb | Fix M1: add distinct emit types for ability/move events in PokemonLevelUpPanel |
+| 2026-03-01 | 48490659 | Fix M2: replace watchEffect with one-time init in MoveLearningPanel |
+| 2026-03-01 | a02ba6b5 | Fix M3: extract shared slideDown/spin keyframes to global SCSS |

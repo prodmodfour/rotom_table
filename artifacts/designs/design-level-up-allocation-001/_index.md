@@ -134,3 +134,17 @@ The `validateBaseRelations()` function is identical for both. If evolution ships
 **Files created:** 7 new files
 **Files modified:** 5 existing files
 **All P1 acceptance criteria addressed.**
+
+### P1 Fix Cycle (2026-03-01, code-review-238 + rules-review-214)
+
+| Date | Commit | Description |
+|------|--------|-------------|
+| 2026-03-01 | 76831179 | `app/utils/abilityAssignment.ts` — fix categorizeAbilities boundary for species with no High ability (C1) |
+| 2026-03-01 | 2ea55977 | `app/server/api/pokemon/[id]/learn-move.post.ts` + `app/components/pokemon/MoveLearningPanel.vue` — include real move ID in response, remove unsafe double-cast (H1) |
+| 2026-03-01 | 3dbe3597 | `app/components/pokemon/PokemonLevelUpPanel.vue` — replace alert() with inline error display (H2) |
+| 2026-03-01 | 025e6edd | `app/server/api/pokemon/[id]/assign-ability.post.ts` — enforce milestone ordering for third ability (rules-H1) |
+| 2026-03-01 | 1b451beb | `app/components/pokemon/PokemonLevelUpPanel.vue` + `app/pages/gm/pokemon/[id].vue` — add distinct emit types for ability/move events (M1) |
+| 2026-03-01 | 48490659 | `app/components/pokemon/MoveLearningPanel.vue` — replace watchEffect with one-time init (M2) |
+| 2026-03-01 | a02ba6b5 | `app/assets/scss/main.scss` + 4 component files — extract shared keyframes to global SCSS (M3) |
+
+**Addressed:** C1 (ability categorization boundary), H1 (unsafe Move cast), H2 (alert() → inline error), rules-H1 (milestone ordering), M1 (distinct emits), M2 (watchEffect timing), M3 (duplicate keyframes)
