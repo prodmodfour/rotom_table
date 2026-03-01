@@ -467,7 +467,9 @@ export function useGridMovement(options: UseGridMovementOptions) {
   ): { cost: number; path: GridPosition[] } | null => {
     // No cells blocked by tokens — only terrain blocks pathfinding
     const blockedCells: GridPosition[] = []
-    const terrainCostGetter = getTerrainCostGetter(combatantId)
+    const movingToken = options.tokens.value.find(t => t.combatantId === combatantId)
+    const tokenSize = movingToken?.size || 1
+    const terrainCostGetter = getTerrainCostGetter(combatantId, tokenSize)
     const elevCostGetter = getElevationCostGetter(combatantId)
     const terrainElevGetter = getTerrainElevationGetter()
     const fromElev = options.getTokenElevation
@@ -475,7 +477,8 @@ export function useGridMovement(options: UseGridMovementOptions) {
       : 0
     return calculatePathCost(
       from, to, blockedCells, terrainCostGetter,
-      elevCostGetter, terrainElevGetter, fromElev
+      elevCostGetter, terrainElevGetter, fromElev,
+      tokenSize
     )
   }
 
@@ -544,13 +547,15 @@ export function useGridMovement(options: UseGridMovementOptions) {
     const fromElev = options.getTokenElevation
       ? options.getTokenElevation(combatantId)
       : 0
-    const terrainCostGetter = getTerrainCostGetter(combatantId)
+    const terrainCostGetter = getTerrainCostGetter(combatantId, tokenSize)
 
     if (terrainCostGetter || elevCostGetter) {
       // Terrain-aware and/or elevation-aware: use A* pathfinding
+      // Pass tokenSize so A* checks full NxN footprint at each step
       const pathResult = calculatePathCost(
         fromPos, toPos, blockedCells, terrainCostGetter,
-        elevCostGetter, terrainElevGetter, fromElev
+        elevCostGetter, terrainElevGetter, fromElev,
+        tokenSize
       )
       if (!pathResult) {
         // No valid path (terrain blocks all routes)
@@ -654,6 +659,7 @@ export function useGridMovement(options: UseGridMovementOptions) {
     getEnemyOccupiedCells,
     getTerrainCostAt,
     getTerrainCostForCombatant,
+    getTerrainCostForFootprint,
     getTerrainCostGetter,
     isValidMove,
     findCombatant,

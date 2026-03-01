@@ -439,6 +439,24 @@ export function useGridRendering(options: UseGridRenderingOptions) {
     const badgeX = token.position.x * cellSize + token.size * cellSize - 10
     const badgeY = token.position.y * cellSize + token.size * cellSize - 10
     drawSpeedBadge(ctx, badgeX, badgeY, displaySpeed)
+
+    // Draw ghost footprint outline at hovered position for large tokens
+    const hovered = options.hoveredCell.value
+    if (hovered && token.size > 1) {
+      const isInRange = rangeCells.some(c => c.x === hovered.x && c.y === hovered.y)
+      if (isInRange) {
+        ctx.strokeStyle = 'rgba(34, 211, 238, 0.6)'
+        ctx.lineWidth = 2
+        ctx.setLineDash([4, 4])
+        ctx.strokeRect(
+          hovered.x * cellSize,
+          hovered.y * cellSize,
+          token.size * cellSize,
+          token.size * cellSize
+        )
+        ctx.setLineDash([])
+      }
+    }
   }
 
   /**
