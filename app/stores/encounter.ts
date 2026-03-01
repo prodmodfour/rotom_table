@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import type { Encounter, Combatant, MoveLogEntry, CombatSide, TurnPhase, BattleType, TrainerDeclaration, SwitchAction } from '~/types'
-import type { OutOfTurnAction, AoOTrigger } from '~/types/combat'
+import type { OutOfTurnAction, AoOTrigger, InterruptTrigger } from '~/types/combat'
 import type { GridPosition } from '~/types/spatial'
 import type { SignificanceTier } from '~/utils/encounterBudget'
 
@@ -19,6 +19,8 @@ export const useEncounterStore = defineStore('encounter', {
     encounter: null as Encounter | null,
     loading: false,
     error: null as string | null,
+    /** P1: Between-turns state for Priority declaration window */
+    betweenTurns: false,
   }),
 
   getters: {
@@ -129,6 +131,30 @@ export const useEncounterStore = defineStore('encounter', {
     hasAoOPrompts: (state): boolean => {
       return (state.encounter?.pendingOutOfTurnActions ?? [])
         .some(a => a.category === 'aoo' && a.status === 'pending')
+    },
+
+    /** Hold queue entries (P1) */
+    holdQueue: (state) => {
+      return state.encounter?.holdQueue ?? []
+    },
+
+    /** Whether we are in the between-turns Priority window */
+    isBetweenTurns: (state): boolean => {
+      return state.betweenTurns
+    },
+
+    /** Combatants currently holding their action */
+    holdingCombatants: (state): Combatant[] => {
+      if (!state.encounter) return []
+      return state.encounter.combatants.filter(c =>
+        c.holdAction?.isHolding === true
+      )
+    },
+
+    /** Pending interrupt actions awaiting GM resolution */
+    pendingInterrupts: (state): OutOfTurnAction[] => {
+      return (state.encounter?.pendingOutOfTurnActions ?? [])
+        .filter(a => a.category === 'interrupt' && a.status === 'pending')
     },
   },
 
@@ -648,6 +674,9 @@ export const useEncounterStore = defineStore('encounter', {
           // Out-of-turn action state (feature-016)
           existing.outOfTurnUsage = incomingCombatant.outOfTurnUsage
           existing.disengaged = incomingCombatant.disengaged
+          // P1: Hold Action and skipNextRound state
+          existing.holdAction = incomingCombatant.holdAction
+          existing.skipNextRound = incomingCombatant.skipNextRound
           // Update entity properties
           Object.assign(existing.entity, incomingCombatant.entity)
         } else {
@@ -905,6 +934,139 @@ export const useEncounterStore = defineStore('encounter', {
         return response.data
       } catch (e: any) {
         this.error = e.message || 'Failed to resolve AoO'
+        throw e
+      }
+    },
+
+    // ===========================================
+    // Hold Action (P1 — feature-016)
+    // ===========================================
+
+    /** Declare a Hold Action for the current combatant */
+    async holdAction(combatantId: string, holdUntilInitiative: number | null) {
+      if (!this.encounter) return null
+
+      try {
+        const response = await $fetch<{ data: Encounter }>(
+          `/api/encounters/${this.encounter.id}/hold-action`,
+          {
+            method: 'POST',
+            body: { combatantId, holdUntilInitiative }
+          }
+        )
+        this.encounter = response.data
+        return response.data
+      } catch (e: any) {
+        this.error = e.message || 'Failed to hold action'
+        throw e
+      }
+    },
+
+    /** Release a held action (GM manual release) */
+    async releaseHold(combatantId: string) {
+      if (!this.encounter) return null
+
+      try {
+        const response = await $fetch<{ data: Encounter }>(
+          `/api/encounters/${this.encounter.id}/release-hold`,
+          {
+            method: 'POST',
+            body: { combatantId }
+          }
+        )
+        this.encounter = response.data
+        return response.data
+      } catch (e: any) {
+        this.error = e.message || 'Failed to release hold'
+        throw e
+      }
+    },
+
+    // ===========================================
+    // Priority Action (P1 — feature-016)
+    // ===========================================
+
+    /** Declare a Priority action between turns */
+    async declarePriority(
+      combatantId: string,
+      variant: 'standard' | 'limited' | 'advanced',
+      actionDescription?: string
+    ) {
+      if (!this.encounter) return null
+
+      try {
+        const response = await $fetch<{
+          data: {
+            encounter: Encounter
+            turnInserted: boolean
+            skipNextRound: boolean
+          }
+        }>(`/api/encounters/${this.encounter.id}/priority`, {
+          method: 'POST',
+          body: { combatantId, variant, actionDescription }
+        })
+        this.encounter = response.data.encounter
+        this.betweenTurns = false
+        return response.data
+      } catch (e: any) {
+        this.error = e.message || 'Failed to declare Priority'
+        throw e
+      }
+    },
+
+    /** Enter between-turns state (Priority declaration window) */
+    enterBetweenTurns() {
+      this.betweenTurns = true
+    },
+
+    /** Exit between-turns state (GM clicks Continue) */
+    exitBetweenTurns() {
+      this.betweenTurns = false
+    },
+
+    // ===========================================
+    // Interrupt Action (P1 — feature-016)
+    // ===========================================
+
+    /** Declare an Interrupt action during another combatant's turn */
+    async declareInterrupt(
+      combatantId: string,
+      triggerId: string,
+      triggerType: InterruptTrigger,
+      options?: {
+        interruptAction?: string
+        resolution?: 'accept' | 'decline'
+        context?: {
+          moveName?: string
+          originalTargetId?: string
+          attackerId?: string
+        }
+      }
+    ) {
+      if (!this.encounter) return null
+
+      try {
+        const response = await $fetch<{
+          data: {
+            encounter: Encounter
+            interruptResolved: boolean
+            pendingActionId?: string
+          }
+        }>(`/api/encounters/${this.encounter.id}/interrupt`, {
+          method: 'POST',
+          body: {
+            combatantId,
+            triggerId,
+            triggerType,
+            interruptAction: options?.interruptAction,
+            resolution: options?.resolution,
+            context: options?.context
+          }
+        })
+        this.encounter = response.data.encounter
+        return response.data
+      } catch (e: any) {
+        this.error = e.message || 'Failed to declare Interrupt'
         throw e
       }
     },
