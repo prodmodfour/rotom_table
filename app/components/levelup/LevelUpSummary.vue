@@ -65,7 +65,7 @@
       </div>
     </div>
 
-    <!-- Skill Rank-Ups (from bonus Skill Edges) -->
+    <!-- Skill Rank-Ups (from all Skill Edges) -->
     <div v-if="skillRankUpDetails.length" class="summary-section">
       <h4 class="summary-section__title">Skill Rank-Ups (from Skill Edges)</h4>
       <div class="summary-section__list">
@@ -77,6 +77,7 @@
           <span class="summary-item__label">{{ rankUp.skill }}</span>
           <span class="summary-item__value">
             {{ rankUp.from }} -> {{ rankUp.to }}
+            <span class="summary-item__source">({{ rankUp.source }})</span>
           </span>
         </div>
       </div>
@@ -153,6 +154,8 @@ interface Props {
   edgeChoices: string[]
   /** P1: Bonus Skill Edge choices */
   bonusSkillEdgeChoices: BonusSkillEdgeChoice[]
+  /** P1: Regular Skill Edge skill names (parsed from edgeChoices) */
+  regularSkillEdgeSkills: string[]
   /** P1: Feature choices */
   featureChoices: string[]
   /** P1: New class choices */
@@ -207,19 +210,48 @@ const allEdgeDisplayItems = computed(() => {
   return items
 })
 
-/** Skill rank-up details from bonus Skill Edges */
-const skillRankUpDetails = computed(() =>
-  props.bonusSkillEdgeChoices.map(choice => {
-    const baseRank = (props.currentSkills[choice.skill] ?? 'Untrained') as string
-    const baseIndex = RANK_PROGRESSION.indexOf(baseRank)
-    const newIndex = Math.min(baseIndex + 1, RANK_PROGRESSION.length - 1)
-    return {
+/**
+ * Skill rank-up details from ALL Skill Edges (bonus + regular).
+ * Properly handles stacking: if the same skill is raised multiple times,
+ * each subsequent rank-up starts from where the previous one left off.
+ */
+const skillRankUpDetails = computed(() => {
+  const details: Array<{ skill: string; from: string; to: string; source: string }> = []
+  // Track running rank per skill so stacked rank-ups display correctly
+  const runningRank: Record<string, string> = {}
+
+  // Bonus Skill Edge rank-ups first
+  for (const choice of props.bonusSkillEdgeChoices) {
+    const currentRank = runningRank[choice.skill] ?? (props.currentSkills[choice.skill] ?? 'Untrained') as string
+    const currentIndex = RANK_PROGRESSION.indexOf(currentRank)
+    const newIndex = Math.min(currentIndex + 1, RANK_PROGRESSION.length - 1)
+    const newRank = RANK_PROGRESSION[newIndex]
+    details.push({
       skill: choice.skill,
-      from: baseRank,
-      to: RANK_PROGRESSION[newIndex]
-    }
-  })
-)
+      from: currentRank,
+      to: newRank,
+      source: `Bonus L${choice.fromLevel}`
+    })
+    runningRank[choice.skill] = newRank
+  }
+
+  // Regular Skill Edge rank-ups
+  for (const skillName of props.regularSkillEdgeSkills) {
+    const currentRank = runningRank[skillName] ?? (props.currentSkills[skillName] ?? 'Untrained') as string
+    const currentIndex = RANK_PROGRESSION.indexOf(currentRank)
+    const newIndex = Math.min(currentIndex + 1, RANK_PROGRESSION.length - 1)
+    const newRank = RANK_PROGRESSION[newIndex]
+    details.push({
+      skill: skillName,
+      from: currentRank,
+      to: newRank,
+      source: 'Regular Edge'
+    })
+    runningRank[skillName] = newRank
+  }
+
+  return details
+})
 </script>
 
 <style lang="scss" scoped>
@@ -305,6 +337,12 @@ const skillRankUpDetails = computed(() =>
   &__unchanged {
     color: $color-text-muted;
     font-style: italic;
+  }
+
+  &__source {
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+    font-weight: 400;
   }
 }
 

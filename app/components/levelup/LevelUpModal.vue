@@ -115,6 +115,7 @@
           :summary="summary"
           :edge-choices="levelUp.edgeChoices.value"
           :bonus-skill-edge-choices="levelUp.bonusSkillEdgeChoices.value"
+          :regular-skill-edge-skills="levelUp.regularSkillEdgeSkills.value"
           :feature-choices="levelUp.featureChoices.value"
           :new-class-choices="levelUp.newClassChoices.value"
           :milestone-choices="levelUp.milestoneChoices.value"

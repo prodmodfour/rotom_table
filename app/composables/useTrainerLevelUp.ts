@@ -160,15 +160,38 @@ export function useTrainerLevelUp() {
     regularEdgesTotal.value - edgeChoices.value.length
   )
 
-  // --- P1: Skill Rank Tracking (from Bonus Skill Edges) ---
+  // --- P1: Skill Rank Tracking (from ALL Skill Edges) ---
+
+  /** Skill Edge prefix used in edgeChoices strings */
+  const SKILL_EDGE_PREFIX = 'Skill Edge: '
 
   /**
-   * Get effective skill rank accounting for bonus Skill Edge choices.
-   * Uses character's current skills + pending bonus Skill Edge rank-ups.
+   * Parse regular Skill Edge entries from edgeChoices.
+   * Regular Skill Edges are stored as "Skill Edge: <skillName>" strings.
+   * Returns an array of skill names that have been raised via regular edge slots.
+   */
+  const regularSkillEdgeSkills = computed((): string[] =>
+    edgeChoices.value
+      .filter(e => e.startsWith(SKILL_EDGE_PREFIX))
+      .map(e => e.slice(SKILL_EDGE_PREFIX.length))
+  )
+
+  /**
+   * Count rank-ups for a given skill from ALL sources (bonus + regular Skill Edges).
+   */
+  function countAllSkillEdgeUps(skill: string): number {
+    const bonusUps = bonusSkillEdgeChoices.value.filter(c => c.skill === skill).length
+    const regularUps = regularSkillEdgeSkills.value.filter(s => s === skill).length
+    return bonusUps + regularUps
+  }
+
+  /**
+   * Get effective skill rank accounting for ALL Skill Edge choices
+   * (both bonus and regular). Uses character's current skills + pending rank-ups.
    */
   function getEffectiveSkillRank(skill: PtuSkillName): SkillRank {
     const base = (character.value?.skills?.[skill] as SkillRank) ?? 'Untrained'
-    const ups = bonusSkillEdgeChoices.value.filter(c => c.skill === skill).length
+    const ups = countAllSkillEdgeUps(skill)
     if (ups === 0) return base
     const baseIndex = RANK_PROGRESSION.indexOf(base)
     const newIndex = Math.min(baseIndex + ups, RANK_PROGRESSION.length - 1)
@@ -176,7 +199,8 @@ export function useTrainerLevelUp() {
   }
 
   /**
-   * Computed map of effective skills (current + bonus Skill Edge rank-ups).
+   * Computed map of effective skills (current + ALL Skill Edge rank-ups).
+   * Includes rank-ups from both bonus Skill Edges and regular Skill Edges.
    * Used for passing to edge section as props.
    */
   const effectiveSkills = computed((): Record<string, SkillRank> => {
@@ -184,7 +208,7 @@ export function useTrainerLevelUp() {
     const skills = character.value.skills ?? {}
     const result: Record<string, SkillRank> = {}
     for (const [skill, rank] of Object.entries(skills)) {
-      const ups = bonusSkillEdgeChoices.value.filter(c => c.skill === skill).length
+      const ups = countAllSkillEdgeUps(skill)
       if (ups === 0) {
         result[skill] = rank as SkillRank
       } else {
@@ -408,15 +432,26 @@ export function useTrainerLevelUp() {
       ...newClassChoices.value
     ]
 
-    // Apply bonus skill edge rank-ups to skills
-    const updatedSkillsWithBonusEdges: Record<string, SkillRank> = {
+    // Apply ALL skill edge rank-ups to skills (bonus + regular)
+    const updatedSkillsWithAllEdges: Record<string, SkillRank> = {
       ...(character.value.skills ?? {})
     }
+
+    // Apply bonus skill edge rank-ups
     for (const { skill } of bonusSkillEdgeChoices.value) {
-      const currentRank = (updatedSkillsWithBonusEdges[skill] ?? 'Untrained') as string
+      const currentRank = (updatedSkillsWithAllEdges[skill] ?? 'Untrained') as string
       const currentIndex = RANK_PROGRESSION.indexOf(currentRank)
       if (currentIndex < RANK_PROGRESSION.length - 1) {
-        updatedSkillsWithBonusEdges[skill] = RANK_PROGRESSION[currentIndex + 1] as SkillRank
+        updatedSkillsWithAllEdges[skill] = RANK_PROGRESSION[currentIndex + 1] as SkillRank
+      }
+    }
+
+    // Apply regular skill edge rank-ups (from "Skill Edge: <skill>" entries in edgeChoices)
+    for (const skillName of regularSkillEdgeSkills.value) {
+      const currentRank = (updatedSkillsWithAllEdges[skillName] ?? 'Untrained') as string
+      const currentIndex = RANK_PROGRESSION.indexOf(currentRank)
+      if (currentIndex < RANK_PROGRESSION.length - 1) {
+        updatedSkillsWithAllEdges[skillName] = RANK_PROGRESSION[currentIndex + 1] as SkillRank
       }
     }
 
@@ -431,7 +466,7 @@ export function useTrainerLevelUp() {
       stats: updatedStats.value ?? character.value.stats,
       maxHp: newMaxHp,
       currentHp: newCurrentHp,
-      skills: updatedSkillsWithBonusEdges as Record<string, SkillRank>,
+      skills: updatedSkillsWithAllEdges as Record<string, SkillRank>,
       edges: allEdges,
       features: allFeatures,
       trainerClasses: allClasses
@@ -467,6 +502,7 @@ export function useTrainerLevelUp() {
     // P1: Edge state
     edgeChoices: readonly(edgeChoices),
     bonusSkillEdgeChoices: readonly(bonusSkillEdgeChoices),
+    regularSkillEdgeSkills,
     regularEdgesTotal,
     bonusSkillEdgeEntries,
     edgesRemaining,
