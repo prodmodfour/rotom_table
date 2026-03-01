@@ -5,6 +5,7 @@ import { readJsonSafe } from '../formatters/parsers.mjs'
 import { planCreatedEmbed } from '../formatters/embeds.mjs'
 import { sendEvent } from '../channels.mjs'
 import { watchWithRetry } from './debounce.mjs'
+import { resetAllDoneFlag } from './slave-status.mjs'
 
 const worktreesDir = resolve(config.projectRoot, '.worktrees')
 const planPath = resolve(worktreesDir, 'slave-plan.json')
@@ -38,6 +39,7 @@ async function checkPlanChange() {
 
   if (!lastPlanExists && nowExists) {
     lastPlanExists = true
+    resetAllDoneFlag()
     console.log('Slave plan created')
 
     const plan = readJsonSafe(planPath)

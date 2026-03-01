@@ -1,15 +1,19 @@
 import { watch, existsSync, mkdirSync } from 'node:fs'
 
 /**
- * Watch a file or directory with debouncing.
+ * Watch a file or directory with per-file debouncing.
  * Returns the FSWatcher instance for cleanup.
  */
 export function debouncedWatch(path, callback, delayMs = 200) {
-  let timeout = null
+  const timeouts = new Map()
 
   const watcher = watch(path, { persistent: false }, (eventType, filename) => {
-    if (timeout) clearTimeout(timeout)
-    timeout = setTimeout(() => callback(eventType, filename), delayMs)
+    const key = filename || '__default__'
+    if (timeouts.has(key)) clearTimeout(timeouts.get(key))
+    timeouts.set(key, setTimeout(() => {
+      timeouts.delete(key)
+      callback(eventType, filename)
+    }, delayMs))
   })
 
   watcher.on('error', error => {

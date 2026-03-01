@@ -9,6 +9,7 @@ const EVENT_CHANNEL_MAP = {
   slave_started: 'pipeline',
   slave_completed: 'pipeline',
   slave_failed: 'pipeline',
+  all_slaves_done: 'pipeline',
   collection_started: 'pipeline',
   collection_complete: 'pipeline',
   merge_result: 'pipeline',
@@ -38,24 +39,59 @@ const EVENT_CHANNEL_MAP = {
   info: 'pipeline',
 }
 
+// Cache resolved channel objects by config value
+const channelCache = new Map()
+
 export function getChannelForEvent(eventType) {
   const channelKey = EVENT_CHANNEL_MAP[eventType] || 'pipeline'
   return config.channels[channelKey]
 }
 
-export async function sendToChannel(channelId, content) {
-  const channel = await client.channels.fetch(channelId)
-  if (!channel) {
-    console.error(`Channel not found: ${channelId}`)
-    return null
+/**
+ * Resolve a channel config value to a Discord channel object.
+ * Supports numeric snowflake IDs and #channel-name strings.
+ */
+async function resolveChannel(channelValue) {
+  if (!channelValue) return null
+  if (channelCache.has(channelValue)) return channelCache.get(channelValue)
+
+  let channel = null
+
+  // Try as snowflake ID first (all digits)
+  if (/^\d+$/.test(channelValue)) {
+    try {
+      channel = await client.channels.fetch(channelValue)
+    } catch {
+      // Not a valid ID
+    }
   }
-  if (typeof content === 'string') {
-    return channel.send(content)
+
+  // Fall back to name-based lookup
+  if (!channel) {
+    const name = channelValue.replace(/^#/, '')
+    const guild = client.guilds.cache.get(config.guildId)
+    if (guild) {
+      const channels = await guild.channels.fetch()
+      channel = channels.find(c => c.name === name) || null
+    }
+  }
+
+  if (channel) {
+    channelCache.set(channelValue, channel)
+  }
+  return channel
+}
+
+export async function sendToChannel(channelValue, content) {
+  const channel = await resolveChannel(channelValue)
+  if (!channel) {
+    console.error(`Channel not found: ${channelValue}`)
+    return null
   }
   return channel.send(content)
 }
 
 export async function sendEvent(eventType, content) {
-  const channelId = getChannelForEvent(eventType)
-  return sendToChannel(channelId, content)
+  const channelValue = getChannelForEvent(eventType)
+  return sendToChannel(channelValue, content)
 }
