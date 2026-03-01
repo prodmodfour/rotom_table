@@ -1,6 +1,7 @@
 import type { GridConfig, GridPosition, CameraAngle, Combatant, MovementPreview, Pokemon, HumanCharacter, CombatSide, TerrainType, TerrainFlags } from '~/types'
 import { useIsometricProjection } from '~/composables/useIsometricProjection'
 import { useIsometricOverlays } from '~/composables/useIsometricOverlays'
+import { useRangeParser } from '~/composables/useRangeParser'
 import type { FogState } from '~/stores/fogOfWar'
 import type { MeasurementMode } from '~/stores/measurement'
 
@@ -74,6 +75,11 @@ interface UseIsometricRenderingOptions {
   measurementOrigin?: Ref<GridPosition | null>
   measurementEnd?: Ref<GridPosition | null>
   measurementDistance?: Ref<number>
+  // Token metadata for multi-cell measurement endpoints
+  measurementStartTokenOrigin?: Ref<GridPosition | null>
+  measurementStartTokenSize?: Ref<number>
+  measurementEndTokenOrigin?: Ref<GridPosition | null>
+  measurementEndTokenSize?: Ref<number>
 }
 
 // Sprite cache to avoid re-loading images every frame.
@@ -104,6 +110,8 @@ export function useIsometricRendering(options: UseIsometricRenderingOptions) {
     getTileDiamondPoints,
     getGridOriginOffset
   } = useIsometricProjection()
+
+  const { isTargetHitByAoE } = useRangeParser()
 
   // Background image
   const backgroundImage = ref<HTMLImageElement | null>(null)
@@ -140,6 +148,12 @@ export function useIsometricRendering(options: UseIsometricRenderingOptions) {
     measurementOrigin: options.measurementOrigin,
     measurementEnd: options.measurementEnd,
     measurementDistance: options.measurementDistance,
+    measurementStartTokenOrigin: options.measurementStartTokenOrigin,
+    measurementStartTokenSize: options.measurementStartTokenSize,
+    measurementEndTokenOrigin: options.measurementEndTokenOrigin,
+    measurementEndTokenSize: options.measurementEndTokenSize,
+    tokens: options.tokens,
+    isTargetHitByAoE,
   })
 
   // Render loop state

@@ -58,6 +58,15 @@ interface IsometricOverlayOptions {
   measurementOrigin?: Ref<GridPosition | null>
   measurementEnd?: Ref<GridPosition | null>
   measurementDistance?: Ref<number>
+  // Token metadata for multi-cell measurement endpoints
+  measurementStartTokenOrigin?: Ref<GridPosition | null>
+  measurementStartTokenSize?: Ref<number>
+  measurementEndTokenOrigin?: Ref<GridPosition | null>
+  measurementEndTokenSize?: Ref<number>
+  // Token data for AoE footprint highlighting
+  tokens?: Ref<Array<{ position: GridPosition; size: number }>>
+  // AoE hit detection for multi-cell token highlighting
+  isTargetHitByAoE?: (targetPosition: GridPosition, targetSize: number, affectedCells: GridPosition[]) => boolean
 }
 
 /**
@@ -411,8 +420,35 @@ export function useIsometricOverlays(options: IsometricOverlayOptions) {
   // --- Measurement ---
 
   /**
-   * Draw measurement overlay as isometric diamond highlights.
+   * Draw a dashed diamond outline around a multi-cell token footprint.
+   * Highlights the full NxN footprint by drawing each cell's diamond border.
    */
+  const drawDashedFootprint = (
+    ctx: CanvasRenderingContext2D,
+    origin: GridPosition, size: number,
+    angle: CameraAngle, gridW: number, gridH: number, cellSize: number,
+    strokeColor: string
+  ) => {
+    ctx.save()
+    ctx.strokeStyle = strokeColor
+    ctx.lineWidth = 2
+    ctx.setLineDash([4, 4])
+    for (let dx = 0; dx < size; dx++) {
+      for (let dy = 0; dy < size; dy++) {
+        const diamond = getTileDiamondPoints(origin.x + dx, origin.y + dy, 0, angle, gridW, gridH, cellSize)
+        ctx.beginPath()
+        ctx.moveTo(diamond.top.x, diamond.top.y)
+        ctx.lineTo(diamond.right.x, diamond.right.y)
+        ctx.lineTo(diamond.bottom.x, diamond.bottom.y)
+        ctx.lineTo(diamond.left.x, diamond.left.y)
+        ctx.closePath()
+        ctx.stroke()
+      }
+    }
+    ctx.setLineDash([])
+    ctx.restore()
+  }
+
   const drawMeasurementOverlay = (ctx: CanvasRenderingContext2D) => {
     if (!options.measurementMode || !options.measurementCells) return
     const config = options.config.value
@@ -423,6 +459,12 @@ export function useIsometricOverlays(options: IsometricOverlayOptions) {
     const origin = options.measurementOrigin?.value
     const end = options.measurementEnd?.value
     const distance = options.measurementDistance?.value ?? 0
+
+    // Token metadata for multi-cell endpoints
+    const startTokenOrigin = options.measurementStartTokenOrigin?.value ?? null
+    const startTokenSize = options.measurementStartTokenSize?.value ?? 1
+    const endTokenOrigin = options.measurementEndTokenOrigin?.value ?? null
+    const endTokenSize = options.measurementEndTokenSize?.value ?? 1
 
     const color = MEASUREMENT_COLORS[mode] || MEASUREMENT_COLORS.distance
 
@@ -444,15 +486,44 @@ export function useIsometricOverlays(options: IsometricOverlayOptions) {
       }
     }
 
-    // Draw origin marker
+    // Highlight full footprint of multi-cell tokens hit by the AoE
+    if (mode !== 'distance' && cells.length > 0 && options.tokens && options.isTargetHitByAoE) {
+      const hitTokens = options.tokens.value.filter(token =>
+        token.size > 1 && options.isTargetHitByAoE!(token.position, token.size, cells)
+      )
+      for (const token of hitTokens) {
+        drawDashedFootprint(ctx, token.position, token.size, angle, gridW, gridH, cellSize, 'rgba(255, 255, 255, 0.9)')
+      }
+    }
+
+    // Calculate origin center — accounts for multi-cell token footprint
+    const originAnchor = startTokenOrigin ?? origin
+    const originCenterWx = originAnchor ? originAnchor.x + startTokenSize / 2 : 0
+    const originCenterWy = originAnchor ? originAnchor.y + startTokenSize / 2 : 0
+
+    // Draw origin marker centered on token footprint
     if (origin) {
-      drawDiamondCenterDot(ctx, origin.x, origin.y, 0, angle, gridW, gridH, cellSize, 'rgba(255, 255, 255, 0.8)')
+      const originScreen = worldToScreen(originCenterWx, originCenterWy, 0, angle, gridW, gridH, cellSize)
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.8)'
+      ctx.beginPath()
+      ctx.arc(originScreen.px, originScreen.py, 4, 0, Math.PI * 2)
+      ctx.fill()
+
+      // Draw dashed outline around multi-cell start token
+      if (startTokenSize > 1 && startTokenOrigin) {
+        drawDashedFootprint(ctx, startTokenOrigin, startTokenSize, angle, gridW, gridH, cellSize, 'rgba(255, 255, 255, 0.6)')
+      }
     }
 
     // Draw distance line for distance mode
     if (mode === 'distance' && origin && end) {
-      const fromScreen = worldToScreen(origin.x + 0.5, origin.y + 0.5, 0, angle, gridW, gridH, cellSize)
-      const toScreen = worldToScreen(end.x + 0.5, end.y + 0.5, 0, angle, gridW, gridH, cellSize)
+      // Calculate end center — accounts for multi-cell token footprint
+      const endAnchor = endTokenOrigin ?? end
+      const endCenterWx = endAnchor.x + endTokenSize / 2
+      const endCenterWy = endAnchor.y + endTokenSize / 2
+
+      const fromScreen = worldToScreen(originCenterWx, originCenterWy, 0, angle, gridW, gridH, cellSize)
+      const toScreen = worldToScreen(endCenterWx, endCenterWy, 0, angle, gridW, gridH, cellSize)
 
       ctx.save()
       ctx.strokeStyle = 'rgba(59, 130, 246, 1)'
@@ -463,6 +534,11 @@ export function useIsometricOverlays(options: IsometricOverlayOptions) {
       ctx.lineTo(toScreen.px, toScreen.py)
       ctx.stroke()
       ctx.setLineDash([])
+
+      // Draw dashed outline around multi-cell end token
+      if (endTokenSize > 1 && endTokenOrigin) {
+        drawDashedFootprint(ctx, endTokenOrigin, endTokenSize, angle, gridW, gridH, cellSize, 'rgba(59, 130, 246, 0.6)')
+      }
 
       if (distance > 0) {
         const midX = (fromScreen.px + toScreen.px) / 2

@@ -225,6 +225,10 @@ const rendering = useIsometricRendering({
   measurementOrigin: computed(() => measurementStore.startPosition),
   measurementEnd: computed(() => measurementStore.endPosition),
   measurementDistance: computed(() => measurementStore.distance),
+  measurementStartTokenOrigin: computed(() => measurementStore.startTokenOrigin),
+  measurementStartTokenSize: computed(() => measurementStore.startTokenSize),
+  measurementEndTokenOrigin: computed(() => measurementStore.endTokenOrigin),
+  measurementEndTokenSize: computed(() => measurementStore.endTokenSize),
 })
 
 // Interaction composable (wires mouse events to grid logic)
