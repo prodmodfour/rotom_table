@@ -192,6 +192,10 @@ export function useWebSocket() {
         requestSync()
         break
 
+      case 'pokemon_switched':
+        getEncounterStore().updateFromWebSocket(message.data.encounter)
+        break
+
       case 'encounter_served':
         getEncounterStore().updateFromWebSocket(message.data.encounter)
         break
