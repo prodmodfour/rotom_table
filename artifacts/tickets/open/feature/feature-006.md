@@ -65,3 +65,11 @@ This is a FULL-scope feature requiring a multi-tier design spec before implement
 | 2026-02-28 | 4d2cc37 | P0: UI — clickable evolution entries in LevelUpNotification |
 | 2026-02-28 | 2849aec | P0: UI — manual Evolve button on Pokemon sheet page |
 | 2026-02-28 | 5ce760c | P0: Refactor — move validateBaseRelations to shared utils for client use |
+| 2026-03-01 | b589480 | P1: Service — remapAbilities() for positional ability remapping (R032) |
+| 2026-03-01 | 34b1684 | P1: Utility — getEvolutionMoves() for evolution move learning (R033, decree-036) |
+| 2026-03-01 | 24d6bfb | P1: Service — extend performEvolution with abilities, moves, capabilities, skills (R032/R033/R034) |
+| 2026-03-01 | e19d2f8 | P1: Endpoint — extend POST evolve to accept abilities and moves arrays |
+| 2026-03-01 | 55f5636 | P1: Endpoint — extend POST evolution-check with ability/move data + MoveData enrichment |
+| 2026-03-01 | 30851f4 | P1: UI — multi-step evolution modal (stat/ability/move/summary) with 3 sub-components |
+| 2026-03-01 | 39f47e9 | P1: UI — update Pokemon sheet + XpDistributionResults callers for P1 props |
+| 2026-03-01 | 900c49d | P1: WebSocket — pokemon_evolved broadcast to all clients |
