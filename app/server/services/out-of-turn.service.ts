@@ -567,6 +567,11 @@ export function applyAdvancedPriority(combatant: Combatant): Combatant {
       ...(combatant.outOfTurnUsage ?? getDefaultOutOfTurnUsage()),
       priorityUsed: true
     },
+    // Advanced Priority consumes a Standard Action (spec B2)
+    turnState: {
+      ...combatant.turnState,
+      standardActionUsed: true
+    },
     // If they already acted, they forfeit next round
     skipNextRound: alreadyActed ? true : combatant.skipNextRound
   }
