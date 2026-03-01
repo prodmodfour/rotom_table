@@ -79,6 +79,8 @@ async function sendEncounterState(peer: Parameters<typeof safeSend>[0], encounte
         trainerTurnOrder: JSON.parse(encounter.trainerTurnOrder || '[]'),
         pokemonTurnOrder: JSON.parse(encounter.pokemonTurnOrder || '[]'),
         declarations: JSON.parse(encounter.declarations || '[]'),
+        pendingOutOfTurnActions: JSON.parse((encounter as any).pendingActions || '[]'),
+        holdQueue: JSON.parse((encounter as any).holdQueue || '[]'),
         isActive: encounter.isActive,
         isPaused: encounter.isPaused,
         isServed: encounter.isServed,
