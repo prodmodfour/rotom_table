@@ -16,10 +16,6 @@
             <span class="advancement-banner__label">Stat Points</span>
             <span class="advancement-banner__value">+{{ summary.totalStatPoints }}</span>
           </div>
-          <div class="advancement-banner__item">
-            <span class="advancement-banner__label">Skill Ranks</span>
-            <span class="advancement-banner__value">+{{ summary.totalSkillRanks }}</span>
-          </div>
           <div v-if="summary.totalEdges > 0" class="advancement-banner__item advancement-banner__item--p1">
             <span class="advancement-banner__label">Edges (P1)</span>
             <span class="advancement-banner__value">+{{ summary.totalEdges }}</span>
@@ -44,20 +40,6 @@
           @decrement-stat="levelUp.decrementStat"
         />
 
-        <LevelUpSkillSection
-          v-if="currentStep === 'skills'"
-          :current-skills="character.skills"
-          :skill-choices="levelUp.skillChoices.value"
-          :total-ranks="levelUp.skillRanksTotal.value"
-          :ranks-remaining="levelUp.skillRanksRemaining.value"
-          :target-level="targetLevel"
-          :caps-unlocked="summary?.skillRankCapsUnlocked ?? []"
-          :get-effective-skill-rank="levelUp.getEffectiveSkillRank"
-          :can-rank-up-skill="levelUp.canRankUpSkill"
-          @add-skill-rank="levelUp.addSkillRank"
-          @remove-skill-rank="levelUp.removeSkillRank"
-        />
-
         <LevelUpSummary
           v-if="currentStep === 'summary'"
           :character-name="character.name"
@@ -67,8 +49,6 @@
           :current-stats="character.stats"
           :current-max-hp="levelUp.currentMaxHp.value"
           :updated-max-hp="levelUp.updatedMaxHp.value"
-          :skill-choices="levelUp.skillChoices.value"
-          :current-skills="character.skills"
           :warnings="levelUp.warnings.value"
           :summary="summary"
         />
@@ -145,10 +125,10 @@ onUnmounted(() => {
 const summary = computed((): TrainerAdvancementSummary | null => levelUp.summary.value)
 
 // --- Step Navigation ---
-// P0 steps: stats -> skills -> summary
-// P1 will add: edges, features, classes, milestones
+// P0 steps: stats -> summary
+// P1 will add: edges (includes Skill Edge rank allocation per decree-037), features, classes, milestones
 const steps = computed((): string[] => {
-  const s = ['stats', 'skills']
+  const s = ['stats']
   // P1 additions:
   // if (summary.value && (summary.value.totalEdges > 0 || summary.value.bonusSkillEdges > 0)) s.push('edges')
   // if (summary.value && summary.value.totalFeatures > 0) s.push('features')
