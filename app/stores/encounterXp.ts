@@ -1,6 +1,17 @@
 import { defineStore } from 'pinia'
 import type { XpCalculationResult, XpApplicationResult } from '~/utils/experienceCalculation'
 
+/** Result from batch trainer XP distribution */
+export interface TrainerXpDistributionResult {
+  characterId: string
+  characterName: string
+  previousXp: number
+  previousLevel: number
+  newXp: number
+  newLevel: number
+  levelsGained: number
+}
+
 /**
  * Store for XP calculation and distribution actions.
  * Extracted from encounter.ts to keep file size under 800 lines.
@@ -83,6 +94,28 @@ export const useEncounterXpStore = defineStore('encounterXp', {
           trainerEnemyIds: params.trainerEnemyIds,
           distribution: params.distribution
         }
+      })
+
+      return response.data
+    },
+
+    /** Batch-distribute trainer XP to multiple trainers after an encounter */
+    async distributeTrainerXp(params: {
+      encounterId: string
+      distribution: Array<{ characterId: string; xpAmount: number }>
+    }): Promise<{
+      results: TrainerXpDistributionResult[]
+      totalXpDistributed: number
+    }> {
+      const response = await $fetch<{
+        success: boolean
+        data: {
+          results: TrainerXpDistributionResult[]
+          totalXpDistributed: number
+        }
+      }>(`/api/encounters/${params.encounterId}/trainer-xp-distribute`, {
+        method: 'POST',
+        body: { distribution: params.distribution }
       })
 
       return response.data
