@@ -203,6 +203,9 @@ export default defineEventHandler(async (event) => {
             minimumLevel: a.trigger.minimumLevel,
             requiredItem: a.trigger.requiredItem,
             itemMustBeHeld: a.trigger.itemMustBeHeld,
+            // P2: gender and move requirements
+            requiredGender: a.trigger.requiredGender || null,
+            requiredMove: a.trigger.requiredMove || null,
             targetBaseStats: target ? {
               hp: target.baseHp, attack: target.baseAttack, defense: target.baseDefense,
               specialAttack: target.baseSpAtk, specialDefense: target.baseSpDef, speed: target.baseSpeed
