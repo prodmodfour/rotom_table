@@ -230,11 +230,15 @@ export function useTrainerLevelUp() {
   function buildUpdatePayload(): Partial<HumanCharacter> {
     if (!character.value) return {}
     const newMaxHp = updatedMaxHp.value
+    const wasAtFullHp = character.value.currentHp >= (character.value.maxHp ?? 0)
+    const newCurrentHp = wasAtFullHp
+      ? newMaxHp
+      : Math.min(character.value.currentHp, newMaxHp)
     return {
       level: newLevel.value,
       stats: updatedStats.value ?? character.value.stats,
       maxHp: newMaxHp,
-      currentHp: Math.min(character.value.currentHp, newMaxHp),
+      currentHp: newCurrentHp,
       skills: updatedSkills.value ?? character.value.skills
     }
   }
