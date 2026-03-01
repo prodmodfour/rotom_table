@@ -1,40 +1,257 @@
 /**
- * PTU 1.05 Status Condition Categories
- * Extracted for reuse across components
+ * PTU 1.05 Status Condition Definitions
+ *
+ * Per decree-038: Each condition has independent behavior flags.
+ * Category (persistent/volatile/other) is for display/grouping only.
+ * Behaviors (clearsOnRecall, clearsOnEncounterEnd, clearsOnFaint) are
+ * determined by per-condition flags, NOT by category membership.
  */
 import type { StatusCondition, StageModifiers } from '~/types'
 
-export const PERSISTENT_CONDITIONS: StatusCondition[] = [
-  'Burned', 'Frozen', 'Paralyzed', 'Poisoned', 'Badly Poisoned'
-]
+// ============================================
+// CONDITION DEFINITION TYPE
+// ============================================
 
-export const VOLATILE_CONDITIONS: StatusCondition[] = [
-  'Asleep', 'Bad Sleep', 'Confused', 'Flinched', 'Infatuated', 'Cursed',
-  'Disabled', 'Enraged', 'Suppressed'
-]
+export type ConditionCategory = 'persistent' | 'volatile' | 'other'
 
-export const OTHER_CONDITIONS: StatusCondition[] = [
-  'Fainted', 'Dead', 'Stuck', 'Slowed', 'Trapped', 'Tripped', 'Vulnerable'
-]
+export interface StatusConditionDef {
+  readonly name: StatusCondition
+  readonly category: ConditionCategory
+  /** Whether this condition is cleared when a Pokemon is recalled into its Poke Ball */
+  readonly clearsOnRecall: boolean
+  /** Whether this condition is cleared at encounter end */
+  readonly clearsOnEncounterEnd: boolean
+  /** Whether this condition is cleared when the entity faints (PTU p.248) */
+  readonly clearsOnFaint: boolean
+}
 
-export const ALL_STATUS_CONDITIONS: StatusCondition[] = [
-  ...PERSISTENT_CONDITIONS,
-  ...VOLATILE_CONDITIONS,
-  ...OTHER_CONDITIONS
-]
+// ============================================
+// MASTER CONDITION DEFINITIONS (decree-038)
+// ============================================
+
+/**
+ * Single source of truth for all status condition behaviors.
+ * Category is for UI grouping only. Behavior flags drive game logic.
+ *
+ * PTU references:
+ * - Persistent (p.246): Burn, Freeze, Paralysis, Poison, Badly Poisoned
+ * - Volatile (p.247): Sleep, Confusion, Flinch, Infatuation, Curse, Disable, Rage, Suppression
+ * - Other: Fainted, Dead, Stuck, Slowed, Trapped, Tripped, Vulnerable
+ * - Faint (p.248): "automatically cured of all Persistent and Volatile Status Conditions"
+ * - Recall (p.247-248): "Volatile Afflictions are cured completely... by recalling"
+ *   Also cleared: Stuck, Slowed, Tripped, Vulnerable (p.247: "may be removed by switching")
+ *   NOT cleared: Persistent, Fainted, Dead, Trapped (prevents recall entirely)
+ */
+export const STATUS_CONDITION_DEFS: Record<StatusCondition, StatusConditionDef> = {
+  // === Persistent conditions ===
+  // PTU p.246: retained even if recalled into Poke Ball
+  'Burned': {
+    name: 'Burned',
+    category: 'persistent',
+    clearsOnRecall: false,
+    clearsOnEncounterEnd: false,
+    clearsOnFaint: true
+  },
+  'Frozen': {
+    name: 'Frozen',
+    category: 'persistent',
+    clearsOnRecall: false,
+    clearsOnEncounterEnd: false,
+    clearsOnFaint: true
+  },
+  'Paralyzed': {
+    name: 'Paralyzed',
+    category: 'persistent',
+    clearsOnRecall: false,
+    clearsOnEncounterEnd: false,
+    clearsOnFaint: true
+  },
+  'Poisoned': {
+    name: 'Poisoned',
+    category: 'persistent',
+    clearsOnRecall: false,
+    clearsOnEncounterEnd: false,
+    clearsOnFaint: true
+  },
+  'Badly Poisoned': {
+    name: 'Badly Poisoned',
+    category: 'persistent',
+    clearsOnRecall: false,
+    clearsOnEncounterEnd: false,
+    clearsOnFaint: true
+  },
+
+  // === Volatile conditions ===
+  // PTU p.247: normally cured by recall and at encounter end
+  'Asleep': {
+    name: 'Asleep',
+    category: 'volatile',
+    clearsOnRecall: true,
+    clearsOnEncounterEnd: true,
+    clearsOnFaint: true
+  },
+  'Bad Sleep': {
+    name: 'Bad Sleep',
+    category: 'volatile',
+    clearsOnRecall: true,
+    clearsOnEncounterEnd: true,
+    clearsOnFaint: true
+  },
+  'Confused': {
+    name: 'Confused',
+    category: 'volatile',
+    clearsOnRecall: true,
+    clearsOnEncounterEnd: true,
+    clearsOnFaint: true
+  },
+  'Flinched': {
+    name: 'Flinched',
+    category: 'volatile',
+    clearsOnRecall: true,
+    clearsOnEncounterEnd: true,
+    clearsOnFaint: true
+  },
+  'Infatuated': {
+    name: 'Infatuated',
+    category: 'volatile',
+    clearsOnRecall: true,
+    clearsOnEncounterEnd: true,
+    clearsOnFaint: true
+  },
+  'Cursed': {
+    name: 'Cursed',
+    category: 'volatile',
+    clearsOnRecall: true,
+    clearsOnEncounterEnd: true,
+    clearsOnFaint: true
+  },
+  'Disabled': {
+    name: 'Disabled',
+    category: 'volatile',
+    clearsOnRecall: true,
+    clearsOnEncounterEnd: true,
+    clearsOnFaint: true
+  },
+  'Enraged': {
+    name: 'Enraged',
+    category: 'volatile',
+    clearsOnRecall: true,
+    clearsOnEncounterEnd: true,
+    clearsOnFaint: true
+  },
+  'Suppressed': {
+    name: 'Suppressed',
+    category: 'volatile',
+    clearsOnRecall: true,
+    clearsOnEncounterEnd: true,
+    clearsOnFaint: true
+  },
+
+  // === Other conditions ===
+  'Fainted': {
+    name: 'Fainted',
+    category: 'other',
+    clearsOnRecall: false,
+    clearsOnEncounterEnd: false,
+    clearsOnFaint: false  // Fainted doesn't clear itself
+  },
+  'Dead': {
+    name: 'Dead',
+    category: 'other',
+    clearsOnRecall: false,
+    clearsOnEncounterEnd: false,
+    clearsOnFaint: false
+  },
+  'Stuck': {
+    name: 'Stuck',
+    category: 'other',
+    clearsOnRecall: true,
+    clearsOnEncounterEnd: true,
+    clearsOnFaint: true
+  },
+  'Slowed': {
+    name: 'Slowed',
+    category: 'other',
+    clearsOnRecall: true,
+    clearsOnEncounterEnd: true,
+    clearsOnFaint: true
+  },
+  'Trapped': {
+    name: 'Trapped',
+    category: 'other',
+    clearsOnRecall: false,   // Trapped prevents recall entirely
+    clearsOnEncounterEnd: true,
+    clearsOnFaint: true
+  },
+  'Tripped': {
+    name: 'Tripped',
+    category: 'other',
+    clearsOnRecall: true,
+    clearsOnEncounterEnd: true,
+    clearsOnFaint: true
+  },
+  'Vulnerable': {
+    name: 'Vulnerable',
+    category: 'other',
+    clearsOnRecall: true,
+    clearsOnEncounterEnd: true,
+    clearsOnFaint: true
+  }
+} as const
+
+// ============================================
+// DERIVED ARRAYS (for backward compatibility & display grouping)
+// ============================================
+
+/** Get all condition defs as an array */
+export const ALL_CONDITION_DEFS: readonly StatusConditionDef[] =
+  Object.values(STATUS_CONDITION_DEFS)
+
+/** Persistent conditions — for UI display grouping only (decree-038) */
+export const PERSISTENT_CONDITIONS: StatusCondition[] =
+  ALL_CONDITION_DEFS.filter(d => d.category === 'persistent').map(d => d.name)
+
+/** Volatile conditions — for UI display grouping only (decree-038) */
+export const VOLATILE_CONDITIONS: StatusCondition[] =
+  ALL_CONDITION_DEFS.filter(d => d.category === 'volatile').map(d => d.name)
+
+/** Other conditions — for UI display grouping only (decree-038) */
+export const OTHER_CONDITIONS: StatusCondition[] =
+  ALL_CONDITION_DEFS.filter(d => d.category === 'other').map(d => d.name)
+
+/** All status conditions */
+export const ALL_STATUS_CONDITIONS: StatusCondition[] =
+  ALL_CONDITION_DEFS.map(d => d.name)
+
+// ============================================
+// BEHAVIOR-DERIVED ARRAYS (decree-038)
+// ============================================
 
 /**
  * Conditions cleared when a Pokemon is recalled into its Poke Ball.
- * PTU p.247-248: "Volatile Afflictions are cured completely... from Pokemon
- * by recalling them into their Poke Balls."
- * Also cleared: Stuck, Slowed, Tripped, Vulnerable (p.247: "may be removed by switching").
- * NOT cleared: Persistent (Burned, Frozen, Paralyzed, Poisoned, Badly Poisoned),
- * Fainted, Dead, Trapped (Trapped prevents recall entirely).
+ * Derived from per-condition clearsOnRecall flags (decree-038).
  */
-export const RECALL_CLEARED_CONDITIONS: StatusCondition[] = [
-  ...VOLATILE_CONDITIONS,
-  'Stuck', 'Slowed', 'Tripped', 'Vulnerable'
-]
+export const RECALL_CLEARED_CONDITIONS: StatusCondition[] =
+  ALL_CONDITION_DEFS.filter(d => d.clearsOnRecall).map(d => d.name)
+
+/**
+ * Conditions cleared at encounter end.
+ * Derived from per-condition clearsOnEncounterEnd flags (decree-038).
+ */
+export const ENCOUNTER_END_CLEARED_CONDITIONS: StatusCondition[] =
+  ALL_CONDITION_DEFS.filter(d => d.clearsOnEncounterEnd).map(d => d.name)
+
+/**
+ * Conditions cleared on faint.
+ * Derived from per-condition clearsOnFaint flags (decree-038).
+ * PTU p.248: "automatically cured of all Persistent and Volatile Status Conditions"
+ */
+export const FAINT_CLEARED_CONDITIONS: StatusCondition[] =
+  ALL_CONDITION_DEFS.filter(d => d.clearsOnFaint).map(d => d.name)
+
+// ============================================
+// MECHANIC-SPECIFIC ARRAYS (not category-derived)
+// ============================================
 
 /**
  * Conditions that deal tick damage at end of turn.
@@ -53,6 +270,10 @@ export const TICK_DAMAGE_CONDITIONS: StatusCondition[] = [
 export const ZERO_EVASION_CONDITIONS: StatusCondition[] = [
   'Vulnerable', 'Frozen', 'Asleep'
 ]
+
+// ============================================
+// COMBAT STAGE EFFECTS
+// ============================================
 
 /**
  * Status conditions with inherent combat stage effects (PTU 1.05)
@@ -81,6 +302,17 @@ export function getStatusCsEffect(condition: StatusCondition): { stat: keyof Sta
   const entry = STATUS_CS_EFFECTS.find(e => e.condition === condition)
   if (!entry) return undefined
   return { stat: entry.stat, value: entry.value }
+}
+
+// ============================================
+// HELPER FUNCTIONS
+// ============================================
+
+/**
+ * Get the definition for a status condition.
+ */
+export function getConditionDef(condition: StatusCondition): StatusConditionDef {
+  return STATUS_CONDITION_DEFS[condition]
 }
 
 /**
