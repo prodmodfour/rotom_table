@@ -71,6 +71,12 @@ export default defineEventHandler(async (event) => {
           message: 'Pokemon must be Level 40+ for third ability'
         })
       }
+      if (currentAbilities.length < 2) {
+        throw createError({
+          statusCode: 400,
+          message: 'Pokemon must have a second ability before gaining a third. Assign the second ability first (Level 20 milestone).'
+        })
+      }
       if (currentAbilities.length >= 3) {
         throw createError({
           statusCode: 400,
