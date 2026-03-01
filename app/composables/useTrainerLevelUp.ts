@@ -30,8 +30,7 @@ import {
 } from '~/utils/trainerAdvancement'
 import type {
   TrainerLevelUpInfo,
-  TrainerAdvancementSummary,
-  MilestoneOption
+  TrainerAdvancementSummary
 } from '~/utils/trainerAdvancement'
 
 /** Milestone choice identifier (the option id string) */
