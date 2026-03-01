@@ -88,3 +88,8 @@ FULL-scope feature requiring design spec. Should build on the existing character
   - `2dceceed` fix: use milestone-aware totals for edge/feature step visibility
   - `e49cb3a5` fix: guard step index against step list shrinkage
   - `2b215c1a` chore: remove unused MilestoneOption import
+- 2026-03-01: **P1 fix cycle** — 4 commits on branch `slave/2-developer-feature-008-fix-20260301` (code-review-239 CHANGES_REQUIRED + rules-review-215 APPROVED):
+  - `fdfa2ed9` fix: include regular Skill Edge rank-ups in effective skills, payload, and summary (C1 CRITICAL + MED-01 cosmetic)
+  - `67416ee0` fix: add informational warning for unfilled class choice at milestone levels (M2)
+  - `ab2693fd` docs: update app-surface.md with P1 level-up components and composable extensions (H1)
+  - `b8a66c1b` refactor: extract duplicated SCSS into _level-up-shared.scss partial (M1)

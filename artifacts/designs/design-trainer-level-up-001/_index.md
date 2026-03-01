@@ -4,7 +4,7 @@ ticket_id: feature-008
 category: FEATURE_GAP
 scope: FULL
 domain: character-lifecycle
-status: p1-implemented
+status: p1-fix-applied
 affected_files:
   - app/components/character/CharacterModal.vue
   - app/pages/gm/characters/[id].vue
@@ -23,6 +23,7 @@ new_files:
   - app/components/levelup/LevelUpClassSection.vue
   - app/components/levelup/LevelUpMilestoneSection.vue
   - app/components/levelup/LevelUpSummary.vue
+  - app/assets/scss/_level-up-shared.scss
 ---
 
 
@@ -218,3 +219,23 @@ Branch: `slave/4-dev-feature-008-p1-20260301-093000` (10 commits)
 - Step navigation: milestones -> stats -> skills -> edges -> features -> classes -> summary
 - Reactive step visibility based on milestone-aware computed totals
 - Decree compliance: decree-022 (branching suffix), decree-026 (Martial Artist), decree-027 (Pathetic creation-only)
+
+### P1 Fix Cycle — 2026-03-01
+
+Branch: `slave/2-developer-feature-008-fix-20260301` (4 commits)
+
+Reviews: code-review-239 (CHANGES_REQUIRED: C1+H1+M1+M2), rules-review-215 (APPROVED: MED-01)
+
+| Commit | Description | Files | Review Issue |
+|--------|-------------|-------|-------------|
+| `fdfa2ed9` | Fix regular Skill Edge rank-ups in effectiveSkills, payload, summary, cap checks | `useTrainerLevelUp.ts`, `LevelUpSummary.vue`, `LevelUpModal.vue` | C1 (CRITICAL) + MED-01 |
+| `67416ee0` | Add informational warning for unfilled class choice | `useTrainerLevelUp.ts` | M2 |
+| `ab2693fd` | Update app-surface.md with P1 components | `.claude/skills/references/app-surface.md` | H1 |
+| `b8a66c1b` | Extract duplicated SCSS into shared partial | `_level-up-shared.scss` (new), `nuxt.config.ts`, 4 components | M1 |
+
+**Fix cycle changes:**
+- **C1 fix:** Regular Skill Edges (from normal edge slots) now update skill ranks in effectiveSkills, buildUpdatePayload, summary display, and cap validation. Added `regularSkillEdgeSkills` computed to parse skill names from "Skill Edge: X" entries in edgeChoices, and `countAllSkillEdgeUps` to unify bonus + regular counting.
+- **MED-01 fix (from rules-review-215):** Stacked skill rank-up summary now tracks running rank per skill, so sequential rank-ups on the same skill display correct from/to progression.
+- **M2 fix:** Added informational "(Info)" warning when class choice levels (5/10) are crossed but no class is selected. Non-blocking since class choice is optional per spec.
+- **H1 fix:** Updated app-surface.md trainer level-up entry with all 4 P1 components and composable extensions. Removed "P1 will add" placeholder.
+- **M1 fix:** Extracted ~175 lines of duplicated .btn/.counter/.tag/.selected-tags SCSS into `_level-up-shared.scss` partial with mixins, registered in nuxt.config.ts additionalData.
