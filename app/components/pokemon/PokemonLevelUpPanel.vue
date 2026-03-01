@@ -54,6 +54,12 @@
       </div>
     </div>
 
+    <!-- Error state -->
+    <div v-if="errorMsg" class="level-up-panel__error">
+      <PhWarning :size="16" />
+      <span>{{ errorMsg }}</span>
+    </div>
+
     <!-- Inline stat allocation panel -->
     <StatAllocationPanel
       v-if="showAllocationPanel && pokemon"
@@ -86,7 +92,7 @@
 </template>
 
 <script setup lang="ts">
-import { PhSliders, PhSword, PhLightning } from '@phosphor-icons/vue'
+import { PhSliders, PhSword, PhLightning, PhWarning } from '@phosphor-icons/vue'
 import type { Pokemon } from '~/types'
 
 interface LevelUpSummary {
@@ -119,6 +125,7 @@ const showAbilityPanel = ref(false)
 const showMovePanel = ref(false)
 const activeMilestone = ref<'second' | 'third' | null>(null)
 const speciesData = ref<SpeciesAbilityData | null>(null)
+const errorMsg = ref<string | null>(null)
 
 /** Check if the Pokemon can still assign an ability at this milestone */
 function canAssignAbility(type: string): boolean {
@@ -148,7 +155,7 @@ async function openAbilityPanel(milestone: 'second' | 'third') {
         }
       }
     } catch {
-      alert('Failed to load species ability data.')
+      errorMsg.value = 'Failed to load species ability data.'
       return
     }
   }
@@ -220,6 +227,19 @@ watch(() => props.targetLevel, async (newLevel) => {
     display: flex;
     flex-direction: column;
     gap: $spacing-sm;
+  }
+
+  &__error {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-sm $spacing-md;
+    background: rgba($color-danger, 0.1);
+    border: 1px solid rgba($color-danger, 0.3);
+    border-radius: $border-radius-sm;
+    color: $color-danger;
+    font-size: $font-size-sm;
+    margin-top: $spacing-sm;
   }
 }
 
