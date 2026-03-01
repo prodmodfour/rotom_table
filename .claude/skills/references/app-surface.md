@@ -126,6 +126,8 @@ CRUD + extensive combat actions.
 - `POST /api/encounters/:id/next-turn` — advance turn
 - `POST /api/encounters/:id/declare` — record trainer declaration (League Battle)
 - `POST /api/encounters/:id/switch` — full Pokemon switch (recall + release) as Standard Action with 8m range check, initiative insertion, action economy enforcement
+- `POST /api/encounters/:id/recall` — standalone recall (1 = Shift Action, 2 = Standard Action), removes from field, clears volatile conditions, tracks recall_only SwitchAction
+- `POST /api/encounters/:id/release` — standalone release (1 = Shift Action, 2 = Standard Action), auto-places adjacent to trainer, immediate-act logic (Section K), detects recall+release pair (Section N)
 - `POST /api/encounters/:id/combatants` — add combatant
 - `DELETE /api/encounters/:id/combatants/:combatantId` — remove combatant
 - `POST /api/encounters/:id/damage` — apply damage
@@ -158,7 +160,7 @@ CRUD + extensive combat actions.
 
 **Level-up ability/move assignment:** `utils/abilityAssignment.ts` (pure ability pool computation — categorizeAbilities into Basic/Advanced/High, getAbilityPool for second/third milestone excluding held abilities), `components/pokemon/AbilityAssignmentPanel.vue` (radio button ability picker — category labels, effect text from batch API, submit to assign-ability endpoint), `components/pokemon/MoveLearningPanel.vue` (current moves display with 6 slots, available new moves with full details, add-to-slot or replace-existing-move workflows, batch move detail fetch).
 
-**Switching system:** `composables/useSwitching.ts` (getBenchPokemon, canSwitch pre-validation, executeSwitch), `server/services/switching.service.ts` (10-step validation, range check, initiative insertion, combatant removal). Switch button on `CombatantCard.vue` for trainers and owned Pokemon. WebSocket event: `pokemon_switched` (server -> all clients). `switchActions` field on Encounter model (JSON, cleared per round).
+**Switching system:** `composables/useSwitching.ts` (getBenchPokemon, canSwitch, canFaintedSwitch pre-validation, executeSwitch, executeRecall, executeRelease), `server/services/switching.service.ts` (validateSwitch 10-step chain, validateFaintedSwitch, validateForcedSwitch, checkRecallRange 8m PTU diagonal, insertIntoTurnOrder full contact + league, removeCombatantFromEncounter, markActionUsed, buildSwitchAction, canSwitchedPokemonBeCommanded, hasInitiativeAlreadyPassed Section K, findAdjacentPosition, checkRecallReleasePair Section N, applyRecallSideEffects). Store actions: `switchPokemon`, `recallPokemon`, `releasePokemon`. Switch/Fainted Switch/Force Switch buttons on `CombatantCard.vue` for trainers and owned Pokemon. WebSocket events: `pokemon_switched`, `pokemon_recalled`, `pokemon_released` (server -> all clients). `switchActions` field on Encounter model (JSON, cleared per round; tracks full_switch, fainted_switch, forced_switch, recall_only, release_only action types).
 
 **Budget system:** `utils/encounterBudget.ts` (pure PTU level budget calculator — budget formula, difficulty assessment, XP calculation, SIGNIFICANCE_PRESETS), `composables/useEncounterBudget.ts` (reactive wrapper for active encounter budget analysis).
 
@@ -266,7 +268,7 @@ Export/import for offline character management.
 | `server/services/combatant.service.ts` | Combatant builder, damage pipeline, calculateCurrentInitiative (CS-modified speed for initiative) |
 | `server/services/encounter.service.ts` | Encounter CRUD, reorderInitiativeAfterSpeedChange (decree-006), saveInitiativeReorder |
 | `server/services/status-automation.service.ts` | Tick damage calculation for status conditions (Burned, Poisoned, Badly Poisoned, Cursed). Pure functions: calculateTickDamage, calculateBadlyPoisonedDamage, getTickDamageEntries. TICK_DAMAGE_CONDITIONS constant in `constants/statusConditions.ts`. Integrated into `next-turn.post.ts` (fires before turn advance). WebSocket event: `status_tick` (server → all clients). `badlyPoisonedRound` field on Combatant model tracks escalation. |
-| `server/services/switching.service.ts` | Pokemon switching logic — validateSwitch (10-step chain), checkRecallRange (8m PTU diagonal), insertIntoTurnOrder (full contact + league), removeCombatantFromEncounter, markActionUsed, buildSwitchAction |
+| `server/services/switching.service.ts` | Pokemon switching logic — validateSwitch (10-step chain), validateFaintedSwitch, validateForcedSwitch, checkRecallRange (8m PTU diagonal), insertIntoTurnOrder (full contact + league), removeCombatantFromEncounter, markActionUsed, buildSwitchAction, canSwitchedPokemonBeCommanded, hasInitiativeAlreadyPassed, findAdjacentPosition, checkRecallReleasePair, applyRecallSideEffects |
 | `server/services/out-of-turn.service.ts` | AoO detection/resolution — canUseAoO, detectAoOTriggers, resolveAoOAction, expirePendingActions, autoDeclineFaintedReactor, cleanupResolvedActions |
 | `server/services/entity-update.service.ts` | Entity update broadcasting |
 | `server/services/grid-placement.service.ts` | VTT grid placement and size-to-token mapping |
