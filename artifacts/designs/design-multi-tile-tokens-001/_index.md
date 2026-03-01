@@ -106,6 +106,20 @@ This design implements only square footprints (NxN). Non-square shapes (serpent 
 - Token positioning/scaling in drawSingleToken already used token.size correctly; no changes needed
 - Existing multi-cell support in D-E sections verified correct; only documentation comments added
 
+### P0 Fix Cycle — 2026-03-01 (branch: slave/1-dev-feature-013-p0-fix-20260301)
+
+Addresses code-review-242 findings (CRIT-1, HIGH-1, HIGH-2, MED-1, MED-2).
+
+| Issue | Severity | Fix | Commits |
+|-------|----------|-----|---------|
+| CRIT-1: Depth sorting center inconsistency | CRITICAL | Use `token.size / 2` consistently | 9ae2ca2e |
+| HIGH-1: No bounds clamping on NxN highlight | HIGH | Add bounds check in 3 locations | fd3f3269 |
+| HIGH-2: sizeCategory.ts unused dead code | HIGH | Wire up in useGridMovement | 233152c8 |
+| MED-1: app-surface.md missing sizeCategory.ts | MEDIUM | Added to VTT utilities section | d78a138d |
+| MED-2: Single-point elevation for NxN cells | MEDIUM | Per-cell elevation lookup | fd3f3269 |
+
+**Files changed:** `app/composables/useIsometricRendering.ts`, `app/composables/useGridRendering.ts`, `app/composables/useGridMovement.ts`, `.claude/skills/references/app-surface.md`
+
 ## Atomized Files
 
 - [_index.md](_index.md)

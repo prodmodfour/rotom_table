@@ -64,3 +64,21 @@ FULL-scope feature requiring design spec. Affects core VTT systems: token render
 - Section B: Updated 2D movement preview to highlight full NxN destination footprint; arrow targets footprint center
 - Section C: Updated isometric depth sorting to use footprint center; movement arrow uses NxN footprint center; destination cells highlighted as NxN diamond overlay
 - Sections D-E: Verified getOccupiedCells, getTokenAtPosition, canFit, isValidMove all handle multi-cell NxN footprints correctly (no code changes needed)
+
+### P0 Fix Cycle: code-review-242 (2026-03-01)
+
+**Branch:** `slave/1-dev-feature-013-p0-fix-20260301`
+
+| Commit | Description | Files |
+|--------|-------------|-------|
+| 9ae2ca2e | fix: use consistent token.size / 2 center for isometric depth sorting | `app/composables/useIsometricRendering.ts` |
+| fd3f3269 | fix: add bounds checking to NxN footprint highlight loops + per-cell elevation | `app/composables/useGridRendering.ts`, `app/composables/useIsometricRendering.ts` |
+| 233152c8 | refactor: wire up sizeCategory.ts utility in useGridMovement | `app/composables/useGridMovement.ts` |
+| d78a138d | docs: add sizeCategory.ts to app-surface.md VTT utilities section | `.claude/skills/references/app-surface.md` |
+
+**Review issues addressed:**
+- CRIT-1: Depth sorting center now uses `token.size / 2` consistently with drawSingleToken and drawMovementArrow
+- HIGH-1: NxN footprint highlight loops in drawMovementPreview, drawExternalMovementPreview (2D), and drawMovementArrow (isometric) now clamp cells to grid bounds
+- HIGH-2: sizeCategory.ts wired into useGridMovement — getOccupiedCells, getEnemyOccupiedCells use getFootprintCells; isValidMove uses isFootprintInBounds
+- MED-1: app-surface.md updated with sizeCategory.ts in VTT Grid utilities section
+- MED-2: Isometric destination footprint highlight now uses per-cell elevation lookup instead of single-point elevation
