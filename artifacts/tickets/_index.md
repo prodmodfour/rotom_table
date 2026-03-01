@@ -1,9 +1,9 @@
 ---
-generated_at: 2026-03-01T12:35:20.249Z
-total_tickets: 240
+generated_at: 2026-03-01T13:45:02.649Z
+total_tickets: 243
 open: 23
 in_progress: 102
-resolved: 104
+resolved: 105
 ---
 
 # Tickets Index
@@ -21,9 +21,9 @@ resolved: 104
 | feature-022 | feature | P2 | pokemon-lifecycle | feature-022: Pokemon Loyalty System |
 | feature-023 | feature | P2 | player-view+capture+healing | feature-023: Player Capture & Healing Interfaces |
 | bug-041 | bug | P3 | — | bug-041: Remove Whirlwind references from Force Switch UI pe |
+| ptu-rule-129 | ptu-rule | P3 | combat | ptu-rule-129: Roar's forced recall must respect the Trapped  |
 | feature-004 | feature | P3 | combat | feature-004: Pokemon Mounting / Rider System |
 | ux-012 | ux | P3 | — | The server broadcasts `status_tick` WebSocket events when ti |
-| decree-need-038 | decree | P3 | — | decree-need-038: Does forced switch (Roar) override the Trap |
 | refactoring-108 | refactoring | P3 | — | refactoring-108: Extract switch button computeds from Combat |
 | ptu-rule-095 | ptu-rule | P4 | vtt-grid | ptu-rule-095: Disengage maneuver missing from combatManeuver |
 | ptu-rule-125 | ptu-rule | P4 | character-lifecycle | ptu-rule-125: Populate grantedCapabilities on all capability |
@@ -143,19 +143,17 @@ resolved: 104
 | refactoring-092 | refactoring | P4 | encounter-tables | code-review-207 M1 |
 | refactoring-093 | refactoring | P4 | combat | code-review-207 M2 |
 
-## Open Decree-Needs (1)
+## Open Decree-Needs (0)
 
-| ID | Priority | Domain | Topic |
-|----|----------|--------|-------|
-| decree-need-038 | P3 | — | — |
+All decree-needs addressed.
 
 ## Summary by Category
 
 | Category | Open | In-Progress | Resolved | Total |
 |----------|------|-------------|----------|-------|
 | bug | 1 | 12 | 26 | 41 |
-| ptu-rule | 4 | 59 | 36 | 100 |
+| ptu-rule | 5 | 59 | 36 | 101 |
 | feature | 8 | 11 | 3 | 23 |
 | ux | 3 | 7 | 2 | 13 |
-| decree | 1 | 0 | 37 | 38 |
-| refactoring | 6 | 13 | 0 | 25 |
+| decree | 0 | 0 | 38 | 38 |
+| refactoring | 6 | 13 | 0 | 27 |

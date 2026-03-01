@@ -1,13 +1,13 @@
 ---
-generated_at: 2026-03-01T12:35:20.256Z
-total_decrees: 38
-active: 38
+generated_at: 2026-03-01T13:45:02.656Z
+total_decrees: 39
+active: 39
 superseded: 0
 ---
 
 # Decrees Index
 
-## Active Decrees (38)
+## Active Decrees (39)
 
 | Decree ID | Domain | Topic | Title |
 |-----------|--------|-------|-------|
@@ -49,3 +49,4 @@ superseded: 0
 | decree-036 | pokemon-lifecycle | stone-evolution-move-learning | Stone evolutions learn new-form moves at or below current level |
 | decree-037 | character-lifecycle | skill-ranks-via-edges-only | Skill ranks come from Edge slots only, not automatic per-level grants |
 | decree-038 | combat | sleep-classification-and-condition-behavior-decoupling | Decouple condition behaviors from categories; Sleep is volatile but persists through recall and encounter end |
+| decree-039 | combat | roar-blocked-by-trapped | Roar's forced recall does not override the Trapped condition |
