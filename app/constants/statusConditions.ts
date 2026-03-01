@@ -24,6 +24,19 @@ export const ALL_STATUS_CONDITIONS: StatusCondition[] = [
 ]
 
 /**
+ * Conditions cleared when a Pokemon is recalled into its Poke Ball.
+ * PTU p.247-248: "Volatile Afflictions are cured completely... from Pokemon
+ * by recalling them into their Poke Balls."
+ * Also cleared: Stuck, Slowed, Tripped, Vulnerable (p.247: "may be removed by switching").
+ * NOT cleared: Persistent (Burned, Frozen, Paralyzed, Poisoned, Badly Poisoned),
+ * Fainted, Dead, Trapped (Trapped prevents recall entirely).
+ */
+export const RECALL_CLEARED_CONDITIONS: StatusCondition[] = [
+  ...VOLATILE_CONDITIONS,
+  'Stuck', 'Slowed', 'Tripped', 'Vulnerable'
+]
+
+/**
  * Conditions that deal tick damage at end of turn.
  * PTU p.246-247: Burn/Poison (1 tick), Badly Poisoned (escalating),
  * Cursed (2 ticks on Standard Action only per decree-032).
