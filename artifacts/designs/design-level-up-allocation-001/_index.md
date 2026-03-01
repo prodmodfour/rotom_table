@@ -4,7 +4,7 @@
 **Feature Ticket:** feature-007
 **Priority:** P1
 **Domain:** pokemon-lifecycle
-**Status:** p0-implemented
+**Status:** p1-implemented
 **Created:** 2026-02-28
 
 ## Scope
@@ -113,3 +113,24 @@ The `validateBaseRelations()` function is identical for both. If evolution ships
 | 2026-03-01 | 44e0d46 | `.claude/skills/references/app-surface.md` — add 4 new level-up allocation file entries |
 
 **Addressed:** H1 (unit tests), H2 (docs), M1 (warnings), M2 (partial allocation), M3 (SCSS)
+
+### P1: Ability Assignment + Move Learning (2026-03-01)
+
+| Date | Commit | Description |
+|------|--------|-------------|
+| 2026-03-01 | d1cd4197 | `app/utils/abilityAssignment.ts` — getAbilityPool() utility with categorizeAbilities() |
+| 2026-03-01 | 2669e244 | `app/server/api/abilities/batch.post.ts` — batch ability detail lookup endpoint |
+| 2026-03-01 | ef9b9e94 | `app/server/api/pokemon/[id]/assign-ability.post.ts` — ability assignment with milestone validation |
+| 2026-03-01 | a20e2ff3 | `app/components/pokemon/AbilityAssignmentPanel.vue` — radio button ability picker with category labels |
+| 2026-03-01 | da1fcef5 | `app/server/api/moves/batch.post.ts` — batch move detail lookup endpoint |
+| 2026-03-01 | 43d8c40d | `app/server/api/pokemon/[id]/learn-move.post.ts` — move learning with add/replace support |
+| 2026-03-01 | c14dbddf | `app/components/pokemon/MoveLearningPanel.vue` — current moves + available moves + replace UI |
+| 2026-03-01 | 1d7828fc | `app/composables/useLevelUpAllocation.ts` — extend with pendingAbilityMilestone + pendingNewMoves |
+| 2026-03-01 | 555f9b74 | `app/components/encounter/LevelUpNotification.vue` + SCSS — clickable ability/move action buttons |
+| 2026-03-01 | dcf67640 | `app/server/api/species/[name].get.ts` — single species lookup for ability pool data |
+| 2026-03-01 | 7ea7658e | `app/components/pokemon/PokemonLevelUpPanel.vue` — inline ability/move panels with species fetch |
+| 2026-03-01 | 3bbbb00d | `app/components/encounter/XpDistributionResults.vue` — wire ability/move event handlers |
+
+**Files created:** 7 new files
+**Files modified:** 5 existing files
+**All P1 acceptance criteria addressed.**

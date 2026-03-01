@@ -104,6 +104,8 @@ CRUD + link/unlink + healing/rest + bulk.
 - `POST /api/pokemon/:id/new-day` — reset daily limits
 - `POST /api/pokemon/:id/add-experience` — manual/training XP grant with level-up detection
 - `POST /api/pokemon/:id/allocate-stats` — allocate stat points with Base Relations validation (incremental or batch mode, PTU HP formula, decree-035)
+- `POST /api/pokemon/:id/assign-ability` — assign ability at Level 20/40 milestone (validates level, ability count, pool membership, fetches effect from AbilityData)
+- `POST /api/pokemon/:id/learn-move` — learn move from learnset (validates MoveData, no duplicates, 6-move max, add or replace by index)
 - `POST /api/pokemon/:id/evolution-check` — check evolution eligibility (level/item/triggers)
 - `POST /api/pokemon/:id/evolve` — perform evolution (species, stats, HP recalc, encounter-active guard)
 - `POST /api/pokemon/bulk-action` — bulk archive/delete
@@ -143,7 +145,9 @@ CRUD + extensive combat actions.
 
 **Evolution utilities:** `utils/evolutionCheck.ts` (pure eligibility check — level/item/trigger validation, getEvolutionLevels, EvolutionStats type, validateBaseRelations re-export), `types/species.ts` (EvolutionTrigger interface — toSpecies, targetStage, minimumLevel, requiredItem, itemMustBeHeld).
 
-**Level-up stat allocation:** `utils/baseRelations.ts` (pure PTU Base Relations Rule utilities — buildStatTiers, validateBaseRelations, getValidAllocationTargets, extractStatPoints with warnings, formatStatName; decree-035 ordering), `composables/useLevelUpAllocation.ts` (reactive stat allocation workflow — pending allocation, validation, valid targets, budget tracking, submit to server), `components/pokemon/StatAllocationPanel.vue` (interactive stat point allocation UI — tier display, +/- controls, validation feedback, partial allocation with confirmation).
+**Level-up stat allocation:** `utils/baseRelations.ts` (pure PTU Base Relations Rule utilities — buildStatTiers, validateBaseRelations, getValidAllocationTargets, extractStatPoints with warnings, formatStatName; decree-035 ordering), `composables/useLevelUpAllocation.ts` (reactive stat allocation workflow — pending allocation, validation, valid targets, budget tracking, submit to server, pendingAbilityMilestone, pendingNewMoves, hasPendingActions), `components/pokemon/StatAllocationPanel.vue` (interactive stat point allocation UI — tier display, +/- controls, validation feedback, partial allocation with confirmation).
+
+**Level-up ability/move assignment:** `utils/abilityAssignment.ts` (pure ability pool computation — categorizeAbilities into Basic/Advanced/High, getAbilityPool for second/third milestone excluding held abilities), `components/pokemon/AbilityAssignmentPanel.vue` (radio button ability picker — category labels, effect text from batch API, submit to assign-ability endpoint), `components/pokemon/MoveLearningPanel.vue` (current moves display with 6 slots, available new moves with full details, add-to-slot or replace-existing-move workflows, batch move detail fetch).
 
 **Switching system:** `composables/useSwitching.ts` (getBenchPokemon, canSwitch pre-validation, executeSwitch), `server/services/switching.service.ts` (10-step validation, range check, initiative insertion, combatant removal). Switch button on `CombatantCard.vue` for trainers and owned Pokemon. WebSocket event: `pokemon_switched` (server -> all clients). `switchActions` field on Encounter model (JSON, cleared per round).
 
@@ -217,6 +221,9 @@ Export/import for offline character management.
 
 ### Utilities
 - `GET /api/species` — species list (search/autocomplete)
+- `GET /api/species/:name` — single species lookup (abilities, numBasicAbilities, learnset, base stats, evolution info)
+- `POST /api/abilities/batch` — batch ability detail lookup from AbilityData (up to 50 names)
+- `POST /api/moves/batch` — batch move detail lookup from MoveData (up to 50 names)
 - `POST /api/game/new-day` — global daily reset
 
 ## Store-to-Domain Mapping

@@ -79,3 +79,15 @@ Full design spec: [`design-level-up-allocation-001`](../../../designs/design-lev
 | 2026-03-01 | bb3422e | Fix: allow partial stat allocation with confirmation dialog |
 | 2026-03-01 | a1b4337 | Test: 37 unit tests for baseRelations.ts (all 4 functions + integration) |
 | 2026-03-01 | 44e0d46 | Docs: add level-up allocation files to app-surface.md |
+| 2026-03-01 | d1cd4197 | P1: getAbilityPool() utility for ability pool computation |
+| 2026-03-01 | 2669e244 | P1: POST /api/abilities/batch endpoint |
+| 2026-03-01 | ef9b9e94 | P1: POST /api/pokemon/:id/assign-ability endpoint |
+| 2026-03-01 | a20e2ff3 | P1: AbilityAssignmentPanel.vue component |
+| 2026-03-01 | da1fcef5 | P1: POST /api/moves/batch endpoint |
+| 2026-03-01 | 43d8c40d | P1: POST /api/pokemon/:id/learn-move endpoint |
+| 2026-03-01 | c14dbddf | P1: MoveLearningPanel.vue component |
+| 2026-03-01 | 1d7828fc | P1: Extend useLevelUpAllocation with ability/move state |
+| 2026-03-01 | 555f9b74 | P1: LevelUpNotification clickable ability/move action buttons |
+| 2026-03-01 | dcf67640 | P1: GET /api/species/:name endpoint for ability data |
+| 2026-03-01 | 7ea7658e | P1: PokemonLevelUpPanel inline ability/move panels |
+| 2026-03-01 | 3bbbb00d | P1: XpDistributionResults ability/move event wiring |
