@@ -47,7 +47,7 @@ export function useGridRendering(options: UseGridRenderingOptions) {
   const measurementStore = useMeasurementStore()
   const fogOfWarStore = useFogOfWarStore()
   const terrainStore = useTerrainStore()
-  const { getMovementRangeCells, getMovementRangeCellsWithAveraging } = useRangeParser()
+  const { getMovementRangeCells, getMovementRangeCellsWithAveraging, isTargetHitByAoE } = useRangeParser()
   const {
     drawArrow,
     drawDistanceLabel,
@@ -286,38 +286,90 @@ export function useGridRendering(options: UseGridRenderingOptions) {
       }
     })
 
+    // Highlight full footprint of multi-cell tokens hit by the AoE
+    if (measurementStore.mode !== 'distance' && cells.length > 0) {
+      const hitTokens = options.tokens.value.filter(token =>
+        token.size > 1 && isTargetHitByAoE(token.position, token.size, cells)
+      )
+
+      hitTokens.forEach(token => {
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.9)'
+        ctx.lineWidth = 3
+        ctx.setLineDash([4, 4])
+        ctx.strokeRect(
+          token.position.x * cellSize,
+          token.position.y * cellSize,
+          token.size * cellSize,
+          token.size * cellSize
+        )
+        ctx.setLineDash([])
+      })
+    }
+
+    // Calculate origin center — accounts for multi-cell token footprint
+    const startTokenSize = measurementStore.startTokenSize
+    const originCenterX = origin
+      ? (measurementStore.startTokenOrigin ?? origin).x * cellSize + (startTokenSize * cellSize) / 2
+      : 0
+    const originCenterY = origin
+      ? (measurementStore.startTokenOrigin ?? origin).y * cellSize + (startTokenSize * cellSize) / 2
+      : 0
+
     // Draw origin marker
     if (origin) {
       ctx.fillStyle = 'rgba(255, 255, 255, 0.8)'
       ctx.beginPath()
-      ctx.arc(
-        origin.x * cellSize + cellSize / 2,
-        origin.y * cellSize + cellSize / 2,
-        cellSize / 4,
-        0,
-        Math.PI * 2
-      )
+      ctx.arc(originCenterX, originCenterY, cellSize / 4, 0, Math.PI * 2)
       ctx.fill()
+
+      // Draw dashed outline around multi-cell start token
+      if (startTokenSize > 1 && measurementStore.startTokenOrigin) {
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)'
+        ctx.lineWidth = 2
+        ctx.setLineDash([4, 4])
+        ctx.strokeRect(
+          measurementStore.startTokenOrigin.x * cellSize,
+          measurementStore.startTokenOrigin.y * cellSize,
+          startTokenSize * cellSize,
+          startTokenSize * cellSize
+        )
+        ctx.setLineDash([])
+      }
     }
 
     // Draw distance line for distance mode
     if (measurementStore.mode === 'distance' && origin && measurementStore.endPosition) {
+      // Calculate end center — accounts for multi-cell token footprint
+      const endTokenSize = measurementStore.endTokenSize
+      const endCenterX = (measurementStore.endTokenOrigin ?? measurementStore.endPosition).x * cellSize
+        + (endTokenSize * cellSize) / 2
+      const endCenterY = (measurementStore.endTokenOrigin ?? measurementStore.endPosition).y * cellSize
+        + (endTokenSize * cellSize) / 2
+
       ctx.strokeStyle = 'rgba(59, 130, 246, 1)'
       ctx.lineWidth = 3
       ctx.setLineDash([5, 5])
 
       ctx.beginPath()
-      ctx.moveTo(
-        origin.x * cellSize + cellSize / 2,
-        origin.y * cellSize + cellSize / 2
-      )
-      ctx.lineTo(
-        measurementStore.endPosition.x * cellSize + cellSize / 2,
-        measurementStore.endPosition.y * cellSize + cellSize / 2
-      )
+      ctx.moveTo(originCenterX, originCenterY)
+      ctx.lineTo(endCenterX, endCenterY)
       ctx.stroke()
 
       ctx.setLineDash([])
+
+      // Draw dashed outline around multi-cell end token
+      if (endTokenSize > 1 && measurementStore.endTokenOrigin) {
+        ctx.strokeStyle = 'rgba(59, 130, 246, 0.6)'
+        ctx.lineWidth = 2
+        ctx.setLineDash([4, 4])
+        ctx.strokeRect(
+          measurementStore.endTokenOrigin.x * cellSize,
+          measurementStore.endTokenOrigin.y * cellSize,
+          endTokenSize * cellSize,
+          endTokenSize * cellSize
+        )
+        ctx.setLineDash([])
+      }
     }
   }
 
