@@ -82,3 +82,23 @@ FULL-scope feature requiring design spec. Affects core VTT systems: token render
 - HIGH-2: sizeCategory.ts wired into useGridMovement — getOccupiedCells, getEnemyOccupiedCells use getFootprintCells; isValidMove uses isFootprintInBounds
 - MED-1: app-surface.md updated with sizeCategory.ts in VTT Grid utilities section
 - MED-2: Isometric destination footprint highlight now uses per-cell elevation lookup instead of single-point elevation
+
+### P1: Movement Integration (2026-03-01)
+
+**Branch:** `slave/3-dev-feature-013-p1-20260301`
+
+| Commit | Description | Files |
+|--------|-------------|-------|
+| 00de20d4 | feat: add tokenSize param to A* pathfinding for multi-cell footprint checks | `app/composables/usePathfinding.ts` |
+| b3a4ed5e | feat: add tokenSize and gridBounds to flood-fill movement range functions | `app/composables/usePathfinding.ts` |
+| 905fbb80 | feat: add getTerrainCostForFootprint and footprint-aware terrain getter | `app/composables/useGridMovement.ts` |
+| 3001ec03 | feat: add revealFootprintArea action for multi-cell fog of war reveal | `app/stores/fogOfWar.ts` |
+| d4685725 | feat: pass tokenSize to A* in isValidMove and add ghost footprint outline | `app/composables/useGridMovement.ts`, `app/composables/useGridRendering.ts` |
+| 95ea3490 | test: add unit tests for multi-cell pathfinding (tokenSize, gridBounds) | `app/tests/unit/composables/usePathfinding.test.ts` (NEW) |
+
+**Summary:**
+- Section F: A* pathfinding (calculatePathCost) extended with tokenSize parameter — checks full NxN footprint passability at each step, uses max terrain multiplier across footprint
+- Section G: Flood-fill movement range (getMovementRangeCells, getMovementRangeCellsWithAveraging) extended with tokenSize and optional gridBounds — same footprint checks, terrain type collection across all footprint cells for averaging
+- Section H: New getTerrainCostForFootprint() returns max cost across NxN footprint; getTerrainCostGetter() returns footprint-aware closure when tokenSize > 1
+- Section I: New revealFootprintArea() fogOfWar store action — Chebyshev distance to rectangle for efficient reveal from multi-cell footprint
+- Section J: isValidMove() and calculateTerrainAwarePathCost() pass tokenSize to A* and terrain getter; ghost dashed outline rendered at hovered cell for large tokens in movement range display

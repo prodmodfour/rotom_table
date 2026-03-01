@@ -4,7 +4,7 @@ ticket_id: feature-013
 category: FEATURE
 scope: FULL
 domain: vtt-grid
-status: p0-implemented
+status: p1-implemented
 priority: P1
 decrees:
   - decree-002
@@ -68,11 +68,11 @@ This design implements only square footprints (NxN). Non-square shapes (serpent 
 | `getOccupiedCells()` multi-cell | EXISTS | In `useGridMovement.ts` and `useRangeParser.ts` |
 | `ptuDistanceTokens()` multi-cell distance | EXISTS | In `useRangeParser.ts` |
 | `findPlacementPosition()` multi-cell | EXISTS | In `grid-placement.service.ts` |
-| A* pathfinding multi-cell | MISSING | Single-cell path exploration only |
-| Movement validation multi-cell | PARTIAL | `isValidMove()` checks destination footprint bounds/stacking but uses single-cell A* |
-| Movement range flood-fill multi-cell | MISSING | Single-cell flood-fill only |
-| Fog of war multi-cell reveal | MISSING | Reveals only origin cell on movement |
-| Terrain cost multi-cell | MISSING | Reads terrain at single origin cell |
+| A* pathfinding multi-cell | P1-DONE | tokenSize param, NxN footprint passability per step |
+| Movement validation multi-cell | P1-DONE | isValidMove() passes tokenSize to A* and terrain getter |
+| Movement range flood-fill multi-cell | P1-DONE | tokenSize + gridBounds params, NxN footprint checks |
+| Fog of war multi-cell reveal | P1-DONE | revealFootprintArea() with Chebyshev distance to rect |
+| Terrain cost multi-cell | P1-DONE | getTerrainCostForFootprint(), footprint-aware getter closure |
 | AoE hit detection multi-cell targets | MISSING | Checks single cell per target |
 | Measurement from multi-cell tokens | EXISTS | `ptuDistanceTokens()` handles this |
 | Isometric multi-cell rendering | P0-DONE | Depth sorting, sprite scaling, movement arrow all use footprint center |
@@ -119,6 +119,29 @@ Addresses code-review-242 findings (CRIT-1, HIGH-1, HIGH-2, MED-1, MED-2).
 | MED-2: Single-point elevation for NxN cells | MEDIUM | Per-cell elevation lookup | fd3f3269 |
 
 **Files changed:** `app/composables/useIsometricRendering.ts`, `app/composables/useGridRendering.ts`, `app/composables/useGridMovement.ts`, `.claude/skills/references/app-surface.md`
+
+### P1 — 2026-03-01 (branch: slave/3-dev-feature-013-p1-20260301)
+
+| Section | Status | Commits |
+|---------|--------|---------|
+| F. Multi-cell A* pathfinding | DONE | 00de20d4 |
+| G. Multi-cell flood-fill movement range | DONE | b3a4ed5e |
+| H. Multi-cell terrain cost | DONE | 905fbb80 |
+| I. Fog of war per-cell reveal | DONE | 3001ec03 |
+| J. Movement preview for large tokens | DONE | d4685725 |
+| Unit tests | DONE | 95ea3490 |
+
+**Files changed:** `app/composables/usePathfinding.ts`, `app/composables/useGridMovement.ts`, `app/composables/useGridRendering.ts`, `app/stores/fogOfWar.ts`
+**Files created:** `app/tests/unit/composables/usePathfinding.test.ts`
+
+**Key decisions:**
+- A* and flood-fill use tokenSize param (default 1) for backward compatibility — no changes to existing call sites needed
+- Terrain cost aggregation: max across footprint (any impassable cell blocks movement)
+- Footprint-aware terrain getter is a closure returned by getTerrainCostGetter(combatantId, tokenSize) — pathfinding code stays clean
+- Fog reveal uses Chebyshev distance to bounding rectangle of footprint for efficient area calculation
+- Ghost footprint outline (dashed 4,4 pattern) shown on hover in movement range for large tokens
+- Elevation reads from origin cell of footprint (simplification: terrain elevation is typically region-wide)
+- gridBounds param is optional — when omitted, exploration is unbounded (matches pre-P1 behavior)
 
 ## Atomized Files
 
