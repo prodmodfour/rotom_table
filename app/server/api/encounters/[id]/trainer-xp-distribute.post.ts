@@ -13,16 +13,20 @@
 
 import { prisma } from '~/server/utils/prisma'
 import { broadcast } from '~/server/utils/websocket'
+import { loadEncounter } from '~/server/services/encounter.service'
 import { applyTrainerXp } from '~/utils/trainerExperience'
 
 export default defineEventHandler(async (event) => {
   const encounterId = getRouterParam(event, 'id')
   const body = await readBody(event)
 
-  // Validate encounter exists
+  // Validate encounter ID param
   if (!encounterId) {
     throw createError({ statusCode: 400, message: 'Encounter ID is required' })
   }
+
+  // Validate encounter exists (matches pattern in sibling xp-distribute.post.ts)
+  await loadEncounter(encounterId)
 
   // Validate distribution array
   if (!Array.isArray(body.distribution) || body.distribution.length === 0) {
