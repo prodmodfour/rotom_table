@@ -157,12 +157,66 @@ export function useSwitching() {
     }
   }
 
+  /**
+   * Recall one or two Pokemon from the field (P2 Section L).
+   * PTU p.229: 1 Pokemon = Shift Action, 2 Pokemon = Standard Action.
+   */
+  async function executeRecall(
+    trainerId: string,
+    pokemonCombatantIds: string[]
+  ) {
+    loading.value = true
+    error.value = null
+    try {
+      const result = await encounterStore.recallPokemon(
+        trainerId,
+        pokemonCombatantIds
+      )
+      return result
+    } catch (e: unknown) {
+      const message = e instanceof Error ? e.message : 'Recall failed'
+      error.value = message
+      throw e
+    } finally {
+      loading.value = false
+    }
+  }
+
+  /**
+   * Release one or two Pokemon onto the field (P2 Section L).
+   * PTU p.229: 1 Pokemon = Shift Action, 2 Pokemon = Standard Action.
+   */
+  async function executeRelease(
+    trainerId: string,
+    pokemonEntityIds: string[],
+    positions?: Array<{ x: number; y: number } | null>
+  ) {
+    loading.value = true
+    error.value = null
+    try {
+      const result = await encounterStore.releasePokemon(
+        trainerId,
+        pokemonEntityIds,
+        positions
+      )
+      return result
+    } catch (e: unknown) {
+      const message = e instanceof Error ? e.message : 'Release failed'
+      error.value = message
+      throw e
+    } finally {
+      loading.value = false
+    }
+  }
+
   return {
     loading: readonly(loading),
     error: readonly(error),
     getBenchPokemon,
     canSwitch,
     canFaintedSwitch,
-    executeSwitch
+    executeSwitch,
+    executeRecall,
+    executeRelease
   }
 }

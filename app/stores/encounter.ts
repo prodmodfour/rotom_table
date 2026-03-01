@@ -295,6 +295,69 @@ export const useEncounterStore = defineStore('encounter', {
       }
     },
 
+    /** Recall one or two Pokemon from the field (P2 Section L) */
+    async recallPokemon(
+      trainerId: string,
+      pokemonCombatantIds: string[]
+    ) {
+      if (!this.encounter) return
+
+      try {
+        const response = await $fetch<{
+          data: {
+            encounter: Encounter
+            recallDetails: {
+              trainerName: string
+              recalledNames: string[]
+              actionCost: 'standard' | 'shift'
+              count: number
+            }
+          }
+        }>(`/api/encounters/${this.encounter.id}/recall`, {
+          method: 'POST',
+          body: { trainerId, pokemonCombatantIds }
+        })
+        this.encounter = response.data.encounter
+        return response.data
+      } catch (e: any) {
+        this.error = e.message || 'Failed to recall Pokemon'
+        throw e
+      }
+    },
+
+    /** Release one or two Pokemon onto the field (P2 Section L) */
+    async releasePokemon(
+      trainerId: string,
+      pokemonEntityIds: string[],
+      positions?: Array<{ x: number; y: number } | null>
+    ) {
+      if (!this.encounter) return
+
+      try {
+        const response = await $fetch<{
+          data: {
+            encounter: Encounter
+            releaseDetails: {
+              trainerName: string
+              releasedNames: string[]
+              releasedCombatantIds: string[]
+              actionCost: 'standard' | 'shift'
+              count: number
+              countsAsSwitch: boolean
+            }
+          }
+        }>(`/api/encounters/${this.encounter.id}/release`, {
+          method: 'POST',
+          body: { trainerId, pokemonEntityIds, positions }
+        })
+        this.encounter = response.data.encounter
+        return response.data
+      } catch (e: any) {
+        this.error = e.message || 'Failed to release Pokemon'
+        throw e
+      }
+    },
+
     // Remove combatant from encounter
     async removeCombatant(combatantId: string) {
       if (!this.encounter) return
