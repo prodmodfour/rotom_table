@@ -46,6 +46,14 @@
       <!-- League Battle: Declaration Summary (visible during resolution and pokemon phases) -->
       <DeclarationSummary />
 
+      <!-- Priority Action Panel (between-turns window) -->
+      <PriorityActionPanel
+        v-if="encounterStore.isBetweenTurns && encounter.isActive"
+        :combatants="encounter.combatants"
+        @priority="handlePriorityDeclaration"
+        @proceed="handlePriorityProceed"
+      />
+
       <!-- Main Content -->
       <div class="encounter-content">
         <!-- Grid View -->
@@ -575,6 +583,25 @@ const nextTurn = async () => {
       alert(`${name} has DIED! Cause: ${cause}. Use the Override button on their card to revoke.`)
     }
   }
+}
+
+// Handle Priority action declaration from PriorityActionPanel
+const handlePriorityDeclaration = async (combatantId: string, variant: 'standard' | 'limited' | 'advanced') => {
+  encounterStore.captureSnapshot(`Priority (${variant})`)
+  await encounterStore.declarePriority(combatantId, variant)
+  await nextTick()
+  if (encounterStore.encounter) {
+    send({
+      type: 'encounter_update',
+      data: encounterStore.encounter
+    })
+  }
+  refreshUndoRedoState()
+}
+
+// Handle "No Priority — Continue" from PriorityActionPanel
+const handlePriorityProceed = () => {
+  encounterStore.exitBetweenTurns()
 }
 
 // Handle WebSocket broadcast after a declaration is submitted (League Battle)
