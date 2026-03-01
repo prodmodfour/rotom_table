@@ -202,6 +202,10 @@
       :nature-name="pokemon.nature.name"
       :required-item="evolutionModal.requiredItem"
       :item-must-be-held="evolutionModal.itemMustBeHeld"
+      :current-abilities="evolutionModal.currentAbilities"
+      :current-moves="evolutionModal.currentMoves"
+      :ability-remap="evolutionModal.abilityRemap"
+      :evolution-moves="evolutionModal.evolutionMoves"
       @close="evolutionModal.visible = false"
       @evolved="handleEvolved"
     />
@@ -211,7 +215,8 @@
 <script setup lang="ts">
 import { PhArrowCircleUp } from '@phosphor-icons/vue'
 import type { Pokemon } from '~/types'
-import type { EvolutionStats as Stats } from '~/utils/evolutionCheck'
+import type { EvolutionStats as Stats, EvolutionMoveResult } from '~/utils/evolutionCheck'
+import type { AbilityRemapResult } from '~/server/services/evolution.service'
 
 definePageMeta({
   layout: 'gm'
@@ -301,13 +306,25 @@ const cancelEditing = () => {
 
 // Evolution
 const checkingEvolution = ref(false)
+
+const emptyAbilityRemap: AbilityRemapResult = {
+  remappedAbilities: [], needsResolution: [], preservedAbilities: []
+}
+const emptyEvolutionMoves: EvolutionMoveResult = {
+  availableMoves: [], currentMoveCount: 0, maxMoves: 6, slotsAvailable: 6
+}
+
 const evolutionModal = reactive({
   visible: false,
   targetSpecies: '',
   targetTypes: [] as string[],
   targetRawBaseStats: { hp: 0, attack: 0, defense: 0, specialAttack: 0, specialDefense: 0, speed: 0 } as Stats,
   requiredItem: null as string | null,
-  itemMustBeHeld: false
+  itemMustBeHeld: false,
+  currentAbilities: [] as Array<{ name: string; effect: string }>,
+  currentMoves: [] as Array<Record<string, unknown>>,
+  abilityRemap: emptyAbilityRemap as AbilityRemapResult,
+  evolutionMoves: emptyEvolutionMoves as EvolutionMoveResult
 })
 
 interface EvolutionOption {
@@ -316,6 +333,8 @@ interface EvolutionOption {
   itemMustBeHeld: boolean
   targetBaseStats: Stats | null
   targetTypes: string[]
+  abilityRemap?: AbilityRemapResult
+  evolutionMoves?: EvolutionMoveResult
 }
 
 const evolutionSelection = reactive({
@@ -323,7 +342,7 @@ const evolutionSelection = reactive({
   options: [] as EvolutionOption[]
 })
 
-function openEvolutionModal(evo: EvolutionOption): void {
+function openEvolutionModal(evo: EvolutionOption, checkData?: EvolutionCheckData): void {
   if (!evo.targetBaseStats) {
     alert('Target species data not found.')
     return
@@ -333,12 +352,24 @@ function openEvolutionModal(evo: EvolutionOption): void {
   evolutionModal.targetRawBaseStats = evo.targetBaseStats
   evolutionModal.requiredItem = evo.requiredItem
   evolutionModal.itemMustBeHeld = evo.itemMustBeHeld
+  evolutionModal.currentAbilities = checkData?.currentAbilities || pokemon.value?.abilities || []
+  evolutionModal.currentMoves = checkData?.currentMoves || pokemon.value?.moves || []
+  evolutionModal.abilityRemap = evo.abilityRemap || emptyAbilityRemap
+  evolutionModal.evolutionMoves = evo.evolutionMoves || emptyEvolutionMoves
   evolutionModal.visible = true
 }
 
+interface EvolutionCheckData {
+  currentAbilities: Array<{ name: string; effect: string }>
+  currentMoves: Array<Record<string, unknown>>
+}
+
+// Stash the check data so we can pass it through to the modal
+const lastCheckData = ref<EvolutionCheckData | null>(null)
+
 function selectEvolution(option: EvolutionOption): void {
   evolutionSelection.visible = false
-  openEvolutionModal(option)
+  openEvolutionModal(option, lastCheckData.value || undefined)
 }
 
 const checkEvolution = async () => {
@@ -349,6 +380,8 @@ const checkEvolution = async () => {
     const response = await $fetch<{
       success: boolean
       data: {
+        currentAbilities: Array<{ name: string; effect: string }>
+        currentMoves: Array<Record<string, unknown>>
         available: EvolutionOption[]
         ineligible: Array<{
           toSpecies: string
@@ -362,8 +395,13 @@ const checkEvolution = async () => {
       return
     }
 
+    // Stash P1 check data
+    lastCheckData.value = {
+      currentAbilities: response.data.currentAbilities,
+      currentMoves: response.data.currentMoves
+    }
+
     if (response.data.available.length === 0) {
-      // Show why evolutions are not available
       if (response.data.ineligible.length > 0) {
         const reasons = response.data.ineligible
           .map(i => `${i.toSpecies}: ${i.reason}`)
@@ -376,10 +414,8 @@ const checkEvolution = async () => {
     }
 
     if (response.data.available.length === 1) {
-      // Single evolution path — go straight to confirmation
-      openEvolutionModal(response.data.available[0])
+      openEvolutionModal(response.data.available[0], lastCheckData.value)
     } else {
-      // Multiple evolution paths — show selection UI
       evolutionSelection.options = response.data.available
       evolutionSelection.visible = true
     }

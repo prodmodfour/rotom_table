@@ -90,6 +90,10 @@
       :nature-name="evolutionModal.natureName"
       :required-item="evolutionModal.requiredItem"
       :item-must-be-held="evolutionModal.itemMustBeHeld"
+      :current-abilities="evolutionModal.currentAbilities"
+      :current-moves="evolutionModal.currentMoves"
+      :ability-remap="evolutionModal.abilityRemap"
+      :evolution-moves="evolutionModal.evolutionMoves"
       @close="evolutionModal.visible = false"
       @evolved="handleEvolved"
     />
@@ -98,7 +102,8 @@
 
 <script setup lang="ts">
 import type { XpApplicationResult } from '~/utils/experienceCalculation'
-import type { EvolutionStats as Stats } from '~/utils/evolutionCheck'
+import type { EvolutionStats as Stats, EvolutionMoveResult } from '~/utils/evolutionCheck'
+import type { AbilityRemapResult } from '~/server/services/evolution.service'
 
 const props = defineProps<{
   results: XpApplicationResult[]
@@ -115,6 +120,13 @@ const hasLevelUps = computed(() =>
   props.results.some(r => r.levelsGained > 0)
 )
 
+const emptyAbilityRemap: AbilityRemapResult = {
+  remappedAbilities: [], needsResolution: [], preservedAbilities: []
+}
+const emptyEvolutionMoves: EvolutionMoveResult = {
+  availableMoves: [], currentMoveCount: 0, maxMoves: 6, slotsAvailable: 6
+}
+
 // Evolution modal state
 const evolutionModal = reactive({
   visible: false,
@@ -130,7 +142,11 @@ const evolutionModal = reactive({
   targetRawBaseStats: { hp: 0, attack: 0, defense: 0, specialAttack: 0, specialDefense: 0, speed: 0 } as Stats,
   natureName: '',
   requiredItem: null as string | null,
-  itemMustBeHeld: false
+  itemMustBeHeld: false,
+  currentAbilities: [] as Array<{ name: string; effect: string }>,
+  currentMoves: [] as Array<Record<string, unknown>>,
+  abilityRemap: emptyAbilityRemap as AbilityRemapResult,
+  evolutionMoves: emptyEvolutionMoves as EvolutionMoveResult
 })
 
 // Evolution selection state (branching evolutions)
@@ -142,6 +158,8 @@ interface EvolutionOptionData {
   itemMustBeHeld: boolean
   targetBaseStats: Stats | null
   targetTypes: string[]
+  abilityRemap?: AbilityRemapResult
+  evolutionMoves?: EvolutionMoveResult
 }
 
 const evolutionSelectionVisible = ref(false)
@@ -150,6 +168,12 @@ const pendingPokemonData = ref<{
   id: string; species: string; nickname: string | null
   types: string[]; level: number; maxHp: number
   baseStats: Stats; nature: { name: string }
+} | null>(null)
+
+// Stash check data for branching evolution selection
+const lastCheckData = ref<{
+  currentAbilities: Array<{ name: string; effect: string }>
+  currentMoves: Array<Record<string, unknown>>
 } | null>(null)
 
 function openEvolutionConfirmModal(
@@ -173,6 +197,10 @@ function openEvolutionConfirmModal(
   evolutionModal.natureName = pokemon.nature.name
   evolutionModal.requiredItem = evo.requiredItem
   evolutionModal.itemMustBeHeld = evo.itemMustBeHeld
+  evolutionModal.currentAbilities = lastCheckData.value?.currentAbilities || []
+  evolutionModal.currentMoves = lastCheckData.value?.currentMoves || []
+  evolutionModal.abilityRemap = evo.abilityRemap || emptyAbilityRemap
+  evolutionModal.evolutionMoves = evo.evolutionMoves || emptyEvolutionMoves
   evolutionModal.visible = true
 }
 
@@ -187,13 +215,15 @@ function selectEvolutionOption(option: EvolutionOptionData): void {
  */
 async function handleEvolveClick(payload: { pokemonId: string; species: string }): Promise<void> {
   try {
-    // Fetch evolution check to get available evolutions with target base stats
+    // Fetch evolution check to get available evolutions with P1 data
     const checkResponse = await $fetch<{
       success: boolean
       data: {
         currentSpecies: string
         currentLevel: number
         heldItem: string | null
+        currentAbilities: Array<{ name: string; effect: string }>
+        currentMoves: Array<Record<string, unknown>>
         available: EvolutionOptionData[]
       }
     }>(`/api/pokemon/${payload.pokemonId}/evolution-check`, { method: 'POST' })
@@ -201,6 +231,12 @@ async function handleEvolveClick(payload: { pokemonId: string; species: string }
     if (!checkResponse.success || checkResponse.data.available.length === 0) {
       alert('No evolutions currently available for this Pokemon.')
       return
+    }
+
+    // Stash P1 check data
+    lastCheckData.value = {
+      currentAbilities: checkResponse.data.currentAbilities,
+      currentMoves: checkResponse.data.currentMoves
     }
 
     // Fetch Pokemon details for current stats (serialized format)
@@ -223,10 +259,8 @@ async function handleEvolveClick(payload: { pokemonId: string; species: string }
     const pokemon = pokemonResponse.data
 
     if (checkResponse.data.available.length === 1) {
-      // Single evolution path — go straight to confirmation
       openEvolutionConfirmModal(pokemon, checkResponse.data.available[0])
     } else {
-      // Multiple evolution paths — show selection UI
       pendingPokemonData.value = pokemon
       pendingEvolutionOptions.value = checkResponse.data.available
       evolutionSelectionVisible.value = true

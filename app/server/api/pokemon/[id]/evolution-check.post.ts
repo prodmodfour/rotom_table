@@ -135,13 +135,35 @@ export default defineEventHandler(async (event) => {
           const abilityRemap = remapAbilities(currentAbilities, oldSpeciesAbilities, targetAbilities)
 
           // Pre-compute evolution moves
-          const evolutionMoves = getEvolutionMoves({
+          const evolutionMovesResult = getEvolutionMoves({
             oldLearnset,
             newLearnset: targetLearnset,
             evolutionMinLevel: a.trigger.minimumLevel,
             currentLevel: pokemon.level,
             currentMoves: currentMoveNames
           })
+
+          // Fetch full MoveData for each available evolution move
+          const evoMoveNames = evolutionMovesResult.availableMoves.map(m => m.name)
+          const moveDataRecords = evoMoveNames.length > 0
+            ? await prisma.moveData.findMany({
+                where: { name: { in: evoMoveNames } },
+                select: {
+                  name: true, type: true, damageClass: true, frequency: true,
+                  ac: true, damageBase: true, range: true, effect: true
+                }
+              })
+            : []
+          const moveDataMap = new Map(moveDataRecords.map(m => [m.name, m]))
+
+          // Enrich evolution moves with MoveData details
+          const evolutionMoves = {
+            ...evolutionMovesResult,
+            availableMoves: evolutionMovesResult.availableMoves.map(m => ({
+              ...m,
+              detail: moveDataMap.get(m.name) || null
+            }))
+          }
 
           return {
             toSpecies: a.toSpecies,
