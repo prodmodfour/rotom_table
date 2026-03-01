@@ -32,6 +32,15 @@
         </div>
         <div class="header-actions">
           <button
+            v-if="scene.characters.length > 0"
+            class="btn btn--secondary"
+            @click="showQuestXpDialog = true"
+            :disabled="showQuestXpDialog"
+          >
+            <PhStar :size="18" />
+            <span>Award Quest XP</span>
+          </button>
+          <button
             v-if="scene.pokemon.length > 0 || scene.characters.length > 0"
             class="btn btn--warning"
             @click="showStartEncounterModal = true"
@@ -58,6 +67,15 @@
           </button>
         </div>
       </header>
+
+      <!-- Quest XP Dialog -->
+      <QuestXpDialog
+        v-if="showQuestXpDialog"
+        :characters="sceneCharacters"
+        :scene-name="scene.name"
+        @close="showQuestXpDialog = false"
+        @awarded="handleQuestXpAwarded"
+      />
 
       <!-- Main Content -->
       <div class="scene-editor__content">
@@ -137,7 +155,8 @@ import {
   PhArrowLeft,
   PhBroadcast,
   PhStop,
-  PhSword
+  PhSword,
+  PhStar
 } from '@phosphor-icons/vue'
 import type { Scene, ScenePokemon, SceneCharacter, SceneGroup, ScenePosition } from '~/types/scene'
 import { analyzeEncounterBudget } from '~/utils/encounterBudget'
@@ -160,6 +179,9 @@ const selectedGroupId = ref<string | null>(null)
 const showStartEncounterModal = ref(false)
 const startingEncounter = ref(false)
 
+// Quest XP state
+const showQuestXpDialog = ref(false)
+
 // Panel collapse states
 const groupsPanelCollapsed = ref(false)
 const propsPanelCollapsed = ref(false)
@@ -172,6 +194,8 @@ const allCharacters = ref<Array<{
   name: string
   avatarUrl: string | null
   characterType: string
+  level: number
+  trainerXp: number
 }>>([])
 
 // All library Pokemon (for Add to Scene panel)
@@ -274,7 +298,9 @@ onMounted(async () => {
         id: c.id,
         name: c.name,
         avatarUrl: c.avatarUrl,
-        characterType: c.characterType
+        characterType: c.characterType,
+        level: c.level ?? 1,
+        trainerXp: c.trainerXp ?? 0
       }))
     }
   } catch (error) {
@@ -624,6 +650,41 @@ const handlePositionUpdate = async (type: 'pokemon' | 'character' | 'group', id:
   }
 }
 
+// Scene characters with trainer XP data for quest XP dialog
+const sceneCharacters = computed(() => {
+  if (!scene.value) return []
+  return scene.value.characters.map(sceneChar => {
+    const fullChar = allCharacters.value.find(c => c.id === sceneChar.characterId)
+    return {
+      id: sceneChar.characterId,
+      name: sceneChar.name,
+      level: fullChar?.level ?? 1,
+      trainerXp: fullChar?.trainerXp ?? 0
+    }
+  })
+})
+
+// Handle quest XP awarded — refresh character data to reflect updated levels/XP
+const handleQuestXpAwarded = async () => {
+  showQuestXpDialog.value = false
+
+  try {
+    const response = await $fetch<{ success: boolean; data: any[] }>('/api/characters')
+    if (response.success) {
+      allCharacters.value = response.data.map(c => ({
+        id: c.id,
+        name: c.name,
+        avatarUrl: c.avatarUrl,
+        characterType: c.characterType,
+        level: c.level ?? 1,
+        trainerXp: c.trainerXp ?? 0
+      }))
+    }
+  } catch {
+    // Non-critical refresh failure
+  }
+}
+
 // Start encounter from scene
 const handleStartEncounter = async (options: {
   battleType: 'trainer' | 'full_contact'
@@ -727,6 +788,5 @@ const handleStartEncounter = async (options: {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
-
 
 </style>
