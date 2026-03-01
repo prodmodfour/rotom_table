@@ -459,7 +459,17 @@ const switchModalPokemonId = computed(() => {
   if (!combatant) return ''
   // If this is a Pokemon, use its combatant ID
   if (combatant.type === 'pokemon') return combatant.id
-  // If this is a trainer, find their first Pokemon in the encounter
+  // If this is a trainer, find the appropriate Pokemon based on switch mode
+  if (switchModalMode.value === 'fainted') {
+    // Fainted switch: find their first fainted Pokemon
+    const faintedPokemon = encounter.value.combatants.find(
+      c => c.type === 'pokemon' &&
+        (c.entity as { ownerId?: string }).ownerId === combatant.entityId &&
+        c.entity.currentHp <= 0
+    )
+    return faintedPokemon?.id ?? ''
+  }
+  // Standard/forced: find their first Pokemon in the encounter
   const trainerPokemon = encounter.value.combatants.find(
     c => c.type === 'pokemon' && (c.entity as { ownerId?: string }).ownerId === combatant.entityId
   )
