@@ -567,7 +567,7 @@ export function validateFaintedSwitch(
  * - No action cost check (forced doesn't consume an action)
  * - No turn check (can happen on any combatant's turn)
  * - Range check still applies in Full Contact mode
- * - Trapped check is bypassed for forced switches (the move overrides it)
+ * - Trapped check: currently bypassed, but decree-039 rules Roar does NOT override Trapped (see ptu-rule-129)
  */
 export function validateForcedSwitch(params: {
   encounter: {
@@ -599,7 +599,7 @@ export function validateForcedSwitch(params: {
     return { valid: false, error: 'Recalled Pokemon combatant not found', statusCode: 404 }
   }
 
-  // NOTE: Trapped check is SKIPPED for forced switches — the move overrides it
+  // NOTE: Trapped check is currently skipped — decree-039 rules this is incorrect (see ptu-rule-129)
 
   // 4. Recalled Pokemon belongs to trainer
   const recalledEntity = recalled.entity as { ownerId?: string }
