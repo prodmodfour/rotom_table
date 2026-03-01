@@ -95,18 +95,10 @@
 
 <script setup lang="ts">
 import { PhSword, PhPlus, PhX, PhSwap } from '@phosphor-icons/vue'
-import type { EvolutionMoveResult } from '~/utils/evolutionCheck'
+import { buildSelectedMoveList } from '~/utils/evolutionCheck'
+import type { EvolutionMoveResult, EvolutionMoveDetail } from '~/utils/evolutionCheck'
 
-interface MoveDetail {
-  name: string
-  type: string
-  damageClass: string
-  frequency: string
-  ac: number | null
-  damageBase: number | null
-  range: string
-  effect: string
-}
+type MoveDetail = EvolutionMoveDetail
 
 interface EvolutionMoveWithDetail {
   name: string
@@ -130,20 +122,14 @@ const emit = defineEmits<{
 
 const replacingIndex = ref<number | null>(null)
 
-const selectedMoveList = computed((): MoveDetail[] => {
-  const removedSet = new Set(props.removedMoves.map(n => n.toLowerCase()))
-  const kept = props.currentMoves.filter(m => !removedSet.has(m.name.toLowerCase()))
-  const added: MoveDetail[] = props.addedMoves.map(m => {
-    const detail = m.detail || props.evolutionMoveDetails.get(m.name)
-    return {
-      name: m.name, type: detail?.type || 'Normal',
-      damageClass: detail?.damageClass || 'Status', frequency: detail?.frequency || 'At-Will',
-      ac: detail?.ac ?? null, damageBase: detail?.damageBase ?? null,
-      range: detail?.range || 'Melee', effect: detail?.effect || ''
-    }
+const selectedMoveList = computed((): MoveDetail[] =>
+  buildSelectedMoveList({
+    currentMoves: props.currentMoves,
+    removedMoves: props.removedMoves,
+    addedMoves: props.addedMoves,
+    evolutionMoveDetails: props.evolutionMoveDetails
   })
-  return [...kept, ...added]
-})
+)
 
 const slotsAvailable = computed(() => Math.max(0, 6 - selectedMoveList.value.length))
 

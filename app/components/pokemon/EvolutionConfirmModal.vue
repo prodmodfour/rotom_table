@@ -152,20 +152,11 @@ import {
   PhClipboardText
 } from '@phosphor-icons/vue'
 import { applyNatureToBaseStats } from '~/constants/natures'
-import { validateBaseRelations } from '~/utils/evolutionCheck'
-import type { EvolutionStats as Stats } from '~/utils/evolutionCheck'
+import { validateBaseRelations, buildSelectedMoveList } from '~/utils/evolutionCheck'
+import type { EvolutionStats as Stats, EvolutionMoveDetail } from '~/utils/evolutionCheck'
 import type { AbilityRemapResult } from '~/server/services/evolution.service'
 
-interface MoveDetail {
-  name: string
-  type: string
-  damageClass: string
-  frequency: string
-  ac: number | null
-  damageBase: number | null
-  range: string
-  effect: string
-}
+type MoveDetail = EvolutionMoveDetail
 
 interface EvolutionMoveWithDetail {
   name: string
@@ -299,20 +290,14 @@ const finalAbilities = computed((): Array<{ name: string; effect: string }> => {
   return result
 })
 
-const selectedMoveList = computed((): MoveDetail[] => {
-  const removedSet = new Set(removedMoves.value.map(n => n.toLowerCase()))
-  const kept = props.currentMoves.filter(m => !removedSet.has(m.name.toLowerCase()))
-  const added: MoveDetail[] = addedMoves.value.map(m => {
-    const detail = m.detail || evolutionMoveDetails.value.get(m.name)
-    return {
-      name: m.name, type: detail?.type || 'Normal',
-      damageClass: detail?.damageClass || 'Status', frequency: detail?.frequency || 'At-Will',
-      ac: detail?.ac ?? null, damageBase: detail?.damageBase ?? null,
-      range: detail?.range || 'Melee', effect: detail?.effect || ''
-    }
+const selectedMoveList = computed((): MoveDetail[] =>
+  buildSelectedMoveList({
+    currentMoves: props.currentMoves,
+    removedMoves: removedMoves.value,
+    addedMoves: addedMoves.value,
+    evolutionMoveDetails: evolutionMoveDetails.value
   })
-  return [...kept, ...added]
-})
+)
 
 const allAbilitiesResolved = computed(() => {
   return props.abilityRemap.needsResolution.every(

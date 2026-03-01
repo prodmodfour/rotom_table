@@ -201,6 +201,54 @@ export function getEvolutionMoves(input: {
 }
 
 // ============================================
+// EVOLUTION MOVE LIST BUILDER
+// ============================================
+
+export interface EvolutionMoveDetail {
+  name: string
+  type: string
+  damageClass: string
+  frequency: string
+  ac: number | null
+  damageBase: number | null
+  range: string
+  effect: string
+}
+
+/**
+ * Build the selected move list by combining kept current moves with added evolution moves.
+ * Shared between EvolutionConfirmModal and EvolutionMoveStep to avoid duplication.
+ *
+ * Pure function — no reactivity, no side effects.
+ */
+export function buildSelectedMoveList(input: {
+  currentMoves: EvolutionMoveDetail[]
+  removedMoves: string[]
+  addedMoves: Array<{ name: string; detail: EvolutionMoveDetail | null }>
+  evolutionMoveDetails: Map<string, EvolutionMoveDetail>
+}): EvolutionMoveDetail[] {
+  const { currentMoves, removedMoves, addedMoves, evolutionMoveDetails } = input
+
+  const removedSet = new Set(removedMoves.map(n => n.toLowerCase()))
+  const kept = currentMoves.filter(m => !removedSet.has(m.name.toLowerCase()))
+  const added: EvolutionMoveDetail[] = addedMoves.map(m => {
+    const detail = m.detail || evolutionMoveDetails.get(m.name)
+    return {
+      name: m.name,
+      type: detail?.type || 'Normal',
+      damageClass: detail?.damageClass || 'Status',
+      frequency: detail?.frequency || 'At-Will',
+      ac: detail?.ac ?? null,
+      damageBase: detail?.damageBase ?? null,
+      range: detail?.range || 'Melee',
+      effect: detail?.effect || ''
+    }
+  })
+
+  return [...kept, ...added]
+}
+
+// ============================================
 // STAT TYPES (shared between client and server)
 // ============================================
 
