@@ -147,6 +147,45 @@ export const useFogOfWarStore = defineStore('fogOfWar', {
       }
     },
 
+    /**
+     * Reveal cells visible from a multi-cell token footprint.
+     * For a token at (x, y) with size s, reveals cells within Chebyshev
+     * distance of `radius` from any cell in the footprint rectangle.
+     *
+     * This effectively reveals a larger area because a large token
+     * "sees" from every cell it occupies.
+     */
+    revealFootprintArea(
+      originX: number,
+      originY: number,
+      size: number,
+      radius: number
+    ) {
+      // Compute the expanded bounding box
+      const minX = originX - radius
+      const maxX = originX + size - 1 + radius
+      const minY = originY - radius
+      const maxY = originY + size - 1 + radius
+
+      // Footprint rectangle bounds
+      const footX1 = originX
+      const footY1 = originY
+      const footX2 = originX + size - 1
+      const footY2 = originY + size - 1
+
+      for (let x = minX; x <= maxX; x++) {
+        for (let y = minY; y <= maxY; y++) {
+          // Chebyshev distance from (x, y) to nearest cell in footprint rect
+          const dx = Math.max(0, footX1 - x, x - footX2)
+          const dy = Math.max(0, footY1 - y, y - footY2)
+          const distToFootprint = Math.max(dx, dy)
+          if (distToFootprint <= radius) {
+            this.revealCell(x, y)
+          }
+        }
+      }
+    },
+
     // Apply tool at position based on current mode
     applyTool(x: number, y: number) {
       const radius = this.brushSize - 1
