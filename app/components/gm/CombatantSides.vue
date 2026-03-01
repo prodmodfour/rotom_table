@@ -25,6 +25,8 @@
         @status="(id, add, remove, override) => emit('status', id, add, remove, override)"
         @openActions="(id) => emit('openActions', id)"
         @switchPokemon="(id) => emit('switchPokemon', id)"
+        @faintedSwitch="(id) => emit('faintedSwitch', id)"
+        @forceSwitch="(id) => emit('forceSwitch', id)"
       />
     </div>
 
@@ -53,6 +55,8 @@
             @status="(id, add, remove, override) => emit('status', id, add, remove, override)"
             @openActions="(id) => emit('openActions', id)"
             @switchPokemon="(id) => emit('switchPokemon', id)"
+            @faintedSwitch="(id) => emit('faintedSwitch', id)"
+            @forceSwitch="(id) => emit('forceSwitch', id)"
           />
           <p v-if="playerCombatants.length === 0" class="side__empty">
             No players added
@@ -83,6 +87,8 @@
             @status="(id, add, remove, override) => emit('status', id, add, remove, override)"
             @openActions="(id) => emit('openActions', id)"
             @switchPokemon="(id) => emit('switchPokemon', id)"
+            @faintedSwitch="(id) => emit('faintedSwitch', id)"
+            @forceSwitch="(id) => emit('forceSwitch', id)"
           />
           <p v-if="allyCombatants.length === 0" class="side__empty">
             No allies
@@ -113,6 +119,8 @@
             @status="(id, add, remove, override) => emit('status', id, add, remove, override)"
             @openActions="(id) => emit('openActions', id)"
             @switchPokemon="(id) => emit('switchPokemon', id)"
+            @faintedSwitch="(id) => emit('faintedSwitch', id)"
+            @forceSwitch="(id) => emit('forceSwitch', id)"
           />
           <p v-if="enemyCombatants.length === 0" class="side__empty">
             No enemies
@@ -158,6 +166,8 @@ const emit = defineEmits<{
   openActions: [combatantId: string]
   addCombatant: [side: CombatSide]
   switchPokemon: [combatantId: string]
+  faintedSwitch: [combatantId: string]
+  forceSwitch: [combatantId: string]
 }>()
 </script>
 
