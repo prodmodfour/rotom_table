@@ -10,7 +10,7 @@
  * - Natural injury healing: 1 injury after 24 hours without new injuries
  */
 
-import { PERSISTENT_CONDITIONS } from '~/constants/statusConditions'
+import { STATUS_CONDITION_DEFS } from '~/constants/statusConditions'
 
 /**
  * Compute injury-reduced effective max HP.
@@ -133,17 +133,20 @@ export function calculatePokemonCenterInjuryHealing(params: {
   }
 }
 
-// Get status conditions that would be cleared by extended rest
+// Get status conditions that would be cleared by extended rest.
+// PTU Core Ch.9: Extended Rest clears persistent conditions.
+// Uses category from STATUS_CONDITION_DEFS (decree-038).
 export function getStatusesToClear(statusConditions: string[]): string[] {
   return statusConditions.filter(status =>
-    (PERSISTENT_CONDITIONS as readonly string[]).includes(status)
+    STATUS_CONDITION_DEFS[status as keyof typeof STATUS_CONDITION_DEFS]?.category === 'persistent'
   )
 }
 
-// Remove persistent status conditions from array
+// Remove persistent status conditions from array.
+// Uses category from STATUS_CONDITION_DEFS (decree-038).
 export function clearPersistentStatusConditions(statusConditions: string[]): string[] {
   return statusConditions.filter(status =>
-    !(PERSISTENT_CONDITIONS as readonly string[]).includes(status)
+    STATUS_CONDITION_DEFS[status as keyof typeof STATUS_CONDITION_DEFS]?.category !== 'persistent'
   )
 }
 
