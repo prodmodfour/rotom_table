@@ -257,10 +257,17 @@ export function useGridMovement(options: UseGridMovementOptions) {
       return options.getMovementSpeed(combatantId)
     }
 
-    // Collect distinct terrain types along the path
+    // Collect distinct terrain types along the path, iterating full
+    // NxN footprint at each position for multi-cell tokens
+    const movingToken = options.tokens.value.find(t => t.combatantId === combatantId)
+    const tokenSize = movingToken?.size || 1
     const terrainTypes = new Set<string>()
     for (const pos of path) {
-      terrainTypes.add(terrainStore.getTerrainAt(pos.x, pos.y))
+      for (let fx = 0; fx < tokenSize; fx++) {
+        for (let fy = 0; fy < tokenSize; fy++) {
+          terrainTypes.add(terrainStore.getTerrainAt(pos.x + fx, pos.y + fy))
+        }
+      }
     }
 
     // Calculate averaged base speed from terrain types
