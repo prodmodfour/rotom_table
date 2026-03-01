@@ -162,18 +162,41 @@ export function extractStatPoints(pokemon: {
   totalAllocated: number
   expectedTotal: number
   isConsistent: boolean
+  warnings: string[]
 } {
+  const warnings: string[] = []
+
   // HP extraction from maxHp formula
   const hpStat = Math.round((pokemon.maxHp - pokemon.level - 10) / 3)
   const hpPoints = hpStat - pokemon.baseStats.hp
 
+  // Track raw extraction values and warn on negative clamping
+  const rawExtractions: Record<string, number> = {
+    hp: hpPoints,
+    attack: pokemon.currentStats.attack - pokemon.baseStats.attack,
+    defense: pokemon.currentStats.defense - pokemon.baseStats.defense,
+    specialAttack: pokemon.currentStats.specialAttack - pokemon.baseStats.specialAttack,
+    specialDefense: pokemon.currentStats.specialDefense - pokemon.baseStats.specialDefense,
+    speed: pokemon.currentStats.speed - pokemon.baseStats.speed
+  }
+
+  for (const [key, rawValue] of Object.entries(rawExtractions)) {
+    if (rawValue < 0) {
+      warnings.push(
+        `${formatStatName(key)} extraction is negative (${rawValue}), clamped to 0 — ` +
+        `current stat (${key === 'hp' ? hpStat : pokemon.currentStats[key as keyof Stats]}) ` +
+        `is below base stat (${pokemon.baseStats[key as keyof Stats]})`
+      )
+    }
+  }
+
   const statPoints: Stats = {
-    hp: Math.max(0, hpPoints),
-    attack: Math.max(0, pokemon.currentStats.attack - pokemon.baseStats.attack),
-    defense: Math.max(0, pokemon.currentStats.defense - pokemon.baseStats.defense),
-    specialAttack: Math.max(0, pokemon.currentStats.specialAttack - pokemon.baseStats.specialAttack),
-    specialDefense: Math.max(0, pokemon.currentStats.specialDefense - pokemon.baseStats.specialDefense),
-    speed: Math.max(0, pokemon.currentStats.speed - pokemon.baseStats.speed)
+    hp: Math.max(0, rawExtractions.hp),
+    attack: Math.max(0, rawExtractions.attack),
+    defense: Math.max(0, rawExtractions.defense),
+    specialAttack: Math.max(0, rawExtractions.specialAttack),
+    specialDefense: Math.max(0, rawExtractions.specialDefense),
+    speed: Math.max(0, rawExtractions.speed)
   }
 
   const totalAllocated = Object.values(statPoints).reduce((sum, v) => sum + v, 0)
@@ -183,7 +206,8 @@ export function extractStatPoints(pokemon: {
     statPoints,
     totalAllocated,
     expectedTotal,
-    isConsistent: totalAllocated === expectedTotal
+    isConsistent: totalAllocated === expectedTotal,
+    warnings
   }
 }
 
