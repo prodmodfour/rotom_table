@@ -341,9 +341,11 @@ const save = () => {
 // --- Level-Up Modal State (Human characters only) ---
 const showLevelUpModal = ref(false)
 const levelUpTargetLevel = ref(0)
+const isApplyingLevelUp = ref(false)
 
 // Watch for level increase in edit mode on human characters
 watch(() => editData.value.level, (newVal: number | undefined, oldVal: number | undefined) => {
+  if (isApplyingLevelUp.value) return
   if (isPokemon.value || !isEditing.value) return
   if (typeof newVal !== 'number' || typeof oldVal !== 'number') return
   if (newVal <= oldVal) return
@@ -354,12 +356,15 @@ watch(() => editData.value.level, (newVal: number | undefined, oldVal: number | 
   showLevelUpModal.value = true
 })
 
-function onLevelUpComplete(updatedData: Record<string, unknown>) {
+async function onLevelUpComplete(updatedData: Record<string, unknown>) {
+  isApplyingLevelUp.value = true
   editData.value = {
     ...editData.value,
     ...updatedData
   }
   showLevelUpModal.value = false
+  await nextTick()
+  isApplyingLevelUp.value = false
 }
 
 function onLevelUpCancel() {

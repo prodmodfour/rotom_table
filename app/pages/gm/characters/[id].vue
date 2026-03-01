@@ -327,9 +327,11 @@ const showSpritePicker = ref(false)
 // --- Level-Up Modal State ---
 const showLevelUpModal = ref(false)
 const levelUpTargetLevel = ref(0)
+const isApplyingLevelUp = ref(false)
 
 // Watch for level increase in edit mode — intercept and open level-up modal
 watch(() => editData.value.level, (newVal, oldVal) => {
+  if (isApplyingLevelUp.value) return
   if (!isEditing.value) return
   if (typeof newVal !== 'number' || typeof oldVal !== 'number') return
   if (newVal <= oldVal) return
@@ -341,12 +343,15 @@ watch(() => editData.value.level, (newVal, oldVal) => {
 })
 
 // Handle level-up completion
-function onLevelUpComplete(updatedData: Partial<HumanCharacter>) {
+async function onLevelUpComplete(updatedData: Partial<HumanCharacter>) {
+  isApplyingLevelUp.value = true
   editData.value = {
     ...editData.value,
     ...updatedData
   }
   showLevelUpModal.value = false
+  await nextTick()
+  isApplyingLevelUp.value = false
 }
 
 function onLevelUpCancel() {
