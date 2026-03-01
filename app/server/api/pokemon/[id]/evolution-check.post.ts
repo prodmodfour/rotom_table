@@ -124,7 +124,7 @@ export default defineEventHandler(async (event) => {
         currentMoves,
         // P1: old species data for ability remapping and move learning
         oldSpeciesAbilities,
-        available: result.available.map(a => {
+        available: await Promise.all(result.available.map(async (a) => {
           const target = targetSpeciesMap.get(a.toSpecies)
           const targetAbilities: string[] = target ? JSON.parse(target.abilities || '[]') : []
           const targetLearnset: Array<{ level: number; move: string }> = target
@@ -182,7 +182,7 @@ export default defineEventHandler(async (event) => {
             // P1: evolution move data
             evolutionMoves
           }
-        }),
+        })),
         ineligible: result.ineligible.map(i => ({
           toSpecies: i.toSpecies,
           reason: i.reason
