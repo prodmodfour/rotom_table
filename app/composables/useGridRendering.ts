@@ -437,6 +437,9 @@ export function useGridRendering(options: UseGridRenderingOptions) {
       && options.buildSpeedAveragingFn
       && options.getTerrainTypeAt
 
+    const tokenSize = token.size ?? 1
+    const gridBounds = { width: options.config.value.width, height: options.config.value.height }
+
     if (canUseAveraging) {
       const maxSpeed = options.getMaxPossibleSpeed!(token.combatantId)
       const averagingFn = options.buildSpeedAveragingFn!(token.combatantId)
@@ -449,12 +452,20 @@ export function useGridRendering(options: UseGridRenderingOptions) {
         terrainCostGetter,
         terrainTypeGetter,
         averagingFn,
+        undefined, // elevationCostGetter
+        undefined, // terrainElevationGetter
+        0,         // originElevation
+        tokenSize,
+        gridBounds,
       )
       // Display the speed based on starting terrain (may differ for specific paths)
       displaySpeed = options.getSpeed(token.combatantId)
     } else {
       const speed = options.getSpeed(token.combatantId)
-      rangeCells = getMovementRangeCells(token.position, speed, blocked, terrainCostGetter)
+      rangeCells = getMovementRangeCells(
+        token.position, speed, blocked, terrainCostGetter,
+        undefined, undefined, 0, tokenSize, gridBounds,
+      )
       displaySpeed = speed
     }
 
@@ -606,6 +617,8 @@ export function useGridRendering(options: UseGridRenderingOptions) {
         && options.buildSpeedAveragingFn
         && options.getTerrainTypeAt
 
+      const extGridBounds = { width: options.config.value.width, height: options.config.value.height }
+
       if (canUseAveraging) {
         const maxSpeed = options.getMaxPossibleSpeed!(token.combatantId)
         const averagingFn = options.buildSpeedAveragingFn!(token.combatantId)
@@ -614,12 +627,20 @@ export function useGridRendering(options: UseGridRenderingOptions) {
         rangeCells = getMovementRangeCellsWithAveraging(
           token.position, maxSpeed, blocked,
           terrainCostGetter, terrainTypeGetter, averagingFn,
+          undefined, // elevationCostGetter
+          undefined, // terrainElevationGetter
+          0,         // originElevation
+          tokenSize,
+          extGridBounds,
         )
         // Display the speed based on starting terrain (may differ for specific paths)
         displaySpeed = options.getSpeed(token.combatantId)
       } else {
         displaySpeed = options.getSpeed(token.combatantId)
-        rangeCells = getMovementRangeCells(token.position, displaySpeed, blocked, terrainCostGetter)
+        rangeCells = getMovementRangeCells(
+          token.position, displaySpeed, blocked, terrainCostGetter,
+          undefined, undefined, 0, tokenSize, extGridBounds,
+        )
       }
 
       // Draw reachable cells with cyan tint

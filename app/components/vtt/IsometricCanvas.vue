@@ -136,6 +136,8 @@ const movementRangeCells = computed<GridPosition[]>(() => {
 
   // Per decree-003: tokens never block movement — empty blocked list
   const blockedCells: GridPosition[] = []
+  const tokenSize = token.size ?? 1
+  const gridBounds = { width: props.config.width, height: props.config.height }
   const terrainCostGetter = movement.getTerrainCostGetter(selectedId)
 
   // Build elevation cost getter bound to this combatant
@@ -162,6 +164,8 @@ const movementRangeCells = computed<GridPosition[]>(() => {
       elevationCostGetter,
       terrainElevGetter,
       originElev,
+      tokenSize,
+      gridBounds,
     )
   }
 
@@ -175,6 +179,8 @@ const movementRangeCells = computed<GridPosition[]>(() => {
     elevationCostGetter,
     terrainElevGetter,
     originElev,
+    tokenSize,
+    gridBounds,
   )
 })
 
