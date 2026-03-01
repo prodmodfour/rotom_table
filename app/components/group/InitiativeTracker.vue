@@ -12,7 +12,8 @@
           'initiative-entry--current': combatant.id === currentTurnId,
           'initiative-entry--player': combatant.side === 'players',
           'initiative-entry--ally': combatant.side === 'allies',
-          'initiative-entry--enemy': combatant.side === 'enemies'
+          'initiative-entry--enemy': combatant.side === 'enemies',
+          'initiative-entry--uncommandable': !combatant.turnState?.canBeCommanded && combatant.entity.currentHp > 0
         }"
       >
         <span class="initiative-entry__order">{{ index + 1 }}</span>
@@ -36,6 +37,10 @@
         </div>
         <div class="initiative-entry__info">
           <span class="initiative-entry__name">{{ getCombatantName(combatant) }}</span>
+          <span
+            v-if="!combatant.turnState?.canBeCommanded && combatant.entity.currentHp > 0"
+            class="initiative-entry__restricted"
+          >Cannot Act</span>
           <div class="initiative-entry__health-bar">
             <div
               class="initiative-entry__health-fill"
@@ -273,6 +278,22 @@ const getHpClass = (combatant: Combatant): string => {
     @media (min-width: 3000px) {
       font-size: $font-size-md;
     }
+  }
+
+  &__restricted {
+    font-size: $font-size-xs;
+    font-weight: 600;
+    color: $color-warning;
+    white-space: nowrap;
+
+    @media (min-width: 3000px) {
+      font-size: $font-size-sm;
+    }
+  }
+
+  &--uncommandable {
+    opacity: 0.45;
+    filter: grayscale(40%);
   }
 
   &__health-bar {
