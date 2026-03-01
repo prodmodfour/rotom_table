@@ -1,7 +1,7 @@
 ---
 ticket_id: ptu-rule-128
 priority: P3
-status: open
+status: in-progress
 domain: combat
 source: decree-038
 created_at: 2026-03-01
@@ -43,3 +43,21 @@ decree-038 rules that Sleep is categorized as volatile (per PTU p.247) but does 
 ## Dependencies
 
 Requires refactoring-106 (decouple condition behaviors from categories) to be completed first.
+
+## Resolution Log
+
+### Implementation (2026-03-01)
+
+**Commits:**
+- `3be18960` — fix: Sleep and Bad Sleep persist through recall and encounter end
+
+**Files changed:**
+- `app/constants/statusConditions.ts` — Set `Asleep` and `Bad Sleep` to `clearsOnRecall: false` and `clearsOnEncounterEnd: false` while keeping `category: 'volatile'` for UI display
+
+**Behavior verification:**
+- Asleep/Bad Sleep no longer in RECALL_CLEARED_CONDITIONS (derived from clearsOnRecall flags)
+- Asleep/Bad Sleep no longer in ENCOUNTER_END_CLEARED_CONDITIONS (derived from clearsOnEncounterEnd flags)
+- Asleep/Bad Sleep still in VOLATILE_CONDITIONS (derived from category)
+- Asleep/Bad Sleep still in FAINT_CLEARED_CONDITIONS (clearsOnFaint: true)
+- Breather still cures Sleep (derives from volatile category, not from recall/encounter-end flags)
+- Sleep still appears in volatile UI grouping in CombatantConditionsSection.vue
