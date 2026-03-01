@@ -241,21 +241,21 @@ export function usePathfinding() {
     getTerrainCost?: TerrainCostGetter,
     getElevationCost?: ElevationCostGetter,
     getTerrainElevation?: TerrainElevationGetter,
-    fromElevation: number = 0
+    fromElevation: number = 0,
+    tokenSize: number = 1
   ): { cost: number; path: GridPosition[] } | null {
     const blockedSet = new Set(blockedCells.map(c => `${c.x},${c.y}`))
-    const destKey = `${to.x},${to.y}`
+    const size = tokenSize ?? 1
 
-    // Check if destination is blocked
-    if (blockedSet.has(destKey)) {
-      return null
-    }
-
-    // Check if destination terrain is passable
-    if (getTerrainCost) {
-      const terrainCost = getTerrainCost(to.x, to.y)
-      if (!isFinite(terrainCost)) {
-        return null
+    // Check if ALL cells of destination footprint are passable
+    for (let fx = 0; fx < size; fx++) {
+      for (let fy = 0; fy < size; fy++) {
+        const cellKey = `${to.x + fx},${to.y + fy}`
+        if (blockedSet.has(cellKey)) return null
+        if (getTerrainCost) {
+          const cost = getTerrainCost(to.x + fx, to.y + fy)
+          if (!isFinite(cost)) return null
+        }
       }
     }
 
@@ -353,10 +353,33 @@ export function usePathfinding() {
         const neighborKey = `${nx},${ny}`
 
         if (closedSet.has(neighborKey)) continue
-        if (blockedSet.has(neighborKey)) continue
 
-        const terrainMultiplier = getTerrainCost ? getTerrainCost(nx, ny) : 1
-        if (!isFinite(terrainMultiplier)) continue
+        // Check ALL cells in the footprint at (nx, ny)
+        let maxTerrainMultiplier = 1
+        let isPassable = true
+        for (let fx = 0; fx < size && isPassable; fx++) {
+          for (let fy = 0; fy < size && isPassable; fy++) {
+            const cellX = nx + fx
+            const cellY = ny + fy
+            const cellKey = `${cellX},${cellY}`
+
+            if (blockedSet.has(cellKey)) {
+              isPassable = false
+              break
+            }
+
+            if (getTerrainCost) {
+              const cellTerrain = getTerrainCost(cellX, cellY)
+              if (!isFinite(cellTerrain)) {
+                isPassable = false
+                break
+              }
+              maxTerrainMultiplier = Math.max(maxTerrainMultiplier, cellTerrain)
+            }
+          }
+        }
+
+        if (!isPassable) continue
 
         // PTU diagonal rules for XY cost
         let baseCost: number
@@ -369,9 +392,10 @@ export function usePathfinding() {
           newParity = current.node.parity
         }
 
-        let stepCost = baseCost * terrainMultiplier
+        // Use maximum terrain multiplier across the footprint
+        let stepCost = baseCost * maxTerrainMultiplier
 
-        // Add elevation cost for the transition
+        // Add elevation cost for the transition (uses origin cell elevation)
         const neighborElev = getTerrainElevation ? getTerrainElevation(nx, ny) : 0
         if (getElevationCost && current.node.elevation !== neighborElev) {
           stepCost += getElevationCost(current.node.elevation, neighborElev)
