@@ -4,7 +4,7 @@ ticket_id: feature-013
 category: FEATURE
 scope: FULL
 domain: vtt-grid
-status: p1-implemented
+status: p2-implemented
 priority: P1
 decrees:
   - decree-002
@@ -73,8 +73,8 @@ This design implements only square footprints (NxN). Non-square shapes (serpent 
 | Movement range flood-fill multi-cell | P1-DONE | tokenSize + gridBounds params, NxN footprint checks |
 | Fog of war multi-cell reveal | P1-DONE | revealFootprintArea() with Chebyshev distance to rect |
 | Terrain cost multi-cell | P1-DONE | getTerrainCostForFootprint(), footprint-aware getter closure |
-| AoE hit detection multi-cell targets | MISSING | Checks single cell per target |
-| Measurement from multi-cell tokens | EXISTS | `ptuDistanceTokens()` handles this |
+| AoE hit detection multi-cell targets | P2-DONE | isTargetHitByAoE() checks footprint overlap |
+| Measurement from multi-cell tokens | P2-DONE | Edge-to-edge distance in store + footprint highlighting |
 | Isometric multi-cell rendering | P0-DONE | Depth sorting, sprite scaling, movement arrow all use footprint center |
 | Client-side size utility | P0-DONE | `sizeCategory.ts` with sizeToFootprint(), getFootprintCells(), isFootprintInBounds() |
 | 2D movement preview footprint | P0-DONE | drawMovementPreview highlights full NxN footprint at destination |
@@ -142,6 +142,27 @@ Addresses code-review-242 findings (CRIT-1, HIGH-1, HIGH-2, MED-1, MED-2).
 - Ghost footprint outline (dashed 4,4 pattern) shown on hover in movement range for large tokens
 - Elevation reads from origin cell of footprint (simplification: terrain elevation is typically region-wide)
 - gridBounds param is optional — when omitted, exploration is unbounded (matches pre-P1 behavior)
+
+### P2 — 2026-03-01 (branch: slave/2-dev-feature-013-p2-20260301)
+
+| Section | Status | Commits |
+|---------|--------|---------|
+| K. AoE hit detection for multi-cell targets | DONE | 380c916e |
+| K. Close Blast origin from multi-cell attacker | DONE | 380c916e |
+| L. Flanking geometry for large tokens | DONE | 9e74b813 |
+| M. Edge-to-edge distance utility extraction | DONE | 42114b5e |
+| M. Measurement store token-aware distance | DONE | 58e93651 |
+| M. Interaction callers pass token metadata | DONE | 96fedddc |
+| M. Measurement overlay footprint highlighting | DONE | 2fe55451 |
+
+**Files changed:** `app/utils/gridDistance.ts`, `app/composables/useRangeParser.ts`, `app/stores/measurement.ts`, `app/composables/useGridInteraction.ts`, `app/composables/useIsometricInteraction.ts`, `app/composables/useGridRendering.ts`
+
+**Key decisions:**
+- ptuDistanceTokensBBox extracted to gridDistance.ts as a standalone utility (shared by useRangeParser and measurement store)
+- isFlankingTarget uses angle-based geometry (>= 135 degrees) from target center via closestCellPair, suitable for any token size
+- Measurement store tracks token origin+size at both start and end positions; distance getter switches to edge-to-edge when multi-cell tokens are present
+- AoE measurement overlay draws dashed outlines around multi-cell tokens whose footprints overlap the affected area
+- Distance mode draws measurement lines between token centers (not cell centers) for multi-cell tokens
 
 ## Atomized Files
 

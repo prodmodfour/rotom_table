@@ -102,3 +102,21 @@ FULL-scope feature requiring design spec. Affects core VTT systems: token render
 - Section H: New getTerrainCostForFootprint() returns max cost across NxN footprint; getTerrainCostGetter() returns footprint-aware closure when tokenSize > 1
 - Section I: New revealFootprintArea() fogOfWar store action — Chebyshev distance to rectangle for efficient reveal from multi-cell footprint
 - Section J: isValidMove() and calculateTerrainAwarePathCost() pass tokenSize to A* and terrain getter; ghost dashed outline rendered at hovered cell for large tokens in movement range display
+
+### P2: Combat Integration (2026-03-01)
+
+**Branch:** `slave/2-dev-feature-013-p2-20260301`
+
+| Commit | Description | Files |
+|--------|-------------|-------|
+| 380c916e | feat: add isTargetHitByAoE and getBlastEdgeOrigin to useRangeParser | `app/composables/useRangeParser.ts` |
+| 9e74b813 | feat: add isFlankingTarget for multi-cell flanking geometry | `app/composables/useRangeParser.ts` |
+| 42114b5e | refactor: extract ptuDistanceTokensBBox to gridDistance utility | `app/utils/gridDistance.ts`, `app/composables/useRangeParser.ts` |
+| 58e93651 | feat: add token-aware edge-to-edge distance to measurement store | `app/stores/measurement.ts` |
+| 96fedddc | feat: pass token metadata to measurement for edge-to-edge distance | `app/composables/useGridInteraction.ts`, `app/composables/useIsometricInteraction.ts` |
+| 2fe55451 | feat: highlight multi-cell token footprints in measurement overlay | `app/composables/useGridRendering.ts` |
+
+**Summary:**
+- Section K: New isTargetHitByAoE() checks if any cell of a multi-cell target's footprint overlaps AoE affected cells; getBlastEdgeOrigin() returns the correct edge cell of a multi-cell attacker for Close Blast origin
+- Section L: New isFlankingTarget() checks if two attackers flank a multi-cell target using angle-based geometry from target center, with closestCellPair for positioning and ptuDistanceTokens for melee adjacency
+- Section M: Measurement store tracks token sizes at both endpoints; distance getter uses ptuDistanceTokensBBox for edge-to-edge measurement; interaction composables pass token metadata; rendering highlights multi-cell token footprints hit by AoE and draws distance lines between token centers
