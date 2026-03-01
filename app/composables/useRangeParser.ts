@@ -409,6 +409,8 @@ export function useRangeParser() {
       case 'close-blast':
       case 'ranged-blast':
         // Square blast
+        // TODO (P3): For multi-cell attackers, use getBlastEdgeOrigin() instead
+        // of raw origin to place close-blast adjacent to the correct footprint edge.
         const startX = origin.x + direction.dx
         const startY = origin.y + direction.dy
         for (let dx = 0; dx < size; dx++) {
@@ -504,6 +506,12 @@ export function useRangeParser() {
    * "adjacent" means adjacent to the nearest edge cell in the blast direction.
    * This function returns the corner cell of the footprint closest to the
    * blast direction, so the blast is placed adjacent to the correct edge.
+   *
+   * NOTE: Not yet integrated into getAffectedCells() for close-blast case.
+   * Currently getAffectedCells uses `origin.x + direction.dx` which is correct
+   * for 1x1 attackers but places the blast relative to the top-left anchor for
+   * multi-cell attackers. Integration needed when multi-cell Close Blast is
+   * actively used in combat — tracked as P3 follow-up (rules-review-237 MED-1).
    *
    * @param attackerPosition - Top-left anchor of the attacker token
    * @param attackerSize - Token footprint (1=1x1, 2=2x2, etc.)
