@@ -24,6 +24,41 @@ export function ptuDiagonalDistance(dx: number, dy: number): number {
   return diagonals + Math.floor(diagonals / 2) + straights
 }
 
+/** Token footprint descriptor for distance calculations. */
+export interface TokenFootprintRect {
+  position: { x: number; y: number }
+  size: number // 1 = 1x1, 2 = 2x2, etc.
+}
+
+/**
+ * Calculate minimum PTU diagonal distance between two token bounding boxes.
+ *
+ * PTU Rule (decree-002): All grid distances use the alternating diagonal rule
+ * (1-2-1-2). Range is measured from the nearest occupied cell of one token
+ * to the nearest occupied cell of the other.
+ *
+ * Computes the gap between token bounding boxes and applies ptuDiagonalDistance.
+ * Returns 0 when tokens overlap.
+ *
+ * @param a - First token footprint
+ * @param b - Second token footprint
+ * @returns Distance in meters (cells)
+ */
+export function ptuDistanceTokensBBox(
+  a: TokenFootprintRect,
+  b: TokenFootprintRect
+): number {
+  const aRight = a.position.x + a.size - 1
+  const aBottom = a.position.y + a.size - 1
+  const bRight = b.position.x + b.size - 1
+  const bBottom = b.position.y + b.size - 1
+
+  const gapX = Math.max(0, a.position.x - bRight, b.position.x - aRight)
+  const gapY = Math.max(0, a.position.y - bBottom, b.position.y - aBottom)
+
+  return ptuDiagonalDistance(gapX, gapY)
+}
+
 /**
  * Calculate the maximum number of purely diagonal cells reachable within
  * a given meter budget using PTU's alternating diagonal rule (1-2-1-2).

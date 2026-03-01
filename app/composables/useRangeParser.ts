@@ -1,6 +1,6 @@
 import type { RangeType, ParsedRange, GridPosition, TerrainType, TerrainCostGetter } from '~/types'
 import { usePathfinding } from '~/composables/usePathfinding'
-import { ptuDiagonalDistance, maxDiagonalCells } from '~/utils/gridDistance'
+import { ptuDiagonalDistance, maxDiagonalCells, ptuDistanceTokensBBox } from '~/utils/gridDistance'
 
 // Re-export VTT pathfinding types for backwards compatibility
 export type { TerrainCostGetter, ElevationCostGetter, TerrainElevationGetter } from '~/types'
@@ -179,21 +179,13 @@ export function useRangeParser() {
    * (1-2-1-2). Range is measured from the nearest occupied cell of the
    * attacker to the nearest occupied cell of the target.
    *
-   * Computes the gap between token bounding boxes and applies ptuDiagonalDistance.
+   * Delegates to ptuDistanceTokensBBox utility (shared with measurement store).
    */
   function ptuDistanceTokens(
     a: TokenFootprint,
     b: TokenFootprint
   ): number {
-    const aRight = a.position.x + a.size - 1
-    const aBottom = a.position.y + a.size - 1
-    const bRight = b.position.x + b.size - 1
-    const bBottom = b.position.y + b.size - 1
-
-    const gapX = Math.max(0, a.position.x - bRight, b.position.x - aRight)
-    const gapY = Math.max(0, a.position.y - bBottom, b.position.y - aBottom)
-
-    return ptuDiagonalDistance(gapX, gapY)
+    return ptuDistanceTokensBBox(a, b)
   }
 
   /**
