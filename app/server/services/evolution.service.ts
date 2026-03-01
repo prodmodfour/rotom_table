@@ -607,42 +607,7 @@ export async function performEvolution(input: PerformEvolutionInput): Promise<Ev
   const shouldConsumeHeldItem = trigger.itemMustBeHeld && trigger.requiredItem !== null
     && (input.consumeHeldItem !== false)
 
-  // 11. Write the Pokemon update
-  const updated = await prisma.pokemon.update({
-    where: { id: pokemonId },
-    data: {
-      species: targetSpecies,
-      type1: targetSpeciesData.type1,
-      type2: targetSpeciesData.type2 || null,
-      baseHp: recalc.natureAdjustedBase.hp,
-      baseAttack: recalc.natureAdjustedBase.attack,
-      baseDefense: recalc.natureAdjustedBase.defense,
-      baseSpAtk: recalc.natureAdjustedBase.specialAttack,
-      baseSpDef: recalc.natureAdjustedBase.specialDefense,
-      baseSpeed: recalc.natureAdjustedBase.speed,
-      currentAttack: recalc.calculatedStats.attack,
-      currentDefense: recalc.calculatedStats.defense,
-      currentSpAtk: recalc.calculatedStats.specialAttack,
-      currentSpDef: recalc.calculatedStats.specialDefense,
-      currentSpeed: recalc.calculatedStats.speed,
-      maxHp: recalc.maxHp,
-      currentHp: newCurrentHp,
-      spriteUrl: null,
-      abilities: JSON.stringify(finalAbilities),
-      moves: finalMoves,
-      capabilities: JSON.stringify(newCapabilities),
-      skills: JSON.stringify(newSkills),
-      // P2: Clear held item if consumed for held-item evolution
-      ...(shouldConsumeHeldItem ? { heldItem: null } : {})
-    }
-  })
-
-  // 12. Consume stone from trainer inventory (if requested)
-  if (input.consumeItem && !input.consumeItem.skipInventoryCheck) {
-    await consumeStoneFromInventory(input.consumeItem.ownerId, input.consumeItem.itemName)
-  }
-
-  // 13. Log evolution in Pokemon notes (P2)
+  // 11. Build evolution history note (prepend to existing notes)
   const dateStr = new Date().toISOString().split('T')[0]
   const evolutionNote = `[Evolved from ${pokemon.species} at Level ${pokemon.level} on ${dateStr}]`
   const existingNotes = pokemon.notes || ''
@@ -650,9 +615,76 @@ export async function performEvolution(input: PerformEvolutionInput): Promise<Ev
     ? `${evolutionNote}\n${existingNotes}`
     : evolutionNote
 
-  await prisma.pokemon.update({
-    where: { id: pokemonId },
-    data: { notes: updatedNotes }
+  // 12. Write Pokemon update + consume stone in a single transaction
+  //     Ensures atomicity: if stone consumption fails, the evolution is rolled back.
+  const shouldConsumeStone = input.consumeItem && !input.consumeItem.skipInventoryCheck
+  const updated = await prisma.$transaction(async (tx) => {
+    const pokemonResult = await tx.pokemon.update({
+      where: { id: pokemonId },
+      data: {
+        species: targetSpecies,
+        type1: targetSpeciesData.type1,
+        type2: targetSpeciesData.type2 || null,
+        baseHp: recalc.natureAdjustedBase.hp,
+        baseAttack: recalc.natureAdjustedBase.attack,
+        baseDefense: recalc.natureAdjustedBase.defense,
+        baseSpAtk: recalc.natureAdjustedBase.specialAttack,
+        baseSpDef: recalc.natureAdjustedBase.specialDefense,
+        baseSpeed: recalc.natureAdjustedBase.speed,
+        currentAttack: recalc.calculatedStats.attack,
+        currentDefense: recalc.calculatedStats.defense,
+        currentSpAtk: recalc.calculatedStats.specialAttack,
+        currentSpDef: recalc.calculatedStats.specialDefense,
+        currentSpeed: recalc.calculatedStats.speed,
+        maxHp: recalc.maxHp,
+        currentHp: newCurrentHp,
+        spriteUrl: null,
+        abilities: JSON.stringify(finalAbilities),
+        moves: finalMoves,
+        capabilities: JSON.stringify(newCapabilities),
+        skills: JSON.stringify(newSkills),
+        notes: updatedNotes,
+        // P2: Clear held item if consumed for held-item evolution
+        ...(shouldConsumeHeldItem ? { heldItem: null } : {})
+      }
+    })
+
+    // Consume stone from trainer inventory within the same transaction
+    if (shouldConsumeStone) {
+      const trainer = await tx.humanCharacter.findUnique({
+        where: { id: input.consumeItem!.ownerId },
+        select: { inventory: true }
+      })
+      if (!trainer) {
+        throw new Error(`Trainer not found: ${input.consumeItem!.ownerId}`)
+      }
+
+      const inventory: Array<{ name: string; quantity: number; [key: string]: unknown }> = JSON.parse(trainer.inventory || '[]')
+      const itemIndex = inventory.findIndex(
+        item => item.name.toLowerCase() === input.consumeItem!.itemName.toLowerCase()
+      )
+      if (itemIndex === -1) {
+        throw new Error(`${input.consumeItem!.itemName} not found in trainer's inventory`)
+      }
+
+      const newInventory = inventory.map((item, idx) => {
+        if (idx !== itemIndex) return item
+        return { ...item, quantity: item.quantity - 1 }
+      }).filter(item => item.quantity > 0)
+
+      await tx.humanCharacter.update({
+        where: { id: input.consumeItem!.ownerId },
+        data: { inventory: JSON.stringify(newInventory) }
+      })
+
+      // Track consumed stone in undo snapshot for restoration during undo
+      undoSnapshot.consumedStone = {
+        ownerId: input.consumeItem!.ownerId,
+        itemName: input.consumeItem!.itemName
+      }
+    }
+
+    return pokemonResult
   })
 
   const changes: EvolutionChanges = {
