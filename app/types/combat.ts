@@ -202,3 +202,33 @@ export interface OutOfTurnUsage {
   /** Whether this combatant has used an Interrupt action this round */
   interruptUsed: boolean;
 }
+
+// ============================================================
+// Flanking Detection Types (feature-014)
+// ============================================================
+
+/**
+ * Size category for flanking requirement lookup.
+ * Maps to PTU size categories (p.232).
+ */
+export type FlankingSize = 'small' | 'medium' | 'large' | 'huge' | 'gigantic'
+
+/**
+ * Result of flanking detection for a single combatant.
+ */
+export interface FlankingStatus {
+  /** Whether this combatant is currently flanked */
+  isFlanked: boolean
+  /** IDs of the combatants that are flanking this target */
+  flankerIds: string[]
+  /** Number of effective flanking foes (includes multi-tile counting in P1) */
+  effectiveFoeCount: number
+  /** Number required to flank (based on target size) */
+  requiredFoes: number
+}
+
+/**
+ * Map of combatant ID -> flanking status for the entire encounter.
+ * Recomputed whenever token positions change.
+ */
+export type FlankingMap = Record<string, FlankingStatus>
