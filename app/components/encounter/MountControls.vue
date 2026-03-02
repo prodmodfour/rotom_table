@@ -95,6 +95,7 @@ import { getOverlandSpeed } from '~/utils/combatantCapabilities'
 import { areAdjacent } from '~/utils/adjacency'
 
 const encounterStore = useEncounterStore()
+const { send } = useWebSocket()
 
 const selectedMountId = ref('')
 const skipCheck = ref(false)
@@ -226,16 +227,34 @@ const showPanel = computed(() => {
 })
 
 // Actions
+// Broadcast encounter state after mount/dismount
+const broadcastUpdate = async () => {
+  await nextTick()
+  if (encounterStore.encounter) {
+    send({ type: 'encounter_update', data: encounterStore.encounter })
+  }
+}
+
 const handleMount = async () => {
   if (!selectedMountId.value || !currentCombatant.value) return
   try {
-    await encounterStore.mountRider(
+    const result = await encounterStore.mountRider(
       currentCombatant.value.id,
       selectedMountId.value,
       skipCheck.value
     )
     selectedMountId.value = ''
     skipCheck.value = false
+
+    // Broadcast to group/player views
+    if (result) {
+      send({ type: 'mount_change', data: {
+        riderId: result.riderId,
+        mountId: result.mountId,
+        action: 'mount'
+      }})
+      await broadcastUpdate()
+    }
   } catch (e: any) {
     alert(`Mount failed: ${e.data?.message || e.message || 'Unknown error'}`)
   }
@@ -244,10 +263,21 @@ const handleMount = async () => {
 const handleDismount = async (forced: boolean) => {
   if (!currentCombatant.value) return
   try {
-    await encounterStore.dismountRider(
+    const result = await encounterStore.dismountRider(
       currentCombatant.value.id,
       forced
     )
+
+    // Broadcast to group/player views
+    if (result) {
+      send({ type: 'mount_change', data: {
+        riderId: result.riderId,
+        mountId: result.mountId,
+        action: 'dismount',
+        forced
+      }})
+      await broadcastUpdate()
+    }
   } catch (e: any) {
     alert(`Dismount failed: ${e.data?.message || e.message || 'Unknown error'}`)
   }
