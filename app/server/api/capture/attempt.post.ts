@@ -162,6 +162,9 @@ export default defineEventHandler(async (event) => {
   let speciesXpAwarded = false
   let speciesXpResult: TrainerXpResult | null = null
 
+  // Track post-capture effect
+  let postCaptureEffect: { type: string; description: string } | undefined
+
   // If captured, auto-link Pokemon to trainer and update origin
   if (captureResult.success) {
     await prisma.pokemon.update({
@@ -171,6 +174,32 @@ export default defineEventHandler(async (event) => {
         origin: 'captured'
       }
     })
+
+    // Apply post-capture effects based on ball type
+    if (ballDef?.postCaptureEffect === 'heal_full') {
+      // Heal Ball: restore to real max HP (decree-015: use real max HP)
+      // PTU p.273: "A caught Pokemon will heal to Max HP immediately upon capture."
+      await prisma.pokemon.update({
+        where: { id: body.pokemonId },
+        data: { currentHp: pokemon.maxHp }
+      })
+      postCaptureEffect = {
+        type: 'heal_full',
+        description: `${pokemon.species} was healed to full HP (${pokemon.maxHp}) by the Heal Ball.`,
+      }
+    } else if (ballDef?.postCaptureEffect === 'loyalty_plus_one') {
+      // Friend Ball: +1 Loyalty (no mechanical effect yet — loyalty not tracked)
+      postCaptureEffect = {
+        type: 'loyalty_plus_one',
+        description: `${pokemon.species} starts with +1 Loyalty (Friend Ball).`,
+      }
+    } else if (ballDef?.postCaptureEffect === 'raised_happiness') {
+      // Luxury Ball: raised happiness (no mechanical effect yet — happiness not tracked)
+      postCaptureEffect = {
+        type: 'raised_happiness',
+        description: `${pokemon.species} is easily pleased and starts with raised happiness (Luxury Ball).`,
+      }
+    }
 
     // Check for new species -> +1 trainer XP (PTU Core p.461)
     const trainerRecord = await prisma.humanCharacter.findUnique({
@@ -236,7 +265,10 @@ export default defineEventHandler(async (event) => {
         id: pokemon.id,
         species: pokemon.species,
         level: pokemon.level,
-        currentHp: pokemon.currentHp,
+        // If Heal Ball was used, show the healed HP in the response
+        currentHp: (captureResult.success && ballDef?.postCaptureEffect === 'heal_full')
+          ? pokemon.maxHp
+          : pokemon.currentHp,
         maxHp: pokemon.maxHp,
         hpPercentage: Math.round(rateResult.hpPercentage),
         ownerId: captureResult.success ? body.trainerId : pokemon.ownerId,
@@ -247,6 +279,7 @@ export default defineEventHandler(async (event) => {
         name: trainer.name,
         level: trainer.level
       },
+      postCaptureEffect,
       speciesXp: captureResult.success ? {
         awarded: speciesXpAwarded,
         species: pokemon.species,
