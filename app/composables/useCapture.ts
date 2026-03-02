@@ -1,5 +1,14 @@
 import type { StatusCondition } from '~/types'
 import { calculateCaptureRate, getCaptureDescription } from '~/utils/captureRate'
+import { POKE_BALL_CATALOG, DEFAULT_BALL_TYPE, calculateBallModifier } from '~/constants/pokeBalls'
+import type { PokeBallDef } from '~/constants/pokeBalls'
+
+export interface BallBreakdown {
+  baseModifier: number
+  conditionalModifier: number
+  conditionMet: boolean
+  conditionDescription?: string
+}
 
 export interface CaptureRateData {
   species: string
@@ -22,6 +31,9 @@ export interface CaptureRateData {
     stuckModifier: number
     slowModifier: number
   }
+  ballType: string
+  ballModifier: number
+  ballBreakdown: BallBreakdown
 }
 
 export interface CaptureAttemptResult {
@@ -34,8 +46,11 @@ export interface CaptureAttemptResult {
   criticalHit: boolean
   trainerLevel: number
   modifiers: number
+  ballModifier: number
+  ballType: string
   difficulty: string
   breakdown: CaptureRateData['breakdown']
+  ballBreakdown: BallBreakdown
   pokemon: {
     id: string
     species: string
@@ -58,16 +73,19 @@ export function useCapture() {
   const warning = ref<string | null>(null)
 
   /**
-   * Get the capture rate for a Pokemon by ID
+   * Get the capture rate for a Pokemon by ID, with optional ball type.
    */
-  async function getCaptureRate(pokemonId: string): Promise<CaptureRateData | null> {
+  async function getCaptureRate(
+    pokemonId: string,
+    ballType: string = DEFAULT_BALL_TYPE
+  ): Promise<CaptureRateData | null> {
     loading.value = true
     error.value = null
 
     try {
       const response = await $fetch<{ success: boolean; data: CaptureRateData }>('/api/capture/rate', {
         method: 'POST',
-        body: { pokemonId }
+        body: { pokemonId, ballType }
       })
 
       if (response.success) {
@@ -83,7 +101,7 @@ export function useCapture() {
   }
 
   /**
-   * Calculate capture rate from provided data (no API call)
+   * Calculate capture rate from provided data (no API call), with ball modifier.
    */
   function calculateCaptureRateLocal(params: {
     level: number
@@ -95,6 +113,7 @@ export function useCapture() {
     injuries?: number
     isShiny?: boolean
     isLegendary?: boolean
+    ballType?: string
   }): CaptureRateData {
     const result = calculateCaptureRate({
       level: params.level,
@@ -108,6 +127,10 @@ export function useCapture() {
       isLegendary: params.isLegendary ?? false
     })
 
+    const ballType = params.ballType || DEFAULT_BALL_TYPE
+    const ballResult = calculateBallModifier(ballType)
+    const ballDef = POKE_BALL_CATALOG[ballType]
+
     return {
       species: '',
       level: params.level,
@@ -117,12 +140,20 @@ export function useCapture() {
       difficulty: getCaptureDescription(result.captureRate),
       canBeCaptured: result.canBeCaptured,
       hpPercentage: Math.round(result.hpPercentage),
-      breakdown: result.breakdown
+      breakdown: result.breakdown,
+      ballType,
+      ballModifier: ballResult.total,
+      ballBreakdown: {
+        baseModifier: ballResult.base,
+        conditionalModifier: ballResult.conditional,
+        conditionMet: ballResult.conditionMet,
+        conditionDescription: ballDef?.conditionDescription,
+      }
     }
   }
 
   /**
-   * Attempt to capture a Pokemon.
+   * Attempt to capture a Pokemon with a specific ball type.
    * Per PTU Core (p227): Throwing a Poke Ball is a Standard Action.
    * When encounterContext is provided, consumes the trainer's Standard Action.
    */
@@ -130,6 +161,7 @@ export function useCapture() {
     pokemonId: string
     trainerId: string
     accuracyRoll?: number
+    ballType?: string
     modifiers?: number
     encounterContext?: {
       encounterId: string
@@ -147,6 +179,7 @@ export function useCapture() {
           pokemonId: params.pokemonId,
           trainerId: params.trainerId,
           accuracyRoll: params.accuracyRoll,
+          ballType: params.ballType || DEFAULT_BALL_TYPE,
           modifiers: params.modifiers
         }
       })
@@ -179,6 +212,15 @@ export function useCapture() {
   }
 
   /**
+   * Get all available ball types for the selection UI.
+   * Safari balls are excluded by default (restricted use).
+   */
+  function getAvailableBalls(includeSafari: boolean = false): PokeBallDef[] {
+    return Object.values(POKE_BALL_CATALOG)
+      .filter(ball => includeSafari || ball.category !== 'safari')
+  }
+
+  /**
    * Roll accuracy check for throwing a Poke Ball
    * AC 6, range = 4 + Athletics rank
    */
@@ -198,6 +240,7 @@ export function useCapture() {
     getCaptureRate,
     calculateCaptureRateLocal,
     attemptCapture,
-    rollAccuracyCheck
+    rollAccuracyCheck,
+    getAvailableBalls,
   }
 }
