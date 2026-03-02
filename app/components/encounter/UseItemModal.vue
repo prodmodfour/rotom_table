@@ -23,38 +23,159 @@
               class="form-select"
             >
               <option v-for="c in targetCombatants" :key="c.id" :value="c.id">
-                {{ getCombatantName(c) }} ({{ c.entity.currentHp }}/{{ getEffectiveMaxHp(c.entity.maxHp, c.entity.injuries || 0) }} HP)
+                {{ getCombatantName(c) }}
+                ({{ c.entity.currentHp }}/{{ getEffectiveMaxHp(c.entity.maxHp, c.entity.injuries || 0) }} HP)
+                <template v-if="isCombatantFainted(c)"> [Fainted]</template>
               </option>
             </select>
           </div>
 
-          <!-- Available Items -->
-          <div class="use-item__items-header">Available Items:</div>
+          <!-- Grouped item sections -->
+          <div v-if="hasAnyApplicableItems" class="use-item__sections">
+            <!-- Restoratives -->
+            <div v-if="groupedItems.restorative.length > 0" class="use-item__section">
+              <div class="use-item__section-header">
+                <PhHeart :size="14" weight="bold" />
+                Restoratives
+              </div>
+              <div class="use-item__item-list">
+                <button
+                  v-for="item in groupedItems.restorative"
+                  :key="item.name"
+                  class="use-item__item"
+                  :class="{ 'use-item__item--selected': selectedItemName === item.name }"
+                  @click="selectedItemName = item.name"
+                >
+                  <div class="use-item__item-icon use-item__item-icon--restorative">
+                    <PhFirstAidKit :size="18" weight="duotone" />
+                  </div>
+                  <div class="use-item__item-info">
+                    <div class="use-item__item-header">
+                      <span class="use-item__item-name">{{ item.name }}</span>
+                      <span v-if="item.repulsive" class="use-item__repulsive-badge" title="May decrease Pokemon loyalty with repeated use">
+                        <PhWarning :size="12" weight="bold" />
+                        Repulsive
+                      </span>
+                    </div>
+                    <div class="use-item__item-desc">{{ item.description }}</div>
+                  </div>
+                  <div class="use-item__item-effect">
+                    <span v-if="item.hpAmount" class="use-item__item-hp">+{{ item.hpAmount }} HP</span>
+                  </div>
+                  <div class="use-item__item-cost">${{ item.cost }}</div>
+                </button>
+              </div>
+            </div>
 
-          <div v-if="applicableItems.length === 0" class="use-item__empty">
-            No applicable items for this target.
+            <!-- Status Cures -->
+            <div v-if="groupedItems.cure.length > 0" class="use-item__section">
+              <div class="use-item__section-header">
+                <PhPill :size="14" weight="bold" />
+                Status Cures
+              </div>
+              <div class="use-item__item-list">
+                <button
+                  v-for="item in groupedItems.cure"
+                  :key="item.name"
+                  class="use-item__item"
+                  :class="{ 'use-item__item--selected': selectedItemName === item.name }"
+                  @click="selectedItemName = item.name"
+                >
+                  <div class="use-item__item-icon use-item__item-icon--cure">
+                    <PhPill :size="18" weight="duotone" />
+                  </div>
+                  <div class="use-item__item-info">
+                    <div class="use-item__item-header">
+                      <span class="use-item__item-name">{{ item.name }}</span>
+                      <span v-if="item.repulsive" class="use-item__repulsive-badge" title="May decrease Pokemon loyalty with repeated use">
+                        <PhWarning :size="12" weight="bold" />
+                        Repulsive
+                      </span>
+                    </div>
+                    <div class="use-item__item-desc">{{ item.description }}</div>
+                  </div>
+                  <div class="use-item__item-effect">
+                    <span class="use-item__item-cure-label">
+                      {{ getCureLabel(item) }}
+                    </span>
+                  </div>
+                  <div class="use-item__item-cost">${{ item.cost }}</div>
+                </button>
+              </div>
+            </div>
+
+            <!-- Combined -->
+            <div v-if="groupedItems.combined.length > 0" class="use-item__section">
+              <div class="use-item__section-header">
+                <PhStar :size="14" weight="bold" />
+                Combined
+              </div>
+              <div class="use-item__item-list">
+                <button
+                  v-for="item in groupedItems.combined"
+                  :key="item.name"
+                  class="use-item__item"
+                  :class="{ 'use-item__item--selected': selectedItemName === item.name }"
+                  @click="selectedItemName = item.name"
+                >
+                  <div class="use-item__item-icon use-item__item-icon--combined">
+                    <PhStar :size="18" weight="duotone" />
+                  </div>
+                  <div class="use-item__item-info">
+                    <div class="use-item__item-header">
+                      <span class="use-item__item-name">{{ item.name }}</span>
+                    </div>
+                    <div class="use-item__item-desc">{{ item.description }}</div>
+                  </div>
+                  <div class="use-item__item-effect">
+                    <span v-if="item.hpAmount" class="use-item__item-hp">+{{ item.hpAmount }} HP</span>
+                    <span class="use-item__item-cure-label">+All Cures</span>
+                  </div>
+                  <div class="use-item__item-cost">${{ item.cost }}</div>
+                </button>
+              </div>
+            </div>
+
+            <!-- Revives -->
+            <div v-if="groupedItems.revive.length > 0" class="use-item__section">
+              <div class="use-item__section-header">
+                <PhHeartBreak :size="14" weight="bold" />
+                Revives
+              </div>
+              <div class="use-item__item-list">
+                <button
+                  v-for="item in groupedItems.revive"
+                  :key="item.name"
+                  class="use-item__item"
+                  :class="{ 'use-item__item--selected': selectedItemName === item.name }"
+                  @click="selectedItemName = item.name"
+                >
+                  <div class="use-item__item-icon use-item__item-icon--revive">
+                    <PhHeartBreak :size="18" weight="duotone" />
+                  </div>
+                  <div class="use-item__item-info">
+                    <div class="use-item__item-header">
+                      <span class="use-item__item-name">{{ item.name }}</span>
+                      <span v-if="item.repulsive" class="use-item__repulsive-badge" title="May decrease Pokemon loyalty with repeated use">
+                        <PhWarning :size="12" weight="bold" />
+                        Repulsive
+                      </span>
+                    </div>
+                    <div class="use-item__item-desc">{{ item.description }}</div>
+                  </div>
+                  <div class="use-item__item-effect">
+                    <span v-if="item.hpAmount" class="use-item__item-hp">{{ item.hpAmount }} HP</span>
+                    <span v-else-if="item.healToPercent" class="use-item__item-hp">{{ item.healToPercent }}% HP</span>
+                  </div>
+                  <div class="use-item__item-cost">${{ item.cost }}</div>
+                </button>
+              </div>
+            </div>
           </div>
 
-          <div v-else class="use-item__item-list">
-            <button
-              v-for="item in applicableItems"
-              :key="item.name"
-              class="use-item__item"
-              :class="{ 'use-item__item--selected': selectedItemName === item.name }"
-              @click="selectedItemName = item.name"
-            >
-              <div class="use-item__item-icon">
-                <PhFirstAidKit :size="20" weight="duotone" />
-              </div>
-              <div class="use-item__item-info">
-                <div class="use-item__item-header">
-                  <span class="use-item__item-name">{{ item.name }}</span>
-                  <span v-if="item.hpAmount" class="use-item__item-hp">+{{ item.hpAmount }} HP</span>
-                </div>
-                <div class="use-item__item-desc">{{ item.description }}</div>
-              </div>
-              <div class="use-item__item-cost">${{ item.cost }}</div>
-            </button>
+          <!-- No items state -->
+          <div v-else class="use-item__empty">
+            No applicable items for this target.
           </div>
 
           <!-- Result display (after item use) -->
@@ -64,11 +185,18 @@
             </div>
             <div v-else class="use-item__result-success">
               <PhHeart :size="16" weight="fill" />
+              <span v-if="result.revived">
+                {{ result.targetName }} was revived!
+              </span>
               <span v-if="result.hpHealed">
                 {{ result.targetName }} healed {{ result.hpHealed }} HP
               </span>
-              <span v-if="result.repulsive" class="use-item__repulsive">
-                (Repulsive)
+              <span v-if="result.conditionsCured && result.conditionsCured.length > 0">
+                {{ !result.hpHealed && !result.revived ? result.targetName + ' ' : '' }}Cured: {{ result.conditionsCured.join(', ') }}
+              </span>
+              <span v-if="result.repulsive" class="use-item__repulsive-result">
+                <PhWarning :size="14" weight="bold" />
+                Repulsive
               </span>
             </div>
           </div>
@@ -105,10 +233,10 @@
 </template>
 
 <script setup lang="ts">
-import { PhFirstAidKit, PhHeart } from '@phosphor-icons/vue'
+import { PhFirstAidKit, PhHeart, PhHeartBreak, PhPill, PhStar, PhWarning } from '@phosphor-icons/vue'
 import { getEffectiveMaxHp } from '~/utils/restHealing'
 import type { Combatant, StatusCondition } from '~/types'
-import type { HealingItemDef } from '~/constants/healingItems'
+import type { HealingItemDef, HealingItemCategory } from '~/constants/healingItems'
 
 const props = defineProps<{
   /** Combatant ID of the user applying the item */
@@ -121,6 +249,9 @@ const emit = defineEmits<{
     itemName: string
     targetName: string
     hpHealed?: number
+    conditionsCured?: StatusCondition[]
+    revived?: boolean
+    repulsive?: boolean
     refused: boolean
   }]
 }>()
@@ -136,6 +267,8 @@ const result = ref<{
   itemName: string
   targetName: string
   hpHealed?: number
+  conditionsCured?: StatusCondition[]
+  revived?: boolean
   repulsive?: boolean
   refused: boolean
 } | null>(null)
@@ -151,7 +284,7 @@ const userName = computed(() => {
   return getCombatantName(userCombatant.value)
 })
 
-// Target combatants (all alive combatants in encounter)
+// Target combatants (all non-dead combatants in encounter)
 const targetCombatants = computed(() => {
   if (!encounterStore.encounter) return []
   return encounterStore.encounter.combatants.filter(c => {
@@ -175,11 +308,40 @@ const selectedTarget = computed(() => {
   ) ?? null
 })
 
-// Applicable items for selected target
-const applicableItems = computed<HealingItemDef[]>(() => {
-  if (!selectedTarget.value) return []
-  return healingItems.getApplicableItems(selectedTarget.value, ['restorative'])
+// Applicable items for selected target, grouped by category
+const groupedItems = computed<Record<HealingItemCategory, HealingItemDef[]>>(() => {
+  const empty: Record<HealingItemCategory, HealingItemDef[]> = {
+    restorative: [],
+    cure: [],
+    combined: [],
+    revive: [],
+  }
+  if (!selectedTarget.value) return empty
+
+  const items = healingItems.getApplicableItems(selectedTarget.value)
+  const grouped = { ...empty }
+  for (const item of items) {
+    grouped[item.category] = [...grouped[item.category], item]
+  }
+  return grouped
 })
+
+const hasAnyApplicableItems = computed(() => {
+  return Object.values(groupedItems.value).some(items => items.length > 0)
+})
+
+function isCombatantFainted(combatant: Combatant): boolean {
+  return (combatant.entity.statusConditions || []).includes('Fainted')
+}
+
+function getCureLabel(item: HealingItemDef): string {
+  if (item.curesAllPersistent) return 'All Persistent'
+  if (item.curesAllStatus) return 'All Status'
+  if (item.curesConditions && item.curesConditions.length > 0) {
+    return item.curesConditions.join(', ')
+  }
+  return ''
+}
 
 // Reset item selection when target changes
 watch(selectedTargetId, () => {
@@ -207,6 +369,8 @@ async function handleApply() {
         itemName: itemResult.itemName,
         targetName: itemResult.targetName,
         hpHealed: itemResult.hpHealed,
+        conditionsCured: itemResult.conditionsCured,
+        revived: itemResult.revived,
         repulsive: itemResult.repulsive,
         refused: itemResult.refused
       }
@@ -215,6 +379,9 @@ async function handleApply() {
         itemName: itemResult.itemName,
         targetName: itemResult.targetName,
         hpHealed: itemResult.hpHealed,
+        conditionsCured: itemResult.conditionsCured,
+        revived: itemResult.revived,
+        repulsive: itemResult.repulsive,
         refused: false
       })
     }
@@ -277,13 +444,26 @@ async function handleRefuse() {
     color: $color-text;
   }
 
-  &__items-header {
-    font-weight: 600;
-    font-size: $font-size-sm;
-    color: $color-text-muted;
-    margin-bottom: $spacing-sm;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+  &__sections {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+    max-height: 350px;
+    overflow-y: auto;
+  }
+
+  &__section {
+    &-header {
+      display: flex;
+      align-items: center;
+      gap: $spacing-xs;
+      font-weight: 600;
+      font-size: $font-size-sm;
+      color: $color-text-muted;
+      margin-bottom: $spacing-xs;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
   }
 
   &__empty {
@@ -299,8 +479,6 @@ async function handleRefuse() {
     display: flex;
     flex-direction: column;
     gap: $spacing-xs;
-    max-height: 250px;
-    overflow-y: auto;
   }
 
   &__item {
@@ -329,9 +507,13 @@ async function handleRefuse() {
 
   &__item-icon {
     flex-shrink: 0;
-    color: $color-success;
     display: flex;
     align-items: center;
+
+    &--restorative { color: $color-success; }
+    &--cure { color: $color-info; }
+    &--combined { color: $color-warning; }
+    &--revive { color: $color-accent-scarlet; }
   }
 
   &__item-info {
@@ -350,10 +532,24 @@ async function handleRefuse() {
     font-size: $font-size-sm;
   }
 
+  &__item-effect {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    flex-shrink: 0;
+  }
+
   &__item-hp {
     font-weight: 700;
     font-size: $font-size-xs;
     color: $color-success;
+  }
+
+  &__item-cure-label {
+    font-weight: 500;
+    font-size: $font-size-xs;
+    color: $color-info;
   }
 
   &__item-desc {
@@ -367,6 +563,18 @@ async function handleRefuse() {
     font-size: $font-size-xs;
     color: $color-text-muted;
     font-weight: 500;
+  }
+
+  &__repulsive-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    font-size: $font-size-xs;
+    font-weight: 600;
+    color: $color-warning;
+    background: rgba($color-warning, 0.1);
+    padding: 1px $spacing-xs;
+    border-radius: $border-radius-sm;
   }
 
   &__result {
@@ -385,6 +593,7 @@ async function handleRefuse() {
     padding: $spacing-sm $spacing-md;
     border-radius: $border-radius-md;
     border: 1px solid rgba($color-success, 0.3);
+    flex-wrap: wrap;
   }
 
   &__result-refused {
@@ -396,10 +605,13 @@ async function handleRefuse() {
     border: 1px solid rgba($color-warning, 0.3);
   }
 
-  &__repulsive {
-    font-weight: 400;
+  &__repulsive-result {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    font-weight: 500;
     font-size: $font-size-xs;
-    color: $color-text-muted;
+    color: $color-warning;
     margin-left: $spacing-xs;
   }
 
