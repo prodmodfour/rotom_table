@@ -152,6 +152,8 @@ export type InterruptTrigger =
 /**
  * Conditions that prevent AoO usage (PTU p.241).
  * "Attacks of Opportunity cannot be made by Sleeping, Flinched, or Paralyzed targets."
+ * 'Bad Sleep' is included because it is a variant of Asleep per PTU status definitions
+ * (PTU p.249) — "Sleeping" in the rules text logically encompasses both Sleep variants.
  */
 export const AOO_BLOCKING_CONDITIONS: readonly string[] = [
   'Asleep', 'Bad Sleep', 'Flinched', 'Paralyzed'
@@ -161,6 +163,8 @@ export const AOO_BLOCKING_CONDITIONS: readonly string[] = [
  * Conditions that prevent Intercept usage (PTU p.242).
  * "cannot attempt Intercepts if they are Asleep, Confused, Enraged, Frozen, Stuck,
  *  Paralyzed, or otherwise unable to move"
+ * 'Bad Sleep' is included because it is a variant of Asleep per PTU status definitions
+ * (PTU p.249) — "Asleep" in the rules text logically encompasses both Sleep variants.
  */
 export const INTERCEPT_BLOCKING_CONDITIONS: readonly string[] = [
   'Asleep', 'Bad Sleep', 'Confused', 'Enraged', 'Frozen', 'Stuck', 'Paralyzed'
