@@ -193,6 +193,19 @@
             <PhStrategy :size="20" />
             <span>Maneuver</span>
           </button>
+
+          <!-- Capture (trainers only, not during Pokemon phase in League Battles) -->
+          <button
+            v-if="canShowCapture"
+            class="combat-actions__btn combat-actions__btn--capture"
+            :disabled="!canUseStandardAction || !canBeCommanded || captureTargets.length === 0"
+            :aria-expanded="showCapturePanel"
+            aria-label="Request to throw a Poke Ball (requires GM approval)"
+            @click="showCapturePanel = !showCapturePanel"
+          >
+            <PhCrosshairSimple :size="20" />
+            <span>Capture</span>
+          </button>
         </div>
       </section>
 
@@ -258,6 +271,13 @@
           <span class="combat-actions__panel-desc">{{ maneuver.shortDesc }}</span>
         </button>
       </section>
+
+      <!-- Capture Panel (expandable) -->
+      <PlayerCapturePanel
+        v-if="showCapturePanel"
+        @request-sent="handleCaptureRequestSent"
+        @cancel="showCapturePanel = false"
+      />
     </template>
 
     <!-- Pass Turn Confirmation -->
@@ -335,7 +355,8 @@ import {
   PhSkipForward,
   PhFirstAidKit,
   PhArrowsClockwise,
-  PhStrategy
+  PhStrategy,
+  PhCrosshairSimple
 } from '@phosphor-icons/vue'
 import type { Move } from '~/types'
 import { COMBAT_MANEUVERS } from '~/constants/combatManeuvers'
@@ -361,6 +382,7 @@ const {
   requestSwitchPokemon,
   requestManeuver,
   validTargets,
+  captureTargets,
   switchablePokemon,
   trainerInventory
 } = usePlayerCombat()
@@ -372,7 +394,19 @@ const { getSpriteUrl } = usePokemonSprite()
 const showItemPanel = ref(false)
 const showSwitchPanel = ref(false)
 const showManeuverPanel = ref(false)
+const showCapturePanel = ref(false)
 const showPassConfirm = ref(false)
+
+/**
+ * Whether the capture button should be visible.
+ * Only trainers can throw Poke Balls, not Pokemon.
+ * In League Battles during Pokemon phase, capture is hidden.
+ */
+const canShowCapture = computed((): boolean => {
+  if (isActivePokemon.value) return false
+  if (isLeagueBattle.value && !isTrainerPhase.value) return false
+  return true
+})
 
 // Target selection state
 const showTargetSelector = ref(false)
@@ -553,12 +587,18 @@ const handleRequestManeuver = (maneuverId: string, maneuverName: string) => {
   showToast(`Requested: ${maneuverName}`)
 }
 
+const handleCaptureRequestSent = () => {
+  showCapturePanel.value = false
+  showToast('Capture request sent to GM')
+}
+
 // Close panels when turn ends
 watch(isMyTurn, (isTurn) => {
   if (!isTurn) {
     showItemPanel.value = false
     showSwitchPanel.value = false
     showManeuverPanel.value = false
+    showCapturePanel.value = false
     showPassConfirm.value = false
     resetTargetSelector()
   }

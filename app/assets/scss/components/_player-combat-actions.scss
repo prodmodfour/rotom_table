@@ -150,6 +150,11 @@
       &:hover:not(:disabled) { border-color: $color-accent-violet; }
     }
 
+    &--capture {
+      border-color: rgba($color-accent-scarlet, 0.3);
+      &:hover:not(:disabled) { border-color: $color-accent-scarlet; }
+    }
+
     &--confirm {
       flex-direction: row;
       gap: $spacing-xs;
