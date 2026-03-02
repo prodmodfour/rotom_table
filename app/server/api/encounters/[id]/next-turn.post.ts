@@ -55,7 +55,7 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    const combatants = JSON.parse(encounter.combatants)
+    let combatants = JSON.parse(encounter.combatants)
     let turnOrder = JSON.parse(encounter.turnOrder)
     let currentTurnIndex = encounter.currentTurnIndex
     let currentRound = encounter.currentRound
@@ -212,9 +212,7 @@ export default defineEventHandler(async (event) => {
       const gridHeight = encounter.gridHeight || 20
       const mountFaintResult = clearMountOnFaint(combatants, currentCombatantId, gridWidth, gridHeight)
       if (mountFaintResult.dismounted) {
-        // Replace combatants array contents with cleared version
-        combatants.length = 0
-        mountFaintResult.combatants.forEach((c: any) => combatants.push(c))
+        combatants = mountFaintResult.combatants
       }
     }
 

@@ -32,7 +32,9 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const { record, combatants } = await loadEncounter(id)
+    const loaded = await loadEncounter(id)
+    const { record } = loaded
+    let combatants = loaded.combatants
     const combatant = findCombatant(combatants, body.combatantId)
     const entity = combatant.entity
     const isLeagueBattle = record.battleType === 'trainer'
@@ -120,10 +122,8 @@ export default defineEventHandler(async (event) => {
       const gridHeight = record.gridHeight || 20
       const mountResult = clearMountOnFaint(combatants, body.combatantId, gridWidth, gridHeight)
       mountDismounted = mountResult.dismounted
-      // Update combatants array in-place for subsequent save
       if (mountResult.dismounted) {
-        combatants.length = 0
-        mountResult.combatants.forEach((c: any) => combatants.push(c))
+        combatants = mountResult.combatants
       }
     }
 
