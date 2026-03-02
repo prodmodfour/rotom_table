@@ -3,7 +3,7 @@ id: docs-011
 title: "Add CLAUDE.md for app/server/api/"
 priority: P0
 severity: MEDIUM
-status: open
+status: resolved
 domain: server
 source: plan-descendant-claude-md-rollout
 created_by: user
@@ -85,3 +85,11 @@ Simple CRUD endpoints may work directly with Prisma + serializer utilities from 
 - Directory listing matches actual api/ subdirectories
 - Response format verified against 3+ existing endpoints
 - Service delegation pattern verified against actual endpoint implementations
+
+## Resolution Log
+
+- Created `app/server/api/CLAUDE.md` (~56 lines) documenting 14 API domains with verified endpoint counts (151 total), naming conventions, response format, error handling, service delegation rule, and comprehensive service mapping table
+- Endpoint counts verified by scanning actual .ts files per directory
+- Service mappings verified by checking imports in representative endpoints
+- Corrected ticket's `statusMessage` to `message` (matching actual codebase pattern)
+- Omitted `library/` directory (listed in ticket but does not exist)
