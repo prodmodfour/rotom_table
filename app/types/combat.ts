@@ -158,6 +158,15 @@ export const AOO_BLOCKING_CONDITIONS: readonly string[] = [
 ] as const;
 
 /**
+ * Conditions that prevent Intercept usage (PTU p.242).
+ * "cannot attempt Intercepts if they are Asleep, Confused, Enraged, Frozen, Stuck,
+ *  Paralyzed, or otherwise unable to move"
+ */
+export const INTERCEPT_BLOCKING_CONDITIONS: readonly string[] = [
+  'Asleep', 'Bad Sleep', 'Confused', 'Enraged', 'Frozen', 'Stuck', 'Paralyzed'
+] as const;
+
+/**
  * Hold Action state for a combatant (P1 scope).
  * PTU p.227: "Combatants can choose to hold their action until a
  * specified lower Initiative value once per round."

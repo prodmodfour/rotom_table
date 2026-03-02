@@ -183,6 +183,10 @@ export interface Pokemon {
   trainingExp: number;
   eggGroups: string[];
 
+  // Loyalty (PTU p.242: required for Intercept maneuvers)
+  // 0-6 scale. 3+ can intercept for Trainer, 6 can intercept for any ally.
+  loyalty?: number;
+
   // Ownership
   ownerId?: string;
 
