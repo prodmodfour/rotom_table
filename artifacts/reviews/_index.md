@@ -1,13 +1,13 @@
 ---
-generated_at: 2026-03-02T08:01:27.043Z
-total_reviews: 230
-active_count: 119
-approved_count: 107
+generated_at: 2026-03-02T08:37:50.470Z
+total_reviews: 234
+active_count: 120
+approved_count: 110
 ---
 
 # Reviews Index
 
-## Active Reviews (119)
+## Active Reviews (120)
 
 | Review ID | Verdict | Target | Reviewer | Date |
 |-----------|---------|--------|----------|------|
@@ -101,6 +101,7 @@ approved_count: 107
 | code-review-259 | CHANGES_REQUIRED | feature-016 | senior-reviewer | 2026-03-01 |
 | code-review-261 | CHANGES_REQUIRED | feature-013 | senior-reviewer | 2026-03-01 |
 | code-review-263 | CHANGES_REQUIRED | ptu-rule-132, bug-041 | senior-reviewer | 2026-03-01 |
+| code-review-267 | CHANGES_REQUIRED | feature-020 | senior-reviewer | 2026-03-02 |
 | rules-review-034 | CHANGES_REQUIRED | bug-002 | game-logic-reviewer | 2026-02-18 |
 | rules-review-039 | CHANGES_REQUIRED | ptu-rule-034, ptu-rule-035 | game-logic-reviewer | 2026-02-18 |
 | rules-review-047 | MIXED | — | game-logic-reviewer | 2026-02-19 |
@@ -135,6 +136,7 @@ approved_count: 107
 
 | Review ID | Target | Reviewer | Date |
 |-----------|--------|----------|------|
+| code-review-266 | feature-013 | senior-reviewer | 2026-03-02 |
 | code-review-265 | feature-019 | senior-reviewer | 2026-03-01 |
 | code-review-264 | feature-016 | senior-reviewer | 2026-03-01 |
 | code-review-262 | feature-009 | senior-reviewer | 2026-03-01 |
@@ -144,13 +146,12 @@ approved_count: 107
 | code-review-255 | feature-006 | senior-reviewer | 2026-03-01 |
 | code-review-252 | ptu-rule-120 | senior-reviewer | 2026-03-01 |
 | code-review-251 | feature-016 | senior-reviewer | 2026-03-01 |
-| code-review-250 | feature-009 | senior-reviewer | 2026-03-01 |
 
 ## Stats
 
-- Active reviews: 230
-- Needs action: 119
-- Approved/Pass (active): 107
+- Active reviews: 234
+- Needs action: 120
+- Approved/Pass (active): 110
 - Archived: 297
-- Total (active + archived): 527
-- Unique targets reviewed: 77
+- Total (active + archived): 531
+- Unique targets reviewed: 78

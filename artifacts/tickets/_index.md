@@ -1,19 +1,18 @@
 ---
-generated_at: 2026-03-02T08:01:27.050Z
+generated_at: 2026-03-02T08:37:50.478Z
 total_tickets: 259
-open: 31
-in_progress: 104
+open: 30
+in_progress: 107
 resolved: 108
 ---
 
 # Tickets Index
 
-## Open Tickets (31)
+## Open Tickets (30)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
 | ptu-rule-127 | ptu-rule | P1 | character-lifecycle | Per decree-037, trainers should NOT receive an automatic +1  |
-| bug-042 | bug | P2 | — | bug-042: release-hold.post.ts creates duplicate turnOrder en |
 | feature-018 | feature | P2 | scenes | feature-018: Weather Effect Automation |
 | feature-021 | feature | P2 | character-lifecycle | feature-021: Derived Capability Calculations |
 | feature-022 | feature | P2 | pokemon-lifecycle | feature-022: Pokemon Loyalty System |
@@ -44,7 +43,7 @@ resolved: 108
 | refactoring-118 | refactoring | P4 | — | refactoring-118: Remove unused flankingMap destructure in Gr |
 | refactoring-119 | refactoring | P4 | — | refactoring-119: Update stale interrupt.post.ts file header  |
 
-## In-Progress Tickets (104)
+## In-Progress Tickets (107)
 
 | ID | Category | Priority | Domain | Source |
 |----|----------|----------|--------|--------|
@@ -74,11 +73,14 @@ resolved: 108
 | ptu-rule-104 | ptu-rule | P1 | combat | decree-012 |
 | refactoring-001 | refactoring | P1 | vtt | decree-010 |
 | bug-039 | bug | P2 | capture | capture-audit-report (R018, 2026-02-28) |
+| bug-042 | bug | P2 | — | code-review-264 HIGH-001 |
 | ptu-rule-107 | ptu-rule | P2 | combat | decree-021 |
 | ptu-rule-108 | ptu-rule | P2 | vtt-grid | rules-review-160 M2 + rules-review-162 M1 |
 | feature-016 | feature | P2 | combat+vtt-grid | matrix-gap (combat Gap 2 + VTT SG-5) |
+| feature-017 | feature | P2 | capture | matrix-gap (GAP-CAP-2) |
 | feature-019 | feature | P2 | vtt-grid | matrix-gap (VTT SG-4) |
 | feature-020 | feature | P2 | healing | matrix-gap (GAP-HEAL-2) |
+| feature-023 | feature | P2 | player-view+capture+healing | matrix-gap (GAP-CAP-1 + GAP-HEAL-1) |
 | refactoring-106 | refactoring | P2 | combat | decree-038 |
 | bug-001 | bug | P2 | csv-import | code-review-034 |
 | bug-030 | bug | P2 | player-view | code-review-159 M3 |
@@ -161,9 +163,9 @@ All decree-needs addressed.
 
 | Category | Open | In-Progress | Resolved | Total |
 |----------|------|-------------|----------|-------|
-| bug | 1 | 12 | 27 | 42 |
+| bug | 0 | 13 | 27 | 42 |
 | ptu-rule | 7 | 59 | 37 | 104 |
-| feature | 4 | 13 | 3 | 23 |
+| feature | 4 | 15 | 3 | 23 |
 | ux | 5 | 7 | 2 | 15 |
 | decree | 0 | 0 | 39 | 39 |
 | refactoring | 14 | 13 | 0 | 36 |

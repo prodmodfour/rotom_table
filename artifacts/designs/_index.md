@@ -1,5 +1,5 @@
 ---
-generated_at: 2026-03-02T08:01:27.053Z
+generated_at: 2026-03-02T08:37:50.481Z
 total_designs: 26
 ---
 
@@ -19,11 +19,11 @@ total_designs: 26
 | design-living-weapon-001 | combat | design-complete | feature-005 | FULL | FEATURE_GAP |
 | design-mounting-001 | combat | design-complete | feature-004 | FULL | FEATURE |
 | design-multi-tile-tokens-001 | vtt-grid | p2-fix-implemented | feature-013 | FULL | FEATURE |
-| design-player-capture-healing-001 | player-view+capture+healing | design-complete | feature-023 | FULL | FEATURE |
+| design-player-capture-healing-001 | player-view+capture+healing | p0-implemented | feature-023 | FULL | FEATURE |
 | design-player-view-core-001 | player-view | p0-implemented | feature-003 | FULL | FEATURE |
 | design-player-view-infra-001 | player-view | draft | feature-003 | FULL | INFRASTRUCTURE |
 | design-player-view-integration-001 | player-view | designed | feature-003 | FULL | FEATURE |
-| design-poke-ball-types-001 | capture | design-complete | feature-017 | FULL | FEATURE |
+| design-poke-ball-types-001 | capture | p0-implemented | feature-017 | FULL | FEATURE |
 | design-pokemon-evolution-001 | — | — | — | — | — |
 | design-pokemon-switching-001 | combat | p2-implemented | feature-011 | FULL | FEATURE |
 | design-priority-interrupt-001 | — | — | — | — | — |
