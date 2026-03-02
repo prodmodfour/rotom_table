@@ -34,7 +34,7 @@ export const STAT_DEFINITIONS = [
 
 /**
  * Skill rank progression order.
- * Shared by LevelUpSkillSection, and any future skill rank UI.
+ * Used by Skill Edge rank-up logic in level-up composable and summary.
  */
 export const RANK_PROGRESSION: readonly string[] = [
   'Pathetic', 'Untrained', 'Novice', 'Adept', 'Expert', 'Master'
