@@ -202,8 +202,16 @@ const characterName = computed(() => playerStore.characterName ?? 'Player')
 const pokemonIds = computed(() => playerStore.pokemonIds)
 
 // Action ack toast computed properties
+const isCaptureAckMiss = computed(() => {
+  const ack = lastActionAck.value
+  if (!ack || ack.status !== 'accepted' || !ack.result) return false
+  const result = ack.result as Record<string, unknown>
+  return result.accuracyHit === false
+})
+
 const actionAckClass = computed(() => {
   if (!lastActionAck.value) return ''
+  if (isCaptureAckMiss.value) return 'player-toast--error'
   return lastActionAck.value.status === 'accepted'
     ? 'player-toast--success'
     : 'player-toast--error'
@@ -211,6 +219,11 @@ const actionAckClass = computed(() => {
 
 const actionAckMessage = computed(() => {
   if (!lastActionAck.value) return ''
+  // Capture miss: show the reason from result instead of generic 'approved'
+  if (isCaptureAckMiss.value) {
+    const result = lastActionAck.value.result as Record<string, unknown>
+    return (result.reason as string) || 'Ball missed!'
+  }
   switch (lastActionAck.value.status) {
     case 'accepted': return 'Request approved by GM'
     case 'rejected': return 'Request rejected by GM'

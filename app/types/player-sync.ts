@@ -56,6 +56,19 @@ export interface PlayerActionRequest {
 }
 
 /**
+ * Structured result for capture action acks.
+ * Includes accuracy roll outcome and, on hit, the capture result.
+ */
+export interface CaptureAckResult {
+  accuracyRoll: number
+  accuracyHit: boolean
+  captured: boolean
+  captureRate?: number
+  roll?: number
+  reason?: string
+}
+
+/**
  * GM acknowledgment of a player action request.
  * Routed back to the originating player via pendingRequests map.
  */
@@ -63,7 +76,7 @@ export interface PlayerActionAck {
   requestId: string
   status: 'accepted' | 'rejected' | 'pending'
   reason?: string
-  result?: unknown
+  result?: CaptureAckResult | Record<string, unknown>
 }
 
 /**
