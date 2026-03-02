@@ -39,6 +39,23 @@
         :display-hp-override="getDisplayHpOverride(token.combatantId)"
         @select="(id, evt) => handleTokenSelectWithPlayerMode(id, evt)"
       />
+
+      <!-- Mounted Pair Tokens: rider overlaid at 60% on mount (feature-004 P1) -->
+      <VTTMountedToken
+        v-for="pair in visibleMountedPairs"
+        :key="`mount-${pair.mountCombatant.id}`"
+        :mount-token="pair.mountToken"
+        :rider-token="pair.riderToken"
+        :cell-size="scaledCellSize"
+        :mount-combatant="pair.mountCombatant"
+        :rider-combatant="pair.riderCombatant"
+        :is-current-turn="pair.mountCombatant.id === currentTurnId || pair.riderCombatant.id === currentTurnId"
+        :is-selected="pair.mountCombatant.id === interaction.selectedTokenId.value"
+        :is-gm="isGm"
+        :is-flanked="isTargetFlanked(pair.mountCombatant.id)"
+        @select-mount="(id, evt) => handleTokenSelectWithPlayerMode(id, evt)"
+        @select-rider="(id, evt) => handleTokenSelectWithPlayerMode(id, evt)"
+      />
     </div>
 
     <!-- Marquee Selection Overlay -->
@@ -149,12 +166,51 @@ const tokenLayerStyle = computed(() => ({
   height: `${gridPixelHeight.value}px`,
 }))
 
+// Mounted pair detection: identify rider/mount pairs (feature-004 P1)
+const mountedPairs = computed(() => {
+  const pairs: { mountId: string; riderId: string }[] = []
+  for (const c of props.combatants) {
+    // Mount combatant (isMounted=false, has partnerId = the rider)
+    if (c.mountState && !c.mountState.isMounted && c.mountState.partnerId) {
+      pairs.push({ mountId: c.id, riderId: c.mountState.partnerId })
+    }
+  }
+  return pairs
+})
+
+// Set of mounted rider IDs (these are rendered by VTTMountedToken, not independently)
+const mountedRiderIds = computed(() =>
+  new Set(mountedPairs.value.map(p => p.riderId))
+)
+
 const visibleTokens = computed(() => {
   return props.tokens.filter(token => {
     const pos = token.position
-    return pos.x >= 0 && pos.x < props.config.width &&
-           pos.y >= 0 && pos.y < props.config.height
+    if (pos.x < 0 || pos.x >= props.config.width || pos.y < 0 || pos.y >= props.config.height) return false
+    // Skip mounted riders — they are rendered on top of their mount by VTTMountedToken
+    if (mountedRiderIds.value.has(token.combatantId)) return false
+    return true
   })
+})
+
+// Visible mounted pairs with token data for VTTMountedToken rendering
+const visibleMountedPairs = computed(() => {
+  return mountedPairs.value
+    .map(pair => {
+      const mountToken = props.tokens.find(t => t.combatantId === pair.mountId)
+      const riderToken = props.tokens.find(t => t.combatantId === pair.riderId)
+      if (!mountToken || !riderToken) return null
+      const mountCombatant = getCombatant(pair.mountId)
+      const riderCombatant = getCombatant(pair.riderId)
+      if (!mountCombatant || !riderCombatant) return null
+      return { mountToken, riderToken, mountCombatant, riderCombatant }
+    })
+    .filter(Boolean) as Array<{
+      mountToken: TokenData
+      riderToken: TokenData
+      mountCombatant: Combatant
+      riderCombatant: Combatant
+    }>
 })
 
 // Combatant lookup (used by movement composable and template)
