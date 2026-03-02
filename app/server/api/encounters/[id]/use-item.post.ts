@@ -145,8 +145,9 @@ export default defineEventHandler(async (event) => {
 
       const trainerEntity = itemTrainer.entity as HumanCharacter
       const trainerInventory: InventoryItem[] = trainerEntity.inventory || []
+      // Case-insensitive match: inventory names may differ in casing from catalog keys
       const inventoryItem = trainerInventory.find(
-        inv => inv.name === body.itemName
+        inv => inv.name.toLowerCase() === body.itemName.toLowerCase()
       )
 
       if (!inventoryItem || inventoryItem.quantity <= 0) {
@@ -202,9 +203,10 @@ export default defineEventHandler(async (event) => {
     // P2: Deduct from inventory after successful application (reuses hoisted itemTrainer)
     if (!skipInventory && itemTrainer) {
       const trainerEntity = itemTrainer.entity as HumanCharacter
+      const itemNameLower = body.itemName.toLowerCase()
       const updatedInventory = (trainerEntity.inventory || []).map(
         (inv: InventoryItem) => {
-          if (inv.name === body.itemName) {
+          if (inv.name.toLowerCase() === itemNameLower) {
             return { ...inv, quantity: inv.quantity - 1 }
           }
           return inv
@@ -227,7 +229,7 @@ export default defineEventHandler(async (event) => {
 
       // Track remaining quantity for response
       const after = updatedInventory.find(
-        (inv: InventoryItem) => inv.name === body.itemName
+        (inv: InventoryItem) => inv.name.toLowerCase() === itemNameLower
       )
       remainingQuantity = after ? after.quantity : 0
       inventoryConsumed = true

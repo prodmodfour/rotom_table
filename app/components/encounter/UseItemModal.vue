@@ -443,7 +443,9 @@ const trainerInventory = computed((): InventoryItem[] => {
 })
 
 function getItemQuantity(itemName: string): number {
-  const invItem = trainerInventory.value.find(inv => inv.name === itemName)
+  // Case-insensitive match: inventory names may differ in casing from catalog keys
+  const nameLower = itemName.toLowerCase()
+  const invItem = trainerInventory.value.find(inv => inv.name.toLowerCase() === nameLower)
   return invItem ? invItem.quantity : 0
 }
 
