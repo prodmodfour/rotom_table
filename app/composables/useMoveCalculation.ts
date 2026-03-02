@@ -398,9 +398,8 @@ export function useMoveCalculation(
     // through rough terrain (enemy-occupied per decree-003, or painted rough per decree-010)
     const roughPenalty = getRoughTerrainPenalty(targetId)
     // Flanking penalty (PTU p.232): -2 to evasion when flanked, reducing threshold (easier to hit)
-    // NOTE: Flanking penalty is currently applied AFTER the evasion cap (Math.min(9, evasion)).
-    // The ordering of flanking penalty vs evasion cap is pending decree-need-039.
-    // Do NOT change this ordering until the decree is ruled.
+    // Per decree-040: flanking penalty applies AFTER the evasion cap of 9.
+    // effectiveEvasion = Math.min(9, rawEvasion) - flankingPenalty
     const flankingPenalty = options?.getFlankingPenalty?.(targetId) ?? 0
     return Math.max(1, move.value.ac + effectiveEvasion - attackerAccuracyStage.value - flankingPenalty + roughPenalty)
   }
