@@ -120,9 +120,8 @@ interface DisplayedRequest {
   status: 'pending' | 'processing' | 'resolved'
 }
 
-const props = defineProps<{
-  encounterId: string
-}>()
+// No props needed — WebSocket server already scopes player_action
+// forwarding to the encounter room, so no client-side filtering required.
 
 const emit = defineEmits<{
   'approve-capture': [data: {

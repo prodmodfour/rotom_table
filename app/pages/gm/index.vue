@@ -57,7 +57,6 @@
       <!-- Player Action Requests (GM approves/denies incoming player requests) -->
       <PlayerRequestPanel
         v-if="encounter.isActive"
-        :encounter-id="encounter.id"
         @approve-capture="handleApproveCapture"
         @approve-breather="handleApproveBreather"
         @approve-healing-item="handleApproveHealingItem"
