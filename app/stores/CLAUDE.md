@@ -31,16 +31,21 @@ Context for working with the 16 Pinia stores in `app/stores/`.
 - Encounter store lazy-initializes the composable via module-level `getHistory()` helper
 - Restore flow: undo/redo retrieves a snapshot, PUTs the full encounter to server, updates local state
 - On PUT failure: rollback by calling `history.redo()` (for failed undo) or `history.undo()` (for failed redo)
+- Exposed API: `canUndo`, `canRedo`, `lastActionName`, `nextActionName`
 
 ## WebSocket Sync
 
 - **Encounter store** `updateFromWebSocket()`: surgical property-by-property update to avoid full reactivity cascade. Updates top-level fields individually, then iterates combatants by ID to patch in-place.
-- **GroupViewTabs store**: BroadcastChannel (`ptu-scene-sync`) for cross-tab sync of scene activation/deactivation. WebSocket handlers (`handleSceneUpdate`, `handleSceneActivated`, etc.) for server-pushed scene changes.
+- **GroupViewTabs store**: BroadcastChannel (`ptu-scene-sync`) for cross-tab sync. Handlers: `handleTabChange`, `handleSceneUpdate`, `handleSceneActivated/Deactivated`, `handleScenePositionsUpdated`, granular entity add/remove events.
+- **GroupView store**: Direct setters `setWildSpawnPreview()`, `setServedMap()` called from WebSocket handlers.
 - **Flow**: Server broadcasts WS event -> WS composable receives -> calls store handler method
 
 ## Cross-Store Rules
 
-Stores never import each other. All coordination happens at the component or composable level. The `library` store self-references via `useLibraryStore()` for getter composition (`allFiltered`), but no store imports a different store.
+Stores never import each other. All coordination happens at the component or composable level:
+- `useGridInteraction` uses `selection`, `measurement`, `fogOfWar`, `terrain` stores
+- `useGridMovement` uses `terrain` store for movement cost lookups
+- `VTTContainer.vue` uses `selection`, `measurement`, `fogOfWar`, `terrain` stores directly
 
 ## Gotchas
 
