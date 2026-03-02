@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-03-02T23:10:00
-updated_by: slave-collector (plan-20260302-224448)
+last_updated: 2026-03-03T04:50:00
+updated_by: slave-collector (plan-20260303-040754)
 ---
 
 # Dev Ecosystem State
@@ -24,7 +24,7 @@ updated_by: slave-collector (plan-20260302-224448)
 | bug-040 | P4 | **resolved** | Extended-rest endpoint lacks Math.max(0,...) safety clamp on currentAp calculation. Already fixed in commit 3d6a238 (bug-038 fix cycle). Ticket moved to resolved by slave-3 (plan-20260228-153856) |
 | bug-041 | P3 | **resolved** | Remove Whirlwind references from Force Switch UI per decree-034. Fixed by slave-3 (plan-20260301-204809). Fix cycle (2 medium doc fixes) completed by slave-3 (plan-20260301-223500). Resolved |
 | bug-042 | P2 | **resolved** | release-hold.post.ts creates duplicate turnOrder entry in Full Contact battles after hold-release. First fix BLOCKED (code-review-268). Rewritten by slave-1 (plan-20260302-110035): remove-before-insert approach. Re-reviewed by slave-5 (plan-20260302-120000): code-review-274 **APPROVED** (MED-001: commit hashes, non-blocking) + rules-review-250 **APPROVED** (all 5 scenarios traced, 12 tests pass). Resolved |
-| bug-043 | P2 | **in-progress** | Poke Ball accuracy check does not gate capture attempt — AC 6 not enforced, balls never miss. Pre-existing in useCapture.ts. Fixed by slave-6 (plan-20260302-130300): 5 commits. Reviewed by slave-6 (plan-20260302-150500): code-review-281 **CHANGES_REQUIRED** + rules-review-257 **APPROVED**. Fix cycle applied by slave-2 (plan-20260302-224448): 6 commits (C1 server validation, H1 error surface, H2 unit tests, M1 typed ack, M2 decree-042 comment). Needs re-review |
+| bug-043 | P2 | **resolved** | Poke Ball accuracy check does not gate capture attempt — AC 6 not enforced, balls never miss. Pre-existing in useCapture.ts. Fixed by slave-6 (plan-20260302-130300): 5 commits. Reviewed (plan-20260302-150500): code-review-281 **CHANGES_REQUIRED** + rules-review-257 **APPROVED**. Fix cycle by slave-2 (plan-20260302-224448): 6 commits. Re-reviewed by slave-2 (plan-20260303-040754): code-review-283 **APPROVED** + rules-review-259 **APPROVED** |
 | bug-044 | P3 | **open** | Standard Action consumption endpoint missing for capture attempts — `/api/encounters/${encounterId}/action` does not exist. Pre-existing in useCapture.ts. Source: rules-review-246 PRE-EXISTING-002. Filed by slave-collector (plan-20260302-084714) |
 
 ### PTU Rule Tickets (`tickets/ptu-rule/`)
@@ -96,7 +96,7 @@ updated_by: slave-collector (plan-20260302-224448)
 | feature-001 | P3 | **resolved** | B2W2 trainer sprites — single-phase design complete, P0 APPROVED (code-review-149 + rules-review-139). Closed by slave-3 (plan-20260224-162105) | single-phase |
 | feature-002 | P2 | **P2-APPROVED** | 3D isometric grid — P2 fix cycle 2 APPROVED (code-review-160 + rules-review-150). All tiers complete | multi-phase |
 | feature-003 | P1 | **Track-A-P2-APPROVED + Track-B-P1-APPROVED + Track-C-P1-APPROVED** | Player View — Track A P2 APPROVED: code-review-188 APPROVED (`:deep()` fix complete). Track B P1 APPROVED (code-review-162). Track C P1 APPROVED (code-review-163 + rules-review-152). All tracks P0+P1+P2 complete | multi-phase-parallel |
-| feature-004 | P3 | **design-complete** | Pokemon Mounting / Rider System — design spec created by slave-1 (plan-20260228-153856). 7 files in design-mounting-001/: _index.md, spec-p0.md (mount relationship, APIs, combat state), spec-p1.md (VTT linked tokens, dismount checks, Mounted Prowess), spec-p2.md (Rider class features), shared-specs.md, testing-strategy.md | multi-phase |
+| feature-004 | P3 | **P0-implemented** | Pokemon Mounting / Rider System — design spec created by slave-1 (plan-20260228-153856). P0 implemented by slave-5 (plan-20260303-040754): 15 commits (MountState interface, mountingRules utility, mounting.service, mount/dismount endpoints, movement sharing, faint auto-dismount, WS sync). Needs review | multi-phase |
 | feature-005 | P3 | **design-complete** | Living Weapon System (Honedge Line) — design spec created by slave-2 (plan-20260228-153856). 7 files in design-living-weapon-001/: _index.md, spec-p0.md (wield relationship, Living Weapon capability), spec-p1.md (equipment integration, Doublade/Aegislash bonuses), spec-p2.md (shared movement, No Guard suppression, Weaponize/Soulstealer), shared-specs.md, testing-strategy.md | multi-phase |
 | feature-006 | P1 | **P2-APPROVED** | Pokemon Evolution System — P0 APPROVED. P1 APPROVED. P2 APPROVED: code-review-255 **APPROVED** + rules-review-231 **APPROVED** (re-review by slave-4, plan-20260301-170000). All code-review-248 + rules-review-224 issues verified resolved. Feature complete | multi-phase |
 | feature-007 | P1 | **P1-APPROVED** | Pokemon Level-Up Allocation UI — P0 APPROVED. P1 fix cycle APPROVED: code-review-243 **APPROVED** (M1: loose MoveDetail types → refactoring-109, M2: canAssignAbility UX → refactoring-110) + rules-review-219 **APPROVED** (all 9 mechanics verified, 0 issues). All code-review-238 + rules-review-214 issues resolved. **Feature complete** (design has P0+P1 only, no P2 tier) | multi-phase |
@@ -109,10 +109,10 @@ updated_by: slave-collector (plan-20260302-224448)
 | feature-014 | P1 | **P2-APPROVED** | VTT Flanking Detection — P0 APPROVED. P1 APPROVED. P2 APPROVED: code-review-276 **APPROVED** (2 MED: flanking_update missing from WebSocketEvent union → refactoring-121, receivedFlankingMap not consumed in group/player views → refactoring-122) + rules-review-252 **APPROVED** (0 issues, all PTU flanking mechanics verified). **Feature complete** (all 12 sections A-L implemented and approved) | multi-phase |
 | feature-016 | P2 | **P2-APPROVED** | Priority / Interrupt / Attack of Opportunity System — P0 APPROVED. P1 APPROVED. P2 APPROVED: code-review-279 **APPROVED** (2 MED: distanceMoved uses budget not actual → refactoring-123, hardcoded speed=20 in InterceptPrompt → refactoring-124) + rules-review-255 **APPROVED** (0 issues, all code-review-273 + rules-review-249 issues verified resolved). **Feature complete** (all tiers approved) | multi-phase |
 
-| feature-017 | P2 | **P1-CHANGES_REQUIRED** | Poke Ball Type System — P0 APPROVED. P1 CHANGES_REQUIRED: code-review-277 **CHANGES_REQUIRED** (2H: conditionContext not passed to local capture rate preview, rate.post.ts missing 8+ auto-context fields vs attempt.post.ts; 3M: dead condition property, buildConditionContext not shared, zero test coverage) + rules-review-253 **APPROVED** (13/13 evaluators match PTU 1.05, MED-1: rate preview incomplete context same as code H2). Needs fix cycle | multi-phase |
+| feature-017 | P2 | **P1-fix-cycle-done** | Poke Ball Type System — P0 APPROVED. P1 CHANGES_REQUIRED: code-review-277 (2H+3M). Fix cycle applied by slave-4 (plan-20260303-040754): 5 commits (extracted buildConditionContext to ball-condition.service, passed conditionContext to client calc, removed dead property, 55 unit tests). rules-review-253 **APPROVED**. Needs re-review | multi-phase |
 | feature-019 | P2 | **APPROVED** | VTT Status-Movement Integration — Tripped combatants blocked from VTT movement (R025). Stuck (R022) and Slowed (R024) pre-existing. Reviewed by slave-7 (plan-20260301-223500): code-review-265 **APPROVED** (0 issues, PTU faithful, consistent pattern, thorough documentation) + rules-review-241 **APPROVED** (all 3 mechanics verified correct, 46 tests passing, 0 issues). Feature complete | partial |
-| feature-020 | P2 | **P1-fix-cycle-done** | Healing Item System — P0 APPROVED. P1 CHANGES_REQUIRED: code-review-278 + rules-review-254. Fix cycle applied by slave-3 (plan-20260302-224448): 4 commits (M1 Revive Math.max guard, M2 decree-041 comment, H1 app-surface). Needs re-review | multi-phase |
-| feature-023 | P2 | **P1-fix-cycle-done** | Player Capture & Healing Interfaces — P0 APPROVED. P1 implemented by slave-5 (plan-20260302-130300). Reviewed (plan-20260302-150500): code-review-280 **CHANGES_REQUIRED** + rules-review-256 **CHANGES_REQUIRED**. Fix cycle applied by slave-1 (plan-20260302-224448): 5 commits (CRIT-1 case fix, M1 spacing, M2 comment, H1 app-surface). Needs re-review | multi-phase |
+| feature-020 | P2 | **P1-APPROVED** | Healing Item System — P0 APPROVED. P1 APPROVED: code-review-284 **APPROVED** + rules-review-260 **APPROVED** (re-review by slave-3, plan-20260303-040754). All code-review-278 + rules-review-254 issues verified resolved. P2 remaining | multi-phase |
+| feature-023 | P2 | **P1-APPROVED** | Player Capture & Healing Interfaces — P0 APPROVED. P1 APPROVED: code-review-282 **APPROVED** + rules-review-258 **APPROVED** (re-review by slave-1, plan-20260303-040754). All code-review-280 + rules-review-256 issues verified resolved. P2 remaining | multi-phase |
 
 ### UX Tickets (`tickets/ux/`)
 | Ticket | Priority | Status | Summary |
@@ -135,7 +135,21 @@ updated_by: slave-collector (plan-20260302-224448)
 
 ## Active Developer Work
 
-**Current task:** Session 88 collection complete. 5 slaves merged (27 commits). 3 dev fix-cycle slaves (feature-023 P1, bug-043, feature-020 P1). 2 docs slaves (docs-009+010+011+016, docs-012+013+014+015). Smoke test PASSED. No conflicts.
+**Current task:** Session 89 collection complete. 6 slaves merged (32 commits). 3 reviewer re-reviews (all APPROVED), 3 dev slaves (feature-017 fix cycle, feature-004 P0, docs gap fixes). Smoke test PASSED. No conflicts.
+
+**Session 89 (2026-03-03, plan-20260303-040754):**
+- **slave-1** (reviewers): feature-023-p1-rereview — code-review-282 **APPROVED** + rules-review-258 **APPROVED**. All code-review-280 + rules-review-256 issues verified resolved. → feature-023 **P1-APPROVED**
+- **slave-2** (reviewers): bug-043-rereview — code-review-283 **APPROVED** + rules-review-259 **APPROVED**. All code-review-281 issues verified resolved. → bug-043 **resolved**
+- **slave-3** (reviewers): feature-020-p1-rereview — code-review-284 **APPROVED** + rules-review-260 **APPROVED**. All code-review-278 + rules-review-254 issues verified resolved. → feature-020 **P1-APPROVED**
+- **slave-4** (developer): feature-017-p1-fix — 5 commits: Extracted buildConditionContext to ball-condition.service.ts, passed conditionContext to local capture rate calc, removed dead condition property from PokeBallDef, 55 unit tests for buildConditionContext, updated app-surface/implementation log. → **fix-cycle-done, needs re-review**
+- **slave-5** (developer): feature-004-p0 — 15 commits: Pokemon Mounting / Rider System P0. MountState interface, mountingRules utility, mounting.service (454 lines), mount/dismount endpoints, movement sharing in position endpoint, round reset in next-turn, faint auto-dismount in damage + next-turn, combatant removal cleanup, encounter store actions, WS sync. → **P0-implemented, needs review**
+- **slave-6** (developer): docs-gap-fixes — 6 commits: Fixed content gaps in 5 CLAUDE.md files (vtt, stores, encounter, composables, tests). Resolved docs-001, docs-003, docs-004, docs-005, docs-007.
+
+**Smoke test:** PASSED (Playwright) — GM view renders (full nav + encounter). Group view renders (initiative tracker). Player view renders (character selection). No issues.
+**Tickets APPROVED:** feature-023 P1, feature-020 P1, bug-043 (all re-reviews passed)
+**Tickets with fix-cycle-done:** feature-017 P1 (needs re-review)
+**New implementations:** feature-004 P0 (mounting system, needs review)
+**Docs resolved:** docs-001, docs-003, docs-004, docs-005, docs-007 (5 tickets)
 
 **Session 88 (2026-03-02, plan-20260302-224448):**
 - **slave-1** (developer): feature-023-p1-fix — 5 commits: Fix cycle for Player Capture UI P1. CRIT-1 captureTargets 'Enemies' → 'enemies' case fix, hardcoded gap → $spacing-xs, inline comment for omitted estimateCaptureRate params, app-surface.md P1 update, ticket resolution log.
@@ -144,8 +158,8 @@ updated_by: slave-collector (plan-20260302-224448)
 - **slave-4** (developer): docs-batch-a — 4 commits: Created `artifacts/CLAUDE.md`, `decrees/CLAUDE.md`, `app/server/api/CLAUDE.md`. Added descendant cross-refs to `app/server/CLAUDE.md`. Resolved docs-009, docs-010, docs-011, docs-016.
 - **slave-5** (developer): docs-batch-b — 8 commits: Created `app/types/CLAUDE.md`, `app/components/scene/CLAUDE.md`. Slimmed `app/CLAUDE.md` and root `CLAUDE.md` with cross-refs. Resolved docs-012, docs-013, docs-014, docs-015.
 
-**Smoke test:** PASSED (Playwright) — GM view renders (full nav + encounter). Group view renders (initiative tracker). Player view renders (character selection). No issues.
-**Tickets with fix-cycle-done:** feature-023 P1 (all code-review-280 + rules-review-256 issues addressed), bug-043 (all code-review-281 issues addressed), feature-020 P1 (all code-review-278 + rules-review-254 issues addressed)
+**Smoke test:** PASSED (Playwright)
+**Tickets with fix-cycle-done:** feature-023 P1, bug-043, feature-020 P1 (all need re-review)
 **Tickets still needing fix cycle:** feature-017 P1 (code-review-277 2H+3M)
 **Docs resolved:** docs-009 through docs-016 (8 tickets, 6 new CLAUDE.md files + 2 slimmed)
 
@@ -727,6 +741,16 @@ updated_by: slave-collector (plan-20260302-224448)
 
 ## Review Status
 
+### Session 89 Reviews (plan-20260303-040754)
+| Review ID | Target | Verdict | Reviewer | Date |
+|-----------|--------|---------|----------|------|
+| code-review-282 | feature-023 P1 re-review (Player Capture UI fix cycle) | APPROVED (all code-review-280 + rules-review-256 issues resolved) | senior-reviewer | 2026-03-03 |
+| rules-review-258 | feature-023 P1 re-review (Player Capture UI fix cycle) | APPROVED (all mechanics verified, 0 issues) | game-logic-reviewer | 2026-03-03 |
+| code-review-283 | bug-043 re-review (Poke Ball AC 6 accuracy gate fix cycle) | APPROVED (all code-review-281 issues resolved) | senior-reviewer | 2026-03-03 |
+| rules-review-259 | bug-043 re-review (Poke Ball AC 6 accuracy gate fix cycle) | APPROVED (all mechanics verified, 0 issues) | game-logic-reviewer | 2026-03-03 |
+| code-review-284 | feature-020 P1 re-review (Healing Item status cures fix cycle) | APPROVED (all code-review-278 + rules-review-254 issues resolved) | senior-reviewer | 2026-03-03 |
+| rules-review-260 | feature-020 P1 re-review (Healing Item status cures fix cycle) | APPROVED (all mechanics verified, decree-041 compliant) | game-logic-reviewer | 2026-03-03 |
+
 ### Session 84 Reviews (plan-20260302-110035)
 | Review ID | Target | Verdict | Reviewer | Date |
 |-----------|--------|---------|----------|------|
@@ -1116,6 +1140,22 @@ updated_by: slave-collector (plan-20260302-224448)
 | Open tickets (P4) | 10 (refactoring-060/062/076/078/079/084 + ux-002/006/007/008) |
 | Total open | 16 |
 | Total resolved | 159 (feature-002 fully resolved) |
+
+## Session Summary (2026-03-03, session 89 — plan-20260303-040754)
+
+**Slave collection plan-20260303-040754:** 6 slaves merged (32 commits total). Review artifact naming collision resolved (slaves 2+3 renumbered to 283/259 and 284/260).
+- **slave-1** (reviewers): feature-023-p1-rereview — code-review-282 **APPROVED** + rules-review-258 **APPROVED**. → feature-023 **P1-APPROVED**
+- **slave-2** (reviewers): bug-043-rereview — code-review-283 **APPROVED** + rules-review-259 **APPROVED**. → bug-043 **resolved**
+- **slave-3** (reviewers): feature-020-p1-rereview — code-review-284 **APPROVED** + rules-review-260 **APPROVED**. → feature-020 **P1-APPROVED**
+- **slave-4** (developer): feature-017-p1-fix — 5 commits: Extracted buildConditionContext to shared ball-condition.service.ts, conditionContext passed to client calc, dead condition property removed, 55 unit tests. → **fix-cycle-done, needs re-review**
+- **slave-5** (developer): feature-004-p0 — 15 commits: Pokemon Mounting System P0 (Sections A-D). MountState interface, mountingRules utility, mounting.service, mount/dismount endpoints, movement sharing, faint auto-dismount, WS sync. → **P0-implemented, needs review**
+- **slave-6** (developer): docs-gap-fixes — 6 commits: Fixed 5 CLAUDE.md files (vtt, stores, encounter, composables, tests). Resolved docs-001/003/004/005/007.
+
+**Smoke test:** PASSED
+**Tickets APPROVED:** feature-023 P1, feature-020 P1, bug-043
+**Tickets with fix-cycle-done:** feature-017 P1 (needs re-review)
+**New implementations:** feature-004 P0 (needs review)
+**Docs resolved:** 5 tickets (docs-001, 003, 004, 005, 007)
 
 ## Session Summary (2026-03-02, session 88 — plan-20260302-224448)
 
