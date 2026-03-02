@@ -4,11 +4,11 @@
 
 ## Turn Lifecycle (5 Phases)
 
-1. **Declaration** (League only) — `DeclarationPanel`: trainers declare actions low-to-high speed. `DeclarationSummary` displays recorded declarations.
-2. **Priority Window** — `PriorityActionPanel`: between turns, any combatant may declare a Priority action (Standard, Limited, or Advanced).
-3. **Action Phase** — `CombatantCard` + `GMActionModal`: active combatant uses Standard/Shift/Swift actions. Moves via `MoveButton` + `MoveTargetModal`. Maneuvers via `ManeuverGrid`.
-4. **Out-of-Turn Interrupts** — `AoOPrompt` (Attacks of Opportunity) and `InterceptPrompt` (melee/ranged intercepts) fire when triggered by movement or attacks.
-5. **Turn End** — tick damage from persistent status conditions (Burned, Poisoned) applied before advancing to next combatant.
+1. **Declaration** (`currentPhase === 'trainer_declaration'`, League only) — `DeclarationPanel` collects declarations, store calls `POST /declare`.
+2. **Priority Window** (`betweenTurns === true`) — `PriorityActionPanel` after `nextTurn()`. GM declares priority or continues.
+3. **Action Phase** (`currentPhase === 'pokemon'` or `'trainer_resolution'`) — `GMActionModal` hub: Standard/Shift/Swift actions, moves, maneuvers.
+4. **Out-of-Turn Interrupts** — `AoOPrompt` / `InterceptPrompt` triggered by `out-of-turn.service.ts` and `intercept.service.ts`.
+5. **Turn End** — `encounterStore.nextTurn()` calls `POST /next-turn`. Server runs `status-automation.service.ts` (Burn/Poison tick), advances `currentTurnIndex`.
 
 ## Battle Modes
 
@@ -56,5 +56,7 @@ For status moves (no damage base), MoveTargetModal skips the damage section enti
 | `useCapture` | Capture rate calc, accuracy check (AC 6), ball modifiers | CombatantCard |
 | `useSwitchModalState` | Switch modal open/close, trainer/pokemon ID resolution | pages/gm/index.vue (parent) |
 | `useCombatantDisplay` | Name resolution for Pokemon (nickname/species) and humans | MoveTargetModal, UseItemModal, TargetSelector |
+| `useEncounterStore()` | Core encounter state, turn management, combatant CRUD | DeclarationPanel, GMActionModal, MoveTargetModal, CombatantCard, PriorityActionPanel, SwitchPokemonModal, SignificancePanel, UseItemModal, XpDistributionModal |
+| `useFlankingDetection()` | Flanking penalty overlay on target selection | MoveTargetModal |
 
 Shared composables also used: `useTypeChart` (MoveButton), `usePokemonSprite` / `useTrainerSprite` (all card components), `useWebSocket` (PlayerRequestPanel, SignificancePanel).
