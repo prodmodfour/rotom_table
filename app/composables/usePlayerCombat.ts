@@ -343,6 +343,70 @@ export function usePlayerCombat() {
     send({ type: 'player_action', data: request })
   }
 
+  /**
+   * Request to throw a Poke Ball at a target Pokemon.
+   * Capture is a Standard Action (PTU p.227).
+   * GM must approve before executing the capture attempt.
+   */
+  const requestCapture = (params: {
+    targetPokemonId: string
+    targetPokemonName: string
+    ballType?: string
+    captureRatePreview?: number
+    trainerCombatantId: string
+  }): void => {
+    const request: PlayerActionRequest = {
+      ...buildBaseRequest(),
+      action: 'capture',
+      targetPokemonId: params.targetPokemonId,
+      targetPokemonName: params.targetPokemonName,
+      ballType: params.ballType ?? 'Poke Ball',
+      captureRatePreview: params.captureRatePreview,
+      trainerCombatantId: params.trainerCombatantId
+    }
+    send({ type: 'player_action', data: request })
+  }
+
+  /**
+   * Request to Take a Breather.
+   * Full Action (PTU p.245): uses both Standard and Shift actions.
+   * GM must approve before executing the breather.
+   */
+  const requestBreather = (params: {
+    combatantId: string
+    assisted?: boolean
+  }): void => {
+    const request: PlayerActionRequest = {
+      ...buildBaseRequest(),
+      action: 'breather',
+      combatantId: params.combatantId,
+      assisted: params.assisted ?? false
+    }
+    send({ type: 'player_action', data: request })
+  }
+
+  /**
+   * Request to use a healing item (requires feature-020).
+   * Using items is a Standard Action (PTU p.276).
+   * GM must approve before applying the item.
+   */
+  const requestHealingItem = (params: {
+    healingItemName: string
+    healingTargetId: string
+    healingTargetName: string
+    trainerCombatantId: string
+  }): void => {
+    const request: PlayerActionRequest = {
+      ...buildBaseRequest(),
+      action: 'use_healing_item',
+      healingItemName: params.healingItemName,
+      healingTargetId: params.healingTargetId,
+      healingTargetName: params.healingTargetName,
+      trainerCombatantId: params.trainerCombatantId
+    }
+    send({ type: 'player_action', data: request })
+  }
+
   // =============================================
   // Target Helpers
   // =============================================
@@ -416,6 +480,9 @@ export function usePlayerCombat() {
     requestUseItem,
     requestSwitchPokemon,
     requestManeuver,
+    requestCapture,
+    requestBreather,
+    requestHealingItem,
 
     // Target helpers
     validTargets,
