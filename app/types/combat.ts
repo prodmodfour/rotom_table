@@ -88,6 +88,14 @@ export interface TurnState {
   // Held/Delayed action
   isHolding: boolean;
   heldUntilInitiative?: number;
+
+  // Item use action forfeit (PTU p.276, feature-020 P2)
+  // Set when a combatant receives a healing item from another combatant.
+  // Consumed at the start of their next turn in next-turn.post.ts.
+  /** Whether this combatant forfeits their Standard Action next turn (item received) */
+  forfeitStandardAction?: boolean;
+  /** Whether this combatant forfeits their Shift Action next turn (item received) */
+  forfeitShiftAction?: boolean;
 }
 
 // Source-tracked combat stage modification (decree-005)
