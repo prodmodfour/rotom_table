@@ -57,33 +57,14 @@ Components shouldn't import axios or fetch directly; use a composable that can b
 
 ## Domain Systems
 
-### Combat Automation
-- Initiative sorting: Speed + bonuses
-- Turn progression with action tracking
-- Set damage application (dice roller utility available for capture and future rolled mode)
-- Combat stages (-6 to +6 multipliers)
-- Accuracy check system (d20 vs AC with natural 1/20 handling)
-- PTU maneuvers: Push, Sprint, Trip, Grapple, Intercept, Take a Breather
-- Injury system with HP marker tracking (50%, 0%, -50%, -100%)
-- Undo/redo system (50-snapshot history)
-- Move history and effect logging
-- Trainer (League) vs Full Contact battle modes with separate trainer/pokemon phases
-- Capture mechanics (full PTU capture rate formula)
-
-### Scene System
-Narrative scenes linking characters, Pokemon, and groups to a location with weather. Scene-to-encounter conversion via `StartEncounterModal`. Components in `components/scene/` (7 files). APIs in `server/api/scenes/` (17 endpoints).
-
-### VTT Grid
-Full tactical grid for encounters. 11 components (`components/vtt/`), 7 composables (`useCanvasRendering`, `useCanvasDrawing`, `useGridMovement`, `useGridInteraction`, `useGridRendering`, `useTerrainPersistence`, `useRangeParser`), 5 stores (`encounterGrid`, `fogOfWar`, `terrain`, `measurement`, `selection`). Features: PTU diagonal movement (alternating 1m/2m), fog of war (3-state: hidden/revealed/explored), terrain painter (6 types with movement costs), measurement tools (distance/burst/cone/line/blast), A* pathfinding, token management.
-
-### Encounter Tables & Templates
-Weighted Pokemon spawn tables with density tiers, sub-habitat modifications, level range overrides. Encounter templates for reusable setups. JSON export/import. Stores: `encounterTables`, `encounterLibrary`. APIs in `server/api/encounter-tables/` (18 endpoints) and `server/api/encounter-templates/` (7 endpoints).
-
-### Capture System
-Full PTU capture rate calculation — base 100 adjusted by level, HP, evolution stage, status conditions (persistent vs volatile), injury/stuck/slow modifiers. Server endpoints (`/api/capture/rate`, `/api/capture/attempt`) and client composable (`useCapture`). Accuracy roll for Poke Ball throws (AC 6).
-
-### Rest & Healing
-PTU rest mechanics — 30-minute rest, extended rest (4+ hours), Pokemon Center, injury healing, new day reset. Composable: `useRestHealing`. Per-entity DB tracking (lastInjuryTime, restMinutesToday, injuriesHealedToday, drainedAp). Global new day endpoint (`/api/game/new-day`).
+Detailed architecture in descendant CLAUDE.md files:
+- **Combat & encounters**: See `components/encounter/CLAUDE.md` for turn lifecycle, damage flow, battle modes
+- **VTT grid**: See `components/vtt/CLAUDE.md` for rendering pipeline, coordinate spaces, PTU movement rules
+- **Scenes**: See `components/scene/CLAUDE.md` for scene-to-encounter conversion, deferred features
+- **Stores**: See `stores/CLAUDE.md` for scope classification, undo/redo, WebSocket sync
+- **Composables**: See `composables/CLAUDE.md` for domain grouping, dependency chains
+- **Services**: See `server/services/CLAUDE.md` for service patterns, Pokemon generation entry point
+- **Types**: See `types/CLAUDE.md` for combatant hierarchy, Prisma-derived vs hand-written
 
 ## Testing
 - **Unit**: Vitest — `app/tests/unit/` covering composables, API, stores, components
