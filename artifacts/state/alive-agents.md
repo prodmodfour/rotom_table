@@ -399,3 +399,7 @@
 | plan-20260302-192532/slave-3 | reviewers | feature-017-p1-rereview | APPROVED | 2026-03-02T19:37:30Z | 191e8cc0, 545d71ac |
 | plan-20260302-192532/slave-4 | reviewers | feature-020-p2 | CHANGES_REQUIRED | 2026-03-02T19:37:00Z | 50333977, 453d5a67 |
 | plan-20260302-192532/slave-5 | reviewers | feature-023-p2 | CHANGES_REQUIRED | 2026-03-02T19:37:00Z | c070fb96, 24bbb6c4 |
+| plan-20260302-202212/slave-3 | developer | feature-017-p2 | success | 2026-03-02T20:45:00Z | ddbb1879, b4e7df79, 77e4d5b7, 5515e0d6, 026663f5, 944bd999, 28bfcf12, 0d0c3dad |
+| plan-20260302-202212/slave-1 | developer | feature-020-p2-fix | success | 2026-03-02T20:41:00Z | 9ee31c52, d55e225e, f4baf3ee, 474bc3e5, 2f30d9c3, 37541429 |
+| plan-20260302-202212/slave-2 | developer | feature-023-p2-fix | success | 2026-03-02T20:42:22Z | ecffe372, 73e0e5e2, 41185648, 79e3f1f6, a3f654bf |
+| plan-20260302-202212/slave-4 | reviewers | feature-004-p0-rereview | APPROVED | 2026-03-02T20:43:01Z | 7809b8e1, 18c35adc |

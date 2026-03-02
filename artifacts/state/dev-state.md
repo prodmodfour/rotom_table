@@ -96,7 +96,7 @@ updated_by: slave-collector (plan-20260302-192532)
 | feature-001 | P3 | **resolved** | B2W2 trainer sprites — single-phase design complete, P0 APPROVED (code-review-149 + rules-review-139). Closed by slave-3 (plan-20260224-162105) | single-phase |
 | feature-002 | P2 | **P2-APPROVED** | 3D isometric grid — P2 fix cycle 2 APPROVED (code-review-160 + rules-review-150). All tiers complete | multi-phase |
 | feature-003 | P1 | **Track-A-P2-APPROVED + Track-B-P1-APPROVED + Track-C-P1-APPROVED** | Player View — Track A P2 APPROVED: code-review-188 APPROVED (`:deep()` fix complete). Track B P1 APPROVED (code-review-162). Track C P1 APPROVED (code-review-163 + rules-review-152). All tracks P0+P1+P2 complete | multi-phase-parallel |
-| feature-004 | P3 | **P0-fix-cycle-done** | Pokemon Mounting / Rider System — design spec created by slave-1 (plan-20260228-153856). P0 implemented by slave-5 (plan-20260303-040754): 15 commits. Reviewed: code-review-285 **CHANGES_REQUIRED** (1C+2H+3M) + rules-review-261 **APPROVED**. Fix cycle by slave-1 (plan-20260302-192532): 6 commits (synced partner position+movementRemaining locally, wired skipCheck to service, consolidated speed func, replaced array mutation, app-surface.md, ticket update). Needs re-review | multi-phase |
+| feature-004 | P3 | **P0-APPROVED** | Pokemon Mounting / Rider System — design spec created by slave-1 (plan-20260228-153856). P0 implemented by slave-5 (plan-20260303-040754): 15 commits. code-review-285 CHANGES_REQUIRED → fix cycle by slave-1 (plan-20260302-192532): 6 commits. Re-reviewed by slave-4 (plan-20260302-202212): code-review-289 **APPROVED** + rules-review-265 **APPROVED**. All 6 issues verified resolved. Ready for P1 | multi-phase |
 | feature-005 | P3 | **design-complete** | Living Weapon System (Honedge Line) — design spec created by slave-2 (plan-20260228-153856). 7 files in design-living-weapon-001/: _index.md, spec-p0.md (wield relationship, Living Weapon capability), spec-p1.md (equipment integration, Doublade/Aegislash bonuses), spec-p2.md (shared movement, No Guard suppression, Weaponize/Soulstealer), shared-specs.md, testing-strategy.md | multi-phase |
 | feature-006 | P1 | **P2-APPROVED** | Pokemon Evolution System — P0 APPROVED. P1 APPROVED. P2 APPROVED: code-review-255 **APPROVED** + rules-review-231 **APPROVED** (re-review by slave-4, plan-20260301-170000). All code-review-248 + rules-review-224 issues verified resolved. Feature complete | multi-phase |
 | feature-007 | P1 | **P1-APPROVED** | Pokemon Level-Up Allocation UI — P0 APPROVED. P1 fix cycle APPROVED: code-review-243 **APPROVED** (M1: loose MoveDetail types → refactoring-109, M2: canAssignAbility UX → refactoring-110) + rules-review-219 **APPROVED** (all 9 mechanics verified, 0 issues). All code-review-238 + rules-review-214 issues resolved. **Feature complete** (design has P0+P1 only, no P2 tier) | multi-phase |
@@ -109,10 +109,10 @@ updated_by: slave-collector (plan-20260302-192532)
 | feature-014 | P1 | **P2-APPROVED** | VTT Flanking Detection — P0 APPROVED. P1 APPROVED. P2 APPROVED: code-review-276 **APPROVED** (2 MED: flanking_update missing from WebSocketEvent union → refactoring-121, receivedFlankingMap not consumed in group/player views → refactoring-122) + rules-review-252 **APPROVED** (0 issues, all PTU flanking mechanics verified). **Feature complete** (all 12 sections A-L implemented and approved) | multi-phase |
 | feature-016 | P2 | **P2-APPROVED** | Priority / Interrupt / Attack of Opportunity System — P0 APPROVED. P1 APPROVED. P2 APPROVED: code-review-279 **APPROVED** (2 MED: distanceMoved uses budget not actual → refactoring-123, hardcoded speed=20 in InterceptPrompt → refactoring-124) + rules-review-255 **APPROVED** (0 issues, all code-review-273 + rules-review-249 issues verified resolved). **Feature complete** (all tiers approved) | multi-phase |
 
-| feature-017 | P2 | **P1-APPROVED** | Poke Ball Type System — P0 APPROVED. P1 APPROVED: code-review-286 **APPROVED** (all 5 code-review-277 issues verified resolved, 0 new issues) + rules-review-262 **APPROVED** (all mechanics verified, decree-013/014/015/042 compliant). Re-reviewed by slave-3 (plan-20260302-192532). Ready for P2 | multi-phase |
+| feature-017 | P2 | **P2-implemented** | Poke Ball Type System — P0 APPROVED. P1 APPROVED. P2 implemented by slave-3 (plan-20260302-202212): 8 commits. BallSelector, CaptureContextToggles, CapturePanel, CaptureRateDisplay, Heal Ball post-capture effect, WebSocket broadcast. Needs P2 review | multi-phase |
 | feature-019 | P2 | **APPROVED** | VTT Status-Movement Integration — Tripped combatants blocked from VTT movement (R025). Stuck (R022) and Slowed (R024) pre-existing. Reviewed by slave-7 (plan-20260301-223500): code-review-265 **APPROVED** (0 issues, PTU faithful, consistent pattern, thorough documentation) + rules-review-241 **APPROVED** (all 3 mechanics verified correct, 46 tests passing, 0 issues). Feature complete | partial |
-| feature-020 | P2 | **P2-CHANGES_REQUIRED** | Healing Item System — P0 APPROVED. P1 APPROVED. P2 implemented by slave-3 (plan-20260302-180611): 8 commits. Reviewed by slave-4 (plan-20260302-192532): code-review-287 **CHANGES_REQUIRED** (1C: UseItemModal.vue 971 lines, 2H: missing turn validation + duplicate trainer lookup, 2M: app-surface.md + inventory name matching) + rules-review-263 **APPROVED** (all 8 mechanics correct, decree-002/017/029/041 compliant). Needs fix cycle | multi-phase |
-| feature-023 | P2 | **P2-CHANGES_REQUIRED** | Player Capture & Healing Interfaces — P0 APPROVED. P1 APPROVED. P2 implemented by slave-2 (plan-20260302-180611): 3 commits. Reviewed by slave-5 (plan-20260302-192532): code-review-288 **CHANGES_REQUIRED** (2H: app-surface.md not updated + no mutual exclusion between panels, 2M: dead cancel emit + redundant filter) + rules-review-264 **APPROVED** (all mechanics correct, 2 MED non-blocking: breather description omits Slow/Stuck, assisted description says Standard instead of Full Action). Needs fix cycle | multi-phase |
+| feature-020 | P2 | **P2-fix-cycle-done** | Healing Item System — P0 APPROVED. P1 APPROVED. P2 implemented. code-review-287 CHANGES_REQUIRED (1C+2H+2M) + rules-review-263 APPROVED. Fix cycle by slave-1 (plan-20260302-202212): 6 commits (turn validation, deduplicate trainer lookup, case-insensitive inventory, SCSS extraction, app-surface.md, ticket update). Needs P2 re-review | multi-phase |
+| feature-023 | P2 | **P2-fix-cycle-done** | Player Capture & Healing Interfaces — P0 APPROVED. P1 APPROVED. P2 implemented. code-review-288 CHANGES_REQUIRED (2H+2M) + rules-review-264 APPROVED. Fix cycle by slave-2 (plan-20260302-202212): 5 commits (app-surface.md, mutual panel exclusion, cancel button, redundant filter removal, ticket update). Needs P2 re-review | multi-phase |
 
 ### UX Tickets (`tickets/ux/`)
 | Ticket | Priority | Status | Summary |
@@ -135,19 +135,17 @@ updated_by: slave-collector (plan-20260302-192532)
 
 ## Active Developer Work
 
-**Current task:** Session 91 collection complete. 5 slaves merged (17 commits). 2 dev slaves (feature-004 P0 fix cycle, ptu-rule-127 completion) + 3 reviewer slaves (feature-017 P1 re-review, feature-020 P2, feature-023 P2). Smoke test PASSED. No conflicts.
+**Current task:** Session 92 collection complete. 4 slaves merged (21 commits). 3 dev slaves (feature-017 P2, feature-020 P2 fix, feature-023 P2 fix) + 1 reviewer slave (feature-004 P0 re-review). Smoke test PASSED. No conflicts.
 
-**Session 91 (2026-03-02, plan-20260302-192532):**
-- **slave-1** (developer): feature-004-p0-fix — 6 commits: Fix cycle for Pokemon Mounting System P0. Synced mount partner position+movementRemaining locally after move (CRIT-001+HIGH-002), wired skipCheck through endpoints to service (HIGH-001), consolidated duplicate speed logic (MED-002), replaced array mutation with immutable reassignment (MED-003), added mounting to app-surface.md (MED-001), updated ticket resolution log. → **fix-cycle-done, needs re-review**
-- **slave-2** (developer): ptu-rule-127 — 5 commits: Completed decree-037 cleanup. Deleted LevelUpSkillSection.vue, updated design specs, removed app-surface.md reference, moved ticket to resolved. → **resolved**
-- **slave-3** (reviewers): feature-017-p1-rereview — code-review-286 **APPROVED** (all 5 code-review-277 issues verified resolved, 0 new issues) + rules-review-262 **APPROVED** (all mechanics verified, decree-013/014/015/042 compliant). → feature-017 **P1-APPROVED**
-- **slave-4** (reviewers): feature-020-p2 — code-review-287 **CHANGES_REQUIRED** (1C: UseItemModal.vue 971 lines, 2H: missing turn validation + duplicate trainer lookup, 2M: app-surface.md + inventory name matching) + rules-review-263 **APPROVED** (all 8 mechanics correct). → feature-020 **P2-CHANGES_REQUIRED**
-- **slave-5** (reviewers): feature-023-p2 — code-review-288 **CHANGES_REQUIRED** (2H: app-surface.md + no mutual panel exclusion, 2M: dead cancel emit + redundant filter) + rules-review-264 **APPROVED** (all mechanics correct, 2 MED non-blocking). → feature-023 **P2-CHANGES_REQUIRED**
+**Session 92 (2026-03-02, plan-20260302-202212):**
+- **slave-3** (developer): feature-017-p2 — 8 commits: Poke Ball Selection UI, Post-Capture Effects, Capture Result Display. BallSelector, CaptureContextToggles, CapturePanel, CaptureRateDisplay, Heal Ball heal-to-max, CapturePanel in CombatantCard, WebSocket broadcast. → **P2-implemented, needs review**
+- **slave-1** (developer): feature-020-p2-fix — 6 commits: Fix cycle for code-review-287 (1C+2H+2M). Turn validation, deduplicate trainer lookup, case-insensitive inventory, SCSS extraction, app-surface.md, ticket update. → **fix-cycle-done, needs re-review**
+- **slave-2** (developer): feature-023-p2-fix — 5 commits: Fix cycle for code-review-288 (2H+2M). app-surface.md, mutual panel exclusion, cancel button, redundant filter removal, ticket update. → **fix-cycle-done, needs re-review**
+- **slave-4** (reviewers): feature-004-p0-rereview — code-review-289 **APPROVED** (all 6 issues verified resolved, 0 new, no regressions) + rules-review-265 **APPROVED** (12 mechanics verified, decree-001/003/004 compliant). → feature-004 **P0-APPROVED**
 
 **Smoke test:** PASSED (Playwright) — GM view renders (full nav + encounter). Group view renders. Player view renders (character selection). No issues.
-**Tickets APPROVED:** feature-017 P1 (re-review passed), ptu-rule-127 (resolved)
-**Tickets needing fix cycle:** feature-004 P0 (fix cycle done, needs re-review), feature-020 P2 (code-review-287 1C+2H+2M), feature-023 P2 (code-review-288 2H+2M)
-**Rules approved:** feature-020 P2 (rules-review-263), feature-023 P2 (rules-review-264)
+**Tickets APPROVED:** feature-004 P0 (re-review passed, ready for P1)
+**Tickets needing review:** feature-017 P2 (needs first review), feature-020 P2 (fix cycle done, needs re-review), feature-023 P2 (fix cycle done, needs re-review)
 **Tickets filed:** None
 
 **Session 90 (2026-03-03, plan-20260302-180611):**
@@ -1180,6 +1178,19 @@ updated_by: slave-collector (plan-20260302-192532)
 | Open tickets (P4) | 10 (refactoring-060/062/076/078/079/084 + ux-002/006/007/008) |
 | Total open | 16 |
 | Total resolved | 159 (feature-002 fully resolved) |
+
+## Session Summary (2026-03-02, session 92 — plan-20260302-202212)
+
+**Slave collection plan-20260302-202212:** 4 slaves merged (21 commits total). No conflicts. All slaves completed successfully.
+- **slave-3** (developer): feature-017-p2 — 8 commits: Poke Ball Selection UI (BallSelector, CaptureContextToggles, CapturePanel, CaptureRateDisplay), Heal Ball post-capture heal-to-max, CapturePanel integrated into CombatantCard, WebSocket capture_attempt broadcast. → **P2-implemented, needs review**
+- **slave-1** (developer): feature-020-p2-fix — 6 commits: Fix cycle for code-review-287 (1C+2H+2M). Added turn validation, deduplicated trainer lookup, case-insensitive inventory matching, extracted SCSS into _use-item-modal.scss, updated app-surface.md with P2 functions, updated ticket. → **fix-cycle-done, needs re-review**
+- **slave-2** (developer): feature-023-p2-fix — 5 commits: Fix cycle for code-review-288 (2H+2M). Added PlayerHealingPanel to app-surface.md, added mutual panel exclusion (closeAllPanels/togglePanel), added cancel button with emit, removed redundant hp<=0 filter, updated ticket. → **fix-cycle-done, needs re-review**
+- **slave-4** (reviewers): feature-004-p0-rereview — code-review-289 **APPROVED** (all 6 code-review-285 issues verified resolved, 0 new issues, no regressions to 14-commit original P0) + rules-review-265 **APPROVED** (12 mechanics verified, decree-001/003/004 compliant). → feature-004 **P0-APPROVED**
+
+**Smoke test:** PASSED
+**Tickets APPROVED:** feature-004 P0 (re-review passed)
+**Tickets needing review:** feature-017 P2 (first review), feature-020 P2 (re-review), feature-023 P2 (re-review)
+**Tickets filed:** None
 
 ## Session Summary (2026-03-02, session 91 — plan-20260302-192532)
 
