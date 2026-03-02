@@ -3,15 +3,21 @@
  * Extracted from GMActionModal for reuse
  */
 
+import type { AoOTrigger } from '~/types/combat'
+
 export interface Maneuver {
   id: string
   name: string
-  actionType: 'standard' | 'full' | 'interrupt'
+  actionType: 'standard' | 'full' | 'interrupt' | 'shift' | 'free'
   actionLabel: string
   ac: number | null
   icon: string
   shortDesc: string
   requiresTarget: boolean
+  /** AoO trigger type this maneuver may provoke (PTU p.241) */
+  provokesAoO?: AoOTrigger
+  /** Whether this maneuver is an Interrupt-type maneuver */
+  isInterrupt?: boolean
 }
 
 export const COMBAT_MANEUVERS: Maneuver[] = [
@@ -23,7 +29,8 @@ export const COMBAT_MANEUVERS: Maneuver[] = [
     ac: 4,
     icon: '/icons/phosphor/arrow-fat-right.svg',
     shortDesc: 'Push target 1m away (opposed Combat/Athletics)',
-    requiresTarget: true
+    requiresTarget: true,
+    provokesAoO: 'maneuver_other'
   },
   {
     id: 'sprint',
@@ -43,7 +50,8 @@ export const COMBAT_MANEUVERS: Maneuver[] = [
     ac: 6,
     icon: '/icons/phosphor/sneaker-move.svg',
     shortDesc: 'Trip target (opposed Combat/Acrobatics)',
-    requiresTarget: true
+    requiresTarget: true,
+    provokesAoO: 'maneuver_other'
   },
   {
     id: 'grapple',
@@ -53,7 +61,8 @@ export const COMBAT_MANEUVERS: Maneuver[] = [
     ac: 4,
     icon: '/icons/phosphor/hand-grabbing.svg',
     shortDesc: 'Initiate grapple (opposed Combat/Athletics)',
-    requiresTarget: true
+    requiresTarget: true,
+    provokesAoO: 'maneuver_other'
   },
   {
     id: 'disarm',
@@ -63,7 +72,8 @@ export const COMBAT_MANEUVERS: Maneuver[] = [
     ac: 6,
     icon: '/icons/phosphor/hand-fist.svg',
     shortDesc: 'Force target to drop held item (opposed Combat/Stealth)',
-    requiresTarget: true
+    requiresTarget: true,
+    provokesAoO: 'maneuver_other'
   },
   {
     id: 'dirty-trick',
@@ -73,7 +83,18 @@ export const COMBAT_MANEUVERS: Maneuver[] = [
     ac: 2,
     icon: '/icons/phosphor/eye-slash.svg',
     shortDesc: 'Hinder, Blind, or Low Blow (once per Scene per target)',
-    requiresTarget: true
+    requiresTarget: true,
+    provokesAoO: 'maneuver_other'
+  },
+  {
+    id: 'disengage',
+    name: 'Disengage',
+    actionType: 'shift',
+    actionLabel: 'Shift Action',
+    ac: null,
+    icon: '/icons/phosphor/arrow-u-down-left.svg',
+    shortDesc: 'Shift 1m without provoking Attack of Opportunity.',
+    requiresTarget: false
   },
   {
     id: 'intercept-melee',
@@ -83,7 +104,8 @@ export const COMBAT_MANEUVERS: Maneuver[] = [
     ac: null,
     icon: '/icons/phosphor/shield.svg',
     shortDesc: 'Take melee hit meant for adjacent ally',
-    requiresTarget: false
+    requiresTarget: false,
+    isInterrupt: true
   },
   {
     id: 'intercept-ranged',
@@ -93,7 +115,8 @@ export const COMBAT_MANEUVERS: Maneuver[] = [
     ac: null,
     icon: '/icons/phosphor/shield.svg',
     shortDesc: 'Intercept ranged attack for ally',
-    requiresTarget: false
+    requiresTarget: false,
+    isInterrupt: true
   },
   {
     id: 'take-a-breather',
