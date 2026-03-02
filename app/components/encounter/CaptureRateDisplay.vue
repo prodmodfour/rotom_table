@@ -60,6 +60,34 @@
         <span>Slow</span>
         <span class="positive">+{{ captureRate.breakdown.slowModifier }}</span>
       </div>
+
+      <!-- Ball modifier breakdown -->
+      <template v-if="captureRate.ballType && captureRate.ballType !== 'Basic Ball'">
+        <div class="breakdown-separator"></div>
+        <div class="breakdown-item breakdown-item--ball-header">
+          <span>Ball: {{ captureRate.ballType }}</span>
+        </div>
+        <div class="breakdown-item">
+          <span>Base modifier</span>
+          <span :class="ballModClass(captureRate.ballBreakdown.baseModifier)">
+            {{ formatModifier(captureRate.ballBreakdown.baseModifier) }}
+          </span>
+        </div>
+        <div v-if="captureRate.ballBreakdown.conditionDescription" class="breakdown-item">
+          <span>Conditional</span>
+          <span :class="ballModClass(captureRate.ballBreakdown.conditionalModifier)">
+            {{ captureRate.ballBreakdown.conditionMet
+              ? formatModifier(captureRate.ballBreakdown.conditionalModifier)
+              : 'n/a' }}
+          </span>
+        </div>
+        <div class="breakdown-item breakdown-item--total">
+          <span>Total ball mod</span>
+          <span :class="ballModClass(captureRate.ballModifier)">
+            {{ formatModifier(captureRate.ballModifier) }}
+          </span>
+        </div>
+      </template>
     </div>
   </div>
 </template>
@@ -76,6 +104,18 @@ const props = defineProps<{
 defineEmits<{
   attempt: []
 }>()
+
+function formatModifier(mod: number): string {
+  if (mod === 0) return '+0'
+  return mod > 0 ? `+${mod}` : `${mod}`
+}
+
+function ballModClass(mod: number): string {
+  // Negative modifier = easier capture = good (green)
+  if (mod < 0) return 'positive'
+  if (mod > 0) return 'negative'
+  return ''
+}
 
 const captureRateClass = computed(() => {
   const rate = props.captureRate.captureRate
@@ -144,11 +184,28 @@ const captureRateClass = computed(() => {
     z-index: 100;
     display: none;
 
+    .breakdown-separator {
+      border-top: 1px solid $border-color-subtle;
+      margin: $spacing-xs 0;
+    }
+
     .breakdown-item {
       display: flex;
       justify-content: space-between;
       padding: 2px 0;
       font-size: $font-size-xs;
+
+      &--ball-header {
+        font-weight: 600;
+        color: $color-accent-teal;
+      }
+
+      &--total {
+        font-weight: 600;
+        border-top: 1px dashed $border-color-subtle;
+        padding-top: $spacing-xs;
+        margin-top: 2px;
+      }
 
       .positive {
         color: $color-success;
