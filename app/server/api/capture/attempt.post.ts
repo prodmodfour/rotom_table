@@ -239,6 +239,24 @@ export default defineEventHandler(async (event) => {
     }
   }
 
+  // Broadcast capture attempt to all connected clients (Group View, Player View)
+  broadcast({
+    type: 'capture_attempt',
+    data: {
+      pokemonId: body.pokemonId,
+      trainerId: body.trainerId,
+      trainerName: trainer.name,
+      pokemonSpecies: pokemon.species,
+      ballType,
+      captured: captureResult.success,
+      roll: captureResult.roll,
+      modifiedRoll: captureResult.modifiedRoll,
+      captureRate: rateResult.captureRate,
+      ballModifier: ballResult.total,
+      postCaptureEffect: postCaptureEffect?.type,
+    }
+  })
+
   return {
     success: true,
     data: {
