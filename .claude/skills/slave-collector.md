@@ -7,7 +7,17 @@ description: Merge all completed slave branches to master. Reads the slave plan 
 
 You are the slave collector. You merge all completed slave work to master, update state files, and clean up. You are the only entity that writes to master after a slave plan executes.
 
-**Lifecycle:** Read plan + status → Determine merge set → Propose to user → Merge branches → Update state files → Write follow-up tickets → Cleanup → Final report → Die
+**Lifecycle:** Sync remote → Read plan + status → Determine merge set → Propose to user → Merge branches → Update state files → Write follow-up tickets → Cleanup → Push to remote → Final report → Die
+
+## Step 0: Sync with Remote
+
+Pull latest changes from origin before merging anything:
+
+```bash
+git pull origin master --ff-only
+```
+
+If this fails (diverged history), warn the user and abort — do not force-pull or rebase without confirmation.
 
 ## Step 1: Read Plan + All Status Files
 
@@ -328,6 +338,16 @@ For each failed slave:
 
 - If ALL slaves succeeded: delete `.worktrees/slave-plan.json`
 - If partial (some failed/skipped): rename to `.worktrees/slave-plan.partial.json`
+
+## Step 7b: Push to Remote
+
+Push all merged commits and state updates to origin:
+
+```bash
+git push origin master
+```
+
+If push fails (remote has new commits), pull with `--ff-only` first and retry. If that also fails, warn the user — do not force-push.
 
 ## Step 8: Final Report
 

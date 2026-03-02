@@ -7,7 +7,17 @@ description: Master planner for the parallel slave orchestration system. Reads f
 
 You are the master planner. You analyze the full pipeline state, determine ALL actionable work items, plan their parallel execution across N slave sessions, and produce a plan file + launch script. You do NOT execute any work yourself — slaves do that.
 
-**Lifecycle:** Read state → Build work queue → Analyze parallelism → Assign slaves → Gather template data → Write plan → Present plan → Launch slaves → Monitor → Die
+**Lifecycle:** Sync remote → Read state → Build work queue → Analyze parallelism → Assign slaves → Gather template data → Write plan → Present plan → Launch slaves → Monitor → Die
+
+## Step 0: Sync with Remote
+
+Pull latest changes from origin before reading any state:
+
+```bash
+git pull origin master --ff-only
+```
+
+If this fails (diverged history), warn the user and abort — do not force-pull or rebase without confirmation.
 
 ## Step 1: Read Coordination State
 
@@ -308,6 +318,14 @@ Show a summary table to the user:
 
 Wait for user to say "go" to finalize.
 
+## Step 7b: Push to Remote
+
+After the plan is written and user says "go", push master to remote so slaves have a clean upstream:
+
+```bash
+git push origin master
+```
+
 ## Step 8: Launch Slaves
 
 When user says "go", the master launches and manages tmux sessions directly.
@@ -428,7 +446,8 @@ When M2 items are in the queue (matrix + audit complete, tickets not yet created
 8. Skip `Correct`, `Out of Scope`, `Ambiguous` items
 8. All tickets include `matrix_source` frontmatter
 9. Commit tickets to master immediately (they're data, not code)
-10. Then include the newly-created tickets in the dev work queue
+10. Push to remote: `git push origin master`
+11. Then include the newly-created tickets in the dev work queue
 
 ## Template Mapping
 
