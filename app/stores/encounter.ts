@@ -157,6 +157,27 @@ export const useEncounterStore = defineStore('encounter', {
         .filter(a => a.category === 'interrupt' && a.status === 'pending')
     },
 
+    /** Pending Intercept Melee opportunities (ally_hit_melee triggers) */
+    pendingInterceptMelee: (state): OutOfTurnAction[] => {
+      return (state.encounter?.pendingOutOfTurnActions ?? [])
+        .filter(a => a.triggerType === 'ally_hit_melee' && a.status === 'pending')
+    },
+
+    /** Pending Intercept Ranged opportunities (ranged_in_range triggers) */
+    pendingInterceptRanged: (state): OutOfTurnAction[] => {
+      return (state.encounter?.pendingOutOfTurnActions ?? [])
+        .filter(a => a.triggerType === 'ranged_in_range' && a.status === 'pending')
+    },
+
+    /** Whether there are any pending Intercept prompts to show */
+    hasInterceptPrompts: (state): boolean => {
+      return (state.encounter?.pendingOutOfTurnActions ?? [])
+        .some(a =>
+          (a.triggerType === 'ally_hit_melee' || a.triggerType === 'ranged_in_range')
+          && a.status === 'pending'
+        )
+    },
+
     /** Combatants eligible for Priority actions (alive, not used Priority, not holding) */
     priorityEligibleCombatants: (state): Combatant[] => {
       if (!state.encounter) return []
@@ -1126,6 +1147,101 @@ export const useEncounterStore = defineStore('encounter', {
         return response.data
       } catch (e: any) {
         this.error = e.message || 'Failed to declare Interrupt'
+        throw e
+      }
+    },
+
+    // ===========================================
+    // Intercept Melee/Ranged (P2 — feature-016)
+    // ===========================================
+
+    /** Execute Intercept Melee maneuver */
+    async interceptMelee(
+      interceptorId: string,
+      targetId: string,
+      attackerId: string,
+      actionId: string,
+      skillCheck: number
+    ) {
+      if (!this.encounter) return null
+
+      try {
+        const response = await $fetch<{
+          data: {
+            encounter: Encounter
+            interceptSuccess: boolean
+            distanceMoved: number
+            dcRequired: number
+            interceptorNewPosition?: GridPosition
+            targetNewPosition?: GridPosition
+          }
+        }>(`/api/encounters/${this.encounter.id}/intercept-melee`, {
+          method: 'POST',
+          body: { interceptorId, targetId, attackerId, actionId, skillCheck }
+        })
+        this.encounter = response.data.encounter
+        return response.data
+      } catch (e: any) {
+        this.error = e.message || 'Failed to execute Intercept Melee'
+        throw e
+      }
+    },
+
+    /** Execute Intercept Ranged maneuver */
+    async interceptRanged(
+      interceptorId: string,
+      targetSquare: GridPosition,
+      attackerId: string,
+      actionId: string,
+      skillCheck: number
+    ) {
+      if (!this.encounter) return null
+
+      try {
+        const response = await $fetch<{
+          data: {
+            encounter: Encounter
+            interceptSuccess: boolean
+            distanceMoved: number
+            interceptorNewPosition?: GridPosition
+            reachedTarget: boolean
+          }
+        }>(`/api/encounters/${this.encounter.id}/intercept-ranged`, {
+          method: 'POST',
+          body: { interceptorId, targetSquare, attackerId, actionId, skillCheck }
+        })
+        this.encounter = response.data.encounter
+        return response.data
+      } catch (e: any) {
+        this.error = e.message || 'Failed to execute Intercept Ranged'
+        throw e
+      }
+    },
+
+    // ===========================================
+    // Disengage (P2 — feature-016)
+    // ===========================================
+
+    /** Execute Disengage maneuver */
+    async disengage(combatantId: string) {
+      if (!this.encounter) return null
+
+      try {
+        const response = await $fetch<{
+          data: Encounter
+          disengageResult: {
+            combatantId: string
+            combatantName: string
+            disengaged: boolean
+          }
+        }>(`/api/encounters/${this.encounter.id}/disengage`, {
+          method: 'POST',
+          body: { combatantId }
+        })
+        this.encounter = response.data
+        return response.disengageResult
+      } catch (e: any) {
+        this.error = e.message || 'Failed to disengage'
         throw e
       }
     },
