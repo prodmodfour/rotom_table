@@ -200,7 +200,14 @@ export function useGridMovement(options: UseGridMovementOptions) {
     }
 
     const maxSpeed = Math.max(...speeds)
-    return applyMovementModifiers(combatant, maxSpeed)
+    const modifiedSpeed = applyMovementModifiers(combatant, maxSpeed)
+
+    // Disengage clamp: when disengaged, movement is limited to 1m (PTU p.241)
+    if (combatant.disengaged) {
+      return Math.min(modifiedSpeed, 1)
+    }
+
+    return modifiedSpeed
   }
 
   /**
@@ -241,6 +248,11 @@ export function useGridMovement(options: UseGridMovementOptions) {
     // Apply movement modifiers from combat state
     if (combatant) {
       baseSpeed = applyMovementModifiers(combatant, baseSpeed)
+    }
+
+    // Disengage clamp: when disengaged, movement is limited to 1m (PTU p.241)
+    if (combatant?.disengaged) {
+      return Math.min(baseSpeed, 1)
     }
 
     return baseSpeed
