@@ -609,7 +609,8 @@ new_files:
 
 **Status lifecycle:**
 - `pending` — Design is in progress
-- `complete` — spec written, awaiting Developer implementation
+- `complete` — spec written, awaiting pre-flight validation
+- `validated` — pre-flight passed (dependencies mapped, open questions surfaced), ready for Developer implementation
 - `implemented` — Developer filled in the Implementation Log and updated `app-surface.md`
 
 **Constraints:**

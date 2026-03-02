@@ -134,10 +134,11 @@ These categorize *what kind of work* exists. They do NOT determine priority orde
 | D1 | CRITICAL bugs — `tickets/open/bug/` with severity CRITICAL | Developer |
 | D2 | Review verdict CHANGES_REQUIRED — latest review for a target | Developer |
 | D3 | FULL-scope feature tickets — no design yet | Developer (write design) |
+| D3b | Design `status: complete` — needs pre-flight validation | Master Planner (inline, not a slave) |
 | D4 | PTU rule tickets — `tickets/open/ptu-rule/` open | Developer |
 | D5 | HIGH bugs + PARTIAL/MINOR gaps | Developer |
 | D6 | Developer fix without reviews — committed fix missing review artifacts | Both reviewers (parallel) |
-| D7 | Pending designs — `designs/` with `status: complete` | Developer |
+| D7 | Pending designs — `designs/` with `status: validated` | Developer |
 | D8 | Refactoring tickets — open, prioritize by extensibility impact | Developer |
 | D9 | All clean — suggest Code Health Auditor audit | Code Health Auditor |
 
@@ -152,6 +153,26 @@ These categorize *what kind of work* exists. They do NOT determine priority orde
 | M5 | Audit has AMBIGUOUS items | Game Logic Reviewer |
 | M6 | Domain fully processed, all tickets created | Report, suggest next domain |
 | M7 | All domains complete | Report overall coverage |
+
+### D3b: Design Pre-Flight Validation (Inline)
+
+When the Master Planner finds a design with `status: complete`, it runs a pre-flight check **inline during Step 2** (not as a slave). This takes ~2 minutes and prevents mid-implementation blockers.
+
+**1. Dependency Map** — Which other domains/models does this design touch?
+- Read the design spec's `affected_files`, `new_files`, Data Model Changes, and API Changes sections
+- Cross-reference against `references/app-surface.md` to identify domain overlaps
+- If the design touches files owned by 2+ domains, flag as "cross-domain" in the plan summary
+- If the design adds/changes Prisma models, note "schema migration required"
+
+**2. Open Questions** — Are there PTU rule ambiguities or UX decisions that need decrees?
+- Read the design spec's "PTU Rule Questions" and "Questions for Senior Reviewer" sections
+- Check `decrees/_index.md` for existing rulings that might apply
+- If unresolved ambiguities remain, create `decree-need` tickets and leave status as `complete` (do NOT promote to `validated`)
+- Report: "Design <id> blocked on N open questions — run `/address_design_decrees`"
+
+**On pass:** Update the design's `_index.md` status from `complete` → `validated`. The design enters the D7 queue in this or the next plan cycle.
+
+**On fail (open questions found):** Leave status as `complete`, create decree-need tickets, report the blockers. The design stays out of D7 until questions are resolved and the next plan re-runs D3b.
 
 Collect every actionable item into a flat list with: `{priority, type, target, agent_types, launch_mode, description, domain}`.
 
