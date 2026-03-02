@@ -3,7 +3,7 @@ id: docs-004
 title: "Add CLAUDE.md for app/components/encounter/"
 priority: P0
 severity: HIGH
-status: open
+status: in-progress
 domain: combat
 source: plan-descendant-claude-md-rollout
 created_by: user
@@ -89,3 +89,13 @@ MoveButton (click) → MoveTargetModal (select targets, preview damage)
 - Component count verified against actual directory listing (33 .vue files)
 - Battle mode descriptions match decree-021
 - Composable delegation map verified against actual component imports
+
+## Resolution Log
+
+- **Commit:** `0acd51bc` — docs: add encounter components CLAUDE.md with turn lifecycle and composable map
+- **File created:** `app/components/encounter/CLAUDE.md` (60 lines)
+- All 33 components categorized into 9 groups
+- Turn lifecycle documented with 5 phases
+- Battle modes reference decree-021
+- 11 encounter composables mapped to their consuming components
+- Damage flow chain documented: MoveButton -> MoveTargetModal -> useMoveCalculation -> DamageSection -> TargetDamageList

@@ -3,7 +3,7 @@ id: docs-008
 title: "Add CLAUDE.md for books/markdown/"
 priority: P0
 severity: HIGH
-status: open
+status: in-progress
 domain: reference
 source: plan-descendant-claude-md-rollout
 created_by: user
@@ -80,3 +80,13 @@ Errata overrides core text. Decrees override both. When implementing game logic,
 - Chapter file names and line counts verified against actual directory listing
 - Page number header format verified (## Page NNN pattern exists in chapter files)
 - Authority chain matches project conventions (decrees > errata > core)
+
+## Resolution Log
+
+- **Commit:** `03ad6347` — docs: add PTU books CLAUDE.md with chapter lookup table and authority chain
+- **File created:** `books/markdown/CLAUDE.md` (49 lines)
+- All 12 core chapter files documented with correct filenames, page ranges, and line counts
+- Quick lookup section covers damage formula, capture rate, movement/switching, XP, move data, ability data, species data, type chart
+- Pokedex format section documents 1,009 species files across gen1-gen8 + hisui
+- Page number cross-reference format documented (## Page NNN headers)
+- Authority chain: Decrees > Errata > Core chapter text
