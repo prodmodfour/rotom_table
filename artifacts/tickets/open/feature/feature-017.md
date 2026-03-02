@@ -78,3 +78,8 @@ ptu-rule-050 (resolved) only removed dead `pokeBallType` code. The actual ball t
 | 2026-03-02 | P1 implemented | Section F-H: `57d396e0` app/composables/useCapture.ts (pass conditionContext to API) |
 | 2026-03-02 | P1 tests | `91c77ae9` 85 unit tests for all 13 conditional evaluators + integration |
 | 2026-03-02 | Status unchanged | in-progress (P0+P1 complete, P2 pending) |
+| 2026-03-03 | P1 fix cycle | code-review-277 (2 HIGH, 3 MEDIUM) — fixes below |
+| 2026-03-03 | M1 fix | `1b781984` Remove dead condition property from PokeBallDef interface |
+| 2026-03-03 | H2+M2 fix | `1a7b5de2` Extract buildConditionContext to shared ball-condition.service.ts; rate.post.ts gains encounterId/trainerId for full context |
+| 2026-03-03 | H1 fix | `851f2f7e` Pass conditionContext to calculateBallModifier in calculateCaptureRateLocal |
+| 2026-03-03 | M3 fix | `ec2a94e6` 55 unit tests for buildConditionContext, checkEvolvesWithStone, deriveEvoLine |

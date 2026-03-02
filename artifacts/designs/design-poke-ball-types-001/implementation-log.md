@@ -154,3 +154,25 @@ No schema changes needed. All required fields (types, weightClass, overland/swim
 - Post-capture effects (Heal Ball full heal, Friend Ball +1 loyalty, Luxury Ball raised happiness)
 - Full evolution line traversal (currently uses species + direct evolutions only)
 - Scene-linked isDarkOrLowLight auto-detection
+
+---
+
+## P1 Review Fixes (code-review-277)
+
+**Status:** Completed
+**Date:** 2026-03-03
+**Branch:** slave/4-dev-feature-017-p1-fix-20260303
+
+| Commit | Issue | Files Changed | Description |
+|--------|-------|---------------|-------------|
+| `1b781984` | M1 | app/constants/pokeBalls.ts | Remove dead `condition` property from PokeBallDef (evaluator registry replaced it) |
+| `1a7b5de2` | H2+M2 | app/server/services/ball-condition.service.ts (new), attempt.post.ts, rate.post.ts, useCapture.ts | Extract buildConditionContext to shared service; rate.post.ts gains full 13-field context |
+| `851f2f7e` | H1 | app/composables/useCapture.ts | Pass conditionContext to calculateBallModifier in calculateCaptureRateLocal |
+| `ec2a94e6` | M3 | app/tests/unit/services/ball-condition.service.test.ts (new) | 55 unit tests for buildConditionContext, checkEvolvesWithStone, deriveEvoLine |
+
+### Issue Details
+
+- **H1**: `calculateCaptureRateLocal` called `calculateBallModifier(ballType)` without context, so CombatantCard previews never showed conditional modifiers. Now accepts and passes `conditionContext`.
+- **H2+M2**: `rate.post.ts` only had 5 of 13 context fields (missing encounterRound, activePokemon*, trainerOwnsSpecies, targetEvolvesWithStone, targetEvoLine, targetGender, targetWasBaited, isDarkOrLowLight, isUnderwaterOrUnderground). Extracted `buildConditionContext` from `attempt.post.ts` to `ball-condition.service.ts`. `rate.post.ts` now accepts `encounterId`/`trainerId` and uses the shared service for full context.
+- **M1**: Removed `condition?: (context: BallConditionContext) => number` from `PokeBallDef` — dead code since P1 evaluator registry replaced it.
+- **M3**: Added 55 tests covering stone detection (all 12 stone types, case-insensitive, mixed triggers, edge cases), evo line derivation, and full context assembly (encounter round lookup, active Pokemon resolution with faint/owner filtering, species ownership, GM override merging, null speciesData fallbacks).
