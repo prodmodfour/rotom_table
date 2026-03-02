@@ -1,4 +1,5 @@
 import type { StageModifiers, StatusCondition, GridConfig, GridPosition, MovementPreview, Encounter, WebSocketEvent } from '~/types'
+import { ptuDiagonalDistance } from '~/utils/gridDistance'
 
 export interface BreatherShiftResult {
   combatantId: string
@@ -246,7 +247,40 @@ export function useEncounterActions(options: EncounterActionsOptions) {
     await encounterGridStore.updateCombatantPosition(encounterStore.encounter.id, combatantId, position)
     const localCombatant = encounterStore.encounter.combatants.find(c => c.id === combatantId)
     if (localCombatant) {
+      // Calculate movement distance for mount movement tracking (feature-004)
+      const oldPosition = localCombatant.position
+      let distanceMoved = 0
+      if (oldPosition) {
+        distanceMoved = ptuDiagonalDistance(
+          position.x - oldPosition.x,
+          position.y - oldPosition.y
+        )
+      }
+
       localCombatant.position = position
+
+      // Linked movement: update mount partner position locally (feature-004)
+      // Server already saved both positions; this syncs local state before broadcast
+      if (localCombatant.mountState) {
+        const newMovementRemaining = Math.max(0, localCombatant.mountState.movementRemaining - distanceMoved)
+        localCombatant.mountState = {
+          ...localCombatant.mountState,
+          movementRemaining: newMovementRemaining
+        }
+
+        const partner = encounterStore.encounter.combatants.find(
+          c => c.id === localCombatant.mountState!.partnerId
+        )
+        if (partner) {
+          partner.position = { ...position }
+          if (partner.mountState) {
+            partner.mountState = {
+              ...partner.mountState,
+              movementRemaining: newMovementRemaining
+            }
+          }
+        }
+      }
     }
     refreshUndoRedoState()
     await broadcastUpdate()
