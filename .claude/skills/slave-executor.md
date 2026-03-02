@@ -1,13 +1,13 @@
 ---
 name: slave-executor
-description: Execute a single slave assignment from the current slave plan. Reads the plan, creates a git worktree, launches the appropriate agent(s) with pre-gathered template data, writes status, and dies. Does NOT merge to master — the collector does that.
+description: Execute a single slave assignment from the current slave plan. Reads the plan, creates a git worktree, resolves agent templates, and launches Task agent(s). Dev slaves get one agent; reviewer slaves get one or more agents (e.g., senior + game logic in parallel). Does NOT merge to master — the collector does that.
 ---
 
 # Slave Executor
 
-You are a slave executor. You execute exactly one assignment from the slave plan, then die. You do NOT merge to master. You do NOT update state files. You commit to your branch, write a status file, and die.
+You are a slave executor — an **orchestrator** for one assignment. You manage the worktree, launch Task agents to do the work, collect results, and die. You do NOT write code or review files yourself — agents do that.
 
-**Lifecycle:** Parse argument → Read plan → Check dependencies → Write status → Create worktree → Launch agent(s) → Post-process → Report and die
+**Lifecycle:** Parse argument → Read plan → Check dependencies → Write status → Create worktree → Resolve template → Launch agent(s) → Post-process → Report and die
 
 ## Step 1: Parse Argument
 
@@ -25,7 +25,7 @@ Read `.worktrees/slave-plan.json`.
 
 Extract:
 - `task_type`, `target`, `description`
-- `agent_types`, `launch_mode`
+- `agent_types` (single-element array — one agent type per slave)
 - `depends_on`
 - `branch_name`, `worktree_path`
 - `template_data`
@@ -80,15 +80,13 @@ Resolve runtime placeholders in `template_data`:
 
 Update status to `"running"`.
 
-## Step 6: Prepare & Launch Agent(s)
+## Step 6: Prepare & Launch Agents
 
 ### 6a. Read Template
 
-Read the appropriate template from `.claude/skills/templates/agent-<type>.md` based on the first entry in `agent_types`.
+Read the template from `.claude/skills/templates/agent-<type>.md` based on the entry in `agent_types`.
 
-For dual mode (reviewers), read both:
-- `.claude/skills/templates/agent-senior-reviewer.md`
-- `.claude/skills/templates/agent-game-logic-reviewer.md`
+Each slave has exactly one agent type. There is no dual mode — reviewers get separate slaves.
 
 ### 6b. Replace Placeholders
 
@@ -96,24 +94,33 @@ Take the template content and replace all `{{PLACEHOLDER}}` tokens with values f
 
 ### 6c. Validate
 
-Search for `{{` in the final prompt(s). If any unresolved placeholder remains → STOP, log it in the status file as an error, ask user before proceeding.
+Search for `{{` in the resolved template. If any unresolved placeholder remains → STOP, log it in the status file as an error, ask user before proceeding.
 
-### 6d. Launch
+### 6d. Launch — Single Agent for Dev Slaves
 
-**Single mode** (`launch_mode: "single"`):
-- Launch one Task agent:
-  - `subagent_type: "general-purpose"`
-  - `model: "opus"`
-  - Run in **foreground** — wait for completion
-  - The prompt is the fully-resolved template
+**Developer slaves** (`task_type: "developer"`) launch one Task agent:
 
-**Dual mode** (`launch_mode: "dual"`):
-- Launch two Task agents:
-  - Both with `subagent_type: "general-purpose"`, `model: "opus"`
-  - Both with `run_in_background: true`
-  - Poll with `TaskOutput` every 30 seconds until both complete
-  - First agent: Senior Reviewer template
-  - Second agent: Game Logic Reviewer template
+- `subagent_type: "general-purpose"`, `model: "opus"`
+- Run in **foreground** — wait for completion
+- Prompt: the fully-resolved agent-dev.md template
+
+This agent does the actual implementation: reads files, writes code, makes commits. The separate review system (reviewer slaves) handles quality verification — dev slaves don't self-verify.
+
+### 6e. Launch — Dual Agents for Reviewer Slaves
+
+**Reviewer slaves** (`task_type: "reviewers"`) get two parallel agents in one pane:
+
+1. Read both templates:
+   - `.claude/skills/templates/agent-senior-reviewer.md`
+   - `.claude/skills/templates/agent-game-logic-reviewer.md`
+2. Replace placeholders in both using `template_data`
+3. Launch two Task agents:
+   - Both with `subagent_type: "general-purpose"`, `model: "opus"`
+   - Both with `run_in_background: true`
+   - First agent: Senior Reviewer template
+   - Second agent: Game Logic Reviewer template
+4. Poll with `TaskOutput` every 30 seconds until both complete
+5. Collect both agents' results before proceeding to Step 7
 
 ## Step 7: Post-Process
 
@@ -158,6 +165,7 @@ Update `.worktrees/slave-status/slave-<X>.json`:
   "commits": ["<hash1> <message1>", "<hash2> <message2>"],
   "artifacts_produced": ["path/to/artifact1.md", "path/to/artifact2.md"],
   "review_verdict": "APPROVED|CHANGES_REQUIRED|null",
+  "agents_launched": 1,
   "error": null
 }
 ```
@@ -184,6 +192,9 @@ Show a summary:
 - **Target:** <target>
 - **Description:** <description>
 
+### Agent
+- **Implementation:** completed
+
 ### Result
 - **Status:** completed | failed
 - **Commits:** <count> commits on branch <branch_name>
@@ -201,6 +212,7 @@ Run `/collect_slaves` when all slaves are done to merge results to master.
 
 ## What You Do NOT Do
 
+- Write code or review files yourself (Task agents do that)
 - Merge to master (collector does that)
 - Update state files (collector does that)
 - Create tickets (master planner does that)
