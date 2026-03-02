@@ -815,7 +815,7 @@ const handleActClick = () => {
 .use-item-btn {
   display: inline-flex;
   align-items: center;
-  gap: 3px;
+  gap: $spacing-xs;
 }
 
 // Button icon (inline SVG in buttons)
