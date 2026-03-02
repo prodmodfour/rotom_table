@@ -69,17 +69,22 @@ export function useHealingItems() {
 
   /**
    * Execute item use via the encounter store.
+   * P2: supports skipInventory for GM override.
    */
   async function useItem(
     itemName: string,
     userId: string,
     targetId: string,
-    targetAccepts: boolean = true
+    targetAccepts: boolean = true,
+    skipInventory: boolean = false
   ) {
     loading.value = true
     error.value = null
     try {
-      const result = await encounterStore.useItem(itemName, userId, targetId, { targetAccepts })
+      const result = await encounterStore.useItem(itemName, userId, targetId, {
+        targetAccepts,
+        ...(skipInventory && { skipInventory: true })
+      })
       return result
     } catch (e: any) {
       error.value = e.message || 'Failed to use item'
