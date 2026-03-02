@@ -7,13 +7,13 @@
  * - targetId: string -- combatant ID of the item target
  * - targetAccepts?: boolean -- whether the target agrees (default: true)
  *
- * P0: HP restoration only. Status cures and revives return errors.
- * P1: Status cure, revive, combined items.
+ * P0: HP restoration only.
+ * P1: Status cure, revive, combined items (all categories supported).
  * P2: Action economy (Standard Action cost), adjacency check, inventory.
  */
 import { loadEncounter, findCombatant, saveEncounterCombatants, buildEncounterResponse }
   from '~/server/services/encounter.service'
-import { syncHealingToDatabase } from '~/server/services/entity-update.service'
+import { syncEntityToDatabase } from '~/server/services/entity-update.service'
 import { applyHealingItem, getEntityDisplayName }
   from '~/server/services/healing-item.service'
 import { HEALING_ITEM_CATALOG } from '~/constants/healingItems'
@@ -43,13 +43,12 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  // P0: Only allow restorative items
-  // P1 will add: 'cure', 'combined', 'revive'
-  const p0AllowedCategories = ['restorative']
-  if (!p0AllowedCategories.includes(item.category)) {
+  // P1: All healing item categories are now supported
+  const allowedCategories = ['restorative', 'cure', 'combined', 'revive']
+  if (!allowedCategories.includes(item.category)) {
     throw createError({
       statusCode: 400,
-      message: `${item.name} is not yet supported (status cure/revive items coming in P1)`
+      message: `${item.name} has unsupported category: ${item.category}`
     })
   }
 
@@ -78,14 +77,14 @@ export default defineEventHandler(async (event) => {
       throw createError({ statusCode: 400, message: itemResult.error || 'Item application failed' })
     }
 
-    // Sync to database
-    await syncHealingToDatabase(
-      target,
-      target.entity.currentHp,
-      target.entity.temporaryHp || 0,
-      target.entity.injuries || 0,
-      target.entity.statusConditions || []
-    )
+    // Sync to database (HP, status conditions, and stage modifiers for CS reversal)
+    await syncEntityToDatabase(target, {
+      currentHp: target.entity.currentHp,
+      temporaryHp: target.entity.temporaryHp || 0,
+      injuries: target.entity.injuries || 0,
+      statusConditions: target.entity.statusConditions || [],
+      stageModifiers: target.entity.stageModifiers
+    })
 
     await saveEncounterCombatants(id, combatants)
 
