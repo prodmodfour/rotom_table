@@ -1,0 +1,352 @@
+// UseItemModal.vue styles — extracted for file size compliance
+// Imported as scoped styles via @import in the component
+
+.use-item {
+  &__field {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-md;
+  }
+
+  &__label {
+    font-weight: 600;
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+    min-width: 60px;
+  }
+
+  &__value {
+    font-weight: 500;
+    color: $color-text;
+  }
+
+  &__action-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    font-size: $font-size-xs;
+    font-weight: 600;
+    padding: 2px $spacing-xs;
+    border-radius: $border-radius-sm;
+
+    &--standard {
+      color: $color-info;
+      background: rgba($color-info, 0.15);
+    }
+
+    &--full {
+      color: $color-warning;
+      background: rgba($color-warning, 0.15);
+    }
+  }
+
+  &__range-status {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-xs;
+    font-size: $font-size-sm;
+    font-weight: 600;
+
+    &--ok {
+      color: $color-success;
+    }
+
+    &--far {
+      color: $color-danger;
+    }
+  }
+
+  &__action-info {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+    padding: $spacing-sm $spacing-md;
+    background: $color-bg-tertiary;
+    border-radius: $border-radius-md;
+    margin-bottom: $spacing-md;
+    font-size: $font-size-sm;
+  }
+
+  &__action-detail {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    color: $color-text-muted;
+  }
+
+  &__action-warning {
+    color: $color-danger;
+    font-weight: 600;
+  }
+
+  &__forfeit-info {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    color: $color-text-muted;
+    font-size: $font-size-xs;
+  }
+
+  &__medic-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    color: $color-success;
+    font-weight: 600;
+    font-size: $font-size-xs;
+    background: rgba($color-success, 0.1);
+    padding: 1px $spacing-xs;
+    border-radius: $border-radius-sm;
+  }
+
+  &__sections {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  &__section {
+    &-header {
+      display: flex;
+      align-items: center;
+      gap: $spacing-xs;
+      font-weight: 600;
+      font-size: $font-size-sm;
+      color: $color-text-muted;
+      margin-bottom: $spacing-xs;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+  }
+
+  &__empty {
+    padding: $spacing-lg;
+    text-align: center;
+    color: $color-text-muted;
+    font-size: $font-size-sm;
+    background: $color-bg-tertiary;
+    border-radius: $border-radius-md;
+  }
+
+  &__item-list {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-sm $spacing-md;
+    background: $color-bg-tertiary;
+    border: 2px solid transparent;
+    border-radius: $border-radius-md;
+    cursor: pointer;
+    transition: all $transition-fast;
+    text-align: left;
+    color: $color-text;
+
+    &:hover:not(:disabled) {
+      background: $color-bg-hover;
+      border-color: $border-color-default;
+    }
+
+    &--selected {
+      border-color: $color-success;
+      background: rgba($color-success, 0.1);
+    }
+
+    &--out-of-stock {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+  }
+
+  &__item-icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+
+    &--restorative { color: $color-success; }
+    &--cure { color: $color-info; }
+    &--combined { color: $color-warning; }
+    &--revive { color: $color-accent-scarlet; }
+  }
+
+  &__item-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__item-header {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+  }
+
+  &__item-name {
+    font-weight: 600;
+    font-size: $font-size-sm;
+  }
+
+  &__item-effect {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    flex-shrink: 0;
+  }
+
+  &__item-hp {
+    font-weight: 700;
+    font-size: $font-size-xs;
+    color: $color-success;
+  }
+
+  &__item-cure-label {
+    font-weight: 500;
+    font-size: $font-size-xs;
+    color: $color-info;
+  }
+
+  &__item-desc {
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+    margin-top: 2px;
+  }
+
+  &__item-qty {
+    flex-shrink: 0;
+    font-size: $font-size-xs;
+    font-weight: 700;
+    color: $color-text;
+    min-width: 24px;
+    text-align: center;
+
+    &--zero {
+      color: $color-danger;
+    }
+  }
+
+  &__item-cost {
+    flex-shrink: 0;
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+    font-weight: 500;
+  }
+
+  &__repulsive-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    font-size: $font-size-xs;
+    font-weight: 600;
+    color: $color-warning;
+    background: rgba($color-warning, 0.1);
+    padding: 1px $spacing-xs;
+    border-radius: $border-radius-sm;
+  }
+
+  &__result {
+    margin-top: $spacing-md;
+    padding: $spacing-md;
+    border-radius: $border-radius-md;
+  }
+
+  &__result-success {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    color: $color-success;
+    font-weight: 600;
+    background: rgba($color-success, 0.1);
+    padding: $spacing-sm $spacing-md;
+    border-radius: $border-radius-md;
+    border: 1px solid rgba($color-success, 0.3);
+    flex-wrap: wrap;
+  }
+
+  &__result-refused {
+    color: $color-warning;
+    font-weight: 600;
+    background: rgba($color-warning, 0.1);
+    padding: $spacing-sm $spacing-md;
+    border-radius: $border-radius-md;
+    border: 1px solid rgba($color-warning, 0.3);
+  }
+
+  &__repulsive-result {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    font-weight: 500;
+    font-size: $font-size-xs;
+    color: $color-warning;
+    margin-left: $spacing-xs;
+  }
+
+  &__error {
+    margin-top: $spacing-md;
+    padding: $spacing-sm $spacing-md;
+    color: $color-danger;
+    font-size: $font-size-sm;
+    background: rgba($color-danger, 0.1);
+    border: 1px solid rgba($color-danger, 0.3);
+    border-radius: $border-radius-md;
+  }
+
+  &__gm-toggle {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    font-size: $font-size-xs;
+    font-weight: 600;
+    color: $color-text-muted;
+    cursor: pointer;
+    user-select: none;
+
+    input[type="checkbox"] {
+      accent-color: $color-warning;
+    }
+
+    &:hover {
+      color: $color-warning;
+    }
+  }
+
+  &__footer-actions {
+    display: flex;
+    gap: $spacing-sm;
+  }
+}
+
+.modal__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-select {
+  flex: 1;
+  padding: $spacing-sm $spacing-md;
+  background: $color-bg-tertiary;
+  border: 1px solid $border-color-default;
+  border-radius: $border-radius-md;
+  color: $color-text;
+  font-size: $font-size-sm;
+
+  &:focus {
+    border-color: $color-accent-scarlet;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba($color-accent-scarlet, 0.2);
+  }
+
+  option {
+    background: $color-bg-secondary;
+    color: $color-text;
+  }
+}
