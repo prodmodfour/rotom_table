@@ -20,8 +20,6 @@ export interface TrainerLevelUpInfo {
   newLevel: number
   /** Stat points gained this level (always 1 per PTU p.19) */
   statPointsGained: number
-  /** Skill ranks gained this level (always 1 -- feature or general, GM decides) */
-  skillRanksGained: number
   /** Edges gained this level: 1 on even levels, 0 on odd */
   edgesGained: number
   /** Features gained this level: 1 on odd levels (3+), 0 on even, 0 at levels 1-2 */
@@ -83,7 +81,6 @@ export interface TrainerAdvancementSummary {
   fromLevel: number
   toLevel: number
   totalStatPoints: number
-  totalSkillRanks: number
   totalEdges: number
   totalFeatures: number
   bonusSkillEdges: number
@@ -107,7 +104,6 @@ export function computeTrainerLevelUp(level: number): TrainerLevelUpInfo {
   return {
     newLevel: level,
     statPointsGained: 1,
-    skillRanksGained: 1,
     edgesGained: isEven ? 1 : 0,
     featuresGained: (isOdd && level >= 3) ? 1 : 0,
     bonusSkillEdge: [2, 6, 12].includes(level),
@@ -437,17 +433,15 @@ interface Emits {
           <span class="advancement-banner__label">Stat Points</span>
           <span class="advancement-banner__value">+{{ summary.totalStatPoints }}</span>
         </div>
-        <div class="advancement-banner__item">
-          <span class="advancement-banner__label">Skill Ranks</span>
-          <span class="advancement-banner__value">+{{ summary.totalSkillRanks }}</span>
-        </div>
+        <!-- Per decree-037: No skill rank banner item. Skill ranks come from Skill Edges only. -->
         <!-- P1: Edges, Features, Milestones shown here too -->
       </div>
 
       <!-- Step Content (one visible at a time) -->
       <LevelUpStatSection v-if="currentStep === 'stats'" ... />
-      <LevelUpSkillSection v-if="currentStep === 'skills'" ... />
-      <!-- P1: LevelUpEdgeSection, LevelUpFeatureSection, etc. -->
+      <!-- Per decree-037: No LevelUpSkillSection step. Skill ranks come from Skill Edges. -->
+      <LevelUpEdgeSection v-if="currentStep === 'edges'" ... />
+      <LevelUpFeatureSection v-if="currentStep === 'features'" ... />
       <LevelUpSummary v-if="currentStep === 'summary'" ... />
     </div>
 
@@ -471,19 +465,18 @@ interface Emits {
 
 #### Step Navigation
 
-P0 steps: `stats` -> `skills` -> `summary`
-P1 adds: `stats` -> `skills` -> `edges` -> `features` -> `classes` -> `milestones` -> `summary`
+Per decree-037, the skills step has been removed. Steps: `milestones` (if any) -> `stats` -> `edges` (if any) -> `features` (if any) -> `classes` (if any) -> `summary`
 
 Steps are shown conditionally based on what the advancement grants. For example, if the level jump is from 4 to 5 (odd level), the edge step is skipped (no edges at odd levels). If no milestone applies, the milestone step is skipped.
 
 ```typescript
 const steps = computed((): string[] => {
-  const s = ['stats', 'skills']
-  // P1 additions:
-  // if (summary.totalEdges > 0 || summary.bonusSkillEdges > 0) s.push('edges')
-  // if (summary.totalFeatures > 0) s.push('features')
-  // if (summary.classChoicePrompts.length > 0) s.push('classes')
-  // if (summary.milestones.length > 0) s.push('milestones')
+  const s: string[] = []
+  if (summary.milestones.length > 0) s.push('milestones')
+  s.push('stats')
+  if (regularEdgesTotal > 0 || bonusSkillEdgeEntries.length > 0) s.push('edges')
+  if (featuresTotal > 0) s.push('features')
+  if (summary.classChoicePrompts.length > 0) s.push('classes')
   s.push('summary')
   return s
 })
@@ -692,22 +685,8 @@ export function useTrainerLevelUp() {
     statPointsTotal.value - statPointsUsed.value
   )
 
-  // --- P0: Skill Rank Allocation State ---
-  const skillChoices = ref<PtuSkillName[]>([])
-
-  const skillRanksTotal = computed(() =>
-    summary.value?.totalSkillRanks ?? 0
-  )
-
-  const skillRanksRemaining = computed(() =>
-    skillRanksTotal.value - skillChoices.value.length
-  )
-
-  // --- P1: Edge/Feature/Class/Milestone State (stubbed in P0) ---
-  // const edgeChoices = ref<string[]>([])
-  // const featureChoices = ref<string[]>([])
-  // const newClassChoices = ref<string[]>([])
-  // const milestoneChoices = ref<Record<number, MilestoneChoiceId>>({})
+  // Per decree-037: No automatic skill rank allocation state.
+  // Skill ranks come from Skill Edges only (handled in P1 Edge selection).
 
   // --- Initialize ---
   function initialize(char: HumanCharacter, targetLevel: number): void {
@@ -718,7 +697,6 @@ export function useTrainerLevelUp() {
 
     // Reset allocations
     Object.assign(statAllocations, { hp: 0, attack: 0, defense: 0, specialAttack: 0, specialDefense: 0, speed: 0 })
-    skillChoices.value = []
   }
 
   function reset(): void {
@@ -727,7 +705,6 @@ export function useTrainerLevelUp() {
     newLevel.value = 0
     isActive.value = false
     Object.assign(statAllocations, { hp: 0, attack: 0, defense: 0, specialAttack: 0, specialDefense: 0, speed: 0 })
-    skillChoices.value = []
   }
 
   // --- Stat Actions ---
@@ -741,35 +718,8 @@ export function useTrainerLevelUp() {
     statAllocations[stat]--
   }
 
-  // --- Skill Actions ---
-  function getEffectiveSkillRank(skill: PtuSkillName): SkillRank {
-    if (!character.value) return 'Untrained'
-    const baseRank = character.value.skills[skill] ?? 'Untrained'
-    const pendingRankUps = skillChoices.value.filter(s => s === skill).length
-    const rankProgression: SkillRank[] = ['Pathetic', 'Untrained', 'Novice', 'Adept', 'Expert', 'Master']
-    const baseIndex = rankProgression.indexOf(baseRank)
-    const effectiveIndex = Math.min(baseIndex + pendingRankUps, rankProgression.length - 1)
-    return rankProgression[effectiveIndex]
-  }
-
-  function canRankUpSkill(skill: PtuSkillName): boolean {
-    if (skillRanksRemaining.value <= 0) return false
-    const effectiveRank = getEffectiveSkillRank(skill)
-    if (effectiveRank === 'Master') return false
-    const rankProgression: SkillRank[] = ['Pathetic', 'Untrained', 'Novice', 'Adept', 'Expert', 'Master']
-    const nextRank = rankProgression[rankProgression.indexOf(effectiveRank) + 1]
-    if (!nextRank) return false
-    return !isSkillRankAboveCap(nextRank, newLevel.value)
-  }
-
-  function addSkillRank(skill: PtuSkillName): void {
-    if (!canRankUpSkill(skill)) return
-    skillChoices.value = [...skillChoices.value, skill]
-  }
-
-  function removeSkillRank(index: number): void {
-    skillChoices.value = skillChoices.value.filter((_, i) => i !== index)
-  }
+  // Per decree-037: Skill actions removed. Skill rank-ups happen via
+  // Skill Edges in the edges step (addBonusSkillEdge, regular Skill Edge entries).
 
   // --- Computed Updated Stats ---
   const updatedStats = computed((): Stats | null => {
@@ -789,19 +739,8 @@ export function useTrainerLevelUp() {
     return newLevel.value * 2 + updatedStats.value.hp * 3 + 10
   })
 
-  const updatedSkills = computed((): Record<string, SkillRank> | null => {
-    if (!character.value) return null
-    const skills = { ...character.value.skills }
-    const rankProgression: SkillRank[] = ['Pathetic', 'Untrained', 'Novice', 'Adept', 'Expert', 'Master']
-    for (const skill of skillChoices.value) {
-      const currentRank = skills[skill] ?? 'Untrained'
-      const currentIndex = rankProgression.indexOf(currentRank)
-      if (currentIndex < rankProgression.length - 1) {
-        skills[skill] = rankProgression[currentIndex + 1]
-      }
-    }
-    return skills
-  })
+  // Per decree-037: updatedSkills removed from composable. Skills are updated
+  // via Skill Edge rank-ups in buildUpdatePayload (bonus + regular Skill Edges).
 
   // --- Warnings ---
   const warnings = computed((): string[] => {
@@ -809,9 +748,8 @@ export function useTrainerLevelUp() {
     if (statPointsRemaining.value > 0) {
       w.push(`${statPointsRemaining.value} stat point(s) unallocated`)
     }
-    if (skillRanksRemaining.value > 0) {
-      w.push(`${skillRanksRemaining.value} skill rank(s) unallocated`)
-    }
+    // Per decree-037: No "skill rank(s) unallocated" warning.
+    // Skill ranks come from Skill Edges only.
     return w
   })
 
@@ -823,8 +761,8 @@ export function useTrainerLevelUp() {
       stats: updatedStats.value ?? character.value.stats,
       maxHp: updatedMaxHp.value,
       currentHp: Math.min(character.value.currentHp, updatedMaxHp.value),
-      skills: updatedSkills.value ?? character.value.skills,
-      // P1: edges, features, trainerClasses
+      // Per decree-037: skills updated via Skill Edge rank-ups (bonus + regular)
+      // edges, features, trainerClasses
     }
   }
 
@@ -844,18 +782,11 @@ export function useTrainerLevelUp() {
     statPointsRemaining,
     incrementStat,
     decrementStat,
-    // Skill allocation
-    skillChoices,
-    skillRanksTotal,
-    skillRanksRemaining,
-    getEffectiveSkillRank,
-    canRankUpSkill,
-    addSkillRank,
-    removeSkillRank,
+    // Per decree-037: No skill allocation exports.
+    // Skill rank-ups handled via Edge selection.
     // Computed updates
     updatedStats,
     updatedMaxHp,
-    updatedSkills,
     // Warnings
     warnings,
     // Lifecycle
@@ -884,24 +815,15 @@ The existing `[id].put.ts` API already accepts `maxHp` and `currentHp` as update
 
 ## Integration Summary (P0 Complete State)
 
-After P0 implementation:
+After P0+P1 implementation:
 
 1. GM opens character sheet (standalone or modal)
 2. GM clicks "Edit"
 3. GM changes level from N to N+K (any positive increment)
 4. Level input reverts; LevelUpModal opens
-5. Step 1: Stat allocation (+K stat points)
-6. Step 2: Skill rank allocation (+K skill ranks, with cap enforcement)
-7. Step 3: Summary with warnings for unallocated points
-8. GM clicks "Apply Level Up"
-9. editData is updated with new level, stats, skills, maxHp
-10. GM clicks "Save Changes" to persist
+5. Steps: Milestones (if any) -> Stats -> Edges (if any) -> Features (if any) -> Classes (if any) -> Summary
+6. GM clicks "Apply Level Up"
+7. editData is updated with new level, stats, edges, features, classes, skills (from Skill Edges), maxHp
+8. GM clicks "Save Changes" to persist
 
-What is **not** handled until P1:
-- Edge selection at even levels
-- Feature selection at odd levels
-- Bonus Skill Edges at levels 2/6/12
-- Class choice at levels 5/10
-- Milestone bonus choices (Amateur/Capable/Veteran/Elite/Champion)
-
-These are tracked in the advancement summary banner as "X edges to select in P1" indicators, ensuring the GM knows more choices are coming.
+Per decree-037, there is NO automatic skill rank allocation step. Skill ranks come exclusively from Skill Edges selected in the Edges step.
