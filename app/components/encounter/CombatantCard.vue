@@ -115,13 +115,26 @@
         </span>
       </div>
 
-      <!-- Capture Rate (GM only, wild Pokemon) -->
-      <CaptureRateDisplay
-        v-if="isGm && isWildPokemon && captureRate"
-        :capture-rate="captureRate"
-        :show-breakdown="true"
-        class="combatant-card__capture-rate"
-      />
+      <!-- Capture Panel (GM only, wild Pokemon) -->
+      <div v-if="isGm && isWildPokemon" class="combatant-card__capture-section">
+        <!-- Trainer selector for who throws the ball -->
+        <div v-if="availableTrainers.length > 0" class="capture-trainer-select">
+          <label class="capture-trainer-select__label">Trainer</label>
+          <select v-model="selectedTrainerId" class="form-input form-input--sm">
+            <option v-for="t in availableTrainers" :key="t.id" :value="t.id">
+              {{ t.name }}
+            </option>
+          </select>
+        </div>
+        <CapturePanel
+          v-if="selectedTrainerId"
+          :pokemon-id="entity.id"
+          :pokemon-data="capturePokemonData"
+          :trainer-id="selectedTrainerId"
+          :encounter-id="encounterStore.encounter?.id"
+          @captured="handleCaptured"
+        />
+      </div>
     </div>
 
     <!-- GM Actions -->
@@ -297,7 +310,6 @@ const emit = defineEmits<{
 
 const { getSpriteUrl } = usePokemonSprite()
 const { getTrainerSpriteUrl } = useTrainerSprite()
-const { calculateCaptureRateLocal } = useCapture()
 
 // Input states
 const damageInput = ref(0)
@@ -380,21 +392,48 @@ const isWildPokemon = computed(() => {
   return !pokemon.ownerId
 })
 
-// Capture rate for wild Pokemon
-const captureRate = computed(() => {
-  if (!isWildPokemon.value) return null
+const encounterStore = useEncounterStore()
+
+// Available player/ally trainers in the encounter for capture
+const availableTrainers = computed(() => {
+  const encounter = encounterStore.encounter
+  if (!encounter) return []
+  return encounter.combatants
+    .filter(c => c.type === 'human' && (c.side === 'players' || c.side === 'allies'))
+    .map(c => ({
+      id: c.entityId!,
+      name: (c.entity as HumanCharacter).name,
+    }))
+})
+
+// Default selected trainer (first available)
+const selectedTrainerId = ref('')
+watch(availableTrainers, (trainers) => {
+  if (trainers.length > 0 && !selectedTrainerId.value) {
+    selectedTrainerId.value = trainers[0].id
+  }
+}, { immediate: true })
+
+// Pokemon data for CapturePanel
+const capturePokemonData = computed(() => {
   const pokemon = entity.value as Pokemon
-  return calculateCaptureRateLocal({
+  return {
     level: pokemon.level,
     currentHp: pokemon.currentHp,
     maxHp: pokemon.maxHp,
-    evolutionStage: 1,
-    maxEvolutionStage: 3,
     statusConditions: pokemon.statusConditions || [],
     injuries: pokemon.injuries || 0,
-    isShiny: pokemon.shiny || false
-  })
+    isShiny: pokemon.shiny || false,
+  }
 })
+
+// Handle successful capture — reload encounter to reflect Pokemon ownership change
+function handleCaptured() {
+  const encId = encounterStore.encounter?.id
+  if (encId) {
+    encounterStore.loadEncounter(encId)
+  }
+}
 
 // Show switch button for trainers who own Pokemon in encounter, or for Pokemon owned by a trainer
 const canShowSwitchButton = computed(() => {
@@ -740,8 +779,11 @@ const handleActClick = () => {
     margin-bottom: $spacing-xs;
   }
 
-  &__capture-rate {
+  &__capture-section {
     margin-top: $spacing-sm;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
   }
 
   &__actions {
@@ -831,6 +873,36 @@ const handleActClick = () => {
   &--negative {
     color: $color-danger;
     background: rgba($color-danger, 0.2);
+  }
+}
+
+// Capture trainer selector
+.capture-trainer-select {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+
+  &__label {
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  select {
+    flex: 1;
+    background: $color-bg-tertiary;
+    color: $color-text;
+    border: 1px solid $border-color-default;
+    border-radius: $border-radius-sm;
+    padding: 2px $spacing-xs;
+    font-size: $font-size-xs;
+
+    &:focus {
+      border-color: $color-accent-teal;
+      outline: none;
+    }
   }
 }
 
