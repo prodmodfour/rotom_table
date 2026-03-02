@@ -33,6 +33,16 @@ export default defineEventHandler(async (event) => {
   // If the client provides an accuracy roll, enforce the AC 6 gate.
   // Natural 1 always misses, natural 20 always hits, otherwise must roll >= 6.
   if (body.accuracyRoll !== undefined) {
+    if (typeof body.accuracyRoll !== 'number'
+      || !Number.isInteger(body.accuracyRoll)
+      || body.accuracyRoll < 1
+      || body.accuracyRoll > 20) {
+      throw createError({
+        statusCode: 400,
+        message: 'accuracyRoll must be an integer between 1 and 20'
+      })
+    }
+
     const roll = body.accuracyRoll
     const isNat1 = roll === 1
     const isNat20 = roll === 20
