@@ -4,7 +4,7 @@ ticket_id: feature-014
 category: FEATURE
 scope: FULL
 domain: vtt-grid+combat
-status: designed
+status: implemented
 decree: decree-002, decree-003
 affected_files:
   - app/composables/useGridMovement.ts
@@ -46,7 +46,7 @@ Implement PTU flanking detection on the VTT grid. When a combatant is adjacent t
 |------|----------|------|
 | P0 | A. Flanking geometry utility, B. 1x1 flanking detection composable, C. Visual indicator on VTT, D. Flanking evasion penalty in accuracy | [spec-p0.md](spec-p0.md) | **IMPLEMENTED** |
 | P1 | E. Multi-tile target flanking geometry, F. Multi-tile attacker counting, G. Diagonal flanking with PTU distance, H. 3+ attacker flanking | [spec-p1.md](spec-p1.md) | **IMPLEMENTED** |
-| P2 | I. Auto-detect flanking on token placement/movement, J. Auto-apply penalty to accuracy checks, K. Flanking indicator in CombatantCard, L. WebSocket flanking sync | [spec-p2.md](spec-p2.md) |
+| P2 | I. Auto-detect flanking on token placement/movement, J. Auto-apply penalty to accuracy checks, K. Flanking indicator in CombatantCard, L. WebSocket flanking sync | [spec-p2.md](spec-p2.md) | **IMPLEMENTED** |
 
 ## Dependencies
 
@@ -66,10 +66,10 @@ Implement PTU flanking detection on the VTT grid. When a combatant is adjacent t
 | F | Multi-tile attacker counting | IMPLEMENTED | countAdjacentAttackerCells | **P1** |
 | G | Diagonal flanking with PTU distance | IMPLEMENTED | Confirmed correct from P0 (8-directional adjacency) | **P1** |
 | H | 3+ attacker flanking | IMPLEMENTED | Validated via independent set algorithm | **P1** |
-| I | Auto-detect on token movement | NOT_IMPLEMENTED | No reactive flanking state | **P2** |
-| J | Auto-apply penalty to accuracy checks | NOT_IMPLEMENTED | Manual flanking tracking | **P2** |
-| K | Flanking indicator in CombatantCard | NOT_IMPLEMENTED | No flanking status display | **P2** |
-| L | WebSocket flanking sync | NOT_IMPLEMENTED | GM-only detection, not synced | **P2** |
+| I | Auto-detect on token movement | IMPLEMENTED | Watcher in useFlankingDetection with transition callbacks | **P2** |
+| J | Auto-apply penalty to accuracy checks | IMPLEMENTED | Server-side in calculate-damage.post.ts, client via composable | **P2** |
+| K | Flanking indicator in CombatantCard | IMPLEMENTED | isFlanked prop + warning badge | **P2** |
+| L | WebSocket flanking sync | IMPLEMENTED | flanking_update relay, GM broadcast, client reception | **P2** |
 
 ---
 
