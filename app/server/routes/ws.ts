@@ -530,6 +530,13 @@ export default defineWebSocketHandler({
           }
           break
 
+        case 'mount_change':
+          // Mount/dismount state change, broadcast to all viewers in encounter
+          if (clientInfo?.encounterId) {
+            broadcastToEncounter(clientInfo.encounterId, event, peer)
+          }
+          break
+
         case 'movement_preview':
           // GM previewing a move, broadcast to group views
           if (clientInfo?.role === 'gm' && clientInfo.encounterId) {
