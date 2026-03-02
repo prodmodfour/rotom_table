@@ -340,20 +340,22 @@ const handleKeyboardShortcuts = (event: KeyboardEvent) => {
 // Separate instance from GridCanvas (which has its own for the VTT tokens).
 // Both use the same computed combatants so results are identical.
 const allCombatants = computed(() => encounter.value?.combatants ?? [])
-const { flankingMap, isTargetFlanked } = useFlankingDetection(allCombatants, {
-  onFlankingChanged: () => {
-    // Broadcast full flanking map to group/player views via WebSocket
-    if (isConnected.value && encounterStore.encounter) {
-      send({
-        type: 'flanking_update',
-        data: {
-          encounterId: encounterStore.encounter.id,
-          flankingMap: flankingMap.value,
-        },
-      })
-    }
-  },
-})
+const { flankingMap, isTargetFlanked } = useFlankingDetection(allCombatants)
+
+// P2: Broadcast flanking map changes to group/player views via WebSocket.
+// Uses a separate watcher instead of the composable's onFlankingChanged callback
+// to avoid referencing flankingMap before it's returned from useFlankingDetection.
+watch(flankingMap, (newMap) => {
+  if (isConnected.value && encounterStore.encounter) {
+    send({
+      type: 'flanking_update',
+      data: {
+        encounterId: encounterStore.encounter.id,
+        flankingMap: newMap,
+      },
+    })
+  }
+}, { deep: true })
 
 // View state
 const activeView = ref<'list' | 'grid'>('list')
