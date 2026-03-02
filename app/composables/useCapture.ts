@@ -1,7 +1,7 @@
 import type { StatusCondition } from '~/types'
 import { calculateCaptureRate, getCaptureDescription } from '~/utils/captureRate'
 import { POKE_BALL_CATALOG, DEFAULT_BALL_TYPE, calculateBallModifier } from '~/constants/pokeBalls'
-import type { PokeBallDef } from '~/constants/pokeBalls'
+import type { PokeBallDef, BallConditionContext } from '~/constants/pokeBalls'
 
 export interface BallBreakdown {
   baseModifier: number
@@ -73,11 +73,12 @@ export function useCapture() {
   const warning = ref<string | null>(null)
 
   /**
-   * Get the capture rate for a Pokemon by ID, with optional ball type.
+   * Get the capture rate for a Pokemon by ID, with optional ball type and condition context.
    */
   async function getCaptureRate(
     pokemonId: string,
-    ballType: string = DEFAULT_BALL_TYPE
+    ballType: string = DEFAULT_BALL_TYPE,
+    conditionContext?: Partial<BallConditionContext>
   ): Promise<CaptureRateData | null> {
     loading.value = true
     error.value = null
@@ -85,7 +86,7 @@ export function useCapture() {
     try {
       const response = await $fetch<{ success: boolean; data: CaptureRateData }>('/api/capture/rate', {
         method: 'POST',
-        body: { pokemonId, ballType }
+        body: { pokemonId, ballType, conditionContext }
       })
 
       if (response.success) {
@@ -163,6 +164,8 @@ export function useCapture() {
     accuracyRoll?: number
     ballType?: string
     modifiers?: number
+    /** GM overrides for ball condition context */
+    conditionContext?: Partial<BallConditionContext>
     encounterContext?: {
       encounterId: string
       trainerCombatantId: string
@@ -180,7 +183,9 @@ export function useCapture() {
           trainerId: params.trainerId,
           accuracyRoll: params.accuracyRoll,
           ballType: params.ballType || DEFAULT_BALL_TYPE,
-          modifiers: params.modifiers
+          modifiers: params.modifiers,
+          encounterId: params.encounterContext?.encounterId,
+          conditionContext: params.conditionContext,
         }
       })
 
