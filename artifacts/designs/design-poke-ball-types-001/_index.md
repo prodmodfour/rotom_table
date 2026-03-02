@@ -4,7 +4,7 @@ ticket_id: feature-017
 category: FEATURE
 scope: FULL
 domain: capture
-status: p1-implemented
+status: implemented
 decrees:
   - decree-013
   - decree-014
@@ -23,9 +23,16 @@ affected_files:
   - app/server/api/capture/attempt.post.ts
   - app/composables/useCapture.ts
   - app/types/capture.ts
+  - app/components/encounter/CaptureRateDisplay.vue
+  - app/components/encounter/CombatantCard.vue
 new_files:
   - app/constants/pokeBalls.ts
   - app/utils/pokeBallConditions.ts
+  - app/server/services/ball-condition.service.ts
+  - app/components/capture/BallSelector.vue
+  - app/components/capture/BallConditionPreview.vue
+  - app/components/capture/CaptureContextToggles.vue
+  - app/components/capture/CapturePanel.vue
 ---
 
 # Design: Poke Ball Type System

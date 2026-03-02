@@ -83,3 +83,10 @@ ptu-rule-050 (resolved) only removed dead `pokeBallType` code. The actual ball t
 | 2026-03-03 | H2+M2 fix | `1a7b5de2` Extract buildConditionContext to shared ball-condition.service.ts; rate.post.ts gains encounterId/trainerId for full context |
 | 2026-03-03 | H1 fix | `851f2f7e` Pass conditionContext to calculateBallModifier in calculateCaptureRateLocal |
 | 2026-03-03 | M3 fix | `ec2a94e6` 55 unit tests for buildConditionContext, checkEvolvesWithStone, deriveEvoLine |
+| 2026-03-02 | P2 implemented | Section I: `ddbb1879` BallSelector.vue + BallConditionPreview.vue (ball type selection UI) |
+| 2026-03-02 | P2 implemented | Section I: `b4e7df79` CaptureContextToggles.vue (GM context flags for baited/dark/underwater) |
+| 2026-03-02 | P2 implemented | Section I: `77e4d5b7` CaptureRateDisplay.vue (ball modifier breakdown in hover) |
+| 2026-03-02 | P2 implemented | Section J: `5515e0d6` attempt.post.ts (Heal Ball heal-to-max, Friend/Luxury Ball info effects) |
+| 2026-03-02 | P2 implemented | Section I+K: `026663f5` CapturePanel.vue (full capture workflow), useCapture.ts (postCaptureEffect type) |
+| 2026-03-02 | P2 implemented | Section I: `944bd999` CombatantCard.vue (CapturePanel integration with trainer selector) |
+| 2026-03-02 | P2 implemented | Section K: `28bfcf12` attempt.post.ts (capture_attempt WebSocket broadcast with ball info) |

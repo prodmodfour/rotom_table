@@ -176,3 +176,52 @@ No schema changes needed. All required fields (types, weightClass, overland/swim
 - **H2+M2**: `rate.post.ts` only had 5 of 13 context fields (missing encounterRound, activePokemon*, trainerOwnsSpecies, targetEvolvesWithStone, targetEvoLine, targetGender, targetWasBaited, isDarkOrLowLight, isUnderwaterOrUnderground). Extracted `buildConditionContext` from `attempt.post.ts` to `ball-condition.service.ts`. `rate.post.ts` now accepts `encounterId`/`trainerId` and uses the shared service for full context.
 - **M1**: Removed `condition?: (context: BallConditionContext) => number` from `PokeBallDef` — dead code since P1 evaluator registry replaced it.
 - **M3**: Added 55 tests covering stone detection (all 12 stone types, case-insensitive, mixed triggers, edge cases), evo line derivation, and full context assembly (encounter round lookup, active Pokemon resolution with faint/owner filtering, species ownership, GM override merging, null speciesData fallbacks).
+
+---
+
+## P2: Selection UI and Post-Capture Effects
+
+**Status:** Implemented
+**Date:** 2026-03-02
+**Branch:** slave/3-dev-feature-017-p2-20260302
+
+### Commits
+
+| Commit | Section | Files Changed | Description |
+|--------|---------|---------------|-------------|
+| `ddbb1879` | I | app/components/capture/BallSelector.vue, BallConditionPreview.vue (new) | Ball selector with grouped list, condition previews, post-capture badges |
+| `b4e7df79` | I | app/components/capture/CaptureContextToggles.vue (new) | GM context toggles for baited, dark, underwater flags |
+| `77e4d5b7` | I | app/components/encounter/CaptureRateDisplay.vue | Ball modifier breakdown in capture rate hover |
+| `5515e0d6` | J | app/server/api/capture/attempt.post.ts | Heal Ball heal-to-max, Friend/Luxury Ball info effects, postCaptureEffect in response |
+| `026663f5` | I+K | app/components/capture/CapturePanel.vue (new), app/composables/useCapture.ts | Full capture workflow panel, postCaptureEffect on CaptureAttemptResult type |
+| `944bd999` | I | app/components/encounter/CombatantCard.vue | CapturePanel integration with trainer selector for wild Pokemon |
+| `28bfcf12` | K | app/server/api/capture/attempt.post.ts | capture_attempt WebSocket broadcast with ball info |
+
+### Section Details
+
+**I. Ball Type Selection UI**
+- `BallSelector.vue`: Dropdown grouped by category (basic, apricorn, special, safari) with Phosphor Icons. Shows base modifier, conditional bonus preview (green if met, gray if not), post-capture effect badges.
+- `BallConditionPreview.vue`: Inline condition met/unmet indicator using PhCheckCircle/PhMinusCircle.
+- `CaptureContextToggles.vue`: GM checkboxes for targetWasBaited, isDarkOrLowLight, isUnderwaterOrUnderground.
+- `CaptureRateDisplay.vue`: Ball modifier breakdown section showing base modifier, conditional status, total ball modifier.
+- `CapturePanel.vue`: Full capture workflow — BallSelector + context toggles + rate display + accuracy roll (AC 6) + capture roll + result display with roll breakdown and post-capture effects.
+- `CombatantCard.vue`: Replaces inline CaptureRateDisplay with CapturePanel on wild enemy Pokemon. Adds trainer selector dropdown.
+
+**J. Post-Capture Effects**
+- Heal Ball: After successful capture, sets `currentHp = maxHp` (real max HP per decree-015). DB update in attempt.post.ts.
+- Friend Ball: Returns `{ type: 'loyalty_plus_one', description }` in response. No mechanical effect (loyalty not tracked).
+- Luxury Ball: Returns `{ type: 'raised_happiness', description }` in response. No mechanical effect (happiness not tracked).
+- All effects stored in `postCaptureEffect` field on API response.
+
+**K. Capture Result Display with Ball Info**
+- CapturePanel shows detailed roll breakdown: raw roll, trainer level subtraction, ball modifier, other modifiers, modified roll.
+- Outcome display: natural 100 auto-capture, success/fail with modified roll vs capture rate.
+- Post-capture effect notification badge when applicable (Heal Ball, Friend Ball, Luxury Ball).
+- WebSocket `capture_attempt` broadcast includes ballType, ballModifier, postCaptureEffect for Group View display.
+
+### Deferred to Future
+
+- Ball inventory integration (consume balls from trainer inventory)
+- Safari Zone ball restrictions
+- Full evolution line traversal for Love Ball (uses direct evolutions only)
+- Scene-linked isDarkOrLowLight auto-detection
