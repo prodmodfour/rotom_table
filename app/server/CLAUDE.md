@@ -18,3 +18,8 @@ WebSocket (`/ws`) handles GM-to-Group synchronization with role-based broadcasti
 - **Scene**: `scene_update`
 - **Player**: `player_action` (group → GM only)
 - **Entity**: `character_update` (broadcast to all)
+
+## Descendant Context
+
+- **Service architecture**: See `services/CLAUDE.md` for the 16-service inventory, Pokemon generation entry point rule, service patterns, and dependency map
+- **API conventions**: See `api/CLAUDE.md` for endpoint naming conventions, response format, error handling, and service delegation rules

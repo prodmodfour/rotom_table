@@ -3,7 +3,7 @@ id: docs-016
 title: "Add cross-references to app/server/CLAUDE.md"
 priority: P0
 severity: LOW
-status: open
+status: resolved
 domain: server
 source: plan-descendant-claude-md-rollout
 created_by: user
@@ -59,3 +59,9 @@ Append the following section at the end of `app/server/CLAUDE.md`:
 - Cross-reference paths are correct relative to app/server/ directory
 - Existing WebSocket content unchanged
 - Referenced CLAUDE.md files exist (docs-002 and docs-011 must be completed first)
+
+## Resolution Log
+
+- Appended `## Descendant Context` section (4 lines) to `app/server/CLAUDE.md` with bullet links to `services/CLAUDE.md` and `api/CLAUDE.md`
+- Existing WebSocket documentation (lines 1-21) unchanged
+- Both referenced CLAUDE.md files verified to exist
