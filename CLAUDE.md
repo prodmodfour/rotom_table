@@ -4,9 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Tech Stack
 - **Framework**: Nuxt 3 (SPA mode, `ssr: false`)
-- **Backend**: Nitro server with 108 REST API endpoints
+- **Backend**: Nitro server with 153 REST API endpoints
 - **Database**: SQLite with Prisma ORM (`app/prisma/schema.prisma`)
-- **State**: 13 Pinia stores (auto-registered via `@pinia/nuxt`)
+- **State**: 16 Pinia stores (auto-registered via `@pinia/nuxt`)
 - **Real-time**: WebSocket for GM-Group synchronization
 - **Styling**: SCSS with global variables
 - **Testing**: Vitest (unit) + UX exploration sessions (Playwright browser automation)
@@ -16,17 +16,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 app/
 ├── pages/           # File-based routing (gm/, group/, player/)
 ├── layouts/         # Role-based layouts (gm, group, player, default)
-├── components/      # 73 auto-imported components by domain
-├── composables/     # 19 auto-imported composables for shared logic
-├── stores/          # 13 Pinia stores for state management
-├── types/           # 11 TypeScript type definition files
+├── components/      # 147 auto-imported components by domain
+├── composables/     # 54 auto-imported composables for shared logic
+├── stores/          # 16 Pinia stores for state management
+├── types/           # 15 TypeScript type definition files
 ├── utils/           # captureRate, diceRoller, restHealing
 ├── constants/       # combatManeuvers, statusConditions
 ├── prisma/          # Schema, seeds, database
 ├── tests/           # Vitest (unit) + e2e artifacts (tickets, matrix, reviews)
 ├── server/
-│   ├── api/         # REST endpoints across 10 domain categories
-│   ├── services/    # Business logic (combatant, encounter, entity-update, pokemon-generator, mounting, ball-condition)
+│   ├── api/         # REST endpoints across 14 domain categories
+│   ├── services/    # 18 business logic services (see server/services/CLAUDE.md)
 │   ├── routes/      # WebSocket handler (ws.ts)
 │   └── utils/       # Prisma client, websocket, servedMap, wildSpawnState, pokemon-nickname
 └── assets/scss/     # Global styles and variables

@@ -18,7 +18,7 @@ Good:
 - useChatMessages() (Composable): Handles fetching and WebSocket sync.
 - utils/date.ts: Handles timestamp formatting.
 
-**In the Nitro Backend (108 Endpoints):**
+**In the Nitro Backend (153 Endpoints):**
 API routes shouldn't contain business logic. Use a Service Layer:
 - Controller (`server/api/users.get.ts`): Parses the request, calls the service, returns JSON.
 - Service (`server/services/userService.ts`): Contains the actual business logic (validation, complexity).

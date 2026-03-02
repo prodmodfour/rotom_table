@@ -34,7 +34,7 @@ If you need Pokemon, call one of these. Never build Pokemon records ad-hoc in AP
 | `entity-update.service.ts` | ~141 | Sync combatant state changes back to Pokemon/HumanCharacter DB rows |
 | `evolution.service.ts` | ~715 | Species evolution: stat recalc, Base Relations validation, full execution |
 | `grid-placement.service.ts` | ~147 | Auto-place combatant tokens on VTT grid by side, size-to-token mapping |
-| `healing-item.service.ts` | ~317 | Healing item validation and application (HP restore, status cure, revive) |
+| `healing-item.service.ts` | ~372 | Healing item validation and application (HP restore, status cure, revive, combat action economy) |
 | `intercept.service.ts` | ~732 | Intercept Melee/Ranged (PTU p.242) — eligibility, detection, resolution |
 | `out-of-turn.service.ts` | ~752 | AoO, Hold Action, Priority Actions, Interrupt framework |
 | `pokemon-generator.service.ts` | ~524 | Canonical Pokemon creation: generate data, persist, build combatants |
