@@ -187,21 +187,6 @@ export function getCureItems(): HealingItemDef[] {
   )
 }
 
-/**
- * Get all items applicable to a given target state.
- * Returns items that would actually have an effect.
- * Full implementation deferred to service layer / composable.
- */
-export function getApplicableItems(_params: {
-  currentHp: number
-  maxHp: number
-  injuries: number
-  statusConditions: StatusCondition[]
-  isFainted: boolean
-}): HealingItemDef[] {
-  return Object.values(HEALING_ITEM_CATALOG)
-}
-
 /** Item category labels for UI display */
 export const ITEM_CATEGORY_LABELS: Record<HealingItemCategory, string> = {
   restorative: 'Restorative',

@@ -55,7 +55,7 @@ export function validateItemApplication(
     if (!isFainted && !item.canRevive) {
       const effectiveMax = getEffectiveMaxHp(entity.maxHp, entity.injuries || 0)
       if (entity.currentHp >= effectiveMax) {
-        return `${entity.currentHp >= 0 ? (target.type === 'pokemon' ? getPokemonDisplayName(entity as Pokemon) : (entity as HumanCharacter).name) : 'Target'} is already at full HP`
+        return `${getEntityDisplayName(target)} is already at full HP`
       }
     }
   }
