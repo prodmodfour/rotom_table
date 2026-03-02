@@ -114,3 +114,25 @@ Branch: `slave/5-dev-feature-004-p0-20260303`
 - `app/stores/encounter.ts` (EDIT)
 
 **P0 covers:** Data model, capability parsing, mount/dismount API, turn system integration, linked movement, auto-dismount on faint, round reset. P1 (VTT tokens, dismount checks on damage/push, UI) and P2 (Rider class features) remain open.
+
+### P0 Fix Cycle (2026-03-02)
+
+Branch: `slave/1-dev-feature-004-fix-20260302`
+Review: code-review-285 (CHANGES_REQUIRED — 1C+2H+3M)
+
+**Commits (5):**
+- `c26d7a6e` — fix: sync mount partner position and movementRemaining locally after move (CRIT-001, HIGH-002)
+- `9007ce5d` — fix: wire skipCheck parameter through mount/dismount endpoints to service (HIGH-001)
+- `fa55ac84` — refactor: remove duplicate getMovementSpeedForMount, use getOverlandSpeed (MED-002)
+- `f5ae1952` — refactor: replace array mutation with immutable reassignment for mount-on-faint (MED-003)
+- `82a06a0e` — docs: add mounting system to app-surface.md (MED-001)
+
+**Files changed (7):**
+- `app/composables/useEncounterActions.ts` (EDIT — linked movement + movementRemaining local sync)
+- `app/server/services/mounting.service.ts` (EDIT — skipCheck param, remove duplicate import)
+- `app/server/api/encounters/[id]/mount.post.ts` (EDIT — pass skipCheck to service)
+- `app/server/api/encounters/[id]/dismount.post.ts` (EDIT — accept skipCheck for forward compat)
+- `app/utils/mountingRules.ts` (EDIT — remove duplicate getMovementSpeedForMount)
+- `app/server/api/encounters/[id]/damage.post.ts` (EDIT — immutable reassignment)
+- `app/server/api/encounters/[id]/next-turn.post.ts` (EDIT — immutable reassignment)
+- `.claude/skills/references/app-surface.md` (EDIT — mounting system documentation)
