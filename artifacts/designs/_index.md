@@ -1,5 +1,5 @@
 ---
-generated_at: 2026-03-02T12:34:10.810Z
+generated_at: 2026-03-02T13:37:22.893Z
 total_designs: 26
 ---
 
@@ -16,8 +16,8 @@ total_designs: 26
 | design-league-battle-001 | combat | p1-implemented | ptu-rule-107 | FULL | PTU_RULE |
 | design-level-budget-001 | scenes | p1-complete | ptu-rule-060 | NEW_FEATURE | FEATURE_GAP |
 | design-level-up-allocation-001 | — | — | — | — | — |
-| design-living-weapon-001 | combat | design-complete | feature-005 | FULL | FEATURE_GAP |
-| design-mounting-001 | combat | design-complete | feature-004 | FULL | FEATURE |
+| design-living-weapon-001 | combat | validated | feature-005 | FULL | FEATURE_GAP |
+| design-mounting-001 | combat | validated | feature-004 | FULL | FEATURE |
 | design-multi-tile-tokens-001 | vtt-grid | p2-fix-implemented | feature-013 | FULL | FEATURE |
 | design-player-capture-healing-001 | player-view+capture+healing | p0-implemented | feature-023 | FULL | FEATURE |
 | design-player-view-core-001 | player-view | p0-implemented | feature-003 | FULL | FEATURE |
