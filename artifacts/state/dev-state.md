@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-03-02T12:35:00
-updated_by: slave-collector (plan-20260302-120000)
+last_updated: 2026-03-02T13:55:00
+updated_by: slave-collector (plan-20260302-130300)
 ---
 
 # Dev Ecosystem State
@@ -24,7 +24,7 @@ updated_by: slave-collector (plan-20260302-120000)
 | bug-040 | P4 | **resolved** | Extended-rest endpoint lacks Math.max(0,...) safety clamp on currentAp calculation. Already fixed in commit 3d6a238 (bug-038 fix cycle). Ticket moved to resolved by slave-3 (plan-20260228-153856) |
 | bug-041 | P3 | **resolved** | Remove Whirlwind references from Force Switch UI per decree-034. Fixed by slave-3 (plan-20260301-204809). Fix cycle (2 medium doc fixes) completed by slave-3 (plan-20260301-223500). Resolved |
 | bug-042 | P2 | **resolved** | release-hold.post.ts creates duplicate turnOrder entry in Full Contact battles after hold-release. First fix BLOCKED (code-review-268). Rewritten by slave-1 (plan-20260302-110035): remove-before-insert approach. Re-reviewed by slave-5 (plan-20260302-120000): code-review-274 **APPROVED** (MED-001: commit hashes, non-blocking) + rules-review-250 **APPROVED** (all 5 scenarios traced, 12 tests pass). Resolved |
-| bug-043 | P2 | **open** | Poke Ball accuracy check does not gate capture attempt — AC 6 not enforced, balls never miss. Pre-existing in useCapture.ts. Source: rules-review-246 PRE-EXISTING-001. Filed by slave-collector (plan-20260302-084714) |
+| bug-043 | P2 | **in-progress** | Poke Ball accuracy check does not gate capture attempt — AC 6 not enforced, balls never miss. Pre-existing in useCapture.ts. Fixed by slave-6 (plan-20260302-130300): 5 commits — AC 6 hit/miss logic in rollAccuracyCheck, gated handleApproveCapture, server-side AC 6 validation in attempt.post.ts, updated app-surface.md. Needs review |
 | bug-044 | P3 | **open** | Standard Action consumption endpoint missing for capture attempts — `/api/encounters/${encounterId}/action` does not exist. Pre-existing in useCapture.ts. Source: rules-review-246 PRE-EXISTING-002. Filed by slave-collector (plan-20260302-084714) |
 
 ### PTU Rule Tickets (`tickets/ptu-rule/`)
@@ -106,13 +106,13 @@ updated_by: slave-collector (plan-20260302-120000)
 | feature-012 | P1 | **APPROVED** | Death & Heavily Injured Automation — fix cycle 3 APPROVED. code-review-233 **APPROVED** + rules-review-209 **APPROVED** (re-review by slave-3, plan-20260301-084803). All code-review-228 + rules-review-204 issues resolved. Feature complete | single-phase |
 | feature-009 | P1 | **P1-APPROVED** | Trainer XP & Advancement Tracking — P0 APPROVED. P1 APPROVED: code-review-262 **APPROVED** (0 issues, all 5 code-review-257 issues verified resolved) + rules-review-238 **APPROVED** (7 mechanics verified, MED-1: XpDistributionModal at 1016 lines → update refactoring-116). **Feature complete** (design has P0+P1 only, no P2 tier) | multi-phase |
 | feature-013 | P1 | **P2-APPROVED** | Multi-Tile Token System — P0 APPROVED. P1 APPROVED. P2 APPROVED: code-review-266 **APPROVED** (0 issues, all 5 code-review-261 + rules-review-237 issues verified resolved) + rules-review-242 **APPROVED** (all 5 mechanics verified, decree-002/040 compliant). Re-reviewed by slave-4 (plan-20260302-081436). **Feature complete** (all P0+P1+P2 tiers approved) | multi-phase |
-| feature-014 | P1 | **P2-implemented** | VTT Flanking Detection — P0 APPROVED. P1 APPROVED. P2 implemented by slave-2 (plan-20260302-120000): 8 commits — fixed P1 MEDs (app-surface.md, decree-040 citation), auto-detect flanking on movement (Section I), server-side flanking penalty (Section J), CombatantCard isFlanked badge (Section K), WebSocket flanking sync (Section L). TDZ bug in gm/index.vue fixed by collector. Needs review | multi-phase |
-| feature-016 | P2 | **P2-fix-cycle-done** | Priority / Interrupt / Attack of Opportunity System — P0 APPROVED. P1 APPROVED. P2 CHANGES_REQUIRED (code-review-273, rules-review-249). Fix cycle by slave-1 (plan-20260302-120000): 9 commits — fixed CRIT-001 canIntercept &&→||, HIGH-001 decree-002 diagonal cost, HIGH-002 multi-tile bbox distance, HIGH-001 speed modifiers, extracted intercept.service.ts (HIGH-003/refactoring-120), updated app-surface.md, InterceptPrompt display name, intercept-ranged actionId. Needs re-review | multi-phase |
+| feature-014 | P1 | **P2-APPROVED** | VTT Flanking Detection — P0 APPROVED. P1 APPROVED. P2 APPROVED: code-review-276 **APPROVED** (2 MED: flanking_update missing from WebSocketEvent union → refactoring-121, receivedFlankingMap not consumed in group/player views → refactoring-122) + rules-review-252 **APPROVED** (0 issues, all PTU flanking mechanics verified). **Feature complete** (all 12 sections A-L implemented and approved) | multi-phase |
+| feature-016 | P2 | **P2-APPROVED** | Priority / Interrupt / Attack of Opportunity System — P0 APPROVED. P1 APPROVED. P2 APPROVED: code-review-279 **APPROVED** (2 MED: distanceMoved uses budget not actual → refactoring-123, hardcoded speed=20 in InterceptPrompt → refactoring-124) + rules-review-255 **APPROVED** (0 issues, all code-review-273 + rules-review-249 issues verified resolved). **Feature complete** (all tiers approved) | multi-phase |
 
-| feature-017 | P2 | **P1-implemented** | Poke Ball Type System — P0 APPROVED. P1 implemented by slave-3 (plan-20260302-120000): 12 commits — fixed P0 issues (as const satisfies, ball modifier tests, app-surface.md), added conditional ball logic engine with 13 evaluators (Timer, Quick, Level, Heavy, Fast, Love, Net, Dusk, Moon, Lure, Repeat, Nest, Dive), wired calculateBallModifier to condition evaluator, auto-populate context in capture APIs, comprehensive tests (673 lines). Needs review | multi-phase |
+| feature-017 | P2 | **P1-CHANGES_REQUIRED** | Poke Ball Type System — P0 APPROVED. P1 CHANGES_REQUIRED: code-review-277 **CHANGES_REQUIRED** (2H: conditionContext not passed to local capture rate preview, rate.post.ts missing 8+ auto-context fields vs attempt.post.ts; 3M: dead condition property, buildConditionContext not shared, zero test coverage) + rules-review-253 **APPROVED** (13/13 evaluators match PTU 1.05, MED-1: rate preview incomplete context same as code H2). Needs fix cycle | multi-phase |
 | feature-019 | P2 | **APPROVED** | VTT Status-Movement Integration — Tripped combatants blocked from VTT movement (R025). Stuck (R022) and Slowed (R024) pre-existing. Reviewed by slave-7 (plan-20260301-223500): code-review-265 **APPROVED** (0 issues, PTU faithful, consistent pattern, thorough documentation) + rules-review-241 **APPROVED** (all 3 mechanics verified correct, 46 tests passing, 0 issues). Feature complete | partial |
-| feature-020 | P2 | **P1-implemented** | Healing Item System — P0 APPROVED. P1 implemented by slave-4 (plan-20260302-120000): 8 commits — status cure items (Antidote, Paralyze Heal, Burn Heal, Awakening, Full Heal, Ice Heal), revive items (Revive 20HP, Revival Herb 50% + repulsive), Full Restore (cure all + 80HP), resolveConditionsToCure moved to constants for client/server sharing, UseItemModal grouped sections, comprehensive tests (748 lines). Needs review | multi-phase |
-| feature-023 | P2 | **P0-APPROVED** | Player Capture & Healing Interfaces — P0 implemented + fix cycle complete. Re-reviewed by slave-6 (plan-20260302-120000): code-review-275 **APPROVED** (0 issues, all 12 code-review-270 + rules-review-246 issues verified resolved) + rules-review-251 **APPROVED** (0 issues, all 11 mechanics verified, decree-013/014/015 compliant). P0 complete, ready for P1 | multi-phase |
+| feature-020 | P2 | **P1-CHANGES_REQUIRED** | Healing Item System — P0 APPROVED. P1 CHANGES_REQUIRED: code-review-278 **CHANGES_REQUIRED** (H1: app-surface.md not updated for P1, MED-1: Revive missing Math.max(1,...) HP guard, MED-2: Awakening not in PTU 1.05 → decree-need-040) + rules-review-254 **CHANGES_REQUIRED** (H1: Awakening not in PTU 1.05, deliberate omission). Needs fix cycle | multi-phase |
+| feature-023 | P2 | **P1-implemented** | Player Capture & Healing Interfaces — P0 APPROVED. P1 implemented by slave-5 (plan-20260302-130300): 5 commits — captureTargets computed (Section F), usePlayerCapture composable (Section G), PlayerCapturePanel two-step capture flow (Section E), wired capture button into PlayerCombatActions (Section H). Needs review | multi-phase |
 
 ### UX Tickets (`tickets/ux/`)
 | Ticket | Priority | Status | Summary |
@@ -135,7 +135,22 @@ updated_by: slave-collector (plan-20260302-120000)
 
 ## Active Developer Work
 
-**Current task:** Session 85 collection complete. 6 slaves merged (41 commits total + 1 collector fix). 4 dev slaves (feature-016 fix 9, feature-014 P2 8, feature-017 P1 12, feature-020 P1 8). 2 reviewer slaves (bug-042 APPROVED, feature-023 APPROVED). Smoke test PASSED (after TDZ fix + Prisma sync). No conflicts.
+**Current task:** Session 86 collection complete. 6 slaves merged (18 commits). 4 reviewer slaves (feature-014 P2 APPROVED, feature-017 P1 CHANGES_REQUIRED, feature-020 P1 CHANGES_REQUIRED, feature-016 P2 re-review APPROVED). 2 dev slaves (feature-023 P1 5 commits, bug-043 fix 5 commits). Smoke test PASSED. No conflicts.
+
+**Session 86 (2026-03-02, plan-20260302-130300):**
+- **slave-1** (reviewers): feature-014-p2-review — code-review-276 **APPROVED** (2 MED: flanking_update missing from WebSocketEvent union → refactoring-121, receivedFlankingMap not consumed in group/player views → refactoring-122) + rules-review-252 **APPROVED** (0 issues, all PTU flanking mechanics verified). → feature-014 **P2-APPROVED, feature complete**
+- **slave-2** (reviewers): feature-017-p1-review — code-review-277 **CHANGES_REQUIRED** (H1: conditionContext not passed to local rate preview, H2: rate.post.ts incomplete auto-context vs attempt.post.ts; M1: dead condition property, M2: buildConditionContext not shared, M3: zero test coverage) + rules-review-253 **APPROVED** (13/13 evaluators match PTU 1.05, M1: rate preview same as code H2). → feature-017 **P1-CHANGES_REQUIRED**
+- **slave-3** (reviewers): feature-020-p1-review — code-review-278 **CHANGES_REQUIRED** (H1: app-surface.md not updated, M1: Revive missing Math.max(1,...) HP guard, M2: Awakening not in PTU 1.05 → decree-need-040) + rules-review-254 **CHANGES_REQUIRED** (H1: Awakening not in PTU 1.05). → feature-020 **P1-CHANGES_REQUIRED**
+- **slave-4** (reviewers): feature-016-p2-rereview — code-review-279 **APPROVED** (2 MED: distanceMoved budget vs actual → refactoring-123, hardcoded speed=20 → refactoring-124) + rules-review-255 **APPROVED** (0 issues, all prior issues resolved). → feature-016 **P2-APPROVED, feature complete**
+- **slave-5** (developer): feature-023-p1 — 5 commits: Player Capture UI P1 (Sections E-H). captureTargets computed filtering, usePlayerCapture composable with fetchCaptureRate/estimateCaptureRate, PlayerCapturePanel two-step flow (target select → rate preview → confirm), wired Capture button into PlayerCombatActions. → **P1-implemented, needs review**
+- **slave-6** (developer): bug-043-fix — 5 commits: AC 6 accuracy check gates capture attempt. Added hit/miss logic to rollAccuracyCheck (nat 1 always miss, nat 20 always hit, <6 miss), gated handleApproveCapture on accuracy check, added server-side AC 6 validation to attempt.post.ts, updated app-surface.md. → **fix-implemented, needs review**
+
+**Smoke test:** PASSED (Playwright) — GM view renders (full nav + encounter + combatants). Group view renders (initiative tracker). Player view renders (character selection). No issues.
+**Tickets approved:** feature-014 P2 (APPROVED by code-review-276 + rules-review-252, feature complete), feature-016 P2 (APPROVED by code-review-279 + rules-review-255, feature complete)
+**Tickets needing fix cycle:** feature-017 P1 (code-review-277 2H+3M), feature-020 P1 (code-review-278 1H+2M, rules-review-254 1H)
+**Tickets needing review:** feature-023 P1 (first implementation), bug-043 (first fix implementation)
+**Tickets filed:** refactoring-121 (flanking WS type), refactoring-122 (flanking group/player wire), refactoring-123 (intercept distanceMoved), refactoring-124 (InterceptPrompt hardcoded speed), decree-need-040 (Awakening item not in PTU 1.05)
+**Decree-needs:** decree-need-040 — Awakening item inclusion requires human ruling before feature-020 fix cycle
 
 **Session 85 (2026-03-02, plan-20260302-120000):**
 - **slave-5** (reviewers): bug-042-rereview — code-review-274 **APPROVED** (MED-001: commit hashes non-blocking) + rules-review-250 **APPROVED** (all 5 positional scenarios traced, 12 tests pass, 0 issues). → bug-042 **resolved**
@@ -709,6 +724,18 @@ updated_by: slave-collector (plan-20260302-120000)
 | rules-review-248 | feature-014 P1 (Multi-Tile Flanking) | APPROVED (0 issues, multi-tile algorithms correct) | game-logic-reviewer | 2026-03-02 |
 | code-review-273 | feature-016 P2 (Intercept/Disengage) | CHANGES_REQUIRED (CRIT-001: canIntercept && vs ||; HIGH-001: diagonal decree-002; HIGH-002: multi-tile distance; HIGH-003: 1361-line file; MED-001/002/003) | senior-reviewer | 2026-03-02 |
 | rules-review-249 | feature-016 P2 (Intercept/Disengage) | CHANGES_REQUIRED (CRIT-001: canIntercept logic; HIGH-001: raw speed no modifiers; MED-001/002) | game-logic-reviewer | 2026-03-02 |
+
+### Session 86 Reviews (plan-20260302-130300)
+| Review ID | Target | Verdict | Reviewer | Date |
+|-----------|--------|---------|----------|------|
+| code-review-276 | feature-014 P2 (Flanking Auto-Detect + Server Penalty) | APPROVED (2 MED: flanking_update WS type → refactoring-121, group/player flanking wire → refactoring-122) | senior-reviewer | 2026-03-02 |
+| rules-review-252 | feature-014 P2 (Flanking Auto-Detect + Server Penalty) | APPROVED (0 issues, all PTU flanking mechanics verified) | game-logic-reviewer | 2026-03-02 |
+| code-review-277 | feature-017 P1 (Conditional Ball Evaluators) | CHANGES_REQUIRED (H1: conditionContext missing from local preview, H2: rate.post.ts incomplete auto-context; M1: dead condition prop, M2: buildConditionContext not shared, M3: no tests) | senior-reviewer | 2026-03-02 |
+| rules-review-253 | feature-017 P1 (Conditional Ball Evaluators) | APPROVED (13/13 evaluators match PTU 1.05, M1: rate preview incomplete context) | game-logic-reviewer | 2026-03-02 |
+| code-review-278 | feature-020 P1 (Status Cures + Revives) | CHANGES_REQUIRED (H1: app-surface.md outdated, M1: Revive missing min HP guard, M2: Awakening not in PTU 1.05 → decree-need-040) | senior-reviewer | 2026-03-02 |
+| rules-review-254 | feature-020 P1 (Status Cures + Revives) | CHANGES_REQUIRED (H1: Awakening not in PTU 1.05, deliberate omission) | game-logic-reviewer | 2026-03-02 |
+| code-review-279 | feature-016 P2 re-review (Intercept fix cycle) | APPROVED (2 MED: distanceMoved budget vs actual → refactoring-123, hardcoded speed=20 → refactoring-124. All 7 prior issues resolved) | senior-reviewer | 2026-03-02 |
+| rules-review-255 | feature-016 P2 re-review (Intercept fix cycle) | APPROVED (0 issues, all 5 prior issues resolved) | game-logic-reviewer | 2026-03-02 |
 
 ### Session 82 Reviews (plan-20260302-081436)
 | Review ID | Target | Verdict | Reviewer | Date |
