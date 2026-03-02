@@ -406,6 +406,33 @@ export default defineEventHandler(async (event) => {
       }
     }
 
+    // P2 (feature-020): Consume action forfeit flags on the new current combatant's turn start.
+    // PTU p.276: target of a healing item forfeits their next Standard + Shift Action.
+    // The forfeit is applied here (turn start) so the combatant begins with those actions already used.
+    let actionForfeitApplied = false
+    if (currentTurnIndex < turnOrder.length) {
+      const newCurrentId = turnOrder[currentTurnIndex]
+      const newCurrent = combatants.find((c: any) => c.id === newCurrentId)
+      if (newCurrent && newCurrent.turnState) {
+        if (newCurrent.turnState.forfeitStandardAction) {
+          newCurrent.turnState = {
+            ...newCurrent.turnState,
+            standardActionUsed: true,
+            forfeitStandardAction: false
+          }
+          actionForfeitApplied = true
+        }
+        if (newCurrent.turnState.forfeitShiftAction) {
+          newCurrent.turnState = {
+            ...newCurrent.turnState,
+            shiftActionUsed: true,
+            forfeitShiftAction: false
+          }
+          actionForfeitApplied = true
+        }
+      }
+    }
+
     const updateData: Record<string, unknown> = {
       currentTurnIndex,
       currentRound,
@@ -494,7 +521,8 @@ export default defineEventHandler(async (event) => {
       data: response,
       ...(heavilyInjuredPenalty && { heavilyInjuredPenalty }),
       ...(tickResults.length > 0 && { tickDamage: tickResults }),
-      ...(holdReleaseTriggered.length > 0 && { holdReleaseTriggered })
+      ...(holdReleaseTriggered.length > 0 && { holdReleaseTriggered }),
+      ...(actionForfeitApplied && { actionForfeitApplied })
     }
   } catch (error: unknown) {
     if (error && typeof error === 'object' && 'statusCode' in error) throw error
@@ -520,13 +548,18 @@ function resetResolvingTrainerTurnState(combatants: any[], combatantId: string) 
     // Clear temporary conditions (Sprint, Tripped, etc.) that last "until next turn".
     // These were skipped during declaration phase — the resolution turn is the trainer's actual turn.
     trainer.tempConditions = []
+    // Preserve forfeit flags from item use (PTU p.276, feature-020 P2)
+    const forfeitStandard = trainer.turnState?.forfeitStandardAction === true
+    const forfeitShift = trainer.turnState?.forfeitShiftAction === true
     trainer.turnState = {
       hasActed: false,
       standardActionUsed: false,
       shiftActionUsed: false,
       swiftActionUsed: false,
       canBeCommanded: true,
-      isHolding: false
+      isHolding: false,
+      ...(forfeitStandard && { forfeitStandardAction: true }),
+      ...(forfeitShift && { forfeitShiftAction: true })
     }
   }
 }
@@ -570,13 +603,19 @@ function resetCombatantsForNewRound(combatants: any[]) {
     }
     c.skipNextRound = false // Always clear the flag
     c.readyAction = null
+    // Preserve forfeit flags from item use (PTU p.276, feature-020 P2)
+    // These persist across round boundaries until the combatant's next turn
+    const forfeitStandard = c.turnState?.forfeitStandardAction === true
+    const forfeitShift = c.turnState?.forfeitShiftAction === true
     c.turnState = {
       hasActed: shouldSkip,
       standardActionUsed: false,
       shiftActionUsed: false,
       swiftActionUsed: false,
       canBeCommanded: true,
-      isHolding: false
+      isHolding: false,
+      ...(forfeitStandard && { forfeitStandardAction: true }),
+      ...(forfeitShift && { forfeitShiftAction: true })
     }
     // Reset out-of-turn action usage for new round (feature-016)
     c.outOfTurnUsage = {
