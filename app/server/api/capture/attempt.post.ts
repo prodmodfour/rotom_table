@@ -29,6 +29,25 @@ export default defineEventHandler(async (event) => {
     })
   }
 
+  // PTU p.214: Server-side AC 6 validation.
+  // If the client provides an accuracy roll, enforce the AC 6 gate.
+  // Natural 1 always misses, natural 20 always hits, otherwise must roll >= 6.
+  if (body.accuracyRoll !== undefined) {
+    const roll = body.accuracyRoll
+    const isNat1 = roll === 1
+    const isNat20 = roll === 20
+    const hits = isNat1 ? false : (isNat20 ? true : roll >= 6)
+
+    if (!hits) {
+      throw createError({
+        statusCode: 400,
+        message: isNat1
+          ? 'Natural 1 — ball missed! (auto-miss)'
+          : `Accuracy roll ${roll} does not meet AC 6 — ball missed`
+      })
+    }
+  }
+
   // Look up Pokemon
   const pokemon = await prisma.pokemon.findUnique({
     where: { id: body.pokemonId }
