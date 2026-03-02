@@ -51,10 +51,10 @@ export default defineEventHandler(async (event) => {
     skillCheck: number
   }
 
-  if (!interceptorId || !targetSquare || !attackerId || skillCheck === undefined) {
+  if (!interceptorId || !targetSquare || !attackerId || !actionId || skillCheck === undefined) {
     throw createError({
       statusCode: 400,
-      message: 'interceptorId, targetSquare, attackerId, and skillCheck are required'
+      message: 'interceptorId, targetSquare, attackerId, actionId, and skillCheck are required'
     })
   }
 

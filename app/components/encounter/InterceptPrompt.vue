@@ -103,6 +103,8 @@ import { ref } from 'vue'
 import type { OutOfTurnAction } from '~/types/combat'
 import type { Combatant } from '~/types/encounter'
 import { ptuDistanceTokensBBox } from '~/utils/gridDistance'
+import { getLineOfAttackCellsMultiTile, canReachLineOfAttack } from '~/utils/lineOfAttack'
+import type { GridPosition } from '~/types/spatial'
 
 const props = defineProps<{
   pendingIntercepts: OutOfTurnAction[]
@@ -111,7 +113,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   interceptMelee: [actionId: string, interceptorId: string, targetId: string, attackerId: string, skillCheck: number]
-  interceptRanged: [actionId: string, interceptorId: string, attackerId: string, skillCheck: number]
+  interceptRanged: [actionId: string, interceptorId: string, attackerId: string, targetSquare: GridPosition, skillCheck: number]
   decline: [actionId: string]
 }>()
 
@@ -169,6 +171,33 @@ function calculateDC(action: OutOfTurnAction): number {
   return 3 * calculateDistance(action)
 }
 
+/**
+ * Get the best (closest reachable) target square on the line of attack
+ * for a ranged intercept. Auto-selects the optimal interception point.
+ */
+function getBestTargetSquare(action: OutOfTurnAction): GridPosition | null {
+  const interceptor = props.combatants.find(c => c.id === action.actorId)
+  const attackerId = action.triggerContext?.attackerId
+  const originalTargetId = action.triggerContext?.originalTargetId
+  const attacker = attackerId ? props.combatants.find(c => c.id === attackerId) : null
+  const target = originalTargetId ? props.combatants.find(c => c.id === originalTargetId) : null
+
+  if (!interceptor?.position || !attacker?.position || !target?.position) return null
+
+  const attackLine = getLineOfAttackCellsMultiTile(
+    attacker.position, attacker.tokenSize || 1,
+    target.position, target.tokenSize || 1
+  )
+
+  // Use a generous speed estimate for finding the best square
+  // (actual speed enforcement happens server-side)
+  const speed = 20
+  const result = canReachLineOfAttack(
+    interceptor.position, speed, attackLine, interceptor.tokenSize || 1
+  )
+  return result.bestSquare
+}
+
 function startResolve(action: OutOfTurnAction) {
   resolvingAction.value = action.id
   skillCheckInput.value = 0
@@ -188,7 +217,9 @@ function confirmIntercept(action: OutOfTurnAction) {
     emit('interceptMelee', action.id, action.actorId, targetId, attackerId, check)
   } else {
     const attackerId = action.triggerContext?.attackerId || ''
-    emit('interceptRanged', action.id, action.actorId, attackerId, check)
+    const targetSquare = getBestTargetSquare(action)
+    if (!targetSquare) return // Cannot determine interception square
+    emit('interceptRanged', action.id, action.actorId, attackerId, targetSquare, check)
   }
 
   resolvingAction.value = null
