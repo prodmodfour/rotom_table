@@ -22,6 +22,7 @@ import { broadcastToEncounter } from '~/server/utils/websocket'
 import { expirePendingActions, cleanupResolvedActions, checkHoldQueue } from '~/server/services/out-of-turn.service'
 import { checkHeavilyInjured, applyHeavilyInjuredPenalty, checkDeath } from '~/utils/injuryMechanics'
 import { getOverlandSpeed } from '~/utils/combatantCapabilities'
+import { clearMountOnFaint } from '~/server/services/mounting.service'
 import type { TrainerDeclaration } from '~/types/combat'
 import type { StatusCondition } from '~/types'
 
@@ -202,6 +203,18 @@ export default defineEventHandler(async (event) => {
       // Increment Badly Poisoned escalation counter for next turn
       if (currentCombatant.entity.statusConditions?.includes('Badly Poisoned')) {
         currentCombatant.badlyPoisonedRound = (currentCombatant.badlyPoisonedRound || 1) + 1
+      }
+    }
+
+    // Auto-dismount on faint from tick damage or heavily injured penalty (feature-004)
+    if (currentCombatant && currentCombatant.entity.currentHp === 0 && currentCombatant.mountState) {
+      const gridWidth = encounter.gridWidth || 20
+      const gridHeight = encounter.gridHeight || 20
+      const mountFaintResult = clearMountOnFaint(combatants, currentCombatantId, gridWidth, gridHeight)
+      if (mountFaintResult.dismounted) {
+        // Replace combatants array contents with cleared version
+        combatants.length = 0
+        mountFaintResult.combatants.forEach((c: any) => combatants.push(c))
       }
     }
 
