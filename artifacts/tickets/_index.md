@@ -1,18 +1,17 @@
 ---
-generated_at: 2026-03-02T17:53:54.110Z
+generated_at: 2026-03-02T18:42:15.838Z
 total_tickets: 285
-open: 29
-in_progress: 109
+open: 28
+in_progress: 110
 resolved: 128
 ---
 
 # Tickets Index
 
-## Open Tickets (29)
+## Open Tickets (28)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
-| ptu-rule-127 | ptu-rule | P1 | character-lifecycle | Per decree-037, trainers should NOT receive an automatic +1  |
 | feature-018 | feature | P2 | scenes | feature-018: Weather Effect Automation |
 | feature-021 | feature | P2 | character-lifecycle | feature-021: Derived Capability Calculations |
 | feature-022 | feature | P2 | pokemon-lifecycle | feature-022: Pokemon Loyalty System |
@@ -42,7 +41,7 @@ resolved: 128
 | refactoring-118 | refactoring | P4 | — | refactoring-118: Remove unused flankingMap destructure in Gr |
 | refactoring-119 | refactoring | P4 | — | refactoring-119: Update stale interrupt.post.ts file header  |
 
-## In-Progress Tickets (109)
+## In-Progress Tickets (110)
 
 | ID | Category | Priority | Domain | Source |
 |----|----------|----------|--------|--------|
@@ -70,6 +69,7 @@ resolved: 128
 | ptu-rule-102 | ptu-rule | P1 | vtt | decree-009 |
 | ptu-rule-103 | ptu-rule | P1 | vtt | decree-011 |
 | ptu-rule-104 | ptu-rule | P1 | combat | decree-012 |
+| ptu-rule-127 | ptu-rule | P1 | character-lifecycle | decree-037 |
 | refactoring-001 | refactoring | P1 | vtt | decree-010 |
 | bug-039 | bug | P2 | capture | capture-audit-report (R018, 2026-02-28) |
 | ptu-rule-107 | ptu-rule | P2 | combat | decree-021 |
@@ -165,7 +165,7 @@ All decree-needs addressed.
 | Category | Open | In-Progress | Resolved | Total |
 |----------|------|-------------|----------|-------|
 | bug | 1 | 14 | 27 | 44 |
-| ptu-rule | 6 | 59 | 38 | 105 |
+| ptu-rule | 5 | 60 | 38 | 105 |
 | feature | 3 | 16 | 3 | 23 |
 | ux | 5 | 7 | 2 | 15 |
 | decree | 0 | 0 | 41 | 41 |
