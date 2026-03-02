@@ -11,6 +11,9 @@ import type { GridPosition } from './spatial'
 export type PlayerActionType =
   | 'use_move' | 'shift' | 'struggle' | 'pass'
   | 'use_item' | 'switch_pokemon' | 'maneuver' | 'move_token'
+  | 'capture'           // Throw a Poke Ball (Standard Action, PTU p.227)
+  | 'breather'          // Take a Breather maneuver (Full Action, PTU p.245)
+  | 'use_healing_item'  // Use a healing item (Standard Action, PTU p.276)
 
 /**
  * Player action request with requestId tracking for response routing.
@@ -34,6 +37,22 @@ export interface PlayerActionRequest {
   maneuverName?: string
   fromPosition?: GridPosition
   toPosition?: GridPosition
+
+  // Capture-specific (action: 'capture')
+  targetPokemonId?: string
+  targetPokemonName?: string
+  ballType?: string
+  captureRatePreview?: number
+  trainerCombatantId?: string
+
+  // Breather-specific (action: 'breather')
+  combatantId?: string
+  assisted?: boolean
+
+  // Healing item specific (action: 'use_healing_item')
+  healingItemName?: string
+  healingTargetId?: string
+  healingTargetName?: string
 }
 
 /**
