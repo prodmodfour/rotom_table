@@ -3,7 +3,7 @@ id: docs-002
 title: "Add CLAUDE.md for app/server/services/"
 priority: P0
 severity: HIGH
-status: open
+status: in-progress
 domain: server
 source: plan-descendant-claude-md-rollout
 created_by: user
@@ -73,6 +73,10 @@ csv-import → pokemon-generator (createPokemonRecord)
 - Template-loaded combatants may have no `entityId` — `entity-update.service.ts` silently skips them
 - `combatant.service.ts` is the largest service (~686 lines) — handles add/remove/damage/heal/status/stages
 - Services that are pure functions (status-automation, grid-placement) should never gain DB dependencies
+
+## Resolution Log
+
+- `331a803c` — Created `app/server/services/CLAUDE.md` (66 lines). Covers entry point rule, service patterns table, full 16-service inventory with line counts, import-level dependency map, and 5 gotchas. All claims verified against actual source files and import statements.
 
 ## Verification
 

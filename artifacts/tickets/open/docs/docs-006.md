@@ -3,7 +3,7 @@ id: docs-006
 title: "Add CLAUDE.md for app/prisma/"
 priority: P0
 severity: HIGH
-status: open
+status: in-progress
 domain: database
 source: plan-descendant-claude-md-rollout
 created_by: user
@@ -93,6 +93,12 @@ app/prisma/
 - **UUID primary keys** on all models via `@default(uuid())`
 - **Encounter combatants are denormalized JSON**: No FK to Pokemon/HumanCharacter tables. Entity state is serialized into the encounter for snapshot isolation.
 - **`ptu.db` is the live database file** — committed to repo for development convenience. Do not `.gitignore` it.
+
+## Resolution Log
+
+- `2b5e148a` — Created `app/prisma/CLAUDE.md` (72 lines). Covers 14-model relationship diagram, origin enum (5 values as String not Prisma enum), JSON-as-TEXT field inventory per model, seed sources (3 functions in seed.ts), schema sync workflow.
+- `8f6dc414` — Added one-time migration scripts and additional seed files to Schema Sync section.
+- Corrections from ticket: `baseRelations` is NOT a column in schema.prisma (ticket had it in Pokemon JSON fields — omitted). `ptu.db` is gitignored (ticket said "committed to repo" — corrected to "gitignored").
 
 ## Verification
 
