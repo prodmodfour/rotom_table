@@ -185,6 +185,13 @@ export function useGridMovement(options: UseGridMovementOptions) {
     const combatant = findCombatant(combatantId)
     if (!combatant) return DEFAULT_MOVEMENT_SPEED
 
+    // Mounted combatants use shared movementRemaining (PTU p.218, feature-004)
+    // Rider uses mount's movement on trainer turn; mount uses remainder on its turn.
+    // movementRemaining already accounts for the mount's base speed (set at round start).
+    if (combatant.mountState) {
+      return combatant.mountState.movementRemaining
+    }
+
     if (options.getMovementSpeed) {
       return options.getMovementSpeed(combatantId)
     }
@@ -224,6 +231,13 @@ export function useGridMovement(options: UseGridMovementOptions) {
    */
   const getSpeed = (combatantId: string): number => {
     const combatant = findCombatant(combatantId)
+
+    // Mounted combatants use shared movementRemaining (PTU p.218, feature-004)
+    // This value is pre-calculated at round start and decremented as either
+    // the rider or mount moves. Movement modifiers were applied at mount time.
+    if (combatant?.mountState) {
+      return combatant.mountState.movementRemaining
+    }
 
     // Base speed: use callback if provided, otherwise derive from combatant
     let baseSpeed: number
