@@ -8,10 +8,14 @@
         </div>
 
         <div class="modal__body">
-          <!-- User display -->
+          <!-- User display with action cost -->
           <div class="use-item__field">
             <span class="use-item__label">User:</span>
             <span class="use-item__value">{{ userName }}</span>
+            <span class="use-item__action-badge" :class="actionCostClass">
+              <PhLightning :size="12" weight="bold" />
+              {{ actionCostLabel }}
+            </span>
           </div>
 
           <!-- Target selector -->
@@ -30,6 +34,42 @@
             </select>
           </div>
 
+          <!-- P2: Range status -->
+          <div v-if="!isSelfUse && rangeStatus" class="use-item__field">
+            <span class="use-item__label">Range:</span>
+            <span
+              class="use-item__range-status"
+              :class="rangeStatus.adjacent ? 'use-item__range-status--ok' : 'use-item__range-status--far'"
+            >
+              <PhMapPin :size="14" weight="bold" />
+              {{ rangeStatus.adjacent ? 'Adjacent' : `Too far (${rangeStatus.distance}m)` }}
+            </span>
+          </div>
+
+          <!-- P2: Action cost and forfeit info -->
+          <div class="use-item__action-info">
+            <div class="use-item__action-detail">
+              <PhLightning :size="14" weight="bold" />
+              <span v-if="isSelfUse">
+                Full-Round Action (Standard + Shift)
+              </span>
+              <span v-else>
+                Standard Action
+              </span>
+              <span v-if="!canUseAction" class="use-item__action-warning">
+                (not available)
+              </span>
+            </div>
+            <div v-if="!isSelfUse" class="use-item__forfeit-info">
+              <PhTimer :size="14" weight="bold" />
+              Target forfeits next Standard + Shift
+              <span v-if="hasMedicTraining" class="use-item__medic-badge">
+                <PhShieldCheck :size="12" weight="bold" />
+                Exempt (Medic Training)
+              </span>
+            </div>
+          </div>
+
           <!-- Grouped item sections -->
           <div v-if="hasAnyApplicableItems" class="use-item__sections">
             <!-- Restoratives -->
@@ -43,8 +83,12 @@
                   v-for="item in groupedItems.restorative"
                   :key="item.name"
                   class="use-item__item"
-                  :class="{ 'use-item__item--selected': selectedItemName === item.name }"
-                  @click="selectedItemName = item.name"
+                  :class="{
+                    'use-item__item--selected': selectedItemName === item.name,
+                    'use-item__item--out-of-stock': !gmMode && getItemQuantity(item.name) <= 0
+                  }"
+                  :disabled="!gmMode && getItemQuantity(item.name) <= 0"
+                  @click="selectItem(item.name)"
                 >
                   <div class="use-item__item-icon use-item__item-icon--restorative">
                     <PhFirstAidKit :size="18" weight="duotone" />
@@ -62,6 +106,9 @@
                   <div class="use-item__item-effect">
                     <span v-if="item.hpAmount" class="use-item__item-hp">+{{ item.hpAmount }} HP</span>
                   </div>
+                  <div class="use-item__item-qty" :class="{ 'use-item__item-qty--zero': getItemQuantity(item.name) <= 0 }">
+                    x{{ getItemQuantity(item.name) }}
+                  </div>
                   <div class="use-item__item-cost">${{ item.cost }}</div>
                 </button>
               </div>
@@ -78,8 +125,12 @@
                   v-for="item in groupedItems.cure"
                   :key="item.name"
                   class="use-item__item"
-                  :class="{ 'use-item__item--selected': selectedItemName === item.name }"
-                  @click="selectedItemName = item.name"
+                  :class="{
+                    'use-item__item--selected': selectedItemName === item.name,
+                    'use-item__item--out-of-stock': !gmMode && getItemQuantity(item.name) <= 0
+                  }"
+                  :disabled="!gmMode && getItemQuantity(item.name) <= 0"
+                  @click="selectItem(item.name)"
                 >
                   <div class="use-item__item-icon use-item__item-icon--cure">
                     <PhPill :size="18" weight="duotone" />
@@ -99,6 +150,9 @@
                       {{ getCureLabel(item) }}
                     </span>
                   </div>
+                  <div class="use-item__item-qty" :class="{ 'use-item__item-qty--zero': getItemQuantity(item.name) <= 0 }">
+                    x{{ getItemQuantity(item.name) }}
+                  </div>
                   <div class="use-item__item-cost">${{ item.cost }}</div>
                 </button>
               </div>
@@ -115,8 +169,12 @@
                   v-for="item in groupedItems.combined"
                   :key="item.name"
                   class="use-item__item"
-                  :class="{ 'use-item__item--selected': selectedItemName === item.name }"
-                  @click="selectedItemName = item.name"
+                  :class="{
+                    'use-item__item--selected': selectedItemName === item.name,
+                    'use-item__item--out-of-stock': !gmMode && getItemQuantity(item.name) <= 0
+                  }"
+                  :disabled="!gmMode && getItemQuantity(item.name) <= 0"
+                  @click="selectItem(item.name)"
                 >
                   <div class="use-item__item-icon use-item__item-icon--combined">
                     <PhStar :size="18" weight="duotone" />
@@ -130,6 +188,9 @@
                   <div class="use-item__item-effect">
                     <span v-if="item.hpAmount" class="use-item__item-hp">+{{ item.hpAmount }} HP</span>
                     <span class="use-item__item-cure-label">+All Cures</span>
+                  </div>
+                  <div class="use-item__item-qty" :class="{ 'use-item__item-qty--zero': getItemQuantity(item.name) <= 0 }">
+                    x{{ getItemQuantity(item.name) }}
                   </div>
                   <div class="use-item__item-cost">${{ item.cost }}</div>
                 </button>
@@ -147,8 +208,12 @@
                   v-for="item in groupedItems.revive"
                   :key="item.name"
                   class="use-item__item"
-                  :class="{ 'use-item__item--selected': selectedItemName === item.name }"
-                  @click="selectedItemName = item.name"
+                  :class="{
+                    'use-item__item--selected': selectedItemName === item.name,
+                    'use-item__item--out-of-stock': !gmMode && getItemQuantity(item.name) <= 0
+                  }"
+                  :disabled="!gmMode && getItemQuantity(item.name) <= 0"
+                  @click="selectItem(item.name)"
                 >
                   <div class="use-item__item-icon use-item__item-icon--revive">
                     <PhHeartBreak :size="18" weight="duotone" />
@@ -166,6 +231,9 @@
                   <div class="use-item__item-effect">
                     <span v-if="item.hpAmount" class="use-item__item-hp">{{ item.hpAmount }} HP</span>
                     <span v-else-if="item.healToPercent" class="use-item__item-hp">{{ item.healToPercent }}% HP</span>
+                  </div>
+                  <div class="use-item__item-qty" :class="{ 'use-item__item-qty--zero': getItemQuantity(item.name) <= 0 }">
+                    x{{ getItemQuantity(item.name) }}
                   </div>
                   <div class="use-item__item-cost">${{ item.cost }}</div>
                 </button>
@@ -208,24 +276,34 @@
         </div>
 
         <div class="modal__footer">
-          <button
-            class="btn btn--ghost"
-            :disabled="!selectedItemName || !selectedTargetId || healingItems.loading.value"
-            title="Target refuses the item (not consumed)"
-            @click="handleRefuse"
-          >
-            Target Refuses
-          </button>
-          <button class="btn btn--secondary" @click="$emit('close')">
-            Cancel
-          </button>
-          <button
-            class="btn btn--primary"
-            :disabled="!selectedItemName || !selectedTargetId || healingItems.loading.value"
-            @click="handleApply"
-          >
-            {{ healingItems.loading.value ? 'Applying...' : 'Apply Item' }}
-          </button>
+          <!-- P2: GM Mode toggle -->
+          <label class="use-item__gm-toggle" title="Skip inventory check (GM override)">
+            <input type="checkbox" v-model="gmMode" />
+            <PhShieldStar :size="14" weight="bold" />
+            GM Mode
+          </label>
+
+          <div class="use-item__footer-actions">
+            <button
+              class="btn btn--ghost"
+              :disabled="!selectedItemName || !selectedTargetId || healingItems.loading.value"
+              title="Target refuses the item (not consumed)"
+              @click="handleRefuse"
+            >
+              Target Refuses
+            </button>
+            <button class="btn btn--secondary" @click="$emit('close')">
+              Cancel
+            </button>
+            <button
+              class="btn btn--primary"
+              :disabled="isApplyDisabled"
+              :title="applyDisabledReason"
+              @click="handleApply"
+            >
+              {{ healingItems.loading.value ? 'Applying...' : 'Apply Item' }}
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -233,9 +311,13 @@
 </template>
 
 <script setup lang="ts">
-import { PhFirstAidKit, PhHeart, PhHeartBreak, PhPill, PhStar, PhWarning } from '@phosphor-icons/vue'
+import {
+  PhFirstAidKit, PhHeart, PhHeartBreak, PhLightning, PhMapPin,
+  PhPill, PhShieldCheck, PhShieldStar, PhStar, PhTimer, PhWarning
+} from '@phosphor-icons/vue'
 import { getEffectiveMaxHp } from '~/utils/restHealing'
-import type { Combatant, StatusCondition } from '~/types'
+import { ptuDistanceTokensBBox } from '~/utils/gridDistance'
+import type { Combatant, StatusCondition, HumanCharacter, Pokemon, InventoryItem } from '~/types'
 import type { HealingItemDef, HealingItemCategory } from '~/constants/healingItems'
 
 const props = defineProps<{
@@ -263,6 +345,7 @@ const { getCombatantName } = useCombatantDisplay()
 // State
 const selectedTargetId = ref('')
 const selectedItemName = ref('')
+const gmMode = ref(false)
 const result = ref<{
   itemName: string
   targetName: string
@@ -283,6 +366,86 @@ const userName = computed(() => {
   if (!userCombatant.value) return 'Unknown'
   return getCombatantName(userCombatant.value)
 })
+
+// P2: Self-use detection
+const isSelfUse = computed(() =>
+  selectedTargetId.value === props.userId
+)
+
+// P2: Medic Training check
+const hasMedicTraining = computed(() => {
+  if (!userCombatant.value || userCombatant.value.type !== 'human') return false
+  const edges = (userCombatant.value.entity as HumanCharacter).edges || []
+  return edges.some(e => e.toLowerCase().includes('medic training'))
+})
+
+// P2: Action availability check
+const canUseAction = computed(() => {
+  if (!userCombatant.value) return false
+  const ts = userCombatant.value.turnState
+  if (isSelfUse.value) {
+    // Full-Round: need both Standard and Shift unused
+    return !ts.standardActionUsed && !ts.shiftActionUsed
+  }
+  // Standard Action only
+  return !ts.standardActionUsed
+})
+
+// P2: Action cost label
+const actionCostLabel = computed(() =>
+  isSelfUse.value ? 'Full-Round' : 'Standard'
+)
+
+const actionCostClass = computed(() =>
+  isSelfUse.value ? 'use-item__action-badge--full' : 'use-item__action-badge--standard'
+)
+
+// P2: Adjacency/range check
+const rangeStatus = computed(() => {
+  if (!userCombatant.value || !selectedTargetId.value) return null
+  if (isSelfUse.value) return { adjacent: true, distance: 0 }
+
+  const target = encounterStore.encounter?.combatants.find(
+    c => c.id === selectedTargetId.value
+  )
+  if (!target) return null
+
+  const userPos = userCombatant.value.position
+  const targetPos = target.position
+  if (!userPos || !targetPos) return { adjacent: true, distance: 0 } // Gridless
+
+  const distance = ptuDistanceTokensBBox(
+    { position: userPos, size: userCombatant.value.tokenSize || 1 },
+    { position: targetPos, size: target.tokenSize || 1 }
+  )
+  return { adjacent: distance <= 1, distance }
+})
+
+// P2: Inventory resolution — find the trainer who owns the items
+const trainerInventory = computed((): InventoryItem[] => {
+  if (!userCombatant.value) return []
+
+  // If user is a trainer, use their inventory
+  if (userCombatant.value.type === 'human') {
+    return (userCombatant.value.entity as HumanCharacter).inventory || []
+  }
+
+  // If user is a Pokemon, find their owner trainer in the encounter
+  const pokemon = userCombatant.value.entity as Pokemon
+  const ownerId = pokemon.ownerId
+  if (!ownerId) return []
+
+  const trainer = encounterStore.encounter?.combatants.find(
+    c => c.type === 'human' && c.entityId === ownerId
+  )
+  if (!trainer) return []
+  return (trainer.entity as HumanCharacter).inventory || []
+})
+
+function getItemQuantity(itemName: string): number {
+  const invItem = trainerInventory.value.find(inv => inv.name === itemName)
+  return invItem ? invItem.quantity : 0
+}
 
 // Target combatants (all non-dead combatants in encounter)
 const targetCombatants = computed(() => {
@@ -330,6 +493,30 @@ const hasAnyApplicableItems = computed(() => {
   return Object.values(groupedItems.value).some(items => items.length > 0)
 })
 
+// P2: Comprehensive disabled check
+const isApplyDisabled = computed(() => {
+  if (!selectedItemName.value || !selectedTargetId.value) return true
+  if (healingItems.loading.value) return true
+  if (!canUseAction.value) return true
+  if (rangeStatus.value && !rangeStatus.value.adjacent) return true
+  // Check inventory (unless GM mode)
+  if (!gmMode.value && getItemQuantity(selectedItemName.value) <= 0) return true
+  return false
+})
+
+const applyDisabledReason = computed(() => {
+  if (!selectedItemName.value) return 'Select an item'
+  if (!selectedTargetId.value) return 'Select a target'
+  if (!canUseAction.value) {
+    return isSelfUse.value
+      ? 'Full-Round Action not available (Standard or Shift already used)'
+      : 'Standard Action already used this turn'
+  }
+  if (rangeStatus.value && !rangeStatus.value.adjacent) return 'Target is not adjacent'
+  if (!gmMode.value && getItemQuantity(selectedItemName.value) <= 0) return 'Out of stock'
+  return ''
+})
+
 function isCombatantFainted(combatant: Combatant): boolean {
   return (combatant.entity.statusConditions || []).includes('Fainted')
 }
@@ -343,6 +530,12 @@ function getCureLabel(item: HealingItemDef): string {
   return ''
 }
 
+function selectItem(itemName: string) {
+  // Don't select out-of-stock items unless in GM mode
+  if (!gmMode.value && getItemQuantity(itemName) <= 0) return
+  selectedItemName.value = itemName
+}
+
 // Reset item selection when target changes
 watch(selectedTargetId, () => {
   selectedItemName.value = ''
@@ -351,7 +544,7 @@ watch(selectedTargetId, () => {
 })
 
 async function handleApply() {
-  if (!selectedItemName.value || !selectedTargetId.value) return
+  if (isApplyDisabled.value) return
 
   errorMessage.value = ''
   result.value = null
@@ -361,7 +554,8 @@ async function handleApply() {
       selectedItemName.value,
       props.userId,
       selectedTargetId.value,
-      true
+      true,
+      gmMode.value
     )
 
     if (itemResult) {
@@ -401,7 +595,8 @@ async function handleRefuse() {
       selectedItemName.value,
       props.userId,
       selectedTargetId.value,
-      false
+      false,
+      gmMode.value
     )
 
     if (itemResult) {
@@ -444,11 +639,90 @@ async function handleRefuse() {
     color: $color-text;
   }
 
+  &__action-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    font-size: $font-size-xs;
+    font-weight: 600;
+    padding: 2px $spacing-xs;
+    border-radius: $border-radius-sm;
+
+    &--standard {
+      color: $color-info;
+      background: rgba($color-info, 0.15);
+    }
+
+    &--full {
+      color: $color-warning;
+      background: rgba($color-warning, 0.15);
+    }
+  }
+
+  &__range-status {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-xs;
+    font-size: $font-size-sm;
+    font-weight: 600;
+
+    &--ok {
+      color: $color-success;
+    }
+
+    &--far {
+      color: $color-danger;
+    }
+  }
+
+  &__action-info {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+    padding: $spacing-sm $spacing-md;
+    background: $color-bg-tertiary;
+    border-radius: $border-radius-md;
+    margin-bottom: $spacing-md;
+    font-size: $font-size-sm;
+  }
+
+  &__action-detail {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    color: $color-text-muted;
+  }
+
+  &__action-warning {
+    color: $color-danger;
+    font-weight: 600;
+  }
+
+  &__forfeit-info {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    color: $color-text-muted;
+    font-size: $font-size-xs;
+  }
+
+  &__medic-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    color: $color-success;
+    font-weight: 600;
+    font-size: $font-size-xs;
+    background: rgba($color-success, 0.1);
+    padding: 1px $spacing-xs;
+    border-radius: $border-radius-sm;
+  }
+
   &__sections {
     display: flex;
     flex-direction: column;
     gap: $spacing-md;
-    max-height: 350px;
+    max-height: 300px;
     overflow-y: auto;
   }
 
@@ -484,7 +758,7 @@ async function handleRefuse() {
   &__item {
     display: flex;
     align-items: center;
-    gap: $spacing-md;
+    gap: $spacing-sm;
     padding: $spacing-sm $spacing-md;
     background: $color-bg-tertiary;
     border: 2px solid transparent;
@@ -494,7 +768,7 @@ async function handleRefuse() {
     text-align: left;
     color: $color-text;
 
-    &:hover {
+    &:hover:not(:disabled) {
       background: $color-bg-hover;
       border-color: $border-color-default;
     }
@@ -502,6 +776,11 @@ async function handleRefuse() {
     &--selected {
       border-color: $color-success;
       background: rgba($color-success, 0.1);
+    }
+
+    &--out-of-stock {
+      opacity: 0.4;
+      cursor: not-allowed;
     }
   }
 
@@ -556,6 +835,19 @@ async function handleRefuse() {
     font-size: $font-size-xs;
     color: $color-text-muted;
     margin-top: 2px;
+  }
+
+  &__item-qty {
+    flex-shrink: 0;
+    font-size: $font-size-xs;
+    font-weight: 700;
+    color: $color-text;
+    min-width: 24px;
+    text-align: center;
+
+    &--zero {
+      color: $color-danger;
+    }
   }
 
   &__item-cost {
@@ -624,6 +916,36 @@ async function handleRefuse() {
     border: 1px solid rgba($color-danger, 0.3);
     border-radius: $border-radius-md;
   }
+
+  &__gm-toggle {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    font-size: $font-size-xs;
+    font-weight: 600;
+    color: $color-text-muted;
+    cursor: pointer;
+    user-select: none;
+
+    input[type="checkbox"] {
+      accent-color: $color-warning;
+    }
+
+    &:hover {
+      color: $color-warning;
+    }
+  }
+
+  &__footer-actions {
+    display: flex;
+    gap: $spacing-sm;
+  }
+}
+
+.modal__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .form-select {
