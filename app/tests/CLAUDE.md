@@ -16,7 +16,7 @@ tests/
 │   ├── stores/         # 7 files — encounter, encounterLibrary, encounterTables, library, settings, terrain, terrain-migration
 │   └── utils/          # 13 files — diceRoller, gridDistance, captureRate, typeChart, restHealing, etc.
 ├── integration/        # 2 files — encounter-tables, fog-of-war
-└── e2e/                # empty (.gitkeep)
+└── e2e/                # empty (.gitkeep) — UX exploration uses Playwright in ux-sessions/
 ```
 
 ## Running Tests
@@ -41,17 +41,17 @@ Defined in `app/vitest.config.ts`:
 
 ## Mock Patterns
 
-**Prisma client** — `vi.mock('~/server/utils/prisma', () => ({ prisma: mockPrisma }))` with per-model `vi.fn()` methods.
+**Prisma client** (API/service tests): `const mockPrisma = { model: { findMany: vi.fn() } }; vi.mock('~/server/utils/prisma', () => ({ prisma: mockPrisma }))`
 
-**`$fetch`** — `vi.stubGlobal('$fetch', mockFetch)` before importing the store under test.
+**$fetch** (store tests): `vi.stubGlobal('$fetch', vi.fn())` — stub before importing the store under test.
 
-**H3 utilities** — stub `readBody`, `getRouterParam`, `defineEventHandler` via `vi.stubGlobal()`. The `defineEventHandler` stub unwraps to the raw handler function for direct invocation.
+**H3 utilities** (API tests): `vi.stubGlobal('readBody', vi.fn()); vi.stubGlobal('createError', vi.fn((o) => ({...o}))); vi.stubGlobal('getRouterParam', vi.fn())`
 
-**Pinia stores** — `setActivePinia(createPinia())` in `beforeEach` to isolate store state per test.
+**Pinia stores** (component/composable tests): `import { setActivePinia, createPinia } from 'pinia'; beforeEach(() => setActivePinia(createPinia()))`
 
-**Composables/utilities** — imported and called directly; pure functions need no mocking.
+**Composables** — call directly, test return values: `const { getSetDamage } = useDamageCalculation(); expect(getSetDamage(6)).toBe(15)`
 
-**Components** — tested via extracted logic functions, not `@vue/test-utils` mounting.
+**Components** — do NOT mount; test extracted logic via factory helpers: `createMockPokemonEntity()`, `createMockCombatant()`.
 
 ## Coverage Gaps
 
@@ -63,3 +63,4 @@ Defined in `app/vitest.config.ts`:
 - **Isometric**: 5 composables + 1 component + 1 store = 7 source files, 0 tests
 - **Components overall**: 2 unit tests out of 146 total components
 - **WebSocket**: 3 source files (composable, server route, server util), 0 tests
+- **Integration**: only 2 files — cross-layer flows (e.g., encounter creation -> combat -> XP) untested
