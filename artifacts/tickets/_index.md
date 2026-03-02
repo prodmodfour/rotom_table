@@ -1,19 +1,17 @@
 ---
-generated_at: 2026-03-02T16:39:33.620Z
+generated_at: 2026-03-02T17:53:54.110Z
 total_tickets: 285
-open: 32
-in_progress: 114
-resolved: 120
+open: 29
+in_progress: 109
+resolved: 128
 ---
 
 # Tickets Index
 
-## Open Tickets (32)
+## Open Tickets (29)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
-| docs-003 | docs | P0 | state-management | docs-003: Add CLAUDE.md for app/stores/ |
-| docs-007 | docs | P0 | testing | docs-007: Add CLAUDE.md for app/tests/ |
 | ptu-rule-127 | ptu-rule | P1 | character-lifecycle | Per decree-037, trainers should NOT receive an automatic +1  |
 | feature-018 | feature | P2 | scenes | feature-018: Weather Effect Automation |
 | feature-021 | feature | P2 | character-lifecycle | feature-021: Derived Capability Calculations |
@@ -21,7 +19,6 @@ resolved: 120
 | ptu-rule-131 | ptu-rule | P2 | combat | `rollAccuracyCheck()` in `app/composables/useCapture.ts` rei |
 | bug-044 | bug | P3 | capture | `useCapture.ts` (line ~192) references `/api/encounters/${en |
 | ptu-rule-129 | ptu-rule | P3 | combat | ptu-rule-129: Roar's forced recall must respect the Trapped  |
-| feature-004 | feature | P3 | combat | feature-004: Pokemon Mounting / Rider System |
 | ux-012 | ux | P3 | — | The server broadcasts `status_tick` WebSocket events when ti |
 | refactoring-108 | refactoring | P3 | — | refactoring-108: Extract switch button computeds from Combat |
 | refactoring-112 | refactoring | P3 | combat | Refactoring-112: Decompose encounter store into focused sub- |
@@ -45,20 +42,14 @@ resolved: 120
 | refactoring-118 | refactoring | P4 | — | refactoring-118: Remove unused flankingMap destructure in Gr |
 | refactoring-119 | refactoring | P4 | — | refactoring-119: Update stale interrupt.post.ts file header  |
 
-## In-Progress Tickets (114)
+## In-Progress Tickets (109)
 
 | ID | Category | Priority | Domain | Source |
 |----|----------|----------|--------|--------|
 | bug-036 | bug | P0 | player-view | smoke-test (plan-20260227-122512) |
 | bug-038 | bug | P0 | healing | healing-audit-report (R033, 2026-02-28) |
-| docs-001 | docs | P0 | vtt-grid | plan-descendant-claude-md-rollout |
-| docs-002 | docs | P0 | server | plan-descendant-claude-md-rollout |
-| docs-005 | docs | P0 | composables | plan-descendant-claude-md-rollout |
-| docs-006 | docs | P0 | database | plan-descendant-claude-md-rollout |
 | ptu-rule-096 | ptu-rule | P0 | vtt | decree-002 |
 | ptu-rule-097 | ptu-rule | P0 | vtt | decree-003 |
-| docs-004 | docs | P0 | combat | plan-descendant-claude-md-rollout |
-| docs-008 | docs | P0 | reference | plan-descendant-claude-md-rollout |
 | bug-033 | bug | P0 | build | dev-server-error-log |
 | bug-034 | bug | P0 | build | dev-server-error-log |
 | bug-035 | bug | P0 | build | dev-server-error-log |
@@ -134,6 +125,7 @@ resolved: 120
 | ptu-rule-079 | ptu-rule | P3 | combat | code-review-120 (M1) |
 | ptu-rule-080 | ptu-rule | P3 | character-lifecycle | code-review-121 (M3) |
 | ptu-rule-109 | ptu-rule | P3 | capture | rules-review-161 M1 |
+| feature-004 | feature | P3 | combat | user-request |
 | ux-003 | ux | P3 | player-view | code-review-158 M1 |
 | ux-004 | ux | P3 | player-view | rules-review-149 R2 |
 | ptu-rule-112 | ptu-rule | P3 | vtt-grid | rules-review-162 M2 |
@@ -174,8 +166,8 @@ All decree-needs addressed.
 |----------|------|-------------|----------|-------|
 | bug | 1 | 14 | 27 | 44 |
 | ptu-rule | 6 | 59 | 38 | 105 |
-| feature | 4 | 15 | 3 | 23 |
+| feature | 3 | 16 | 3 | 23 |
 | ux | 5 | 7 | 2 | 15 |
 | decree | 0 | 0 | 41 | 41 |
 | refactoring | 14 | 13 | 1 | 41 |
-| docs | 2 | 6 | 8 | 16 |
+| docs | 0 | 0 | 16 | 16 |
