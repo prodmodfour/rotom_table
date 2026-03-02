@@ -265,6 +265,106 @@ describe('POST /api/capture/attempt', () => {
     })
   })
 
+  describe('AC 6 accuracy gate', () => {
+    it('should reject accuracyRoll=1 (natural 1 always misses)', async () => {
+      const wildPokemon = createWildPokemon()
+      mockPrisma.pokemon.findUnique.mockResolvedValue(wildPokemon)
+      mockPrisma.humanCharacter.findUnique.mockResolvedValue(createMockTrainer())
+
+      const event = createMockEvent({
+        pokemonId: wildPokemon.id,
+        trainerId: 'trainer-1',
+        accuracyRoll: 1,
+      })
+
+      await expect(captureAttemptHandler(event)).rejects.toThrow(
+        'Natural 1 — ball missed! (auto-miss)'
+      )
+    })
+
+    it('should reject accuracyRoll=3 (below AC 6)', async () => {
+      const wildPokemon = createWildPokemon()
+      mockPrisma.pokemon.findUnique.mockResolvedValue(wildPokemon)
+      mockPrisma.humanCharacter.findUnique.mockResolvedValue(createMockTrainer())
+
+      const event = createMockEvent({
+        pokemonId: wildPokemon.id,
+        trainerId: 'trainer-1',
+        accuracyRoll: 3,
+      })
+
+      await expect(captureAttemptHandler(event)).rejects.toThrow(
+        'Accuracy roll 3 does not meet AC 6 — ball missed'
+      )
+    })
+
+    it('should pass accuracyRoll=6 (exact AC 6 threshold)', async () => {
+      const wildPokemon = createWildPokemon()
+      const trainer = createMockTrainer()
+      const speciesData = createMockSpeciesData()
+
+      mockPrisma.pokemon.findUnique.mockResolvedValue(wildPokemon)
+      mockPrisma.humanCharacter.findUnique.mockResolvedValue(trainer)
+      mockPrisma.speciesData.findUnique.mockResolvedValue(speciesData)
+      mockPrisma.pokemon.update.mockResolvedValue({ ...wildPokemon, ownerId: trainer.id, origin: 'captured' })
+
+      const event = createMockEvent({
+        pokemonId: wildPokemon.id,
+        trainerId: trainer.id,
+        accuracyRoll: 6,
+      })
+
+      const result = await captureAttemptHandler(event)
+
+      expect(result.success).toBe(true)
+      expect(result.data.captured).toBe(true)
+    })
+
+    it('should pass accuracyRoll=20 (natural 20 always hits)', async () => {
+      const wildPokemon = createWildPokemon()
+      const trainer = createMockTrainer()
+      const speciesData = createMockSpeciesData()
+
+      mockPrisma.pokemon.findUnique.mockResolvedValue(wildPokemon)
+      mockPrisma.humanCharacter.findUnique.mockResolvedValue(trainer)
+      mockPrisma.speciesData.findUnique.mockResolvedValue(speciesData)
+      mockPrisma.pokemon.update.mockResolvedValue({ ...wildPokemon, ownerId: trainer.id, origin: 'captured' })
+
+      const event = createMockEvent({
+        pokemonId: wildPokemon.id,
+        trainerId: trainer.id,
+        accuracyRoll: 20,
+      })
+
+      const result = await captureAttemptHandler(event)
+
+      expect(result.success).toBe(true)
+      expect(result.data.criticalHit).toBe(true)
+    })
+
+    it('should skip AC 6 validation when accuracyRoll is undefined (backward compat)', async () => {
+      const wildPokemon = createWildPokemon()
+      const trainer = createMockTrainer()
+      const speciesData = createMockSpeciesData()
+
+      mockPrisma.pokemon.findUnique.mockResolvedValue(wildPokemon)
+      mockPrisma.humanCharacter.findUnique.mockResolvedValue(trainer)
+      mockPrisma.speciesData.findUnique.mockResolvedValue(speciesData)
+      mockPrisma.pokemon.update.mockResolvedValue({ ...wildPokemon, ownerId: trainer.id, origin: 'captured' })
+
+      const event = createMockEvent({
+        pokemonId: wildPokemon.id,
+        trainerId: trainer.id,
+        // No accuracyRoll — omitted intentionally
+      })
+
+      const result = await captureAttemptHandler(event)
+
+      expect(result.success).toBe(true)
+      expect(result.data.criticalHit).toBe(false)
+    })
+  })
+
   describe('ball modifier integration', () => {
     it('should pass the ball type to calculateBallModifier and include result in response', async () => {
       const wildPokemon = createWildPokemon()
