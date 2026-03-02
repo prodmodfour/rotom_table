@@ -1,0 +1,164 @@
+/**
+ * Mounting rules and capability parsing for PTU Pokemon mounting system.
+ *
+ * PTU p.306-307: "Mountable X: This Pokemon may serve as a mount for
+ * X average Trainers regardless of Power Capability and ignoring
+ * penalties for weight carried."
+ *
+ * PTU p.218: Mounting is a Standard Action with Acrobatics/Athletics DC 10.
+ * Expert skill: mount as Free Action during Shift (2m+ movement).
+ *
+ * PTU p.139: Mounted Prowess edge: auto-succeed mounting checks,
+ * +3 to remain-mounted checks.
+ */
+
+import type { Combatant } from '~/types/encounter'
+import type { Pokemon, HumanCharacter, SkillRank } from '~/types/character'
+
+// ============================================================
+// Constants
+// ============================================================
+
+/** PTU p.218: DC for mounting a Pokemon */
+export const MOUNT_CHECK_DC = 10
+
+/** PTU p.218: DC for remaining mounted (dismount check) */
+export const DISMOUNT_CHECK_DC = 10
+
+/** PTU p.139: Mounted Prowess bonus to remain-mounted checks */
+export const MOUNTED_PROWESS_REMAIN_BONUS = 3
+
+/** PTU p.218: Minimum shift distance for Expert-level free mount */
+export const FREE_MOUNT_MIN_SHIFT = 2
+
+/** Default trainer movement speed (meters) */
+export const TRAINER_DEFAULT_SPEED = 5
+
+// ============================================================
+// Capability Parsing
+// ============================================================
+
+/**
+ * Parse the Mountable capability from a Pokemon's otherCapabilities.
+ * Returns the capacity (number of trainers it can carry), or 0 if not mountable.
+ *
+ * Matches patterns: "Mountable 1", "Mountable 2", "Mountable X" (treated as 1).
+ * Case-insensitive. Handles leading/trailing whitespace.
+ */
+export function parseMountableCapacity(otherCapabilities: string[]): number {
+  if (!otherCapabilities || otherCapabilities.length === 0) return 0
+
+  for (const cap of otherCapabilities) {
+    const match = cap.trim().match(/^mountable\s+(\d+)$/i)
+    if (match) {
+      return parseInt(match[1], 10)
+    }
+    // Handle bare "Mountable" without a number (treat as 1)
+    if (cap.trim().toLowerCase() === 'mountable') {
+      return 1
+    }
+  }
+
+  return 0
+}
+
+/**
+ * Check if a Pokemon combatant has the Mountable capability.
+ */
+export function isMountable(combatant: Combatant): boolean {
+  if (combatant.type !== 'pokemon') return false
+  const pokemon = combatant.entity as Pokemon
+  const caps = pokemon.capabilities?.otherCapabilities
+  if (!caps) return false
+  return parseMountableCapacity(caps) > 0
+}
+
+/**
+ * Get the mount capacity of a Pokemon combatant.
+ * Returns 0 if not a Pokemon or not mountable.
+ */
+export function getMountCapacity(combatant: Combatant): number {
+  if (combatant.type !== 'pokemon') return 0
+  const pokemon = combatant.entity as Pokemon
+  const caps = pokemon.capabilities?.otherCapabilities
+  if (!caps) return 0
+  return parseMountableCapacity(caps)
+}
+
+/**
+ * Count how many riders are currently mounted on a given mount.
+ * Searches all combatants for riders pointing to this mount's ID.
+ */
+export function countCurrentRiders(mountId: string, combatants: Combatant[]): number {
+  return combatants.filter(
+    c => c.mountState?.isMounted && c.mountState.partnerId === mountId
+  ).length
+}
+
+// ============================================================
+// Skill & Edge Checks
+// ============================================================
+
+/**
+ * Check if a trainer has the Mounted Prowess edge.
+ * PTU p.139: Auto-succeed mounting checks, +3 to remain-mounted checks.
+ */
+export function hasMountedProwess(combatant: Combatant): boolean {
+  if (combatant.type !== 'human') return false
+  const human = combatant.entity as HumanCharacter
+  return (human.edges ?? []).some(
+    edge => edge.toLowerCase().includes('mounted prowess')
+  )
+}
+
+/**
+ * Check if a trainer's Acrobatics or Athletics skill is at least Expert.
+ * Used to determine if mounting can be done as a Free Action during Shift.
+ * PTU p.218: "If your Acrobatics or Athletics is at least Expert..."
+ */
+export function hasExpertMountingSkill(combatant: Combatant): boolean {
+  if (combatant.type !== 'human') return false
+  const human = combatant.entity as HumanCharacter
+  const skills = human.skills ?? {}
+  const expertOrAbove: SkillRank[] = ['Expert', 'Master']
+  const acrobatics = skills['Acrobatics'] ?? skills['acrobatics']
+  const athletics = skills['Athletics'] ?? skills['athletics']
+  return expertOrAbove.includes(acrobatics as SkillRank) ||
+         expertOrAbove.includes(athletics as SkillRank)
+}
+
+/**
+ * Determine the action cost for mounting.
+ * PTU p.218:
+ * - Standard Action (Acrobatics/Athletics DC 10) by default
+ * - Free Action during Shift if Expert Acrobatics/Athletics AND 2m+ movement
+ * - Mounted Prowess: auto-succeed the check (still costs the action)
+ */
+export function getMountActionCost(
+  combatant: Combatant
+): 'standard' | 'free_with_shift' {
+  if (hasExpertMountingSkill(combatant)) {
+    return 'free_with_shift'
+  }
+  return 'standard'
+}
+
+/**
+ * Check whether damage triggers a dismount check.
+ * PTU p.218: "damage equal or greater to 1/4th of the target's Max Hit Points"
+ * Per decree-004: uses real HP damage after temp HP absorption.
+ */
+export function triggersDismountCheck(hpDamage: number, maxHp: number): boolean {
+  return hpDamage >= Math.floor(maxHp / 4)
+}
+
+/**
+ * Get the base movement speed for a mount Pokemon.
+ * Uses the mount's Overland capability as the primary movement speed.
+ * Movement modifiers (Slowed, Speed CS) are applied at movement time, not at mount time.
+ */
+export function getMovementSpeedForMount(mount: Combatant): number {
+  if (mount.type !== 'pokemon') return TRAINER_DEFAULT_SPEED
+  const pokemon = mount.entity as Pokemon
+  return pokemon.capabilities?.overland ?? TRAINER_DEFAULT_SPEED
+}
