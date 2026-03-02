@@ -114,6 +114,8 @@ const emit = defineEmits<{
   playerCellClick: [position: GridPosition]
   /** Player mode: player tapped their own token */
   playerTokenSelect: [combatantId: string]
+  /** P2: Flanking state changed for a combatant */
+  flankingChanged: [combatantId: string, isFlanked: boolean, flankerIds: string[]]
 }>()
 
 // Stores
@@ -205,9 +207,17 @@ const handleTokenSelectWithPlayerMode = (combatantId: string, evt: MouseEvent): 
   interaction.handleTokenSelect(combatantId, evt)
 }
 
-// Flanking detection composable
+// Flanking detection composable (P2: watcher with transition callbacks)
 const combatantsRef = computed(() => props.combatants)
-const { flankingMap, isTargetFlanked, getFlankingPenalty } = useFlankingDetection(combatantsRef)
+const { flankingMap, isTargetFlanked, getFlankingPenalty } = useFlankingDetection(
+  combatantsRef,
+  {
+    onFlankingChanged: (combatantId, isFlanked, flankerIds) => {
+      emit('flankingChanged', combatantId, isFlanked, flankerIds)
+    },
+    render: () => rendering.render(),
+  }
+)
 
 // Movement composable
 const movement = useGridMovement({
@@ -401,6 +411,8 @@ defineExpose({
   resetView: interaction.resetView,
   render: rendering.render,
   getFlankingPenalty,
+  flankingMap,
+  isTargetFlanked,
 })
 </script>
 

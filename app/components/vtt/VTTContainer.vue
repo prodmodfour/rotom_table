@@ -138,6 +138,7 @@
         @cell-click="handleCellClick"
         @multi-select="handleMultiSelect"
         @movement-preview-change="handleMovementPreviewChange"
+        @flanking-changed="handleFlankingChanged"
       />
     </div>
 
@@ -202,6 +203,8 @@ const emit = defineEmits<{
   backgroundRemove: []
   multiSelect: [combatantIds: string[]]
   movementPreviewChange: [preview: MovementPreview | null]
+  /** P2: Flanking state changed for a combatant */
+  flankingChanged: [combatantId: string, isFlanked: boolean, flankerIds: string[]]
 }>()
 
 // Stores
@@ -431,6 +434,10 @@ const handleMovementPreviewChange = (preview: MovementPreview | null) => {
   emit('movementPreviewChange', preview)
 }
 
+const handleFlankingChanged = (combatantId: string, isFlanked: boolean, flankerIds: string[]) => {
+  emit('flankingChanged', combatantId, isFlanked, flankerIds)
+}
+
 // Measurement methods
 const setMeasurementMode = (mode: MeasurementMode) => {
   if (measurementStore.mode === mode) {
@@ -507,9 +514,17 @@ watch(
   }
 )
 
-// Expose methods
+// Expose methods and flanking state
 defineExpose({
   resetView: () => activeCanvasRef.value?.resetView(),
+  /** P2: Access flanking map from the active canvas */
+  get flankingMap() {
+    return gridCanvasRef.value?.flankingMap
+  },
+  /** P2: Check if a specific combatant is flanked */
+  isTargetFlanked: (combatantId: string) => {
+    return gridCanvasRef.value?.isTargetFlanked?.(combatantId) ?? false
+  },
 })
 </script>
 

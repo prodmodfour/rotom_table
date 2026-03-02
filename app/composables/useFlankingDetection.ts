@@ -11,7 +11,11 @@
  * Handles Large (2x2, 3 foes), Huge (3x3, 4 foes), Gigantic (4x4, 5 foes).
  * Multi-tile attackers count as multiple foes per adjacent cells (PTU p.232).
  *
+ * P2: Watcher detects flanking state transitions and invokes callbacks
+ * for WebSocket broadcasting and VTT re-rendering.
+ *
  * Client-side only -- no server involvement for P0/P1.
+ * Server-side flanking for accuracy is in calculate-damage.post.ts (P2).
  */
 
 import type { Combatant, CombatSide } from '~/types'
@@ -31,15 +35,33 @@ interface FlankingCombatant {
 }
 
 /**
+ * Options for the flanking detection composable.
+ *
+ * onFlankingChanged: Called when a combatant's flanked status transitions
+ *   (flanked -> unflanked or unflanked -> flanked). Used for WebSocket broadcast.
+ * render: Called after flanking state changes to trigger VTT re-render.
+ */
+interface FlankingDetectionOptions {
+  onFlankingChanged?: (combatantId: string, isFlanked: boolean, flankerIds: string[]) => void
+  render?: () => void
+}
+
+/**
  * Composable for detecting flanking status across all combatants.
  *
  * Accepts the full combatant list (reactive) and computes a FlankingMap
  * indicating which combatants are currently flanked.
  *
+ * P2: Accepts optional callbacks for transition detection and re-rendering.
+ *
  * Usage:
  *   const { flankingMap, isTargetFlanked, getFlankingPenalty } = useFlankingDetection(combatants)
+ *   const { flankingMap } = useFlankingDetection(combatants, { onFlankingChanged, render })
  */
-export function useFlankingDetection(combatants: Ref<Combatant[]>) {
+export function useFlankingDetection(
+  combatants: Ref<Combatant[]>,
+  options?: FlankingDetectionOptions
+) {
   /**
    * Extract position data from combatants, filtering to alive and positioned.
    */
@@ -121,6 +143,36 @@ export function useFlankingDetection(combatants: Ref<Combatant[]>) {
   const getFlankingPenalty = (combatantId: string): number => {
     return isTargetFlanked(combatantId) ? FLANKING_EVASION_PENALTY : 0
   }
+
+  // P2: Track previous flanking state for change detection
+  const previousFlankedSet = ref<Set<string>>(new Set())
+
+  watch(flankingMap, (newMap) => {
+    const newFlankedSet = new Set<string>()
+
+    for (const [id, status] of Object.entries(newMap)) {
+      if (status.isFlanked) {
+        newFlankedSet.add(id)
+      }
+    }
+
+    // Detect transitions (newly flanked or no longer flanked)
+    for (const id of newFlankedSet) {
+      if (!previousFlankedSet.value.has(id)) {
+        options?.onFlankingChanged?.(id, true, newMap[id].flankerIds)
+      }
+    }
+    for (const id of previousFlankedSet.value) {
+      if (!newFlankedSet.has(id)) {
+        options?.onFlankingChanged?.(id, false, [])
+      }
+    }
+
+    previousFlankedSet.value = newFlankedSet
+
+    // Trigger VTT re-render to update visual indicators
+    options?.render?.()
+  }, { deep: true })
 
   return {
     flankingMap,
