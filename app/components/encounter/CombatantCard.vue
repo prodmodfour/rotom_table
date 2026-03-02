@@ -107,6 +107,12 @@
         </span>
       </div>
 
+      <!-- Mount relationship indicator (feature-004 P1) -->
+      <div v-if="mountIndicatorText" class="combatant-card__mount-indicator">
+        <PhHorse :size="12" weight="bold" />
+        {{ mountIndicatorText }}
+      </div>
+
       <!-- Initiative (GM only) -->
       <div v-if="isGm" class="combatant-card__initiative">
         Init: {{ combatant.initiative }}
@@ -284,7 +290,7 @@
 </template>
 
 <script setup lang="ts">
-import { PhFirstAidKit } from '@phosphor-icons/vue'
+import { PhFirstAidKit, PhHorse } from '@phosphor-icons/vue'
 import type { Combatant, Pokemon, HumanCharacter, StatusCondition, StageModifiers } from '~/types'
 
 const props = defineProps<{
@@ -383,6 +389,22 @@ const nonZeroStages = computed(() => {
 })
 
 const hasStageChanges = computed(() => Object.keys(nonZeroStages.value).length > 0)
+
+// Mount relationship indicator text (feature-004 P1)
+const mountIndicatorText = computed(() => {
+  const ms = props.combatant.mountState
+  if (!ms) return ''
+  const encounterStore = useEncounterStore()
+  const partner = encounterStore.getMountPartner(props.combatant.id)
+  if (!partner) return ''
+  const partnerName = partner.type === 'pokemon'
+    ? ((partner.entity as Pokemon).nickname || (partner.entity as Pokemon).species)
+    : (partner.entity as HumanCharacter).name
+  if (ms.isMounted) {
+    return `Mounted on ${partnerName}`
+  }
+  return `Carrying ${partnerName}`
+})
 
 // Wild Pokemon check (enemy Pokemon without owner)
 const isWildPokemon = computed(() => {
@@ -772,6 +794,20 @@ const handleActClick = () => {
     color: $color-warning;
     background: rgba($color-warning, 0.15);
     border: 1px solid rgba($color-warning, 0.3);
+    border-radius: $border-radius-sm;
+  }
+
+  &__mount-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px $spacing-xs;
+    margin-bottom: $spacing-xs;
+    font-size: $font-size-xs;
+    font-weight: 500;
+    color: $color-accent-teal;
+    background: rgba($color-accent-teal, 0.1);
+    border: 1px solid rgba($color-accent-teal, 0.3);
     border-radius: $border-radius-sm;
   }
 
