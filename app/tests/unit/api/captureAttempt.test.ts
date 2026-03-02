@@ -30,13 +30,16 @@ const {
       pokemon: {
         findUnique: vi.fn(),
         update: vi.fn(),
-        count: vi.fn(),
+        count: vi.fn().mockResolvedValue(0),
       },
       humanCharacter: {
         findUnique: vi.fn(),
       },
       speciesData: {
         findUnique: vi.fn(),
+      },
+      encounter: {
+        findUnique: vi.fn().mockResolvedValue(null),
       },
     },
     mockAttemptCapture: vi.fn(() => ({
@@ -139,6 +142,7 @@ const createWildPokemon = (overrides = {}) => ({
   statusConditions: '[]',
   injuries: 0,
   shiny: false,
+  gender: 'Male',
   ownerId: null,
   origin: 'wild',
   ...overrides,
@@ -163,6 +167,13 @@ const createMockSpeciesData = (overrides = {}) => ({
   name: 'Pidgey',
   evolutionStage: 1,
   maxEvolutionStage: 3,
+  type1: 'Normal',
+  type2: 'Flying',
+  weightClass: 1,
+  overland: 3,
+  swim: 0,
+  sky: 5,
+  evolutionTriggers: '[]',
   ...overrides,
 })
 
@@ -281,8 +292,11 @@ describe('POST /api/capture/attempt', () => {
 
       const result = await captureAttemptHandler(event)
 
-      // Verify calculateBallModifier was called with the correct ball type
-      expect(mockCalculateBallModifier).toHaveBeenCalledWith('Great Ball')
+      // Verify calculateBallModifier was called with ball type + condition context
+      expect(mockCalculateBallModifier).toHaveBeenCalledWith(
+        'Great Ball',
+        expect.objectContaining({ targetLevel: 5, targetSpecies: 'Pidgey' })
+      )
 
       // Verify the ball modifier is included in the response
       expect(result.data.ballType).toBe('Great Ball')
@@ -368,7 +382,10 @@ describe('POST /api/capture/attempt', () => {
 
       const result = await captureAttemptHandler(event)
 
-      expect(mockCalculateBallModifier).toHaveBeenCalledWith('Basic Ball')
+      expect(mockCalculateBallModifier).toHaveBeenCalledWith(
+        'Basic Ball',
+        expect.objectContaining({ targetLevel: 5, targetSpecies: 'Pidgey' })
+      )
       expect(result.data.ballType).toBe('Basic Ball')
     })
   })
