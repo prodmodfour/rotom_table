@@ -22,8 +22,8 @@ These tests verify the `trainerAdvancement.ts` pure functions against the PTU ad
 
 | Test Case | Input | Expected Output | PTU Reference |
 |-----------|-------|-----------------|---------------|
-| Level 2 -- even level basics | `level: 2` | `statPoints: 1, skillRanks: 1, edges: 1, features: 0, bonusSkillEdge: true, skillRankCapUnlocked: 'Adept'` | p. 19 |
-| Level 3 -- odd level basics | `level: 3` | `statPoints: 1, skillRanks: 1, edges: 0, features: 1, bonusSkillEdge: false, skillRankCapUnlocked: null` | p. 19 |
+| Level 2 -- even level basics | `level: 2` | `statPoints: 1, edges: 1, features: 0, bonusSkillEdge: true, skillRankCapUnlocked: 'Adept'` | p. 19 |
+| Level 3 -- odd level basics | `level: 3` | `statPoints: 1, edges: 0, features: 1, bonusSkillEdge: false, skillRankCapUnlocked: null` | p. 19 |
 | Level 4 -- even, no milestone | `level: 4` | `statPoints: 1, edges: 1, features: 0, bonusSkillEdge: false, milestone: null` | p. 20 |
 | Level 5 -- Amateur milestone | `level: 5` | `statPoints: 1, features: 1, milestone.name: 'Amateur', classChoicePrompt: true` | p. 19 |
 | Level 6 -- Expert Skills | `level: 6` | `bonusSkillEdge: true, skillRankCapUnlocked: 'Expert', edges: 1` | p. 19 |

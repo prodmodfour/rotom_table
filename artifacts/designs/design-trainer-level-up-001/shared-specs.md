@@ -169,7 +169,7 @@ Pure functions for computing trainer advancement deltas. Follows the same patter
 export interface TrainerLevelUpInfo {
   newLevel: number
   statPointsGained: number          // Always 1
-  skillRanksGained: number          // Always 1
+  // skillRanksGained removed per decree-037 (skill ranks come from Skill Edges only)
   edgesGained: number               // 1 on even levels, 0 on odd
   featuresGained: number            // 1 on odd levels (3+), 0 on even
   bonusSkillEdge: boolean           // true at levels 2, 6, 12
