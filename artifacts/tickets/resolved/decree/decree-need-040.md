@@ -6,6 +6,8 @@ domain: healing
 source: code-review-278 MED-2 + rules-review-254 HIGH-1
 created_by: slave-collector (plan-20260302-130300)
 created_at: 2026-03-02
+status: addressed
+decree_id: decree-041
 ---
 
 # decree-need-040: Awakening item inclusion
@@ -32,3 +34,7 @@ Adding Awakening at $200 significantly changes the item economy around Sleep —
 ## Impact
 
 Affects healing item catalog in `app/constants/healingItems.ts` and all related tests. If removed, the fix is simple (delete one entry). If kept, tests and review must be updated to acknowledge house-rule status.
+
+## Resolution
+
+Addressed by decree-041. The ch9 omission is an editing oversight — Awakening is explicitly referenced in ch11 (Pharmacy stock list) and ch4 (Apothecary Restorative Science recipe). Kept at $200 as intended RAW.
