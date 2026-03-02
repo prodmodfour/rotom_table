@@ -60,6 +60,20 @@ export function useEncounterActions(options: EncounterActionsOptions) {
       } else if (result.deathCheck?.leagueSuppressed) {
         alert(`${name} would have died from HP loss, but death is suppressed in League Battle mode.`)
       }
+
+      // Dismount check notification (feature-004 P1, PTU p.218)
+      if (result.dismountCheck?.triggered) {
+        const dc = result.dismountCheck
+        const bonusText = dc.mountedProwessBonus > 0
+          ? ` (+${dc.mountedProwessBonus} Mounted Prowess)`
+          : ''
+        alert(
+          `Dismount Check Triggered!\n` +
+          `${name} took >= 1/4 max HP damage while mounted.\n` +
+          `Rider must make Acrobatics/Athletics DC ${dc.dc}${bonusText} to remain mounted.\n` +
+          `If failed, use Dismount button in Mount Controls.`
+        )
+      }
     }
   }
 

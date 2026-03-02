@@ -629,6 +629,15 @@ export const useEncounterStore = defineStore('encounter', {
               cause: string | null
               leagueSuppressed: boolean
             }
+            mountDismounted?: boolean
+            dismountCheck?: {
+              triggered: boolean
+              riderId: string
+              mountId: string
+              dc: number
+              mountedProwessBonus: number
+              reason: 'damage' | 'push' | 'confusion'
+            }
           }
         }>(`/api/encounters/${this.encounter.id}/damage`, {
           method: 'POST',
