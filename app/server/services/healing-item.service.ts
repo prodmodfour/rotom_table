@@ -10,7 +10,9 @@
 import { HEALING_ITEM_CATALOG, resolveConditionsToCure, type HealingItemDef } from '~/constants/healingItems'
 import { applyHealingToEntity, updateStatusConditions } from '~/server/services/combatant.service'
 import { getEffectiveMaxHp } from '~/utils/restHealing'
+import { ptuDistanceTokensBBox } from '~/utils/gridDistance'
 import type { Combatant, StatusCondition, Pokemon, HumanCharacter } from '~/types'
+import type { GridPosition } from '~/types/spatial'
 
 export interface ItemApplicationResult {
   success: boolean
@@ -100,6 +102,59 @@ export function validateItemApplication(
   }
 
   return undefined
+}
+
+// ============================================
+// ADJACENCY CHECK (P2 — PTU p.276)
+// ============================================
+
+/**
+ * Check if the user is adjacent to the target for item use.
+ * PTU p.276: Items are applied by physical contact (adjacency = within 1m).
+ *
+ * Uses ptuDistanceTokensBBox for multi-cell token support (decree-002).
+ *
+ * Special cases:
+ * - Self-use: always adjacent (distance 0)
+ * - No grid/positions: always adjacent (gridless play)
+ */
+export function checkItemRange(
+  userPosition: GridPosition | undefined,
+  userTokenSize: number,
+  targetPosition: GridPosition | undefined,
+  targetTokenSize: number,
+  isSelfUse: boolean
+): { adjacent: boolean; distance: number } {
+  if (isSelfUse) return { adjacent: true, distance: 0 }
+  if (!userPosition || !targetPosition) return { adjacent: true, distance: 0 }
+
+  const distance = ptuDistanceTokensBBox(
+    { position: userPosition, size: userTokenSize },
+    { position: targetPosition, size: targetTokenSize }
+  )
+
+  return {
+    adjacent: distance <= 1,
+    distance
+  }
+}
+
+/**
+ * Find the trainer combatant who owns a Pokemon combatant.
+ * Used for inventory resolution when a Pokemon receives/uses an item.
+ */
+export function findTrainerForPokemon(
+  combatants: Combatant[],
+  pokemonCombatant: Combatant
+): Combatant | undefined {
+  const pokemon = pokemonCombatant.entity as Pokemon
+  const ownerId = pokemon.ownerId
+
+  if (!ownerId) return undefined
+
+  return combatants.find(
+    c => c.type === 'human' && c.entityId === ownerId
+  )
 }
 
 // ============================================
