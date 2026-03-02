@@ -104,6 +104,7 @@ export const HEALING_ITEM_CATALOG: Record<string, HealingItemDef> = {
     cost: 200,
     description: 'Cures Freezing.',
   },
+  // per decree-041: Awakening confirmed as standard cure item despite ch9 table omission
   'Awakening': {
     name: 'Awakening',
     category: 'cure',
