@@ -73,6 +73,20 @@ export default defineEventHandler(async (event) => {
     const user = findCombatant(combatants, body.userId)
     const target = findCombatant(combatants, body.targetId)
 
+    // P2: Turn validation — user must be the current turn combatant or releasing a held action
+    if (record.isActive) {
+      const turnOrder = JSON.parse(record.turnOrder) as string[]
+      const currentTurnId = turnOrder[record.currentTurnIndex]
+      const isUsersTurn = currentTurnId === body.userId
+      const hasHeldAction = user.holdAction?.isHolding === true
+      if (!isUsersTurn && !hasHeldAction) {
+        throw createError({
+          statusCode: 400,
+          message: 'Can only use items on your own turn (or with a held action)'
+        })
+      }
+    }
+
     // P2: Self-use detection
     const isSelfUse = body.userId === body.targetId
 
