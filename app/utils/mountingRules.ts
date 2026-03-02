@@ -152,3 +152,72 @@ export function triggersDismountCheck(hpDamage: number, maxHp: number): boolean 
   return hpDamage >= Math.floor(maxHp / 4)
 }
 
+// ============================================================
+// Dismount Check Info
+// ============================================================
+
+export type DismountCheckReason = 'damage' | 'push' | 'confusion'
+
+/**
+ * Information about a triggered dismount check, returned in API responses.
+ * The GM uses this to manually resolve the Acrobatics/Athletics check.
+ */
+export interface DismountCheckInfo {
+  triggered: boolean
+  riderId: string
+  mountId: string
+  dc: number
+  mountedProwessBonus: number
+  reason: DismountCheckReason
+}
+
+/**
+ * Build dismount check info for a mounted combatant that was hit.
+ * Determines the rider and mount IDs from the damaged combatant's mount state.
+ */
+export function buildDismountCheckInfo(
+  damagedCombatant: Combatant,
+  reason: DismountCheckReason,
+  combatants: Combatant[]
+): DismountCheckInfo | null {
+  if (!damagedCombatant.mountState) return null
+
+  const isRider = damagedCombatant.mountState.isMounted
+  const riderId = isRider ? damagedCombatant.id : damagedCombatant.mountState.partnerId
+  const mountId = isRider ? damagedCombatant.mountState.partnerId : damagedCombatant.id
+
+  // Look up rider for Mounted Prowess check
+  const rider = combatants.find(c => c.id === riderId)
+  const prowessBonus = rider && hasMountedProwess(rider) ? MOUNTED_PROWESS_REMAIN_BONUS : 0
+
+  return {
+    triggered: true,
+    riderId,
+    mountId,
+    dc: DISMOUNT_CHECK_DC,
+    mountedProwessBonus: prowessBonus,
+    reason
+  }
+}
+
+// ============================================================
+// Intercept Bonus (PTU p.218)
+// ============================================================
+
+/**
+ * Check if two combatants are a mounted pair and can easily Intercept for each other.
+ * PTU p.218: "It is very easy for you and your Pokemon to Intercept attacks
+ * for each other while you are Mounted due to the lack of distance."
+ *
+ * Returns true if interceptor and target are a mounted pair (rider/mount relationship).
+ */
+export function isEasyIntercept(
+  interceptorId: string,
+  targetId: string,
+  combatants: Combatant[]
+): boolean {
+  const interceptor = combatants.find(c => c.id === interceptorId)
+  if (!interceptor?.mountState) return false
+  return interceptor.mountState.partnerId === targetId
+}
+
