@@ -3,7 +3,7 @@ id: feature-023
 title: Player Capture & Healing Interfaces
 priority: P2
 severity: MEDIUM
-status: design-complete
+status: in-progress
 domain: player-view+capture+healing
 source: matrix-gap (GAP-CAP-1 + GAP-HEAL-1)
 matrix_source: capture R004, R027, R032, healing R018, R019, R024
@@ -52,3 +52,4 @@ FULL-scope feature requiring design spec. Extends the player view system (featur
 | Date | Action | Details |
 |------|--------|---------|
 | 2026-03-01 | Design spec created | design-player-capture-healing-001 with P0/P1/P2 tiers, shared-specs, testing-strategy |
+| 2026-03-02 | P0 implemented | 5 commits (a5a0a822..15527ddc): extended PlayerActionType, added player request functions, created PlayerRequestPanel, extracted usePlayerRequestHandlers composable, wired into GM encounter view |
