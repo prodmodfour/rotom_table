@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-03-02T15:45:00
-updated_by: slave-collector (plan-20260302-150500)
+last_updated: 2026-03-02T23:10:00
+updated_by: slave-collector (plan-20260302-224448)
 ---
 
 # Dev Ecosystem State
@@ -24,7 +24,7 @@ updated_by: slave-collector (plan-20260302-150500)
 | bug-040 | P4 | **resolved** | Extended-rest endpoint lacks Math.max(0,...) safety clamp on currentAp calculation. Already fixed in commit 3d6a238 (bug-038 fix cycle). Ticket moved to resolved by slave-3 (plan-20260228-153856) |
 | bug-041 | P3 | **resolved** | Remove Whirlwind references from Force Switch UI per decree-034. Fixed by slave-3 (plan-20260301-204809). Fix cycle (2 medium doc fixes) completed by slave-3 (plan-20260301-223500). Resolved |
 | bug-042 | P2 | **resolved** | release-hold.post.ts creates duplicate turnOrder entry in Full Contact battles after hold-release. First fix BLOCKED (code-review-268). Rewritten by slave-1 (plan-20260302-110035): remove-before-insert approach. Re-reviewed by slave-5 (plan-20260302-120000): code-review-274 **APPROVED** (MED-001: commit hashes, non-blocking) + rules-review-250 **APPROVED** (all 5 scenarios traced, 12 tests pass). Resolved |
-| bug-043 | P2 | **in-progress** | Poke Ball accuracy check does not gate capture attempt — AC 6 not enforced, balls never miss. Pre-existing in useCapture.ts. Fixed by slave-6 (plan-20260302-130300): 5 commits. Reviewed by slave-6 (plan-20260302-150500): code-review-281 **CHANGES_REQUIRED** (C1: server-side accuracyRoll not validated, H1: empty catch on miss path, H2: no unit tests; M1: player toast UX, M2: accuracy modifiers TODO), rules-review-257 **APPROVED**. Needs fix cycle |
+| bug-043 | P2 | **in-progress** | Poke Ball accuracy check does not gate capture attempt — AC 6 not enforced, balls never miss. Pre-existing in useCapture.ts. Fixed by slave-6 (plan-20260302-130300): 5 commits. Reviewed by slave-6 (plan-20260302-150500): code-review-281 **CHANGES_REQUIRED** + rules-review-257 **APPROVED**. Fix cycle applied by slave-2 (plan-20260302-224448): 6 commits (C1 server validation, H1 error surface, H2 unit tests, M1 typed ack, M2 decree-042 comment). Needs re-review |
 | bug-044 | P3 | **open** | Standard Action consumption endpoint missing for capture attempts — `/api/encounters/${encounterId}/action` does not exist. Pre-existing in useCapture.ts. Source: rules-review-246 PRE-EXISTING-002. Filed by slave-collector (plan-20260302-084714) |
 
 ### PTU Rule Tickets (`tickets/ptu-rule/`)
@@ -111,8 +111,8 @@ updated_by: slave-collector (plan-20260302-150500)
 
 | feature-017 | P2 | **P1-CHANGES_REQUIRED** | Poke Ball Type System — P0 APPROVED. P1 CHANGES_REQUIRED: code-review-277 **CHANGES_REQUIRED** (2H: conditionContext not passed to local capture rate preview, rate.post.ts missing 8+ auto-context fields vs attempt.post.ts; 3M: dead condition property, buildConditionContext not shared, zero test coverage) + rules-review-253 **APPROVED** (13/13 evaluators match PTU 1.05, MED-1: rate preview incomplete context same as code H2). Needs fix cycle | multi-phase |
 | feature-019 | P2 | **APPROVED** | VTT Status-Movement Integration — Tripped combatants blocked from VTT movement (R025). Stuck (R022) and Slowed (R024) pre-existing. Reviewed by slave-7 (plan-20260301-223500): code-review-265 **APPROVED** (0 issues, PTU faithful, consistent pattern, thorough documentation) + rules-review-241 **APPROVED** (all 3 mechanics verified correct, 46 tests passing, 0 issues). Feature complete | partial |
-| feature-020 | P2 | **P1-CHANGES_REQUIRED** | Healing Item System — P0 APPROVED. P1 CHANGES_REQUIRED: code-review-278 **CHANGES_REQUIRED** (H1: app-surface.md not updated for P1, MED-1: Revive missing Math.max(1,...) HP guard, MED-2: Awakening not in PTU 1.05 → decree-need-040) + rules-review-254 **CHANGES_REQUIRED** (H1: Awakening not in PTU 1.05, deliberate omission). Needs fix cycle | multi-phase |
-| feature-023 | P2 | **P1-CHANGES_REQUIRED** | Player Capture & Healing Interfaces — P0 APPROVED. P1 implemented by slave-5 (plan-20260302-130300): 5 commits. Reviewed by slave-5 (plan-20260302-150500): code-review-280 **CHANGES_REQUIRED** (H1: app-surface.md not updated; M1: hardcoded gap, M2: missing estimate comment), rules-review-256 **CHANGES_REQUIRED** (CRIT-1: 'Enemies' case mismatch makes captureTargets always empty). Needs fix cycle | multi-phase |
+| feature-020 | P2 | **P1-fix-cycle-done** | Healing Item System — P0 APPROVED. P1 CHANGES_REQUIRED: code-review-278 + rules-review-254. Fix cycle applied by slave-3 (plan-20260302-224448): 4 commits (M1 Revive Math.max guard, M2 decree-041 comment, H1 app-surface). Needs re-review | multi-phase |
+| feature-023 | P2 | **P1-fix-cycle-done** | Player Capture & Healing Interfaces — P0 APPROVED. P1 implemented by slave-5 (plan-20260302-130300). Reviewed (plan-20260302-150500): code-review-280 **CHANGES_REQUIRED** + rules-review-256 **CHANGES_REQUIRED**. Fix cycle applied by slave-1 (plan-20260302-224448): 5 commits (CRIT-1 case fix, M1 spacing, M2 comment, H1 app-surface). Needs re-review | multi-phase |
 
 ### UX Tickets (`tickets/ux/`)
 | Ticket | Priority | Status | Summary |
@@ -135,20 +135,19 @@ updated_by: slave-collector (plan-20260302-150500)
 
 ## Active Developer Work
 
-**Current task:** Session 87 collection complete. 6 slaves merged (16 commits). 4 dev slaves (docs-001+005, docs-002+006, docs-003+007, docs-004+008 — 8 new CLAUDE.md files). 2 reviewer slaves (feature-023 P1 CHANGES_REQUIRED, bug-043 CHANGES_REQUIRED/APPROVED). Smoke test PASSED. No conflicts.
+**Current task:** Session 88 collection complete. 5 slaves merged (27 commits). 3 dev fix-cycle slaves (feature-023 P1, bug-043, feature-020 P1). 2 docs slaves (docs-009+010+011+016, docs-012+013+014+015). Smoke test PASSED. No conflicts.
 
-**Session 87 (2026-03-02, plan-20260302-150500):**
-- **slave-1** (developer): docs-001+docs-005 — 3 commits: Created `app/components/vtt/CLAUDE.md` (VTT rendering pipeline, coordinate spaces, 14 components, decree references) and `app/composables/CLAUDE.md` (54 composables by domain, dependency chains, naming conventions). Updated tickets.
-- **slave-2** (developer): docs-002+docs-006 — 4 commits: Created `app/server/services/CLAUDE.md` (16-service backend architecture, pokemon-generator entry point, dependency map) and `app/prisma/CLAUDE.md` (14 models, JSON conventions, seed sources, schema sync). Updated tickets.
-- **slave-3** (developer): docs-003+docs-007 — 2 commits: Created `app/stores/CLAUDE.md` (16 Pinia stores, undo system, WebSocket sync, cross-store rules) and `app/tests/CLAUDE.md` (test structure, vitest config, mock patterns, coverage gaps).
-- **slave-4** (developer): docs-004+docs-008 — 3 commits: Created `app/components/encounter/CLAUDE.md` (33 encounter components, turn lifecycle, battle modes, damage flow) and `books/markdown/CLAUDE.md` (chapter lookup, pokedex format, authority chain). Moved tickets to in-progress.
-- **slave-5** (reviewers): feature-023-p1-review — code-review-280 **CHANGES_REQUIRED** (H1: app-surface.md not updated; M1: hardcoded gap:4px; M2: missing estimate comment) + rules-review-256 **CHANGES_REQUIRED** (CRIT-1: 'Enemies' case mismatch makes captureTargets always empty — spec error). → feature-023 **P1-CHANGES_REQUIRED**
-- **slave-6** (reviewers): bug-043-review — code-review-281 **CHANGES_REQUIRED** (C1: server-side accuracyRoll not validated; H1: empty catch on miss; H2: no AC 6 unit tests; M1: player toast UX; M2: accuracy modifiers TODO) + rules-review-257 **APPROVED** (all mechanics correct per PTU 1.05). → bug-043 **CHANGES_REQUIRED**
+**Session 88 (2026-03-02, plan-20260302-224448):**
+- **slave-1** (developer): feature-023-p1-fix — 5 commits: Fix cycle for Player Capture UI P1. CRIT-1 captureTargets 'Enemies' → 'enemies' case fix, hardcoded gap → $spacing-xs, inline comment for omitted estimateCaptureRate params, app-surface.md P1 update, ticket resolution log.
+- **slave-2** (developer): bug-043-fix — 6 commits: Fix cycle for Poke Ball AC 6 accuracy. Server-side accuracyRoll validation (integer 1-20), surfaced action economy failure on miss, 5 unit tests for AC 6 gate, typed PlayerActionAck result for miss toast, decree-042 comment on accuracy modifiers, ticket resolution log.
+- **slave-3** (developer): feature-020-p1-fix — 4 commits: Fix cycle for Healing Item System P1. Revive Math.max(1,...) HP guard, decree-041 comment on Awakening, app-surface.md P1 update, ticket resolution log.
+- **slave-4** (developer): docs-batch-a — 4 commits: Created `artifacts/CLAUDE.md`, `decrees/CLAUDE.md`, `app/server/api/CLAUDE.md`. Added descendant cross-refs to `app/server/CLAUDE.md`. Resolved docs-009, docs-010, docs-011, docs-016.
+- **slave-5** (developer): docs-batch-b — 8 commits: Created `app/types/CLAUDE.md`, `app/components/scene/CLAUDE.md`. Slimmed `app/CLAUDE.md` and root `CLAUDE.md` with cross-refs. Resolved docs-012, docs-013, docs-014, docs-015.
 
 **Smoke test:** PASSED (Playwright) — GM view renders (full nav + encounter). Group view renders (initiative tracker). Player view renders (character selection). No issues.
-**Tickets needing fix cycle:** feature-023 P1 (code-review-280 1H+2M, rules-review-256 1CRIT), bug-043 (code-review-281 1C+2H+2M), feature-017 P1 (code-review-277 2H+3M), feature-020 P1 (code-review-278 1H+2M, rules-review-254 1H)
-**Tickets filed:** ptu-rule-131 (Poke Ball accuracy modifiers, P3, from code-review-281 M2)
-**Docs created:** 8 new CLAUDE.md files across vtt, composables, services, prisma, stores, tests, encounter, books
+**Tickets with fix-cycle-done:** feature-023 P1 (all code-review-280 + rules-review-256 issues addressed), bug-043 (all code-review-281 issues addressed), feature-020 P1 (all code-review-278 + rules-review-254 issues addressed)
+**Tickets still needing fix cycle:** feature-017 P1 (code-review-277 2H+3M)
+**Docs resolved:** docs-009 through docs-016 (8 tickets, 6 new CLAUDE.md files + 2 slimmed)
 
 **Session 86 (2026-03-02, plan-20260302-130300):**
 - **slave-1** (reviewers): feature-014-p2-review — code-review-276 **APPROVED** (2 MED: flanking_update missing from WebSocketEvent union → refactoring-121, receivedFlankingMap not consumed in group/player views → refactoring-122) + rules-review-252 **APPROVED** (0 issues, all PTU flanking mechanics verified). → feature-014 **P2-APPROVED, feature complete**
@@ -1117,6 +1116,34 @@ updated_by: slave-collector (plan-20260302-150500)
 | Open tickets (P4) | 10 (refactoring-060/062/076/078/079/084 + ux-002/006/007/008) |
 | Total open | 16 |
 | Total resolved | 159 (feature-002 fully resolved) |
+
+## Session Summary (2026-03-02, session 88 — plan-20260302-224448)
+
+**Slave collection plan-20260302-224448:** 5 slaves merged (27 commits total). No conflicts.
+- **slave-1** (developer): feature-023-p1-fix — 5 commits: CRIT-1 captureTargets case fix, $spacing-xs, estimateCaptureRate comment, app-surface.md, ticket update. → **fix-cycle-done, needs re-review**
+- **slave-2** (developer): bug-043-fix — 6 commits: Server-side accuracyRoll validation, action economy error surface, 5 AC 6 unit tests, typed PlayerActionAck, decree-042 comment, ticket update. → **fix-cycle-done, needs re-review**
+- **slave-3** (developer): feature-020-p1-fix — 4 commits: Revive Math.max(1,...) guard, decree-041 Awakening comment, app-surface.md, ticket update. → **fix-cycle-done, needs re-review**
+- **slave-4** (developer): docs-batch-a — 4 commits: 3 new CLAUDE.md files (artifacts/, decrees/, app/server/api/) + server cross-refs. docs-009/010/011/016 resolved.
+- **slave-5** (developer): docs-batch-b — 8 commits: 2 new CLAUDE.md files (app/types/, app/components/scene/) + slimmed app/CLAUDE.md and root CLAUDE.md. docs-012/013/014/015 resolved.
+
+**Smoke test:** PASSED
+**Tickets with fix-cycle-done:** feature-023 P1, bug-043, feature-020 P1 (all need re-review)
+**Tickets still needing fix cycle:** feature-017 P1 (code-review-277 2H+3M)
+**Docs resolved:** 8 tickets (docs-009 through docs-016)
+
+## Session Summary (2026-03-02, session 87 — plan-20260302-150500)
+
+**Slave collection plan-20260302-150500:** 6 slaves merged (16 commits). No conflicts.
+- **slave-1** (developer): docs-001+docs-005 — 3 commits: Created vtt/CLAUDE.md and composables/CLAUDE.md.
+- **slave-2** (developer): docs-002+docs-006 — 4 commits: Created services/CLAUDE.md and prisma/CLAUDE.md.
+- **slave-3** (developer): docs-003+docs-007 — 2 commits: Created stores/CLAUDE.md and tests/CLAUDE.md.
+- **slave-4** (developer): docs-004+docs-008 — 3 commits: Created encounter/CLAUDE.md and books/markdown/CLAUDE.md.
+- **slave-5** (reviewers): feature-023-p1-review — code-review-280 CHANGES_REQUIRED (H1+M1+M2) + rules-review-256 CHANGES_REQUIRED (CRIT-1: case mismatch). → feature-023 P1-CHANGES_REQUIRED
+- **slave-6** (reviewers): bug-043-review — code-review-281 CHANGES_REQUIRED (C1+H1+H2+M1+M2) + rules-review-257 APPROVED. → bug-043 CHANGES_REQUIRED
+
+**Smoke test:** PASSED
+**Tickets filed:** ptu-rule-131 (Poke Ball accuracy modifiers)
+**Docs created:** 8 new CLAUDE.md files
 
 ## Session Summary (2026-03-02, session 84 — plan-20260302-110035)
 
