@@ -3,7 +3,7 @@ ticket_id: refactoring-120
 category: EXT-GOD
 priority: P3
 severity: MEDIUM
-status: open
+status: resolved
 domain: combat
 source: code-review-273 HIGH-003
 created_by: slave-collector (plan-20260302-110035)
