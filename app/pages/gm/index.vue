@@ -97,6 +97,7 @@
           :current-combatant="currentCombatant"
           :is-active="encounter.isActive"
           :current-phase="encounter.battleType === 'trainer' ? encounterStore.currentPhase : undefined"
+          :is-target-flanked="isTargetFlanked"
           @action="handleAction"
           @damage="handleDamage"
           @heal="handleHeal"
@@ -334,6 +335,12 @@ const handleKeyboardShortcuts = (event: KeyboardEvent) => {
     return
   }
 }
+
+// P2: Flanking detection for list view CombatantCards
+// Separate instance from GridCanvas (which has its own for the VTT tokens).
+// Both use the same computed combatants so results are identical.
+const allCombatants = computed(() => encounter.value?.combatants ?? [])
+const { isTargetFlanked } = useFlankingDetection(allCombatants)
 
 // View state
 const activeView = ref<'list' | 'grid'>('list')

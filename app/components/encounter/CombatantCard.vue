@@ -90,6 +90,11 @@
         </span>
       </div>
 
+      <!-- P2: Flanking indicator (PTU p.232: -2 evasion penalty) -->
+      <div v-if="isFlanked" class="combatant-card__flanking">
+        <span class="flanking-badge">Flanked</span>
+      </div>
+
       <!-- Combat Stages (GM only, show non-zero) -->
       <div v-if="isGm && hasStageChanges" class="combatant-card__stages">
         <span
@@ -273,6 +278,8 @@ const props = defineProps<{
   combatant: Combatant
   isCurrent: boolean
   isGm: boolean
+  /** P2: Whether this combatant is currently flanked (provided by parent when VTT is active) */
+  isFlanked?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -729,6 +736,10 @@ const handleActClick = () => {
     border-radius: $border-radius-sm;
   }
 
+  &__flanking {
+    margin-bottom: $spacing-xs;
+  }
+
   &__capture-rate {
     margin-top: $spacing-sm;
   }
@@ -790,6 +801,18 @@ const handleActClick = () => {
   align-items: center;
   gap: $spacing-sm;
   margin-bottom: $spacing-xs;
+}
+
+// Flanking badge (PTU p.232)
+.flanking-badge {
+  display: inline-block;
+  padding: 2px $spacing-xs;
+  font-size: $font-size-xs;
+  font-weight: 600;
+  color: $color-warning;
+  background: rgba($color-warning, 0.2);
+  border: 1px solid rgba($color-warning, 0.4);
+  border-radius: $border-radius-sm;
 }
 
 // Stage badge

@@ -18,6 +18,7 @@
         :combatant="currentCombatant"
         :is-current="true"
         :is-gm="true"
+        :is-flanked="isTargetFlanked?.(currentCombatant.id) ?? false"
         @action="(id, action) => emit('action', id, action)"
         @damage="(id, damage) => emit('damage', id, damage)"
         @heal="(id, amount, temp, injuries) => emit('heal', id, amount, temp, injuries)"
@@ -47,6 +48,7 @@
             :combatant="combatant"
             :is-current="combatant.id === currentCombatant?.id"
             :is-gm="true"
+            :is-flanked="isTargetFlanked?.(combatant.id) ?? false"
             @action="(id, action) => emit('action', id, action)"
             @damage="(id, damage) => emit('damage', id, damage)"
             @heal="(id, amount, temp, injuries) => emit('heal', id, amount, temp, injuries)"
@@ -79,6 +81,7 @@
             :combatant="combatant"
             :is-current="combatant.id === currentCombatant?.id"
             :is-gm="true"
+            :is-flanked="isTargetFlanked?.(combatant.id) ?? false"
             @action="(id, action) => emit('action', id, action)"
             @damage="(id, damage) => emit('damage', id, damage)"
             @heal="(id, amount, temp, injuries) => emit('heal', id, amount, temp, injuries)"
@@ -111,6 +114,7 @@
             :combatant="combatant"
             :is-current="combatant.id === currentCombatant?.id"
             :is-gm="true"
+            :is-flanked="isTargetFlanked?.(combatant.id) ?? false"
             @action="(id, action) => emit('action', id, action)"
             @damage="(id, damage) => emit('damage', id, damage)"
             @heal="(id, amount, temp, injuries) => emit('heal', id, amount, temp, injuries)"
@@ -147,6 +151,8 @@ interface Props {
   currentCombatant: Combatant | null
   isActive: boolean
   currentPhase?: TurnPhase
+  /** P2: Check if a combatant is flanked (from VTT flanking detection) */
+  isTargetFlanked?: (combatantId: string) => boolean
 }
 
 const props = defineProps<Props>()
