@@ -3,7 +3,7 @@ id: docs-003
 title: "Add CLAUDE.md for app/stores/"
 priority: P0
 severity: HIGH
-status: open
+status: resolved
 domain: state-management
 source: plan-descendant-claude-md-rollout
 created_by: user
@@ -70,3 +70,7 @@ Stores do NOT import each other. Cross-store coordination happens at the compone
 - Classification matches actual store state/action analysis
 - Undo/redo description matches useEncounterHistory implementation
 - WebSocket handlers verified against actual store method signatures
+
+## Resolution Log
+
+- **9d90a397** — Gap fix: added undo/redo API names, groupView WS setters, groupViewTabs handler names, cross-store coordination examples (58 lines)

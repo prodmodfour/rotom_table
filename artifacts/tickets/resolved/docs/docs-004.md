@@ -3,7 +3,7 @@ id: docs-004
 title: "Add CLAUDE.md for app/components/encounter/"
 priority: P0
 severity: HIGH
-status: in-progress
+status: resolved
 domain: combat
 source: plan-descendant-claude-md-rollout
 created_by: user
@@ -99,3 +99,4 @@ MoveButton (click) → MoveTargetModal (select targets, preview damage)
 - Battle modes reference decree-021
 - 11 encounter composables mapped to their consuming components
 - Damage flow chain documented: MoveButton -> MoveTargetModal -> useMoveCalculation -> DamageSection -> TargetDamageList
+- **b4309231** — Gap fix: added currentPhase values, API endpoints, store methods, server service references to turn lifecycle; added useEncounterStore() and useFlankingDetection() to composable table (62 lines)

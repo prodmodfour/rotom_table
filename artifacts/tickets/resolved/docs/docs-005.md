@@ -3,7 +3,7 @@ id: docs-005
 title: "Add CLAUDE.md for app/composables/"
 priority: P0
 severity: HIGH
-status: in-progress
+status: resolved
 domain: composables
 source: plan-descendant-claude-md-rollout
 created_by: user
@@ -90,3 +90,4 @@ Create a descendant CLAUDE.md in `app/composables/` to map the 54 composables by
   - Dependency chains verified against actual import statements
   - Gotchas verified: module-level refs in useEncounterHistory (lines 6-7), 280+ name mappings in usePokemonSprite
   - No duplication with parent `app/CLAUDE.md`
+- **4d4bd31e** — Gap fix: added useIsometricInteraction, useMoveCalculation, usePlayerCombat dependency chains; added VTT exclusivity note (53 lines)

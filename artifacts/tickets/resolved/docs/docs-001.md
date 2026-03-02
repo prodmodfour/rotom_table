@@ -3,7 +3,7 @@ id: docs-001
 title: "Add CLAUDE.md for app/components/vtt/"
 priority: P0
 severity: HIGH
-status: in-progress
+status: resolved
 domain: vtt-grid
 source: plan-descendant-claude-md-rollout
 created_by: user
@@ -83,3 +83,4 @@ Table mapping each of the 14 .vue files to the composables and stores they consu
   - 10 decree references verified against `decrees/` directory
   - Line counts verified: VTTContainer 644, GridCanvas 465, IsometricCanvas 440, VTTToken 404, TerrainPainter 595
   - No duplication with parent `app/CLAUDE.md`
+- **0063eecc** — Gap fix: added decree-009, ptuDistanceTokensBBox(), movement modifiers, AoO detection to PTU rules section (63 lines)

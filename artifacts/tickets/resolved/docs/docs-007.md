@@ -3,7 +3,7 @@ id: docs-007
 title: "Add CLAUDE.md for app/tests/"
 priority: P0
 severity: HIGH
-status: open
+status: resolved
 domain: testing
 source: plan-descendant-claude-md-rollout
 created_by: user
@@ -109,3 +109,7 @@ expect(getSetDamage(6)).toBe(15)
 - Test count verified against actual directory listing
 - Mock patterns verified against existing test files
 - Vitest config details match app/vitest.config.ts
+
+## Resolution Log
+
+- **1cf0aefd** — Gap fix: added inline code examples for all 6 mock patterns, factory helper names (createMockPokemonEntity, createMockCombatant), Playwright e2e note, integration test gap note (66 lines)
