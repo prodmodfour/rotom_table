@@ -188,6 +188,38 @@ export const useEncounterStore = defineStore('encounter', {
         return true
       })
     },
+
+    // ===========================================
+    // Mount State Getters (feature-004)
+    // ===========================================
+
+    /** Get all currently mounted pairs (rider combatants with isMounted=true) */
+    mountedRiders: (state): Combatant[] => {
+      if (!state.encounter) return []
+      return state.encounter.combatants.filter(c => c.mountState?.isMounted === true)
+    },
+
+    /** Check if a specific combatant is currently mounted (as rider) */
+    isMountedRider: (state) => (combatantId: string): boolean => {
+      if (!state.encounter) return false
+      const c = state.encounter.combatants.find(c => c.id === combatantId)
+      return c?.mountState?.isMounted === true
+    },
+
+    /** Check if a specific combatant is currently being ridden (as mount) */
+    isBeingRidden: (state) => (combatantId: string): boolean => {
+      if (!state.encounter) return false
+      const c = state.encounter.combatants.find(c => c.id === combatantId)
+      return c?.mountState !== undefined && c.mountState.isMounted === false
+    },
+
+    /** Get the mount partner for a combatant (returns the other half of the pair) */
+    getMountPartner: (state) => (combatantId: string): Combatant | null => {
+      if (!state.encounter) return null
+      const c = state.encounter.combatants.find(c => c.id === combatantId)
+      if (!c?.mountState) return null
+      return state.encounter.combatants.find(p => p.id === c.mountState!.partnerId) ?? null
+    },
   },
 
   actions: {
@@ -945,6 +977,67 @@ export const useEncounterStore = defineStore('encounter', {
         this.encounter = response.data
       } catch (e: any) {
         this.error = e.message || 'Failed to set weather'
+        throw e
+      }
+    },
+
+    // ===========================================
+    // Mount / Dismount (feature-004)
+    // ===========================================
+
+    /** Mount a trainer on an adjacent Pokemon with the Mountable capability */
+    async mountRider(riderId: string, mountId: string, skipCheck?: boolean) {
+      if (!this.encounter) return null
+
+      try {
+        const response = await $fetch<{
+          data: {
+            encounter: Encounter
+            mountResult: {
+              riderId: string
+              mountId: string
+              actionCost: 'standard' | 'free_with_shift'
+              checkRequired: boolean
+              checkAutoSuccess: boolean
+              mounted: boolean
+            }
+          }
+        }>(`/api/encounters/${this.encounter.id}/mount`, {
+          method: 'POST',
+          body: { riderId, mountId, skipCheck }
+        })
+        this.encounter = response.data.encounter
+        return response.data.mountResult
+      } catch (e: any) {
+        this.error = e.message || 'Failed to mount'
+        throw e
+      }
+    },
+
+    /** Dismount a trainer from their mounted Pokemon */
+    async dismountRider(riderId: string, forced?: boolean, skipCheck?: boolean) {
+      if (!this.encounter) return null
+
+      try {
+        const response = await $fetch<{
+          data: {
+            encounter: Encounter
+            dismountResult: {
+              riderId: string
+              mountId: string
+              riderPosition: GridPosition | null
+              forced: boolean
+              dismounted: boolean
+            }
+          }
+        }>(`/api/encounters/${this.encounter.id}/dismount`, {
+          method: 'POST',
+          body: { riderId, forced, skipCheck }
+        })
+        this.encounter = response.data.encounter
+        return response.data.dismountResult
+      } catch (e: any) {
+        this.error = e.message || 'Failed to dismount'
         throw e
       }
     },
