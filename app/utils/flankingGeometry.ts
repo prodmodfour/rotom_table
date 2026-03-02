@@ -192,3 +192,48 @@ export function checkFlanking(
     requiredFoes,
   }
 }
+
+/**
+ * Count how many cells of an attacker are adjacent to a target.
+ * This determines the attacker's "foe count" for flanking purposes.
+ *
+ * PTU p.232: Foes larger than Medium count as multiple foes equal to
+ * the number of their squares adjacent to the flanked target.
+ *
+ * An attacker cell is "adjacent" to the target if any of its 8-neighbors
+ * is a cell occupied by the target.
+ *
+ * @param attackerPos - Attacker's anchor position (top-left)
+ * @param attackerSize - Attacker's token footprint
+ * @param targetPos - Target's anchor position (top-left)
+ * @param targetSize - Target's token footprint
+ * @returns Number of attacker cells adjacent to the target (0 if not adjacent)
+ */
+export function countAdjacentAttackerCells(
+  attackerPos: GridPosition, attackerSize: number,
+  targetPos: GridPosition, targetSize: number
+): number {
+  const targetCellSet = new Set<string>()
+  for (let dx = 0; dx < targetSize; dx++) {
+    for (let dy = 0; dy < targetSize; dy++) {
+      targetCellSet.add(`${targetPos.x + dx},${targetPos.y + dy}`)
+    }
+  }
+
+  let count = 0
+  for (let dx = 0; dx < attackerSize; dx++) {
+    for (let dy = 0; dy < attackerSize; dy++) {
+      const ax = attackerPos.x + dx
+      const ay = attackerPos.y + dy
+      // Check if this attacker cell is adjacent to any target cell
+      for (const [ox, oy] of NEIGHBOR_OFFSETS) {
+        if (targetCellSet.has(`${ax + ox},${ay + oy}`)) {
+          count++
+          break // This attacker cell counts as at most 1 foe
+        }
+      }
+    }
+  }
+
+  return count
+}
