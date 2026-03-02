@@ -42,6 +42,9 @@ export function usePlayerRequestHandlers(options: PlayerRequestHandlersOptions) 
     if (!encounter.value) return
 
     try {
+      // Capture undo snapshot before modifying encounter state
+      encounterStore.captureSnapshot('Capture Attempt')
+
       // Find the trainer combatant to get the trainer entity ID
       const trainerCombatant = encounter.value.combatants.find(
         c => c.id === data.trainerCombatantId
@@ -108,6 +111,9 @@ export function usePlayerRequestHandlers(options: PlayerRequestHandlersOptions) 
     if (!encounter.value) return
 
     try {
+      // Capture undo snapshot before modifying encounter state
+      encounterStore.captureSnapshot('Take a Breather')
+
       const result = await $fetch(`/api/encounters/${encounter.value.id}/breather`, {
         method: 'POST',
         body: {
@@ -176,6 +182,9 @@ export function usePlayerRequestHandlers(options: PlayerRequestHandlersOptions) 
     if (!encounter.value) return
 
     try {
+      // Capture undo snapshot before modifying encounter state
+      encounterStore.captureSnapshot('Use Healing Item')
+
       // Find the trainer combatant to get the user entity ID
       const trainerCombatant = encounter.value.combatants.find(
         c => c.id === data.trainerCombatantId
