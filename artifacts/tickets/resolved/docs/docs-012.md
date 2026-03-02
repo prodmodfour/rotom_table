@@ -3,7 +3,7 @@ id: docs-012
 title: "Add CLAUDE.md for app/types/"
 priority: P0
 severity: MEDIUM
-status: open
+status: resolved
 domain: types
 source: plan-descendant-claude-md-rollout
 created_by: user
