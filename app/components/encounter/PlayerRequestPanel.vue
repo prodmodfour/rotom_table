@@ -88,6 +88,7 @@ import {
 } from '@phosphor-icons/vue'
 import type { WebSocketEvent } from '~/types'
 import type { PlayerActionRequest, PlayerActionType } from '~/types/player-sync'
+import { DEFAULT_BALL_TYPE } from '~/constants/pokeBalls'
 
 interface DisplayedRequest {
   requestId: string
@@ -276,7 +277,7 @@ function handleApprove(req: DisplayedRequest): void {
         requestId: req.requestId,
         targetPokemonId: req.targetPokemonId!,
         trainerCombatantId: req.trainerCombatantId!,
-        ballType: req.ballType ?? 'Poke Ball'
+        ballType: req.ballType ?? DEFAULT_BALL_TYPE
       })
     } else if (req.action === 'breather') {
       emit('approve-breather', {

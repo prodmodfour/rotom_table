@@ -1,6 +1,7 @@
 import type { Combatant, Move, Pokemon, HumanCharacter, WebSocketEvent } from '~/types'
 import type { PlayerActionRequest } from '~/types/api'
 import type { TurnPhase } from '~/types/combat'
+import { DEFAULT_BALL_TYPE } from '~/constants/pokeBalls'
 
 /**
  * Injection key for the shared WebSocket send function.
@@ -360,7 +361,7 @@ export function usePlayerCombat() {
       action: 'capture',
       targetPokemonId: params.targetPokemonId,
       targetPokemonName: params.targetPokemonName,
-      ballType: params.ballType ?? 'Poke Ball',
+      ballType: params.ballType ?? DEFAULT_BALL_TYPE,
       captureRatePreview: params.captureRatePreview,
       trainerCombatantId: params.trainerCombatantId
     }
