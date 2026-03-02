@@ -1,17 +1,33 @@
 ---
-generated_at: 2026-03-02T13:54:17.664Z
-total_tickets: 267
-open: 30
+generated_at: 2026-03-02T14:28:37.077Z
+total_tickets: 283
+open: 46
 in_progress: 108
-resolved: 110
+resolved: 111
 ---
 
 # Tickets Index
 
-## Open Tickets (30)
+## Open Tickets (46)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
+| docs-001 | docs | P0 | vtt-grid | docs-001: Add CLAUDE.md for app/components/vtt/ |
+| docs-002 | docs | P0 | server | docs-002: Add CLAUDE.md for app/server/services/ |
+| docs-003 | docs | P0 | state-management | docs-003: Add CLAUDE.md for app/stores/ |
+| docs-004 | docs | P0 | combat | docs-004: Add CLAUDE.md for app/components/encounter/ |
+| docs-005 | docs | P0 | composables | docs-005: Add CLAUDE.md for app/composables/ |
+| docs-006 | docs | P0 | database | docs-006: Add CLAUDE.md for app/prisma/ |
+| docs-007 | docs | P0 | testing | docs-007: Add CLAUDE.md for app/tests/ |
+| docs-008 | docs | P0 | reference | docs-008: Add CLAUDE.md for books/markdown/ |
+| docs-009 | docs | P0 | workflow | docs-009: Add CLAUDE.md for artifacts/ |
+| docs-010 | docs | P0 | workflow | docs-010: Add CLAUDE.md for decrees/ |
+| docs-011 | docs | P0 | server | docs-011: Add CLAUDE.md for app/server/api/ |
+| docs-012 | docs | P0 | types | docs-012: Add CLAUDE.md for app/types/ |
+| docs-013 | docs | P0 | scenes | docs-013: Add CLAUDE.md for app/components/scene/ |
+| docs-014 | docs | P0 | workflow | docs-014: Slim app/CLAUDE.md — replace domain detail with cr |
+| docs-015 | docs | P0 | workflow | docs-015: Slim root CLAUDE.md — replace data models and PTU  |
+| docs-016 | docs | P0 | server | docs-016: Add cross-references to app/server/CLAUDE.md |
 | ptu-rule-127 | ptu-rule | P1 | character-lifecycle | Per decree-037, trainers should NOT receive an automatic +1  |
 | feature-018 | feature | P2 | scenes | feature-018: Weather Effect Automation |
 | feature-021 | feature | P2 | character-lifecycle | feature-021: Derived Capability Calculations |
@@ -156,11 +172,9 @@ resolved: 110
 | refactoring-092 | refactoring | P4 | encounter-tables | code-review-207 M1 |
 | refactoring-093 | refactoring | P4 | combat | code-review-207 M2 |
 
-## Open Decree-Needs (1)
+## Open Decree-Needs (0)
 
-| ID | Priority | Domain | Topic |
-|----|----------|--------|-------|
-| decree-need-040 | P2 | healing | — |
+All decree-needs addressed.
 
 ## Summary by Category
 
@@ -170,5 +184,6 @@ resolved: 110
 | ptu-rule | 6 | 59 | 38 | 104 |
 | feature | 4 | 15 | 3 | 23 |
 | ux | 5 | 7 | 2 | 15 |
-| decree | 0 | 0 | 39 | 40 |
+| decree | 0 | 0 | 40 | 40 |
 | refactoring | 14 | 13 | 1 | 41 |
+| docs | 16 | 0 | 0 | 16 |
