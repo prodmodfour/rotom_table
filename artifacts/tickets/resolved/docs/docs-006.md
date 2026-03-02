@@ -3,7 +3,7 @@ id: docs-006
 title: "Add CLAUDE.md for app/prisma/"
 priority: P0
 severity: HIGH
-status: in-progress
+status: resolved
 domain: database
 source: plan-descendant-claude-md-rollout
 created_by: user

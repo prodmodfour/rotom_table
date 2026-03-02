@@ -3,7 +3,7 @@ id: docs-002
 title: "Add CLAUDE.md for app/server/services/"
 priority: P0
 severity: HIGH
-status: in-progress
+status: resolved
 domain: server
 source: plan-descendant-claude-md-rollout
 created_by: user

@@ -3,7 +3,7 @@ id: docs-008
 title: "Add CLAUDE.md for books/markdown/"
 priority: P0
 severity: HIGH
-status: in-progress
+status: resolved
 domain: reference
 source: plan-descendant-claude-md-rollout
 created_by: user
