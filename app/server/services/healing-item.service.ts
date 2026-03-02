@@ -7,8 +7,7 @@
  * P2: Action economy, inventory consumption.
  */
 
-import { HEALING_ITEM_CATALOG, type HealingItemDef } from '~/constants/healingItems'
-import { PERSISTENT_CONDITIONS } from '~/constants/statusConditions'
+import { HEALING_ITEM_CATALOG, resolveConditionsToCure, type HealingItemDef } from '~/constants/healingItems'
 import { applyHealingToEntity, updateStatusConditions } from '~/server/services/combatant.service'
 import { getEffectiveMaxHp } from '~/utils/restHealing'
 import type { Combatant, StatusCondition, Pokemon, HumanCharacter } from '~/types'
@@ -25,44 +24,8 @@ export interface ItemApplicationResult {
   error?: string
 }
 
-// ============================================
-// CURE RESOLUTION
-// ============================================
-
-/**
- * Resolve which conditions an item cures on a specific target.
- * Returns the list of StatusCondition values to remove.
- *
- * Priority order:
- * 1. curesAllStatus — clears all conditions except Fainted and Dead
- * 2. curesAllPersistent — clears all persistent conditions
- * 3. curesConditions — clears specific named conditions
- */
-export function resolveConditionsToCure(
-  item: HealingItemDef,
-  targetConditions: StatusCondition[]
-): StatusCondition[] {
-  if (!targetConditions || targetConditions.length === 0) return []
-
-  // curesAllStatus: clear all persistent + volatile (but not Fainted/Dead)
-  if (item.curesAllStatus) {
-    return targetConditions.filter(c => c !== 'Fainted' && c !== 'Dead')
-  }
-
-  // curesAllPersistent: clear all persistent conditions
-  if (item.curesAllPersistent) {
-    const persistentSet = new Set<string>(PERSISTENT_CONDITIONS)
-    return targetConditions.filter(c => persistentSet.has(c))
-  }
-
-  // curesConditions: clear specific named conditions
-  if (item.curesConditions && item.curesConditions.length > 0) {
-    const cureSet = new Set<string>(item.curesConditions)
-    return targetConditions.filter(c => cureSet.has(c))
-  }
-
-  return []
-}
+// Re-export for backwards compatibility with tests and callers
+export { resolveConditionsToCure } from '~/constants/healingItems'
 
 // ============================================
 // VALIDATION

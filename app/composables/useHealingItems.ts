@@ -6,9 +6,10 @@
  * P1: Adds cure, revive, combined items with category-aware filtering.
  */
 
-import { HEALING_ITEM_CATALOG, type HealingItemDef, type HealingItemCategory }
-  from '~/constants/healingItems'
-import { resolveConditionsToCure } from '~/server/services/healing-item.service'
+import {
+  HEALING_ITEM_CATALOG, resolveConditionsToCure,
+  type HealingItemDef, type HealingItemCategory
+} from '~/constants/healingItems'
 import { getEffectiveMaxHp } from '~/utils/restHealing'
 import type { Combatant } from '~/types'
 

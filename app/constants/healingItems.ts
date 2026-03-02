@@ -201,3 +201,48 @@ export const ITEM_CATEGORY_LABELS: Record<HealingItemCategory, string> = {
   combined: 'Full Restore',
   revive: 'Revive',
 }
+
+// ============================================
+// CURE RESOLUTION (shared between client + server)
+// ============================================
+
+/**
+ * Resolve which conditions an item cures on a specific target.
+ * Returns the list of StatusCondition values to remove.
+ *
+ * This is a pure function with no server dependencies, safe to use
+ * in both client composables and server services.
+ *
+ * Priority order:
+ * 1. curesAllStatus — clears all conditions except Fainted and Dead
+ * 2. curesAllPersistent — clears all persistent conditions
+ * 3. curesConditions — clears specific named conditions
+ */
+export function resolveConditionsToCure(
+  item: HealingItemDef,
+  targetConditions: StatusCondition[]
+): StatusCondition[] {
+  if (!targetConditions || targetConditions.length === 0) return []
+
+  // Import-free persistent condition list (avoids circular dependency with statusConditions.ts)
+  const PERSISTENT: readonly string[] = ['Burned', 'Frozen', 'Paralyzed', 'Poisoned', 'Badly Poisoned']
+
+  // curesAllStatus: clear all persistent + volatile (but not Fainted/Dead)
+  if (item.curesAllStatus) {
+    return targetConditions.filter(c => c !== 'Fainted' && c !== 'Dead')
+  }
+
+  // curesAllPersistent: clear all persistent conditions
+  if (item.curesAllPersistent) {
+    const persistentSet = new Set<string>(PERSISTENT)
+    return targetConditions.filter(c => persistentSet.has(c))
+  }
+
+  // curesConditions: clear specific named conditions
+  if (item.curesConditions && item.curesConditions.length > 0) {
+    const cureSet = new Set<string>(item.curesConditions)
+    return targetConditions.filter(c => cureSet.has(c))
+  }
+
+  return []
+}
