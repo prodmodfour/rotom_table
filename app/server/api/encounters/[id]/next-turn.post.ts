@@ -21,6 +21,7 @@ import type { TickDamageResult } from '~/server/services/status-automation.servi
 import { broadcastToEncounter } from '~/server/utils/websocket'
 import { expirePendingActions, cleanupResolvedActions, checkHoldQueue } from '~/server/services/out-of-turn.service'
 import { checkHeavilyInjured, applyHeavilyInjuredPenalty, checkDeath } from '~/utils/injuryMechanics'
+import { getOverlandSpeed } from '~/utils/combatantCapabilities'
 import type { TrainerDeclaration } from '~/types/combat'
 import type { StatusCondition } from '~/types'
 
@@ -576,6 +577,22 @@ function resetCombatantsForNewRound(combatants: any[]) {
       isHolding: false,
       holdUntilInitiative: null,
       holdUsedThisRound: false
+    }
+    // Reset mount movement for new round (feature-004)
+    // Recalculate movementRemaining from mount's Overland speed
+    if (c.mountState) {
+      if (!c.mountState.isMounted) {
+        // This is the mount -- recalculate from its own Overland speed
+        const mountSpeed = getOverlandSpeed(c)
+        c.mountState = { ...c.mountState, movementRemaining: mountSpeed }
+      } else {
+        // This is the rider -- sync movement with mount partner
+        const mountPartner = combatants.find((p: any) => p.id === c.mountState.partnerId)
+        if (mountPartner) {
+          const mountSpeed = getOverlandSpeed(mountPartner)
+          c.mountState = { ...c.mountState, movementRemaining: mountSpeed }
+        }
+      }
     }
   })
 }
