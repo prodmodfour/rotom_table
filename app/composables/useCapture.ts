@@ -74,11 +74,15 @@ export function useCapture() {
 
   /**
    * Get the capture rate for a Pokemon by ID, with optional ball type and condition context.
+   * When encounterId/trainerId are provided, the server auto-populates full ball condition
+   * context (encounter round, active Pokemon, species ownership, etc.).
    */
   async function getCaptureRate(
     pokemonId: string,
     ballType: string = DEFAULT_BALL_TYPE,
-    conditionContext?: Partial<BallConditionContext>
+    conditionContext?: Partial<BallConditionContext>,
+    encounterId?: string,
+    trainerId?: string
   ): Promise<CaptureRateData | null> {
     loading.value = true
     error.value = null
@@ -86,7 +90,7 @@ export function useCapture() {
     try {
       const response = await $fetch<{ success: boolean; data: CaptureRateData }>('/api/capture/rate', {
         method: 'POST',
-        body: { pokemonId, ballType, conditionContext }
+        body: { pokemonId, ballType, conditionContext, encounterId, trainerId }
       })
 
       if (response.success) {

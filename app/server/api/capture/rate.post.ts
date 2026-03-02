@@ -3,6 +3,7 @@ import { calculateCaptureRate, getCaptureDescription } from '~/utils/captureRate
 import { isLegendarySpecies } from '~/constants/legendarySpecies'
 import { POKE_BALL_CATALOG, DEFAULT_BALL_TYPE, calculateBallModifier } from '~/constants/pokeBalls'
 import type { BallConditionContext } from '~/constants/pokeBalls'
+import { buildConditionContext } from '~/server/services/ball-condition.service'
 import type { StatusCondition } from '~/types'
 
 interface CaptureRateRequest {
@@ -17,7 +18,11 @@ interface CaptureRateRequest {
   isShiny?: boolean
   isLegendary?: boolean  // GM override for legendary status
   ballType?: string      // Key in POKE_BALL_CATALOG (default: 'Basic Ball')
-  /** Ball condition context for conditional modifier preview */
+  /** Active encounter ID (for round tracking, active Pokemon lookup) */
+  encounterId?: string
+  /** Trainer ID (for Repeat Ball species check, active Pokemon lookup) */
+  trainerId?: string
+  /** GM overrides for ball condition context */
   conditionContext?: Partial<BallConditionContext>
 }
 
@@ -33,6 +38,7 @@ export default defineEventHandler(async (event) => {
   let injuries: number = 0
   let isShiny: boolean = false
   let species: string = ''
+  let pokemonGender: string = ''
   let speciesDataRecord: any = null
 
   if (body.pokemonId) {
@@ -55,6 +61,7 @@ export default defineEventHandler(async (event) => {
     injuries = pokemon.injuries || 0
     isShiny = pokemon.shiny || false
     species = pokemon.species
+    pokemonGender = pokemon.gender || ''
 
     // Look up species data for evolution info and ball condition context
     speciesDataRecord = await prisma.speciesData.findUnique({
@@ -121,22 +128,38 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  // Build condition context: auto-populate from species data, merge with GM overrides
-  const autoContext: Partial<BallConditionContext> = {
-    targetLevel: level,
-    targetTypes: speciesDataRecord
-      ? [speciesDataRecord.type1, ...(speciesDataRecord.type2 ? [speciesDataRecord.type2] : [])]
-      : [],
-    targetWeightClass: speciesDataRecord?.weightClass ?? 1,
-    targetMovementSpeed: speciesDataRecord
-      ? Math.max(speciesDataRecord.overland ?? 0, speciesDataRecord.swim ?? 0, speciesDataRecord.sky ?? 0)
-      : 5,
-    targetSpecies: species,
-  }
+  // Build condition context using the shared service (same logic as attempt.post.ts).
+  // When trainerId is provided, resolves encounter round, active Pokemon, species ownership.
+  // Falls back to partial context from speciesData when trainerId is not available.
+  let conditionContext: Partial<BallConditionContext>
 
-  const conditionContext: Partial<BallConditionContext> = {
-    ...autoContext,
-    ...body.conditionContext,
+  if (body.trainerId) {
+    // Full context: encounter round, active Pokemon, species ownership, etc.
+    conditionContext = await buildConditionContext(
+      { species, level, gender: pokemonGender },
+      speciesDataRecord,
+      { id: body.trainerId },
+      body.encounterId,
+      body.conditionContext
+    )
+  } else {
+    // Minimal context when no trainer is specified (backward-compatible fallback)
+    const autoContext: Partial<BallConditionContext> = {
+      targetLevel: level,
+      targetTypes: speciesDataRecord
+        ? [speciesDataRecord.type1, ...(speciesDataRecord.type2 ? [speciesDataRecord.type2] : [])]
+        : [],
+      targetWeightClass: speciesDataRecord?.weightClass ?? 1,
+      targetMovementSpeed: speciesDataRecord
+        ? Math.max(speciesDataRecord.overland ?? 0, speciesDataRecord.swim ?? 0, speciesDataRecord.sky ?? 0)
+        : 5,
+      targetSpecies: species,
+    }
+
+    conditionContext = {
+      ...autoContext,
+      ...body.conditionContext,
+    }
   }
 
   const ballResult = calculateBallModifier(ballType, conditionContext)
