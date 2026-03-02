@@ -1,6 +1,6 @@
 # Composables CLAUDE.md
 
-54 composables across 13 domains. All follow `use<PascalCaseName>.ts` naming and are auto-imported by Nuxt 3.
+54 composables across 13 domains. All follow `use<PascalCaseName>.ts` naming and are auto-imported by Nuxt 3. **VTT composables are exclusively used in VTT grid contexts -- NOT used for non-VTT features.**
 
 ## Domain Grouping
 
@@ -27,6 +27,9 @@
 - `useGridInteraction` -> `useTouchInteraction` + selection/measurement/fogOfWar stores (input handling)
 - `useGridRendering` -> `useRangeParser` + `useCanvasDrawing` + fogOfWar/terrain/measurement stores (2D draw loop)
 - `useFlankingDetection` -> `flankingGeometry` util + `combatSides` util (bridges combat + VTT position data)
+- `useIsometricInteraction` -> `useIsometricProjection` + `useTouchInteraction` (iso input handling)
+- `useMoveCalculation` -> `equipmentBonuses`, `evasionCalculation`, `typeEffectiveness` utilities
+- `usePlayerCombat` -> `usePlayerWebSocket` via `PLAYER_WS_SEND_KEY` injection key
 
 ## Largest Composables (over 20KB)
 
