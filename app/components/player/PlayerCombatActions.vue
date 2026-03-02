@@ -165,7 +165,7 @@
             :disabled="trainerInventory.length === 0"
             :aria-expanded="showItemPanel"
             aria-label="Request to use an item (requires GM approval)"
-            @click="showItemPanel = !showItemPanel"
+            @click="togglePanel(showItemPanel)"
           >
             <PhFirstAidKit :size="20" />
             <span>Use Item</span>
@@ -177,7 +177,7 @@
             :disabled="switchablePokemon.length === 0"
             :aria-expanded="showSwitchPanel"
             aria-label="Request to switch Pokemon (requires GM approval)"
-            @click="showSwitchPanel = !showSwitchPanel"
+            @click="togglePanel(showSwitchPanel)"
           >
             <PhArrowsClockwise :size="20" />
             <span>Switch</span>
@@ -188,7 +188,7 @@
             class="combat-actions__btn combat-actions__btn--maneuver"
             :aria-expanded="showManeuverPanel"
             aria-label="Request a combat maneuver (requires GM approval)"
-            @click="showManeuverPanel = !showManeuverPanel"
+            @click="togglePanel(showManeuverPanel)"
           >
             <PhStrategy :size="20" />
             <span>Maneuver</span>
@@ -201,7 +201,7 @@
             :disabled="!canUseStandardAction || !canBeCommanded || captureTargets.length === 0"
             :aria-expanded="showCapturePanel"
             aria-label="Request to throw a Poke Ball (requires GM approval)"
-            @click="showCapturePanel = !showCapturePanel"
+            @click="togglePanel(showCapturePanel)"
           >
             <PhCrosshairSimple :size="20" />
             <span>Capture</span>
@@ -213,7 +213,7 @@
             :disabled="!canUseStandardAction"
             :aria-expanded="showHealingPanel"
             aria-label="Healing options: Take a Breather or use healing items (requires GM approval)"
-            @click="showHealingPanel = !showHealingPanel"
+            @click="togglePanel(showHealingPanel)"
           >
             <PhHeart :size="20" />
             <span>Heal</span>
@@ -378,6 +378,7 @@ import {
   PhCrosshairSimple,
   PhHeart
 } from '@phosphor-icons/vue'
+import type { Ref } from 'vue'
 import type { Move } from '~/types'
 import { COMBAT_MANEUVERS } from '~/constants/combatManeuvers'
 
@@ -417,6 +418,20 @@ const showManeuverPanel = ref(false)
 const showCapturePanel = ref(false)
 const showHealingPanel = ref(false)
 const showPassConfirm = ref(false)
+
+// Mutual exclusion: only one request panel open at a time
+const closeAllPanels = () => {
+  showItemPanel.value = false
+  showSwitchPanel.value = false
+  showManeuverPanel.value = false
+  showCapturePanel.value = false
+  showHealingPanel.value = false
+}
+const togglePanel = (panel: Ref<boolean>) => {
+  const wasOpen = panel.value
+  closeAllPanels()
+  panel.value = !wasOpen
+}
 
 /**
  * Whether the capture button should be visible.
@@ -621,11 +636,7 @@ const handleHealingRequestSent = () => {
 // Close panels when turn ends
 watch(isMyTurn, (isTurn) => {
   if (!isTurn) {
-    showItemPanel.value = false
-    showSwitchPanel.value = false
-    showManeuverPanel.value = false
-    showCapturePanel.value = false
-    showHealingPanel.value = false
+    closeAllPanels()
     showPassConfirm.value = false
     resetTargetSelector()
   }
