@@ -219,6 +219,12 @@ export function useWebSocket() {
         movementPreview.value = message.data
         break
 
+      case 'mount_change':
+        // feature-004 P1: mount/dismount state change
+        // The encounter state is already updated via encounter_update broadcast;
+        // this event provides mount-specific context for any specialized rendering.
+        break
+
       case 'flanking_update':
         // P2: GM broadcast flanking state — store for group/player views
         if (message.data && typeof message.data === 'object' && 'flankingMap' in message.data) {
