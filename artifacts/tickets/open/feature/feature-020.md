@@ -66,3 +66,11 @@ Design spec: `artifacts/designs/design-healing-items-001/`
   - `c5847923` H3+M2: Delete dead getApplicableItems stub, simplify validation ternary
   - `cae215af` M4: Replace hardcoded 3px gap with $spacing-xs in CombatantCard
   - `976d9bc6` M3: Add healing item system to app-surface.md
+- 2026-03-02: code-review-271 APPROVED (0 issues). rules-review-247 APPROVED (0 issues).
+- 2026-03-02: P1 implementation complete (6 commits):
+  - `71b782aa` Section F: Add Awakening item to healing item catalog
+  - `5539eb95` Sections F/G/H/I: P1 healing item service (resolveConditionsToCure, revive, combined, repulsive)
+  - `1e15b3e9` Section F: Enable all P1 categories in use-item endpoint, sync stageModifiers
+  - `7462947d` Section F-I: Category-aware getApplicableItems in useHealingItems composable
+  - `0636470b` Section I/UI: UseItemModal grouped sections with repulsive badge
+  - `b178d013` Tests: Comprehensive unit tests for cure resolution, revive HP, Full Restore

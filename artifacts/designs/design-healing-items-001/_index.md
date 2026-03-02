@@ -4,7 +4,7 @@ ticket_id: feature-020
 category: FEATURE
 scope: FULL
 domain: healing
-status: p0-implemented
+status: p1-implemented
 decrees:
   - decree-017
   - decree-029
@@ -26,6 +26,7 @@ new_files:
   - app/server/services/healing-item.service.ts
   - app/composables/useHealingItems.ts
   - app/components/encounter/UseItemModal.vue
+  - app/tests/unit/services/healing-item.service.test.ts
 ---
 
 # Design: Healing Item System

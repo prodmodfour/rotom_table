@@ -98,3 +98,63 @@ Review: code-review-267 CHANGES_REQUIRED (3H + 4M), rules-review-243 APPROVED.
 - Added use-item endpoint to encounters API list
 - Added healing item system paragraph (constants, service, composable, modal, store, WebSocket)
 - Added healing-item.service.ts to server services table
+
+## P1 Implementation (2026-03-02)
+
+Branch: `slave/4-dev-feature-020-p1-20260302`
+Review: code-review-271 APPROVED (0 issues). rules-review-247 APPROVED (0 issues).
+
+### Section F: Status Cure Items
+- **Commit:** `71b782aa` — Added Awakening item to catalog (cures Asleep + Bad Sleep, $200)
+- **Commit:** `5539eb95` — Core cure logic in healing-item.service.ts:
+  - `resolveConditionsToCure()`: resolves which conditions an item cures (specific, all-persistent, all-status modes)
+  - Integration with `updateStatusConditions()` for CS reversal (decree-005)
+  - `badlyPoisonedRound` reset when Badly Poisoned is cured
+  - Updated `validateItemApplication()` for cure items: requires matching curable conditions
+- **Commit:** `1e15b3e9` — API endpoint: removed P0 category restriction, syncs stageModifiers to DB
+
+### Section G: Revive Items
+- **Commit:** `5539eb95` — Revive logic in `applyReviveItem()`:
+  - Explicitly removes Fainted status before setting HP (avoids applyHealingToEntity double-processing)
+  - Revive: sets to fixed HP (20), capped at effective max
+  - Revival Herb: sets to 50% of effective max HP (floor), minimum 1 HP
+  - Validation: revive items require Fainted target; non-fainted returns error
+
+### Section H: Full Restore (Combined Item)
+- **Commit:** `5539eb95` — Combined handling in `applyCombinedItem()`:
+  - Cures all status conditions first (CS reversal before HP healing)
+  - Then heals 80 HP (capped at effective max)
+  - Does NOT revive from Fainted — rejects fainted targets
+  - Validation: requires either HP below max OR curable conditions
+
+### Section I: Repulsive Items
+- **Commit:** `0636470b` — UI repulsive indicators:
+  - PhWarning icon + "Repulsive" badge on repulsive items
+  - Tooltip: "May decrease Pokemon loyalty with repeated use"
+  - Repulsive flag in result display with PhWarning icon
+  - No mechanical loyalty effect (deferred)
+
+### Updated Composable
+- **Commit:** `7462947d` — `useHealingItems.ts`:
+  - `getApplicableItems()` now defaults to all P1 categories
+  - Filters restoratives by HP need, cures by matching conditions, combined by HP or condition need, revives by Fainted status
+
+### Updated UseItemModal UI
+- **Commit:** `0636470b` — `UseItemModal.vue`:
+  - Items grouped into 4 sections: Restoratives, Status Cures, Combined, Revives
+  - Category-specific icons (PhFirstAidKit, PhPill, PhStar, PhHeartBreak)
+  - Color-coded icon variants per category
+  - Fainted indicator in target dropdown
+  - Result display shows revive, conditions cured, and repulsive warnings
+  - Empty categories are hidden
+
+### Unit Tests
+- **Commit:** `b178d013` — `app/tests/unit/services/healing-item.service.test.ts` (new):
+  - resolveConditionsToCure: specific conditions, all-persistent, all-status, edge cases
+  - validateItemApplication: all categories, fainted/non-fainted, full HP, injury cap
+  - applyHealingItem: restoratives, cures with CS reversal, revives, combined items
+  - 40+ test cases covering cure resolution, revive HP calculation, Full Restore
+
+### Deviations from Spec
+- Added Awakening item (Asleep + Bad Sleep cure, $200) — referenced in spec section F item list but not in catalog P0 entries
+- Revival Herb uses `Math.max(1, floor(effectiveMax * 0.5))` to guarantee minimum 1 HP even with extreme injuries
