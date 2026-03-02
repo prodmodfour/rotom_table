@@ -2,6 +2,7 @@ import { prisma } from '~/server/utils/prisma'
 import { calculateCaptureRate, getCaptureDescription } from '~/utils/captureRate'
 import { isLegendarySpecies } from '~/constants/legendarySpecies'
 import { POKE_BALL_CATALOG, DEFAULT_BALL_TYPE, calculateBallModifier } from '~/constants/pokeBalls'
+import type { BallConditionContext } from '~/constants/pokeBalls'
 import type { StatusCondition } from '~/types'
 
 interface CaptureRateRequest {
@@ -16,6 +17,8 @@ interface CaptureRateRequest {
   isShiny?: boolean
   isLegendary?: boolean  // GM override for legendary status
   ballType?: string      // Key in POKE_BALL_CATALOG (default: 'Basic Ball')
+  /** Ball condition context for conditional modifier preview */
+  conditionContext?: Partial<BallConditionContext>
 }
 
 export default defineEventHandler(async (event) => {
@@ -30,6 +33,7 @@ export default defineEventHandler(async (event) => {
   let injuries: number = 0
   let isShiny: boolean = false
   let species: string = ''
+  let speciesDataRecord: any = null
 
   if (body.pokemonId) {
     // Look up Pokemon from database
@@ -52,14 +56,14 @@ export default defineEventHandler(async (event) => {
     isShiny = pokemon.shiny || false
     species = pokemon.species
 
-    // Look up species data for evolution info
-    const speciesData = await prisma.speciesData.findUnique({
+    // Look up species data for evolution info and ball condition context
+    speciesDataRecord = await prisma.speciesData.findUnique({
       where: { name: pokemon.species }
     })
 
-    if (speciesData) {
-      evolutionStage = speciesData.evolutionStage
-      maxEvolutionStage = speciesData.maxEvolutionStage
+    if (speciesDataRecord) {
+      evolutionStage = speciesDataRecord.evolutionStage
+      maxEvolutionStage = speciesDataRecord.maxEvolutionStage
     }
   } else {
     // Use provided data
@@ -80,13 +84,13 @@ export default defineEventHandler(async (event) => {
 
     // Look up species for evolution info if provided
     if (body.species) {
-      const speciesData = await prisma.speciesData.findUnique({
+      speciesDataRecord = await prisma.speciesData.findUnique({
         where: { name: body.species }
       })
 
-      if (speciesData) {
-        evolutionStage = speciesData.evolutionStage
-        maxEvolutionStage = speciesData.maxEvolutionStage
+      if (speciesDataRecord) {
+        evolutionStage = speciesDataRecord.evolutionStage
+        maxEvolutionStage = speciesDataRecord.maxEvolutionStage
       }
     }
   }
@@ -117,7 +121,25 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const ballResult = calculateBallModifier(ballType)
+  // Build condition context: auto-populate from species data, merge with GM overrides
+  const autoContext: Partial<BallConditionContext> = {
+    targetLevel: level,
+    targetTypes: speciesDataRecord
+      ? [speciesDataRecord.type1, ...(speciesDataRecord.type2 ? [speciesDataRecord.type2] : [])]
+      : [],
+    targetWeightClass: speciesDataRecord?.weightClass ?? 1,
+    targetMovementSpeed: speciesDataRecord
+      ? Math.max(speciesDataRecord.overland ?? 0, speciesDataRecord.swim ?? 0, speciesDataRecord.sky ?? 0)
+      : 5,
+    targetSpecies: species,
+  }
+
+  const conditionContext: Partial<BallConditionContext> = {
+    ...autoContext,
+    ...body.conditionContext,
+  }
+
+  const ballResult = calculateBallModifier(ballType, conditionContext)
 
   return {
     success: true,
@@ -137,7 +159,7 @@ export default defineEventHandler(async (event) => {
         baseModifier: ballResult.base,
         conditionalModifier: ballResult.conditional,
         conditionMet: ballResult.conditionMet,
-        conditionDescription: ballDef?.conditionDescription,
+        conditionDescription: ballResult.description ?? ballDef?.conditionDescription,
       }
     }
   }
