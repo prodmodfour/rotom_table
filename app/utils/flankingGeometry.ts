@@ -237,3 +237,174 @@ export function countAdjacentAttackerCells(
 
   return count
 }
+
+/**
+ * Greedy independent set finder.
+ *
+ * Finds a set of vertices in the adjacency graph where no two are connected.
+ * Uses a minimum-degree-first greedy heuristic: at each step, pick the vertex
+ * with the fewest connections among remaining candidates, add it to the set,
+ * then remove it and all its neighbors from the candidate pool.
+ *
+ * For the small graph sizes in PTU combat (max ~20 foes around a Gigantic
+ * target), this greedy approach finds the correct answer in virtually all
+ * practical cases.
+ *
+ * @param adjacency - Adjacency matrix (n x n), true if two vertices are connected
+ * @param n - Number of vertices
+ * @param target - Desired independent set size (stop early when reached)
+ * @returns Array of vertex indices in the independent set
+ */
+export function findIndependentSet(
+  adjacency: ReadonlyArray<ReadonlyArray<boolean>>,
+  n: number,
+  target: number
+): number[] {
+  const available = new Set<number>()
+  for (let i = 0; i < n; i++) available.add(i)
+
+  const selected: number[] = []
+
+  while (available.size > 0 && selected.length < target) {
+    // Pick vertex with minimum degree among available vertices
+    let minDeg = Infinity
+    let pick = -1
+    for (const v of available) {
+      let deg = 0
+      for (const u of available) {
+        if (u !== v && adjacency[v][u]) deg++
+      }
+      if (deg < minDeg) {
+        minDeg = deg
+        pick = v
+      }
+    }
+
+    if (pick === -1) break
+
+    selected.push(pick)
+    // Remove pick and all its neighbors from available
+    available.delete(pick)
+    for (const u of [...available]) {
+      if (adjacency[pick][u]) available.delete(u)
+    }
+  }
+
+  return selected
+}
+
+/**
+ * Check if a target is flanked (P1: full multi-tile support).
+ *
+ * Handles multi-tile targets (Large 2x2, Huge 3x3, Gigantic 4x4) which
+ * require more non-adjacent foes. Also handles multi-tile attackers which
+ * count as multiple foes equal to the number of their cells adjacent to
+ * the target (PTU p.232).
+ *
+ * Algorithm:
+ * 1. Find all foes adjacent to the target.
+ * 2. Count effective foe contributions (multi-tile attackers count more).
+ * 3. Enforce self-flank prevention (minimum 2 distinct combatants).
+ * 4. Build adjacency graph among foes.
+ * 5. Find an independent set of size >= requiredFoes using greedy algorithm.
+ *    For multi-tile attackers in the independent set, their contribution
+ *    counts toward the effective total.
+ *
+ * @param targetPos - Target's grid position (anchor)
+ * @param targetSize - Target's token footprint
+ * @param foes - Enemy combatants with positions and sizes
+ * @returns Flanking result including effective foe count
+ */
+export function checkFlankingMultiTile(
+  targetPos: GridPosition,
+  targetSize: number,
+  foes: ReadonlyArray<{ id: string; position: GridPosition; size: number }>
+): { isFlanked: boolean; flankerIds: string[]; effectiveFoeCount: number; requiredFoes: number } {
+  const requiredFoes = FLANKING_FOES_REQUIRED[targetSize] ?? 2
+
+  // Step 1: Find all foes adjacent to the target
+  const adjacentFoes = foes.filter(foe =>
+    areAdjacent(targetPos, targetSize, foe.position, foe.size)
+  )
+
+  // Self-flank prevention: minimum 2 distinct combatants always required
+  if (adjacentFoes.length < 2) {
+    const effectiveCount = adjacentFoes.length === 1
+      ? (adjacentFoes[0].size > 1
+        ? countAdjacentAttackerCells(adjacentFoes[0].position, adjacentFoes[0].size, targetPos, targetSize)
+        : 1)
+      : 0
+    return {
+      isFlanked: false,
+      flankerIds: [],
+      effectiveFoeCount: effectiveCount,
+      requiredFoes,
+    }
+  }
+
+  // Step 2: Calculate each foe's contribution (multi-tile attackers count more)
+  const foeContributions = adjacentFoes.map(foe => ({
+    ...foe,
+    contribution: foe.size > 1
+      ? countAdjacentAttackerCells(foe.position, foe.size, targetPos, targetSize)
+      : 1,
+  }))
+
+  const totalEffectiveCount = foeContributions.reduce(
+    (sum, f) => sum + f.contribution, 0
+  )
+
+  // Quick check: if total effective foe count is less than required, no flanking
+  if (totalEffectiveCount < requiredFoes) {
+    return {
+      isFlanked: false,
+      flankerIds: [],
+      effectiveFoeCount: totalEffectiveCount,
+      requiredFoes,
+    }
+  }
+
+  // Step 3: Build adjacency graph among the foes themselves
+  const n = adjacentFoes.length
+  const isAdjacentPair: boolean[][] = Array.from({ length: n }, () =>
+    Array(n).fill(false)
+  )
+
+  for (let i = 0; i < n; i++) {
+    for (let j = i + 1; j < n; j++) {
+      const adj = areAdjacent(
+        adjacentFoes[i].position, adjacentFoes[i].size,
+        adjacentFoes[j].position, adjacentFoes[j].size
+      )
+      isAdjacentPair[i][j] = adj
+      isAdjacentPair[j][i] = adj
+    }
+  }
+
+  // Step 4: Find an independent set and check if their combined contributions
+  // meet the required foe count.
+  // For 1x1 targets (requiredFoes=2), we just need any 2 non-adjacent foes.
+  // For multi-tile targets, we need an independent set whose total contribution >= requiredFoes.
+  const independentSet = findIndependentSet(isAdjacentPair, n, requiredFoes)
+
+  // Sum contributions of the independent set members
+  const independentContribution = independentSet.reduce(
+    (sum, idx) => sum + foeContributions[idx].contribution, 0
+  )
+
+  if (independentContribution >= requiredFoes) {
+    return {
+      isFlanked: true,
+      flankerIds: adjacentFoes.map(f => f.id),
+      effectiveFoeCount: totalEffectiveCount,
+      requiredFoes,
+    }
+  }
+
+  return {
+    isFlanked: false,
+    flankerIds: [],
+    effectiveFoeCount: totalEffectiveCount,
+    requiredFoes,
+  }
+}
