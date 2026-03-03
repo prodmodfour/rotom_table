@@ -188,10 +188,16 @@ export default defineEventHandler(async (event) => {
         description: `${pokemon.species} was healed to full HP (${pokemon.maxHp}) by the Heal Ball.`,
       }
     } else if (ballDef?.postCaptureEffect === 'loyalty_plus_one') {
-      // Friend Ball: +1 Loyalty (no mechanical effect yet — loyalty not tracked)
+      // Friend Ball: +1 Loyalty (PTU p.279)
+      const currentLoyalty = (pokemon as any).loyalty ?? 2
+      const newLoyalty = Math.min(6, currentLoyalty + 1)
+      await prisma.pokemon.update({
+        where: { id: body.pokemonId },
+        data: { loyalty: newLoyalty } as any
+      })
       postCaptureEffect = {
         type: 'loyalty_plus_one',
-        description: `${pokemon.species} starts with +1 Loyalty (Friend Ball).`,
+        description: `${pokemon.species} starts with +1 Loyalty (Friend Ball). Loyalty: ${currentLoyalty} -> ${newLoyalty}.`,
       }
     } else if (ballDef?.postCaptureEffect === 'raised_happiness') {
       // Luxury Ball: raised happiness (no mechanical effect yet — happiness not tracked)
