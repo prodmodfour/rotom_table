@@ -7,7 +7,7 @@ Context for working within the `artifacts/` directory — the project's structur
 ```
 artifacts/
   _index.md           # Root ecosystem index (open work summary, artifact counts)
-  designs/            # 26 feature design specs (design-NAME-NNN/ dirs)
+  designs/            # 27 feature design specs (design-NAME-NNN/ dirs)
   matrix/             # 9 domain coverage matrices (rules/, capabilities/, audit/)
   reviews/            # Code and rules reviews
   tickets/            # Tickets across lifecycle states

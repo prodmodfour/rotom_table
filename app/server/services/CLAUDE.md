@@ -17,7 +17,7 @@ If you need Pokemon, call one of these. Never build Pokemon records ad-hoc in AP
 
 | Pattern | Services |
 |---|---|
-| **Pure functions** (no DB, no side effects) | encounter-generation, status-automation, grid-placement, ball-condition, mounting |
+| **Pure functions** (no DB, no side effects) | encounter-generation, status-automation, grid-placement, ball-condition, mounting, living-weapon, living-weapon-state |
 | **DB writers** (read/write Prisma) | pokemon-generator, entity-update, entity-builder, rest-healing, scene, csv-import, evolution |
 | **Hybrid** (pure logic + DB persist) | combatant, switching, healing-item, out-of-turn, intercept |
 | **Orchestrators** (coordinate other services) | encounter |
@@ -29,7 +29,7 @@ If you need Pokemon, call one of these. Never build Pokemon records ad-hoc in AP
 | `combatant.service.ts` | ~686 | Damage calc, healing, status conditions, stage mods, combatant construction |
 | `csv-import.service.ts` | ~405 | Parse PTU character sheet CSVs, create trainer + Pokemon DB records |
 | `encounter-generation.service.ts` | ~125 | Weighted random species selection with diversity enforcement for spawn tables |
-| `encounter.service.ts` | ~471 | Encounter CRUD, initiative sorting, turn management, response building |
+| `encounter.service.ts` | ~476 | Encounter CRUD, initiative sorting, turn management, response building |
 | `entity-builder.service.ts` | ~127 | Transform Prisma records into typed Pokemon/HumanCharacter entities |
 | `entity-update.service.ts` | ~141 | Sync combatant state changes back to Pokemon/HumanCharacter DB rows |
 | `evolution.service.ts` | ~715 | Species evolution: stat recalc, Base Relations validation, full execution |
@@ -44,6 +44,8 @@ If you need Pokemon, call one of these. Never build Pokemon records ad-hoc in AP
 | `switching.service.ts` | ~812 | Pokemon switch validation, recall range, initiative insertion, action tracking |
 | `ball-condition.service.ts` | ~185 | Build Poke Ball condition context from encounter state for conditional ball modifiers |
 | `mounting.service.ts` | ~456 | Trainer-Pokemon mount/dismount logic, movement sharing, faint auto-dismount |
+| `living-weapon.service.ts` | ~351 | Living Weapon engage/disengage, wield state queries, faint penalty, auto-disengage |
+| `living-weapon-state.ts` | ~51 | Reconstruct wieldRelationships from combatant flags for WebSocket state sync |
 
 ## Dependency Map
 
@@ -59,6 +61,8 @@ intercept ---------> out-of-turn (getDefaultOutOfTurnUsage)
 out-of-turn -------> intercept (detect/resolve intercept functions)
 ball-condition ----> encounter (encounter state for context building)
 mounting ----------> combatant (mount state on combatants)
+living-weapon -----> encounter (wield state on combatants)
+living-weapon-state -> (standalone, reconstructs from combatant flags)
 ```
 
 ## Gotchas

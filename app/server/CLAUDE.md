@@ -12,7 +12,7 @@ WebSocket (`/ws`) handles GM-to-Group synchronization with role-based broadcasti
 - `sync_request` / `tab_sync_request` — request state sync
 
 ### Broadcast Events (relayed by server)
-- **Combat**: `turn_change`, `damage_applied`, `heal_applied`, `status_change`, `move_executed`, `combatant_added`, `combatant_removed`, `mount_change`
+- **Combat**: `turn_change`, `damage_applied`, `heal_applied`, `status_change`, `move_executed`, `combatant_added`, `combatant_removed`, `mount_change`, `living_weapon_engage`, `living_weapon_disengage`
 - **Encounter**: `encounter_update`, `serve_encounter`, `encounter_unserved`
 - **VTT**: `movement_preview`
 - **Scene**: `scene_update`
@@ -21,5 +21,5 @@ WebSocket (`/ws`) handles GM-to-Group synchronization with role-based broadcasti
 
 ## Descendant Context
 
-- **Service architecture**: See `services/CLAUDE.md` for the 18-service inventory, Pokemon generation entry point rule, service patterns, and dependency map
+- **Service architecture**: See `services/CLAUDE.md` for the 20-service inventory, Pokemon generation entry point rule, service patterns, and dependency map
 - **API conventions**: See `api/CLAUDE.md` for endpoint naming conventions, response format, error handling, and service delegation rules
