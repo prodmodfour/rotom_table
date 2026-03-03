@@ -126,11 +126,18 @@ const isFainted = computed(() => entity.value.currentHp <= 0)
 const statusConditions = computed(() => entity.value.statusConditions || [])
 
 // Mount indicator for player view (feature-004 P1)
+// Uses encounterStore.getMountPartner to resolve partner name, matching CombatantCard pattern.
+const encounterStore = useEncounterStore()
 const mountIndicatorText = computed(() => {
   const ms = props.combatant.mountState
   if (!ms) return ''
-  if (ms.isMounted) return 'Mounted'
-  return 'Carrying rider'
+  const partner = encounterStore.getMountPartner(props.combatant.id)
+  if (!partner) return ''
+  const partnerName = partner.type === 'pokemon'
+    ? ((partner.entity as Pokemon).nickname || (partner.entity as Pokemon).species)
+    : (partner.entity as HumanCharacter).name
+  if (ms.isMounted) return `Mounted on ${partnerName}`
+  return `Carrying ${partnerName}`
 })
 </script>
 
