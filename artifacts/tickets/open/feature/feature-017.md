@@ -90,3 +90,12 @@ ptu-rule-050 (resolved) only removed dead `pokeBallType` code. The actual ball t
 | 2026-03-02 | P2 implemented | Section I+K: `026663f5` CapturePanel.vue (full capture workflow), useCapture.ts (postCaptureEffect type) |
 | 2026-03-02 | P2 implemented | Section I: `944bd999` CombatantCard.vue (CapturePanel integration with trainer selector) |
 | 2026-03-02 | P2 implemented | Section K: `28bfcf12` attempt.post.ts (capture_attempt WebSocket broadcast with ball info) |
+| 2026-03-03 | P2 fix cycle | code-review-295 (1 CRITICAL, 3 HIGH, 4 MEDIUM) -- fixes below |
+| 2026-03-03 | M1 fix | `31fa1a44` Extract formatModifier to shared utils/pokeBallFormatters.ts (BallSelector, BallConditionPreview, CaptureRateDisplay) |
+| 2026-03-03 | H3 fix | `a4d92020` Replace hardcoded z-index: 100 with $z-index-dropdown in CaptureRateDisplay.vue |
+| 2026-03-03 | H2 fix | `be7c987d` Display useCapture warning ref in CapturePanel for action economy failures |
+| 2026-03-03 | M3 fix | `26446360` Include encounterRound from encounter store in CapturePanel fullConditionContext |
+| 2026-03-03 | M4 fix | `a2b1eed6` Add click-outside handler to BallSelector dropdown |
+| 2026-03-03 | H1 fix | `08085f0a` Add capture_attempt WebSocket consumer in useWebSocket.ts + type in api.ts |
+| 2026-03-03 | M2 fix | `a37ba0d5` Fetch species data for evolutionStage/maxEvolutionStage in capture rate preview |
+| 2026-03-03 | C1 fix | `00338955` Extract CombatantCaptureSection.vue from CombatantCard.vue (1027 -> 918 lines) |
