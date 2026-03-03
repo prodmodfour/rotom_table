@@ -4,6 +4,7 @@ category: PTU-INCORRECT
 severity: MEDIUM
 priority: P3
 domain: capture
+status: in-progress
 title: "Poke Ball accuracy check should use central calculateAccuracyThreshold utility"
 source: code-review-281 M2
 created_by: slave-collector (plan-20260302-150500)
@@ -52,3 +53,26 @@ This is a pre-existing gap identified during the bug-043 review (AC 6 enforcemen
 ## Impact
 
 Low gameplay impact — modifiers only matter in edge cases with extreme combat stage shifts. High code health impact — eliminates a duplicated accuracy system and ensures consistency.
+
+## Resolution Log
+
+### Commits
+
+| Hash | Description | Files |
+|------|-------------|-------|
+| `feb43aac` | refactor: replace hardcoded AC 6 check with calculateAccuracyThreshold in useCapture | `app/composables/useCapture.ts` |
+| `a6da1c6e` | feat: pass accuracy params through CapturePanel and show dynamic threshold | `app/components/capture/CapturePanel.vue` |
+| `b7e070a1` | feat: compute and pass accuracy params from encounter combatant data | `app/components/encounter/CombatantCaptureSection.vue` |
+| `28ec7da9` | feat: pass accuracy params in player capture request handler | `app/composables/usePlayerRequestHandlers.ts` |
+| `62b8f57e` | feat: server-side accuracy validation uses client-computed threshold | `app/server/api/capture/attempt.post.ts`, `app/composables/useCapture.ts`, `app/components/capture/CapturePanel.vue`, `app/composables/usePlayerRequestHandlers.ts` |
+| `ac95e811` | fix: update hardcoded AC 6 references in UI text and tests | `app/components/player/PlayerCapturePanel.vue`, `app/tests/unit/api/captureAttempt.test.ts` |
+
+### Changes Made
+
+1. **useCapture.ts**: `rollAccuracyCheck()` now accepts `CaptureAccuracyParams` (throwerAccuracyStage, targetSpeedEvasion, flankingPenalty, roughTerrainPenalty) and delegates to `calculateAccuracyThreshold(6, ...)` from `damageCalculation.ts`. Returns `threshold` instead of `total`.
+2. **CapturePanel.vue**: Accepts `accuracyParams` prop, passes to `rollAccuracyCheck`. Template shows dynamic threshold instead of hardcoded "AC 6". Passes threshold to server via `attemptCapture`.
+3. **CombatantCaptureSection.vue**: Computes `CaptureAccuracyParams` from encounter combatant data — trainer accuracy CS from `getStageModifiers`, target Speed Evasion from combatant record.
+4. **usePlayerRequestHandlers.ts**: `handleApproveCapture` computes accuracy params from trainer/Pokemon combatants before calling `rollAccuracyCheck`.
+5. **capture/attempt.post.ts**: Server accepts `accuracyThreshold` parameter (defaults to 6 for backwards compat), validates roll against it.
+6. **PlayerCapturePanel.vue**: Updated label from "AC 6 accuracy check" to "accuracy check".
+7. **captureAttempt.test.ts**: Updated test descriptions/expectations, added two new tests for custom threshold validation.
