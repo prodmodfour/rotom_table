@@ -117,6 +117,8 @@ CRUD + link/unlink + healing/rest + bulk.
 - `POST /api/pokemon/:id/evolution-undo` — revert evolution using pre-evolution snapshot (restores species, stats, types, abilities, moves, capabilities, skills, heldItem, notes), restores consumed stone to trainer inventory, active encounter guard, WebSocket broadcast with `undone: true`
 - `POST /api/pokemon/bulk-action` — bulk archive/delete
 
+**Pokemon loyalty (feature-022):** `Pokemon.loyalty` field (`Int @default(3)`, PTU Chapter 10). 7 ranks: 0=Hostile, 1=Resistant, 2=Wary, 3=Neutral, 4=Friendly, 5=Loyal, 6=Devoted. Starting values by origin: captured/wild=2, default=3. Editable via `PUT /api/pokemon/:id` (`body.loyalty`). Displayed in `PokemonStatsTab.vue` with PhHandshake icon and color-coded rank name. GM can edit in Pokemon sheet edit mode via dropdown select.
+
 ### Encounters (`/api/encounters`)
 CRUD + extensive combat actions.
 - `GET/POST /api/encounters` — list, create
