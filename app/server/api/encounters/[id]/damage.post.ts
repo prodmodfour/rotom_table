@@ -140,6 +140,11 @@ export default defineEventHandler(async (event) => {
       }
     }
 
+    // Living Weapon fainted state (feature-005, PTU p.305):
+    // Fainted Living Weapons remain wielded (not auto-disengaged) but with -2 penalty.
+    // The isFainted flag on WieldRelationship is derived from entity HP during reconstruction,
+    // so no explicit update is needed here.
+
     // Track defeated enemies for XP
     let defeatedEnemies = JSON.parse(record.defeatedEnemies)
     const isDefeated = faintedFromAnySource || deathCheck.isDead
