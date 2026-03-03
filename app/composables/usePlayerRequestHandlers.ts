@@ -138,6 +138,7 @@ export function usePlayerRequestHandlers(options: PlayerRequestHandlersOptions) 
         pokemonId: data.targetPokemonId,
         trainerId: trainerCombatant.entityId,
         accuracyRoll: accuracyResult.roll,
+        accuracyThreshold: accuracyResult.threshold,
         ballType: data.ballType,
         encounterContext: {
           encounterId: encounter.value.id,

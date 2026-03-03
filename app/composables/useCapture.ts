@@ -191,6 +191,8 @@ export function useCapture() {
     pokemonId: string
     trainerId: string
     accuracyRoll?: number
+    /** Accuracy threshold computed by rollAccuracyCheck (decree-042). Sent to server for validation. */
+    accuracyThreshold?: number
     ballType?: string
     modifiers?: number
     /** GM overrides for ball condition context */
@@ -211,6 +213,7 @@ export function useCapture() {
           pokemonId: params.pokemonId,
           trainerId: params.trainerId,
           accuracyRoll: params.accuracyRoll,
+          accuracyThreshold: params.accuracyThreshold,
           ballType: params.ballType || DEFAULT_BALL_TYPE,
           modifiers: params.modifiers,
           encounterId: params.encounterContext?.encounterId,

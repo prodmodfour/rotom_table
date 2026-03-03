@@ -209,11 +209,12 @@ async function rollAndThrow() {
     return
   }
 
-  // Step 2: Call capture attempt API
+  // Step 2: Call capture attempt API with threshold for server validation
   const result = await attemptCapture({
     pokemonId: props.pokemonId,
     trainerId: props.trainerId,
     accuracyRoll: accuracy.roll,
+    accuracyThreshold: accuracy.threshold,
     ballType: selectedBallType.value,
     conditionContext: fullConditionContext.value,
     encounterContext: props.encounterId

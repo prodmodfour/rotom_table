@@ -13,6 +13,10 @@ interface CaptureAttemptRequest {
   pokemonId: string
   trainerId: string
   accuracyRoll?: number  // The accuracy check roll (to detect nat 20)
+  /** Accuracy threshold computed by the client (decree-042: includes accuracy stages, evasion, terrain).
+   *  When provided, the server validates roll >= threshold instead of hardcoded AC 6.
+   *  Must be >= 1. Falls back to 6 (base Poke Ball AC) when omitted for backwards compat. */
+  accuracyThreshold?: number
   ballType?: string      // Key in POKE_BALL_CATALOG (default: 'Basic Ball')
   modifiers?: number     // Additional non-ball modifiers (features, equipment)
   encounterId?: string   // Active encounter ID (for round tracking, active Pokemon lookup)
@@ -30,9 +34,11 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  // PTU p.214: Server-side AC 6 validation.
-  // If the client provides an accuracy roll, enforce the AC 6 gate.
-  // Natural 1 always misses, natural 20 always hits, otherwise must roll >= 6.
+  // PTU p.214: Server-side accuracy validation (decree-042).
+  // Uses client-provided threshold (which includes accuracy stages, Speed Evasion,
+  // flanking, and rough terrain per the full accuracy system), falling back to
+  // base AC 6 when threshold is not provided (backwards compatibility).
+  // Natural 1 always misses, natural 20 always hits, otherwise roll >= threshold.
   if (body.accuracyRoll !== undefined) {
     if (typeof body.accuracyRoll !== 'number'
       || !Number.isInteger(body.accuracyRoll)
@@ -44,17 +50,26 @@ export default defineEventHandler(async (event) => {
       })
     }
 
+    // Validate threshold if provided
+    const threshold = body.accuracyThreshold ?? 6
+    if (typeof threshold !== 'number' || !Number.isInteger(threshold) || threshold < 1) {
+      throw createError({
+        statusCode: 400,
+        message: 'accuracyThreshold must be a positive integer'
+      })
+    }
+
     const roll = body.accuracyRoll
     const isNat1 = roll === 1
     const isNat20 = roll === 20
-    const hits = isNat1 ? false : (isNat20 ? true : roll >= 6)
+    const hits = isNat1 ? false : (isNat20 ? true : roll >= threshold)
 
     if (!hits) {
       throw createError({
         statusCode: 400,
         message: isNat1
           ? 'Natural 1 — ball missed! (auto-miss)'
-          : `Accuracy roll ${roll} does not meet AC 6 — ball missed`
+          : `Accuracy roll ${roll} does not meet threshold ${threshold} — ball missed`
       })
     }
   }
