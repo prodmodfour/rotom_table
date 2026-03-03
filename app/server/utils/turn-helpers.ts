@@ -7,6 +7,7 @@
  */
 
 import { getOverlandSpeed } from '~/utils/combatantCapabilities'
+import { applyMovementModifiers } from '~/utils/movementModifiers'
 import type { TrainerDeclaration } from '~/types/combat'
 
 /**
@@ -106,17 +107,18 @@ export function resetCombatantsForNewRound(combatants: any[]) {
       holdUsedThisRound: false
     }
     // Reset mount movement for new round (feature-004)
-    // Recalculate movementRemaining from mount's Overland speed
+    // Apply movement modifiers (Slowed, Speed CS, Sprint) from the mount's conditions
+    // ONCE here so the client returns movementRemaining directly without re-applying.
     if (c.mountState) {
       if (!c.mountState.isMounted) {
-        // This is the mount -- recalculate from its own Overland speed
-        const mountSpeed = getOverlandSpeed(c)
+        // This is the mount -- recalculate from its own modified Overland speed
+        const mountSpeed = applyMovementModifiers(c, getOverlandSpeed(c))
         c.mountState = { ...c.mountState, movementRemaining: mountSpeed }
       } else {
-        // This is the rider -- sync movement with mount partner
+        // This is the rider -- sync movement with mount partner's modified speed
         const mountPartner = combatants.find((p: any) => p.id === c.mountState.partnerId)
         if (mountPartner) {
-          const mountSpeed = getOverlandSpeed(mountPartner)
+          const mountSpeed = applyMovementModifiers(mountPartner, getOverlandSpeed(mountPartner))
           c.mountState = { ...c.mountState, movementRemaining: mountSpeed }
         }
       }

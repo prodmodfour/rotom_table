@@ -23,6 +23,7 @@ import {
 import { areAdjacent, getTokenCells, getAdjacentCellsForFootprint } from '~/utils/adjacency'
 import { getFootprintCells } from '~/utils/sizeCategory'
 import { getOverlandSpeed } from '~/utils/combatantCapabilities'
+import { applyMovementModifiers } from '~/utils/movementModifiers'
 
 // ============================================================
 // Result Types
@@ -154,7 +155,10 @@ export function executeMount(
   // GM override: skipCheck bypasses the DC 10 mounting check
   const checkRequired = skipCheck ? false : !checkAutoSuccess
 
-  const mountMovement = getOverlandSpeed(mount)
+  // Apply movement modifiers (Slowed, Speed CS, Sprint) from the mount's conditions
+  // ONCE upfront so movementRemaining is the final budget. The client returns this
+  // value directly from getSpeed/getMaxPossibleSpeed without re-applying modifiers.
+  const mountMovement = applyMovementModifiers(mount, getOverlandSpeed(mount))
 
   const updatedCombatants = combatants.map(c => {
     if (c.id === riderId) {
@@ -328,7 +332,9 @@ export function executeDismount(
 /**
  * Reset mount movement for a new round.
  * Called by resetCombatantsForNewRound.
- * Sets movementRemaining to mount's full movement speed for all active mount pairs.
+ * Sets movementRemaining to mount's modifier-adjusted movement speed for all active mount pairs.
+ * Movement modifiers (Slowed, Speed CS, Sprint) are applied from the mount's conditions
+ * ONCE here so the client can return movementRemaining directly without re-applying.
  * Returns a new combatant array (immutable).
  */
 export function resetMountMovement(combatants: Combatant[]): Combatant[] {
@@ -336,8 +342,8 @@ export function resetMountMovement(combatants: Combatant[]): Combatant[] {
     if (!c.mountState) return c
 
     if (!c.mountState.isMounted) {
-      // This is the mount -- recalculate movement from its Overland speed
-      const mountSpeed = getOverlandSpeed(c)
+      // This is the mount -- recalculate movement from its Overland speed with modifiers
+      const mountSpeed = applyMovementModifiers(c, getOverlandSpeed(c))
       return {
         ...c,
         mountState: {
@@ -347,10 +353,10 @@ export function resetMountMovement(combatants: Combatant[]): Combatant[] {
       }
     }
 
-    // This is the rider -- sync movement with mount's speed
+    // This is the rider -- sync movement with mount's modified speed
     const mountPartner = combatants.find(p => p.id === c.mountState!.partnerId)
     if (mountPartner) {
-      const mountSpeed = getOverlandSpeed(mountPartner)
+      const mountSpeed = applyMovementModifiers(mountPartner, getOverlandSpeed(mountPartner))
       return {
         ...c,
         mountState: {

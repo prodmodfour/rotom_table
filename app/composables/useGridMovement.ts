@@ -90,70 +90,10 @@ function getTerrainAwareSpeed(combatant: Combatant, terrainType: string): number
   return getOverlandSpeed(combatant)
 }
 
-/**
- * Apply movement-modifying conditions and combat stage effects to base speed.
- *
- * Exported as a pure function for direct unit testing.
- *
- * PTU Rules:
- * - Stuck: cannot Shift at all — effective speed 0 (PTU 1.05 p.231)
- * - Tripped: must spend Shift Action to stand up — effective speed 0 (PTU 1.05 p.251)
- * - Slowed: reduce all movement speeds by half
- * - Speed CS: additive bonus/penalty of half stage value (PTU 1.05 p.234), min 2
- * - Sprint (tempCondition): +50% movement speed for the turn
- */
-export function applyMovementModifiers(combatant: Combatant, speed: number): number {
-  let modifiedSpeed = speed
-  const conditions = combatant.entity.statusConditions ?? []
-  const tempConditions = combatant.tempConditions ?? []
-
-  // Stuck: cannot Shift at all (PTU 1.05 p.231, p.253)
-  // Early-return so no downstream modifier (Speed CS, Sprint, min floor) can override
-  if (conditions.includes('Stuck')) {
-    return 0
-  }
-
-  // Tripped: must spend Shift Action to stand up before moving (PTU 1.05 p.251)
-  // "needs to spend a Shift Action getting up before they can take further actions"
-  // Since the Shift Action IS movement in PTU, a Tripped combatant cannot move
-  // on the grid. The GM removes Tripped via the status system when the combatant
-  // uses their Shift to stand up.
-  // Tripped can come from two sources:
-  //   - statusConditions (Trip maneuver, Blindness, etc.)
-  //   - tempConditions (Take a Breather — cleared at next turn)
-  if (conditions.includes('Tripped') || tempConditions.includes('Tripped')) {
-    return 0
-  }
-
-  // Slowed: reduce all movement speeds by half
-  if (conditions.includes('Slowed')) {
-    modifiedSpeed = Math.floor(modifiedSpeed / 2)
-  }
-
-  // Speed Combat Stage modifier (-6 to +6): additive bonus/penalty
-  // PTU 1.05 p.234: "bonus or penalty to all Movement Speeds equal to
-  // half your current Speed Combat Stage value rounded down"
-  // Math.trunc rounds toward zero for symmetric positive/negative results:
-  // +5→+2, -5→-2, +1→0, -1→0 (PTU: "reduces movement equally")
-  const speedStage = combatant.entity.stageModifiers?.speed ?? 0
-  if (speedStage !== 0) {
-    const clamped = Math.max(-6, Math.min(6, speedStage))
-    const stageBonus = Math.trunc(clamped / 2)
-    modifiedSpeed = modifiedSpeed + stageBonus
-    // PTU 1.05 p.700: negative CS may never reduce movement below 2
-    if (stageBonus < 0) {
-      modifiedSpeed = Math.max(modifiedSpeed, 2)
-    }
-  }
-
-  // Sprint: +50% movement speed for the turn (tracked as tempCondition)
-  if (tempConditions.includes('Sprint')) {
-    modifiedSpeed = Math.floor(modifiedSpeed * 1.5)
-  }
-
-  // Minimum speed is 1 (can always move at least 1 cell unless at 0)
-  return Math.max(modifiedSpeed, speed > 0 ? 1 : 0)
-}
+// Re-export applyMovementModifiers from shared utility for backward compatibility.
+// The canonical implementation lives in ~/utils/movementModifiers.ts so both
+// client composables and server services can use it without circular imports.
+export { applyMovementModifiers } from '~/utils/movementModifiers'
 
 export function useGridMovement(options: UseGridMovementOptions) {
   const terrainStore = useTerrainStore()
@@ -193,18 +133,11 @@ export function useGridMovement(options: UseGridMovementOptions) {
 
     // Mounted combatants use shared movementRemaining (PTU p.218, feature-004)
     // Rider uses mount's movement on trainer turn; mount uses remainder on its turn.
-    // movementRemaining is the raw distance budget. Movement modifiers (Slowed, Speed CS)
-    // are applied from the MOUNT's conditions, not the rider's (PTU p.218, spec-p1 Section E).
+    // movementRemaining already has movement modifiers (Slowed, Speed CS, Sprint)
+    // applied when it was set (executeMount / resetCombatantsForNewRound).
+    // Returning it directly avoids double-applying modifiers to a shrinking budget.
     if (combatant.mountState) {
-      const remaining = combatant.mountState.movementRemaining
-      // Look up the mount combatant for condition-based modifiers
-      const mountCombatant = combatant.mountState.isMounted
-        ? findCombatant(combatant.mountState.partnerId) // rider -> lookup mount
-        : combatant // this IS the mount
-      if (mountCombatant) {
-        return applyMovementModifiers(mountCombatant, remaining)
-      }
-      return remaining
+      return combatant.mountState.movementRemaining
     }
 
     if (options.getMovementSpeed) {
@@ -258,17 +191,11 @@ export function useGridMovement(options: UseGridMovementOptions) {
     const combatant = findCombatant(combatantId)
 
     // Mounted combatants use shared movementRemaining (PTU p.218, feature-004)
-    // Movement modifiers (Slowed, Speed CS) are applied from the MOUNT's
-    // conditions, not the rider's personal conditions (spec-p1 Section E).
+    // movementRemaining already has movement modifiers (Slowed, Speed CS, Sprint)
+    // applied when it was set (executeMount / resetCombatantsForNewRound).
+    // Returning it directly avoids double-applying modifiers to a shrinking budget.
     if (combatant?.mountState) {
-      const remaining = combatant.mountState.movementRemaining
-      const mountCombatant = combatant.mountState.isMounted
-        ? findCombatant(combatant.mountState.partnerId)
-        : combatant
-      if (mountCombatant) {
-        return applyMovementModifiers(mountCombatant, remaining)
-      }
-      return remaining
+      return combatant.mountState.movementRemaining
     }
 
     // Base speed: use callback if provided, otherwise derive from combatant
