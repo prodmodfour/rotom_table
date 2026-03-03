@@ -13,15 +13,12 @@ commits_reviewed:
   - f1f8ba38
   - 0e68ce08
 mechanics_verified:
-  - movement-modifier-application-timing
   - dismount-check-threshold-with-heavily-injured
+  - movement-modifier-application-order
   - mount-capacity-filtering
-  - mount-indicator-partner-name-resolution
-  - movement-modifier-function-correctness
-  - no-regression-dismount-check-formula
-  - no-regression-mounted-prowess
-  - no-regression-linked-token-movement
-  - no-regression-faint-auto-dismount
+  - rider-movement-uses-mount-modified-speed
+  - mount-controls-mountable-2-plus
+  - decree-004-dismount-threshold-compliance
 verdict: APPROVED
 issues_found:
   critical: 0
@@ -32,9 +29,13 @@ ptu_refs:
   - core/10-indices-and-reference.md#Mountable-X (pp.306-307)
   - core/03-skills-edges-and-features.md#Mounted-Prowess (p.139)
   - core/07-combat.md#Heavily-Injured (p.250)
-reviewed_at: 2026-03-03T18:15:00Z
+reviewed_at: 2026-03-03T18:20:00Z
 follows_up: rules-review-269
 ---
+
+## Review Scope
+
+Rules verification of the feature-004 P1 fix cycle (6 commits). rules-review-269 APPROVED the original P1 implementation with 0 issues. This review verifies that the 5 bug fixes do not introduce PTU rule regressions and that the corrected behaviors are themselves rule-accurate.
 
 ## Mechanics Verified
 
@@ -55,7 +56,8 @@ follows_up: rules-review-269
   - Speed CS: `Math.trunc(clamped / 2)` additive bonus/penalty (PTU 1.05 p.234), with minimum floor of 2 for negative stages
   - Sprint: `Math.floor(speed * 1.5)` -- +50% movement
   - Minimum speed 1 (unless base was 0)
-- **Status:** CORRECT -- Modifiers applied once upfront eliminates the double-application bug. The modifier implementation itself is unchanged (identical logic, just moved to shared utility). All PTU movement rules are correctly encoded.
+- **Modifiers sourced from mount:** In `mounting.service.ts:161`, the mount combatant is passed to `applyMovementModifiers(mount, ...)`. In `resetMountMovement` (line 346) and `resetCombatantsForNewRound` (turn-helpers.ts:115), the mount combatant (or mount partner for riders) is used. This ensures Slowed/Speed CS/Sprint on the MOUNT affects movement, not the rider's personal conditions.
+- **Status:** CORRECT -- Modifiers applied once at budget creation, sourced from mount's conditions. Identical PTU rules logic, just restructured for correct application timing.
 
 ### 2. Dismount Check Threshold with Heavily Injured Penalty (MEDIUM-2 fix)
 
@@ -73,31 +75,27 @@ follows_up: rules-review-269
 - **Function verification:**
   - `getMountCapacity()` in `mountingRules.ts:80-86` calls `parseMountableCapacity()` which correctly parses "Mountable 1", "Mountable 2", etc. from `otherCapabilities`, case-insensitive.
   - `countCurrentRiders()` in `mountingRules.ts:92-96` counts combatants where `mountState.isMounted === true` and `mountState.partnerId === mountId` -- correctly identifying riders pointing to this mount.
-  - The server-side `validateMountPreconditions()` in `mounting.service.ts:89-97` uses the exact same functions for validation, so client and server are consistent.
+  - The server-side `validateMountPreconditions()` in `mounting.service.ts:89-97` uses the same functions for validation, so client and server are consistent.
 - **Status:** CORRECT -- Mountable X capacity is properly respected. A Mountable 2 Pokemon carrying 1 rider will still appear as an option (1 < 2). A Mountable 1 Pokemon carrying 1 rider will be filtered out (1 >= 1).
 
 ### 4. Mount Partner Name Resolution in Group/Player Cards (MEDIUM-3 fix)
 
 - **Rule:** No specific PTU rule -- this is a UI accuracy concern. Mount relationships should display the partner's identity for tactical awareness.
-- **Implementation:** Both `GroupCombatantCard.vue:126-137` and `PlayerCombatantCard.vue:130-141` now:
-  1. Import `useEncounterStore()` and call `getMountPartner(props.combatant.id)` to resolve the partner combatant.
-  2. Extract the partner name: Pokemon use `nickname || species`, humans use `name`.
-  3. Display "Mounted on [partnerName]" for riders and "Carrying [partnerName]" for mounts.
-  This matches the pattern established in `CombatantCard.vue:383-396` (GM view).
-- **Status:** CORRECT -- All three views (GM, Group, Player) now consistently show the partner name in mount indicators.
+- **Implementation:** Both `GroupCombatantCard.vue:126-137` and `PlayerCombatantCard.vue:130-141` now call `encounterStore.getMountPartner(props.combatant.id)` and display "Mounted on [partnerName]" for riders or "Carrying [partnerName]" for mounts, matching the CombatantCard (GM view) pattern.
+- **Status:** CORRECT -- All three views now consistently show partner names in mount indicators.
 
 ### 5. VTT Token Badge Offset (HIGH-1 fix)
 
-- **Rule:** No PTU rule -- this is a visual display issue. Both mount badge and elevation badge must be simultaneously visible on tokens that have both states.
-- **Implementation:** `VTTToken.vue:421` changes `.vtt-token__mount-badge` from `right: 2px` to `right: 18px`, placing it to the left of the elevation badge (which remains at `right: 2px`). Both badges share `top: 2px` but no longer overlap horizontally.
-- **Status:** CORRECT -- No game logic impact. Visual fix only.
+- **Rule:** No PTU rule -- visual display fix only. Both mount badge and elevation badge must be simultaneously visible.
+- **Implementation:** Mount badge offset from `right: 2px` to `right: 18px`. No game logic impact.
+- **Status:** CORRECT -- Visual fix only.
 
 ## Regression Check Against rules-review-269
 
-All mechanics approved in rules-review-269 (APPROVED, 0 issues) were re-verified against the fix cycle changes:
+All 16 mechanics approved in rules-review-269 (APPROVED, 0 issues) were re-verified against the fix cycle changes:
 
 ### Dismount Check Formula
-- `triggersDismountCheck(hpDamage, maxHp)` at `mountingRules.ts:151-153` is UNCHANGED: `hpDamage >= Math.floor(maxHp / 4)`. The fix in `damage.post.ts` changes what is passed as the first argument (now includes heavily injured penalty), not the formula itself.
+- `triggersDismountCheck(hpDamage, maxHp)` at `mountingRules.ts:151-153` is UNCHANGED: `hpDamage >= Math.floor(maxHp / 4)`. The fix changes what is passed as the first argument (now includes heavily injured penalty), not the formula itself.
 - **No regression.**
 
 ### Dismount Check DC and Mounted Prowess
@@ -112,8 +110,7 @@ All mechanics approved in rules-review-269 (APPROVED, 0 issues) were re-verified
 - **No regression.**
 
 ### Linked Token Movement
-- `position.post.ts` -- not modified in fix cycle commits.
-- `useEncounterActions.ts` -- not modified in fix cycle commits.
+- `position.post.ts` and `useEncounterActions.ts` -- not modified in fix cycle commits.
 - **No regression.**
 
 ### Mount/Dismount Execution
@@ -135,28 +132,32 @@ All mechanics approved in rules-review-269 (APPROVED, 0 issues) were re-verified
 - `ws.ts` -- not modified in fix cycle.
 - **No regression.**
 
+### Mounted Prowess Auto-Succeed
+- `mounting.service.ts:153-156` -- `checkAutoSuccess = hasMountedProwess(rider)` logic unchanged. Only the `mountMovement` calculation below it changed.
+- **No regression.**
+
 ## Decree Compliance
 
 ### decree-003: All tokens passable; enemy-occupied squares are rough terrain
 Mounted pairs sharing grid squares is unaffected by the fix cycle. The `findDismountPosition()` placement logic is unchanged. **COMPLIANT.**
 
 ### decree-004: Massive damage check uses real HP lost after temp HP absorption
-The dismount check in `damage.post.ts` continues to use `damageResult.hpDamage` (real HP after temp HP) as the base value. The heavily injured penalty is additive real HP loss, not raw damage. Comment at line 121-123 explicitly cites decree-004. **COMPLIANT.**
+The dismount check in `damage.post.ts` continues to use `damageResult.hpDamage` (real HP after temp HP) as the base value. The heavily injured penalty is additive real HP loss, not raw damage. Comment at lines 121-123 explicitly cites decree-004. **COMPLIANT.**
 
 ## Rulings
 
-- **Heavily injured HP loss counts toward dismount threshold:** PTU p.250 describes the heavily injured penalty as HP loss that occurs "when a Heavily Injured Trainer or Pokemon takes Damage from an attack." PTU p.218 triggers the dismount check when "a damaging attack that deals damage equal or greater to 1/4th of the target's Max Hit Points." The heavily injured penalty is damage from that same attack event -- it is a cascading consequence of the attack, not a separate damage source. Including it in the dismount threshold is the correct interpretation. The total HP impact a mounted combatant experiences from a single attack is `directHpDamage + heavilyInjuredPenalty`, and this total should be measured against the 1/4 max HP threshold.
+- **Heavily injured HP loss counts toward dismount threshold:** PTU p.250 describes the heavily injured penalty as HP loss that occurs "when a Heavily Injured Trainer or Pokemon takes Damage from an attack." PTU p.218 triggers the dismount check when "a damaging attack that deals damage equal or greater to 1/4th of the target's Max Hit Points." The heavily injured penalty is damage from that same attack event -- it is a cascading consequence of the attack, not a separate damage source. Including it in the dismount threshold is the correct interpretation.
 
-- **Movement modifiers applied once at budget creation, not per-query:** PTU p.218 says the rider uses the "Mount's Movement Capabilities." The mount's movement capabilities are modified by its conditions (Slowed halves, Stuck zeroes, Speed CS adjusts). These modifiers affect the mount's effective movement speed for the round, which becomes the shared movement budget. Applying modifiers once when the budget is set (at mount-time and round-reset) correctly reflects that the mount's movement capability for the round is a fixed quantity derived from its base speed and current conditions. Re-applying modifiers to a decreasing budget would incorrectly penalize movement mid-round.
+- **Movement modifiers applied once at budget creation, not per-query:** PTU p.218 says the rider uses the "Mount's Movement Capabilities." The mount's movement capabilities are modified by its conditions (Slowed halves, Stuck zeroes, Speed CS adjusts). These modifiers affect the mount's effective movement speed for the round, which becomes the shared movement budget. Applying modifiers once when the budget is set correctly reflects that the mount's movement capability for the round is a fixed quantity derived from its base speed and current conditions. Re-applying modifiers to a decreasing budget would incorrectly penalize movement mid-round.
 
 ## Summary
 
-The 6-commit fix cycle resolves all 5 issues identified in code-review-296 (2H + 3M). No PTU rule regressions were introduced:
+The 6-commit fix cycle resolves all 5 issues from code-review-296 (2H + 3M). No PTU rule regressions were introduced:
 
 1. **HIGH-1 (badge overlap):** Visual fix only, no game logic impact.
 2. **HIGH-2 (double movement modifiers):** Correctly restructured to apply modifiers once upfront. The shared `applyMovementModifiers` utility correctly implements all PTU movement rules (Stuck, Tripped, Slowed, Speed CS, Sprint). All three code paths where movement budget is set (executeMount, resetMountMovement, resetCombatantsForNewRound) now apply modifiers consistently.
 3. **MEDIUM-1 (mount capacity):** Correctly uses `getMountCapacity`/`countCurrentRiders` to allow Mountable 2+ Pokemon with remaining capacity. Matches server-side validation.
-4. **MEDIUM-2 (heavily injured + dismount):** Correctly includes heavily injured HP loss in the dismount threshold evaluation. The heavily injured penalty is part of the damage event from the attack per PTU p.250.
+4. **MEDIUM-2 (heavily injured + dismount):** Correctly includes heavily injured HP loss in the dismount threshold evaluation per PTU p.218 + p.250.
 5. **MEDIUM-3 (partner names):** Group and Player cards now resolve partner names via encounter store, matching the GM CombatantCard pattern.
 
 All 16 mechanics verified in rules-review-269 remain correct with no regressions. Decree-003 and decree-004 compliance maintained.
