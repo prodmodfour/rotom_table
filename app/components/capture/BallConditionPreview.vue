@@ -16,6 +16,7 @@
 import { PhCheckCircle, PhMinusCircle } from '@phosphor-icons/vue'
 import { evaluateBallCondition } from '~/utils/pokeBallConditions'
 import type { PokeBallDef, BallConditionContext } from '~/constants/pokeBalls'
+import { formatModifier } from '~/utils/pokeBallFormatters'
 
 const props = defineProps<{
   ball: PokeBallDef
@@ -32,10 +33,6 @@ const conditionResult = computed(() => {
 const conditionMet = computed(() => conditionResult.value.conditionMet)
 const conditionalModifier = computed(() => conditionResult.value.modifier)
 
-function formatModifier(mod: number): string {
-  if (mod === 0) return '+0'
-  return mod > 0 ? `+${mod}` : `${mod}`
-}
 </script>
 
 <style lang="scss" scoped>

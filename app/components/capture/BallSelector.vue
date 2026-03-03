@@ -140,6 +140,7 @@
 import { PhCaretDown, PhCircle, PhFlower, PhStar, PhTree, PhSparkle } from '@phosphor-icons/vue'
 import { POKE_BALL_CATALOG, getBallsByCategory, calculateBallModifier } from '~/constants/pokeBalls'
 import type { PokeBallDef, BallConditionContext } from '~/constants/pokeBalls'
+import { formatModifier, modifierClass } from '~/utils/pokeBallFormatters'
 
 const props = withDefaults(defineProps<{
   /** Currently selected ball type */
@@ -178,17 +179,6 @@ const totalModifier = computed(() => {
 function selectBall(name: string) {
   emit('update:modelValue', name)
   isOpen.value = false
-}
-
-function formatModifier(mod: number): string {
-  if (mod === 0) return '+0'
-  return mod > 0 ? `+${mod}` : `${mod}`
-}
-
-function modifierClass(mod: number): string {
-  if (mod < 0) return 'mod--positive'  // Negative modifier = easier capture = good
-  if (mod > 0) return 'mod--negative'  // Positive modifier = harder capture = bad
-  return 'mod--neutral'
 }
 
 function effectLabel(effect: string): string {

@@ -94,6 +94,7 @@
 
 <script setup lang="ts">
 import type { CaptureRateData } from '~/composables/useCapture'
+import { formatModifier } from '~/utils/pokeBallFormatters'
 
 const props = defineProps<{
   captureRate: CaptureRateData
@@ -104,11 +105,6 @@ const props = defineProps<{
 defineEmits<{
   attempt: []
 }>()
-
-function formatModifier(mod: number): string {
-  if (mod === 0) return '+0'
-  return mod > 0 ? `+${mod}` : `${mod}`
-}
 
 function ballModClass(mod: number): string {
   // Negative modifier = easier capture = good (green)
