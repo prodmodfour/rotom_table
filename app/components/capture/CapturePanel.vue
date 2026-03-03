@@ -105,6 +105,9 @@
     <div v-if="captureError" class="capture-panel__error">
       {{ captureError }}
     </div>
+    <div v-if="captureWarning" class="capture-panel__warning">
+      {{ captureWarning }}
+    </div>
   </div>
 </template>
 
@@ -141,6 +144,7 @@ const emit = defineEmits<{
 const {
   loading: captureLoading,
   error: captureError,
+  warning: captureWarning,
   calculateCaptureRateLocal,
   attemptCapture,
   rollAccuracyCheck,
@@ -360,6 +364,16 @@ function resetCapture() {
     color: $color-danger;
     text-align: center;
     padding: $spacing-xs;
+  }
+
+  &__warning {
+    font-size: $font-size-xs;
+    color: $color-warning;
+    text-align: center;
+    padding: $spacing-xs;
+    background: rgba($color-warning, 0.1);
+    border: 1px solid rgba($color-warning, 0.3);
+    border-radius: $border-radius-sm;
   }
 }
 </style>
