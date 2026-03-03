@@ -15,6 +15,7 @@
       :pokemon-data="pokemonData"
       :trainer-id="selectedTrainerId"
       :encounter-id="encounterId"
+      :accuracy-params="captureAccuracyParams"
       @captured="$emit('captured')"
     />
   </div>
@@ -22,6 +23,7 @@
 
 <script setup lang="ts">
 import type { Pokemon, HumanCharacter } from '~/types'
+import type { CaptureAccuracyParams } from '~/composables/useCapture'
 
 const props = defineProps<{
   /** The wild Pokemon's entity ID */
@@ -97,6 +99,46 @@ const pokemonData = computed(() => {
     statusConditions: pokemon.statusConditions || [],
     injuries: pokemon.injuries || 0,
     isShiny: pokemon.shiny || false,
+  }
+})
+
+const { getStageModifiers } = useEntityStats()
+
+/**
+ * Compute Poke Ball accuracy parameters from encounter combatant data.
+ * Per decree-042: full accuracy system applies to Poke Ball throws.
+ * - Thrower's accuracy combat stage from their entity's stageModifiers
+ * - Target Pokemon's Speed Evasion from the combatant record
+ *   (already computed from stats + stages by the encounter system)
+ */
+const captureAccuracyParams = computed<CaptureAccuracyParams>(() => {
+  const encounter = encounterStore.encounter
+  if (!encounter) return {}
+
+  // Get thrower's accuracy stage from the selected trainer combatant
+  let throwerAccuracyStage = 0
+  const trainerCombatant = encounter.combatants.find(c => c.id === selectedTrainerId.value)
+  if (trainerCombatant?.entity) {
+    const stages = getStageModifiers(trainerCombatant.entity)
+    throwerAccuracyStage = stages.accuracy || 0
+  }
+
+  // Get target Pokemon's Speed Evasion from combatant record
+  // The combatant's speedEvasion is pre-computed from stats + combat stages
+  let targetSpeedEvasion = 0
+  const pokemonCombatant = encounter.combatants.find(
+    c => c.type === 'pokemon' && c.entityId === props.pokemonId
+  )
+  if (pokemonCombatant) {
+    targetSpeedEvasion = pokemonCombatant.speedEvasion || 0
+  }
+
+  return {
+    throwerAccuracyStage,
+    targetSpeedEvasion,
+    // Flanking and rough terrain penalties require VTT grid context
+    // which is not available in CombatantCaptureSection. These default
+    // to 0 and can be extended when VTT-aware capture is implemented.
   }
 })
 </script>
