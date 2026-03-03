@@ -10,6 +10,9 @@
  *
  * Tick damage (Burn, Poison, Badly Poisoned, Cursed) is processed at turn end
  * before advancing to the next combatant (PTU p.246-247, decree-032).
+ *
+ * Weather damage (Hail, Sandstorm) is processed at the START of the incoming
+ * combatant's turn (PTU pp.341-342). Type and ability immunities apply.
  */
 import { prisma } from '~/server/utils/prisma'
 import { v4 as uuidv4 } from 'uuid'
@@ -23,6 +26,9 @@ import { expirePendingActions, cleanupResolvedActions, checkHoldQueue } from '~/
 import { checkHeavilyInjured, applyHeavilyInjuredPenalty, checkDeath } from '~/utils/injuryMechanics'
 import { getOverlandSpeed } from '~/utils/combatantCapabilities'
 import { clearMountOnFaint } from '~/server/services/mounting.service'
+import { getWeatherTickForCombatant } from '~/server/services/weather-automation.service'
+import type { WeatherTickResult } from '~/server/services/weather-automation.service'
+import { isDamagingWeather } from '~/utils/weatherRules'
 import type { TrainerDeclaration } from '~/types/combat'
 import type { StatusCondition } from '~/types'
 
@@ -431,6 +437,73 @@ export default defineEventHandler(async (event) => {
       }
     }
 
+    // --- Weather tick damage at turn START (PTU pp.341-342) ---
+    // Hail: 1 tick to non-Ice (immune: Ice Body, Snow Cloak, Snow Warning, Overcoat)
+    // Sandstorm: 1 tick to non-Ground/Rock/Steel (immune: Sand Veil, Sand Rush, Sand Force, Desert Weather, Overcoat)
+    // Skip during declaration phase (declaration is not a real turn).
+    let weatherTickResult: WeatherTickResult | null = null
+
+    if (currentPhase !== 'trainer_declaration' && weather && isDamagingWeather(weather) && currentTurnIndex < turnOrder.length) {
+      const newCurrentId = turnOrder[currentTurnIndex]
+      const newCurrent = combatants.find((c: any) => c.id === newCurrentId)
+
+      if (newCurrent && newCurrent.entity.currentHp > 0) {
+        const { shouldApply, tick } = getWeatherTickForCombatant(
+          newCurrent,
+          weather,
+          combatants
+        )
+
+        if (shouldApply && tick) {
+          // Apply damage using existing combatant.service functions
+          const weatherDamageResult = calculateDamage(
+            tick.amount,
+            newCurrent.entity.currentHp,
+            newCurrent.entity.maxHp,
+            newCurrent.entity.temporaryHp || 0,
+            newCurrent.entity.injuries || 0
+          )
+
+          applyDamageToEntity(newCurrent, weatherDamageResult)
+
+          // Fill in post-damage fields
+          tick.newHp = weatherDamageResult.newHp
+          tick.injuryGained = weatherDamageResult.injuryGained
+          tick.fainted = weatherDamageResult.fainted
+
+          weatherTickResult = tick
+
+          // Handle faint
+          if (weatherDamageResult.fainted) {
+            applyFaintStatus(newCurrent)
+            // Auto-dismount if mounted
+            if (newCurrent.mountState) {
+              const gridWidth = encounter.gridWidth || 20
+              const gridHeight = encounter.gridHeight || 20
+              const mountFaintResult = clearMountOnFaint(combatants, newCurrentId, gridWidth, gridHeight)
+              if (mountFaintResult.dismounted) {
+                combatants = mountFaintResult.combatants
+              }
+            }
+            // Track defeated
+            trackDefeated(newCurrent)
+          }
+
+          // Sync to database
+          await syncEntityToDatabase(newCurrent, {
+            currentHp: newCurrent.entity.currentHp,
+            temporaryHp: newCurrent.entity.temporaryHp,
+            injuries: newCurrent.entity.injuries,
+            statusConditions: newCurrent.entity.statusConditions,
+            ...(weatherDamageResult.injuryGained ? { lastInjuryTime: new Date() } : {})
+          })
+        } else if (tick) {
+          // Immune -- include in response for GM awareness
+          weatherTickResult = tick
+        }
+      }
+    }
+
     const updateData: Record<string, unknown> = {
       currentTurnIndex,
       currentRound,
@@ -486,6 +559,29 @@ export default defineEventHandler(async (event) => {
       updateData.moveLog = JSON.stringify(moveLog)
     }
 
+    // Add weather tick damage to move log
+    if (weatherTickResult && weatherTickResult.effect === 'damage') {
+      const moveLog = JSON.parse((updateData.moveLog as string) || encounter.moveLog || '[]')
+      moveLog.push({
+        id: uuidv4(),
+        timestamp: new Date(),
+        round: currentRound,
+        actorId: weatherTickResult.combatantId,
+        actorName: weatherTickResult.combatantName,
+        moveName: `${weather === 'hail' ? 'Hail' : 'Sandstorm'} Damage`,
+        damageClass: 'Status',
+        targets: [{
+          id: weatherTickResult.combatantId,
+          name: weatherTickResult.combatantName,
+          hit: true,
+          damage: weatherTickResult.amount,
+          injury: weatherTickResult.injuryGained
+        }],
+        notes: weatherTickResult.formula
+      })
+      updateData.moveLog = JSON.stringify(moveLog)
+    }
+
     const updatedRecord = await prisma.encounter.update({
       where: { id },
       data: updateData
@@ -508,9 +604,26 @@ export default defineEventHandler(async (event) => {
       })
     }
 
+    // Broadcast weather tick damage via WebSocket
+    if (weatherTickResult && weatherTickResult.effect === 'damage') {
+      broadcastToEncounter(id, {
+        type: 'status_tick',
+        data: {
+          encounterId: id,
+          combatantId: weatherTickResult.combatantId,
+          combatantName: weatherTickResult.combatantName,
+          condition: weather === 'hail' ? 'Hail' : 'Sandstorm',
+          damage: weatherTickResult.amount,
+          newHp: weatherTickResult.newHp,
+          fainted: weatherTickResult.fainted,
+          formula: weatherTickResult.formula
+        }
+      })
+    }
+
     const response = buildEncounterResponse(updatedRecord, combatants, {
       ...(clearDeclarations && { declarations: [], switchActions: [] }),
-      ...(tickResults.length > 0 && { moveLog: JSON.parse(updateData.moveLog as string) }),
+      ...(updateData.moveLog && { moveLog: JSON.parse(updateData.moveLog as string) }),
       defeatedEnemies
     })
 
@@ -520,7 +633,8 @@ export default defineEventHandler(async (event) => {
       ...(heavilyInjuredPenalty && { heavilyInjuredPenalty }),
       ...(tickResults.length > 0 && { tickDamage: tickResults }),
       ...(holdReleaseTriggered.length > 0 && { holdReleaseTriggered }),
-      ...(actionForfeitApplied && { actionForfeitApplied })
+      ...(actionForfeitApplied && { actionForfeitApplied }),
+      ...(weatherTickResult && { weatherTick: weatherTickResult })
     }
   } catch (error: unknown) {
     if (error && typeof error === 'object' && 'statusCode' in error) throw error
