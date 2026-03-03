@@ -1,13 +1,13 @@
 ---
-generated_at: 2026-03-03T23:07:27.182Z
-total_decrees: 45
-active: 44
+generated_at: 2026-03-03T23:12:06.443Z
+total_decrees: 46
+active: 45
 superseded: 0
 ---
 
 # Decrees Index
 
-## Active Decrees (44)
+## Active Decrees (45)
 
 | Decree ID | Domain | Topic | Title |
 |-----------|--------|-------|-------|
@@ -55,3 +55,4 @@ superseded: 0
 | decree-042 | capture | pokeball-accuracy-modifiers | Apply full accuracy system to Poke Ball throws |
 | decree-043 | combat | living-weapon-skill-rank-gate | Combat Skill Rank gates Living Weapon move access, not engagement |
 | decree-044 | combat | bound-condition-removal | Remove phantom 'Bound' condition; only Trapped blocks recall (RAW) |
+| decree-045 | combat | sun-blanket-healing-fraction | Use Tick (1/10th max HP) for Sun Blanket healing, not 1/16th |

@@ -3,7 +3,8 @@ id: decree-need-044
 title: "Sun Blanket healing fraction: Tick (1/10th) vs 1/16th max HP"
 priority: P2
 severity: medium
-status: open
+status: addressed
+decree_id: decree-045
 domain: combat
 source: rules-review-283
 created_by: game-logic-reviewer

@@ -1,18 +1,17 @@
 ---
-generated_at: 2026-03-03T23:07:27.177Z
+generated_at: 2026-03-03T23:12:06.438Z
 total_tickets: 298
-open: 29
+open: 28
 in_progress: 117
-resolved: 134
+resolved: 135
 ---
 
 # Tickets Index
 
-## Open Tickets (29)
+## Open Tickets (28)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
-| decree-need-044 | decree | P2 | combat | The PTU 1.05 rulebook contradicts itself on Sun Blanket's he |
 | ptu-rule-131 | ptu-rule | P2 | combat | `rollAccuracyCheck()` in `app/composables/useCapture.ts` rei |
 | feature-024 | feature | P3 | testing | No unit tests exist for any Living Weapon code (code-review- |
 | ux-012 | ux | P3 | — | The server broadcasts `status_tick` WebSocket events when ti |
@@ -164,11 +163,9 @@ resolved: 134
 | refactoring-092 | refactoring | P4 | encounter-tables | code-review-207 M1 |
 | refactoring-093 | refactoring | P4 | combat | code-review-207 M2 |
 
-## Open Decree-Needs (1)
+## Open Decree-Needs (0)
 
-| ID | Priority | Domain | Topic |
-|----|----------|--------|-------|
-| decree-need-044 | P2 | combat | — |
+All decree-needs addressed.
 
 ## Summary by Category
 
@@ -178,6 +175,6 @@ resolved: 134
 | ptu-rule | 5 | 61 | 39 | 106 |
 | feature | 1 | 19 | 3 | 24 |
 | ux | 6 | 7 | 2 | 16 |
-| decree | 1 | 0 | 43 | 44 |
+| decree | 0 | 0 | 44 | 44 |
 | refactoring | 15 | 13 | 2 | 43 |
 | docs | 0 | 0 | 16 | 16 |
