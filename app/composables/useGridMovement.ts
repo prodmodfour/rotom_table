@@ -64,6 +64,9 @@ export function calculateElevationCost(
  * Get the appropriate movement speed for a combatant based on terrain context.
  * Returns Swim speed for water terrain, Burrow speed for earth terrain,
  * and Overland speed for all other terrain types.
+ *
+ * For humans, delegates to getOverlandSpeed/getSwimSpeed which compute from
+ * trainer skills (PTU Core p.16).
  */
 function getTerrainAwareSpeed(combatant: Combatant, terrainType: string): number {
   if (combatant.type === 'pokemon') {
@@ -80,8 +83,11 @@ function getTerrainAwareSpeed(combatant: Combatant, terrainType: string): number
     return caps.overland || DEFAULT_MOVEMENT_SPEED
   }
 
-  // Human characters use default (no capabilities interface yet)
-  return DEFAULT_MOVEMENT_SPEED
+  // Human trainers: derive speeds from skills (PTU Core p.16)
+  if (terrainType === 'water') {
+    return getSwimSpeed(combatant)
+  }
+  return getOverlandSpeed(combatant)
 }
 
 /**
@@ -265,11 +271,9 @@ export function useGridMovement(options: UseGridMovementOptions) {
       if (token && terrainStore.terrainCount > 0) {
         const terrainType = terrainStore.getTerrainAt(token.position.x, token.position.y)
         baseSpeed = getTerrainAwareSpeed(combatant, terrainType)
-      } else if (combatant.type === 'pokemon') {
-        const pokemon = combatant.entity as Pokemon
-        baseSpeed = pokemon.capabilities?.overland || DEFAULT_MOVEMENT_SPEED
       } else {
-        baseSpeed = DEFAULT_MOVEMENT_SPEED
+        // No terrain data: use Overland speed (computed from skills for humans)
+        baseSpeed = getOverlandSpeed(combatant)
       }
     } else {
       baseSpeed = DEFAULT_MOVEMENT_SPEED
