@@ -119,10 +119,13 @@ export default defineEventHandler(async (event) => {
     // --- Dismount check on damage (feature-004 P1, PTU p.218) ---
     // If either rider or mount takes damage >= 1/4 max HP, trigger a dismount check.
     // Per decree-004: uses real HP damage after temp HP absorption (damageResult.hpDamage).
+    // Include heavily injured HP loss in the total damage event for threshold evaluation
+    // (PTU p.250: heavily injured penalty is damage from an attack).
     // The GM manually resolves the Acrobatics/Athletics vs DC 10 check.
     let dismountCheck: DismountCheckInfo | null = null
     if (combatant.mountState && !faintedFromAnySource) {
-      if (triggersDismountCheck(damageResult.hpDamage, entity.maxHp)) {
+      const totalDamageEvent = damageResult.hpDamage + heavilyInjuredHpLoss
+      if (triggersDismountCheck(totalDamageEvent, entity.maxHp)) {
         dismountCheck = buildDismountCheckInfo(combatant, 'damage', combatants)
       }
     }
