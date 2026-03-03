@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-03-03T19:50:00
-updated_by: slave-collector (plan-20260303-191515)
+last_updated: 2026-03-03T23:00:00
+updated_by: slave-collector (plan-20260303-202535)
 ---
 
 # Dev Ecosystem State
@@ -88,9 +88,9 @@ updated_by: slave-collector (plan-20260303-191515)
 | ptu-rule-126 | P4 | **open** | Snow Boots conditional Overland speed penalty not mechanically enforced (-1 on ice/deep snow). Follow-up from rules-review-198 MED-01. Filed by slave-collector (plan-20260228-153856) |
 | ptu-rule-127 | P1 | **resolved** | Remove automatic skill rank per level per decree-037. Originally resolved by slave-3 (plan-20260228-233710). Additional cleanup by slave-1 (plan-20260302-180611). Final completion by slave-2 (plan-20260302-192532): 5 commits — deleted LevelUpSkillSection.vue, updated design specs, removed app-surface.md reference, moved ticket to resolved |
 | ptu-rule-128 | P3 | **resolved** | Sleep does not clear on recall or encounter end. Resolved by slave-6 (plan-20260301-110550). Asleep and Bad Sleep set to clearsOnRecall: false, clearsOnEncounterEnd: false. Part of decree-038 compliance |
-| ptu-rule-129 | P3 | **CHANGES_REQUIRED** | Roar forced recall blocked by Trapped condition per decree-039. Fixed by slave-5 (plan-20260303-175043): 6 commits — Trapped check in switching.service.ts, client-side validation in useSwitching.ts, unit tests. Reviewed by slave-4 (plan-20260303-191515): code-review-308 **CHANGES_REQUIRED** (1H: recall.post.ts tempConditions reads entity not combatant, 2M: app-surface.md, Bound condition dead code) + rules-review-281 **APPROVED** (1H: Bound has no PTU basis, 1M: recall.post.ts same). Needs fix cycle |
+| ptu-rule-129 | P3 | **fix-done** | Roar forced recall blocked by Trapped condition per decree-039. Fixed by slave-5 (plan-20260303-175043): 6 commits. Reviewed: code-review-308 **CHANGES_REQUIRED** (1H+2M). Fix cycle by slave-1 (plan-20260303-202535): 5 commits — fixed tempConditions read from combatant not entity (H1), removed dead Bound checks per decree-044 (M2/bug-049), updated app-surface.md (M1). Resolved bug-049, bug-048, refactoring-105. Needs re-review |
 | ptu-rule-130 | P4 | **open** | Fainted recall+release pair should not apply League switch restriction — pair detection hardcodes isFaintedSwitch: false. Source: rules-review-225 M1. Filed by slave-collector (plan-20260301-143720) |
-| ptu-rule-131 | P2 | **resolved** | Expert+ Combat skill AoO Struggle Attack — fixed by slave-2 (plan-20260301-184039). AC 3/DB 5 for Expert+ Combat instead of hardcoded AC 4/DB 4. Commit 62c6822c. Part of feature-016 P1 implementation |
+| ptu-rule-131 | P3 | **in-progress** | Poke Ball accuracy check should use central calculateAccuracyThreshold utility per decree-042. Implemented by slave-2 (plan-20260303-202535): 7 commits — refactored rollAccuracyCheck to use calculateAccuracyThreshold, passed accuracy params through CapturePanel, server-side validation, updated tests. Needs first review |
 | ptu-rule-132 | P3 | **resolved** | Evolution species XP not hooked into capturedSpecies tracking. Fixed by slave-3 (plan-20260301-204809). Fix cycle (doc fixes) completed by slave-3 (plan-20260301-223500). Resolved |
 
 ### Feature Tickets (`tickets/feature/`)
@@ -113,12 +113,12 @@ updated_by: slave-collector (plan-20260303-191515)
 | feature-016 | P2 | **P2-APPROVED** | Priority / Interrupt / Attack of Opportunity System — P0 APPROVED. P1 APPROVED. P2 APPROVED: code-review-279 **APPROVED** (2 MED: distanceMoved uses budget not actual → refactoring-123, hardcoded speed=20 in InterceptPrompt → refactoring-124) + rules-review-255 **APPROVED** (0 issues, all code-review-273 + rules-review-249 issues verified resolved). **Feature complete** (all tiers approved) | multi-phase |
 
 | feature-017 | P2 | **P2-APPROVED** | Poke Ball Type System — P0 APPROVED. P1 APPROVED. P2 fix cycle done by slave-5 (plan-20260303-074602): 9 commits. Re-reviewed by slave-5 (plan-20260303-131425): code-review-299 **APPROVED** + rules-review-272 **APPROVED**. All code-review-295 issues verified resolved. **Feature complete** | multi-phase |
-| feature-018 | P2 | **P1-implemented** | Weather Effect Automation — design spec created by slave-5 (plan-20260303-065350). P0 implemented by slave-3 (plan-20260303-131425). P0 fix cycle by slave-1 (plan-20260303-165227). P0 APPROVED (plan-20260303-175043). P1 implemented by slave-2 (plan-20260303-191515): 7 commits — weather type damage modifiers (Rain/Sun affect Fire/Water DB), WEATHER_CS_ABILITIES + speed bonuses, weather CS apply/reverse on weather change/expiry, WEATHER_ABILITY_EFFECTS + healing/damage integration into turn lifecycle. Needs P1 review | multi-phase |
+| feature-018 | P2 | **P1-CHANGES_REQUIRED** | Weather Effect Automation — P0 APPROVED. P1 implemented by slave-2 (plan-20260303-191515). Reviewed by slave-4 (plan-20260303-202535): code-review-310 **CHANGES_REQUIRED** (1C: client-side damage calc missing weather DB modifier, 1H: WebSocket broadcast newHp:0, 1M: Desert Weather Sun fire resistance scope) + rules-review-283 **APPROVED** (1M advisory: Sun Blanket HP fraction ambiguity → decree-need-044). Needs P1 fix cycle | multi-phase |
 | feature-019 | P2 | **APPROVED** | VTT Status-Movement Integration — Tripped combatants blocked from VTT movement (R025). Stuck (R022) and Slowed (R024) pre-existing. Reviewed by slave-7 (plan-20260301-223500): code-review-265 **APPROVED** (0 issues, PTU faithful, consistent pattern, thorough documentation) + rules-review-241 **APPROVED** (all 3 mechanics verified correct, 46 tests passing, 0 issues). Feature complete | partial |
 | feature-020 | P2 | **P2-APPROVED** | Healing Item System — P0 APPROVED. P1 APPROVED. P2 APPROVED. P2 fix cycle re-review: code-review-293 **APPROVED** (plan-20260302-224650). All code-review-287 issues verified resolved. Rules-review-263 already APPROVED. **Feature complete** | multi-phase |
 | feature-021 | P2 | **APPROVED** | Derived Capability Calculations — implemented by slave-4 (plan-20260303-065350). Fix cycle by slave-2 (plan-20260303-131425). Re-reviewed by slave-2 (plan-20260303-165227): code-review-303 **APPROVED** + rules-review-276 **APPROVED**. All code-review-298 issues verified resolved. **Feature complete** | partial |
 | feature-023 | P2 | **P2-APPROVED** | Player Capture & Healing Interfaces — P0 APPROVED. P1 APPROVED. P2 APPROVED. P2 fix cycle re-review: code-review-294 **APPROVED** (plan-20260302-224650). All code-review-288 issues verified resolved. Rules-review-264 already APPROVED. **Feature complete** | multi-phase |
-| feature-022 | P2 | **fix-done** | Pokemon Loyalty System — PARTIAL scope implemented by slave-4 (plan-20260303-165227). First review CHANGES_REQUIRED (code-review-306 1C+3H+2M, rules-review-279 1H). Fix cycle by slave-1 (plan-20260303-191515): 6 commits — threaded origin through CreatedPokemon to fix entity loyalty divergence (C1), corrected JSDoc (M1+M2+rules H1), added server-side loyalty validation PUT+POST (H1+H2), documented as-any removal checklist (H3). Needs re-review + prisma db push. Out of scope: command checks (R049), loyalty-gated evolution | partial |
+| feature-022 | P2 | **APPROVED** | Pokemon Loyalty System — PARTIAL scope. Fix cycle by slave-1 (plan-20260303-191515). Re-reviewed by slave-3 (plan-20260303-202535): code-review-309 **APPROVED** (all 6 code-review-306 issues verified resolved, 0 new) + rules-review-282 **APPROVED** (all rules-review-279 issues resolved, 0 new). Needs `prisma db push` + as-any removal (5 locations documented in ticket). Out of scope: command checks (R049), loyalty-gated evolution | partial |
 | feature-024 | P3 | **open** | Living Weapon unit test coverage — engage validation rules, disengage state clearing, reconstruction from flags, homebrew species fallback. Filed by slave-1 (plan-20260303-131425) as part of feature-005 fix cycle (code-review-297 H3) | single-phase |
 
 ### UX Tickets (`tickets/ux/`)
@@ -142,7 +142,20 @@ updated_by: slave-collector (plan-20260303-191515)
 
 ## Active Developer Work
 
-**Current task:** Session 100 collection complete. 4 slaves merged (17 commits), 0 skipped. 2 dev slaves + 2 reviewer slaves.
+**Current task:** Session 101 collection complete. 4 slaves merged (17 commits), 0 skipped. 2 dev slaves + 2 reviewer slaves.
+
+**Session 101 (2026-03-03, plan-20260303-202535):**
+- **slave-1** (developer): ptu-rule-129+bug-049 fix — 5 commits: Fix cycle addressing code-review-308. Fixed tempConditions read from combatant not entity (H1), removed dead Bound checks per decree-044 (M2), updated app-surface.md (M1). Also resolved bug-049, bug-048, refactoring-105. → **fix-done, needs re-review**
+- **slave-2** (developer): ptu-rule-131 — 7 commits: Unified Poke Ball accuracy with central calculateAccuracyThreshold per decree-042. Refactored rollAccuracyCheck, passed accuracy params through UI, server-side validation, updated tests. → **implemented, needs first review**
+- **slave-3** (reviewers): feature-022 re-review — code-review-309 **APPROVED** (all 6 code-review-306 issues resolved, 0 new) + rules-review-282 **APPROVED** (all rules-review-279 issues resolved). → feature-022 **APPROVED**
+- **slave-4** (reviewers): feature-018-p1 review — code-review-310 **CHANGES_REQUIRED** (1C: client-side weather DB modifier missing, 1H: WebSocket newHp:0, 1M: Desert Weather scope) + rules-review-283 **APPROVED** (1M advisory: Sun Blanket HP fraction → decree-need-044). → feature-018 P1 **CHANGES_REQUIRED, needs fix cycle**
+
+**Smoke test:** PASSED (all 3 views render)
+**Tickets APPROVED:** feature-022 (both reviews passed — needs prisma db push + as-any removal)
+**Tickets needing fix cycle:** feature-018 P1 (code-review-310 1C+1H+1M), ptu-rule-129 (fix done, needs re-review)
+**Tickets needing first review:** ptu-rule-131 (new implementation)
+**Migration needed:** `npx prisma db push` for feature-022 loyalty field
+**Tickets filed:** decree-need-044 (Sun Blanket HP fraction ambiguity), refactoring-126 (Pokemon PUT/POST 500 error wrapping)
 
 **Session 100 (2026-03-03, plan-20260303-191515):**
 - **slave-1** (developer): feature-022-fix — 6 commits: Fix cycle for Pokemon Loyalty System. Threaded origin through CreatedPokemon to fix entity loyalty divergence (C1), corrected JSDoc (M1+M2+rules H1), added server-side loyalty validation PUT+POST (H1+H2), documented as-any removal checklist (H3). → **fix-done, needs re-review**
@@ -865,6 +878,14 @@ updated_by: slave-collector (plan-20260303-191515)
 
 ## Review Status
 
+### Session 101 Reviews (plan-20260303-202535)
+| Review ID | Target | Verdict | Reviewer | Date |
+|-----------|--------|---------|----------|------|
+| code-review-309 | feature-022 re-review (Loyalty fix cycle) | APPROVED (all 6 code-review-306 issues resolved, 0 new. Pre-existing note: PUT/POST error wrapping → refactoring-126) | senior-reviewer | 2026-03-03 |
+| rules-review-282 | feature-022 re-review (Loyalty fix cycle) | APPROVED (all rules-review-279 issues resolved, 0 new. 4 mechanics verified) | game-logic-reviewer | 2026-03-03 |
+| code-review-310 | feature-018 P1 first review (Weather Effect Automation) | CHANGES_REQUIRED (1C: useMoveCalculation.ts missing weather DB modifier, 1H: WebSocket newHp:0 hardcoded, 1M: Desert Weather Sun fire resistance scope mismatch) | senior-reviewer | 2026-03-03 |
+| rules-review-283 | feature-018 P1 first review (Weather Effect Automation) | APPROVED (20 mechanics verified, 1M advisory: Sun Blanket HP fraction PTU contradiction → decree-need-044) | game-logic-reviewer | 2026-03-03 |
+
 ### Session 100 Reviews (plan-20260303-191515)
 | Review ID | Target | Verdict | Reviewer | Date |
 |-----------|--------|---------|----------|------|
@@ -1330,6 +1351,21 @@ updated_by: slave-collector (plan-20260303-191515)
 | Open tickets (P4) | 10 (refactoring-060/062/076/078/079/084 + ux-002/006/007/008) |
 | Total open | 16 |
 | Total resolved | 159 (feature-002 fully resolved) |
+
+## Session Summary (2026-03-03, session 101 — plan-20260303-202535)
+
+**Slave collection plan-20260303-202535:** 4 slaves merged (17 commits total). 2 dev slaves + 2 reviewer slaves, all completed successfully.
+- **slave-1** (developer): ptu-rule-129+bug-049 fix — 5 commits (tempConditions fix, Bound removal per decree-044, app-surface.md, ticket resolution)
+- **slave-2** (developer): ptu-rule-131 — 7 commits (Poke Ball accuracy unification with calculateAccuracyThreshold per decree-042)
+- **slave-3** (reviewers): feature-022 re-review — code-review-309 **APPROVED** + rules-review-282 **APPROVED** → **feature-022 complete**
+- **slave-4** (reviewers): feature-018 P1 review — code-review-310 **CHANGES_REQUIRED** (1C+1H+1M) + rules-review-283 **APPROVED** (1M advisory)
+
+**Smoke test:** PASSED (all 3 views render)
+**Tickets filed:** 2 (decree-need-044: Sun Blanket HP fraction, refactoring-126: Pokemon PUT/POST error wrapping)
+**Tickets APPROVED:** 1 (feature-022 — needs prisma db push + as-any removal)
+**Tickets needing fix cycle:** 1 (feature-018 P1 — code-review-310 1C+1H+1M)
+**New implementations needing review:** ptu-rule-131 (Poke Ball accuracy), ptu-rule-129 fix cycle (re-review)
+**CLAUDE.md updates:** 1 file (app/server/services/CLAUDE.md — switching.service.ts line count ~812→~824)
 
 ## Session Summary (2026-03-03, session 99 — plan-20260303-175043)
 
