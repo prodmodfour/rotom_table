@@ -66,3 +66,14 @@ Searched for all Trapped checks across the codebase:
 4. `useSwitching.ts` — Client-side validation added via `canForcedSwitch()`
 
 Note: recall.post.ts has a similar tempConditions source issue (reads from entity instead of combatant), but that is a separate concern from this ticket's scope (forced switch Trapped check).
+
+### Fix Cycle (code-review-308 + decree-044)
+
+6. `02beecb7` — fix: read tempConditions from combatant, not entity, in recall.post.ts
+   - `app/server/api/encounters/[id]/recall.post.ts`: Fixed HIGH-001 from code-review-308. Changed `(pokemon.entity as { tempConditions?: string[] })?.tempConditions` to `pokemon.tempConditions`. Added inline comment matching switching.service.ts pattern.
+7. `0caab34e` — fix: remove dead 'Bound' condition checks from switching system (decree-044)
+   - `app/server/services/switching.service.ts`: Removed `|| allRecalledConditions.includes('Bound')` from validateSwitch and validateForcedSwitch
+   - `app/composables/useSwitching.ts`: Removed `|| allConditions.includes('Bound')` from canForcedSwitch
+   - `app/tests/unit/services/switching.service.test.ts`: Removed `['Bound'] as any` test case
+8. `d8a20ea1` — docs: add canForcedSwitch to useSwitching listing in app-surface.md
+   - `.claude/skills/references/app-surface.md`: Added canForcedSwitch to useSwitching composable listing (MEDIUM-001)

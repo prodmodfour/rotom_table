@@ -3,7 +3,7 @@ ticket_id: refactoring-105
 category: EXT-CLEANUP
 priority: P4
 severity: LOW
-status: open
+status: resolved
 domain: combat
 source: code-review-236 MEDIUM-001
 created_by: slave-collector (plan-20260301-093000)
@@ -29,3 +29,8 @@ Remove the `|| allRecalledConditions.includes('Bound')` clause. If a "Bound" sta
 ## Impact
 
 No functional impact (the check never matches). Cleanup only — prevents developer confusion about what conditions block recall.
+
+## Resolution Log
+
+Subset of bug-049. Resolved by decree-044 (remove all 'Bound' checks).
+- **0caab34e** `fix: remove dead 'Bound' condition checks from switching system (decree-044)`
