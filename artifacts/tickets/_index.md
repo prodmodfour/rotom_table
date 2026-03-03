@@ -1,14 +1,14 @@
 ---
-generated_at: 2026-03-03T14:31:24.302Z
-total_tickets: 290
-open: 28
+generated_at: 2026-03-03T16:37:26.427Z
+total_tickets: 291
+open: 29
 in_progress: 113
 resolved: 130
 ---
 
 # Tickets Index
 
-## Open Tickets (28)
+## Open Tickets (29)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
@@ -27,6 +27,7 @@ resolved: 130
 | ptu-rule-125 | ptu-rule | P4 | character-lifecycle | ptu-rule-125: Populate grantedCapabilities on all capability |
 | ptu-rule-126 | ptu-rule | P4 | combat | ptu-rule-126: Snow Boots conditional Overland speed penalty  |
 | ptu-rule-130 | ptu-rule | P4 | combat | PTU-Rule-130: Fainted recall+release pair should not apply L |
+| ptu-rule-133 | ptu-rule | P4 | scenes | ptu-rule-133: Permafrost ability weather damage reduction no |
 | ux-006 | ux | P4 | — | ux-006: PTU injury markers may leak precise HP info in playe |
 | ux-011 | ux | P4 | character-lifecycle | ux-011: Custom item form missing grantedCapabilities input f |
 | ux-014 | ux | P4 | pokemon-lifecycle | UX-014: Evolution undo snapshot staleness warning |
@@ -168,7 +169,7 @@ All decree-needs addressed.
 | Category | Open | In-Progress | Resolved | Total |
 |----------|------|-------------|----------|-------|
 | bug | 1 | 16 | 27 | 46 |
-| ptu-rule | 5 | 59 | 39 | 105 |
+| ptu-rule | 6 | 59 | 39 | 106 |
 | feature | 2 | 18 | 3 | 24 |
 | ux | 5 | 7 | 2 | 15 |
 | decree | 0 | 0 | 42 | 42 |
