@@ -156,6 +156,9 @@ model Pokemon {
   tutorPoints   Int      @default(0)
   trainingExp   Int      @default(0)
 
+  // Loyalty (PTU Chapter 10: 0=Hostile, 1=Resistant, 2=Wary, 3=Neutral, 4=Friendly, 5=Loyal, 6=Devoted)
+  loyalty       Int      @default(3)
+
   // Display
   spriteUrl     String?
   shiny         Boolean  @default(false)
