@@ -1,5 +1,5 @@
 ---
-generated_at: 2026-03-03T18:47:49.303Z
+generated_at: 2026-03-03T19:49:36.401Z
 total_designs: 27
 ---
 
@@ -32,5 +32,5 @@ total_designs: 27
 | design-trainer-level-up-001 | character-lifecycle | p1-fix-applied | feature-008 | FULL | FEATURE_GAP |
 | design-trainer-sprites-001 | character-lifecycle | implemented | feature-001 | SINGLE_PHASE | FEATURE_GAP |
 | design-trainer-xp-001 | character-lifecycle | p1-implemented | feature-009 | FULL | FEATURE_GAP |
-| design-weather-001 | scenes, combat | p0-implemented | feature-018 | FULL | FEATURE |
+| design-weather-001 | scenes, combat | p1-implemented | feature-018 | FULL | FEATURE |
 | design-xp-system-001 | pokemon-lifecycle | implemented | ptu-rule-055 | FULL | FEATURE_GAP |

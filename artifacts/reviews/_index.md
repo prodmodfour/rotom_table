@@ -1,13 +1,13 @@
 ---
-generated_at: 2026-03-03T18:47:49.285Z
-total_reviews: 309
-active_count: 141
-approved_count: 163
+generated_at: 2026-03-03T19:49:36.383Z
+total_reviews: 313
+active_count: 142
+approved_count: 166
 ---
 
 # Reviews Index
 
-## Active Reviews (141)
+## Active Reviews (142)
 
 | Review ID | Verdict | Target | Reviewer | Date |
 |-----------|---------|--------|----------|------|
@@ -117,6 +117,7 @@ approved_count: 163
 | code-review-298 | CHANGES_REQUIRED | feature-021 | senior-reviewer | 2026-03-03 |
 | code-review-302 | CHANGES_REQUIRED | feature-018 | senior-reviewer | 2026-03-03 |
 | code-review-306 | CHANGES_REQUIRED | feature-022 | senior-reviewer | 2026-03-03 |
+| code-review-308 | CHANGES_REQUIRED | ptu-rule-129 | senior-reviewer | 2026-03-03 |
 | rules-review-034 | CHANGES_REQUIRED | bug-002 | game-logic-reviewer | 2026-02-18 |
 | rules-review-039 | CHANGES_REQUIRED | ptu-rule-034, ptu-rule-035 | game-logic-reviewer | 2026-02-18 |
 | rules-review-047 | MIXED | — | game-logic-reviewer | 2026-02-19 |
@@ -157,6 +158,7 @@ approved_count: 163
 
 | Review ID | Target | Reviewer | Date |
 |-----------|--------|----------|------|
+| code-review-307 | bug-044 | senior-reviewer | 2026-03-03 |
 | code-review-305 | feature-004 | senior-reviewer | 2026-03-03 |
 | code-review-304 | feature-018 | senior-reviewer | 2026-03-03 |
 | code-review-303 | feature-021 | senior-reviewer | 2026-03-03 |
@@ -166,13 +168,12 @@ approved_count: 163
 | code-review-294 | feature-023 | senior-reviewer | 2026-03-02 |
 | code-review-293 | feature-020 | senior-reviewer | 2026-03-02 |
 | code-review-292 | bug-038+bug-039 | senior-reviewer | 2026-03-02 |
-| code-review-291 | feature-008 | senior-reviewer | 2026-03-02 |
 
 ## Stats
 
-- Active reviews: 309
-- Needs action: 141
-- Approved/Pass (active): 163
+- Active reviews: 313
+- Needs action: 142
+- Approved/Pass (active): 166
 - Archived: 297
-- Total (active + archived): 606
-- Unique targets reviewed: 87
+- Total (active + archived): 610
+- Unique targets reviewed: 89

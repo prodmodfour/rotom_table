@@ -1,26 +1,29 @@
 ---
-generated_at: 2026-03-03T18:47:49.293Z
-total_tickets: 291
-open: 26
+generated_at: 2026-03-03T19:49:36.391Z
+total_tickets: 295
+open: 30
 in_progress: 116
 resolved: 130
 ---
 
 # Tickets Index
 
-## Open Tickets (26)
+## Open Tickets (30)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
 | ptu-rule-131 | ptu-rule | P2 | combat | `rollAccuracyCheck()` in `app/composables/useCapture.ts` rei |
+| bug-048 | bug | P3 | combat | bug-048: 'Bound' condition check blocks recall without PTU b |
 | feature-024 | feature | P3 | testing | No unit tests exist for any Living Weapon code (code-review- |
 | ux-012 | ux | P3 | — | The server broadcasts `status_tick` WebSocket events when ti |
+| decree-need-043 | decree | P3 | combat | decree-need-043: Should 'Bound' condition block Pokemon reca |
 | refactoring-108 | refactoring | P3 | — | refactoring-108: Extract switch button computeds from Combat |
 | refactoring-112 | refactoring | P3 | combat | Refactoring-112: Decompose encounter store into focused sub- |
 | refactoring-113 | refactoring | P3 | combat | refactoring-113: Wire or remove autoDeclineFaintedReactor in |
 | refactoring-114 | refactoring | P3 | character-lifecycle | refactoring-114: Rename capturedSpecies to ownedSpecies for  |
 | refactoring-117 | refactoring | P3 | — | refactoring-117: Extract out-of-turn actions from encounter. |
 | refactoring-125 | refactoring | P3 | combat | refactoring-125: CombatantCard.vue exceeds 800-line file siz |
+| bug-047 | bug | P4 | capture | bug-047: Friend Ball loyalty fallback default mismatch |
 | ptu-rule-125 | ptu-rule | P4 | character-lifecycle | ptu-rule-125: Populate grantedCapabilities on all capability |
 | ptu-rule-126 | ptu-rule | P4 | combat | ptu-rule-126: Snow Boots conditional Overland speed penalty  |
 | ptu-rule-130 | ptu-rule | P4 | combat | PTU-Rule-130: Fainted recall+release pair should not apply L |
@@ -29,6 +32,7 @@ resolved: 130
 | ux-011 | ux | P4 | character-lifecycle | ux-011: Custom item form missing grantedCapabilities input f |
 | ux-014 | ux | P4 | pokemon-lifecycle | UX-014: Evolution undo snapshot staleness warning |
 | ux-015 | ux | P4 | pokemon-lifecycle | UX-015: Replace alert() with inline UI for evolution prevent |
+| ux-016 | ux | P4 | combat | ux-016: hasActed flag not set when all three actions individ |
 | refactoring-099 | refactoring | P4 | — | refactoring-099: Extract XP actions from encounter.ts store  |
 | refactoring-100 | refactoring | P4 | — | When a combatant faints from any damage source, `applyDamage |
 | refactoring-101 | refactoring | P4 | pokemon-lifecycle | Deduplicate type-badge SCSS across evolution components |
@@ -160,18 +164,20 @@ resolved: 130
 | refactoring-092 | refactoring | P4 | encounter-tables | code-review-207 M1 |
 | refactoring-093 | refactoring | P4 | combat | code-review-207 M2 |
 
-## Open Decree-Needs (0)
+## Open Decree-Needs (1)
 
-All decree-needs addressed.
+| ID | Priority | Domain | Topic |
+|----|----------|--------|-------|
+| decree-need-043 | P3 | combat | — |
 
 ## Summary by Category
 
 | Category | Open | In-Progress | Resolved | Total |
 |----------|------|-------------|----------|-------|
-| bug | 0 | 17 | 27 | 46 |
+| bug | 2 | 17 | 27 | 48 |
 | ptu-rule | 5 | 60 | 39 | 106 |
 | feature | 1 | 19 | 3 | 24 |
-| ux | 5 | 7 | 2 | 15 |
-| decree | 0 | 0 | 42 | 42 |
+| ux | 6 | 7 | 2 | 16 |
+| decree | 1 | 0 | 42 | 43 |
 | refactoring | 15 | 13 | 1 | 42 |
 | docs | 0 | 0 | 16 | 16 |
