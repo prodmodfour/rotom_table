@@ -62,6 +62,16 @@ PARTIAL-scope — can be implemented as a simple integer field with minimal UI. 
 
 After merging, run `npx prisma db push` to add the `loyalty` column to the Pokemon table. Existing Pokemon will get default value 3 (Neutral).
 
+### Post-merge `as any` removal checklist
+
+After running `npx prisma generate` (so the Prisma client includes the `loyalty` field), remove these 5 `as any` casts:
+
+1. `app/server/utils/serializers.ts` line 51: `(p as any).loyalty` → `p.loyalty`
+2. `app/server/utils/serializers.ts` line 242: `(pokemon as any).loyalty` → `pokemon.loyalty`
+3. `app/server/services/entity-builder.service.ts` line 64: `(record as any).loyalty` → `record.loyalty`
+4. `app/server/api/capture/attempt.post.ts` line 192: `(pokemon as any).loyalty` → `pokemon.loyalty`
+5. `app/server/api/capture/attempt.post.ts` line 196: `{ loyalty: newLoyalty } as any` → `{ loyalty: newLoyalty }`
+
 ## Resolution Log
 
 | Commit | Files | Description |
