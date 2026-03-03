@@ -37,13 +37,13 @@ If you need Pokemon, call one of these. Never build Pokemon records ad-hoc in AP
 | `healing-item.service.ts` | ~372 | Healing item validation and application (HP restore, status cure, revive, combat action economy) |
 | `intercept.service.ts` | ~732 | Intercept Melee/Ranged (PTU p.242) — eligibility, detection, resolution |
 | `out-of-turn.service.ts` | ~752 | AoO, Hold Action, Priority Actions, Interrupt framework |
-| `pokemon-generator.service.ts` | ~524 | Canonical Pokemon creation: generate data, persist, build combatants |
+| `pokemon-generator.service.ts` | ~539 | Canonical Pokemon creation: generate data, persist, build combatants |
 | `rest-healing.service.ts` | ~130 | Daily move refresh for Extended Rest (rolling window rule) |
 | `scene.service.ts` | ~74 | Scene-end AP restoration for characters |
 | `status-automation.service.ts` | ~151 | Tick damage at turn end (Burn, Poison, Badly Poisoned, Cursed) |
 | `switching.service.ts` | ~812 | Pokemon switch validation, recall range, initiative insertion, action tracking |
 | `ball-condition.service.ts` | ~185 | Build Poke Ball condition context from encounter state for conditional ball modifiers |
-| `mounting.service.ts` | ~456 | Trainer-Pokemon mount/dismount logic, movement sharing, faint auto-dismount |
+| `mounting.service.ts` | ~462 | Trainer-Pokemon mount/dismount logic, movement sharing, faint auto-dismount |
 | `living-weapon.service.ts` | ~349 | Living Weapon engage/disengage, wield state queries, faint penalty, auto-disengage |
 | `weather-automation.service.ts` | ~112 | Weather damage ticks at turn start (Hail, Sandstorm) with type/ability immunities |
 | `living-weapon-state.ts` | ~51 | Reconstruct wieldRelationships from combatant flags for WebSocket state sync |

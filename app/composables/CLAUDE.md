@@ -22,7 +22,7 @@
 
 ## Key Dependency Chains
 
-- `useGridMovement` -> `useRangeParser` -> `usePathfinding` (movement range calculation with A* terrain costs)
+- `useGridMovement` -> `useRangeParser` -> `usePathfinding` (movement range calculation with A* terrain costs). Also imports `movementModifiers.ts` utility for Stuck/Slowed/Sprint modifiers.
 - `useIsometricRendering` -> `useIsometricOverlays` + `useIsometricProjection` + `useRangeParser` (full iso render pipeline)
 - `useGridInteraction` -> `useTouchInteraction` + selection/measurement/fogOfWar stores (input handling)
 - `useGridRendering` -> `useRangeParser` + `useCanvasDrawing` + fogOfWar/terrain/measurement stores (2D draw loop)
@@ -35,7 +35,7 @@
 
 | File | Size | Notes |
 |---|---|---|
-| useGridMovement.ts | 27KB | PTU movement rules, diagonal costs, terrain, multi-cell tokens |
+| useGridMovement.ts | 26KB | PTU movement rules, diagonal costs, terrain, multi-cell tokens |
 | useIsometricRendering.ts | 27KB | Full isometric draw loop with sprite caching |
 | useGridRendering.ts | 26KB | 2D canvas draw: grid, fog, terrain, measurement overlays |
 | usePathfinding.ts | 25KB | A* with terrain costs, elevation, multi-cell footprints |

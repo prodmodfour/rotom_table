@@ -19,9 +19,9 @@ VTTContainer (644 lines) is the root orchestrator. It selects between two render
 | Component (lines) | Composables | Stores |
 |---|---|---|
 | VTTContainer (644) | useFogPersistence, useTerrainPersistence, useCombatantDisplay | selection, measurement, fogOfWar, terrain |
-| GridCanvas (465) | useGridMovement, useGridRendering, useGridInteraction, useFlankingDetection | selection, measurement |
+| GridCanvas (521) | useGridMovement, useGridRendering, useGridInteraction, useFlankingDetection | selection, measurement |
 | IsometricCanvas (440) | useIsometricCamera, useIsometricRendering, useIsometricInteraction, useGridMovement, useElevation, useRangeParser | fogOfWar, terrain, measurement |
-| VTTToken (404) | usePokemonSprite, useTrainerSprite | (none) |
+| VTTToken (447) | usePokemonSprite, useTrainerSprite | (none) |
 | TerrainPainter (595) | (none) | terrain |
 | GridSettingsPanel (293) | (none) | (none) |
 | MapUploader (348) | (none) | (none) |
@@ -48,8 +48,8 @@ Decrees binding on this code (see `decrees/` at project root):
 - **Burst AoE diagonal** (decree-023): burst area calculation with diagonals
 - **Diagonal cone corner** (decree-024): corner-cell inclusion for cone shapes
 - **Edge-to-edge distance** (decree-002): `ptuDistanceTokensBBox()` for multi-cell token distance
-- **Movement modifiers**: Stuck=0, Tripped=0, Slowed=half, Sprint=+50%, Disengaged=max 1m
-- **AoO detection**: shift-away trigger check in `useGridMovement` (lines 639-682)
+- **Movement modifiers**: Stuck=0, Tripped=0, Slowed=half, Sprint=+50%, Disengaged=max 1m (codified in `app/utils/movementModifiers.ts`)
+- **AoO detection**: shift-away trigger check in `useGridMovement` (lines 599-671)
 - **Rough terrain endpoint exclusion** (decree-025): accuracy penalty scope
 - **Flanking after evasion cap** (decree-040): flanking penalty application
 
