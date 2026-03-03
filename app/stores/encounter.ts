@@ -243,6 +243,48 @@ export const useEncounterStore = defineStore('encounter', {
       const current = state.encounter.combatants.find(c => c.id === currentId)
       return current?.mountState?.isMounted === true
     },
+
+    // ===========================================
+    // Living Weapon Getters (feature-005)
+    // ===========================================
+
+    /** Check if a combatant is currently wielding a Living Weapon */
+    isWieldingWeapon: (state) => (combatantId: string): boolean => {
+      if (!state.encounter) return false
+      const c = state.encounter.combatants.find(c => c.id === combatantId)
+      return c?.wieldingWeaponId !== undefined
+    },
+
+    /** Check if a combatant is currently being wielded as a Living Weapon */
+    isBeingWielded: (state) => (combatantId: string): boolean => {
+      if (!state.encounter) return false
+      const c = state.encounter.combatants.find(c => c.id === combatantId)
+      return c?.wieldedByTrainerId !== undefined
+    },
+
+    /** Get the wielded weapon combatant for a trainer */
+    getWieldedWeapon: (state) => (combatantId: string): Combatant | null => {
+      if (!state.encounter) return null
+      const c = state.encounter.combatants.find(c => c.id === combatantId)
+      if (!c?.wieldingWeaponId) return null
+      return state.encounter.combatants.find(w => w.id === c.wieldingWeaponId) ?? null
+    },
+
+    /** Get the wielder trainer combatant for a weapon Pokemon */
+    getWeaponWielder: (state) => (combatantId: string): Combatant | null => {
+      if (!state.encounter) return null
+      const c = state.encounter.combatants.find(c => c.id === combatantId)
+      if (!c?.wieldedByTrainerId) return null
+      return state.encounter.combatants.find(w => w.id === c.wieldedByTrainerId) ?? null
+    },
+
+    /** Get all active wield pairs as { wielderId, weaponId } tuples */
+    wieldPairs: (state): { wielderId: string; weaponId: string }[] => {
+      if (!state.encounter) return []
+      return state.encounter.combatants
+        .filter(c => c.wieldingWeaponId !== undefined)
+        .map(c => ({ wielderId: c.id, weaponId: c.wieldingWeaponId! }))
+    },
   },
 
   actions: {
@@ -802,6 +844,10 @@ export const useEncounterStore = defineStore('encounter', {
       if (data.holdQueue !== undefined) {
         this.encounter.holdQueue = data.holdQueue
       }
+      // Living Weapon wield relationships (feature-005)
+      if (data.wieldRelationships !== undefined) {
+        this.encounter.wieldRelationships = data.wieldRelationships
+      }
       this.encounter.moveLog = data.moveLog ?? this.encounter.moveLog
       if (data.significanceMultiplier !== undefined) {
         this.encounter.significanceMultiplier = data.significanceMultiplier
@@ -832,6 +878,9 @@ export const useEncounterStore = defineStore('encounter', {
           existing.skipNextRound = incomingCombatant.skipNextRound
           // Mount state (feature-004)
           existing.mountState = incomingCombatant.mountState
+          // Living Weapon state (feature-005)
+          existing.wieldingWeaponId = incomingCombatant.wieldingWeaponId
+          existing.wieldedByTrainerId = incomingCombatant.wieldedByTrainerId
           // Update entity properties
           Object.assign(existing.entity, incomingCombatant.entity)
         } else {

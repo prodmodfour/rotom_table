@@ -7,8 +7,9 @@ import { prisma } from '~/server/utils/prisma'
 import { rollDie } from '~/utils/diceRoller'
 import { calculateCurrentInitiative } from '~/server/services/combatant.service'
 import type { Combatant, Encounter, GridConfig } from '~/types'
-import type { TrainerDeclaration, SwitchAction, OutOfTurnAction } from '~/types/combat'
+import type { TrainerDeclaration, SwitchAction, OutOfTurnAction, WieldRelationship } from '~/types/combat'
 import type { SignificanceTier } from '~/utils/encounterBudget'
+import { reconstructWieldRelationships } from '~/server/services/living-weapon-state'
 
 // Prisma encounter record type (matches Prisma schema)
 interface EncounterRecord {
@@ -82,6 +83,7 @@ export interface ParsedEncounter {
   switchActions: SwitchAction[]
   pendingOutOfTurnActions: OutOfTurnAction[]
   holdQueue: Array<{ combatantId: string; holdUntilInitiative: number | null }>
+  wieldRelationships: WieldRelationship[]
   createdAt: Date
   updatedAt: Date
 }
@@ -213,6 +215,8 @@ export function buildEncounterResponse(
     // Out-of-turn actions (feature-016)
     pendingOutOfTurnActions?: OutOfTurnAction[]
     holdQueue?: Array<{ combatantId: string; holdUntilInitiative: number | null }>
+    // Living Weapon wield relationships (feature-005)
+    wieldRelationships?: WieldRelationship[]
   }
 ): ParsedEncounter {
   const turnOrder = options?.turnOrder ?? JSON.parse(record.turnOrder) as string[]
@@ -258,6 +262,7 @@ export function buildEncounterResponse(
     switchActions: options?.switchActions ?? JSON.parse(record.switchActions || '[]'),
     pendingOutOfTurnActions: options?.pendingOutOfTurnActions ?? JSON.parse(record.pendingActions || '[]'),
     holdQueue: options?.holdQueue ?? JSON.parse(record.holdQueue || '[]'),
+    wieldRelationships: options?.wieldRelationships ?? reconstructWieldRelationships(combatants),
     createdAt: record.createdAt,
     updatedAt: record.updatedAt
   }
