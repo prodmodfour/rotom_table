@@ -47,7 +47,15 @@ export default defineEventHandler(async (event) => {
     if (body.statusConditions !== undefined) updateData.statusConditions = JSON.stringify(body.statusConditions)
 
     // Loyalty (PTU Chapter 10: 0-6 scale)
-    if (body.loyalty !== undefined) updateData.loyalty = body.loyalty
+    if (body.loyalty !== undefined) {
+      if (!Number.isInteger(body.loyalty) || body.loyalty < 0 || body.loyalty > 6) {
+        throw createError({
+          statusCode: 400,
+          message: 'Loyalty must be an integer between 0 and 6'
+        })
+      }
+      updateData.loyalty = body.loyalty
+    }
 
     // Healing-related fields
     if (body.injuries !== undefined) updateData.injuries = body.injuries
