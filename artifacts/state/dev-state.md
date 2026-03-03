@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-03-02T20:00:00
-updated_by: slave-collector (plan-20260302-192532)
+last_updated: 2026-03-03T07:30:00
+updated_by: slave-collector (plan-20260303-065350)
 ---
 
 # Dev Ecosystem State
@@ -96,8 +96,8 @@ updated_by: slave-collector (plan-20260302-192532)
 | feature-001 | P3 | **resolved** | B2W2 trainer sprites — single-phase design complete, P0 APPROVED (code-review-149 + rules-review-139). Closed by slave-3 (plan-20260224-162105) | single-phase |
 | feature-002 | P2 | **P2-APPROVED** | 3D isometric grid — P2 fix cycle 2 APPROVED (code-review-160 + rules-review-150). All tiers complete | multi-phase |
 | feature-003 | P1 | **Track-A-P2-APPROVED + Track-B-P1-APPROVED + Track-C-P1-APPROVED** | Player View — Track A P2 APPROVED: code-review-188 APPROVED (`:deep()` fix complete). Track B P1 APPROVED (code-review-162). Track C P1 APPROVED (code-review-163 + rules-review-152). All tracks P0+P1+P2 complete | multi-phase-parallel |
-| feature-004 | P3 | **P1-implemented** | Pokemon Mounting / Rider System — design spec created by slave-1 (plan-20260228-153856). P0 APPROVED. P1 implemented by slave-5 (plan-20260302-224650): 18 commits. VTT linked tokens (VTTMountedToken, stacked rendering), dismount checks on damage/push, Mounted Prowess edge, intercept bonus, MountControls panel, initiative/group/player mount indicators, WebSocket mount_change event. Needs P1 review | multi-phase |
-| feature-005 | P3 | **design-complete** | Living Weapon System (Honedge Line) — design spec created by slave-2 (plan-20260228-153856). 7 files in design-living-weapon-001/: _index.md, spec-p0.md (wield relationship, Living Weapon capability), spec-p1.md (equipment integration, Doublade/Aegislash bonuses), spec-p2.md (shared movement, No Guard suppression, Weaponize/Soulstealer), shared-specs.md, testing-strategy.md | multi-phase |
+| feature-004 | P3 | **P1-CHANGES_REQUIRED** | Pokemon Mounting / Rider System — design spec created by slave-1 (plan-20260228-153856). P0 APPROVED. P1 reviewed by slave-2 (plan-20260303-065350): code-review-296 **CHANGES_REQUIRED** + rules-review-269. Needs P1 fix cycle | multi-phase |
+| feature-005 | P3 | **P0-implemented** | Living Weapon System (Honedge Line) — design spec created by slave-2 (plan-20260228-153856). P0 implemented by slave-3 (plan-20260303-065350): 15 commits. WieldRelationship interface, Living Weapon constants (Honedge/Doublade/Aegislash), getLivingWeaponConfig parser, living-weapon.service.ts (351 lines), living-weapon-state.ts (51 lines), engage/disengage endpoints, WebSocket events, auto-disengage on recall/switch/removal. Needs P0 review | multi-phase |
 | feature-006 | P1 | **P2-APPROVED** | Pokemon Evolution System — P0 APPROVED. P1 APPROVED. P2 APPROVED. P2 fix cycle re-review: code-review-290 **APPROVED** + rules-review-266 **APPROVED** (plan-20260302-224650). All code-review-248 + rules-review-224 issues verified resolved. Feature complete | multi-phase |
 | feature-007 | P1 | **P1-APPROVED** | Pokemon Level-Up Allocation UI — P0 APPROVED. P1 fix cycle APPROVED: code-review-243 **APPROVED** (M1: loose MoveDetail types → refactoring-109, M2: canAssignAbility UX → refactoring-110) + rules-review-219 **APPROVED** (all 9 mechanics verified, 0 issues). All code-review-238 + rules-review-214 issues resolved. **Feature complete** (design has P0+P1 only, no P2 tier) | multi-phase |
 | feature-008 | P1 | **P1-APPROVED** | Trainer Level-Up Milestone Workflow — P0 APPROVED. P1 fix cycle re-review: code-review-291 **APPROVED** + rules-review-267 **APPROVED** (plan-20260302-224650). All code-review-239 + rules-review-206 issues verified resolved. **Feature complete** (design has P0+P1 only, no P2 tier) | multi-phase |
@@ -109,9 +109,11 @@ updated_by: slave-collector (plan-20260302-192532)
 | feature-014 | P1 | **P2-APPROVED** | VTT Flanking Detection — P0 APPROVED. P1 APPROVED. P2 APPROVED: code-review-276 **APPROVED** (2 MED: flanking_update missing from WebSocketEvent union → refactoring-121, receivedFlankingMap not consumed in group/player views → refactoring-122) + rules-review-252 **APPROVED** (0 issues, all PTU flanking mechanics verified). **Feature complete** (all 12 sections A-L implemented and approved) | multi-phase |
 | feature-016 | P2 | **P2-APPROVED** | Priority / Interrupt / Attack of Opportunity System — P0 APPROVED. P1 APPROVED. P2 APPROVED: code-review-279 **APPROVED** (2 MED: distanceMoved uses budget not actual → refactoring-123, hardcoded speed=20 in InterceptPrompt → refactoring-124) + rules-review-255 **APPROVED** (0 issues, all code-review-273 + rules-review-249 issues verified resolved). **Feature complete** (all tiers approved) | multi-phase |
 
-| feature-017 | P2 | **P2-implemented** | Poke Ball Type System — P0 APPROVED. P1 APPROVED. P2 implemented by slave-3 (plan-20260302-202212): 8 commits. BallSelector, CaptureContextToggles, CapturePanel, CaptureRateDisplay, Heal Ball post-capture effect, WebSocket broadcast. Needs P2 review | multi-phase |
+| feature-017 | P2 | **P2-CHANGES_REQUIRED** | Poke Ball Type System — P0 APPROVED. P1 APPROVED. P2 reviewed by slave-1 (plan-20260303-065350): code-review-295 **CHANGES_REQUIRED** + rules-review-268. Needs P2 fix cycle | multi-phase |
+| feature-018 | P2 | **design-complete** | Weather Effect Automation — design spec created by slave-5 (plan-20260303-065350). 6 files in design-weather-001/: _index.md, spec-p0.md (weather damage on turn end), spec-p1.md (type damage modifiers, speed-doubling abilities), spec-p2.md (Weather Ball, Forecast, UI indicators), shared-specs.md, testing-strategy.md. Needs pre-flight validation | multi-phase |
 | feature-019 | P2 | **APPROVED** | VTT Status-Movement Integration — Tripped combatants blocked from VTT movement (R025). Stuck (R022) and Slowed (R024) pre-existing. Reviewed by slave-7 (plan-20260301-223500): code-review-265 **APPROVED** (0 issues, PTU faithful, consistent pattern, thorough documentation) + rules-review-241 **APPROVED** (all 3 mechanics verified correct, 46 tests passing, 0 issues). Feature complete | partial |
 | feature-020 | P2 | **P2-APPROVED** | Healing Item System — P0 APPROVED. P1 APPROVED. P2 APPROVED. P2 fix cycle re-review: code-review-293 **APPROVED** (plan-20260302-224650). All code-review-287 issues verified resolved. Rules-review-263 already APPROVED. **Feature complete** | multi-phase |
+| feature-021 | P2 | **partial-implemented** | Derived Capability Calculations — implemented by slave-4 (plan-20260303-065350): 3 commits. Trainer Overland and Swimming derived from Athletics+Acrobatics skills. VTT grid movement uses derived speeds. Throwing Range, Power, High/Long Jump NOT yet implemented (ticket updated with partial resolution). Needs review | partial |
 | feature-023 | P2 | **P2-APPROVED** | Player Capture & Healing Interfaces — P0 APPROVED. P1 APPROVED. P2 APPROVED. P2 fix cycle re-review: code-review-294 **APPROVED** (plan-20260302-224650). All code-review-288 issues verified resolved. Rules-review-264 already APPROVED. **Feature complete** | multi-phase |
 
 ### UX Tickets (`tickets/ux/`)
@@ -135,7 +137,20 @@ updated_by: slave-collector (plan-20260302-192532)
 
 ## Active Developer Work
 
-**Current task:** Session 93 collection complete. 5 slaves merged (24 commits + 1 SCSS fix). 4 reviewer slaves (feature-006, feature-008, bug-038+039, feature-020+023) + 1 dev slave (feature-004 P1). Smoke test PASSED (after SCSS fix). No conflicts.
+**Current task:** Session 94 collection complete. 5 slaves merged (24 commits total). 2 reviewer slaves (feature-017 P2, feature-004 P1) + 3 dev slaves (feature-005 P0, feature-021, feature-018 design). Smoke test PASSED. 1 conflict resolved (combatantCapabilities.ts import collision between slave-3 and slave-4).
+
+**Session 94 (2026-03-03, plan-20260303-065350):**
+- **slave-1** (reviewers): feature-017-p2-review — code-review-295 **CHANGES_REQUIRED** + rules-review-268. → feature-017 **P2-CHANGES_REQUIRED**
+- **slave-2** (reviewers): feature-004-p1-review — code-review-296 **CHANGES_REQUIRED** + rules-review-269. → feature-004 **P1-CHANGES_REQUIRED**
+- **slave-3** (developer): feature-005-p0 — 15 commits: Living Weapon System P0. WieldRelationship interface, Living Weapon constants (Honedge/Doublade/Aegislash), getLivingWeaponConfig parser, living-weapon.service.ts, living-weapon-state.ts, engage/disengage endpoints, WebSocket events, auto-disengage on recall/switch/removal. → **P0-implemented, needs review**
+- **slave-4** (developer): feature-021 — 3 commits: Derived trainer Overland and Swimming speeds from Athletics+Acrobatics skills. VTT grid movement uses derived speeds. → **partial-implemented, needs review**
+- **slave-5** (developer): feature-018-design — 2 commits: Weather Effect Automation design spec. 6 files in design-weather-001/ (P0: weather damage, P1: type modifiers + speed abilities, P2: Weather Ball + Forecast + UI). → **design-complete**
+
+**Smoke test:** PASSED (Playwright) — GM view renders (full nav + encounter). Group view renders. Player view renders (character selection). No issues.
+**Tickets needing review:** feature-005 P0 (first implementation), feature-021 (first implementation)
+**Tickets needing fix cycle:** feature-017 P2 (CHANGES_REQUIRED), feature-004 P1 (CHANGES_REQUIRED)
+**New designs:** feature-018 (Weather Effect Automation, design-complete)
+**Tickets filed:** (see Step 6)
 
 **Session 93 (2026-03-03, plan-20260302-224650):**
 - **slave-3** (reviewers): bug-038+bug-039 re-review — code-review-292 **APPROVED** (all code-review-216 issues verified resolved). → **APPROVED**
@@ -775,6 +790,14 @@ updated_by: slave-collector (plan-20260302-192532)
 
 ## Review Status
 
+### Session 94 Reviews (plan-20260303-065350)
+| Review ID | Target | Verdict | Reviewer | Date |
+|-----------|--------|---------|----------|------|
+| code-review-295 | feature-017 P2 (Poke Ball Type System P2: Ball Selection UI, Post-Capture Effects, Capture Result Display) | CHANGES_REQUIRED (1C: CombatantCard 999 lines, 3H: dead WS broadcast, hidden warning, hardcoded z-index, 4M: formatModifier duplication, missing evolution data, missing encounterRound, no click-outside) | senior-reviewer | 2026-03-03 |
+| rules-review-268 | feature-017 P2 (Poke Ball Type System P2) | APPROVED (all 13 mechanics correct, decree-013/014/015/042 compliant, 2 observations: missing evolutionStage in preview, trainerCombatantId mismatch) | game-logic-reviewer | 2026-03-03 |
+| code-review-296 | feature-004 P1 (Mounting System P1: VTT tokens, dismount checks, Mounted Prowess, intercept, UI indicators) | CHANGES_REQUIRED (2H: badge overlap, movement modifiers double-applied, 3M: mount capacity check inverted, dismount threshold missing heavily-injured penalty, partner name missing in group/player cards) | senior-reviewer | 2026-03-03 |
+| rules-review-269 | feature-004 P1 (Mounting System P1) | APPROVED (all 16 mechanics correct, decree-003/004 compliant, no regressions to P0) | game-logic-reviewer | 2026-03-03 |
+
 ### Session 91 Reviews (plan-20260302-192532)
 | Review ID | Target | Verdict | Reviewer | Date |
 |-----------|--------|---------|----------|------|
@@ -1190,6 +1213,20 @@ updated_by: slave-collector (plan-20260302-192532)
 | Open tickets (P4) | 10 (refactoring-060/062/076/078/079/084 + ux-002/006/007/008) |
 | Total open | 16 |
 | Total resolved | 159 (feature-002 fully resolved) |
+
+## Session Summary (2026-03-03, session 94 — plan-20260303-065350)
+
+**Slave collection plan-20260303-065350:** 5 slaves merged (24 commits total). 1 conflict resolved (combatantCapabilities.ts import collision between slave-3 and slave-4). All slaves completed successfully.
+- **slave-1** (reviewers): feature-017-p2-review — code-review-295 **CHANGES_REQUIRED** + rules-review-268. → feature-017 **P2-CHANGES_REQUIRED**
+- **slave-2** (reviewers): feature-004-p1-review — code-review-296 **CHANGES_REQUIRED** + rules-review-269. → feature-004 **P1-CHANGES_REQUIRED**
+- **slave-3** (developer): feature-005-p0 — 15 commits: Living Weapon System P0. WieldRelationship interface, constants, service, endpoints, WebSocket events, auto-disengage. → **P0-implemented, needs review**
+- **slave-4** (developer): feature-021 — 3 commits: Derived trainer Overland+Swimming from skills, VTT grid movement integration. → **partial-implemented, needs review**
+- **slave-5** (developer): feature-018-design — 2 commits: Weather Effect Automation design spec (6 files). → **design-complete**
+
+**Smoke test:** PASSED
+**Tickets needing review:** feature-005 P0, feature-021
+**Tickets needing fix cycle:** feature-017 P2, feature-004 P1
+**New designs:** feature-018 (Weather Effect Automation)
 
 ## Session Summary (2026-03-02, session 92 — plan-20260302-202212)
 
