@@ -288,7 +288,7 @@ const handleDismount = async (forced: boolean) => {
 .mount-controls {
   background: $color-bg-tertiary;
   border: 1px solid rgba(100, 200, 255, 0.3);
-  border-radius: $border-radius;
+  border-radius: $border-radius-md;
   padding: 0.75rem;
   display: flex;
   flex-direction: column;
@@ -321,7 +321,7 @@ const handleDismount = async (forced: boolean) => {
 
 .mount-controls__select {
   background: $color-bg-secondary;
-  border: 1px solid $color-border;
+  border: 1px solid $border-color-default;
   color: $color-text;
   padding: 0.25rem 0.5rem;
   border-radius: $border-radius-sm;
