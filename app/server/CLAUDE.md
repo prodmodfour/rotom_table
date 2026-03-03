@@ -12,7 +12,7 @@ WebSocket (`/ws`) handles GM-to-Group synchronization with role-based broadcasti
 - `sync_request` / `tab_sync_request` — request state sync
 
 ### Broadcast Events (relayed by server)
-- **Combat**: `turn_change`, `damage_applied`, `heal_applied`, `status_change`, `move_executed`, `combatant_added`, `combatant_removed`
+- **Combat**: `turn_change`, `damage_applied`, `heal_applied`, `status_change`, `move_executed`, `combatant_added`, `combatant_removed`, `mount_change`
 - **Encounter**: `encounter_update`, `serve_encounter`, `encounter_unserved`
 - **VTT**: `movement_preview`
 - **Scene**: `scene_update`

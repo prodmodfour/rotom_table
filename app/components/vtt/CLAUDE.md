@@ -14,7 +14,7 @@ VTTContainer (644 lines) is the root orchestrator. It selects between two render
 2. **Pixel coords** (x, y) — canvas drawing positions. Grid coords multiplied by cellSize, adjusted by pan/zoom.
 3. **Screen coords** — mouse/touch event positions. In 2D: pixel coords with CSS transform. In isometric: projected via camera angle + elevation, requiring inverse projection for hit-testing.
 
-## Component-to-Composable Map (14 .vue files)
+## Component-to-Composable Map (15 .vue files)
 
 | Component (lines) | Composables | Stores |
 |---|---|---|
@@ -31,6 +31,7 @@ VTTContainer (644 lines) is the root orchestrator. It selects between two render
 | GroupGridCanvas (140) | (none) | (none) |
 | CameraControls (105) | (none) | (none) |
 | ZoomControls (85) | (none) | (none) |
+| VTTMountedToken (277) | (none) | encounter |
 | CoordinateDisplay (60) | (none) | (none) |
 
 ## PTU Rules in VTT Code
