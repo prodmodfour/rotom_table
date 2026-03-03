@@ -1,18 +1,17 @@
 ---
-generated_at: 2026-03-03T16:37:26.427Z
+generated_at: 2026-03-03T17:34:03.121Z
 total_tickets: 291
-open: 29
-in_progress: 113
+open: 28
+in_progress: 114
 resolved: 130
 ---
 
 # Tickets Index
 
-## Open Tickets (29)
+## Open Tickets (28)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
-| feature-022 | feature | P2 | pokemon-lifecycle | feature-022: Pokemon Loyalty System |
 | ptu-rule-131 | ptu-rule | P2 | combat | `rollAccuracyCheck()` in `app/composables/useCapture.ts` rei |
 | bug-044 | bug | P3 | capture | `useCapture.ts` (line ~192) references `/api/encounters/${en |
 | ptu-rule-129 | ptu-rule | P3 | combat | ptu-rule-129: Roar's forced recall must respect the Trapped  |
@@ -42,7 +41,7 @@ resolved: 130
 | refactoring-118 | refactoring | P4 | — | refactoring-118: Remove unused flankingMap destructure in Gr |
 | refactoring-119 | refactoring | P4 | — | refactoring-119: Update stale interrupt.post.ts file header  |
 
-## In-Progress Tickets (113)
+## In-Progress Tickets (114)
 
 | ID | Category | Priority | Domain | Source |
 |----|----------|----------|--------|--------|
@@ -100,6 +99,7 @@ resolved: 130
 | ptu-rule-113 | ptu-rule | P2 | vtt | decree-023 |
 | feature-002 | feature | P2 | vtt-grid | — |
 | feature-018 | feature | P2 | scenes | matrix-gap (Scenes SG-1) |
+| feature-022 | feature | P2 | pokemon-lifecycle | matrix-gap (GAP-PLC-3) |
 | feature-023 | feature | P2 | player-view+capture+healing | matrix-gap (GAP-CAP-1 + GAP-HEAL-1) |
 | bug-042 | bug | P2 | — | code-review-264 HIGH-001 |
 | ptu-rule-086 | ptu-rule | P3 | capture | capture-audit.md (capture-R005) |
@@ -170,7 +170,7 @@ All decree-needs addressed.
 |----------|------|-------------|----------|-------|
 | bug | 1 | 16 | 27 | 46 |
 | ptu-rule | 6 | 59 | 39 | 106 |
-| feature | 2 | 18 | 3 | 24 |
+| feature | 1 | 19 | 3 | 24 |
 | ux | 5 | 7 | 2 | 15 |
 | decree | 0 | 0 | 42 | 42 |
 | refactoring | 15 | 13 | 1 | 42 |
