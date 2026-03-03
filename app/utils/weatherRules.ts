@@ -69,9 +69,10 @@ export const SANDSTORM_IMMUNE_TYPES: string[] = ['Ground', 'Rock', 'Steel']
  * - Snow Cloak: immune + adjacent allies immune
  * - Snow Warning: static effect, user not damaged by Hail
  * - Overcoat: immune to weather damage (errata)
+ * - Magic Guard: immune to all indirect damage including weather (PTU p.1770-1775)
  */
 export const HAIL_IMMUNE_ABILITIES: string[] = [
-  'Ice Body', 'Snow Cloak', 'Snow Warning', 'Overcoat'
+  'Ice Body', 'Snow Cloak', 'Snow Warning', 'Overcoat', 'Magic Guard'
 ]
 
 /**
@@ -81,9 +82,11 @@ export const HAIL_IMMUNE_ABILITIES: string[] = [
  * - Sand Force: immune to Sandstorm damage
  * - Desert Weather: immune to Sandstorm damage
  * - Overcoat: immune to weather damage (errata)
+ * - Magic Guard: immune to all indirect damage including weather (PTU p.1770-1775)
+ * - Sand Stream: grants Sandstorm immunity (PTU 10-indices p.2247-2251)
  */
 export const SANDSTORM_IMMUNE_ABILITIES: string[] = [
-  'Sand Veil', 'Sand Rush', 'Sand Force', 'Desert Weather', 'Overcoat'
+  'Sand Veil', 'Sand Rush', 'Sand Force', 'Desert Weather', 'Overcoat', 'Magic Guard', 'Sand Stream'
 ]
 
 /** Abilities that protect adjacent allies from Hail damage */
@@ -183,7 +186,10 @@ export function isImmuneToHail(
       if (ally.id === combatant.id) continue
       if (ally.side !== combatant.side) continue
       if (!ally.position) continue
+      // Fainted allies cannot protect (PTU p.248: fainted abilities inactive)
+      if (ally.entity.currentHp <= 0) continue
 
+      // Note: uses anchor position only; does not account for large token sizes (pre-existing limitation)
       // Check adjacency (1 cell distance in any direction)
       const dx = Math.abs(ally.position.x - combatant.position.x)
       const dy = Math.abs(ally.position.y - combatant.position.y)
@@ -203,6 +209,7 @@ export function isImmuneToHail(
     }
   }
 
+  // Permafrost damage reduction not handled (tracked in ptu-rule-133)
   return { immune: false }
 }
 
@@ -243,7 +250,10 @@ export function isImmuneToSandstorm(
       if (ally.id === combatant.id) continue
       if (ally.side !== combatant.side) continue
       if (!ally.position) continue
+      // Fainted allies cannot protect (PTU p.248: fainted abilities inactive)
+      if (ally.entity.currentHp <= 0) continue
 
+      // Note: uses anchor position only; does not account for large token sizes (pre-existing limitation)
       const dx = Math.abs(ally.position.x - combatant.position.x)
       const dy = Math.abs(ally.position.y - combatant.position.y)
       const isAdjacent = dx <= 1 && dy <= 1 && (dx + dy > 0)
