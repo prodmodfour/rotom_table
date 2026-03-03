@@ -3,7 +3,8 @@ id: decree-need-042
 title: "Living Weapon Combat Skill Rank gate: block engagement or only gate move access?"
 priority: P1
 severity: HIGH
-status: open
+status: addressed
+decree_id: decree-043
 domain: combat
 source: rules-review-270 HIGH #1
 created_by: slave-collector (plan-20260303-074602)
