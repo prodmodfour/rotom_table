@@ -46,6 +46,9 @@ export default defineEventHandler(async (event) => {
     if (body.moves !== undefined) updateData.moves = JSON.stringify(body.moves)
     if (body.statusConditions !== undefined) updateData.statusConditions = JSON.stringify(body.statusConditions)
 
+    // Loyalty (PTU Chapter 10: 0-6 scale)
+    if (body.loyalty !== undefined) updateData.loyalty = body.loyalty
+
     // Healing-related fields
     if (body.injuries !== undefined) updateData.injuries = body.injuries
     if (body.restMinutesToday !== undefined) updateData.restMinutesToday = body.restMinutesToday

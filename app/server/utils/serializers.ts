@@ -48,6 +48,7 @@ function serializeLinkedPokemon(p: Pokemon) {
     tutorPoints: p.tutorPoints,
     trainingExp: p.trainingExp,
     eggGroups: JSON.parse(p.eggGroups),
+    loyalty: (p as any).loyalty ?? 3,
     shiny: p.shiny,
     gender: p.gender,
     spriteUrl: p.spriteUrl
@@ -238,6 +239,7 @@ export function serializePokemon(pokemon: Pokemon) {
     tutorPoints: pokemon.tutorPoints,
     trainingExp: pokemon.trainingExp,
     eggGroups: JSON.parse(pokemon.eggGroups),
+    loyalty: (pokemon as any).loyalty ?? 3,
     statusConditions: JSON.parse(pokemon.statusConditions),
     injuries: pokemon.injuries,
     temporaryHp: pokemon.temporaryHp,

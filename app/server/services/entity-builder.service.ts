@@ -61,6 +61,7 @@ export function buildPokemonEntityFromRecord(record: PrismaPokemonRecord): Pokem
     tutorPoints: record.tutorPoints,
     trainingExp: record.trainingExp,
     eggGroups: JSON.parse(record.eggGroups),
+    loyalty: (record as any).loyalty ?? 3,
     ownerId: record.ownerId ?? undefined,
     spriteUrl: record.spriteUrl ?? undefined,
     shiny: record.shiny,
