@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Tech Stack
 - **Framework**: Nuxt 3 (SPA mode, `ssr: false`)
-- **Backend**: Nitro server with 155 REST API endpoints
+- **Backend**: Nitro server with 156 REST API endpoints
 - **Database**: SQLite with Prisma ORM (`app/prisma/schema.prisma`)
 - **State**: 16 Pinia stores (auto-registered via `@pinia/nuxt`)
 - **Real-time**: WebSocket for GM-Group synchronization
