@@ -1,7 +1,7 @@
 // API and WebSocket types
 
 import type { GridPosition } from './spatial';
-import type { StatusCondition } from './combat';
+import type { StatusCondition, WieldRelationship } from './combat';
 import type { Pokemon, HumanCharacter } from './character';
 import type { Encounter, Combatant, MoveLogEntry, MovementPreview } from './encounter';
 import type { Scene, ScenePosition, SceneCharacter, ScenePokemon, SceneGroup } from './scene';
@@ -49,6 +49,9 @@ export type WebSocketEvent =
   | { type: 'status_change'; data: { combatantId: string; added?: StatusCondition[]; removed?: StatusCondition[] } }
   | { type: 'combatant_added'; data: Combatant }
   | { type: 'combatant_removed'; data: { combatantId: string } }
+  // Living Weapon events (feature-005)
+  | { type: 'living_weapon_engage'; data: { encounterId: string; wieldRelationship: WieldRelationship } }
+  | { type: 'living_weapon_disengage'; data: { encounterId: string; wielderId: string; weaponId: string } }
   // Switching events
   | { type: 'pokemon_switched'; data: { encounterId: string; trainerId: string; trainerName: string; recalledName: string; releasedName: string; releasedCombatantId: string; actionCost: 'standard' | 'shift' | 'none'; canActThisRound: boolean; canActImmediately: boolean; encounter: Encounter } }
   | { type: 'pokemon_recalled'; data: { encounterId: string; trainerId: string; trainerName: string; recalledNames: string[]; actionCost: 'standard' | 'shift'; encounter: Encounter } }

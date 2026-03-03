@@ -236,6 +236,13 @@ export function useWebSocket() {
         // this event provides mount-specific context for any specialized rendering.
         break
 
+      case 'living_weapon_engage':
+      case 'living_weapon_disengage':
+        // feature-005: Living Weapon engage/disengage events.
+        // State sync happens via the accompanying encounter_update broadcast;
+        // these events provide wield-specific context for any specialized rendering.
+        break
+
       case 'capture_attempt':
         // P2: Store capture event for Group View / Player View display
         if (message.data && typeof message.data === 'object') {
