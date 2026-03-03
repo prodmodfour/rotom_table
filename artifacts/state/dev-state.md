@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-03-03T18:45:00
-updated_by: slave-collector (plan-20260303-175043)
+last_updated: 2026-03-03T19:50:00
+updated_by: slave-collector (plan-20260303-191515)
 ---
 
 # Dev Ecosystem State
@@ -25,7 +25,7 @@ updated_by: slave-collector (plan-20260303-175043)
 | bug-041 | P3 | **resolved** | Remove Whirlwind references from Force Switch UI per decree-034. Fixed by slave-3 (plan-20260301-204809). Fix cycle (2 medium doc fixes) completed by slave-3 (plan-20260301-223500). Resolved |
 | bug-042 | P2 | **resolved** | release-hold.post.ts creates duplicate turnOrder entry in Full Contact battles after hold-release. First fix BLOCKED (code-review-268). Rewritten by slave-1 (plan-20260302-110035): remove-before-insert approach. Re-reviewed by slave-5 (plan-20260302-120000): code-review-274 **APPROVED** (MED-001: commit hashes, non-blocking) + rules-review-250 **APPROVED** (all 5 scenarios traced, 12 tests pass). Resolved |
 | bug-043 | P2 | **resolved** | Poke Ball accuracy check does not gate capture attempt — AC 6 not enforced, balls never miss. Pre-existing in useCapture.ts. Fixed by slave-6 (plan-20260302-130300): 5 commits. Reviewed (plan-20260302-150500): code-review-281 **CHANGES_REQUIRED** + rules-review-257 **APPROVED**. Fix cycle by slave-2 (plan-20260302-224448): 6 commits. Re-reviewed by slave-2 (plan-20260303-040754): code-review-283 **APPROVED** + rules-review-259 **APPROVED** |
-| bug-044 | P3 | **in-progress** | Standard Action consumption endpoint missing for capture attempts. Fixed by slave-4 (plan-20260303-175043): created `action.post.ts` endpoint consuming Standard Action. 2 commits. Needs review |
+| bug-044 | P3 | **APPROVED** | Standard Action consumption endpoint missing for capture attempts. Fixed by slave-4 (plan-20260303-175043): created `action.post.ts` endpoint consuming Standard Action. 2 commits. Reviewed by slave-3 (plan-20260303-191515): code-review-307 **APPROVED** (2M: loyalty fallback mismatch, CLAUDE.md event list) + rules-review-280 **APPROVED** (1M: hasActed flag edge case). Feature complete |
 | bug-045 | P2 | **resolved** | CapturePanel receives entityId instead of combatantId for trainer action economy. Fixed by slave-4 (plan-20260303-131425): used combatant `id` instead of `entityId` in availableTrainers. Regression test added. 3 commits |
 | bug-046 | P2 | **resolved** | Pre-existing malformed encounter_update WebSocket broadcast in mount/dismount endpoints. mount.post.ts and dismount.post.ts broadcast `{ encounterId: id }` instead of full encounter response. Fixed by slave-1 (plan-20260303-131425) as part of feature-005 fix cycle (same pattern as C1) |
 
@@ -88,7 +88,7 @@ updated_by: slave-collector (plan-20260303-175043)
 | ptu-rule-126 | P4 | **open** | Snow Boots conditional Overland speed penalty not mechanically enforced (-1 on ice/deep snow). Follow-up from rules-review-198 MED-01. Filed by slave-collector (plan-20260228-153856) |
 | ptu-rule-127 | P1 | **resolved** | Remove automatic skill rank per level per decree-037. Originally resolved by slave-3 (plan-20260228-233710). Additional cleanup by slave-1 (plan-20260302-180611). Final completion by slave-2 (plan-20260302-192532): 5 commits — deleted LevelUpSkillSection.vue, updated design specs, removed app-surface.md reference, moved ticket to resolved |
 | ptu-rule-128 | P3 | **resolved** | Sleep does not clear on recall or encounter end. Resolved by slave-6 (plan-20260301-110550). Asleep and Bad Sleep set to clearsOnRecall: false, clearsOnEncounterEnd: false. Part of decree-038 compliance |
-| ptu-rule-129 | P3 | **in-progress** | Roar forced recall blocked by Trapped condition per decree-039. Fixed by slave-5 (plan-20260303-175043): 6 commits — Trapped check in switching.service.ts, client-side validation in useSwitching.ts, unit tests. Needs review |
+| ptu-rule-129 | P3 | **CHANGES_REQUIRED** | Roar forced recall blocked by Trapped condition per decree-039. Fixed by slave-5 (plan-20260303-175043): 6 commits — Trapped check in switching.service.ts, client-side validation in useSwitching.ts, unit tests. Reviewed by slave-4 (plan-20260303-191515): code-review-308 **CHANGES_REQUIRED** (1H: recall.post.ts tempConditions reads entity not combatant, 2M: app-surface.md, Bound condition dead code) + rules-review-281 **APPROVED** (1H: Bound has no PTU basis, 1M: recall.post.ts same). Needs fix cycle |
 | ptu-rule-130 | P4 | **open** | Fainted recall+release pair should not apply League switch restriction — pair detection hardcodes isFaintedSwitch: false. Source: rules-review-225 M1. Filed by slave-collector (plan-20260301-143720) |
 | ptu-rule-131 | P2 | **resolved** | Expert+ Combat skill AoO Struggle Attack — fixed by slave-2 (plan-20260301-184039). AC 3/DB 5 for Expert+ Combat instead of hardcoded AC 4/DB 4. Commit 62c6822c. Part of feature-016 P1 implementation |
 | ptu-rule-132 | P3 | **resolved** | Evolution species XP not hooked into capturedSpecies tracking. Fixed by slave-3 (plan-20260301-204809). Fix cycle (doc fixes) completed by slave-3 (plan-20260301-223500). Resolved |
@@ -113,12 +113,12 @@ updated_by: slave-collector (plan-20260303-175043)
 | feature-016 | P2 | **P2-APPROVED** | Priority / Interrupt / Attack of Opportunity System — P0 APPROVED. P1 APPROVED. P2 APPROVED: code-review-279 **APPROVED** (2 MED: distanceMoved uses budget not actual → refactoring-123, hardcoded speed=20 in InterceptPrompt → refactoring-124) + rules-review-255 **APPROVED** (0 issues, all code-review-273 + rules-review-249 issues verified resolved). **Feature complete** (all tiers approved) | multi-phase |
 
 | feature-017 | P2 | **P2-APPROVED** | Poke Ball Type System — P0 APPROVED. P1 APPROVED. P2 fix cycle done by slave-5 (plan-20260303-074602): 9 commits. Re-reviewed by slave-5 (plan-20260303-131425): code-review-299 **APPROVED** + rules-review-272 **APPROVED**. All code-review-295 issues verified resolved. **Feature complete** | multi-phase |
-| feature-018 | P2 | **P0-APPROVED** | Weather Effect Automation — design spec created by slave-5 (plan-20260303-065350). P0 implemented by slave-3 (plan-20260303-131425). P0 fix cycle by slave-1 (plan-20260303-165227). Re-reviewed by plan-20260303-175043: code-review-304 **APPROVED** + rules-review-277 **APPROVED**. All code-review-302 + rules-review-275 issues resolved. P0 complete, ready for P1 | multi-phase |
+| feature-018 | P2 | **P1-implemented** | Weather Effect Automation — design spec created by slave-5 (plan-20260303-065350). P0 implemented by slave-3 (plan-20260303-131425). P0 fix cycle by slave-1 (plan-20260303-165227). P0 APPROVED (plan-20260303-175043). P1 implemented by slave-2 (plan-20260303-191515): 7 commits — weather type damage modifiers (Rain/Sun affect Fire/Water DB), WEATHER_CS_ABILITIES + speed bonuses, weather CS apply/reverse on weather change/expiry, WEATHER_ABILITY_EFFECTS + healing/damage integration into turn lifecycle. Needs P1 review | multi-phase |
 | feature-019 | P2 | **APPROVED** | VTT Status-Movement Integration — Tripped combatants blocked from VTT movement (R025). Stuck (R022) and Slowed (R024) pre-existing. Reviewed by slave-7 (plan-20260301-223500): code-review-265 **APPROVED** (0 issues, PTU faithful, consistent pattern, thorough documentation) + rules-review-241 **APPROVED** (all 3 mechanics verified correct, 46 tests passing, 0 issues). Feature complete | partial |
 | feature-020 | P2 | **P2-APPROVED** | Healing Item System — P0 APPROVED. P1 APPROVED. P2 APPROVED. P2 fix cycle re-review: code-review-293 **APPROVED** (plan-20260302-224650). All code-review-287 issues verified resolved. Rules-review-263 already APPROVED. **Feature complete** | multi-phase |
 | feature-021 | P2 | **APPROVED** | Derived Capability Calculations — implemented by slave-4 (plan-20260303-065350). Fix cycle by slave-2 (plan-20260303-131425). Re-reviewed by slave-2 (plan-20260303-165227): code-review-303 **APPROVED** + rules-review-276 **APPROVED**. All code-review-298 issues verified resolved. **Feature complete** | partial |
 | feature-023 | P2 | **P2-APPROVED** | Player Capture & Healing Interfaces — P0 APPROVED. P1 APPROVED. P2 APPROVED. P2 fix cycle re-review: code-review-294 **APPROVED** (plan-20260302-224650). All code-review-288 issues verified resolved. Rules-review-264 already APPROVED. **Feature complete** | multi-phase |
-| feature-022 | P2 | **CHANGES_REQUIRED** | Pokemon Loyalty System — PARTIAL scope implemented by slave-4 (plan-20260303-165227). First review by plan-20260303-175043: code-review-306 **CHANGES_REQUIRED** (1C+3H+2M: entity loyalty divergence, input validation, as-any casts, stale JSDoc) + rules-review-279 **APPROVED** (1H: JSDoc bred=4 should be bred=3). Needs fix cycle + prisma db push. Out of scope: command checks (R049), loyalty-gated evolution | partial |
+| feature-022 | P2 | **fix-done** | Pokemon Loyalty System — PARTIAL scope implemented by slave-4 (plan-20260303-165227). First review CHANGES_REQUIRED (code-review-306 1C+3H+2M, rules-review-279 1H). Fix cycle by slave-1 (plan-20260303-191515): 6 commits — threaded origin through CreatedPokemon to fix entity loyalty divergence (C1), corrected JSDoc (M1+M2+rules H1), added server-side loyalty validation PUT+POST (H1+H2), documented as-any removal checklist (H3). Needs re-review + prisma db push. Out of scope: command checks (R049), loyalty-gated evolution | partial |
 | feature-024 | P3 | **open** | Living Weapon unit test coverage — engage validation rules, disengage state clearing, reconstruction from flags, homebrew species fallback. Filed by slave-1 (plan-20260303-131425) as part of feature-005 fix cycle (code-review-297 H3) | single-phase |
 
 ### UX Tickets (`tickets/ux/`)
@@ -142,7 +142,21 @@ updated_by: slave-collector (plan-20260303-175043)
 
 ## Active Developer Work
 
-**Current task:** Session 99 collection complete. 5 slaves merged (14 commits), 0 skipped. 2 dev slaves + 3 reviewer slaves.
+**Current task:** Session 100 collection complete. 4 slaves merged (17 commits), 0 skipped. 2 dev slaves + 2 reviewer slaves.
+
+**Session 100 (2026-03-03, plan-20260303-191515):**
+- **slave-1** (developer): feature-022-fix — 6 commits: Fix cycle for Pokemon Loyalty System. Threaded origin through CreatedPokemon to fix entity loyalty divergence (C1), corrected JSDoc (M1+M2+rules H1), added server-side loyalty validation PUT+POST (H1+H2), documented as-any removal checklist (H3). → **fix-done, needs re-review**
+- **slave-2** (developer): feature-018-p1 — 7 commits: Weather Effect Automation P1. Type damage modifiers (Rain/Sun affect Fire/Water DB in damage formula Step 1.5), WEATHER_CS_ABILITIES + speed bonuses (Swift Swim/Chlorophyll/Sand Rush/Solar Power), weather CS apply/reverse on change/expiry, WEATHER_ABILITY_EFFECTS + healing/damage (Ice Body, Rain Dish, Sun Blanket, Solar Power, Dry Skin, Desert Weather) integrated into turn lifecycle. → **P1-implemented, needs review**
+- **slave-3** (reviewers): bug-044-review — code-review-307 **APPROVED** (2M: loyalty fallback mismatch, CLAUDE.md event list) + rules-review-280 **APPROVED** (1M: hasActed flag edge case). → bug-044 **APPROVED**
+- **slave-4** (reviewers): ptu-rule-129-review — code-review-308 **CHANGES_REQUIRED** (1H: recall.post.ts tempConditions reads entity not combatant, 2M: app-surface.md, Bound condition dead code) + rules-review-281 **APPROVED** (1H: Bound has no PTU basis, 1M: recall.post.ts same). → ptu-rule-129 **CHANGES_REQUIRED, needs fix cycle**
+
+**Smoke test:** PASSED (build in 4.1s, all 3 views render)
+**Tickets APPROVED:** bug-044 (both reviews passed)
+**Tickets needing fix cycle:** ptu-rule-129 (code-review-308 1H+2M)
+**Tickets needing re-review:** feature-022 (fix cycle complete)
+**Tickets needing review:** feature-018 P1 (new implementation)
+**Migration needed:** `npx prisma db push` for feature-022 loyalty field
+**Tickets filed:** bug-047 (loyalty fallback mismatch), bug-048 (Bound condition dead code), decree-need-043 (should Bound block recall?), ux-016 (hasActed flag edge case)
 
 **Session 99 (2026-03-03, plan-20260303-175043):**
 - **slave-1** (reviewers): feature-018-p0-rereview — code-review-304 **APPROVED** (all 5 code-review-302 issues verified resolved, 0 new) + rules-review-277 **APPROVED** (all 14 mechanics verified, 0 issues). → feature-018 **P0-APPROVED**
@@ -850,6 +864,14 @@ updated_by: slave-collector (plan-20260303-175043)
 5. Remaining open: ptu-rule-086-095 (various P3-P4), bug-032 (P4), ux-006 (P4), ux-009 (P4)
 
 ## Review Status
+
+### Session 100 Reviews (plan-20260303-191515)
+| Review ID | Target | Verdict | Reviewer | Date |
+|-----------|--------|---------|----------|------|
+| code-review-307 | bug-044 first review (Standard Action consumption endpoint) | APPROVED (2M: Friend Ball loyalty fallback mismatch → bug-047, server CLAUDE.md missing capture_attempt event) | senior-reviewer | 2026-03-03 |
+| rules-review-280 | bug-044 first review (Standard Action consumption endpoint) | APPROVED (5 mechanics verified, 1M: hasActed flag edge case → ux-016) | game-logic-reviewer | 2026-03-03 |
+| code-review-308 | ptu-rule-129 first review (Roar forced recall blocked by Trapped) | CHANGES_REQUIRED (1H: recall.post.ts tempConditions reads entity not combatant, 2M: app-surface.md missing canForcedSwitch, Bound condition dead code → bug-048) | senior-reviewer | 2026-03-03 |
+| rules-review-281 | ptu-rule-129 first review (Roar forced recall blocked by Trapped) | APPROVED (1H: Bound has no PTU basis → decree-need-043, 1M: recall.post.ts tempConditions same as code-review-308) | game-logic-reviewer | 2026-03-03 |
 
 ### Session 99 Reviews (plan-20260303-175043)
 | Review ID | Target | Verdict | Reviewer | Date |
