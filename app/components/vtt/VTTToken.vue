@@ -418,7 +418,7 @@ const handleClick = (event: MouseEvent) => {
 .vtt-token__mount-badge {
   position: absolute;
   top: 2px;
-  right: 2px;
+  right: 18px;
   background: rgba(100, 200, 255, 0.8);
   padding: 2px;
   border-radius: 3px;
