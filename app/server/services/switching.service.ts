@@ -567,7 +567,7 @@ export function validateFaintedSwitch(
  * - No action cost check (forced doesn't consume an action)
  * - No turn check (can happen on any combatant's turn)
  * - Range check still applies in Full Contact mode
- * - Trapped check: currently bypassed, but decree-039 rules Roar does NOT override Trapped (see ptu-rule-129)
+ * - Trapped check: per decree-039, Roar does NOT override Trapped. Blocked with specific error.
  */
 export function validateForcedSwitch(params: {
   encounter: {
@@ -599,7 +599,17 @@ export function validateForcedSwitch(params: {
     return { valid: false, error: 'Recalled Pokemon combatant not found', statusCode: 404 }
   }
 
-  // NOTE: Trapped check is currently skipped — decree-039 rules this is incorrect (see ptu-rule-129)
+  // 3b. Trapped check — per decree-039: Roar does NOT override Trapped
+  // PTU p.247: "A Pokemon or Trainer that is Trapped cannot be recalled."
+  // Only moves with explicit text bypass Trapped (U-Turn, Baton Pass, Volt Switch, Parting Shot).
+  // Roar's text (p.8855) says nothing about Trapped, so the recall is blocked.
+  // The shift movement still happens (handled by the caller), but recall fails here.
+  const recalledStatuses: string[] = (recalled.entity as { statusConditions?: string[] })?.statusConditions || []
+  const recalledTempConditions: string[] = (recalled.entity as { tempConditions?: string[] })?.tempConditions || []
+  const allRecalledConditions = [...recalledStatuses, ...recalledTempConditions]
+  if (allRecalledConditions.includes('Trapped') || allRecalledConditions.includes('Bound')) {
+    return { valid: false, error: 'Cannot recall Trapped Pokemon — forced switch blocked (decree-039)', statusCode: 400 }
+  }
 
   // 4. Recalled Pokemon belongs to trainer
   const recalledEntity = recalled.entity as { ownerId?: string }
