@@ -132,8 +132,11 @@ export interface DisengageResult {
  * 4. Must be on the same side
  * 5. Trainer must not already be wielding
  * 6. Pokemon must not already be wielded
- * 7. Trainer must have requisite Combat skill rank
- * 8. Must be adjacent (if positions are set)
+ * 7. Must be adjacent (if positions are set)
+ *
+ * NOTE: Per decree-043, Combat Skill Rank gates weapon MOVE ACCESS only,
+ * not engagement. Any trainer can engage a Living Weapon regardless of
+ * Combat rank. Rank gating deferred to P1 (move injection).
  */
 export function engageLivingWeapon(
   combatants: Combatant[],
@@ -184,19 +187,7 @@ export function engageLivingWeapon(
     throw createError({ statusCode: 400, message: 'This Pokemon is already being wielded by another trainer' })
   }
 
-  // Rule 7: Combat skill rank check
-  const human = wielder.entity as HumanCharacter
-  const combatRank = human.skills?.Combat as SkillRank | undefined
-  const requiredRank: SkillRank = weaponConfig.weaponType === 'Simple' ? 'Novice' : 'Adept'
-
-  if (!meetsSkillRequirement(combatRank, requiredRank)) {
-    throw createError({
-      statusCode: 400,
-      message: `Trainer needs ${requiredRank} Combat or higher to wield a ${weaponConfig.weaponType} weapon (current: ${combatRank ?? 'Untrained'})`
-    })
-  }
-
-  // Rule 8: adjacency check (only if both have positions)
+  // Rule 7: adjacency check (only if both have positions)
   if (wielder.position && weapon.position) {
     const adjacent = areAdjacent(
       wielder.position, wielder.tokenSize || 1,
