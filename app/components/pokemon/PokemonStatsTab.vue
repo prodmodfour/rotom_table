@@ -124,10 +124,34 @@
         </span>
       </p>
     </div>
+
+    <!-- Loyalty Section (PTU Chapter 10) -->
+    <div class="info-section">
+      <h4>
+        <PhHandshake :size="16" class="loyalty-icon" />
+        Loyalty
+      </h4>
+      <div v-if="isEditing" class="loyalty-edit">
+        <select
+          :value="editData.loyalty ?? pokemon.loyalty ?? 3"
+          class="form-input loyalty-select"
+          @change="updateLoyalty(Number(($event.target as HTMLSelectElement).value))"
+        >
+          <option v-for="rank in loyaltyRanks" :key="rank.value" :value="rank.value">
+            {{ rank.value }} - {{ rank.label }}
+          </option>
+        </select>
+      </div>
+      <div v-else class="loyalty-display">
+        <span class="loyalty-value" :class="loyaltyClass">{{ currentLoyalty }}</span>
+        <span class="loyalty-rank" :class="loyaltyClass">{{ loyaltyRankName }}</span>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { PhHandshake } from '@phosphor-icons/vue'
 import type { Pokemon } from '~/types'
 
 const props = defineProps<{
@@ -174,6 +198,37 @@ const formatStageValue = (value: number | undefined): string => {
 const getStageClass = (value: number | undefined): string => {
   if (value === undefined || value === 0) return ''
   return value > 0 ? 'stage-item--positive' : 'stage-item--negative'
+}
+
+// Loyalty ranks (PTU Chapter 10)
+const loyaltyRanks = [
+  { value: 0, label: 'Hostile' },
+  { value: 1, label: 'Resistant' },
+  { value: 2, label: 'Wary' },
+  { value: 3, label: 'Neutral' },
+  { value: 4, label: 'Friendly' },
+  { value: 5, label: 'Loyal' },
+  { value: 6, label: 'Devoted' }
+]
+
+const currentLoyalty = computed(() => props.pokemon.loyalty ?? 3)
+
+const loyaltyRankName = computed(() => {
+  const rank = loyaltyRanks.find(r => r.value === currentLoyalty.value)
+  return rank?.label ?? 'Neutral'
+})
+
+const loyaltyClass = computed(() => {
+  const val = currentLoyalty.value
+  if (val <= 1) return 'loyalty--low'
+  if (val <= 2) return 'loyalty--wary'
+  if (val === 3) return 'loyalty--neutral'
+  if (val <= 5) return 'loyalty--high'
+  return 'loyalty--devoted'
+})
+
+const updateLoyalty = (value: number) => {
+  emit('update:editData', { ...props.editData, loyalty: value })
 }
 
 const formatStatName = (stat: string) => {
@@ -379,6 +434,56 @@ const formatStatName = (stat: string) => {
 
   &--up { color: $color-success; }
   &--down { color: $color-danger; }
+}
+
+// Loyalty styles
+.loyalty-icon {
+  vertical-align: middle;
+  margin-right: $spacing-xs;
+}
+
+.loyalty-display {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.loyalty-value {
+  font-size: $font-size-lg;
+  font-weight: 700;
+}
+
+.loyalty-rank {
+  font-size: $font-size-sm;
+  font-weight: 500;
+}
+
+.loyalty--low {
+  color: $color-danger;
+}
+
+.loyalty--wary {
+  color: $color-warning;
+}
+
+.loyalty--neutral {
+  color: $color-text-muted;
+}
+
+.loyalty--high {
+  color: $color-success;
+}
+
+.loyalty--devoted {
+  color: $color-accent-violet;
+}
+
+.loyalty-edit {
+  margin-top: $spacing-xs;
+}
+
+.loyalty-select {
+  max-width: 200px;
 }
 
 .tab-content {
