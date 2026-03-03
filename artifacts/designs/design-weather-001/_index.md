@@ -4,7 +4,7 @@ ticket_id: feature-018
 category: FEATURE
 scope: FULL
 domain: scenes, combat
-status: complete
+status: validated
 decree: decree-030
 affected_files:
   - app/types/encounter.ts
