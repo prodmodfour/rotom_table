@@ -86,7 +86,7 @@ export default defineEventHandler(async (event) => {
     // ==============================
 
     if (isForcedSwitch) {
-      // Forced switch: separate validation chain (skips Trapped, action, and turn checks)
+      // Forced switch: separate validation chain (skips action and turn checks, but checks Trapped per decree-039)
       const forcedValidation = validateForcedSwitch({
         encounter: {
           isActive: record.isActive,
