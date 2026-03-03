@@ -265,7 +265,7 @@ describe('POST /api/capture/attempt', () => {
     })
   })
 
-  describe('AC 6 accuracy gate', () => {
+  describe('accuracy threshold gate (decree-042)', () => {
     it('should reject accuracyRoll=1 (natural 1 always misses)', async () => {
       const wildPokemon = createWildPokemon()
       mockPrisma.pokemon.findUnique.mockResolvedValue(wildPokemon)
@@ -282,7 +282,7 @@ describe('POST /api/capture/attempt', () => {
       )
     })
 
-    it('should reject accuracyRoll=3 (below AC 6)', async () => {
+    it('should reject accuracyRoll=3 (below default threshold 6)', async () => {
       const wildPokemon = createWildPokemon()
       mockPrisma.pokemon.findUnique.mockResolvedValue(wildPokemon)
       mockPrisma.humanCharacter.findUnique.mockResolvedValue(createMockTrainer())
@@ -294,11 +294,11 @@ describe('POST /api/capture/attempt', () => {
       })
 
       await expect(captureAttemptHandler(event)).rejects.toThrow(
-        'Accuracy roll 3 does not meet AC 6 — ball missed'
+        'Accuracy roll 3 does not meet threshold 6 — ball missed'
       )
     })
 
-    it('should pass accuracyRoll=6 (exact AC 6 threshold)', async () => {
+    it('should pass accuracyRoll=6 (exact default threshold)', async () => {
       const wildPokemon = createWildPokemon()
       const trainer = createMockTrainer()
       const speciesData = createMockSpeciesData()
@@ -342,7 +342,7 @@ describe('POST /api/capture/attempt', () => {
       expect(result.data.criticalHit).toBe(true)
     })
 
-    it('should skip AC 6 validation when accuracyRoll is undefined (backward compat)', async () => {
+    it('should skip accuracy validation when accuracyRoll is undefined (backward compat)', async () => {
       const wildPokemon = createWildPokemon()
       const trainer = createMockTrainer()
       const speciesData = createMockSpeciesData()
@@ -362,6 +362,49 @@ describe('POST /api/capture/attempt', () => {
 
       expect(result.success).toBe(true)
       expect(result.data.criticalHit).toBe(false)
+    })
+
+    it('should use client-provided accuracyThreshold instead of default 6 (decree-042)', async () => {
+      const wildPokemon = createWildPokemon()
+      mockPrisma.pokemon.findUnique.mockResolvedValue(wildPokemon)
+      mockPrisma.humanCharacter.findUnique.mockResolvedValue(createMockTrainer())
+
+      // Roll of 7 would pass default AC 6 but fails against threshold 8
+      // (e.g., target has Speed Evasion that raises threshold)
+      const event = createMockEvent({
+        pokemonId: wildPokemon.id,
+        trainerId: 'trainer-1',
+        accuracyRoll: 7,
+        accuracyThreshold: 8,
+      })
+
+      await expect(captureAttemptHandler(event)).rejects.toThrow(
+        'Accuracy roll 7 does not meet threshold 8 — ball missed'
+      )
+    })
+
+    it('should pass when roll meets custom threshold (decree-042)', async () => {
+      const wildPokemon = createWildPokemon()
+      const trainer = createMockTrainer()
+      const speciesData = createMockSpeciesData()
+
+      mockPrisma.pokemon.findUnique.mockResolvedValue(wildPokemon)
+      mockPrisma.humanCharacter.findUnique.mockResolvedValue(trainer)
+      mockPrisma.speciesData.findUnique.mockResolvedValue(speciesData)
+      mockPrisma.pokemon.update.mockResolvedValue({ ...wildPokemon, ownerId: trainer.id, origin: 'captured' })
+
+      // Threshold 4 (e.g., trainer has +2 accuracy stage lowering threshold)
+      const event = createMockEvent({
+        pokemonId: wildPokemon.id,
+        trainerId: trainer.id,
+        accuracyRoll: 4,
+        accuracyThreshold: 4,
+      })
+
+      const result = await captureAttemptHandler(event)
+
+      expect(result.success).toBe(true)
+      expect(result.data.captured).toBe(true)
     })
   })
 

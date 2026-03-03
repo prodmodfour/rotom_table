@@ -58,7 +58,7 @@
       <!-- Action cost reminder -->
       <div class="capture-panel__action-cost">
         <PhInfo :size="14" />
-        <span>Standard Action (AC 6 accuracy check)</span>
+        <span>Standard Action (accuracy check)</span>
       </div>
 
       <!-- Confirm / Cancel -->
