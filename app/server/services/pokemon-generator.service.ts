@@ -72,6 +72,7 @@ export interface CreatedPokemon {
   species: string
   level: number
   nickname: string | null
+  origin: PokemonOrigin
   data: GeneratedPokemonData
 }
 
@@ -266,6 +267,7 @@ export async function createPokemonRecord(
     species: pokemon.species,
     level: pokemon.level,
     nickname: pokemon.nickname,
+    origin: input.origin,
     data
   }
 }
@@ -332,11 +334,11 @@ function createdPokemonToEntity(pokemon: CreatedPokemon): Pokemon {
     tutorPoints: data.tutorPoints,
     trainingExp: 0,
     eggGroups: data.eggGroups,
-    loyalty: 3,
-    shiny: false,
+    loyalty: getStartingLoyalty(pokemon.origin),
+    shiny: data.shiny ?? false,
     gender: data.gender as Pokemon['gender'],
     isInLibrary: true,
-    origin: 'wild'
+    origin: pokemon.origin
   }
 }
 
