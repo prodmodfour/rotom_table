@@ -11,6 +11,7 @@ import {
   registerPendingRequest,
   consumePendingRequest
 } from '~/server/utils/pendingRequests'
+import { reconstructWieldRelationships } from '~/server/services/living-weapon-state'
 
 interface WebSocketEvent {
   type: string
@@ -64,6 +65,7 @@ async function sendEncounterState(peer: Parameters<typeof safeSend>[0], encounte
     })
 
     if (encounter) {
+      const combatants = JSON.parse(encounter.combatants)
       const parsed = {
         id: encounter.id,
         name: encounter.name,
@@ -71,7 +73,7 @@ async function sendEncounterState(peer: Parameters<typeof safeSend>[0], encounte
         weather: encounter.weather ?? null,
         weatherDuration: encounter.weatherDuration ?? 0,
         weatherSource: encounter.weatherSource ?? null,
-        combatants: JSON.parse(encounter.combatants),
+        combatants,
         currentRound: encounter.currentRound,
         currentTurnIndex: encounter.currentTurnIndex,
         turnOrder: JSON.parse(encounter.turnOrder),
@@ -81,6 +83,7 @@ async function sendEncounterState(peer: Parameters<typeof safeSend>[0], encounte
         declarations: JSON.parse(encounter.declarations || '[]'),
         pendingOutOfTurnActions: JSON.parse((encounter as any).pendingActions || '[]'),
         holdQueue: JSON.parse((encounter as any).holdQueue || '[]'),
+        wieldRelationships: reconstructWieldRelationships(combatants),
         isActive: encounter.isActive,
         isPaused: encounter.isPaused,
         isServed: encounter.isServed,
