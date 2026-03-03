@@ -1,8 +1,8 @@
 ---
-generated_at: 2026-03-02T21:34:43.624Z
-total_reviews: 278
+generated_at: 2026-03-03T06:27:43.666Z
+total_reviews: 285
 active_count: 133
-approved_count: 140
+approved_count: 147
 ---
 
 # Reviews Index
@@ -149,22 +149,22 @@ approved_count: 140
 
 | Review ID | Target | Reviewer | Date |
 |-----------|--------|----------|------|
+| code-review-294 | feature-023 | senior-reviewer | 2026-03-02 |
+| code-review-293 | feature-020 | senior-reviewer | 2026-03-02 |
+| code-review-292 | bug-038+bug-039 | senior-reviewer | 2026-03-02 |
+| code-review-291 | feature-008 | senior-reviewer | 2026-03-02 |
+| code-review-290 | feature-006 | senior-reviewer | 2026-03-02 |
 | code-review-289 | feature-004 | senior-reviewer | 2026-03-02 |
 | code-review-286 | feature-017 | senior-reviewer | 2026-03-02 |
 | code-review-284 | feature-020 | senior-reviewer | 2026-03-03 |
 | code-review-283 | bug-043 | senior-reviewer | 2026-03-03 |
 | code-review-282 | feature-023 | senior-reviewer | 2026-03-02 |
-| code-review-279 | feature-016 | senior-reviewer | 2026-03-02 |
-| code-review-276 | feature-014 | senior-reviewer | 2026-03-02 |
-| code-review-275 | feature-023 | senior-reviewer | 2026-03-02 |
-| code-review-274 | bug-042 | senior-reviewer | 2026-03-02 |
-| code-review-272 | feature-014 | senior-reviewer | 2026-03-02 |
 
 ## Stats
 
-- Active reviews: 278
+- Active reviews: 285
 - Needs action: 133
-- Approved/Pass (active): 140
+- Approved/Pass (active): 147
 - Archived: 297
-- Total (active + archived): 575
+- Total (active + archived): 582
 - Unique targets reviewed: 83
