@@ -79,3 +79,21 @@ PARTIAL-scope — can be implemented as computed properties. No design spec need
 - `next-turn.post.ts` — mount movement reset per turn
 - `MountControls.vue` — mount speed display
 - `useGridMovement.ts` — VTT movement range, speed averaging, terrain-aware speed
+
+### Fix Cycle (2026-03-03) — code-review-298
+
+**HIGH-01: Redundant computeTrainerDerivedStats calls per combatant.**
+
+3. `013d35bd` — `refactor: consolidate redundant computeTrainerDerivedStats calls into getHumanDerivedSpeeds`
+   - `app/utils/combatantCapabilities.ts`: Replaced separate `getHumanOverlandSpeed`/`getHumanSwimSpeed` with single exported `getHumanDerivedSpeeds` that calls `computeTrainerDerivedStats` once. Simplified `combatantCanSwim` to return `true` for humans (minimum Swimming >= 2).
+   - `app/composables/useGridMovement.ts`: Updated `getMaxPossibleSpeed` hot path to use `getHumanDerivedSpeeds` for human combatants, eliminating 3 redundant derivation calls per movement query.
+
+**MED-01: Unit tests for speed derivation functions.**
+
+4. `908c4c8a` — `test: add unit tests for trainer speed derivation functions`
+   - `app/tests/unit/utils/combatantCapabilities.test.ts`: Added 17 test cases covering `getOverlandSpeed`, `getSwimSpeed`, `combatantCanSwim` for both human and Pokemon combatants. Updated `makeHumanCombatant` helper to accept `skills` parameter.
+
+**MED-02: Wrong commit hashes in resolution log.**
+
+5. `039a043c` — `docs: fix incorrect commit hashes in feature-021 resolution log`
+   - `artifacts/tickets/open/feature/feature-021.md`: Corrected `f822d987` → `3912f8da` and `311adc9d` → `6d54d85e`.
