@@ -53,6 +53,8 @@ export type WebSocketEvent =
   | { type: 'pokemon_switched'; data: { encounterId: string; trainerId: string; trainerName: string; recalledName: string; releasedName: string; releasedCombatantId: string; actionCost: 'standard' | 'shift' | 'none'; canActThisRound: boolean; canActImmediately: boolean; encounter: Encounter } }
   | { type: 'pokemon_recalled'; data: { encounterId: string; trainerId: string; trainerName: string; recalledNames: string[]; actionCost: 'standard' | 'shift'; encounter: Encounter } }
   | { type: 'pokemon_released'; data: { encounterId: string; trainerId: string; trainerName: string; releasedNames: string[]; releasedCombatantIds: string[]; actionCost: 'standard' | 'shift'; countsAsSwitch: boolean; encounter: Encounter } }
+  // Capture events
+  | { type: 'capture_attempt'; data: { pokemonId: string; trainerId: string; trainerName: string; pokemonSpecies: string; ballType: string; captured: boolean; roll: number; modifiedRoll: number; captureRate: number; ballModifier: number; postCaptureEffect?: string } }
   // Entity events
   | { type: 'character_update'; data: Pokemon | HumanCharacter }
   | { type: 'player_action'; data: PlayerActionRequest }

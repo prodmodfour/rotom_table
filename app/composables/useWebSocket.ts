@@ -37,6 +37,17 @@ export function useWebSocket() {
   const movementPreview = ref<MovementPreview | null>(null)
   /** P2: Received flanking map from GM broadcast */
   const receivedFlankingMap = ref<FlankingMap>({})
+  /** P2: Last capture attempt event received via WebSocket */
+  const lastCaptureAttempt = ref<{
+    trainerName: string
+    pokemonSpecies: string
+    ballType: string
+    captured: boolean
+    roll: number
+    modifiedRoll: number
+    captureRate: number
+    timestamp: number
+  } | null>(null)
   const messageListeners = new Set<(message: WebSocketEvent) => void>()
 
   // Stored identity for auto re-identification on reconnect
@@ -225,6 +236,24 @@ export function useWebSocket() {
         // this event provides mount-specific context for any specialized rendering.
         break
 
+      case 'capture_attempt':
+        // P2: Store capture event for Group View / Player View display
+        if (message.data && typeof message.data === 'object') {
+          const d = message.data as {
+            trainerName: string; pokemonSpecies: string; ballType: string
+            captured: boolean; roll: number; modifiedRoll: number; captureRate: number
+          }
+          lastCaptureAttempt.value = { ...d, timestamp: Date.now() }
+          // Reload encounter to reflect ownership change on successful capture
+          if (d.captured) {
+            const store = getEncounterStore()
+            if (store.encounter?.id) {
+              store.loadEncounter(store.encounter.id)
+            }
+          }
+        }
+        break
+
       case 'flanking_update':
         // P2: GM broadcast flanking state — store for group/player views
         if (message.data && typeof message.data === 'object' && 'flankingMap' in message.data) {
@@ -323,6 +352,8 @@ export function useWebSocket() {
     movementPreview: readonly(movementPreview),
     /** P2: Flanking map received from GM via WebSocket */
     receivedFlankingMap: readonly(receivedFlankingMap),
+    /** P2: Last capture attempt event for Group/Player View display */
+    lastCaptureAttempt: readonly(lastCaptureAttempt),
     connect,
     disconnect,
     resetAndReconnect,
