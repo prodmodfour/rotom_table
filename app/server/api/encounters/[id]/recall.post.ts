@@ -25,6 +25,8 @@ import {
   canSwitchedPokemonBeCommanded,
   applyRecallSideEffects
 } from '~/server/services/switching.service'
+import { clearWieldOnRemoval } from '~/server/services/living-weapon.service'
+import { reconstructWieldRelationships } from '~/server/services/living-weapon-state'
 import { broadcastToEncounter } from '~/server/utils/websocket'
 import type { SwitchAction } from '~/types/combat'
 
@@ -181,6 +183,11 @@ export default defineEventHandler(async (event) => {
       currentTrainerOrder = removalResult.trainerTurnOrder
       currentPokemonOrder = removalResult.pokemonTurnOrder
       currentTurnIndex = removalResult.currentTurnIndex
+
+      // Auto-disengage Living Weapon on recall (feature-005)
+      const wieldRelationships = reconstructWieldRelationships(currentCombatants)
+      const wieldResult = clearWieldOnRemoval(currentCombatants, wieldRelationships, combatantId)
+      currentCombatants = wieldResult.combatants
 
       // Apply recall side-effects on DB record
       await applyRecallSideEffects(pokemon.entityId)
