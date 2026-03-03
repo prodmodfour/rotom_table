@@ -10,70 +10,109 @@ commits_reviewed:
   - aabbc668
   - 28bfcf12
 mechanics_verified:
-  - standard-action-consumption
-  - action-type-per-turn-limit
-  - friend-ball-loyalty-bonus
-  - capture-action-economy
+  - action-economy
+  - poke-ball-standard-action
+  - action-downgrade
 verdict: APPROVED
 issues_found:
   critical: 0
   high: 0
-  medium: 0
+  medium: 1
 ptu_refs:
-  - core/07-combat.md#Standard Actions (p.227)
-  - core/07-combat.md#Action Types (p.227)
-  - core/09-gear-and-items.md#Friend Ball (p.279)
-  - core/05-pokemon.md#Loyalty (p.210)
-reviewed_at: 2026-03-03T19:30:00Z
+  - core/07-combat.md#Action Types (p.218)
+  - core/07-combat.md#Commanding Pokemon (p.228)
+  - core/07-combat.md#Full Action (p.218)
+reviewed_at: 2026-03-03T19:35:00Z
 follows_up: null
 ---
 
 ## Mechanics Verified
 
-### Standard Action Consumption (R049)
+### Action Economy — One Standard Action Per Turn (R051)
 
-- **Rule:** "During each round of combat, each participant may take one Standard Action, one Shift Action, and one Swift Action on their turn" (`core/07-combat.md` p.227, line 83-84). "Throwing a Poke Ball to Capture a wild Pokemon" is listed as a Standard Action example (line 107).
-- **Implementation:** The `action.post.ts` endpoint accepts `actionType: 'standard' | 'shift' | 'swift'` and sets the corresponding `turnState` flag (`standardActionUsed`, `shiftActionUsed`, or `swiftActionUsed`) to `true`. Callers in `useCapture.ts` and `usePlayerRequestHandlers.ts` pass `actionType: 'standard'` when a Poke Ball is thrown.
+- **Rule:** "During each round of combat, each participant may take one Standard Action, one Shift Action, and one Swift Action on their turn in any order." (`core/07-combat.md` p.218, lines 82-84)
+- **Implementation:** `action.post.ts` validates three action types (`standard`, `shift`, `swift`) via the `validActions` whitelist (line 33). Each maps to a boolean flag on `combatant.turnState`: `standardActionUsed`, `shiftActionUsed`, `swiftActionUsed` (lines 46-49). The endpoint checks `if (combatant.turnState[field])` (line 54) and returns 400 if the action was already consumed, enforcing the one-per-turn limit. On success, it sets the flag to `true` via immutable spread (lines 62-65).
 - **Status:** CORRECT
 
-### Action Type Per-Turn Limit (R050)
+The `TurnState` interface (`app/types/combat.ts` lines 101-105) defines all three flags as booleans, matching the three PTU action types. The endpoint correctly prevents double-consumption of any single action type.
 
-- **Rule:** Each action type is available once per turn. Using a Standard Action as a Shift Action is governed by separate rules (p.227, line 114-118), not by this endpoint.
-- **Implementation:** The endpoint checks `if (combatant.turnState[field])` and returns 400 if the action was already consumed. This prevents double-consumption within a single turn.
+### Throwing a Poke Ball Is a Standard Action (R052)
+
+- **Rule:** "Throwing a Poke Ball to Capture a wild Pokemon" is listed as an example of Standard Action usage (`core/07-combat.md` p.218, line 107)
+- **Implementation:** Both callers that invoke the endpoint during capture contexts send `actionType: 'standard'`:
+  - `useCapture.ts:212` sends `actionType: 'standard'` after a successful capture attempt
+  - `usePlayerRequestHandlers.ts:90` sends `actionType: 'standard'` when a ball misses (AC check failed)
 - **Status:** CORRECT
 
-### Capture Action Economy Flow (R051)
+Both the hit and miss paths correctly consume a Standard Action. PTU rules do not distinguish between a successful and failed throw for action economy purposes — the trainer has committed the action regardless of outcome. The comment in `useCapture.ts` line 170-171 correctly cites "PTU Core (p227)" for this rule (actual page is 218 in the markdown, p.227 in the physical book layout; both refer to the same section).
 
-- **Rule:** Throwing a Poke Ball is a Standard Action (p.227). Even if the ball misses the AC 6 accuracy check, the Standard Action is still consumed (the trainer spent their action throwing the ball, regardless of whether it hits).
-- **Implementation verified in two code paths:**
-  1. **Ball hits, capture attempted** (`useCapture.ts` line 206-218): After a successful `attemptCapture()` call, the composable calls the action endpoint with `actionType: 'standard'`. Standard Action consumed.
-  2. **Ball misses** (`usePlayerRequestHandlers.ts` line 84-96): When `accuracyResult.hits` is false, the handler still calls the action endpoint with `actionType: 'standard'`. Standard Action consumed even on a miss.
-- **Status:** CORRECT. Both hit and miss paths consume the Standard Action, which is the correct PTU behavior. Per decree-042, the full accuracy system applies to Poke Ball throws; the endpoint only handles the action economy side, not accuracy, so no decree conflict.
+### Standard Action Consumed Regardless of Ball Hit/Miss (R053)
 
-### Friend Ball +1 Loyalty (R052)
+- **Rule:** Action economy is committed when the action is declared, not when the effect resolves. The PTU text does not provide for "refunding" a Standard Action on a missed ball throw.
+- **Implementation:** In `usePlayerRequestHandlers.ts`, the miss path (lines 84-96) calls the action endpoint to consume the Standard Action even though the ball missed (AC check failed, no capture attempt made). In `useCapture.ts`, the hit path (lines 206-218) consumes the Standard Action after the capture attempt resolves. Both paths consume the action.
+- **Status:** CORRECT
 
-- **Rule:** "A caught Pokemon will start with +1 Loyalty" (`core/09-gear-and-items.md` p.279, Friend Ball entry).
-- **Implementation:** Commit aabbc668 reads `pokemon.loyalty`, increments by 1, caps at 6 (maximum loyalty rank per PTU p.210: ranks 0-6), and persists via `prisma.pokemon.update()`.
-- **Status:** CORRECT. The +1 is additive from the Pokemon's current loyalty value after capture. The `Math.min(6, currentLoyalty + 1)` cap prevents exceeding the PTU maximum of 6 (Devoted).
+This is the correct interpretation. The Standard Action cost is for "throwing a Poke Ball," not for "successfully capturing." The action is spent when the ball is thrown, regardless of whether it hits the target.
 
-### Loyalty Range (R053)
+### Action Type Downgrade — Standard to Shift/Swift (R054)
 
-- **Rule:** "There are 7 Ranks of Loyalty, from 0 to 6" (`core/05-pokemon.md` p.210).
-- **Implementation:** The `Math.min(6, ...)` cap enforces the upper bound. The schema default is `@default(3)` (Neutral), which is the PTU-standard starting loyalty for freshly caught wild Pokemon (PTU p.210: "Caught Pokemon usually start at 3, Neutral").
-- **Status:** CORRECT. Note: the code fallback uses `?? 2` which differs from the schema default of 3, but this is a code quality concern (covered in code-review-307 MED-001), not a rules violation. The schema default ensures all new Pokemon rows start at 3; the fallback only applies if the value is somehow null/undefined at runtime, which Prisma prevents.
+- **Rule:** "You may give up a Standard Action to take another Swift Action" and "You may give up a Standard Action to take another Shift Action, but this cannot be used for Movement if you have already used your regular Shift Action for Movement." (`core/07-combat.md` p.218, lines 114-121)
+- **Implementation:** The endpoint accepts all three action types and consumes them independently. It does NOT implement the downgrade mechanic (using a Standard Action as an additional Shift or Swift Action). However, the endpoint's contract is to consume a single named action — it does not need to implement downgrade logic. Downgrade is a UI/caller concern: the caller would send `actionType: 'standard'` to consume the Standard Action when it's being traded for an extra Shift/Swift. The endpoint simply records that the action was used.
+- **Status:** CORRECT (within scope)
+
+The endpoint's design as a generic "mark this action as used" primitive is correct. The downgrade decision belongs to the caller or the GM, not to the consumption endpoint.
+
+### Full Action (R055)
+
+- **Rule:** "Full Actions take both your Standard Action and Shift Action for a turn." (`core/07-combat.md` p.218, lines 150-153)
+- **Implementation:** The endpoint consumes one action type per call. For Full Actions (Take a Breather, Coup de Grace, Intercept), the caller would need to make two calls: one for `standard` and one for `shift`. Alternatively, the breather endpoint (`breather.post.ts`) handles its own action economy directly. The generic action endpoint supports this pattern without modification.
+- **Status:** CORRECT (no issues for the capture domain being reviewed)
 
 ## Decree Compliance
 
-- **decree-013** (use core 1d100 capture, not errata d20 playtest): Not affected. The action consumption endpoint does not touch capture roll mechanics.
-- **decree-042** (full accuracy system applies to Poke Ball throws): Not affected directly. The endpoint only sets `standardActionUsed = true`. Accuracy checks happen upstream in `useCapture.rollAccuracyCheck()` and the `/api/capture/attempt` endpoint. The action consumption correctly occurs after both hit and miss accuracy outcomes, as verified in R051.
+- **decree-013:** Use core 1d100 capture system, not errata d20 playtest. The action consumption endpoint does not touch capture mechanics or dice rolls. No violation.
+- **decree-042:** Apply full accuracy system to Poke Ball throws. The action consumption endpoint does not touch accuracy rolls. The `useCapture.ts:264` comment explicitly references decree-042 and notes the TODO for full accuracy modifiers (ptu-rule-131). No violation.
 
-## What Looks Good
+Neither decree constrains the action consumption endpoint. Per decree-042, capture attempts involve the full combat action system, which this endpoint supports by providing the mechanism to consume the Standard Action.
 
-1. **Both hit and miss paths consume Standard Action.** This is a subtle but important PTU rule: the trainer spends the action regardless of accuracy outcome. Both callers implement this correctly.
-2. **Generic action consumption.** The endpoint handles all three action types, not just Standard. This correctly models PTU's per-turn action budget (Standard + Shift + Swift) and could serve future features (e.g., marking a Shift Action as used after movement, or a Swift Action after a quick Feature).
-3. **Double-use prevention.** The 400 on already-consumed action prevents action economy exploits.
-4. **Friend Ball loyalty cap at 6.** The upper bound prevents exceeding the PTU loyalty system's defined range.
+## Issues
+
+### MEDIUM
+
+**M1: `hasActed` flag not set when all three actions are individually exhausted**
+File: `app/server/api/encounters/[id]/action.post.ts`, line 62
+Severity: MEDIUM (potential turn management edge case)
+
+PTU p.218 states each combatant gets one of each action type per turn. The `pass.post.ts` endpoint sets `hasActed: true` alongside all three action flags (line 33), signaling the turn management system that the combatant's turn is complete. The new `action.post.ts` endpoint only sets the individual action flag.
+
+If a combatant consumes all three actions individually (Standard via capture, Shift via movement, Swift via an ability) through separate calls to this endpoint, `hasActed` remains `false`. Turn management logic that relies on `hasActed` to determine turn completion would not recognize the combatant as having finished.
+
+This is not a PTU rule violation per se — PTU does not have a concept of "has acted" beyond the individual action budget — but it could cause the GM interface to show the combatant as still having an active turn when they have no actions remaining. The turn management system handles this at a higher level, and the GM can always manually pass, so this is MEDIUM severity.
+
+## Summary
+
+The action consumption endpoint correctly implements PTU 1.05 action economy for the capture domain. The three core rules verified:
+
+1. Each combatant gets exactly one Standard, one Shift, and one Swift Action per turn (p.218)
+2. Throwing a Poke Ball costs a Standard Action (p.218)
+3. The action is consumed regardless of whether the ball hits or misses
+
+The endpoint is a generic primitive that marks a named action type as consumed without implementing game effects. This design correctly separates action economy tracking from action resolution, allowing callers (capture, moves, items) to consume actions independently of their domain-specific logic.
+
+No PTU formulas are involved (no HP, damage, capture rate, or stat calculations). The endpoint is purely a state flag setter.
+
+## Rulings
+
+1. **Action consumption on miss is correct.** PTU treats Poke Ball throwing as a Standard Action regardless of outcome. The `usePlayerRequestHandlers.ts` code correctly consumes the Standard Action even when the ball misses the AC 6 check. There is no "refund" mechanic in PTU for missed ball throws.
+
+2. **Endpoint is correctly generic.** Supporting all three action types (not just Standard) is forward-compatible with future mechanics that consume Shift or Swift Actions through the same mechanism. PTU has features and abilities that require specific action types, so the generic design is appropriate.
+
+3. **No move log entry is correct.** The action consumption endpoint should not add move log entries. The caller (capture attempt, move execution) is responsible for logging the action that consumed the Standard/Shift/Swift Action. This matches the endpoint's documented contract: "the caller is responsible for the effect."
 
 ## Verdict
 
-**APPROVED.** All PTU mechanics are correctly implemented. The action consumption endpoint properly models the per-turn action budget. Capture-specific action economy flows (both hit and miss) correctly consume Standard Actions. Friend Ball +1 Loyalty is correctly applied and capped. No decree violations.
+**APPROVED** — The implementation correctly reflects PTU 1.05 action economy rules for the capture domain. No formulas are involved, no mechanics are missing, and the endpoint's design as a generic action consumption primitive is sound. The one MEDIUM issue (M1: `hasActed` flag) is a turn management UX concern, not a rules violation.
+
+## Required Changes
+
+None blocking. The MEDIUM issue should be addressed as a follow-up if turn completion detection proves problematic in practice.
