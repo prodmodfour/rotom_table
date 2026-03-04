@@ -1,5 +1,5 @@
 ---
-generated_at: 2026-03-04T14:22:38.067Z
+generated_at: 2026-03-04T15:30:14.477Z
 total_designs: 27
 ---
 
@@ -8,7 +8,7 @@ total_designs: 27
 | Design ID | Domain | Status | Ticket | Scope | Category |
 |-----------|--------|--------|--------|-------|----------|
 | design-char-creation-001 | character-lifecycle | implemented | ptu-rule-056 | FULL | FEATURE_GAP |
-| design-density-significance-001 | encounter-tables | p1-complete | ptu-rule-058 | FULL | PTU_INCORRECT |
+| design-density-significance-001 | encounter-tables | p2-implemented | ptu-rule-058 | FULL | PTU_INCORRECT |
 | design-equipment-001 | combat | p1-complete | ptu-rule-045 | FULL | FEATURE_GAP |
 | design-flanking-001 | vtt-grid+combat | implemented | feature-014 | FULL | FEATURE |
 | design-healing-items-001 | healing | p2-implemented | feature-020 | FULL | FEATURE |

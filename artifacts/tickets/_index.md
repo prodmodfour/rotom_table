@@ -1,18 +1,19 @@
 ---
-generated_at: 2026-03-04T14:22:38.058Z
-total_tickets: 303
-open: 26
-in_progress: 122
-resolved: 137
+generated_at: 2026-03-04T15:30:14.475Z
+total_tickets: 304
+open: 27
+in_progress: 121
+resolved: 138
 ---
 
 # Tickets Index
 
-## Open Tickets (26)
+## Open Tickets (27)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
 | ptu-rule-131 | ptu-rule | P2 | combat | `rollAccuracyCheck()` in `app/composables/useCapture.ts` rei |
+| decree-need-046 | decree | P3 | combat | PTU p.248 states: "When a Pokemon becomes Fainted, they are  |
 | refactoring-108 | refactoring | P3 | — | refactoring-108: Extract switch button computeds from Combat |
 | refactoring-112 | refactoring | P3 | combat | Refactoring-112: Decompose encounter store into focused sub- |
 | refactoring-113 | refactoring | P3 | combat | refactoring-113: Wire or remove autoDeclineFaintedReactor in |
@@ -39,7 +40,7 @@ resolved: 137
 | refactoring-119 | refactoring | P4 | — | refactoring-119: Update stale interrupt.post.ts file header  |
 | refactoring-126 | refactoring | P4 | pokemon-lifecycle | The outer catch block in `[id].put.ts` (line ~90) and `index |
 
-## In-Progress Tickets (122)
+## In-Progress Tickets (121)
 
 | ID | Category | Priority | Domain | Source |
 |----|----------|----------|--------|--------|
@@ -79,7 +80,6 @@ resolved: 137
 | feature-020 | feature | P2 | healing | matrix-gap (GAP-HEAL-2) |
 | feature-021 | feature | P2 | character-lifecycle | matrix-gap (Character SG-3) |
 | refactoring-106 | refactoring | P2 | combat | decree-038 |
-| bug-001 | bug | P2 | csv-import | code-review-034 |
 | bug-030 | bug | P2 | player-view | code-review-159 M3 |
 | bug-043 | bug | P2 | capture | rules-review-246 PRE-EXISTING-001 |
 | ptu-rule-030 | ptu-rule | P2 | pokemon-generation | — |
@@ -166,18 +166,20 @@ resolved: 137
 | refactoring-092 | refactoring | P4 | encounter-tables | code-review-207 M1 |
 | refactoring-093 | refactoring | P4 | combat | code-review-207 M2 |
 
-## Open Decree-Needs (0)
+## Open Decree-Needs (1)
 
-All decree-needs addressed.
+| ID | Priority | Domain | Topic |
+|----|----------|--------|-------|
+| decree-need-046 | P3 | combat | — |
 
 ## Summary by Category
 
 | Category | Open | In-Progress | Resolved | Total |
 |----------|------|-------------|----------|-------|
-| bug | 1 | 18 | 29 | 50 |
+| bug | 1 | 17 | 30 | 50 |
 | ptu-rule | 5 | 61 | 39 | 106 |
 | feature | 0 | 20 | 3 | 24 |
 | ux | 5 | 8 | 2 | 16 |
-| decree | 0 | 0 | 45 | 45 |
+| decree | 1 | 0 | 45 | 46 |
 | refactoring | 15 | 15 | 3 | 46 |
 | docs | 0 | 0 | 16 | 16 |
