@@ -8,7 +8,9 @@ import {
   getOverlandSpeed,
   getSwimSpeed,
   combatantCanSwim,
+  getLivingWeaponConfig,
 } from '~/utils/combatantCapabilities'
+import type { Pokemon as FullPokemon } from '~/types/character'
 
 /**
  * Build a minimal Pokemon combatant stub for testing Naturewalk functions.
@@ -965,5 +967,92 @@ describe('getOverlandSpeed / getSwimSpeed — Pokemon paths unchanged', () => {
     const pokemon = makePokemonCombatant()
     ;(pokemon.entity as any).capabilities = undefined
     expect(getSwimSpeed(pokemon)).toBe(0)
+  })
+})
+
+// =========================================================
+// getLivingWeaponConfig (PTU pp.305-306)
+// =========================================================
+
+describe('getLivingWeaponConfig', () => {
+  function makeLWPokemon(species: string, otherCapabilities?: string[]): FullPokemon {
+    return {
+      id: 'pkmn-lw-1',
+      species,
+      capabilities: {
+        overland: 3, swim: 0, sky: 0, burrow: 0, levitate: 0,
+        jump: { high: 1, long: 1 }, power: 2, weightClass: 1, size: 'Small',
+        ...(otherCapabilities ? { otherCapabilities } : {}),
+      },
+    } as unknown as FullPokemon
+  }
+
+  it('should return Honedge config for Honedge species', () => {
+    const config = getLivingWeaponConfig(makeLWPokemon('Honedge'))
+    expect(config).not.toBeNull()
+    expect(config!.species).toBe('Honedge')
+    expect(config!.weaponType).toBe('Simple')
+    expect(config!.occupiedSlots).toEqual(['mainHand'])
+    expect(config!.grantsShield).toBe(false)
+    expect(config!.grantedMoves).toHaveLength(1)
+    expect(config!.grantedMoves[0].name).toBe('Wounding Strike')
+  })
+
+  it('should return Doublade config for Doublade species', () => {
+    const config = getLivingWeaponConfig(makeLWPokemon('Doublade'))
+    expect(config).not.toBeNull()
+    expect(config!.species).toBe('Doublade')
+    expect(config!.weaponType).toBe('Simple')
+    expect(config!.occupiedSlots).toEqual(['mainHand', 'offHand'])
+    expect(config!.dualWieldEvasionBonus).toBe(2)
+    expect(config!.grantedMoves).toHaveLength(1)
+    expect(config!.grantedMoves[0].name).toBe('Double Swipe')
+  })
+
+  it('should return Aegislash config for Aegislash species', () => {
+    const config = getLivingWeaponConfig(makeLWPokemon('Aegislash'))
+    expect(config).not.toBeNull()
+    expect(config!.species).toBe('Aegislash')
+    expect(config!.weaponType).toBe('Fine')
+    expect(config!.grantsShield).toBe(true)
+    expect(config!.grantedMoves).toHaveLength(2)
+    expect(config!.grantedMoves.map(m => m.name)).toContain('Wounding Strike')
+    expect(config!.grantedMoves.map(m => m.name)).toContain('Bleed!')
+  })
+
+  it('should return null for non-Living Weapon species without otherCapabilities', () => {
+    const config = getLivingWeaponConfig(makeLWPokemon('Pikachu'))
+    expect(config).toBeNull()
+  })
+
+  it('should return null for species without capabilities at all', () => {
+    const pokemon = { id: 'p', species: 'Pikachu' } as unknown as FullPokemon
+    expect(getLivingWeaponConfig(pokemon)).toBeNull()
+  })
+
+  it('should return Honedge-based config for homebrew species with Living Weapon otherCapability', () => {
+    const config = getLivingWeaponConfig(makeLWPokemon('HomebrewBlade', ['Living Weapon']))
+    expect(config).not.toBeNull()
+    expect(config!.species).toBe('HomebrewBlade')
+    expect(config!.weaponType).toBe('Simple')
+    expect(config!.grantedMoves).toHaveLength(1)
+    expect(config!.grantedMoves[0].name).toBe('Wounding Strike')
+    expect(config!.equipmentDescription).toBe('Living Weapon (HomebrewBlade)')
+  })
+
+  it('should handle case-insensitive Living Weapon capability check', () => {
+    const config = getLivingWeaponConfig(makeLWPokemon('CustomMon', ['living weapon']))
+    expect(config).not.toBeNull()
+    expect(config!.species).toBe('CustomMon')
+  })
+
+  it('should handle Living Weapon with whitespace', () => {
+    const config = getLivingWeaponConfig(makeLWPokemon('CustomMon', [' Living Weapon ']))
+    expect(config).not.toBeNull()
+  })
+
+  it('should return null for otherCapabilities that do not match Living Weapon', () => {
+    const config = getLivingWeaponConfig(makeLWPokemon('Pikachu', ['Glow', 'Firestarter']))
+    expect(config).toBeNull()
   })
 })
