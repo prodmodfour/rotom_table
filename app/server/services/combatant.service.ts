@@ -9,6 +9,8 @@ import { ALL_STATUS_CONDITIONS, FAINT_CLEARED_CONDITIONS, getStatusCsEffect } fr
 import { getEffectiveMaxHp } from '~/utils/restHealing'
 import { v4 as uuidv4 } from 'uuid'
 import { computeEquipmentBonuses } from '~/utils/equipmentBonuses'
+import { getEffectiveEquipmentBonuses } from '~/server/services/living-weapon.service'
+import type { WieldRelationship } from '~/types/combat'
 import { applyStageModifier, calculateEvasion } from '~/utils/damageCalculation'
 import type {
   StatusCondition, StageModifiers, StageSource, Combatant,
@@ -663,9 +665,15 @@ export function buildCombatantFromEntity(options: BuildCombatantOptions): Combat
  * Mirrors the logic in buildCombatantFromEntity but uses the combatant's
  * current speed CS instead of the initial equipment default.
  *
+ * When wieldRelationships are provided, accounts for Living Weapon equipment
+ * overlay (which may change focus items and thus speed bonus).
+ *
  * Returns the new initiative value (does NOT mutate the combatant).
  */
-export function calculateCurrentInitiative(combatant: Combatant): number {
+export function calculateCurrentInitiative(
+  combatant: Combatant,
+  wieldRelationships?: WieldRelationship[]
+): number {
   const entity = combatant.entity
   const speedCS = entity.stageModifiers?.speed ?? 0
 
@@ -674,9 +682,12 @@ export function calculateCurrentInitiative(combatant: Combatant): number {
     : (entity as HumanCharacter).stats.speed
 
   // For humans, check for focus speed bonus (PTU p.295: +5 applied after CS)
+  // Use effective equipment (accounts for Living Weapon overlay if present)
   let focusSpeedBonus = 0
   if (combatant.type === 'human') {
-    const equipBonuses = computeEquipmentBonuses((entity as HumanCharacter).equipment ?? {})
+    const equipBonuses = wieldRelationships
+      ? getEffectiveEquipmentBonuses(wieldRelationships, combatant)
+      : computeEquipmentBonuses((entity as HumanCharacter).equipment ?? {})
     focusSpeedBonus = equipBonuses.statBonuses.speed ?? 0
   }
 

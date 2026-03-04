@@ -346,8 +346,10 @@ export function reorderInitiativeAfterSpeedChange(
   currentPhase?: string
 ): InitiativeReorderResult {
   // Step 1: Recalculate initiative for all combatants (mutates combatant.initiative)
+  // Reconstruct wield relationships so initiative calc accounts for Living Weapon equipment overlay
+  const wieldRelationships = reconstructWieldRelationships(combatants)
   for (const c of combatants) {
-    c.initiative = calculateCurrentInitiative(c)
+    c.initiative = calculateCurrentInitiative(c, wieldRelationships)
   }
 
   // Helper to build a lookup map
