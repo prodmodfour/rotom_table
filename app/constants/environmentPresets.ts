@@ -6,7 +6,8 @@
  * the Encounter record. Custom presets can be created ad-hoc.
  *
  * PTU rule sources:
- *   - Dark Cave: 07-combat.md Blindness (p.1693-1701), Darkvision/Blindsense
+ *   - Dim Cave: 07-combat.md Blindness (p.1699-1700) — -6 accuracy, negated by Darkvision
+ *   - Dark Cave: 07-combat.md Total Blindness (p.1716-1717) — -10 accuracy, negated by Blindsense
  *   - Frozen Lake: 07-combat.md Slow/Rough Terrain (p.475-481), weight/ice rules
  *   - Hazard Factory: GM-defined interactive machinery and hazard zones
  */
@@ -14,29 +15,56 @@
 import type { EnvironmentPreset } from '~/types/encounter'
 
 /**
- * Dark Cave — Accuracy penalty in darkness; requires Darkvision,
- * Blindsense, or a light source to see. PTU p.1693-1701:
- * Blindness gives -6 accuracy; Darkvision/Blindsense negates.
- * Simplified to -2 per unilluminated meter distance.
+ * Dim Cave — Blindness (PTU 07-combat.md:1699-1700)
+ * -6 flat accuracy penalty, negated by Darkvision.
+ * decree-048: RAW Blindness penalty with split cave presets.
+ */
+export const DIM_CAVE_PRESET: EnvironmentPreset = {
+  id: 'dim-cave',
+  name: 'Dim Cave',
+  description:
+    'Blindness: -6 accuracy penalty (PTU p.1699). ' +
+    'Negated by Darkvision. Pokemon with the Illuminate ability can serve as light sources.',
+  effects: [
+    {
+      type: 'accuracy_penalty',
+      accuracyPenalty: 6,
+      description: 'Blindness: -6 accuracy (negated by Darkvision)'
+    },
+    {
+      type: 'custom',
+      customRule:
+        'Darkvision negates Blindness penalties. ' +
+        'Light sources illuminate Burst 2 (small), Burst 3 (medium), or Burst 4 (large). ' +
+        'Illuminate ability: +1 Burst radius to any light source the Pokemon is near.'
+    }
+  ]
+}
+
+/**
+ * Dark Cave — Total Blindness (PTU 07-combat.md:1716-1717)
+ * -10 flat accuracy penalty, negated by Blindsense.
+ * No map awareness, cannot use Priority or Interrupt moves.
+ * decree-048: RAW Total Blindness penalty with split cave presets.
  */
 export const DARK_CAVE_PRESET: EnvironmentPreset = {
   id: 'dark-cave',
   name: 'Dark Cave',
   description:
-    'Accuracy -2 per unilluminated meter between attacker and target. ' +
-    'Requires Darkvision, Blindsense, or a light source (Burst 2/3/4 depending on size). ' +
-    'Pokemon with the Illuminate ability extend light radius by +1 burst.',
+    'Total Blindness: -10 accuracy penalty (PTU p.1716). ' +
+    'Negated by Blindsense. No map awareness, cannot use Priority or Interrupt moves.',
   effects: [
     {
       type: 'accuracy_penalty',
-      accuracyPenaltyPerMeter: -2
+      accuracyPenalty: 10,
+      description: 'Total Blindness: -10 accuracy (negated by Blindsense), no map awareness, no Priority/Interrupt moves'
     },
     {
       type: 'custom',
       customRule:
-        'Darkvision and Blindsense negate darkness penalties. ' +
-        'Light sources illuminate Burst 2 (small), Burst 3 (medium), or Burst 4 (large). ' +
-        'Illuminate ability: +1 Burst radius to any light source the Pokemon is near.'
+        'Blindsense negates Total Blindness penalties. ' +
+        'Totally Blind combatants have no map awareness and cannot use Priority or Interrupt moves. ' +
+        'Light sources illuminate Burst 2 (small), Burst 3 (medium), or Burst 4 (large).'
     }
   ]
 }
@@ -112,6 +140,7 @@ export const HAZARD_FACTORY_PRESET: EnvironmentPreset = {
  * All built-in presets, indexed by ID for quick lookup.
  */
 export const BUILT_IN_PRESETS: Record<string, EnvironmentPreset> = {
+  'dim-cave': DIM_CAVE_PRESET,
   'dark-cave': DARK_CAVE_PRESET,
   'frozen-lake': FROZEN_LAKE_PRESET,
   'hazard-factory': HAZARD_FACTORY_PRESET
@@ -120,13 +149,14 @@ export const BUILT_IN_PRESETS: Record<string, EnvironmentPreset> = {
 /**
  * Built-in preset IDs in display order.
  */
-export const BUILT_IN_PRESET_IDS = ['dark-cave', 'frozen-lake', 'hazard-factory'] as const
+export const BUILT_IN_PRESET_IDS = ['dim-cave', 'dark-cave', 'frozen-lake', 'hazard-factory'] as const
 
 /**
  * Labels for the preset selector dropdown.
  */
 export const PRESET_LABELS: Record<string, string> = {
-  'dark-cave': 'Dark Cave',
+  'dim-cave': 'Dim Cave (Blindness)',
+  'dark-cave': 'Dark Cave (Total Blindness)',
   'frozen-lake': 'Frozen Lake',
   'hazard-factory': 'Hazard Factory'
 }
