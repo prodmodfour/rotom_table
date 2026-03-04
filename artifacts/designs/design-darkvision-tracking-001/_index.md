@@ -4,7 +4,7 @@ ticket_id: feature-025
 category: FEATURE
 scope: FULL
 domain: encounter-tables, combat
-status: validated
+status: p0-implemented
 decree: decree-048
 affected_files:
   - app/types/encounter.ts
