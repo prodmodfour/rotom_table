@@ -6,6 +6,7 @@ import { computeTargetEvasions } from '~/utils/evasionCalculation'
 import { getEffectivenessClass } from '~/utils/typeEffectiveness'
 import { getWeatherDamageModifier } from '~/utils/damageCalculation'
 import { getWeatherBallEffect, getSandForceDamageBonus } from '~/utils/weatherRules'
+import { getEffectiveEnvironmentPenalty } from '~/utils/visionRules'
 import type { EvasionDependencies } from '~/utils/evasionCalculation'
 import { useTerrainStore } from '~/stores/terrain'
 import { useEncounterStore } from '~/stores/encounter'
@@ -471,24 +472,21 @@ export function useMoveCalculation(
   // --- Environment Accuracy Penalty (P2: ptu-rule-058) ---
 
   /**
-   * Computed environment-based accuracy penalty for the current encounter.
+   * Computed environment-based accuracy penalty for the current encounter,
+   * accounting for the attacker's vision capabilities.
+   *
    * Returns a positive number that increases the accuracy threshold (harder to hit).
    * Supports the accuracy_penalty effect type (Dim Cave: 6, Dark Cave: 10).
    *
    * Stored as a positive number per MED-2 sign convention (penalty = positive = worse).
    * decree-048: RAW flat Blindness (-6) and Total Blindness (-10) penalties.
+   * Per decree-048: Darkvision/Blindsense negate darkness penalties for the attacker.
    */
   const environmentAccuracyPenalty = computed((): number => {
     const preset = encounterStore.activeEnvironmentPreset
     if (!preset) return 0
-
-    let penalty = 0
-    for (const effect of preset.effects) {
-      if (effect.type === 'accuracy_penalty' && effect.accuracyPenalty) {
-        penalty += effect.accuracyPenalty
-      }
-    }
-    return penalty
+    // Per decree-048: Darkvision/Blindsense negate darkness penalties
+    return getEffectiveEnvironmentPenalty(preset, actor.value.visionState)
   })
 
   const getAccuracyThreshold = (targetId: string): number => {
