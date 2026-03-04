@@ -24,10 +24,16 @@ artifacts/
 │       │   ├── _index.md          # Capability listing + chains
 │       │   └── <domain>-C<NNN>.md # Individual capability files
 │       ├── matrix.md              # Coverage Analyzer writes (stays monolithic)
-│       └── audit/                 # Implementation Auditor writes
-│           ├── _index.md          # Summary + action items
-│           ├── tier-N-<slug>.md   # Grouped verifications by tier
-│           └── correct-items.md   # COLD: all verified-correct items
+│       ├── audit/                 # Implementation Auditor writes
+│       │   ├── _index.md          # Summary + action items
+│       │   ├── tier-N-<slug>.md   # Grouped verifications by tier
+│       │   └── correct-items.md   # COLD: all verified-correct items
+│       └── browser-audit/         # Browser Auditor writes
+│           ├── _index.md          # Summary + action items + view file links
+│           ├── view-gm.md         # Capabilities verified on /gm/* views
+│           ├── view-group.md      # Capabilities verified on /group
+│           ├── view-player.md     # Capabilities verified on /player
+│           └── untestable-items.md # Server-side only capabilities (COLD)
 ├── designs/               # Developer writes (atomized per-design dirs)
 │   ├── design-NAME/       # Per-design directory
 │   │   ├── _index.md      # Frontmatter + summary + tier status
@@ -60,6 +66,7 @@ artifacts/
 - Capability catalogs: `matrix/<domain>/capabilities/<domain>-C<NNN>.md` (atomized) with `_index.md` summary
 - Coverage matrices: `matrix/<domain>/matrix.md` (single file per domain)
 - Implementation audits: `matrix/<domain>/audit/tier-N-<slug>.md` (per-tier) with `_index.md` summary
+- Browser audits: `matrix/<domain>/browser-audit/view-<actor>.md` (per-view) with `_index.md` summary
 - Tickets: `<type>-<NNN>.md` in `tickets/open/<type>/` (e.g., `tickets/bug/bug-003.md`)
 - Designs: `design-<NNN>.md` (e.g., `design-001.md`) — per-prefix counter in `artifacts/designs/`
 - Code reviews: `code-review-<NNN>.md` (e.g., `code-review-001.md`) — per-prefix counter in `artifacts/reviews/`
@@ -373,6 +380,143 @@ ambiguous: <count>
 - Every Ambiguous item documents multiple interpretations
 - Severity assignments are consistent across items
 - Verified-correct items go to `correct-items.md` (COLD storage, rarely re-read)
+
+---
+
+## 4b. Browser Audit Report
+
+**Written by:** Browser Auditor
+**Read by:** Orchestrator (ticket creation), Developer (absent/error items)
+**Location:** `artifacts/matrix/<domain>/browser-audit/` (atomized: `_index.md` + per-view files + `untestable-items.md`)
+
+### `_index.md`
+
+```markdown
+---
+domain: <domain>
+type: browser-audit
+browser_audited_at: <ISO timestamp>
+browser_audited_by: browser-auditor
+total_checked: <count>
+present: <count>
+absent: <count>
+error: <count>
+unreachable: <count>
+untestable: <count>
+---
+
+# Browser Audit: <Domain Display Name>
+
+## Summary
+
+| Classification | Count |
+|---------------|-------|
+| Present | <N> |
+| Absent | <N> |
+| Error | <N> |
+| Unreachable | <N> |
+| Untestable | <N> |
+| **Total** | **<N>** |
+
+## Action Items
+
+| Cap ID | Name | Classification | Severity | Route | View File |
+|--------|------|---------------|----------|-------|-----------|
+| <domain>-C<NNN> | <name> | Absent | HIGH | /gm | [view-gm.md](view-gm.md) |
+| <domain>-C<NNN> | <name> | Error | HIGH | /group | [view-group.md](view-group.md) |
+<!-- non-present, non-untestable items only -->
+
+## View Files
+- [GM Views](view-gm.md)
+- [Group Views](view-group.md)
+- [Player Views](view-player.md)
+- [Untestable Items](untestable-items.md)
+```
+
+### Per-View Files (`view-gm.md`, `view-group.md`, `view-player.md`)
+
+```markdown
+---
+domain: <domain>
+view: gm | group | player
+routes_checked:
+  - /gm
+  - /gm/sheets
+  - /gm/characters/1
+total_capabilities: <count>
+present: <count>
+absent: <count>
+error: <count>
+unreachable: <count>
+---
+
+# Browser Audit: <Domain> — <View> Views
+
+## Route: /gm
+
+### <domain>-C<NNN>: <Capability Name>
+- **Classification:** Present
+- **Route:** `/gm`
+- **Expected:** Button with text "Start Encounter"
+- **Found:** `role: button, name: "Start Encounter", ref: s1e5`
+- **Evidence:** Accessibility tree line 42
+
+### <domain>-C<NNN>: <Capability Name>
+- **Classification:** Absent
+- **Severity:** HIGH
+- **Route:** `/gm`
+- **Expected:** Panel showing combatant HP values
+- **Found:** Not present in accessibility tree
+- **Evidence:** Searched for role: heading/text containing "HP" — no match after 5s wait + re-snapshot
+
+## Route: /gm/sheets
+...
+```
+
+### `untestable-items.md`
+
+```markdown
+---
+domain: <domain>
+total_untestable: <count>
+---
+
+# Browser Audit: <Domain> — Untestable Items
+
+Server-side only capabilities with no UI terminus. These are verified by the Implementation Auditor, not the Browser Auditor.
+
+| Cap ID | Name | Type | Reason |
+|--------|------|------|--------|
+| <domain>-C<NNN> | <name> | service-function | No UI renders this data directly |
+| <domain>-C<NNN> | <name> | api-endpoint | Internal API, no component consumes response |
+```
+
+### Classification Table
+
+| Classification | Meaning | Criteria |
+|---------------|---------|----------|
+| **Present** | Element found in accessibility tree | Matching role/text/name on the correct actor's view |
+| **Absent** | Element not found | Navigated to correct view, element not in accessibility tree |
+| **Error** | View fails to render | 500 error, blank page, JS error, SPA hydration failure |
+| **Unreachable** | Element on wrong actor's view | Element exists but not accessible to the intended actor |
+| **Untestable** | Server-side only capability | No UI terminus (service, utility, prisma, constant) |
+
+### Severity Assignment (for Absent/Error/Unreachable)
+
+| Severity | Criteria |
+|----------|----------|
+| **HIGH** | Core UI missing — primary action button, main display panel, critical form |
+| **MEDIUM** | Supporting display absent — secondary info, status indicator, tooltip |
+| **LOW** | Optional/indirect element — convenience shortcut, cosmetic display |
+
+**Constraints:**
+- One directory per domain with per-view files + `_index.md` summary + `untestable-items.md`
+- Every component-type capability in the catalog has been checked or classified as Untestable
+- Accessibility tree snapshots were actually captured (not assumed from code reading)
+- Every `Absent` item includes the route checked and what was expected
+- Every `Unreachable` item explains the actor mismatch
+- Every `Error` item includes the error output
+- `untestable-items.md` is COLD storage (rarely re-read, like `correct-items.md` for audits)
 
 ---
 
