@@ -12,6 +12,7 @@ import { ZERO_EVASION_CONDITIONS } from '~/constants/statusConditions'
 import { checkFlankingMultiTile, FLANKING_EVASION_PENALTY } from '~/utils/flankingGeometry'
 import { isEnemySide } from '~/utils/combatSides'
 import type { AccuracyCalcResult } from '~/utils/damageCalculation'
+import { getWeatherBallEffect, getSandForceDamageBonus } from '~/utils/weatherRules'
 import type { Pokemon, HumanCharacter, Move, Combatant } from '~/types'
 
 interface CalculateDamageRequest {
@@ -249,12 +250,28 @@ export default defineEventHandler(async (event) => {
       defenseBonus = targetEquipBonuses.statBonuses[isPhysical ? 'defense' : 'specialDefense'] ?? 0
     }
 
+    // P2: Weather Ball type/DB override (PTU p.338+)
+    // When Weather Ball is used with active weather, its type changes to match
+    // the weather and its DB doubles from 5 to 10.
+    let effectiveMoveType = move.type
+    let effectiveMoveDB = move.damageBase
+    const isWeatherBall = move.name.toLowerCase() === 'weather ball'
+    if (isWeatherBall) {
+      const weatherBall = getWeatherBallEffect(record.weather)
+      effectiveMoveType = weatherBall.type
+      effectiveMoveDB = weatherBall.damageBase
+    }
+
+    // P2: Sand Force ability damage bonus (PTU p.323)
+    // +5 flat damage for Ground/Rock/Steel moves in Sandstorm
+    const abilityDamageBonus = getSandForceDamageBonus(attacker, record.weather, effectiveMoveType)
+
     const result = calculateDamage({
       attackerTypes: attackerData.types,
       attackStat: attackerData.attackStat,
       attackStage: attackerData.attackStage,
-      moveType: move.type,
-      moveDamageBase: move.damageBase,
+      moveType: effectiveMoveType,
+      moveDamageBase: effectiveMoveDB,
       moveDamageClass: move.damageClass,
       targetTypes: targetData.types,
       defenseStat: targetData.defenseStat,
@@ -264,6 +281,7 @@ export default defineEventHandler(async (event) => {
       attackBonus,
       defenseBonus,
       weather: record.weather,
+      abilityDamageBonus,
     })
 
     // PTU p.246-247: Vulnerable, Frozen, and Asleep set evasion to 0
@@ -344,8 +362,11 @@ export default defineEventHandler(async (event) => {
           attackerId: body.attackerId,
           targetId: body.targetId,
           moveName: move.name,
-          moveType: move.type,
+          moveType: effectiveMoveType,
+          moveBaseType: move.type,
           moveDamageClass: move.damageClass,
+          ...(isWeatherBall && { weatherBallActive: true, weatherBallOriginalDB: 5 }),
+          ...(abilityDamageBonus > 0 && { abilityDamageBonus, abilityDamageBonusSource: 'Sand Force' }),
         },
       },
     }
