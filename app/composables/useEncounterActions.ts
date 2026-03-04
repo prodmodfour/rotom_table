@@ -18,6 +18,7 @@ export function useEncounterActions(options: EncounterActionsOptions) {
   const encounterGridStore = useEncounterGridStore()
   const encounterCombatStore = useEncounterCombatStore()
   const { getCombatantName } = useCombatantDisplay()
+  const { showToast } = useGmToast()
 
   // Helper to broadcast encounter updates
   const broadcastUpdate = async () => {
@@ -50,15 +51,15 @@ export function useEncounterActions(options: EncounterActionsOptions) {
     // GM notifications for heavily injured penalty and death
     if (result) {
       if (result.heavilyInjured && result.heavilyInjuredHpLoss && result.heavilyInjuredHpLoss > 0) {
-        alert(`${name} is Heavily Injured! Lost ${result.heavilyInjuredHpLoss} additional HP from injury penalty.`)
+        showToast(`${name} is Heavily Injured! Lost ${result.heavilyInjuredHpLoss} additional HP from injury penalty.`, 'warning')
       }
       if (result.deathCheck?.isDead) {
         const cause = result.deathCheck.cause === 'injuries'
           ? '10+ injuries'
           : 'HP below death threshold'
-        alert(`${name} has DIED! Cause: ${cause}. Use the Override button on their card to revoke.`)
+        showToast(`${name} has DIED! Cause: ${cause}. Use the Override button on their card to revoke.`, 'critical')
       } else if (result.deathCheck?.leagueSuppressed) {
-        alert(`${name} would have died from HP loss, but death is suppressed in League Battle mode.`)
+        showToast(`${name} would have died from HP loss, but death is suppressed in League Battle mode.`, 'info')
       }
 
       // Dismount check notification (feature-004 P1, PTU p.218)
@@ -67,11 +68,11 @@ export function useEncounterActions(options: EncounterActionsOptions) {
         const bonusText = dc.mountedProwessBonus > 0
           ? ` (+${dc.mountedProwessBonus} Mounted Prowess)`
           : ''
-        alert(
-          `Dismount Check Triggered!\n` +
-          `${name} took >= 1/4 max HP damage while mounted.\n` +
-          `Rider must make Acrobatics/Athletics DC ${dc.dc}${bonusText} to remain mounted.\n` +
-          `If failed, use Dismount button in Mount Controls.`
+        showToast(
+          `Dismount Check Triggered! ${name} took >= 1/4 max HP damage while mounted. ` +
+          `Rider must make Acrobatics/Athletics DC ${dc.dc}${bonusText} to remain mounted. ` +
+          `If failed, use Dismount button in Mount Controls.`,
+          'warning'
         )
       }
     }
@@ -118,14 +119,14 @@ export function useEncounterActions(options: EncounterActionsOptions) {
       refreshUndoRedoState()
       await broadcastUpdate()
     } catch (error: unknown) {
-      // Decree-012: type immunity rejection — show informative alert
+      // Decree-012: type immunity rejection — show informative toast
       const fetchError = error as { statusCode?: number; data?: { message?: string } }
       if (fetchError.statusCode === 409) {
         const msg = fetchError.data?.message || 'Type immunity prevents this status condition'
-        alert(`Status blocked: ${msg}\n\nUse the Status Conditions modal and "Force Apply (GM Override)" to bypass.`)
+        showToast(`Status blocked: ${msg} — Use "Force Apply (GM Override)" to bypass.`, 'warning')
         return
       }
-      alert(`Failed to update status conditions for ${name}`)
+      showToast(`Failed to update status conditions for ${name}`, 'error')
     }
   }
 
@@ -163,19 +164,19 @@ export function useEncounterActions(options: EncounterActionsOptions) {
     refreshUndoRedoState()
     await broadcastUpdate()
 
-    // GM alerts for move-caused death and heavily injured penalties
+    // GM toasts for move-caused death and heavily injured penalties
     if (targetResults) {
       for (const result of targetResults) {
         if (result.heavilyInjured && result.heavilyInjuredHpLoss > 0) {
-          alert(`${result.targetName} is Heavily Injured! Lost ${result.heavilyInjuredHpLoss} additional HP from injury penalty.`)
+          showToast(`${result.targetName} is Heavily Injured! Lost ${result.heavilyInjuredHpLoss} additional HP from injury penalty.`, 'warning')
         }
         if (result.isDead) {
           const cause = result.deathCause === 'injuries'
             ? '10+ injuries'
             : 'HP below death threshold'
-          alert(`${result.targetName} has DIED! Cause: ${cause}. Use the Override button on their card to revoke.`)
+          showToast(`${result.targetName} has DIED! Cause: ${cause}. Use the Override button on their card to revoke.`, 'critical')
         } else if (result.leagueSuppressed) {
-          alert(`${result.targetName} would have died from HP loss, but death is suppressed in League Battle mode.`)
+          showToast(`${result.targetName} would have died from HP loss, but death is suppressed in League Battle mode.`, 'info')
         }
       }
     }
