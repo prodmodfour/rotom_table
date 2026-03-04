@@ -26,7 +26,7 @@ app/
 ├── tests/           # Vitest (unit) + e2e artifacts (tickets, matrix, reviews)
 ├── server/
 │   ├── api/         # REST endpoints across 14 domain categories
-│   ├── services/    # 21 business logic services (see server/services/CLAUDE.md)
+│   ├── services/    # 23 business logic services (see server/services/CLAUDE.md)
 │   ├── routes/      # WebSocket handler (ws.ts)
 │   └── utils/       # Prisma client, websocket, servedMap, wildSpawnState, pokemon-nickname, turn-helpers, serializers, csv-parser, pendingRequests, significance-validation
 └── assets/scss/     # Global styles and variables

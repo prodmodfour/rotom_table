@@ -21,5 +21,5 @@ WebSocket (`/ws`) handles GM-to-Group synchronization with role-based broadcasti
 
 ## Descendant Context
 
-- **Service architecture**: See `services/CLAUDE.md` for the 21-service inventory, Pokemon generation entry point rule, service patterns, and dependency map
+- **Service architecture**: See `services/CLAUDE.md` for the 23-service inventory, Pokemon generation entry point rule, service patterns, and dependency map
 - **API conventions**: See `api/CLAUDE.md` for endpoint naming conventions, response format, error handling, and service delegation rules
