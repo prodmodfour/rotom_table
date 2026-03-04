@@ -301,3 +301,97 @@ export function isConquerorsMarchEligibleRange(moveRange: string): boolean {
     lower.startsWith('line')
 }
 
+// ============================================================
+// Run Up Damage Bonus (P2, PTU p.103)
+// ============================================================
+
+/**
+ * Calculate the Run Up damage bonus for a Dash/Pass move.
+ * PTU p.103 (via Ramming Speed): "+1 bonus to their Damage Rolls for
+ * every 3 meters the Pokemon moved this turn"
+ *
+ * @param distanceMovedThisTurn - Distance moved in meters this turn
+ * @returns Damage bonus to add to the damage roll
+ */
+export function calculateRunUpBonus(distanceMovedThisTurn: number): number {
+  return Math.floor(distanceMovedThisTurn / 3)
+}
+
+// ============================================================
+// Overrun Modifier (P2, PTU p.103)
+// ============================================================
+
+/**
+ * Calculate Overrun damage modifiers.
+ * PTU p.103: "Your Pokemon adds their Speed Stat in addition to their
+ * normal attacking Stat to their Damage Roll. The target gains Damage
+ * Reduction against this attack equal to their own Speed Stat."
+ *
+ * @param mountSpeedStat - The mount's current Speed stat (base, pre-stage)
+ * @param mountSpeedStage - The mount's Speed combat stage (-6 to +6)
+ * @param targetSpeedStat - The target's current Speed stat (base, pre-stage)
+ * @param targetSpeedStage - The target's Speed combat stage (-6 to +6)
+ * @returns Object with bonusDamage (mount Speed) and targetDR (target Speed)
+ */
+export function calculateOverrunModifiers(
+  mountSpeedStat: number,
+  mountSpeedStage: number,
+  targetSpeedStat: number,
+  targetSpeedStage: number
+): { bonusDamage: number; targetDR: number } {
+  // Import would create circular dep; inline the stage multiplier calculation
+  const STAGE_MULTS: Record<number, number> = {
+    [-6]: 0.4, [-5]: 0.5, [-4]: 0.6, [-3]: 0.7, [-2]: 0.8, [-1]: 0.9,
+    [0]: 1.0, [1]: 1.2, [2]: 1.4, [3]: 1.6, [4]: 1.8, [5]: 2.0, [6]: 2.2
+  }
+  const clamp = (v: number) => Math.max(-6, Math.min(6, v))
+  const effectiveMountSpeed = Math.floor(mountSpeedStat * STAGE_MULTS[clamp(mountSpeedStage)])
+  const effectiveTargetSpeed = Math.floor(targetSpeedStat * STAGE_MULTS[clamp(targetSpeedStage)])
+
+  return {
+    bonusDamage: effectiveMountSpeed,
+    targetDR: effectiveTargetSpeed
+  }
+}
+
+// ============================================================
+// Lean In Resistance Step (P2, PTU p.103)
+// ============================================================
+
+/**
+ * PTU resistance step progression.
+ * Each step halves the damage. Lean In adds one additional step.
+ *
+ * Effectiveness values in PTU:
+ * 2.0 (Super Effective) -> 1.0 (Neutral) -> 0.5 (Resisted) -> 0.25 (Double Resisted)
+ *
+ * "Resist one step further" means:
+ * - If currently at 2.0: becomes 1.0
+ * - If currently at 1.5: becomes 1.0 (capped — PTU doesn't have 0.75)
+ * - If currently at 1.0: becomes 0.5
+ * - If currently at 0.5: becomes 0.25
+ * - If at 0.25: stays at 0.25 (floor)
+ *
+ * @param currentEffectiveness - The current type effectiveness multiplier
+ * @returns The effectiveness multiplier after applying one resistance step
+ */
+export function applyResistStep(currentEffectiveness: number): number {
+  if (currentEffectiveness >= 2.0) return 1.0
+  if (currentEffectiveness >= 1.5) return 1.0
+  if (currentEffectiveness >= 1.0) return 0.5
+  if (currentEffectiveness >= 0.5) return 0.25
+  return currentEffectiveness // Already at floor or immune
+}
+
+/**
+ * Check if a move range qualifies as an area-of-effect for Lean In.
+ * PTU p.103: "Burst, Blast, Cone, or Line"
+ */
+export function isAoERange(moveRange: string): boolean {
+  const lower = moveRange.toLowerCase().trim()
+  return lower.startsWith('burst') ||
+    lower.startsWith('blast') ||
+    lower.startsWith('cone') ||
+    lower.startsWith('line')
+}
+
