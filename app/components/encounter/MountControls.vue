@@ -675,7 +675,7 @@ const handleUseOverrun = () => {
   gap: 0.375rem;
   font-size: 0.8rem;
   font-weight: 600;
-  color: $color-accent-gold;
+  color: $color-warning;
 }
 
 .mount-controls__feature {
@@ -693,7 +693,7 @@ const handleUseOverrun = () => {
   gap: 0.25rem;
   font-size: 0.75rem;
   font-weight: 500;
-  color: $color-accent-gold;
+  color: $color-warning;
 }
 
 .mount-controls__feature-desc {
