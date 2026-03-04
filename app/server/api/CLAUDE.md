@@ -1,6 +1,6 @@
 # API CLAUDE.md
 
-Context for working within the Nitro REST API layer (`app/server/api/`). 157 endpoint files across 14 domain directories.
+Context for working within the Nitro REST API layer (`app/server/api/`). 158 endpoint files across 14 domain directories.
 
 ## Directory Layout
 
@@ -11,7 +11,7 @@ api/
   characters/          # 17 endpoints — CRUD + rest/healing/xp + equipment
   encounter-tables/    # 18 endpoints — tables + entries + modifications (deeply nested)
   encounter-templates/ # 7 endpoints  — CRUD + load from template
-  encounters/          # 57 endpoints — CRUD + combat actions (damage, status, turns, mount/dismount, living-weapon, etc.)
+  encounters/          # 58 endpoints — CRUD + combat actions (damage, status, turns, mount/dismount, living-weapon, vision, etc.)
   game/                # 1 endpoint   — new-day reset
   group/               # 8 endpoints  — map, tab sync, wild-spawn
   moves/               # 1 endpoint   — batch move lookup

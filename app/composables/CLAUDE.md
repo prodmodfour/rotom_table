@@ -29,7 +29,7 @@
 - `useGridRendering` -> `useRangeParser` + `useCanvasDrawing` + fogOfWar/terrain/measurement stores (2D draw loop)
 - `useFlankingDetection` -> `flankingGeometry` util + `combatSides` util (bridges combat + VTT position data)
 - `useIsometricInteraction` -> `useIsometricProjection` + `useTouchInteraction` (iso input handling)
-- `useMoveCalculation` -> `equipmentBonuses`, `evasionCalculation`, `typeEffectiveness`, `weatherRules` utilities
+- `useMoveCalculation` -> `equipmentBonuses`, `evasionCalculation`, `typeEffectiveness`, `weatherRules`, `visionRules` utilities
 - `usePlayerCombat` -> `usePlayerWebSocket` via `PLAYER_WS_SEND_KEY` injection key
 
 ## Largest Composables (over 20KB)

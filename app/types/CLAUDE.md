@@ -10,7 +10,7 @@
 | `combat.ts` | 329 | Hand-written | StatusCondition, ActionType, TurnPhase, StageModifiers, TurnState, CombatSide, OutOfTurnAction, MountState, WieldRelationship |
 | `spatial.ts` | 131 | Hand-written | GridPosition, GridConfig, TokenState, TerrainCell, TerrainFlags, MovementPath, RangeType, ParsedRange |
 | `character.ts` | 289 | Prisma-derived | HumanCharacter, Pokemon, Move, Ability, Stats, EquipmentSlots, PokemonOrigin |
-| `encounter.ts` | 325 | Prisma-derived | Combatant (includes mountState, wieldMovementUsed, forecastOriginalTypes), Encounter, MoveLogEntry, EnvironmentEffect (discriminated union), EnvironmentPreset, MovementPreview, EncounterSnapshot, LibraryFilters |
+| `encounter.ts` | 332 | Prisma-derived | Combatant (includes mountState, wieldMovementUsed, forecastOriginalTypes, visionState), Encounter, MoveLogEntry, EnvironmentEffect (discriminated union), EnvironmentPreset, MovementPreview, EncounterSnapshot, LibraryFilters |
 | `scene.ts` | 61 | Hand-written | Scene, SceneCharacter, ScenePokemon, SceneGroup, GroupViewTab, SceneModifier |
 | `habitat.ts` | 97 | Hand-written | EncounterTable, TableModification, RarityPreset, DensityTier (includes runtime constants) |
 | `template.ts` | 29 | Hand-written | TemplateCombatant, EncounterTemplate |
@@ -47,7 +47,7 @@ Pokemon / HumanCharacter  (DB entities, character.ts)
 
 - `combat.ts` -> `character.ts` and `encounter.ts` (StatusCondition, StageModifiers, TurnState)
 - `spatial.ts` -> `encounter.ts` and `vtt.ts` (GridPosition, GridConfig)
-- `encounter.ts` imports from `spatial.ts`, `combat.ts`, and `character.ts`
+- `encounter.ts` imports from `spatial.ts`, `combat.ts`, `character.ts`, and `~/utils/visionRules`
 - `api.ts` imports from all domain files -- defines the WebSocketEvent union
 - `scene.ts` is self-contained (extracted from stores/groupViewTabs.ts)
 - `player-sync.ts` only imports GridPosition from `spatial.ts`

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Tech Stack
 - **Framework**: Nuxt 3 (SPA mode, `ssr: false`)
-- **Backend**: Nitro server with 157 REST API endpoints
+- **Backend**: Nitro server with 158 REST API endpoints
 - **Database**: SQLite with Prisma ORM (`app/prisma/schema.prisma`)
 - **State**: 16 Pinia stores (auto-registered via `@pinia/nuxt`)
 - **Real-time**: WebSocket for GM-Group synchronization
@@ -16,7 +16,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 app/
 ├── pages/           # File-based routing (gm/, group/, player/)
 ├── layouts/         # Role-based layouts (gm, group, player, default)
-├── components/      # 157 auto-imported components by domain
+├── components/      # 158 auto-imported components by domain
 ├── composables/     # 57 auto-imported composables for shared logic
 ├── stores/          # 16 Pinia stores for state management
 ├── types/           # 15 TypeScript type definition files

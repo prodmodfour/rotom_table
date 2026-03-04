@@ -52,7 +52,7 @@ Stores never import each other. All coordination happens at the component or com
 - **Map reactivity**: `fogOfWar` and `terrain` use `Map<string, T>` for cell state. Vue tracks the Map reference but not individual entries — mutations via `.set()/.delete()` work because Pinia's reactive proxy intercepts them, but replacing the entire Map (e.g., `importState`) triggers full re-render.
 - **`betweenTurns` is local-only**: Declared on encounter state but not persisted to server or synced via WebSocket. Resets on page reload.
 - **`encounterCombat` is zero-state ISP**: Actions only, no state/getters. Each method takes `encounterId` and returns updated `Encounter`. Callers must update the encounter store themselves.
-- **`encounter.ts` is ~1656 lines**: Largest store, well above the 800-line guideline. ISP extraction of `encounterCombat`, `encounterGrid`, and `encounterXp` reduced it from even larger, but further extraction may be needed.
+- **`encounter.ts` is ~1685 lines**: Largest store, well above the 800-line guideline. ISP extraction of `encounterCombat`, `encounterGrid`, and `encounterXp` reduced it from even larger, but further extraction may be needed.
 - **`settings` is localStorage-only**: No server persistence. Uses `import.meta.client` guard for SSR safety.
 - **Terrain legacy migration**: `migrateLegacyCell()` converts old `difficult`/`rough` terrain types to `normal` + flags (`slow`/`rough`). Import always runs migration. Runtime `setTerrain()` also converts legacy types.
 - **Measurement AoE modes**: Measurement store provides distance/burst/cone/line/close-blast modes. Components wire move range types to the appropriate mode. The store itself has no auto-select — the caller (VTT interaction composable) sets the mode.

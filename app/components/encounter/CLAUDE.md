@@ -1,6 +1,6 @@
 # Encounter Components
 
-39 components managing PTU combat. Parent page: `pages/gm/index.vue` (GM) and `pages/group/index.vue` (Group view).
+40 components managing PTU combat. Parent page: `pages/gm/index.vue` (GM) and `pages/group/index.vue` (Group view).
 
 ## Turn Lifecycle (5 Phases)
 
@@ -21,13 +21,13 @@
 
 For status moves (no damage base), MoveTargetModal skips the damage section entirely.
 
-## Component Categories (39 components, 12 categories)
+## Component Categories (40 components, 12 categories)
 
 **Turn Flow (5):** DeclarationPanel, DeclarationSummary, PriorityActionPanel, HoldActionButton, SignificancePanel
 
 **Damage / Move Resolution (7):** MoveButton, MoveTargetModal, DamageSection, TargetDamageList, TargetSelector, MoveInfoCard, ManeuverGrid
 
-**Combatant Cards (6):** CombatantCard (GM), CombatantGmActions (extracted GM action controls), CombatantCaptureSection (extracted capture UI), GroupCombatantCard (Group view), PlayerCombatantCard (Player view), PlayerRequestPanel
+**Combatant Cards (7):** CombatantCard (GM), CombatantGmActions (extracted GM action controls), CombatantCaptureSection (extracted capture UI), VisionCapabilityToggle (Darkvision/Blindsense toggle), GroupCombatantCard (Group view), PlayerCombatantCard (Player view), PlayerRequestPanel
 
 **Status / Conditions (3):** StatusConditionsModal, CombatStagesModal, CombatantConditionsSection
 
@@ -52,7 +52,7 @@ For status moves (no damage base), MoveTargetModal skips the damage section enti
 | Composable | Purpose | Used by |
 |---|---|---|
 | `useCombat` | Stage multipliers, HP calc, evasions, injuries, XP | CombatantCard, GroupCombatantCard, PlayerCombatantCard |
-| `useMoveCalculation` | Accuracy, damage, range/LoS, STAB, targeting | MoveTargetModal |
+| `useMoveCalculation` | Accuracy, damage, range/LoS, STAB, targeting, vision penalties | MoveTargetModal |
 | `useDamageCalculation` | Damage base chart, rolled/set damage modes | DamageSection |
 | `useEncounterActions` | GM action handlers (damage, heal, stages, status, moves, grid); uses useGmToast for notifications | pages/gm/index.vue (parent) |
 | `useEncounterHistory` | Undo/redo with 50-snapshot ring buffer | pages/gm/index.vue (parent) |
