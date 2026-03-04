@@ -192,3 +192,26 @@ Branch: `slave/2-dev-feature-004-p2-20260304`
 - `app/components/encounter/MountControls.vue` (EDIT — Rider feature UI)
 
 **P2 covers:** All 7 Rider class features (Rider, Ramming Speed, Conqueror's March, Ride as One, Lean In, Cavalier's Reprisal, Overrun). Automation levels vary per spec: Ride as One evasion is fully automated; Agility Training and Conqueror's March are toggle/flag-based; Lean In and Overrun have scene-limited usage tracking; Cavalier's Reprisal detects trigger and prompts GM.
+
+### P2 Fix Cycle (2026-03-04)
+
+Branch: `slave/2-dev-feature-004-p2-fix-20260304-085746`
+Reviews: code-review-314 (CHANGES_REQUIRED — 1C+2H+3M), rules-review-287 (CHANGES_REQUIRED — 1H+1M)
+
+**Commits (6):**
+- `1990f627` — fix: correct applyResistStep to use full PTU effectiveness ladder (rules HIGH-1)
+- `df43c212` — fix: rename ConquerorsMarsh to ConquerorsMarch and extract constant (MED-1, rules MED-1, MED-3)
+- `9a87409f` — fix: move Agility Training flag from tempConditions to mountState (HIGH-1)
+- `c05f2e5a` — fix: wire Ride as One speed evasion into accuracy calculation (CRIT-1)
+- `ca87404b` — fix: wire dead Rider utility functions into integration points (HIGH-2)
+- `595ce0e4` — docs: update app-surface.md with P2 Rider feature additions (MED-2)
+
+**Files changed (8):**
+- `app/utils/mountingRules.ts` (EDIT — fixed applyResistStep effectiveness ladder)
+- `app/constants/trainerClasses.ts` (EDIT — added CONQUERORS_MARCH_CONDITION constant)
+- `app/stores/encounter.ts` (EDIT — persistent Agility Training, Conqueror's March action cost in store)
+- `app/components/encounter/MountControls.vue` (EDIT — use constants, persistent Agility Training check, wired calculateRunUpBonus/calculateOverrunModifiers)
+- `app/types/combat.ts` (EDIT — agilityTrainingActive on MountState)
+- `app/server/api/encounters/[id]/calculate-damage.post.ts` (EDIT — Ride as One evasion override, riderModifiers annotations)
+- `.claude/skills/references/app-surface.md` (EDIT — P2 surface additions)
+- `artifacts/tickets/in-progress/feature/feature-004.md` (EDIT — resolution log)

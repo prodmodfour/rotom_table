@@ -1,6 +1,6 @@
 # Implementation Log
 
-## Status: p2-implemented
+## Status: p2-fix-applied
 
 P0 (Core Mount Relationship, API, and Turn Integration) is fully implemented.
 P1 (VTT Integration, Dismount Checks, Edge Effects, UI) is fully implemented.
@@ -160,3 +160,36 @@ P2 (Rider Trainer Class Features) is fully implemented.
 | EDIT | `app/stores/encounter.ts` |
 | EDIT | `app/composables/useEncounterActions.ts` |
 | EDIT | `app/components/encounter/MountControls.vue` |
+
+## P2 Fix Cycle (code-review-314 + rules-review-287)
+
+### Issues Addressed
+
+| Issue | Severity | Fix |
+|-------|----------|-----|
+| CRIT-1: Ride as One evasion ineffective | CRITICAL | Override recalculated speed evasion in calculate-damage.post.ts |
+| HIGH-1: Agility Training tempCondition cleared | HIGH | Move to mountState.agilityTrainingActive persistent field |
+| HIGH-2: 5 dead utility functions | HIGH | Wire into MountControls and calculate-damage.post.ts |
+| MED-1/rules MED-1: ConquerorsMarsh typo | MEDIUM | Rename to ConquerorsMarch, extract to CONQUERORS_MARCH_CONDITION |
+| MED-2: app-surface.md not updated | MEDIUM | Add P2 functions, actions, constants |
+| MED-3: Direct turnState mutation | MEDIUM | Move Standard Action cost into activateConquerorsMarch store action |
+| rules HIGH-1: applyResistStep skips step | HIGH | Full ladder: 3.0->2.0->1.5->1.0->0.5->0.25->0.125 |
+
+### Fix Commits
+- `1990f627` — fix: correct applyResistStep to use full PTU effectiveness ladder
+- `df43c212` — fix: rename ConquerorsMarsh to ConquerorsMarch and extract constant
+- `9a87409f` — fix: move Agility Training flag from tempConditions to mountState
+- `c05f2e5a` — fix: wire Ride as One speed evasion into accuracy calculation
+- `ca87404b` — fix: wire dead Rider utility functions into integration points
+- `595ce0e4` — docs: update app-surface.md with P2 Rider feature additions
+
+### Files Changed (P2 Fix)
+| Action | File |
+|--------|------|
+| EDIT | `app/utils/mountingRules.ts` |
+| EDIT | `app/constants/trainerClasses.ts` |
+| EDIT | `app/stores/encounter.ts` |
+| EDIT | `app/components/encounter/MountControls.vue` |
+| EDIT | `app/types/combat.ts` |
+| EDIT | `app/server/api/encounters/[id]/calculate-damage.post.ts` |
+| EDIT | `.claude/skills/references/app-surface.md` |
