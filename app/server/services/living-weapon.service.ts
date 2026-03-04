@@ -21,6 +21,7 @@ import {
   computeEffectiveEquipment,
   type EquipmentCombatBonuses,
 } from '~/utils/equipmentBonuses'
+import { calculateEvasion } from '~/utils/damageCalculation'
 
 // ============================================================
 // Skill Rank Validation
@@ -401,6 +402,51 @@ export function getEffectiveEquipmentBonuses(
   }
 
   return computeEquipmentBonuses(equipment)
+}
+
+/**
+ * Recalculate a trainer combatant's equipment-derived bonuses after
+ * a wield relationship change (engage or disengage).
+ *
+ * Updates: evasion values (physical, special, speed).
+ * Does NOT update initiative (that requires separate recalculation).
+ *
+ * Returns a new Combatant with updated evasion values (immutable).
+ */
+export function refreshCombatantEquipmentBonuses(
+  wieldRelationships: WieldRelationship[],
+  combatant: Combatant
+): Combatant {
+  if (combatant.type !== 'human') return combatant
+
+  const human = combatant.entity as HumanCharacter
+  const stats = human.stats
+  const stages = human.stageModifiers
+
+  // Get effective equipment (accounting for Living Weapon overlay)
+  const bonuses = getEffectiveEquipmentBonuses(wieldRelationships, combatant)
+
+  return {
+    ...combatant,
+    physicalEvasion: calculateEvasion(
+      stats.defense || 0,
+      stages?.defense || 0,
+      (stages?.evasion || 0) + bonuses.evasionBonus,
+      bonuses.statBonuses.defense ?? 0
+    ),
+    specialEvasion: calculateEvasion(
+      stats.specialDefense || 0,
+      stages?.specialDefense || 0,
+      (stages?.evasion || 0) + bonuses.evasionBonus,
+      bonuses.statBonuses.specialDefense ?? 0
+    ),
+    speedEvasion: calculateEvasion(
+      stats.speed || 0,
+      stages?.speed || 0,
+      (stages?.evasion || 0) + bonuses.evasionBonus,
+      bonuses.statBonuses.speed ?? 0
+    ),
+  }
 }
 
 // ============================================================
