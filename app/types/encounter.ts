@@ -226,14 +226,28 @@ export interface Encounter {
 
 /**
  * A single mechanical effect within an environment preset.
- * Each effect type maps to a PTU environmental modifier rule.
+ * Discriminated union on `type` — each variant carries only its relevant fields.
+ * This gives compile-time exhaustiveness checking when switching on effect.type.
  */
-export interface EnvironmentEffect {
-  type: 'accuracy_penalty' | 'terrain_override' | 'status_trigger' | 'movement_modifier' | 'custom'
-  /** Accuracy penalty per unilluminated meter (Dark Cave: -2) */
-  accuracyPenaltyPerMeter?: number
+export type EnvironmentEffect =
+  | AccuracyPenaltyEffect
+  | TerrainOverrideEffect
+  | StatusTriggerEffect
+  | MovementModifierEffect
+  | CustomEffect
+
+export interface AccuracyPenaltyEffect {
+  type: 'accuracy_penalty'
+  /** Flat accuracy penalty (positive number = harder to hit). PTU Blindness: 6, Total Blindness: 10. */
+  accuracyPenalty: number
+  /** GM-facing description of this penalty (e.g., 'Blindness: -6 accuracy') */
+  description?: string
+}
+
+export interface TerrainOverrideEffect {
+  type: 'terrain_override'
   /** Terrain override rules (Arctic/ice environments) */
-  terrainRules?: {
+  terrainRules: {
     /** Weight class at which ice breaks (e.g., 5+ breaks ice) */
     weightClassBreak?: number
     /** All squares treated as slow terrain */
@@ -241,8 +255,12 @@ export interface EnvironmentEffect {
     /** Acrobatics check required when taking injury */
     acrobaticsOnInjury?: boolean
   }
+}
+
+export interface StatusTriggerEffect {
+  type: 'status_trigger'
   /** Status effect triggered when entering specific terrain */
-  statusOnEntry?: {
+  statusOnEntry: {
     /** Terrain type that triggers the effect (e.g., 'water') */
     terrain: string
     /** Effect applied on entry (e.g., 'hail_damage_per_turn') */
@@ -250,8 +268,20 @@ export interface EnvironmentEffect {
     /** Optional combat stage penalty on entry */
     stagePenalty?: { stat: string; stages: number }
   }
+}
+
+export interface MovementModifierEffect {
+  type: 'movement_modifier'
+  /** Movement modifier value (positive = bonus, negative = penalty) */
+  movementModifier: number
+  /** GM-facing description */
+  description?: string
+}
+
+export interface CustomEffect {
+  type: 'custom'
   /** Freeform rule text for GM reference (Hazard Factory custom rules) */
-  customRule?: string
+  customRule: string
 }
 
 /**
