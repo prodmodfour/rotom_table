@@ -495,3 +495,38 @@ export const WEATHER_STATUS_CURE_ABILITIES: Array<{
   { weather: 'rain', ability: 'Hydration' },
   { weather: 'sunny', ability: 'Leaf Guard' },
 ]
+
+// ============================================
+// P1: WEATHER ABILITY HEALING/DAMAGE
+// ============================================
+
+/**
+ * Weather ability healing/damage mapping (P1).
+ * Each entry defines when the effect fires and what it does.
+ *
+ * PTU pp.311-335:
+ * Turn start: Ice Body (Hail heal), Rain Dish (Rain heal), Sun Blanket (Sun heal),
+ *             Solar Power (Sun damage)
+ * Turn end: Dry Skin (Rain heal / Sun damage), Desert Weather (Rain heal)
+ */
+export interface WeatherAbilityEffect {
+  ability: string
+  weather: PtuWeather
+  timing: 'turn_start' | 'turn_end'
+  type: 'heal' | 'damage'
+  /** Fraction of max HP: 10 = 1/10th (tick), 16 = 1/16th */
+  hpFraction: number
+}
+
+export const WEATHER_ABILITY_EFFECTS: WeatherAbilityEffect[] = [
+  // Turn start
+  { ability: 'Ice Body', weather: 'hail', timing: 'turn_start', type: 'heal', hpFraction: 10 },
+  { ability: 'Rain Dish', weather: 'rain', timing: 'turn_start', type: 'heal', hpFraction: 10 },
+  { ability: 'Sun Blanket', weather: 'sunny', timing: 'turn_start', type: 'heal', hpFraction: 10 },
+  { ability: 'Solar Power', weather: 'sunny', timing: 'turn_start', type: 'damage', hpFraction: 16 },
+
+  // Turn end
+  { ability: 'Dry Skin', weather: 'rain', timing: 'turn_end', type: 'heal', hpFraction: 10 },
+  { ability: 'Dry Skin', weather: 'sunny', timing: 'turn_end', type: 'damage', hpFraction: 10 },
+  { ability: 'Desert Weather', weather: 'rain', timing: 'turn_end', type: 'heal', hpFraction: 16 },
+]

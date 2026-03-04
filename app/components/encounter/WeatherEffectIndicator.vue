@@ -13,9 +13,9 @@ import {
   isImmuneToWeatherDamage,
   getCombatantAbilities,
   WEATHER_EVASION_ABILITIES,
-  WEATHER_STATUS_CURE_ABILITIES
+  WEATHER_STATUS_CURE_ABILITIES,
+  WEATHER_ABILITY_EFFECTS
 } from '~/utils/weatherRules'
-import { WEATHER_ABILITY_EFFECTS } from '~/server/services/weather-automation.service'
 
 const props = defineProps<{
   combatant: Combatant
