@@ -2,6 +2,7 @@
 
 import type { GridPosition, GridConfig } from './spatial';
 import type { PokemonOrigin } from './character';
+import type { CombatantVisionState } from '~/utils/visionRules';
 import type {
   StatusCondition,
   ActionType,
@@ -106,6 +107,12 @@ export interface Combatant {
   // Present only on Pokemon combatants with the Forecast ability while weather is active.
   /** Original types stored when Forecast changes the Pokemon's type due to weather */
   forecastOriginalTypes?: { type1: string; type2: string | null };
+
+  // Per-combatant Darkvision/Blindsense tracking (decree-048, feature-025)
+  // Combat-scoped -- not persisted to the Pokemon/HumanCharacter DB record.
+  // GM toggles manually in P0; P1 auto-detects from species capabilities.
+  /** Vision capabilities that negate darkness accuracy penalties */
+  visionState?: CombatantVisionState;
 
   // Reference to actual data
   entity: Pokemon | HumanCharacter;
