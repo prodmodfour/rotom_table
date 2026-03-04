@@ -41,3 +41,20 @@
 - `xp.get.ts` endpoint was not needed — `xp-calculate.post.ts` from ptu-rule-055 already provides the same functionality
 - SignificancePanel calls the existing `xp-calculate.post.ts` endpoint for live XP preview
 
+### P2 (Environmental Modifier Framework) -- 2026-03-04
+
+| Commit | Description | Files |
+|---|---|---|
+| `58f502d7` | Add EnvironmentPreset and EnvironmentEffect type definitions | `app/types/encounter.ts` |
+| `bb640c74` | Add built-in PTU environment presets constants (Dark Cave, Frozen Lake, Hazard Factory) | `app/constants/environmentPresets.ts` (new) |
+| `582efc38` | Add `environmentPreset String @default("{}")` to Encounter model | `app/prisma/schema.prisma` |
+| `9564494d` | Add environment preset server endpoint and store management | `app/server/services/encounter.service.ts`, `app/server/api/encounters/[id]/environment-preset.put.ts` (new), `app/server/api/encounters/[id].put.ts`, `app/stores/encounter.ts` |
+| `c98218e8` | Create EnvironmentSelector.vue component with SCSS | `app/components/encounter/EnvironmentSelector.vue` (new), `app/assets/scss/components/_environment-selector.scss` (new) |
+| `23f1fb52` | Integrate environment accuracy penalty into move calculation | `app/utils/damageCalculation.ts`, `app/composables/useMoveCalculation.ts` |
+| `ca41f198` | Integrate EnvironmentSelector into GM encounter sidebar | `app/pages/gm/index.vue`, `app/components/encounter/MoveTargetModal.vue`, `app/assets/scss/components/_move-target-modal.scss` |
+
+**Design vs actual:**
+- Custom presets use freeform text effects rather than the structured form suggested in the spec (more practical for GM usage)
+- The per-meter accuracy penalty is applied as a base penalty value since illumination tracking is not automated
+- No PresetLibrary model (stretch goal as noted in spec) — custom presets are stored inline on the encounter
+

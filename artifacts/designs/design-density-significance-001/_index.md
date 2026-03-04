@@ -4,7 +4,7 @@ ticket_id: ptu-rule-058
 category: PTU_INCORRECT
 scope: FULL
 domain: encounter-tables
-status: p1-complete
+status: p2-implemented
 dependencies:
   - ptu-rule-055 (XP calculation system)
   - ptu-rule-060 (level-budget encounter creation)
@@ -20,6 +20,13 @@ affected_files:
   - app/stores/encounter.ts
   - app/components/habitat/GenerateEncounterModal.vue
   - app/components/encounter/SignificancePanel.vue (new)
+  - app/components/encounter/EnvironmentSelector.vue (new, P2)
+  - app/constants/environmentPresets.ts (new, P2)
+  - app/server/api/encounters/[id]/environment-preset.put.ts (new, P2)
+  - app/server/services/encounter.service.ts
+  - app/utils/damageCalculation.ts
+  - app/composables/useMoveCalculation.ts
+  - app/components/encounter/MoveTargetModal.vue
   - app/components/habitat/EncounterTableCard.vue
   - app/components/habitat/EncounterTableModal.vue
   - app/stores/terrain.ts

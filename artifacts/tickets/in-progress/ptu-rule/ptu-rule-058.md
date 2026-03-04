@@ -59,3 +59,10 @@ Added `safeCustomMultiplier` and `safePlayerCount` computed properties to XpDist
 
 **Commits:** `321bb51`
 **Files (1):** `XpDistributionModal.vue`
+
+### P2 (Environmental Modifier Framework) -- 2026-03-04
+
+Added EnvironmentPreset and EnvironmentEffect type definitions. Three built-in presets (Dark Cave, Frozen Lake, Hazard Factory) as constants. New `environmentPreset` JSON field on Encounter model with dedicated PUT endpoint. EnvironmentSelector GM component in encounter sidebar with preset picker, custom preset support, individual effect dismissal, and WebSocket broadcast. Accuracy penalty integration into move calculation flow: `calculateAccuracyThreshold` accepts optional `environmentPenalty`, `useMoveCalculation` reads accuracy_penalty effects from the active preset, and MoveTargetModal displays the environment penalty in the accuracy section.
+
+**Commits:** `58f502d7`, `bb640c74`, `582efc38`, `9564494d`, `c98218e8`, `23f1fb52`, `ca41f198`
+**Files (11):** `encounter.ts` (type), `environmentPresets.ts` (new), `schema.prisma`, `encounter.service.ts`, `environment-preset.put.ts` (new), `[id].put.ts`, `encounter.ts` (store), `EnvironmentSelector.vue` (new), `_environment-selector.scss` (new), `damageCalculation.ts`, `useMoveCalculation.ts`, `MoveTargetModal.vue`, `_move-target-modal.scss`, `gm/index.vue`
