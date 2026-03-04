@@ -1,18 +1,17 @@
 ---
-generated_at: 2026-03-04T22:42:20.019Z
-total_tickets: 310
-open: 46
-in_progress: 1
+generated_at: 2026-03-04T23:24:50.081Z
+total_tickets: 313
+open: 48
+in_progress: 2
 resolved: 263
 ---
 
 # Tickets Index
 
-## Open Tickets (46)
+## Open Tickets (48)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
-| feature-025 | feature | P2 | encounter-tables | Per decree-048, implement per-combatant vision capability tr |
 | refactoring-002 | refactoring | P3 | vtt-grid | Legacy terrain types `'difficult'` and `'rough'` are still v |
 | refactoring-098 | refactoring | P3 | combat | refactoring-098: Refactor entity mutation in heavily injured |
 | refactoring-112 | refactoring | P3 | combat | Refactoring-112: Decompose encounter store into focused sub- |
@@ -22,6 +21,7 @@ resolved: 263
 | refactoring-128 | refactoring | P3 | combat | `useMoveCalculation.ts` is now 806 lines, exceeding the 800- |
 | refactoring-129 | refactoring | P3 | combat | Per decree-047, whether Other category conditions clear on f |
 | refactoring-131 | refactoring | P3 | cross-cutting | refactoring-131: Replace remaining alert() calls with useGmT |
+| bug-052 | bug | P4 | character-lifecycle | `PlayerCharacterSheet.vue` renders feature tags with bare `c |
 | ptu-rule-095 | ptu-rule | P4 | vtt-grid | ptu-rule-095: Disengage maneuver missing from combatManeuver |
 | ptu-rule-121 | ptu-rule | P4 | combat | The Sprint endpoint (`app/server/api/encounters/[id]/sprint. |
 | ptu-rule-125 | ptu-rule | P4 | character-lifecycle | ptu-rule-125: Populate grantedCapabilities on all capability |
@@ -34,6 +34,7 @@ resolved: 263
 | ux-014 | ux | P4 | pokemon-lifecycle | UX-014: Evolution undo snapshot staleness warning |
 | ux-015 | ux | P4 | pokemon-lifecycle | UX-015: Replace alert() with inline UI for evolution prevent |
 | ux-016 | ux | P4 | combat | ux-016: hasActed flag not set when all three actions individ |
+| decree-need-048 | decree | P4 | capture | The Prisma schema sets `loyalty Int @default(3)` (Neutral),  |
 | refactoring-086 | refactoring | P4 | combat | `app/composables/useMoveCalculation.ts` is 801 lines, exceed |
 | refactoring-087 | refactoring | P4 | vtt-grid | `app/tests/unit/stores/terrain.test.ts` is 811 lines, exceed |
 | refactoring-088 | refactoring | P4 | vtt-grid | `combatantsOnGrid` in `useMoveCalculation.ts` falls back to  |
@@ -58,25 +59,29 @@ resolved: 263
 | refactoring-126 | refactoring | P4 | pokemon-lifecycle | The outer catch block in `[id].put.ts` (line ~90) and `index |
 | refactoring-130 | refactoring | P4 | encounter-tables | When clearing an environment preset, the endpoint stores `'{ |
 | refactoring-132 | refactoring | P4 | combat | refactoring-132: Add type-narrowing helper for Combatant ent |
+| docs-017 | docs | P4 | tooling | The bug-047 ticket resolution log references stale commit ha |
 
-## In-Progress Tickets (1)
+## In-Progress Tickets (2)
 
 | ID | Category | Priority | Domain | Source |
 |----|----------|----------|--------|--------|
+| feature-025 | feature | P2 | encounter-tables | decree-048 |
 | ptu-rule-058 | ptu-rule | P3 | encounter-tables | — |
 
-## Open Decree-Needs (0)
+## Open Decree-Needs (1)
 
-All decree-needs addressed.
+| ID | Priority | Domain | Topic |
+|----|----------|--------|-------|
+| decree-need-048 | P4 | capture | — |
 
 ## Summary by Category
 
 | Category | Open | In-Progress | Resolved | Total |
 |----------|------|-------------|----------|-------|
-| bug | 0 | 0 | 51 | 51 |
+| bug | 1 | 0 | 51 | 52 |
 | ptu-rule | 6 | 1 | 99 | 106 |
-| feature | 1 | 0 | 24 | 25 |
+| feature | 0 | 1 | 24 | 25 |
 | ux | 6 | 0 | 10 | 16 |
-| decree | 0 | 0 | 47 | 47 |
+| decree | 1 | 0 | 47 | 48 |
 | refactoring | 33 | 0 | 16 | 49 |
-| docs | 0 | 0 | 16 | 16 |
+| docs | 1 | 0 | 16 | 17 |
