@@ -71,7 +71,7 @@ export function resetAllTrainersForResolution(combatants: any[], resolutionOrder
  * If a combatant has skipNextRound=true, they are pre-marked as acted
  * and the flag is cleared for subsequent rounds.
  */
-export function resetCombatantsForNewRound(combatants: any[]) {
+export function resetCombatantsForNewRound(combatants: any[], weather?: string | null) {
   combatants.forEach((c: any) => {
     // Check for Advanced Priority / Interrupt penalty (P1 spec B4, F3)
     const shouldSkip = c.skipNextRound === true
@@ -120,13 +120,13 @@ export function resetCombatantsForNewRound(combatants: any[]) {
     if (c.mountState) {
       if (!c.mountState.isMounted) {
         // This is the mount -- recalculate from its own modified Overland speed
-        const mountSpeed = applyMovementModifiers(c, getOverlandSpeed(c))
+        const mountSpeed = applyMovementModifiers(c, getOverlandSpeed(c), weather)
         c.mountState = { ...c.mountState, movementRemaining: mountSpeed, rideAsOneSwapped: false }
       } else {
         // This is the rider -- sync movement with mount partner's modified speed
         const mountPartner = combatants.find((p: any) => p.id === c.mountState.partnerId)
         if (mountPartner) {
-          const mountSpeed = applyMovementModifiers(mountPartner, getOverlandSpeed(mountPartner))
+          const mountSpeed = applyMovementModifiers(mountPartner, getOverlandSpeed(mountPartner), weather)
           c.mountState = { ...c.mountState, movementRemaining: mountSpeed, rideAsOneSwapped: false }
         }
       }

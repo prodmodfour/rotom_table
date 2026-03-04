@@ -45,7 +45,8 @@ export default defineEventHandler(async (event) => {
       combatants,
       body.riderId,
       body.mountId,
-      body.skipCheck
+      body.skipCheck,
+      record.weather
     )
 
     // Persist updated combatants

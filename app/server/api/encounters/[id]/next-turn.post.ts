@@ -387,7 +387,7 @@ export default defineEventHandler(async (event) => {
                 currentRound++
                 currentTurnIndex = 0
                 clearDeclarations = true
-                resetCombatantsForNewRound(combatants)
+                resetCombatantsForNewRound(combatants, weather)
                 ;({ weather, weatherDuration, weatherSource } = decrementWeather(weather, weatherDuration, weatherSource))
               }
             } else {
@@ -407,7 +407,7 @@ export default defineEventHandler(async (event) => {
               currentRound++
               currentTurnIndex = 0
               clearDeclarations = true
-              resetCombatantsForNewRound(combatants)
+              resetCombatantsForNewRound(combatants, weather)
               ;({ weather, weatherDuration, weatherSource } = decrementWeather(weather, weatherDuration, weatherSource))
             }
           }
@@ -426,7 +426,7 @@ export default defineEventHandler(async (event) => {
             currentTurnIndex = 0
             currentRound++
             clearDeclarations = true
-            resetCombatantsForNewRound(combatants)
+            resetCombatantsForNewRound(combatants, weather)
             ;({ weather, weatherDuration, weatherSource } = decrementWeather(weather, weatherDuration, weatherSource))
 
             // If starting a new declaration phase, skip fainted trainers at the start
@@ -439,7 +439,7 @@ export default defineEventHandler(async (event) => {
           currentTurnIndex = 0
           currentRound++
           clearDeclarations = true
-          resetCombatantsForNewRound(combatants)
+          resetCombatantsForNewRound(combatants, weather)
 
           if (trainerTurnOrder.length > 0) {
             currentPhase = 'trainer_declaration'
@@ -466,7 +466,7 @@ export default defineEventHandler(async (event) => {
       if (currentTurnIndex >= turnOrder.length) {
         currentTurnIndex = 0
         currentRound++
-        resetCombatantsForNewRound(combatants);
+        resetCombatantsForNewRound(combatants, weather);
         ({ weather, weatherDuration, weatherSource } = decrementWeather(weather, weatherDuration, weatherSource))
       }
     }

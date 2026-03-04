@@ -234,7 +234,8 @@ export function executeMount(
   combatants: Combatant[],
   riderId: string,
   mountId: string,
-  skipCheck?: boolean
+  skipCheck?: boolean,
+  weather?: string | null
 ): MountResult {
   const { rider, mount } = validateMountPreconditions(combatants, riderId, mountId)
 
@@ -246,7 +247,7 @@ export function executeMount(
   // Apply movement modifiers (Slowed, Speed CS, Sprint) from the mount's conditions
   // ONCE upfront so movementRemaining is the final budget. The client returns this
   // value directly from getSpeed/getMaxPossibleSpeed without re-applying modifiers.
-  const mountMovement = applyMovementModifiers(mount, getOverlandSpeed(mount))
+  const mountMovement = applyMovementModifiers(mount, getOverlandSpeed(mount), weather)
 
   const updatedCombatants = combatants.map(c => {
     if (c.id === riderId) {
@@ -431,13 +432,13 @@ export function executeDismount(
  * ONCE here so the client can return movementRemaining directly without re-applying.
  * Returns a new combatant array (immutable).
  */
-export function resetMountMovement(combatants: Combatant[]): Combatant[] {
+export function resetMountMovement(combatants: Combatant[], weather?: string | null): Combatant[] {
   return combatants.map(c => {
     if (!c.mountState) return c
 
     if (!c.mountState.isMounted) {
       // This is the mount -- recalculate movement from its Overland speed with modifiers
-      const mountSpeed = applyMovementModifiers(c, getOverlandSpeed(c))
+      const mountSpeed = applyMovementModifiers(c, getOverlandSpeed(c), weather)
       return {
         ...c,
         mountState: {
@@ -450,7 +451,7 @@ export function resetMountMovement(combatants: Combatant[]): Combatant[] {
     // This is the rider -- sync movement with mount's modified speed
     const mountPartner = combatants.find(p => p.id === c.mountState!.partnerId)
     if (mountPartner) {
-      const mountSpeed = applyMovementModifiers(mountPartner, getOverlandSpeed(mountPartner))
+      const mountSpeed = applyMovementModifiers(mountPartner, getOverlandSpeed(mountPartner), weather)
       return {
         ...c,
         mountState: {
