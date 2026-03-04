@@ -3,7 +3,8 @@ id: decree-need-048
 title: Default loyalty for newly caught wild Pokemon (schema default 3 vs PTU RAW 2)
 priority: P4
 severity: LOW
-status: open
+status: addressed
+decree_id: decree-049
 domain: capture
 source: rules-review-311 MED-001
 created_by: game-logic-reviewer
