@@ -1,7 +1,7 @@
 {
-  "name": "ptu-session-helper",
+  "name": "rotom_table",
   "version": "1.0.0",
-  "description": "Pokemon Tabletop United 1.05 Session Helper",
+  "description": "Rotom Table - Pokemon Tabletop United 1.05 Session Helper",
   "private": true,
   "type": "module",
   "scripts": {
