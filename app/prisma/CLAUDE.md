@@ -37,7 +37,7 @@ Only one foreign key between entity models: `Pokemon.ownerId -> HumanCharacter.i
 
 | Model | JSON-as-TEXT columns |
 |---|---|
-| **HumanCharacter** | trainerClasses, skills, features, edges, capabilities, equipment, inventory, statusConditions, stageModifiers, capturedSpecies |
+| **HumanCharacter** | trainerClasses, skills, features, edges, capabilities, equipment, inventory, statusConditions, stageModifiers, ownedSpecies |
 | **Pokemon** | nature, stageModifiers, abilities, moves, capabilities, skills, statusConditions, eggGroups |
 | **Encounter** | combatants, turnOrder, trainerTurnOrder, pokemonTurnOrder, declarations, switchActions, pendingActions, holdQueue, fogOfWarState, terrainState, moveLog, defeatedEnemies |
 | **Scene** | pokemon, characters, groups, terrains, modifiers |

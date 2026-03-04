@@ -76,7 +76,7 @@ CRUD + healing/rest + equipment + XP actions.
 - `GET /api/characters/:id/equipment` — current equipment slots + aggregate bonuses
 - `PUT /api/characters/:id/equipment` — equip/unequip items (Zod-validated)
 - `POST /api/characters/:id/xp` — award/deduct trainer XP (auto-level at 10 XP, bank clamp, level cap 50)
-- `GET /api/characters/:id/xp-history` — current trainer XP state (bank, level, xpToNextLevel, capturedSpecies)
+- `GET /api/characters/:id/xp-history` — current trainer XP state (bank, level, xpToNextLevel, ownedSpecies)
 - `POST /api/characters/:id/rest` — 30-min rest
 - `POST /api/characters/:id/extended-rest` — 4h+ rest
 - `POST /api/characters/:id/pokemon-center` — full heal
@@ -113,7 +113,7 @@ CRUD + link/unlink + healing/rest + bulk.
 - `POST /api/pokemon/:id/assign-ability` — assign ability at Level 20/40 milestone (validates level, ability count, pool membership, fetches effect from AbilityData)
 - `POST /api/pokemon/:id/learn-move` — learn move from learnset (validates MoveData, no duplicates, 6-move max, add or replace by index)
 - `POST /api/pokemon/:id/evolution-check` — check evolution eligibility (level/item/triggers) + P1: ability remap preview, evolution move list with MoveData enrichment, resolution options with effects + P2: `preventedByItem` (Everstone/Eviolite), `requiredGender`, `requiredMove` in response
-- `POST /api/pokemon/:id/evolve` — perform evolution (species, stats, HP recalc, encounter-active guard) + P1: accepts abilities array (GM-resolved), moves array (final move list), updates capabilities and skills from target species + P2: accepts `consumeItem` (stone from trainer inventory, `skipInventoryCheck` GM override), `consumeHeldItem` (held item consumption), evolution history note in Pokemon notes, returns `undoSnapshot` for undo support; atomic transaction wrapping Pokemon update + stone consumption; awards +1 trainer XP for new species evolution (capturedSpecies check, character_update broadcast on level-up, returns speciesXp in response)
+- `POST /api/pokemon/:id/evolve` — perform evolution (species, stats, HP recalc, encounter-active guard) + P1: accepts abilities array (GM-resolved), moves array (final move list), updates capabilities and skills from target species + P2: accepts `consumeItem` (stone from trainer inventory, `skipInventoryCheck` GM override), `consumeHeldItem` (held item consumption), evolution history note in Pokemon notes, returns `undoSnapshot` for undo support; atomic transaction wrapping Pokemon update + stone consumption; awards +1 trainer XP for new species evolution (ownedSpecies check, character_update broadcast on level-up, returns speciesXp in response)
 - `POST /api/pokemon/:id/evolution-undo` — revert evolution using pre-evolution snapshot (restores species, stats, types, abilities, moves, capabilities, skills, heldItem, notes), restores consumed stone to trainer inventory, active encounter guard, WebSocket broadcast with `undone: true`
 - `POST /api/pokemon/bulk-action` — bulk archive/delete
 
