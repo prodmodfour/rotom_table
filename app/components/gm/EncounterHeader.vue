@@ -217,10 +217,45 @@ const weatherTooltip = computed(() => {
   if (!props.encounter.weather) return ''
   const source = props.encounter.weatherSource ?? 'manual'
   const duration = props.encounter.weatherDuration
+  const weather = props.encounter.weather
+
+  let tooltip = weatherLabel.value
   if (duration > 0) {
-    return `${weatherLabel.value} - ${duration} round${duration === 1 ? '' : 's'} remaining (${source})`
+    tooltip += ` - ${duration} round${duration === 1 ? '' : 's'} remaining (${source})`
+  } else {
+    tooltip += ` - indefinite (${source})`
   }
-  return `${weatherLabel.value} - indefinite (${source})`
+
+  // P2: Add weather effect summary for PTU weather conditions
+  if (weather === 'hail') {
+    tooltip += '\nDamage: 1/10 max HP to non-Ice types'
+    tooltip += '\nImmune: Ice Body, Snow Cloak, Snow Warning, Overcoat, Magic Guard'
+    tooltip += '\nSnow Cloak: +2 Evasion'
+    tooltip += '\nIce Body: heals 1/10 max HP'
+    tooltip += '\nThermosensitive: halved movement'
+  } else if (weather === 'sandstorm') {
+    tooltip += '\nDamage: 1/10 max HP to non-Ground/Rock/Steel types'
+    tooltip += '\nImmune: Sand Veil, Sand Rush, Sand Force, Sand Stream, Desert Weather, Overcoat, Magic Guard'
+    tooltip += '\nSand Veil: +2 Evasion'
+    tooltip += '\nSand Rush: +4 Speed CS'
+    tooltip += '\nSand Force: +5 damage (Ground/Rock/Steel moves)'
+  } else if (weather === 'rain') {
+    tooltip += '\nFire moves: -5 DB | Water moves: +5 DB'
+    tooltip += '\nSwift Swim: +4 Speed CS'
+    tooltip += '\nRain Dish: heals 1/10 max HP'
+    tooltip += '\nHydration: cures one status'
+    tooltip += '\nDry Skin: heals 1/10 max HP'
+  } else if (weather === 'sunny') {
+    tooltip += '\nFire moves: +5 DB | Water moves: -5 DB'
+    tooltip += '\nChlorophyll: +4 Speed CS'
+    tooltip += '\nSun Blanket: heals 1/10 max HP'
+    tooltip += '\nSolar Power: +2 SpAtk CS, loses 1/16 max HP'
+    tooltip += '\nLeaf Guard: cures one status'
+    tooltip += '\nThermosensitive: +2 Atk/SpAtk CS'
+    tooltip += '\nFlower Gift: distribute +2 CS (manual)'
+  }
+
+  return tooltip
 })
 
 const handleWeatherChange = (event: Event) => {
