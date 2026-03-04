@@ -1,7 +1,7 @@
 <template>
   <div class="group-view__lobby">
     <header class="lobby-header">
-      <h1>PTU Session Helper</h1>
+      <h1>Rotom Table</h1>
     </header>
 
     <div class="players-grid" v-if="players.length > 0">
