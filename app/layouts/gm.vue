@@ -6,7 +6,7 @@
           <img src="/icons/ui/encounter.svg" alt="" class="gm-header__logo-icon" />
         </div>
         <div class="gm-header__title">
-          <h1>PTU Session Helper</h1>
+          <h1>Rotom Table</h1>
           <span class="gm-header__badge">GM View</span>
         </div>
       </div>
