@@ -1,14 +1,14 @@
 ---
-generated_at: 2026-03-04T21:34:26.793Z
-total_tickets: 308
-open: 49
+generated_at: 2026-03-04T22:24:05.885Z
+total_tickets: 310
+open: 51
 in_progress: 3
 resolved: 256
 ---
 
 # Tickets Index
 
-## Open Tickets (49)
+## Open Tickets (51)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
@@ -25,6 +25,7 @@ resolved: 256
 | refactoring-122 | refactoring | P3 | vtt-grid, player-view | refactoring-122: Wire receivedFlankingMap into group/player  |
 | refactoring-128 | refactoring | P3 | combat | `useMoveCalculation.ts` is now 806 lines, exceeding the 800- |
 | refactoring-129 | refactoring | P3 | combat | Per decree-047, whether Other category conditions clear on f |
+| refactoring-131 | refactoring | P3 | cross-cutting | refactoring-131: Replace remaining alert() calls with useGmT |
 | bug-047 | bug | P4 | capture | bug-047: Friend Ball loyalty fallback default mismatch |
 | ptu-rule-095 | ptu-rule | P4 | vtt-grid | ptu-rule-095: Disengage maneuver missing from combatManeuver |
 | ptu-rule-121 | ptu-rule | P4 | combat | The Sprint endpoint (`app/server/api/encounters/[id]/sprint. |
@@ -61,6 +62,7 @@ resolved: 256
 | refactoring-124 | refactoring | P4 | combat, vtt-grid | refactoring-124: Replace hardcoded speed=20 in InterceptProm |
 | refactoring-126 | refactoring | P4 | pokemon-lifecycle | The outer catch block in `[id].put.ts` (line ~90) and `index |
 | refactoring-130 | refactoring | P4 | encounter-tables | When clearing an environment preset, the endpoint stores `'{ |
+| refactoring-132 | refactoring | P4 | combat | refactoring-132: Add type-narrowing helper for Combatant ent |
 
 ## In-Progress Tickets (3)
 
@@ -83,5 +85,5 @@ All decree-needs addressed.
 | feature | 1 | 0 | 24 | 25 |
 | ux | 6 | 0 | 10 | 16 |
 | decree | 0 | 0 | 47 | 47 |
-| refactoring | 34 | 2 | 11 | 47 |
+| refactoring | 36 | 2 | 11 | 49 |
 | docs | 0 | 0 | 16 | 16 |

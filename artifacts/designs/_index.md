@@ -1,6 +1,6 @@
 ---
-generated_at: 2026-03-04T21:34:26.795Z
-total_designs: 27
+generated_at: 2026-03-04T22:24:05.888Z
+total_designs: 28
 ---
 
 # Designs Index
@@ -8,6 +8,7 @@ total_designs: 27
 | Design ID | Domain | Status | Ticket | Scope | Category |
 |-----------|--------|--------|--------|-------|----------|
 | design-char-creation-001 | character-lifecycle | implemented | ptu-rule-056 | FULL | FEATURE_GAP |
+| design-darkvision-tracking-001 | encounter-tables, combat | validated | feature-025 | FULL | FEATURE |
 | design-density-significance-001 | encounter-tables | p2-implemented | ptu-rule-058 | FULL | PTU_INCORRECT |
 | design-equipment-001 | combat | p1-complete | ptu-rule-045 | FULL | FEATURE_GAP |
 | design-flanking-001 | vtt-grid+combat | implemented | feature-014 | FULL | FEATURE |
