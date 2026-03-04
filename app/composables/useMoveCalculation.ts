@@ -7,6 +7,7 @@ import { LIVING_WEAPON_CONFIG } from '~/constants/livingWeapon'
 import { computeTargetEvasions } from '~/utils/evasionCalculation'
 import { getEffectivenessClass } from '~/utils/typeEffectiveness'
 import { getWeatherDamageModifier } from '~/utils/damageCalculation'
+import { getWeatherBallEffect, getSandForceDamageBonus } from '~/utils/weatherRules'
 import type { EvasionDependencies } from '~/utils/evasionCalculation'
 import { useTerrainStore } from '~/stores/terrain'
 import { useEncounterStore } from '~/stores/encounter'
@@ -353,23 +354,51 @@ export function useMoveCalculation(
     return []
   })
 
+  // P2: Weather Ball type/DB override (PTU p.338+)
+  // When Weather Ball is used with active weather, its type and DB change dynamically.
+  const isWeatherBall = computed(() => move.value.name?.toLowerCase() === 'weather ball')
+
+  const effectiveMoveType = computed(() => {
+    if (isWeatherBall.value) {
+      const weather = encounterStore.encounter?.weather ?? null
+      return getWeatherBallEffect(weather).type
+    }
+    return move.value.type
+  })
+
+  const effectiveMoveDB = computed(() => {
+    if (isWeatherBall.value) {
+      const weather = encounterStore.encounter?.weather ?? null
+      return getWeatherBallEffect(weather).damageBase
+    }
+    return move.value.damageBase
+  })
+
   const hasSTAB = computed(() => {
-    if (!move.value.type) return false
-    return checkSTAB(move.value.type, actorTypes.value)
+    if (!effectiveMoveType.value) return false
+    return checkSTAB(effectiveMoveType.value, actorTypes.value)
   })
 
   // Weather DB modifier (P1: PTU pp.341-342)
   // Rain: Water +5 DB, Fire -5 DB. Sun: Fire +5 DB, Water -5 DB.
+  // Uses effective move type (Weather Ball may have changed it).
   const weatherModifier = computed(() => {
-    if (!move.value.damageBase || !move.value.type) return 0
+    if (!effectiveMoveDB.value || !effectiveMoveType.value) return 0
     const weather = encounterStore.encounter?.weather ?? null
-    return getWeatherDamageModifier(weather, move.value.type)
+    return getWeatherDamageModifier(weather, effectiveMoveType.value)
   })
 
   const effectiveDB = computed(() => {
-    if (!move.value.damageBase) return 0
-    const weatherAdjustedDB = Math.max(1, move.value.damageBase + weatherModifier.value)
+    if (!effectiveMoveDB.value) return 0
+    const weatherAdjustedDB = Math.max(1, effectiveMoveDB.value + weatherModifier.value)
     return hasSTAB.value ? weatherAdjustedDB + 2 : weatherAdjustedDB
+  })
+
+  // P2: Sand Force ability damage bonus (PTU p.323)
+  // +5 flat damage for Ground/Rock/Steel moves in Sandstorm
+  const sandForceDamageBonus = computed(() => {
+    const weather = encounterStore.encounter?.weather ?? null
+    return getSandForceDamageBonus(actor.value, weather, effectiveMoveType.value)
   })
 
   // =====================================
@@ -627,12 +656,12 @@ export function useMoveCalculation(
         targetTypes = []
       }
 
-      const effectiveness = move.value.type
-        ? getTypeEffectiveness(move.value.type, targetTypes)
+      const effectiveness = effectiveMoveType.value
+        ? getTypeEffectiveness(effectiveMoveType.value, targetTypes)
         : 1
 
-      // Subtract defense + equipment DR, then apply effectiveness
-      let damage = preDefenseTotal.value - defenseStat - equipmentDR
+      // Subtract defense + equipment DR, add ability damage bonus, then apply effectiveness
+      let damage = preDefenseTotal.value - defenseStat - equipmentDR + sandForceDamageBonus.value
       damage = Math.max(1, damage)
       damage = Math.floor(damage * effectiveness)
       damage = Math.max(1, damage)
@@ -769,6 +798,10 @@ export function useMoveCalculation(
     hasSTAB,
     weatherModifier,
     effectiveDB,
+    effectiveMoveType,
+    effectiveMoveDB,
+    isWeatherBall,
+    sandForceDamageBonus,
 
     // Accuracy
     attackerAccuracyStage,
