@@ -61,7 +61,8 @@ export function buildPokemonEntityFromRecord(record: PrismaPokemonRecord): Pokem
     tutorPoints: record.tutorPoints,
     trainingExp: record.trainingExp,
     eggGroups: JSON.parse(record.eggGroups),
-    loyalty: (record as any).loyalty ?? 3,
+    // decree-049: wild/captured origin defaults to Loyalty 2, others to 3
+    loyalty: (record as any).loyalty ?? (record.origin === 'wild' || record.origin === 'captured' ? 2 : 3),
     ownerId: record.ownerId ?? undefined,
     spriteUrl: record.spriteUrl ?? undefined,
     shiny: record.shiny,
