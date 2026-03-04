@@ -171,6 +171,37 @@ export function getSpecialization(classEntry: string): string | null {
   return null
 }
 
+// ============================================================
+// Rider Class Feature Names (P2, feature-004)
+// ============================================================
+
+/**
+ * Canonical names for Rider class features (PTU pp.102-103).
+ * Used for reliable feature detection in mountingRules.ts.
+ */
+export const RIDER_FEATURE_NAMES = [
+  'Rider',
+  'Ramming Speed',
+  "Conqueror's March",
+  'Ride as One',
+  'Lean In',
+  "Cavalier's Reprisal",
+  'Overrun'
+] as const
+
+/** Scene x2 frequency limit for Lean In */
+export const LEAN_IN_MAX_PER_SCENE = 2
+
+/** Scene x2 frequency limit for Overrun */
+export const OVERRUN_MAX_PER_SCENE = 2
+
+/** Agility Training base bonuses (pre-Rider doubling) */
+export const AGILITY_TRAINING_MOVEMENT_BONUS = 1
+export const AGILITY_TRAINING_INITIATIVE_BONUS = 4
+
+/** Cavalier's Reprisal AP cost */
+export const CAVALIERS_REPRISAL_AP_COST = 1
+
 /** Get trainer classes grouped by category */
 export function getClassesByCategory(): Record<TrainerClassCategory, TrainerClassDef[]> {
   return TRAINER_CLASS_CATEGORIES.reduce((acc, category) => ({

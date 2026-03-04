@@ -14,6 +14,7 @@
 
 import type { Combatant } from '~/types/encounter'
 import type { Pokemon, HumanCharacter, SkillRank } from '~/types/character'
+import { RIDER_FEATURE_NAMES } from '~/constants/trainerClasses'
 
 // ============================================================
 // Constants
@@ -219,5 +220,84 @@ export function isEasyIntercept(
   const interceptor = combatants.find(c => c.id === interceptorId)
   if (!interceptor?.mountState) return false
   return interceptor.mountState.partnerId === targetId
+}
+
+// ============================================================
+// Rider Class Feature Detection (P2)
+// ============================================================
+
+/**
+ * Check if a combatant has the Rider trainer class.
+ * PTU p.102: Rider is a Battling Style class.
+ */
+export function hasRiderClass(combatant: Combatant): boolean {
+  if (combatant.type !== 'human') return false
+  const human = combatant.entity as HumanCharacter
+  return (human.trainerClasses ?? []).some(
+    cls => cls === 'Rider' || cls.startsWith('Rider:')
+  )
+}
+
+/**
+ * Check if a combatant has a specific Rider class feature.
+ * Features are stored in the HumanCharacter.features array.
+ * Uses case-insensitive matching against RIDER_FEATURE_NAMES.
+ */
+export function hasRiderFeature(combatant: Combatant, featureName: string): boolean {
+  if (combatant.type !== 'human') return false
+  const human = combatant.entity as HumanCharacter
+  const normalizedTarget = featureName.toLowerCase()
+  return (human.features ?? []).some(
+    f => f.toLowerCase() === normalizedTarget
+  )
+}
+
+/**
+ * Check if a Pokemon combatant has the Run Up ability.
+ * Run Up is granted by Ramming Speed (2 Tutor Points → Run Up ability).
+ */
+export function hasRunUp(combatant: Combatant): boolean {
+  if (combatant.type !== 'pokemon') return false
+  const pokemon = combatant.entity as Pokemon
+  return (pokemon.abilities ?? []).some(
+    a => a.name.toLowerCase() === 'run up'
+  )
+}
+
+/**
+ * Check if a move uses Dash or Pass range.
+ * Used by Run Up, Conqueror's March, and Overrun features.
+ */
+export function isDashOrPassRange(moveRange: string): boolean {
+  const lower = moveRange.toLowerCase().trim()
+  return lower === 'dash' || lower === 'pass' ||
+    lower.startsWith('dash') || lower.startsWith('pass')
+}
+
+/**
+ * Get remaining uses for a scene-limited feature (Lean In, Overrun).
+ * Returns the number of uses remaining, or the max if not yet tracked.
+ */
+export function getFeatureUsesRemaining(
+  combatant: Combatant,
+  featureName: string,
+  maxPerScene: number
+): number {
+  const usage = combatant.featureUsage?.[featureName]
+  if (!usage) return maxPerScene
+  return Math.max(0, usage.maxPerScene - usage.usedThisScene)
+}
+
+/**
+ * Check if a move's range qualifies for Conqueror's March override.
+ * PTU p.103: Dash, Burst, Blast, Cone, or Line range moves become Pass range.
+ */
+export function isConquerorsMarchEligibleRange(moveRange: string): boolean {
+  const lower = moveRange.toLowerCase().trim()
+  return lower === 'dash' ||
+    lower.startsWith('burst') ||
+    lower.startsWith('blast') ||
+    lower.startsWith('cone') ||
+    lower.startsWith('line')
 }
 
