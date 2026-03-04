@@ -3,7 +3,8 @@ id: decree-need-047
 title: "Dark Cave Blindness accuracy penalty: RAW flat values vs per-meter scaling"
 priority: P2
 severity: high
-status: open
+status: addressed
+decree_id: decree-048
 domain: encounter-tables
 source: rules-review-302 HIGH-1
 created_by: slave-collector (plan-20260304-172253)
