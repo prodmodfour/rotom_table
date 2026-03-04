@@ -1,6 +1,6 @@
 # Remote Access Setup Guide
 
-This guide explains how to set up remote access so players can connect to your PTU Session Helper from outside your local network using Cloudflare Tunnel.
+This guide explains how to set up remote access so players can connect to your Rotom Table from outside your local network using Cloudflare Tunnel.
 
 ## Overview
 
@@ -16,7 +16,7 @@ This guide explains how to set up remote access so players can connect to your P
 
 - A free Cloudflare account: https://dash.cloudflare.com/sign-up
 - A domain name configured with Cloudflare DNS (free plan is fine)
-- The PTU Session Helper server running on your machine
+- The Rotom Table server running on your machine
 
 ## Step 1: Install cloudflared
 
@@ -142,7 +142,7 @@ sudo cloudflared service install
 - Players can click **Retry** in the connection status dropdown
 
 ### "502 Bad Gateway" errors
-- Make sure the PTU Session Helper server is running on port 3000
+- Make sure the Rotom Table server is running on port 3000
 - Check that `config.yml` points to the correct `localhost:3000`
 
 ### Vite HMR not working through tunnel (development only)
