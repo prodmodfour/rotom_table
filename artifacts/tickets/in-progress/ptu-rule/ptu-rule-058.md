@@ -80,3 +80,15 @@ Resolved 2 HIGH + 3 MEDIUM issues from code-review-330. Implemented decree-048 (
 
 **Commits:** `dc566686`, `2b66a066`, `061e18fa`, `8f2c1abe`, `0122da9a`, `3ed80679`
 **Files (4):** `encounter.ts` (type), `environmentPresets.ts`, `useMoveCalculation.ts`, `EnvironmentSelector.vue`, `MoveTargetModal.vue`
+
+### P2 Fix Cycle Verification -- 2026-03-04
+
+All 5 issues from code-review-330 verified as resolved on master:
+
+- **HIGH-1 VERIFIED:** `getEnvironmentAccuracyPenalty()` converted to `environmentAccuracyPenalty` computed property in `useMoveCalculation.ts` (line 481). MoveTargetModal uses it as a reactive value (no function calls in template).
+- **HIGH-2 VERIFIED:** `dismissEffect` in `EnvironmentSelector.vue` creates custom variant ID (`${currentId}-custom-${Date.now()}`) when modifying built-in preset, sets dropdown to 'custom', shows '(modified)' label via `isModifiedPreset` computed.
+- **MED-1 VERIFIED:** `accuracyPenaltyPerMeter` fully renamed to `accuracyPenalty` across types, constants, and composable. Grep confirms zero remaining occurrences.
+- **MED-2 VERIFIED:** Penalty stored as positive number (Dim Cave: 6, Dark Cave: 10). No `Math.abs` wrapper in composable — value used directly.
+- **MED-3 VERIFIED:** `EnvironmentEffect` is a discriminated union type (`AccuracyPenaltyEffect | TerrainOverrideEffect | StatusTriggerEffect | MovementModifierEffect | CustomEffect`) with compile-time exhaustiveness.
+
+**decree-048 compliance VERIFIED:** Dim Cave = 6 (Blindness, PTU -6), Dark Cave = 10 (Total Blindness, PTU -10). Split presets with correct RAW penalties.
