@@ -6,7 +6,7 @@
  */
 import { loadEncounter, findCombatant } from '~/server/services/encounter.service'
 import { calculateDamage, calculateEvasion, calculateAccuracyThreshold } from '~/utils/damageCalculation'
-import { getEffectiveEquipmentBonuses, getEffectiveMoveList } from '~/server/services/living-weapon.service'
+import { getEffectiveEquipmentBonuses, getEffectiveMoveList, isNoGuardActive } from '~/server/services/living-weapon.service'
 import { reconstructWieldRelationships } from '~/server/services/living-weapon-state'
 import { ZERO_EVASION_CONDITIONS } from '~/constants/statusConditions'
 import { checkFlankingMultiTile, FLANKING_EVASION_PENALTY } from '~/utils/flankingGeometry'
@@ -354,11 +354,18 @@ export default defineEventHandler(async (event) => {
     const effectiveEvasionWithFlanking = Math.max(0, effectiveEvasion - flankingPenalty)
 
     const moveAC = move.ac ?? 0
-    // Accuracy threshold uses flanking-adjusted evasion
-    const accuracyThreshold = Math.max(1, moveAC + effectiveEvasionWithFlanking - attackerData.accuracyStage)
 
-    const accuracy: AccuracyCalcResult & { flankingPenalty: number } = {
-      moveAC,
+    // No Guard ability: -3 to AC (PTU p.2240)
+    // Suppressed while wielded as a Living Weapon (PTU p.306, feature-005 P2)
+    const noGuardActive = isNoGuardActive(attacker, wieldRelationships)
+    const noGuardACReduction = noGuardActive ? -3 : 0
+    const effectiveAC = moveAC + noGuardACReduction
+
+    // Accuracy threshold uses flanking-adjusted evasion
+    const accuracyThreshold = Math.max(1, effectiveAC + effectiveEvasionWithFlanking - attackerData.accuracyStage)
+
+    const accuracy: AccuracyCalcResult & { flankingPenalty: number; noGuardActive?: boolean } = {
+      moveAC: effectiveAC,
       attackerAccuracyStage: attackerData.accuracyStage,
       physicalEvasion,
       specialEvasion,
@@ -367,6 +374,7 @@ export default defineEventHandler(async (event) => {
       effectiveEvasion: effectiveEvasionWithFlanking,
       accuracyThreshold,
       flankingPenalty,
+      ...(noGuardActive && { noGuardActive: true }),
     }
 
     // P2: Rider feature modifier annotations for GM awareness.
