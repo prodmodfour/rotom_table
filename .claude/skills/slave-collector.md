@@ -267,9 +267,10 @@ For each merged dev/reviewer slave:
 ### 5b. Update `test-state.md`
 
 For each merged matrix slave:
-- Update domain progress row
+- Update domain progress row (Rules → Capabilities → Matrix → Audit → Browser → Tickets)
 - Update coverage scores
 - Update active work section
+- If a browser auditor slave was merged, update the Browser column with present/absent/error/unreachable counts
 
 ### 5c. Update `alive-agents.md`
 
