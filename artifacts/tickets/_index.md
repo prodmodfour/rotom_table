@@ -1,18 +1,18 @@
 ---
-generated_at: 2026-03-04T15:45:56.640Z
-total_tickets: 306
-open: 28
-in_progress: 121
+generated_at: 2026-03-04T19:16:42.163Z
+total_tickets: 308
+open: 29
+in_progress: 122
 resolved: 139
 ---
 
 # Tickets Index
 
-## Open Tickets (28)
+## Open Tickets (29)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
-| ptu-rule-134 | ptu-rule | P1 | combat | Per decree-047, Other category conditions (Stuck, Slowed, Tr |
+| decree-need-047 | decree | P2 | encounter-tables | The Dark Cave environment preset applies a flat -2 accuracy  |
 | ptu-rule-131 | ptu-rule | P2 | combat | `rollAccuracyCheck()` in `app/composables/useCapture.ts` rei |
 | refactoring-108 | refactoring | P3 | — | refactoring-108: Extract switch button computeds from Combat |
 | refactoring-112 | refactoring | P3 | combat | Refactoring-112: Decompose encounter store into focused sub- |
@@ -40,8 +40,9 @@ resolved: 139
 | refactoring-118 | refactoring | P4 | — | refactoring-118: Remove unused flankingMap destructure in Gr |
 | refactoring-119 | refactoring | P4 | — | refactoring-119: Update stale interrupt.post.ts file header  |
 | refactoring-126 | refactoring | P4 | pokemon-lifecycle | The outer catch block in `[id].put.ts` (line ~90) and `index |
+| refactoring-130 | refactoring | P4 | encounter-tables | When clearing an environment preset, the endpoint stores `'{ |
 
-## In-Progress Tickets (121)
+## In-Progress Tickets (122)
 
 | ID | Category | Priority | Domain | Source |
 |----|----------|----------|--------|--------|
@@ -69,6 +70,7 @@ resolved: 139
 | ptu-rule-102 | ptu-rule | P1 | vtt | decree-009 |
 | ptu-rule-103 | ptu-rule | P1 | vtt | decree-011 |
 | ptu-rule-104 | ptu-rule | P1 | combat | decree-012 |
+| ptu-rule-134 | ptu-rule | P1 | combat | decree-047 |
 | refactoring-001 | refactoring | P1 | vtt | decree-010 |
 | bug-039 | bug | P2 | capture | capture-audit-report (R018, 2026-02-28) |
 | bug-045 | bug | P2 | capture | rules-review-268 Observation 2 |
@@ -167,18 +169,20 @@ resolved: 139
 | refactoring-092 | refactoring | P4 | encounter-tables | code-review-207 M1 |
 | refactoring-093 | refactoring | P4 | combat | code-review-207 M2 |
 
-## Open Decree-Needs (0)
+## Open Decree-Needs (1)
 
-All decree-needs addressed.
+| ID | Priority | Domain | Topic |
+|----|----------|--------|-------|
+| decree-need-047 | P2 | encounter-tables | — |
 
 ## Summary by Category
 
 | Category | Open | In-Progress | Resolved | Total |
 |----------|------|-------------|----------|-------|
 | bug | 1 | 17 | 30 | 50 |
-| ptu-rule | 6 | 61 | 39 | 107 |
+| ptu-rule | 5 | 62 | 39 | 107 |
 | feature | 0 | 20 | 3 | 24 |
 | ux | 5 | 8 | 2 | 16 |
-| decree | 0 | 0 | 46 | 46 |
-| refactoring | 16 | 15 | 3 | 47 |
+| decree | 1 | 0 | 46 | 47 |
+| refactoring | 17 | 15 | 3 | 48 |
 | docs | 0 | 0 | 16 | 16 |
