@@ -21,6 +21,7 @@ import { loadEncounter, buildEncounterResponse, getEntityName } from '~/server/s
 import { resolveAoOAction, canUseAoO, autoDeclineFaintedReactor, getStruggleAttackStats } from '~/server/services/out-of-turn.service'
 import { calculateDamage, applyDamageToEntity, applyFaintStatus } from '~/server/services/combatant.service'
 import { syncEntityToDatabase } from '~/server/services/entity-update.service'
+import { checkSoulstealer, applySoulstealerHealing } from '~/server/services/living-weapon.service'
 import { broadcastToEncounter } from '~/server/utils/websocket'
 import { checkDeath } from '~/utils/injuryMechanics'
 import type { OutOfTurnAction, StatusCondition } from '~/types/combat'
@@ -178,6 +179,21 @@ export default defineEventHandler(async (event) => {
           // Apply faint status if trigger target fainted (MED-002)
           if (damageResult.fainted) {
             applyFaintStatus(trigger)
+
+            // P2: Soulstealer healing for the reactor (PTU p.2417, feature-005)
+            const soulstealCheck = checkSoulstealer(reactor, true)
+            if (soulstealCheck?.triggered) {
+              const healing = applySoulstealerHealing(reactor, soulstealCheck.isKill)
+              responseData.soulstealer = {
+                actorId: reactor.id,
+                hpHealed: healing.hpHealed,
+                injuriesRemoved: healing.injuriesRemoved,
+              }
+              await syncEntityToDatabase(reactor, {
+                currentHp: reactor.entity.currentHp,
+                injuries: reactor.entity.injuries,
+              })
+            }
           }
         }
 
