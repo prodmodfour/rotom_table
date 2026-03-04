@@ -418,7 +418,7 @@ function generateMatrixIndex() {
     // Atomized structure: read _index.md from each domain subdirectory
     for (const domain of domainDirs) {
       const domainPath = join(dir, domain)
-      const info = { rules: null, capabilities: null, matrix: false, audit: null }
+      const info = { rules: null, capabilities: null, matrix: false, audit: null, browserAudit: null }
 
       // Read rules _index.md
       const rulesIdx = join(domainPath, 'rules', '_index.md')
@@ -434,6 +434,10 @@ function generateMatrixIndex() {
       // Read audit _index.md
       const auditIdx = join(domainPath, 'audit', '_index.md')
       if (existsSync(auditIdx)) info.audit = parseFrontmatter(join(domainPath, 'audit', '_index.md'))
+
+      // Read browser-audit _index.md
+      const browserAuditIdx = join(domainPath, 'browser-audit', '_index.md')
+      if (existsSync(browserAuditIdx)) info.browserAudit = parseFrontmatter(join(domainPath, 'browser-audit', '_index.md'))
 
       // Read matrix.md for coverage
       if (info.matrix) {
@@ -452,7 +456,7 @@ function generateMatrixIndex() {
     for (const f of files) {
       const domain = f.domain
       if (!domain) continue
-      if (!domains.has(domain)) domains.set(domain, { rules: null, capabilities: null, matrix: false, audit: null })
+      if (!domains.has(domain)) domains.set(domain, { rules: null, capabilities: null, matrix: false, audit: null, browserAudit: null })
       const d = domains.get(domain)
       if (f.file.endsWith('-rules.md')) d.rules = f
       else if (f.file.endsWith('-capabilities.md')) d.capabilities = f
@@ -464,8 +468,8 @@ function generateMatrixIndex() {
   let out = `---\ngenerated_at: ${new Date().toISOString()}\ntotal_domains: ${domains.size}\n---\n\n`
   out += `# Matrix Index\n\n`
 
-  out += `| Domain | Rules | Capabilities | Matrix | Audit | Coverage | Last Updated |\n`
-  out += `|--------|-------|-------------|--------|-------|----------|-------------|\n`
+  out += `| Domain | Rules | Capabilities | Matrix | Audit | Browser | Coverage | Last Updated |\n`
+  out += `|--------|-------|-------------|--------|-------|---------|----------|-------------|\n`
 
   for (const [domain, d] of [...domains.entries()].sort()) {
     const ruleCount = d.rules?.total_rules ?? '—'
@@ -485,11 +489,27 @@ function generateMatrixIndex() {
       }
     }
 
+    // Browser audit stats
+    let browserSummary = '—'
+    if (d.browserAudit) {
+      const total = d.browserAudit.total_checked ?? 0
+      const present = d.browserAudit.present ?? '?'
+      const absent = d.browserAudit.absent ?? 0
+      const error = d.browserAudit.error ?? 0
+      if (total > 0) {
+        const issues = absent + error
+        browserSummary = `${present}/${total} present${issues > 0 ? `, ${issues} issues` : ''}`
+      } else {
+        browserSummary = 'checked'
+      }
+    }
+
     // Latest update timestamp
     const timestamps = [
       d.rules?.extracted_at,
       d.capabilities?.mapped_at,
       d.audit?.audited_at,
+      d.browserAudit?.browser_audited_at,
     ].filter(Boolean)
     const latest = timestamps.length > 0
       ? timestamps.sort().pop().toString().slice(0, 10)
@@ -498,9 +518,10 @@ function generateMatrixIndex() {
     const hasRules = d.rules != null
     const hasCaps = d.capabilities != null
     const hasAudit = d.audit != null
-    const pipelineStatus = (hasRules && hasCaps && d.matrix && hasAudit) ? 'complete' : 'partial'
+    const hasBrowserAudit = d.browserAudit != null
+    const pipelineStatus = (hasRules && hasCaps && d.matrix && hasAudit && hasBrowserAudit) ? 'complete' : 'partial'
 
-    out += `| ${domain} | ${ruleCount} rules | ${capCount} caps | ${pipelineStatus} | ${auditSummary} | ${coverage} | ${latest} |\n`
+    out += `| ${domain} | ${ruleCount} rules | ${capCount} caps | ${pipelineStatus} | ${auditSummary} | ${browserSummary} | ${coverage} | ${latest} |\n`
   }
 
   return out
