@@ -159,7 +159,7 @@
             Activate Overrun
           </button>
           <div class="mount-controls__feature-desc">
-            Add mount Speed to damage; target gains DR = their Speed (Scene x2)
+            +{{ overrunBonusDamage }} bonus damage (mount Speed); target gains DR = their Speed (Scene x2)
           </div>
         </div>
       </template>
@@ -210,7 +210,8 @@ import { PhHorse, PhShieldChevron, PhSword, PhArrowFatRight, PhHandshake, PhShie
 import {
   isMountable, hasMountedProwess, getMountActionCost, hasExpertMountingSkill,
   getMountCapacity, countCurrentRiders, hasRiderClass, hasRiderFeature,
-  hasRunUp, getFeatureUsesRemaining
+  hasRunUp, getFeatureUsesRemaining, calculateRunUpBonus,
+  calculateOverrunModifiers
 } from '~/utils/mountingRules'
 import { getOverlandSpeed } from '~/utils/combatantCapabilities'
 import { areAdjacent } from '~/utils/adjacency'
@@ -460,8 +461,18 @@ const distanceMovedThisTurn = computed(() => {
   return mount.turnState.distanceMovedThisTurn ?? 0
 })
 
-// Run Up damage bonus: floor(distanceMoved / 3)
-const runUpBonus = computed(() => Math.floor(distanceMovedThisTurn.value / 3))
+// Run Up damage bonus: +1 per 3 meters moved (PTU p.103)
+const runUpBonus = computed(() => calculateRunUpBonus(distanceMovedThisTurn.value))
+
+// Overrun bonus damage from mount's Speed stat (PTU p.103)
+const overrunBonusDamage = computed(() => {
+  const mount = mountCombatant.value
+  if (!mount || mount.type !== 'pokemon') return 0
+  const pokemon = mount.entity as Pokemon
+  const speedStat = pokemon.currentStats?.speed ?? 0
+  const speedStage = pokemon.stageModifiers?.speed ?? 0
+  return calculateOverrunModifiers(speedStat, speedStage, 0, 0).bonusDamage
+})
 
 // ============================================================
 // Actions

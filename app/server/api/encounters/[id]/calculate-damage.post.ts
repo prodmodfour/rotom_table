@@ -11,7 +11,10 @@ import { reconstructWieldRelationships } from '~/server/services/living-weapon-s
 import { ZERO_EVASION_CONDITIONS } from '~/constants/statusConditions'
 import { checkFlankingMultiTile, FLANKING_EVASION_PENALTY } from '~/utils/flankingGeometry'
 import { isEnemySide } from '~/utils/combatSides'
-import { hasRiderFeature } from '~/utils/mountingRules'
+import {
+  hasRiderFeature, calculateRunUpBonus, calculateOverrunModifiers,
+  applyResistStep, isAoERange, isConquerorsMarchEligibleRange, hasRunUp
+} from '~/utils/mountingRules'
 import type { AccuracyCalcResult } from '~/utils/damageCalculation'
 import { getWeatherBallEffect, getSandForceDamageBonus } from '~/utils/weatherRules'
 import type { Pokemon, HumanCharacter, Move, Combatant } from '~/types'
@@ -365,11 +368,70 @@ export default defineEventHandler(async (event) => {
       flankingPenalty,
     }
 
+    // P2: Rider feature modifier annotations for GM awareness.
+    // These are informational — the GM applies them manually per spec automation level.
+    let riderModifiers: Record<string, unknown> | undefined
+    const moveRange = move.range ?? ''
+
+    // Check if attacker is mounted and rider has relevant features
+    if (attacker.mountState) {
+      const isAttackerRider = attacker.mountState.isMounted
+      const riderId = isAttackerRider ? attacker.id : attacker.mountState.partnerId
+      const mountId = isAttackerRider ? attacker.mountState.partnerId : attacker.id
+      const rider = combatants.find(c => c.id === riderId)
+      const mount = combatants.find(c => c.id === mountId)
+
+      if (rider && mount) {
+        const modifiers: Record<string, unknown> = {}
+
+        // Run Up bonus (PTU p.103): +1 damage per 3m moved on Dash/Pass moves
+        const distMoved = mount.turnState?.distanceMovedThisTurn ?? 0
+        if (distMoved > 0 && hasRunUp(mount)) {
+          const bonus = calculateRunUpBonus(distMoved)
+          if (bonus > 0) {
+            modifiers.runUpBonus = bonus
+          }
+        }
+
+        // Overrun (PTU p.103): mount Speed added to damage, target gets Speed DR
+        if (hasRiderFeature(rider, 'Overrun') && mount.type === 'pokemon') {
+          const pokemon = mount.entity as Pokemon
+          const mountSpeed = pokemon.currentStats?.speed ?? 0
+          const mountSpeedStage = pokemon.stageModifiers?.speed ?? 0
+          const targetPokemon = target.type === 'pokemon' ? target.entity as Pokemon : null
+          const targetSpeed = targetPokemon?.currentStats?.speed ?? (target.entity as HumanCharacter).stats?.speed ?? 0
+          const targetSpeedStage = target.entity.stageModifiers?.speed ?? 0
+          modifiers.overrun = calculateOverrunModifiers(mountSpeed, mountSpeedStage, targetSpeed, targetSpeedStage)
+        }
+
+        // Conqueror's March eligibility (PTU p.103): range conversion
+        if (isConquerorsMarchEligibleRange(moveRange)) {
+          modifiers.conquerorsMarchEligible = true
+        }
+
+        if (Object.keys(modifiers).length > 0) {
+          riderModifiers = modifiers
+        }
+      }
+    }
+
+    // Check if target is mounted pair and Lean In could apply (AoE attacks)
+    if (target.mountState && isAoERange(moveRange)) {
+      const targetRiderId = target.mountState.isMounted ? target.id : target.mountState.partnerId
+      const targetRider = combatants.find(c => c.id === targetRiderId)
+      if (targetRider && hasRiderFeature(targetRider, 'Lean In')) {
+        riderModifiers = riderModifiers ?? {}
+        riderModifiers.leanInApplicable = true
+        riderModifiers.leanInReducedEffectiveness = applyResistStep(result.effectiveness ?? 1.0)
+      }
+    }
+
     return {
       success: true,
       data: {
         ...result,
         accuracy,
+        ...(riderModifiers && { riderModifiers }),
         meta: {
           attackerId: body.attackerId,
           targetId: body.targetId,
