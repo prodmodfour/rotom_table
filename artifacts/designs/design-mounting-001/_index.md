@@ -4,7 +4,7 @@ ticket_id: feature-004
 category: FEATURE
 scope: FULL
 domain: combat
-status: validated
+status: implemented
 decree: decree-003, decree-004
 affected_files:
   - app/types/combat.ts
