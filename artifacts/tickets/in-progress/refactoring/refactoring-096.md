@@ -66,3 +66,15 @@ Low — cosmetic inconsistency. Users see different colors for the same tag type
 - `app/assets/scss/components/_player-character-sheet.scss` (removed 5 lines of edge color override)
 
 **All 5 locations** with tag variant styles are now unified through the single `_tags.scss` partial.
+
+### Fix Cycle: code-review-224
+
+**Branch:** `slave/3-dev-refactoring-096-20260304`
+
+**Commits:**
+- `06c3b5b` — H1: Remove color properties (background, border, color) from `.player-sheet .tag` so variant colors from `_tags.scss` cascade naturally
+- `461aad7` — M1: Update stale comment in `_create-form-shared.scss` to reference `_tags.scss` instead of component scoped styles
+
+**Files changed:**
+- `app/assets/scss/components/_player-character-sheet.scss` (removed background, border, color from `.player-sheet .tag`)
+- `app/assets/scss/components/_create-form-shared.scss` (updated comment on line 65)
