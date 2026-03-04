@@ -11,9 +11,11 @@ import { calculateDamage, applyDamageToEntity, applyFaintStatus } from '~/server
 import { syncDamageToDatabase, syncStagesToDatabase } from '~/server/services/entity-update.service'
 import { checkHeavilyInjured, applyHeavilyInjuredPenalty, checkDeath } from '~/utils/injuryMechanics'
 import { clearMountOnFaint } from '~/server/services/mounting.service'
-import { triggersDismountCheck, buildDismountCheckInfo } from '~/utils/mountingRules'
+import { triggersDismountCheck, buildDismountCheckInfo, hasRiderFeature } from '~/utils/mountingRules'
+import { areAdjacent } from '~/utils/adjacency'
+import { CAVALIERS_REPRISAL_AP_COST } from '~/constants/trainerClasses'
 import type { DismountCheckInfo } from '~/utils/mountingRules'
-import type { StatusCondition } from '~/types'
+import type { StatusCondition, HumanCharacter } from '~/types'
 
 export default defineEventHandler(async (event) => {
   const id = getRouterParam(event, 'id')
@@ -143,6 +145,47 @@ export default defineEventHandler(async (event) => {
       }
     }
 
+    // --- Cavalier's Reprisal detection (feature-004 P2, PTU p.103) ---
+    // When the mount takes a hit from an adjacent enemy, check if the rider has
+    // Cavalier's Reprisal and 1+ AP. Include opportunity in response for GM.
+    let reprisalOpportunity: {
+      riderId: string
+      targetId: string
+      apCost: number
+      attackType: string
+    } | undefined
+
+    if (combatant.mountState && !faintedFromAnySource && body.attackerId) {
+      // Only triggers when the MOUNT is hit (isMounted=false means this IS the mount)
+      if (!combatant.mountState.isMounted) {
+        const riderId = combatant.mountState.partnerId
+        const rider = combatants.find((c: any) => c.id === riderId)
+        const attacker = combatants.find((c: any) => c.id === body.attackerId)
+
+        if (rider && attacker && hasRiderFeature(rider, "Cavalier's Reprisal")) {
+          const riderEntity = rider.entity as HumanCharacter
+          const hasAp = (riderEntity.currentAp ?? 0) >= CAVALIERS_REPRISAL_AP_COST
+
+          // Check if attacker is adjacent to the mounted pair
+          const isAttackerAdjacent = combatant.position && attacker.position
+            ? areAdjacent(
+                attacker.position, attacker.tokenSize || 1,
+                combatant.position, combatant.tokenSize || 1
+              )
+            : false
+
+          if (hasAp && isAttackerAdjacent) {
+            reprisalOpportunity = {
+              riderId,
+              targetId: body.attackerId,
+              apCost: CAVALIERS_REPRISAL_AP_COST,
+              attackType: 'Struggle Attack (DB 1, Physical, Melee)'
+            }
+          }
+        }
+      }
+    }
+
     // Living Weapon fainted state (feature-005, PTU p.305):
     // Fainted Living Weapons remain wielded (not auto-disengaged) but with -2 penalty.
     // The isFainted flag on WieldRelationship is derived from entity HP during reconstruction,
@@ -185,7 +228,10 @@ export default defineEventHandler(async (event) => {
         mountDismounted,
         // Dismount check trigger (feature-004 P1, PTU p.218)
         // Present when damage >= 1/4 max HP on a mounted combatant (non-faint)
-        dismountCheck: dismountCheck ?? undefined
+        dismountCheck: dismountCheck ?? undefined,
+        // Cavalier's Reprisal opportunity (feature-004 P2, PTU p.103)
+        // Present when mount is hit by adjacent melee foe and rider has the feature + AP
+        reprisalOpportunity
       }
     }
   } catch (error: unknown) {
