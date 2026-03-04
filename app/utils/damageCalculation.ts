@@ -178,6 +178,13 @@ export interface DamageCalcInput {
    * PTU pp.341-342: Rain/Sun modify Fire/Water DB by +/-5.
    */
   weather?: string | null
+
+  /**
+   * Flat bonus to final damage from abilities (P2).
+   * e.g., Sand Force: +5 damage for Ground/Rock/Steel moves in Sandstorm (PTU p.323).
+   * Applied after defense subtraction, before type effectiveness.
+   */
+  abilityDamageBonus?: number
 }
 
 export interface DamageCalcResult {
@@ -206,6 +213,9 @@ export interface DamageCalcResult {
     effectiveDefense: number
     damageReduction: number
     afterDefense: number
+    // Step 7.5: Ability damage bonus (P2 — Sand Force etc.)
+    abilityDamageBonus: number
+    afterAbilityBonus: number
     // Step 8: Type effectiveness
     typeEffectiveness: number
     typeEffectivenessLabel: string
@@ -329,10 +339,14 @@ export function calculateDamage(input: DamageCalcInput): DamageCalcResult {
   const dr = input.damageReduction ?? 0
   const afterDefense = Math.max(1, subtotalBeforeDefense - effectiveDefense - dr)
 
+  // Step 7.5 (P2): Ability damage bonus (e.g., Sand Force +5)
+  const abilityDamageBonus = input.abilityDamageBonus ?? 0
+  const afterAbilityBonus = afterDefense + abilityDamageBonus
+
   // Step 8: Type effectiveness
   const typeEffectiveness = getTypeEffectiveness(input.moveType, input.targetTypes)
   const typeEffectivenessLabel = getEffectivenessLabel(typeEffectiveness)
-  let afterEffectiveness = Math.floor(afterDefense * typeEffectiveness)
+  let afterEffectiveness = Math.floor(afterAbilityBonus * typeEffectiveness)
 
   // Minimum 1 damage (unless immune)
   let minimumApplied = false
@@ -364,6 +378,8 @@ export function calculateDamage(input: DamageCalcInput): DamageCalcResult {
       effectiveDefense,
       damageReduction: dr,
       afterDefense,
+      abilityDamageBonus,
+      afterAbilityBonus,
       typeEffectiveness,
       typeEffectivenessLabel,
       afterEffectiveness,
