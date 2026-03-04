@@ -141,153 +141,29 @@
     </div>
 
     <!-- GM Actions -->
-    <div v-if="isGm" class="combatant-card__actions">
-      <!-- HP Controls -->
-      <div class="action-row">
-        <input
-          v-model.number="damageInput"
-          type="number"
-          class="form-input form-input--sm"
-          placeholder="DMG"
-          min="0"
-        />
-        <button class="btn btn--sm btn--danger" @click="applyDamage">
-          -HP
-        </button>
-      </div>
-      <div class="action-row">
-        <input
-          v-model.number="healInput"
-          type="number"
-          class="form-input form-input--sm"
-          placeholder="HEAL"
-          min="0"
-        />
-        <button class="btn btn--sm btn--success" @click="applyHeal">
-          +HP
-        </button>
-      </div>
-
-      <!-- Quick Actions -->
-      <div class="action-row action-row--controls">
-        <button
-          class="btn btn--sm btn--secondary"
-          title="Add Temp HP"
-          @click="showTempHpModal = true"
-        >
-          +T
-        </button>
-        <button
-          class="btn btn--sm btn--secondary"
-          title="Modify Stages"
-          @click="showStagesModal = true"
-        >
-          CS
-        </button>
-        <button
-          class="btn btn--sm btn--secondary"
-          title="Status Conditions"
-          @click="showStatusModal = true"
-        >
-          ST
-        </button>
-      </div>
-
-      <!-- Use Item Button -->
-      <button
-        class="btn btn--sm btn--success use-item-btn"
-        title="Use Healing Item"
-        @click="showUseItemModal = true"
-      >
-        <PhFirstAidKit :size="14" weight="bold" />
-        Item
-      </button>
-
-      <!-- Actions Button -->
-      <button
-        class="btn btn--sm btn--primary"
-        title="Take Action"
-        @click="handleActClick"
-      >
-        Act
-      </button>
-
-      <!-- Switch Pokemon Button (visible for trainers with Pokemon, or Pokemon owned by trainers) -->
-      <button
-        v-if="canShowSwitchButton"
-        class="btn btn--sm btn--secondary"
-        title="Switch Pokemon"
-        :disabled="isSwitchDisabled"
-        @click="$emit('switchPokemon', combatant.id)"
-      >
-        <img src="/icons/phosphor/arrow-clockwise.svg" alt="" class="btn-icon" />
-        Switch
-      </button>
-
-      <!-- Fainted Switch Button (visible when a trainer's Pokemon is fainted) -->
-      <button
-        v-if="canShowFaintedSwitchButton"
-        class="btn btn--sm btn--warning"
-        title="Switch Fainted Pokemon (Shift Action)"
-        :disabled="isFaintedSwitchDisabled"
-        @click="$emit('faintedSwitch', combatant.id)"
-      >
-        <img src="/icons/phosphor/arrow-clockwise.svg" alt="" class="btn-icon" />
-        Fainted Switch
-      </button>
-
-      <!-- Force Switch Button (GM-triggered, for move effects like Roar) -->
-      <button
-        v-if="canShowForceSwitchButton"
-        class="btn btn--sm btn--accent"
-        title="Force Switch (Roar, etc.)"
-        @click="$emit('forceSwitch', combatant.id)"
-      >
-        <img src="/icons/phosphor/arrow-clockwise.svg" alt="" class="btn-icon" />
-        Force Switch
-      </button>
-
-      <button class="btn btn--sm btn--ghost" @click="$emit('remove', combatant.id)">
-        Remove
-      </button>
-    </div>
-
-    <!-- Modals -->
-    <TempHpModal
-      v-if="showTempHpModal"
+    <CombatantGmActions
+      v-if="isGm"
+      :combatant="combatant"
+      :display-name="displayName"
       :current-temp-hp="tempHp"
-      @close="showTempHpModal = false"
-      @apply="handleTempHpApply"
-    />
-
-    <CombatStagesModal
-      v-if="showStagesModal"
-      :combatant-name="displayName"
       :current-stages="stages"
-      @close="showStagesModal = false"
-      @save="handleStagesSave"
-    />
-
-    <StatusConditionsModal
-      v-if="showStatusModal"
-      :combatant-name="displayName"
-      :current-statuses="statusConditions"
+      :status-conditions="statusConditions"
       :entity-types="pokemonTypes as string[]"
-      @close="showStatusModal = false"
-      @save="handleStatusSave"
-    />
-
-    <UseItemModal
-      v-if="showUseItemModal"
-      :user-id="combatant.id"
-      @close="showUseItemModal = false"
-      @item-used="showUseItemModal = false"
+      @damage="(id, dmg) => $emit('damage', id, dmg)"
+      @heal="(id, amt, tmp, inj) => $emit('heal', id, amt, tmp, inj)"
+      @stages="(id, changes, abs) => $emit('stages', id, changes, abs)"
+      @status="(id, add, rem, ovr) => $emit('status', id, add, rem, ovr)"
+      @open-actions="(id) => $emit('openActions', id)"
+      @remove="(id) => $emit('remove', id)"
+      @switch-pokemon="(id) => $emit('switchPokemon', id)"
+      @fainted-switch="(id) => $emit('faintedSwitch', id)"
+      @force-switch="(id) => $emit('forceSwitch', id)"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import { PhFirstAidKit, PhHorse } from '@phosphor-icons/vue'
+import { PhHorse } from '@phosphor-icons/vue'
 import type { Combatant, Pokemon, HumanCharacter, StatusCondition, StageModifiers } from '~/types'
 
 const props = defineProps<{
@@ -298,7 +174,7 @@ const props = defineProps<{
   isFlanked?: boolean
 }>()
 
-const emit = defineEmits<{
+defineEmits<{
   action: [combatantId: string, action: { type: string; data: unknown }]
   damage: [combatantId: string, damage: number]
   heal: [combatantId: string, amount: number, tempHp?: number, healInjuries?: number]
@@ -313,16 +189,6 @@ const emit = defineEmits<{
 
 const { getSpriteUrl } = usePokemonSprite()
 const { getTrainerSpriteUrl } = useTrainerSprite()
-
-// Input states
-const damageInput = ref(0)
-const healInput = ref(0)
-
-// Modal states
-const showTempHpModal = ref(false)
-const showStagesModal = ref(false)
-const showStatusModal = ref(false)
-const showUseItemModal = ref(false)
 
 // Computed properties
 const entity = computed(() => props.combatant.entity)
@@ -425,132 +291,6 @@ function handleCaptured() {
   }
 }
 
-// Show switch button for trainers who own Pokemon in encounter, or for Pokemon owned by a trainer
-const canShowSwitchButton = computed(() => {
-  if (props.combatant.type === 'human') {
-    // Trainer: show only if they own at least one Pokemon in the encounter
-    const trainerEntityId = props.combatant.entityId
-    const encounterStore = useEncounterStore()
-    return encounterStore.encounter?.combatants.some(
-      c => c.type === 'pokemon' && (c.entity as Pokemon).ownerId === trainerEntityId
-    ) ?? false
-  }
-  if (props.combatant.type === 'pokemon') {
-    const pokemon = entity.value as Pokemon
-    return !!pokemon.ownerId
-  }
-  return false
-})
-
-/**
- * Determine if the switch button should be disabled.
- * Switch can be initiated on either the trainer's or their Pokemon's turn,
- * and the Standard Action is consumed on whichever combatant's turn it is.
- */
-const isSwitchDisabled = computed(() => {
-  const encounterStore = useEncounterStore()
-  const encounter = encounterStore.encounter
-  if (!encounter) return true
-
-  const currentId = encounter.turnOrder[encounter.currentTurnIndex]
-
-  if (props.combatant.type === 'human') {
-    // Trainer card: check if it's the trainer's turn or any of their Pokemon's turns
-    const trainerEntityId = props.combatant.entityId
-    const isTrainerTurn = currentId === props.combatant.id
-    const isOwnedPokemonTurn = encounter.combatants.some(
-      c => c.id === currentId && c.type === 'pokemon' && (c.entity as Pokemon).ownerId === trainerEntityId
-    )
-    if (!isTrainerTurn && !isOwnedPokemonTurn) return true
-
-    // Check Standard Action on the initiating combatant (whoever's turn it is)
-    const initiator = encounter.combatants.find(c => c.id === currentId)
-    return initiator?.turnState.standardActionUsed ?? true
-  }
-
-  if (props.combatant.type === 'pokemon') {
-    // Pokemon card: check if it's this Pokemon's turn or its trainer's turn
-    const pokemon = entity.value as Pokemon
-    const isPokemonTurn = currentId === props.combatant.id
-    const isTrainerTurn = encounter.combatants.some(
-      c => c.id === currentId && c.type === 'human' && c.entityId === pokemon.ownerId
-    )
-    if (!isPokemonTurn && !isTrainerTurn) return true
-
-    const initiator = encounter.combatants.find(c => c.id === currentId)
-    return initiator?.turnState.standardActionUsed ?? true
-  }
-
-  return true
-})
-
-/**
- * Show fainted switch button when:
- * - Combatant is a trainer who has a fainted Pokemon in the encounter
- * - OR combatant is a fainted Pokemon owned by a trainer
- */
-const canShowFaintedSwitchButton = computed(() => {
-  if (props.combatant.type === 'human') {
-    const trainerEntityId = props.combatant.entityId
-    const encounterStore = useEncounterStore()
-    return encounterStore.encounter?.combatants.some(
-      c => c.type === 'pokemon' &&
-        (c.entity as Pokemon).ownerId === trainerEntityId &&
-        c.entity.currentHp <= 0
-    ) ?? false
-  }
-  if (props.combatant.type === 'pokemon') {
-    const pokemon = entity.value as Pokemon
-    return pokemon.ownerId && pokemon.currentHp <= 0
-  }
-  return false
-})
-
-/**
- * Disable fainted switch when:
- * - Not the trainer's turn
- * - Trainer's Shift Action already used
- */
-const isFaintedSwitchDisabled = computed(() => {
-  const encounterStore = useEncounterStore()
-  const encounter = encounterStore.encounter
-  if (!encounter) return true
-
-  const currentId = encounter.turnOrder[encounter.currentTurnIndex]
-
-  // Find the trainer
-  let trainerCombatantId: string
-  if (props.combatant.type === 'human') {
-    trainerCombatantId = props.combatant.id
-  } else {
-    const pokemon = entity.value as Pokemon
-    const trainer = encounter.combatants.find(
-      c => c.type === 'human' && c.entityId === pokemon.ownerId
-    )
-    if (!trainer) return true
-    trainerCombatantId = trainer.id
-  }
-
-  // Must be the trainer's turn
-  if (currentId !== trainerCombatantId) return true
-
-  // Trainer must have Shift Action
-  const trainer = encounter.combatants.find(c => c.id === trainerCombatantId)
-  return trainer?.turnState.shiftActionUsed ?? true
-})
-
-/**
- * Show force switch button for Pokemon that are owned by a trainer.
- * GM can trigger this on any Pokemon to simulate Roar effects.
- * Only shown on Pokemon combatants (not trainers).
- * Note: Whirlwind is a push, not a forced switch (decree-034).
- */
-const canShowForceSwitchButton = computed(() => {
-  if (props.combatant.type !== 'pokemon') return false
-  const pokemon = entity.value as Pokemon
-  return !!pokemon.ownerId
-})
-
 // Format stat name for display
 // PTU: Evasion bonus is from moves/effects (additive), distinct from stat-derived evasion
 const STAT_NAMES: Record<string, string> = {
@@ -565,38 +305,6 @@ const STAT_NAMES: Record<string, string> = {
 
 const formatStatName = (stat: string): string => STAT_NAMES[stat] || stat
 
-// Actions
-const applyDamage = () => {
-  if (damageInput.value > 0) {
-    emit('damage', props.combatant.id, damageInput.value)
-    damageInput.value = 0
-  }
-}
-
-const applyHeal = () => {
-  if (healInput.value > 0) {
-    emit('heal', props.combatant.id, healInput.value)
-    healInput.value = 0
-  }
-}
-
-const handleTempHpApply = (amount: number) => {
-  emit('heal', props.combatant.id, 0, amount)
-}
-
-const handleStagesSave = (changes: Partial<StageModifiers>, absolute: boolean) => {
-  emit('stages', props.combatant.id, changes, absolute)
-}
-
-const handleStatusSave = (add: StatusCondition[], remove: StatusCondition[], override: boolean) => {
-  if (add.length > 0 || remove.length > 0) {
-    emit('status', props.combatant.id, add, remove, override)
-  }
-}
-
-const handleActClick = () => {
-  emit('openActions', props.combatant.id)
-}
 </script>
 
 <style lang="scss" scoped>
@@ -870,52 +578,6 @@ const handleActClick = () => {
   &--negative {
     color: $color-danger;
     background: rgba($color-danger, 0.2);
-  }
-}
-
-// Use Item button with icon alignment
-.use-item-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: $spacing-xs;
-}
-
-// Button icon (inline SVG in buttons)
-.btn-icon {
-  width: 14px;
-  height: 14px;
-  filter: invert(1);
-  vertical-align: middle;
-  margin-right: 2px;
-}
-
-// Action rows
-.action-row {
-  display: flex;
-  gap: $spacing-xs;
-
-  &--controls {
-    justify-content: space-between;
-  }
-
-  .form-input--sm {
-    width: 50px;
-    padding: $spacing-xs;
-    font-size: $font-size-xs;
-    background: $color-bg-tertiary;
-    border: 1px solid $border-color-default;
-    border-radius: $border-radius-sm;
-    color: $color-text;
-
-    &::placeholder {
-      color: $color-text-muted;
-    }
-
-    &:focus {
-      border-color: $color-accent-scarlet;
-      outline: none;
-      box-shadow: 0 0 0 2px rgba($color-accent-scarlet, 0.2);
-    }
   }
 }
 
