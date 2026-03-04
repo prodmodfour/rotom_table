@@ -191,6 +191,9 @@ For every pair of work items in the queue, classify:
 | Multiple capability remaps (different domains) | Yes | Different output files |
 | Dev + Matrix ecosystems | Yes | Different concerns |
 | Code Health Auditor + dev work | Yes | Auditor reads only |
+| Browser Auditor + other matrix skills (same domain) | No | Needs completed audit first |
+| Browser Auditor + dev work | Yes | Browser auditor is read-only |
+| Multiple Browser Auditors | No | Single port 3000 constraint |
 | Dev tickets on same domain | Serial | Merge conflict risk |
 
 Build a dependency DAG of work items.
@@ -242,6 +245,9 @@ Do NOT inject file contents — just provide paths. The agent reads files it nee
 - `{{BRANCH_NAME}}` — Set to `{{RESOLVED_AT_SLAVE_TIME}}`
 - `{{PREVIOUS_REVIEW}}` — Prior review artifact if re-review
 - `{{RELEVANT_DECREES}}` — Gather active decrees from `decrees/` matching the slave's domain. Include decree ID, title, and ruling summary for each. If no decrees match, use "(No active decrees for this domain)"
+- `{{CAPABILITY_INDEX}}` — (Browser Auditor only) Read `artifacts/matrix/<domain>/capabilities/_index.md`
+- `{{MATRIX_ACCESSIBLE_FROM}}` — (Browser Auditor only) Read `artifacts/matrix/<domain>/matrix.md` accessible_from data
+- `{{VIEW_MAP}}` — (Browser Auditor only) Read `.claude/skills/references/browser-audit-routes.md`
 
 Store all resolved values in `template_data` for each slave. `WORKTREE_PATH` and `BRANCH_NAME` are left as `{{RESOLVED_AT_SLAVE_TIME}}` — the slave resolves these at runtime after creating its worktree.
 
@@ -262,6 +268,9 @@ For each slave's template data:
 | `{{GIT_LOG}}` | "(No recent git history available)" |
 | `{{PREVIOUS_REVIEW}}` | "(First review — no prior review artifact)" |
 | `{{RELEVANT_DECREES}}` | "(No active decrees for this domain)" |
+| `{{CAPABILITY_INDEX}}` | "(No capability index found — read capabilities directory)" |
+| `{{MATRIX_ACCESSIBLE_FROM}}` | "(No matrix accessible_from data — read matrix.md)" |
+| `{{VIEW_MAP}}` | "(No route mapping found — read browser-audit-routes.md)" |
 
 ## Step 6: Write Plan File
 
@@ -482,6 +491,7 @@ When M2 items are in the queue (matrix + audit complete, tickets not yet created
 | Capability Mapper | `templates/agent-capability-mapper.md` | `app-capability-mapper.md` |
 | Coverage Analyzer | `templates/agent-coverage-analyzer.md` | `coverage-analyzer.md` |
 | Implementation Auditor | `templates/agent-implementation-auditor.md` | `implementation-auditor.md` |
+| Browser Auditor | `templates/agent-browser-auditor.md` | `browser-auditor.md` |
 | Retrospective Analyst | `templates/agent-retrospective-analyst.md` | `retrospective-analyst.md` |
 
 **Template fallback:** If a template produces poor agent results (incomplete output, wrong format), fall back to embedding the full skill file for that launch. Note this in the plan.
