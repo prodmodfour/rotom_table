@@ -6,7 +6,6 @@
  */
 import { loadEncounter, findCombatant } from '~/server/services/encounter.service'
 import { calculateDamage, calculateEvasion, calculateAccuracyThreshold } from '~/utils/damageCalculation'
-import { computeEquipmentBonuses } from '~/utils/equipmentBonuses'
 import { getEffectiveEquipmentBonuses, getEffectiveMoveList } from '~/server/services/living-weapon.service'
 import { reconstructWieldRelationships } from '~/server/services/living-weapon-state'
 import { ZERO_EVASION_CONDITIONS } from '~/constants/statusConditions'
