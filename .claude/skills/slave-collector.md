@@ -334,7 +334,7 @@ If any reviewer slave produced a verdict of `CHANGES_REQUIRED`:
 
 If any matrix slave completed and the domain now has matrix + audit both done:
 - Check if tickets have already been created for that domain
-- If not, note in the final report: "Domain <X> ready for M2 ticket creation. Run `/create_slave_plan` to include this."
+- If not, note in the final report: "Domain <X> ready for M2 ticket creation. Run `/survey` to include this."
 
 ### 6f. Report Filed Tickets
 
@@ -536,9 +536,10 @@ node scripts/imp/notify.mjs collection_complete '{"message":"plan-<id>: <merged>
 ## What You Do NOT Do
 
 - Execute work items (slaves did that)
-- Pick work items (master planner did that)
+- Pick work items (orchestrator planner did that)
 - Launch agents (slaves did that)
-- Create the slave plan (master planner did that)
+- Survey pipeline state (orchestrator survey did that)
+- Create the slave plan (orchestrator planner did that)
 - Persist across multiple collections (one collection, then die)
 - Force-push or rewrite history
 - Modify app source code

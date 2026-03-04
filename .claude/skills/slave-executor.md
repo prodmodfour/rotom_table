@@ -19,7 +19,7 @@ If no argument provided, ask the user: "Which slave number? Check `.worktrees/sl
 
 Read `.worktrees/slave-plan.json`.
 
-- If the file doesn't exist → abort with error: "No slave plan found. Run `/create_slave_plan` first."
+- If the file doesn't exist → abort with error: "No slave plan found. Run `/survey` then `/plan_slaves` first."
 - Find the entry where `slave_id == X`
 - If X is out of range → abort with error: "Slave X not found in plan. Plan has <total_slaves> slaves."
 
@@ -215,8 +215,8 @@ Run `/collect_slaves` when all slaves are done to merge results to master.
 - Write code or review files yourself (Task agents do that)
 - Merge to master (collector does that)
 - Update state files (collector does that)
-- Create tickets (master planner does that)
-- Pick work items (master planner assigned you)
+- Create tickets (orchestrator survey does that)
+- Pick work items (orchestrator planner assigned you)
 - Launch other slaves (user does that)
 - Persist across multiple assignments (one assignment, then die)
 - Delete your worktree (collector does that on successful merge)

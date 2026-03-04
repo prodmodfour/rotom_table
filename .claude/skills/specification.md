@@ -15,7 +15,7 @@ The ecosystem is split into two logically separate halves:
 - **Dev Ecosystem:** Developer, Senior Reviewer, Game Logic Reviewer, Code Health Auditor
 - **Matrix Ecosystem:** PTU Rule Extractor, App Capability Mapper, Coverage Analyzer, Implementation Auditor
 
-The Retrospective Analyst serves both. The Master Planner reads both state files and plans all work at once. It also creates tickets from completed matrix analyses.
+The Retrospective Analyst serves both. The orchestrator pipeline (survey → planner → launcher) reads both state files and plans all work at once. The survey also creates tickets from completed matrix analyses.
 
 **Playtesting is external.** The ecosystem produces coverage matrices and correctness audits. Running Playwright tests against the app happens outside these two ecosystems.
 
@@ -23,9 +23,11 @@ The Retrospective Analyst serves both. The Master Planner reads both state files
 
 The orchestration system has three phases:
 
-1. **Master Planner** (`/create_slave_plan`) — analyzes ALL pending work, assigns to N slaves, writes plan file, launches slave tmux sessions directly, and verifies startup
-2. **Slave Executors** (`/slave N`) — each slave creates a worktree, launches agents, commits to its branch, writes status, dies
-3. **Slave Collector** (`/collect_slaves`) — merges all completed branches to master, updates state files, cleans up
+1. **Orchestrator Survey** (`/survey`) — reads state, builds full work queue, creates M2 tickets, writes `work-queue.json`
+2. **Orchestrator Planner** (`/plan_slaves`) — reads work queue, analyzes parallelism, assigns to N slaves, gathers templates, writes `slave-plan.json`
+3. **Orchestrator Launcher** (`/launch_slaves`) — launches tmux sessions and verifies startup
+4. **Slave Executors** (`/slave N`) — each slave creates a worktree, launches agents, commits to its branch, writes status, dies
+5. **Slave Collector** (`/collect_slaves`) — merges all completed branches to master, updates state files, cleans up
 
 **Why master/slave:**
 - One plan covers all work items — no need to run `/orchestrate` N times
@@ -38,7 +40,7 @@ The orchestration system has three phases:
 
 **Coordination:** File-based via `.worktrees/slave-plan.json` (plan) and `.worktrees/slave-status/` (per-slave status JSONs). No shared memory or persistent state beyond the filesystem.
 
-**Agent context:** Templates in `.claude/skills/templates/` provide static rules distilled from source skill files. The master planner gathers all dynamic data (ticket content, relevant files, lessons, git log) during planning and stores it in the plan file. Slaves replace `{{PLACEHOLDER}}` tokens at launch time.
+**Agent context:** Templates in `.claude/skills/templates/` provide static rules distilled from source skill files. The orchestrator planner gathers all dynamic data (ticket content, relevant files, lessons, git log) during planning and stores it in the plan file. Slaves replace `{{PLACEHOLDER}}` tokens at launch time.
 
 ### 2.3 Artifact-Based Communication
 
@@ -72,7 +74,7 @@ artifacts/
 └── state/              # Ecosystem state files
     ├── dev-state.md    # Orchestrator writes → Dev skills read
     ├── test-state.md   # Orchestrator writes → Matrix skills read
-    └── alive-agents.md # Slave Collector writes → Master Planner reads
+    └── alive-agents.md # Slave Collector writes → Orchestrator Survey reads
 ```
 
 ### 2.4 Ticket System
@@ -104,12 +106,12 @@ Skills report completions via their artifacts; orchestrators read artifacts and 
 
 ```
                     ┌──────────────────────┐
-                    │   Master Planner     │ ← reads both state files
-                    │  (plans all work,    │   + all ticket dirs + matrix/
-                    │   creates tickets)   │
+                    │  Orchestrator Pipeline│ ← reads both state files
+                    │  /survey → /plan_slaves│   + all ticket dirs + matrix/
+                    │  → /launch_slaves     │
                     └──────────┬───────────┘
                                │
-                        slave-plan.json
+                     work-queue.json → slave-plan.json
                                │
             ┌──────────────────┼──────────────────────┐
             │                  │                       │
@@ -134,26 +136,57 @@ Skills report completions via their artifacts; orchestrators read artifacts and 
 
 The orchestration system is split into three phases, each with its own skill:
 
-#### 3.1a Master Planner
+#### 3.1a Orchestrator Survey
 
 | Field | Value |
 |-------|-------|
-| **File** | `.claude/skills/master-planner.md` |
-| **Templates** | `.claude/skills/templates/agent-*.md` |
-| **Trigger** | `/create_slave_plan` |
+| **File** | `.claude/skills/orchestrator-survey.md` |
+| **Reference** | `.claude/skills/references/orchestration-tables.md` |
+| **Trigger** | `/survey` |
 | **Input** | `dev-state.md`, `test-state.md`, all ticket/matrix dirs, `.worktrees/slave-status/` |
-| **Output** | `.worktrees/slave-plan.json`, `scripts/launch-slaves.sh`, tickets (M2) |
+| **Output** | `.worktrees/work-queue.json`, tickets (M2) |
+| **Lifecycle** | Ephemeral — one survey per session, then dies |
+
+**Lifecycle (5 steps):**
+1. Sync remote, read coordination state (existing plan, active slaves, pipeline state)
+2. Build full work queue (ALL actionable items from D1-D9 + M1-M7, inline M2 + D3b)
+3. Staleness detection
+4. Write `work-queue.json`
+5. Present summary table
+
+#### 3.1a-ii Orchestrator Planner
+
+| Field | Value |
+|-------|-------|
+| **File** | `.claude/skills/orchestrator-planner.md` |
+| **Reference** | `.claude/skills/references/orchestration-tables.md` |
+| **Templates** | `.claude/skills/templates/agent-*.md` |
+| **Trigger** | `/plan_slaves` |
+| **Input** | `.worktrees/work-queue.json` |
+| **Output** | `.worktrees/slave-plan.json` |
 | **Lifecycle** | Ephemeral — one plan per session, then dies |
 
-**Lifecycle (8 steps):**
-1. Read coordination state (existing plan, active slaves, pipeline state)
-2. Build full work queue (ALL actionable items from D1-D9 + M1-M7)
-3. Parallelization analysis (classify every pair of items)
-4. Assign to N slaves (group items, build dependency DAG, compute merge order)
-5. Gather template data (full context injection pass for each slave)
-6. Write plan file (`.worktrees/slave-plan.json`)
-7. Generate launch script (`scripts/launch-slaves.sh`)
-8. Present plan (summary table, wait for user "go")
+**Lifecycle (6 steps):**
+1. Read work queue (with staleness check against HEAD)
+2. Parallelization analysis (classify every pair of items)
+3. Assign to N slaves (group items, build dependency DAG, compute merge order)
+4. Gather template data (full context injection pass for each slave)
+5. Write plan file (`.worktrees/slave-plan.json`)
+6. Present plan, push to remote
+
+#### 3.1a-iii Orchestrator Launcher
+
+| Field | Value |
+|-------|-------|
+| **File** | `.claude/skills/orchestrator-launcher.md` |
+| **Trigger** | `/launch_slaves` |
+| **Input** | `.worktrees/slave-plan.json` |
+| **Output** | tmux sessions with running slaves |
+| **Lifecycle** | Ephemeral — one launch per session, then dies |
+
+**Lifecycle (2 steps):**
+1. Read plan, launch tmux sessions (create windows, start Claude, send `/slave N`, verify, tile)
+2. Optional monitoring
 
 #### 3.1b Slave Executor
 
@@ -545,7 +578,7 @@ The original `pipeline-state.md` has been archived as `pipeline-state.legacy.md`
 
 ### 4.6c Slave Plan
 
-**Written by:** Master Planner
+**Written by:** Orchestrator Planner
 **Read by:** Slave Executor, Slave Collector
 **Location:** `.worktrees/slave-plan.json`
 
@@ -856,37 +889,37 @@ Reference files live in `.claude/skills/references/`.
 
 Each round is: plan → execute → collect.
 
-1. `/create_slave_plan` → plan includes Rule Extractor + Capability Mapper (parallel slaves) for domain X
+1. `/survey → /plan_slaves → /launch_slaves` → plan includes Rule Extractor + Capability Mapper (parallel slaves) for domain X
 2. `bash scripts/launch-slaves.sh` → slaves execute in parallel
 3. `/collect_slaves` → merge both to master
-4. `/create_slave_plan` → plan includes Coverage Analyzer for domain X
+4. `/survey → /plan_slaves → /launch_slaves` → plan includes Coverage Analyzer for domain X
 5. Execute + collect
-6. `/create_slave_plan` → plan includes Implementation Auditor for domain X
+6. `/survey → /plan_slaves → /launch_slaves` → plan includes Implementation Auditor for domain X
 7. Execute + collect → Master creates tickets (M2) in next plan
-8. `/create_slave_plan` → plan includes Developer slaves for highest-priority tickets
+8. `/survey → /plan_slaves → /launch_slaves` → plan includes Developer slaves for highest-priority tickets
 
 ### 7.2 Bug Fix Cycle (Cross-Ecosystem)
 
-1. `/create_slave_plan` → slave-1: Developer fixes ticket A, slave-2: Developer fixes ticket B (parallel)
+1. `/survey → /plan_slaves → /launch_slaves` → slave-1: Developer fixes ticket A, slave-2: Developer fixes ticket B (parallel)
 2. Execute + collect
-3. `/create_slave_plan` → slave-1: Reviewers for ticket A, slave-2: Reviewers for ticket B (parallel)
+3. `/survey → /plan_slaves → /launch_slaves` → slave-1: Reviewers for ticket A, slave-2: Reviewers for ticket B (parallel)
 4. Execute + collect
-5. Both APPROVED → `/create_slave_plan` → next priority tickets
+5. Both APPROVED → `/survey → /plan_slaves → /launch_slaves` → next priority tickets
 6. CHANGES_REQUIRED → included as highest priority in next plan
 
 ### 7.3 Stale Artifact Detection
 
-The master planner checks timestamps during planning:
+The orchestrator survey checks timestamps during planning:
 - App code changed after capability mapping → capabilities stale, re-map needed
 - Re-mapped capabilities → matrix stale, re-analyze needed
 - Re-analyzed matrix → audit stale, re-audit needed
 - Developer commit after latest approved review for same target → review stale, re-review needed
 
-### 7.4 Ticket Creation Process (Master Planner M2)
+### 7.4 Ticket Creation Process (Orchestrator Survey M2)
 
 When a domain's matrix and audit are both complete:
 
-1. Master planner reads `matrix/<domain>-matrix.md` and `matrix/<domain>-audit.md`
+1. Orchestrator survey reads `matrix/<domain>-matrix.md` and `matrix/<domain>-audit.md`
 2. For each `Incorrect` audit item → creates bug ticket in `tickets/open/bug/`
 3. For each `Missing` matrix item → creates feature ticket in `tickets/open/feature/`
 4. For each `Approximation` audit item → creates ptu-rule ticket in `tickets/open/ptu-rule/`
@@ -921,7 +954,7 @@ Examples: `slave/1-dev-ptu-rule-079-1740200000`, `slave/2-reviewers-ptu-rule-058
 ### 7.7 Coordination Protocol
 
 **Slave plan:**
-- Master planner writes `.worktrees/slave-plan.json` with all slave assignments
+- Orchestrator planner writes `.worktrees/slave-plan.json` with all slave assignments
 - Slaves read their assignment from the plan by `slave_id`
 - Collector reads the plan for merge order and conflict zones
 
@@ -970,7 +1003,7 @@ Skills discover ambiguity (multiple valid interpretations of PTU rules, conflict
 | Game Logic Reviewer | Check decrees. Decrees override PTU RAW interpretations. File decree-need to recommend revisitation. |
 | Implementation Auditor | Check decrees before classifying as Ambiguous. Decree match = Correct/Incorrect, not Ambiguous. |
 | Developer | Read relevant decrees before implementing. Follow them exactly. |
-| Master Planner | Scan decree-need tickets. Inject `{{RELEVANT_DECREES}}` into templates. Never assign decree-needs to slaves. |
+| Orchestrator Survey/Planner | Scan decree-need tickets. Inject `{{RELEVANT_DECREES}}` into templates. Never assign decree-needs to slaves. |
 | Slave Collector | Scan merged artifacts for ambiguity. Create decree-need tickets from AMBIGUOUS flags. |
 | Decree Facilitator | Primary skill. Presents options, records rulings, creates implementation tickets. |
 

@@ -6,61 +6,80 @@ How to use the master/slave orchestration system to validate the PTU Session Hel
 
 | Behavior | v2 (Ephemeral Orchestrator) | v3 (Master/Slave) |
 |----------|---------------------------|-------------------|
-| Planning | One item per `/orchestrate` call | ALL items planned at once via `/create_slave_plan` |
+| Planning | One item per `/orchestrate` call | ALL items planned at once via `/survey` → `/plan_slaves` → `/launch_slaves` |
 | Execution | Orchestrator claims, executes, merges, dies | Slaves execute in parallel, collector merges |
-| Parallelism | Manual — run `/orchestrate` N times | Automatic — master assigns N slaves with dependency DAG |
+| Parallelism | Manual — run `/orchestrate` N times | Automatic — planner assigns N slaves with dependency DAG |
 | Merging | Each orchestrator merges its own work | Collector merges all branches in planned order |
 | State updates | Each orchestrator updates state files | Collector does one atomic state update |
 | Conflict handling | Race conditions on merge | Pre-analyzed conflict zones with planned merge order |
-| Context gathering | Each orchestrator gathers independently | Master gathers ALL context upfront, stores in plan |
-| Launch | Manual per-terminal | Master launches tmux sessions directly |
+| Context gathering | Each orchestrator gathers independently | Survey + planner gather ALL context upfront, stored in plan |
+| Launch | Manual per-terminal | Launcher creates tmux sessions directly |
 
-## Three-Phase Architecture
+## Four-Phase Architecture
 
 ```
-Phase 1: PLAN                    Phase 2: EXECUTE              Phase 3: COLLECT
-/create_slave_plan               /slave 1  /slave 2  /slave 3  /collect_slaves
-      │                              │         │         │           │
- Master Planner                  Slave 1    Slave 2   Slave 3    Collector
- ├ read state                    ├ read plan ├ read... ├ read...  ├ read status
- ├ build work queue              ├ worktree  ├ ...     ├ ...      ├ merge branches
- ├ analyze parallelism           ├ launch    ├ ...     ├ ...      ├ update state
- ├ assign N slaves               ├ commit    ├ ...     ├ ...      ├ cleanup
- ├ gather template data          ├ status    ├ ...     ├ ...      └ die
- ├ write plan                    └ die       └ die     └ die
- ├ launch tmux sessions
- ├ verify startup
- └ die
+Phase 1: SURVEY     Phase 2: PLAN        Phase 3: LAUNCH+EXECUTE       Phase 4: COLLECT
+/survey              /plan_slaves         /launch_slaves                /collect_slaves
+    │                    │                /slave 1  /slave 2  /slave 3       │
+ Orchestrator        Orchestrator             │         │         │      Collector
+  Survey              Planner            Slave 1    Slave 2   Slave 3   ├ read status
+ ├ read state        ├ read queue        ├ read plan ├ read... ├ read...├ merge branches
+ ├ build work queue  ├ analyze parallel  ├ worktree  ├ ...     ├ ...   ├ update state
+ ├ M2 tickets        ├ assign slaves     ├ launch    ├ ...     ├ ...   ├ cleanup
+ ├ D3b pre-flight    ├ gather templates  ├ commit    ├ ...     ├ ...   └ die
+ ├ write queue.json  ├ write plan.json   ├ status    ├ ...     ├ ...
+ └ die               ├ push remote       └ die       └ die     └ die
+                     └ die
 ```
 
 Dev Ecosystem: Developer, Senior Reviewer, Game Logic Reviewer, Code Health Auditor
 Matrix Ecosystem: PTU Rule Extractor, App Capability Mapper, Coverage Analyzer, Implementation Auditor
-Cross-cutting: Retrospective Analyst, Master Planner, Decree Facilitator
+Cross-cutting: Retrospective Analyst, Orchestrator (Survey/Planner/Launcher), Decree Facilitator
 UX Ecosystem: UX Session Planner, UX GM/Player/Narrator/Ticket Creator agents
 
 **Playtesting uses UX exploration sessions.** The `/ux_session` command launches 5 browser agents that interact with the live app and report on the experience.
 
 ## Quick Start
 
-### Step 1 — Create a Slave Plan
+### Step 1 — Survey Pipeline State
 
 Open a Claude Code terminal and run:
 ```
-/create_slave_plan
+/survey
 ```
 
-The master planner will:
+The orchestrator survey will:
 1. Read all pipeline state (dev-state.md, test-state.md, tickets, matrix artifacts)
 2. Build a queue of ALL actionable work items
-3. Analyze which items can run in parallel
-4. Assign items to N slaves with dependency tracking
-5. Gather all template data for each slave
-6. Write `.worktrees/slave-plan.json`
-7. Show you a summary table and wait for confirmation
+3. Create M2 tickets inline if needed
+4. Run D3b design pre-flight validation
+5. Write `.worktrees/work-queue.json`
+6. Show you a summary table
 
-Say "go" and the master will launch tmux sessions, start Claude in each, send `/slave N`, and verify all slaves accepted the command.
+### Step 2 — Plan Slave Assignments
 
-### Step 2 — Wait for Completion
+```
+/plan_slaves
+```
+
+The orchestrator planner will:
+1. Read the work queue from Step 1
+2. Analyze which items can run in parallel
+3. Assign items to N slaves with dependency tracking
+4. Gather all template data for each slave
+5. Write `.worktrees/slave-plan.json`
+6. Show you a summary table
+7. Push to remote
+
+### Step 3 — Launch Slaves
+
+```
+/launch_slaves
+```
+
+The orchestrator launcher will create tmux sessions, start Claude in each, send `/slave N`, and verify all slaves accepted the command.
+
+### Step 4 — Wait for Completion
 
 Each slave will:
 1. Read its assignment from the plan
@@ -71,7 +90,7 @@ Each slave will:
 
 Monitor progress via tmux (`tmux attach -t slaves`) or check status files in `.worktrees/slave-status/`.
 
-### Step 3 — Collect Results
+### Step 5 — Collect Results
 
 When all slaves are done, run:
 ```
@@ -109,20 +128,20 @@ The collector will:
 ### Example: Full Domain Analysis
 
 ```
-Plan 1: /create_slave_plan
+Plan 1: /survey → /plan_slaves → /launch_slaves
   slave-1: Rule Extractor for healing
   slave-2: Capability Mapper for healing (parallel with slave-1)
   → launch, collect
 
-Plan 2: /create_slave_plan
+Plan 2: /survey → /plan_slaves → /launch_slaves
   slave-1: Coverage Analyzer for healing
   → launch, collect
 
-Plan 3: /create_slave_plan
+Plan 3: /survey → /plan_slaves → /launch_slaves
   slave-1: Implementation Auditor for healing
   → launch, collect (master creates tickets via M2)
 
-Plan 4: /create_slave_plan
+Plan 4: /survey → /plan_slaves → /launch_slaves
   slave-1: Developer for bug-042
   slave-2: Developer for ptu-rule-078 (parallel with slave-1)
   slave-3: Developer for ptu-rule-079 (parallel — different domain)
@@ -132,12 +151,12 @@ Plan 4: /create_slave_plan
 ### Example: Bug Fix + Review Cycle
 
 ```
-Plan 1: /create_slave_plan
+Plan 1: /survey → /plan_slaves → /launch_slaves
   slave-1: Developer fixes ptu-rule-079
   slave-2: Developer fixes ptu-rule-080 (parallel, different domain)
   → launch, collect
 
-Plan 2: /create_slave_plan
+Plan 2: /survey → /plan_slaves → /launch_slaves
   slave-1: Reviewers for ptu-rule-079
   slave-2: Reviewers for ptu-rule-080 (parallel)
   → launch, collect
@@ -149,7 +168,7 @@ Plan 2: /create_slave_plan
 ### Example: Mixed Ecosystem Work
 
 ```
-Plan 1: /create_slave_plan
+Plan 1: /survey → /plan_slaves → /launch_slaves
   slave-1: Developer fixing bug-001 (dev ecosystem)
   slave-2: Rule Extractor for healing (matrix ecosystem)
   slave-3: Capability Mapper for healing (matrix, parallel with slave-2)
@@ -159,7 +178,7 @@ Plan 1: /create_slave_plan
 ## Coordination Mechanism
 
 ### Slave Plan (`.worktrees/slave-plan.json`)
-- Master planner writes the plan with all slave assignments
+- Orchestrator planner writes the plan with all slave assignments
 - Each slave reads its assignment by `slave_id`
 - Collector reads the plan for merge order and conflict zones
 - Plan includes pre-gathered template data for each slave
@@ -177,7 +196,7 @@ Plan 1: /create_slave_plan
 - `app/node_modules` symlinked for import resolution
 
 ### Tmux Sessions
-- Master planner creates a `slaves` tmux session with one window per slave
+- Orchestrator launcher creates a `slaves` tmux session with one window per slave
 - Launches Claude Code in each window and sends `/slave N` via `-H 0D` (raw carriage return)
 - Verifies each slave accepted the command before reporting launch status
 
@@ -297,7 +316,7 @@ Simulated play sessions where 5 AI personas interact with the live app through r
 
 ## Tips
 
-- **Four commands.** `/create_slave_plan` (dev/matrix) → `/collect_slaves` (merge). `/ux_session` (UX testing) → `/collect_slaves` (review). `/address_design_decrees` (human rulings).
+- **Five commands.** `/survey` → `/plan_slaves` → `/launch_slaves` (dev/matrix) → `/collect_slaves` (merge). `/ux_session` (UX testing) → `/collect_slaves` (review). `/address_design_decrees` (human rulings).
 - **One plan at a time.** Don't create a new plan while slaves are running. Collect first.
 - **Single-slave plans are fine.** If there's only one work item, the plan will have one slave — equivalent to the old `/orchestrate`.
 - **Check slave status.** Look at `.worktrees/slave-status/` to see which slaves are done.

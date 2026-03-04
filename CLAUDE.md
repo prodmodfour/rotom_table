@@ -83,7 +83,7 @@ Complete PTU 1.05 ruleset in `books/markdown/` -- see `books/markdown/CLAUDE.md`
 
 Use **incremental multi-tier delivery** for non-trivial features. Break the feature into priority tiers (P0/P1/P2), implement each tier separately, and run code review + rules review gates between tiers before proceeding. This pattern was proven effective in design-testability-001 (37 commits, 0 regressions, bugs caught early at each tier boundary).
 
-**Pre-flight validation:** Before a design spec is assigned to a Developer, the Master Planner runs an inline pre-flight check (D3b):
+**Pre-flight validation:** Before a design spec is assigned to a Developer, the Orchestrator Survey runs an inline pre-flight check (D3b):
 1. **Dependency map** — identify cross-domain file overlaps, schema migration needs
 2. **Open questions** — surface unresolved PTU rule ambiguities or UX decisions as decree-need tickets
 

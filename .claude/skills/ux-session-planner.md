@@ -150,7 +150,7 @@ Say "go" to launch the session.
 
 ## Step 9: Launch
 
-Same tmux launch mechanism as the master planner:
+Same tmux launch mechanism as the orchestrator launcher:
 1. Create `slaves` tmux session with 7 windows
 2. Launch Claude in each window
 3. Send `/slave N` to each
