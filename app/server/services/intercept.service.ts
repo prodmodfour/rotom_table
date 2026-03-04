@@ -115,7 +115,7 @@ export function checkInterceptLoyalty(
   if (interceptor.type !== 'pokemon') return { allowed: true }
 
   const pokemon = interceptor.entity as Pokemon
-  const loyalty = pokemon.loyalty ?? 0
+  const loyalty = pokemon.loyalty ?? 3
 
   if (loyalty < 3) {
     return { allowed: false, reason: 'Pokemon needs Loyalty 3+ to Intercept' }
