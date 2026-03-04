@@ -13,7 +13,13 @@ import type { WieldRelationship } from '~/types/combat'
 import type { Pokemon, HumanCharacter, SkillRank } from '~/types/character'
 import { getLivingWeaponConfig } from '~/utils/combatantCapabilities'
 import { LIVING_WEAPON_CONFIG } from '~/constants/livingWeapon'
+import type { LivingWeaponConfig } from '~/constants/livingWeapon'
 import { areAdjacent } from '~/utils/adjacency'
+import {
+  computeEquipmentBonuses,
+  computeEffectiveEquipment,
+  type EquipmentCombatBonuses,
+} from '~/utils/equipmentBonuses'
 
 // ============================================================
 // Skill Rank Validation
@@ -346,4 +352,52 @@ export function clearWieldOnRemoval(
   )
 
   return { combatants: updatedCombatants, wieldRelationships: updatedRelationships }
+}
+
+// ============================================================
+// Equipment Bonus Integration (P1)
+// ============================================================
+
+/**
+ * Get the effective equipment bonuses for a combatant, accounting for
+ * Living Weapon equipment overlay when the combatant is wielding one.
+ *
+ * For human combatants: checks wield relationships and merges the
+ * Living Weapon into equipment slots before computing bonuses.
+ *
+ * For non-human combatants: returns zero bonuses (Pokemon don't use equipment).
+ *
+ * This is the single integration point for all code paths that need
+ * equipment bonuses — it replaces direct computeEquipmentBonuses() calls
+ * for combatants in combat with wield relationships.
+ */
+export function getEffectiveEquipmentBonuses(
+  wieldRelationships: WieldRelationship[],
+  combatant: Combatant
+): EquipmentCombatBonuses {
+  if (combatant.type !== 'human') {
+    return {
+      damageReduction: 0,
+      evasionBonus: 0,
+      statBonuses: {},
+      speedDefaultCS: 0,
+      conditionalDR: [],
+    }
+  }
+
+  const human = combatant.entity as HumanCharacter
+  let equipment = human.equipment ?? {}
+
+  // Check for Living Weapon overlay
+  const wieldRel = wieldRelationships.find(
+    r => r.wielderId === combatant.id
+  )
+  if (wieldRel) {
+    const config = LIVING_WEAPON_CONFIG[wieldRel.weaponSpecies]
+    if (config) {
+      equipment = computeEffectiveEquipment(equipment, config, wieldRel.isFainted)
+    }
+  }
+
+  return computeEquipmentBonuses(equipment)
 }
