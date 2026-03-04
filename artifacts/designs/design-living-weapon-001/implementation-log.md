@@ -2,7 +2,7 @@
 
 ## Status: implemented
 
-P0 implemented (Sections A-D) + fix cycle applied. P1 implemented (Sections E-I) + fix cycle applied. P2 implemented (Sections J-N) + bug-050 fixed.
+P0 implemented (Sections A-D) + fix cycle applied. P1 implemented (Sections E-I) + fix cycle applied. P2 implemented (Sections J-N) + bug-050 fixed. P2 fix cycle applied (code-review-321 + rules-review-294).
 
 ---
 
@@ -16,6 +16,7 @@ P0 implemented (Sections A-D) + fix cycle applied. P1 implemented (Sections E-I)
 | 2026-03-04 | P1 implemented | 12 commits: equipment overlay, weapon moves, evasion refresh, integration across all 4 code paths + faint state sync |
 | 2026-03-04 | P1 fix cycle | 6 commits: code-review-316 (1H+2M) + rules-review-289 (1H+2M). Weapon move DB +1 mod, Weapon keyword STAB exclusion, getEffectiveEquipBonuses extraction, GM move UI injection, encounter reload wield state, app-surface update |
 | 2026-03-04 | P2 implemented | 12 commits: bug-050 fix, WieldRelationship P2 fields, VTT shared movement, No Guard suppression, Aegislash forced Blade forme, Weaponize intercept, Soulstealer healing (3 code paths) |
+| 2026-03-04 | P2 fix cycle | 6 commits: code-review-321 (1C+3H+3M) + rules-review-294 (2H+3M). Service file split, movement pool persistence, round reset, No Guard decree-046 compliance, immutable updates, Soulstealer frequency, movement modifiers |
 
 ---
 
@@ -36,6 +37,39 @@ P0 implemented (Sections A-D) + fix cycle applied. P1 implemented (Sections E-I)
 | cf5ba7a7 | N | Soulstealer healing in damage.post.ts |
 | c1a7c0ea | N | Soulstealer healing in move.post.ts (L2 duplicate path) |
 | 6db8c8bb | N | Soulstealer healing in aoo-resolve.post.ts (L2 duplicate path) |
+
+## P2 Fix Cycle Commits
+
+| Commit | Issue | Description |
+|--------|-------|-------------|
+| 3319923a | C1 (code-321) | Split living-weapon.service.ts into abilities + movement sub-services (836 -> 553 lines) |
+| eb9d7385 | H1 (code-321) | Persist wieldMovementUsed on wielder combatant for mid-round reconstruction |
+| d14f4492 | H2 (code-321, rules-294 HIGH-001) | Reset wieldMovementUsed at round start in resetCombatantsForNewRound |
+| f6acb5b5 | H3 (code-321, rules-294 MEDIUM-001/003) | No Guard client-side accuracy check per decree-046 (+3/-3 flat) + fix server-side |
+| a51fe8ac | M1 (code-321) | Immutable update for wieldRel.movementUsedThisRound in useEncounterActions |
+| 2d5e1260 | rules-294 MEDIUM-002 | Thread movement modifiers (Slowed, Stuck, Speed CS, Sprint) through shared pool |
+
+### P2 Fix Cycle Notes
+- M2 (applySoulstealerHealing mutation): Resolved by adding explicit JSDoc in C1 split (living-weapon-abilities.service.ts)
+- M3 (Soulstealer scene frequency) + rules-294 HIGH-002: Resolved in C1 split by adding featureUsage tracking to checkSoulstealer/applySoulstealerHealing
+- rules-294 MEDIUM-003 (No Guard definition): Resolved by decree-046 compliance in H3 commit
+
+### P2 Fix Cycle Files Changed
+
+#### New Files
+- `app/server/services/living-weapon-abilities.service.ts` — Soulstealer, Weaponize, No Guard, Aegislash (extracted from main service)
+- `app/server/services/living-weapon-movement.service.ts` — Shared movement pool, position sync, speed calc (extracted from main service)
+
+#### Modified Files
+- `app/server/services/living-weapon.service.ts` — Reduced to 553 lines, re-exports from sub-services, wieldMovementUsed init/clear
+- `app/server/services/living-weapon-state.ts` — Read wieldMovementUsed from wielder combatant during reconstruction
+- `app/server/utils/turn-helpers.ts` — Reset wieldMovementUsed in resetCombatantsForNewRound
+- `app/server/api/encounters/[id]/position.post.ts` — Persist wieldMovementUsed on wielder after movement
+- `app/server/api/encounters/[id]/calculate-damage.post.ts` — Apply both attacker and target No Guard bonuses per decree-046
+- `app/types/encounter.ts` — Add wieldMovementUsed field to Combatant
+- `app/composables/useMoveCalculation.ts` — Add No Guard accuracy check (hasActiveNoGuard, getNoGuardBonus)
+- `app/composables/useEncounterActions.ts` — Immutable wieldRelationships update
+- `app/composables/useGridMovement.ts` — Apply movement modifiers to shared pool speed
 
 ## P2 Files Changed
 
