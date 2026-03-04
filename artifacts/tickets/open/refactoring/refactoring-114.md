@@ -3,7 +3,7 @@ ticket: refactoring-114
 category: EXT-NAMING
 priority: P3
 severity: LOW
-status: open
+status: in-progress
 domain: character-lifecycle
 source: rules-review-229 (carried from rules-review-222 M1)
 created_by: slave-collector (plan-20260301-152500)
@@ -37,3 +37,21 @@ Currently, only the capture flow populates this field. When hatch and evolve flo
 - Naming/semantic correctness
 - No behavioral change for P0 (capture-only is currently correct)
 - Sets up clean naming for P1 when hatch+evolve are wired
+
+## Resolution Log
+
+- **Commit:** 7a9bb41c — `refactor: rename capturedSpecies to ownedSpecies in Prisma schema`
+  - `app/prisma/schema.prisma` — renamed field to `ownedSpecies` with `@map("capturedSpecies")` to preserve DB column
+- **Commit:** e3c7772a — `refactor: rename capturedSpecies to ownedSpecies across TypeScript source`
+  - `app/types/character.ts` — updated HumanCharacter interface field
+  - `app/utils/trainerExperience.ts` — updated isNewSpecies() parameter name and JSDoc
+  - `app/server/api/characters/[id]/xp-history.get.ts` — updated Prisma select and response field
+  - `app/server/api/characters/[id].put.ts` — updated PUT handler field
+  - `app/server/utils/serializers.ts` — updated both serializeCharacter and serializeCharacterSummary
+  - `app/server/api/capture/attempt.post.ts` — updated capture species XP flow
+  - `app/server/api/pokemon/[id]/evolve.post.ts` — updated evolution species XP flow
+  - `app/tests/unit/api/trainerXp.test.ts` — updated test factory
+- **Commit:** c6ae2dbe — `docs: update capturedSpecies references to ownedSpecies in CLAUDE.md and app-surface`
+  - `app/prisma/CLAUDE.md` — updated JSON field table
+  - `.claude/skills/references/app-surface.md` — updated endpoint descriptions
+- **Approach:** Used `@map("capturedSpecies")` in Prisma schema to rename the Prisma field while preserving the SQLite column name, avoiding a destructive migration. All 10 source files updated. Artifact docs (designs, reviews, resolved tickets) left as historical record.
