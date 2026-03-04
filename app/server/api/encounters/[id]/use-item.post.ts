@@ -17,6 +17,8 @@ import { loadEncounter, findCombatant, saveEncounterCombatants, buildEncounterRe
 import { syncEntityToDatabase } from '~/server/services/entity-update.service'
 import { applyHealingItem, getEntityDisplayName, checkItemRange, findTrainerForPokemon }
   from '~/server/services/healing-item.service'
+import { refreshCombatantEquipmentBonuses } from '~/server/services/living-weapon.service'
+import { reconstructWieldRelationships } from '~/server/services/living-weapon-state'
 import { HEALING_ITEM_CATALOG } from '~/constants/healingItems'
 import { broadcastToEncounter } from '~/server/utils/websocket'
 import { prisma } from '~/server/utils/prisma'
@@ -233,6 +235,21 @@ export default defineEventHandler(async (event) => {
       )
       remainingQuantity = after ? after.quantity : 0
       inventoryConsumed = true
+    }
+
+    // Living Weapon faint recovery (feature-005, PTU p.305):
+    // When a wielded Pokemon is revived by an item, refresh the wielder's evasion
+    // to remove the -2 fainted penalty from equipment bonuses.
+    if (itemResult.effects?.revived && target.wieldedByTrainerId) {
+      const wieldRels = reconstructWieldRelationships(combatants)
+      const wielder = combatants.find(c => c.id === target.wieldedByTrainerId)
+      if (wielder) {
+        const refreshed = refreshCombatantEquipmentBonuses(wieldRels, wielder)
+        const wielderIdx = combatants.findIndex(c => c.id === wielder.id)
+        if (wielderIdx >= 0) {
+          combatants[wielderIdx] = refreshed
+        }
+      }
     }
 
     // Sync target to database (HP, status conditions, stage modifiers for CS reversal)
