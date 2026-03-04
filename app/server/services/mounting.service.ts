@@ -18,7 +18,8 @@ import {
   getMountCapacity,
   countCurrentRiders,
   hasMountedProwess,
-  getMountActionCost
+  getMountActionCost,
+  hasRiderFeature
 } from '~/utils/mountingRules'
 import { areAdjacent, getTokenCells, getAdjacentCellsForFootprint } from '~/utils/adjacency'
 import { getFootprintCells } from '~/utils/sizeCategory'
@@ -135,6 +136,93 @@ function validateMountPreconditions(
 }
 
 // ============================================================
+// Ride as One: Speed Evasion Sharing (P2, PTU p.103)
+// ============================================================
+
+/**
+ * Apply Ride as One speed evasion sharing to a mounted pair.
+ * PTU p.103: "you and your Mount each use the highest of each other's
+ * Speed Evasion. If both you and your Mount have the same Speed Evasion,
+ * you instead each receive a +1 bonus to Speed Evasion."
+ *
+ * Stores original values in mountState.originalSpeedEvasion for restoration on dismount.
+ * Returns the updated combatant array (immutable).
+ */
+export function applyRideAsOneEvasion(
+  combatants: Combatant[],
+  riderId: string,
+  mountId: string
+): Combatant[] {
+  const rider = combatants.find(c => c.id === riderId)
+  const mount = combatants.find(c => c.id === mountId)
+
+  if (!rider || !mount) return combatants
+  if (!hasRiderFeature(rider, 'Ride as One')) return combatants
+
+  const riderSE = rider.speedEvasion
+  const mountSE = mount.speedEvasion
+
+  let newRiderSE: number
+  let newMountSE: number
+
+  if (riderSE === mountSE) {
+    // Same: +1 bonus to both
+    newRiderSE = riderSE + 1
+    newMountSE = mountSE + 1
+  } else {
+    // Different: both use the higher
+    const higher = Math.max(riderSE, mountSE)
+    newRiderSE = higher
+    newMountSE = higher
+  }
+
+  return combatants.map(c => {
+    if (c.id === riderId) {
+      return {
+        ...c,
+        speedEvasion: newRiderSE,
+        mountState: c.mountState ? {
+          ...c.mountState,
+          originalSpeedEvasion: riderSE
+        } : c.mountState
+      }
+    }
+    if (c.id === mountId) {
+      return {
+        ...c,
+        speedEvasion: newMountSE,
+        mountState: c.mountState ? {
+          ...c.mountState,
+          originalSpeedEvasion: mountSE
+        } : c.mountState
+      }
+    }
+    return c
+  })
+}
+
+/**
+ * Restore original speed evasion values on dismount (reverses Ride as One).
+ * Only restores if originalSpeedEvasion was stored (meaning Ride as One was active).
+ * Returns the updated combatant array (immutable).
+ */
+export function restoreRideAsOneEvasion(
+  combatants: Combatant[],
+  riderId: string,
+  mountId: string
+): Combatant[] {
+  return combatants.map(c => {
+    if ((c.id === riderId || c.id === mountId) && c.mountState?.originalSpeedEvasion !== undefined) {
+      return {
+        ...c,
+        speedEvasion: c.mountState.originalSpeedEvasion
+      }
+    }
+    return c
+  })
+}
+
+// ============================================================
 // Mount
 // ============================================================
 
@@ -190,8 +278,11 @@ export function executeMount(
     return c
   })
 
+  // P2: Apply Ride as One speed evasion sharing after mount state is set
+  const finalCombatants = applyRideAsOneEvasion(updatedCombatants, riderId, mountId)
+
   return {
-    updatedCombatants,
+    updatedCombatants: finalCombatants,
     riderId,
     mountId,
     actionCost,
@@ -298,7 +389,10 @@ export function executeDismount(
     )
   }
 
-  const updatedCombatants = combatants.map(c => {
+  // P2: Restore original speed evasion before clearing mount state
+  const evasionRestored = restoreRideAsOneEvasion(combatants, riderId, mountId)
+
+  const updatedCombatants = evasionRestored.map(c => {
     if (c.id === riderId) {
       return {
         ...c,
@@ -410,9 +504,14 @@ export function clearMountOnFaint(
 
   const partnerId = fainted.mountState.partnerId
 
+  // P2: Restore Ride as One evasion before clearing mount state
+  const riderId = fainted.mountState.isMounted ? faintedId : partnerId
+  const mountId = fainted.mountState.isMounted ? partnerId : faintedId
+  const evasionRestored = restoreRideAsOneEvasion(combatants, riderId, mountId)
+
   if (fainted.mountState.isMounted) {
     // Rider fainted -- just clear mount state on both
-    const updated = combatants.map(c => {
+    const updated = evasionRestored.map(c => {
       if (c.id === faintedId || c.id === partnerId) {
         return { ...c, mountState: undefined }
       }
@@ -422,10 +521,10 @@ export function clearMountOnFaint(
   }
 
   // Mount fainted -- auto-dismount rider with position placement
-  const rider = combatants.find(c => c.id === partnerId)
+  const rider = evasionRestored.find(c => c.id === partnerId)
   if (!rider) {
     // Partner not found, just clear the fainted combatant's state
-    const updated = combatants.map(c => {
+    const updated = evasionRestored.map(c => {
       if (c.id === faintedId) {
         return { ...c, mountState: undefined }
       }
@@ -438,13 +537,13 @@ export function clearMountOnFaint(
   let riderPosition: GridPosition | null = null
   if (fainted.position) {
     const mountSize = fainted.tokenSize || 1
-    const occupiedCells = buildOccupiedCellSet(combatants, [partnerId])
+    const occupiedCells = buildOccupiedCellSet(evasionRestored, [partnerId])
     riderPosition = findDismountPosition(
       fainted.position, mountSize, occupiedCells, gridWidth, gridHeight
     )
   }
 
-  const updated = combatants.map(c => {
+  const updated = evasionRestored.map(c => {
     if (c.id === faintedId) {
       return { ...c, mountState: undefined }
     }
