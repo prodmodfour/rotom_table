@@ -151,7 +151,7 @@ definePageMeta({
 })
 
 useHead({
-  title: 'Scene Manager - PTU Session Helper'
+  title: 'Scene Manager - Rotom Table'
 })
 
 const router = useRouter()
