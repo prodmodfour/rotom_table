@@ -46,7 +46,8 @@ export interface CaptureRateData {
 export interface CaptureAccuracyParams {
   /** Thrower's accuracy combat stage (-6 to +6). Default 0. */
   throwerAccuracyStage?: number
-  /** Target Pokemon's Speed Evasion (0-6+). Default 0. */
+  /** Target Pokemon's total Speed Evasion (stat-derived + bonus evasion).
+   *  Capped at 9 inside rollAccuracyCheck per PTU p.234. Default 0. */
   targetSpeedEvasion?: number
   /** Flanking penalty applied to target evasion (PTU p.232). Default 0. */
   flankingPenalty?: number
