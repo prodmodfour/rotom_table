@@ -56,3 +56,15 @@ This refactoring is a prerequisite for ptu-rule-128 (Sleep behavior fix). They c
 - `app/server/api/encounters/[id]/breather.post.ts` — derives from `STATUS_CONDITION_DEFS` instead of `VOLATILE_CONDITIONS`
 - `app/utils/captureRate.ts` — uses `STATUS_CONDITION_DEFS` category lookup instead of array includes
 - `app/utils/restHealing.ts` — uses `STATUS_CONDITION_DEFS` category lookup instead of array includes
+
+### Fix Cycle — code-review-327 (2026-03-04)
+
+**Review findings addressed:**
+- **H1 (clearsOnFaint expansion):** Set `clearsOnFaint: false` for all 5 Other conditions (Stuck, Slowed, Trapped, Tripped, Vulnerable) per decree-047. Old code cleared only Persistent + Volatile on faint (14 conditions); the refactoring had incorrectly expanded this to 19.
+- **M1 (clearsOnEncounterEnd expansion):** Documented as intentional improvement. Other combat conditions (Stuck, Slowed, Trapped, Tripped, Vulnerable) having `clearsOnEncounterEnd: true` is pragmatically correct — these are combat-context conditions that should not persist after encounters, even though the old category-based code didn't clear them.
+
+**Commits:**
+- `8bdb1834` — fix: set clearsOnFaint: false for Other category conditions per decree-047
+
+**Files changed:**
+- `app/constants/statusConditions.ts` — reverted `clearsOnFaint` to `false` for 5 Other conditions; added decree-047 comments; documented clearsOnEncounterEnd rationale
