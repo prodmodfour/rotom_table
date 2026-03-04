@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-03-04T11:40:00
-updated_by: slave-collector (plan-20260304-110950)
+last_updated: 2026-03-04T12:25:00
+updated_by: slave-collector (plan-20260304-115403)
 ---
 
 # Dev Ecosystem State
@@ -100,7 +100,7 @@ updated_by: slave-collector (plan-20260304-110950)
 | feature-002 | P2 | **P2-APPROVED** | 3D isometric grid — P2 fix cycle 2 APPROVED (code-review-160 + rules-review-150). All tiers complete | multi-phase |
 | feature-003 | P1 | **Track-A-P2-APPROVED + Track-B-P1-APPROVED + Track-C-P1-APPROVED** | Player View — Track A P2 APPROVED: code-review-188 APPROVED (`:deep()` fix complete). Track B P1 APPROVED (code-review-162). Track C P1 APPROVED (code-review-163 + rules-review-152). All tracks P0+P1+P2 complete | multi-phase-parallel |
 | feature-004 | P3 | **P2-APPROVED** | Pokemon Mounting / Rider System — P0 APPROVED. P1 APPROVED. P2 fix cycle re-reviewed by slave-4 (plan-20260304-095500): code-review-318 **APPROVED** (all 6 code-review-314 + 2 rules-review-287 issues verified resolved, 0 new) + rules-review-291 **APPROVED** (all 10 mechanics verified, decree-003/004/040 compliant). **Feature complete** (all P0+P1+P2 tiers approved) | multi-phase |
-| feature-005 | P3 | **P2-implemented** | Living Weapon System (Honedge Line) — P0 APPROVED (code-review-301 + rules-review-274). P1 APPROVED (code-review-319 + rules-review-292). P2 implemented by slave-2 (plan-20260304-110950): 14 commits — VTT shared movement pool, No Guard suppression, Aegislash forced Blade Forme, Weaponize ability intercept, Soulstealer healing, bug-050 fix. **P2 needs review** | multi-phase |
+| feature-005 | P3 | **P2-CHANGES_REQUIRED** | Living Weapon System (Honedge Line) — P0 APPROVED (code-review-301 + rules-review-274). P1 APPROVED (code-review-319 + rules-review-292). P2 reviewed: code-review-321 **CHANGES_REQUIRED** (1C+3H+3M: service over 800 lines, movementUsedThisRound not persisted, resetWieldMovementPools never called, No Guard not suppressed client-side) + rules-review-294 **CHANGES_REQUIRED** (2H+3M: movement pool never resets, Soulstealer scene frequency not enforced). **P2 needs fix cycle** | multi-phase |
 | feature-006 | P1 | **P2-APPROVED** | Pokemon Evolution System — P0 APPROVED. P1 APPROVED. P2 APPROVED. P2 fix cycle re-review: code-review-290 **APPROVED** + rules-review-266 **APPROVED** (plan-20260302-224650). All code-review-248 + rules-review-224 issues verified resolved. Feature complete | multi-phase |
 | feature-007 | P1 | **P1-APPROVED** | Pokemon Level-Up Allocation UI — P0 APPROVED. P1 fix cycle APPROVED: code-review-243 **APPROVED** (M1: loose MoveDetail types → refactoring-109, M2: canAssignAbility UX → refactoring-110) + rules-review-219 **APPROVED** (all 9 mechanics verified, 0 issues). All code-review-238 + rules-review-214 issues resolved. **Feature complete** (design has P0+P1 only, no P2 tier) | multi-phase |
 | feature-008 | P1 | **P1-APPROVED** | Trainer Level-Up Milestone Workflow — P0 APPROVED. P1 fix cycle re-review: code-review-291 **APPROVED** + rules-review-267 **APPROVED** (plan-20260302-224650). All code-review-239 + rules-review-206 issues verified resolved. **Feature complete** (design has P0+P1 only, no P2 tier) | multi-phase |
@@ -119,7 +119,7 @@ updated_by: slave-collector (plan-20260304-110950)
 | feature-021 | P2 | **APPROVED** | Derived Capability Calculations — implemented by slave-4 (plan-20260303-065350). Fix cycle by slave-2 (plan-20260303-131425). Re-reviewed by slave-2 (plan-20260303-165227): code-review-303 **APPROVED** + rules-review-276 **APPROVED**. All code-review-298 issues verified resolved. **Feature complete** | partial |
 | feature-023 | P2 | **P2-APPROVED** | Player Capture & Healing Interfaces — P0 APPROVED. P1 APPROVED. P2 APPROVED. P2 fix cycle re-review: code-review-294 **APPROVED** (plan-20260302-224650). All code-review-288 issues verified resolved. Rules-review-264 already APPROVED. **Feature complete** | multi-phase |
 | feature-022 | P2 | **APPROVED** | Pokemon Loyalty System — PARTIAL scope. Fix cycle by slave-1 (plan-20260303-191515). Re-reviewed by slave-3 (plan-20260303-202535): code-review-309 **APPROVED** (all 6 code-review-306 issues verified resolved, 0 new) + rules-review-282 **APPROVED** (all rules-review-279 issues resolved, 0 new). `prisma db push` completed (schema already in sync). Remaining: as-any removal (5 locations documented in ticket). Out of scope: command checks (R049), loyalty-gated evolution | partial |
-| feature-024 | P3 | **open** | Living Weapon unit test coverage — engage validation rules, disengage state clearing, reconstruction from flags, homebrew species fallback. Filed by slave-1 (plan-20260303-131425) as part of feature-005 fix cycle (code-review-297 H3) | single-phase |
+| feature-024 | P3 | **implemented** | Living Weapon unit test coverage — engage validation, disengage clearing, state reconstruction, homebrew fallback, getLivingWeaponConfig. Implemented by slave-4 (plan-20260304-115403): 4 commits, 3 test files (living-weapon.service.test.ts, living-weapon-state.test.ts, combatantCapabilities.test.ts). **Needs review** | single-phase |
 
 ### UX Tickets (`tickets/ux/`)
 | Ticket | Priority | Status | Summary |
@@ -135,25 +135,26 @@ updated_by: slave-collector (plan-20260304-110950)
 | ux-009 | P4 | **resolved** | Proactive IMMUNE tags in StatusConditionsModal — implemented by slave-4 (plan-20260227-153711). code-review-209 APPROVED + rules-review-185 APPROVED (plan-20260227-162300 slave-2) |
 | ux-010 | P4 | **resolved** | Overlapping significance tier boundaries — fixed by slave-4 (plan-20260227-153711). Exclusive end values. code-review-209 APPROVED + rules-review-185 APPROVED (plan-20260227-162300 slave-2) |
 | ux-011 | P4 | **open** | Custom item form missing grantedCapabilities input field. Follow-up from code-review-222 M-01. Filed by slave-collector (plan-20260228-153856) |
-| ux-012 | P3 | **implemented** | Client-side status_tick WebSocket handler for tick damage notifications. Implemented by slave-4 (plan-20260304-110950): 3 commits — added status_tick to WebSocketEvent union, handler shows toast for each tick result. **Needs review** |
+| ux-012 | P3 | **CHANGES_REQUIRED** | Client-side status_tick WebSocket handler for tick damage notifications. Implemented by slave-4 (plan-20260304-110950). Reviewed: code-review-322 **CHANGES_REQUIRED** (1C: single ref overwrites on multi-tick turns, 2M: dropped payload fields, wrong commit hashes) + rules-review-295 **APPROVED** (all tick mechanics correct, decree-032 compliant). **Needs fix cycle** |
 | ux-013 | P4 | **open** | LevelUpSummary stacked bonus Skill Edge display shows each rank-up from base rank instead of cumulative progression. Cosmetic only — actual payload is correct. Source: rules-review-215 MED-01. Filed by slave-collector (plan-20260301-110550) |
 | ux-014 | P4 | **open** | Evolution undo snapshot staleness warning — no expiry mechanism, GM could undo much later discarding post-evolution changes. Source: code-review-248 M2. Filed by slave-collector (plan-20260301-143720) |
 | ux-015 | P4 | **open** | Replace alert() with inline UI for evolution prevention messages (Everstone/Eviolite). Source: code-review-248 M3. Filed by slave-collector (plan-20260301-143720) |
 
 ## Active Developer Work
 
-**Current task:** Session 107 collection complete. 4 slaves merged (23 commits), 0 skipped. 3 dev slaves + 1 reviewer slave.
+**Current task:** Session 108 collection complete. 4 slaves merged (9 commits), 0 skipped. 3 reviewer slaves + 1 dev slave.
 
-**Session 107 (2026-03-04, plan-20260304-110950):**
-- **slave-1** (reviewers): feature-018-p2-fix-rereview — code-review-320 **APPROVED** (all 4 code-review-317 issues resolved, 0 new) + rules-review-293 **APPROVED** (5 mechanics verified, decree-045 compliant). → feature-018 **P2-APPROVED, feature complete**
-- **slave-2** (developer): feature-005-p2+bug-050 — 14 commits: Living Weapon P2. VTT shared movement pool (movementUsedThisRound on WieldRelationship), No Guard suppression in damage calc, Aegislash forced Blade Forme on engage/revert on disengage (wasInBladeFormeOnEngage), Weaponize ability intercept, Soulstealer healing on faint/kill in damage+move+AoO endpoints. Also fixed bug-050 (moveKeywords passthrough). → **P2-implemented, needs review**
-- **slave-3** (developer): refactoring-114 — 4 commits: Renamed capturedSpecies → ownedSpecies across Prisma schema, TypeScript source, CLAUDE.md, and app-surface.md. → **implemented, needs review + prisma migration**
-- **slave-4** (developer): ux-012 — 3 commits: Added status_tick WebSocket event handler. Toast notifications for Burn/Poison/Cursed tick damage. → **implemented, needs review**
+**Session 108 (2026-03-04, plan-20260304-115403):**
+- **slave-1** (reviewers): feature-005-p2-review — code-review-321 **CHANGES_REQUIRED** (1C+3H+3M) + rules-review-294 **CHANGES_REQUIRED** (2H+3M). Also filed decree-need-045. → feature-005 **P2-CHANGES_REQUIRED, needs fix cycle**
+- **slave-2** (reviewers): ux-012-review — code-review-322 **CHANGES_REQUIRED** (1C+2M) + rules-review-295 **APPROVED**. → ux-012 **CHANGES_REQUIRED, needs fix cycle**
+- **slave-3** (reviewers): refactoring-114-review — code-review-323 **APPROVED** (0 issues). → refactoring-114 **APPROVED, feature complete**
+- **slave-4** (developer): feature-024 — 4 commits: Living Weapon unit tests (3 test files: living-weapon.service.test.ts, living-weapon-state.test.ts, combatantCapabilities.test.ts). → **implemented, needs review**
 
 **Smoke test:** PASSED (all 3 views render correctly)
-**Tickets APPROVED:** feature-018 P2 (both re-reviews passed — feature complete)
-**New implementations needing review:** feature-005 P2 (Living Weapon), refactoring-114 (ownedSpecies rename), ux-012 (status_tick handler)
-**Tickets resolved:** bug-050 (moveKeywords passthrough, fixed as part of feature-005 P2)
+**Tickets APPROVED:** refactoring-114 (code-review-323 APPROVED — pure rename, feature complete)
+**Tickets needing fix cycle:** feature-005 P2 (code-review-321 1C+3H+3M + rules-review-294 2H+3M), ux-012 (code-review-322 1C+2M)
+**New implementations needing review:** feature-024 (Living Weapon unit tests)
+**Decree-need filed:** decree-need-045 (No Guard ability definition: core vs playtest)
 
 **Session 106 (2026-03-04, plan-20260304-104014):**
 - **slave-1** (developer): feature-018-p2-fix — 5 commits: Fix cycle addressing code-review-317 (1H+3M). Server-side weather threading for mount speed calcs (H1), Sand Force bonus before min-1 clamp (M1), WEATHER_ABILITY_EFFECTS moved to client utils (M3), app-surface.md updated (M2), ticket updated. → **fix-cycle-done, needs re-review**
@@ -909,6 +910,15 @@ updated_by: slave-collector (plan-20260304-110950)
 
 ## Review Status
 
+### Session 108 Reviews (plan-20260304-115403)
+| Review ID | Target | Verdict | Reviewer | Date |
+|-----------|--------|---------|----------|------|
+| code-review-321 | feature-005 P2 first review (Living Weapon P2: 14 commits, Sections J-N) | CHANGES_REQUIRED (1C: living-weapon.service.ts over 800 lines, 3H: movementUsedThisRound not persisted, resetWieldMovementPools never called, No Guard not suppressed client-side, 3M: direct mutation, Soulstealer mutation inconsistency, Soulstealer scene frequency not enforced) | senior-reviewer | 2026-03-04 |
+| rules-review-294 | feature-005 P2 first review (Living Weapon P2: 8 mechanics verified) | CHANGES_REQUIRED (2H: movement pool never resets at round start, Soulstealer scene frequency not enforced. 3M: No Guard client-side gap, shared pool ignores movement modifiers, No Guard definition needs decree) | game-logic-reviewer | 2026-03-04 |
+| code-review-322 | ux-012 first review (status_tick WebSocket handler: 3 commits) | CHANGES_REQUIRED (1C: single ref overwrites when multiple ticks fire in one turn, 2M: handler drops combatantId/formula from payload, wrong commit hashes in resolution log) | senior-reviewer | 2026-03-04 |
+| rules-review-295 | ux-012 first review (status_tick handler: 5 mechanics verified) | APPROVED (all tick mechanics correct: Burn/Poison/Cursed/weather. decree-032 compliant. 1M non-blocking: lastStatusTick single-ref overwrite) | game-logic-reviewer | 2026-03-04 |
+| code-review-323 | refactoring-114 (capturedSpecies → ownedSpecies rename: 4 commits, 10 source files) | APPROVED (0 issues. Complete rename, correct @map technique, zero stale references, clean commit layering) | senior-reviewer | 2026-03-04 |
+
 ### Session 107 Reviews (plan-20260304-110950)
 | Review ID | Target | Verdict | Reviewer | Date |
 |-----------|--------|---------|----------|------|
@@ -1418,6 +1428,21 @@ updated_by: slave-collector (plan-20260304-110950)
 | Open tickets (P4) | 10 (refactoring-060/062/076/078/079/084 + ux-002/006/007/008) |
 | Total open | 16 |
 | Total resolved | 159 (feature-002 fully resolved) |
+
+## Session Summary (2026-03-04, session 108 — plan-20260304-115403)
+
+**Slave collection plan-20260304-115403:** 4 slaves merged (9 commits total). 3 reviewer slaves + 1 dev slave, all completed successfully.
+- **slave-1** (reviewers): feature-005-p2-review — code-review-321 **CHANGES_REQUIRED** (1C+3H+3M) + rules-review-294 **CHANGES_REQUIRED** (2H+3M). decree-need-045 filed.
+- **slave-2** (reviewers): ux-012-review — code-review-322 **CHANGES_REQUIRED** (1C+2M) + rules-review-295 **APPROVED** (1M non-blocking)
+- **slave-3** (reviewers): refactoring-114-review — code-review-323 **APPROVED** (0 issues)
+- **slave-4** (developer): feature-024 — 4 commits (3 Living Weapon test files: service, state, capabilities)
+
+**Smoke test:** PASSED (all 3 views render correctly)
+**Tickets APPROVED:** refactoring-114 (code-review-323 — pure rename, feature complete)
+**Tickets needing fix cycle:** feature-005 P2 (1C+3H+3M code + 2H+3M rules), ux-012 (1C+2M code)
+**New implementations needing review:** feature-024 (Living Weapon unit tests)
+**Decree-need filed:** decree-need-045 (No Guard definition: core vs playtest)
+**CLAUDE.md updates:** 1 (app/tests/CLAUDE.md — services 7→9 files, total 53→55)
 
 ## Session Summary (2026-03-04, session 107 — plan-20260304-110950)
 
