@@ -344,11 +344,13 @@ export function calculateDamage(input: DamageCalcInput): DamageCalcResult {
   const defenseStageMultiplier = STAGE_MULTIPLIERS[Math.max(-6, Math.min(6, input.defenseStage))]
   const effectiveDefense = applyStageModifierWithBonus(input.defenseStat, input.defenseStage, input.defenseBonus ?? 0)
   const dr = input.damageReduction ?? 0
-  const afterDefense = Math.max(1, subtotalBeforeDefense - effectiveDefense - dr)
+  const afterDefense = subtotalBeforeDefense - effectiveDefense - dr
 
   // Step 7.5 (P2): Ability damage bonus (e.g., Sand Force +5)
+  // Applied before the min-1 clamp so negative pre-bonus damage + bonus
+  // correctly yields min 1 (not bonus + 1).
   const abilityDamageBonus = input.abilityDamageBonus ?? 0
-  const afterAbilityBonus = afterDefense + abilityDamageBonus
+  const afterAbilityBonus = Math.max(1, afterDefense + abilityDamageBonus)
 
   // Step 8: Type effectiveness
   const typeEffectiveness = getTypeEffectiveness(input.moveType, input.targetTypes)
