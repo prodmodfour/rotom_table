@@ -48,15 +48,20 @@ export function useWebSocket() {
     captureRate: number
     timestamp: number
   } | null>(null)
-  /** Last status tick damage event received via WebSocket */
-  const lastStatusTick = ref<{
+  /** Accumulated status tick damage events for toast/notification display.
+   *  Multiple ticks can fire in one turn (e.g., Burn + Poison on same combatant,
+   *  or ticks on multiple combatants). UI components should consume and clear. */
+  const statusTickQueue = ref<Array<{
+    encounterId: string
+    combatantId: string
     combatantName: string
     condition: string
     damage: number
     newHp: number
     fainted: boolean
+    formula: string
     timestamp: number
-  } | null>(null)
+  }>>([])
   const messageListeners = new Set<(message: WebSocketEvent) => void>()
 
   // Stored identity for auto re-identification on reconnect
@@ -272,12 +277,14 @@ export function useWebSocket() {
 
       case 'status_tick':
         // Tick damage notification (Burn, Poison, Badly Poisoned, Cursed, weather)
+        // Push to queue — multiple ticks can fire in one turn
         if (message.data && typeof message.data === 'object') {
           const d = message.data as {
-            combatantName: string; condition: string; damage: number
-            newHp: number; fainted: boolean
+            encounterId: string; combatantId: string; combatantName: string
+            condition: string; damage: number; newHp: number; fainted: boolean
+            formula: string
           }
-          lastStatusTick.value = { ...d, timestamp: Date.now() }
+          statusTickQueue.value = [...statusTickQueue.value, { ...d, timestamp: Date.now() }]
         }
         break
 
@@ -345,6 +352,11 @@ export function useWebSocket() {
     return () => { messageListeners.delete(listener) }
   }
 
+  /** Clear the status tick queue after UI has consumed/displayed the events */
+  const clearStatusTickQueue = () => {
+    statusTickQueue.value = []
+  }
+
   const disconnect = () => {
     stopKeepalive()
     if (ws) {
@@ -381,8 +393,9 @@ export function useWebSocket() {
     receivedFlankingMap: readonly(receivedFlankingMap),
     /** P2: Last capture attempt event for Group/Player View display */
     lastCaptureAttempt: readonly(lastCaptureAttempt),
-    /** Last status tick damage event for toast/notification display */
-    lastStatusTick: readonly(lastStatusTick),
+    /** Accumulated status tick events — UI should consume and call clearStatusTickQueue() */
+    statusTickQueue: readonly(statusTickQueue),
+    clearStatusTickQueue,
     connect,
     disconnect,
     resetAndReconnect,
