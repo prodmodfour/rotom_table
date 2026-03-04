@@ -1,18 +1,19 @@
 ---
-generated_at: 2026-03-04T19:16:42.163Z
-total_tickets: 308
-open: 29
+generated_at: 2026-03-04T19:26:53.933Z
+total_tickets: 310
+open: 30
 in_progress: 122
-resolved: 139
+resolved: 140
 ---
 
 # Tickets Index
 
-## Open Tickets (29)
+## Open Tickets (30)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
-| decree-need-047 | decree | P2 | encounter-tables | The Dark Cave environment preset applies a flat -2 accuracy  |
+| ptu-rule-134 | ptu-rule | P2 | encounter-tables | Per decree-048, replace the single Dark Cave preset with two |
+| feature-025 | feature | P2 | encounter-tables | Per decree-048, implement per-combatant vision capability tr |
 | ptu-rule-131 | ptu-rule | P2 | combat | `rollAccuracyCheck()` in `app/composables/useCapture.ts` rei |
 | refactoring-108 | refactoring | P3 | — | refactoring-108: Extract switch button computeds from Combat |
 | refactoring-112 | refactoring | P3 | combat | Refactoring-112: Decompose encounter store into focused sub- |
@@ -169,20 +170,18 @@ resolved: 139
 | refactoring-092 | refactoring | P4 | encounter-tables | code-review-207 M1 |
 | refactoring-093 | refactoring | P4 | combat | code-review-207 M2 |
 
-## Open Decree-Needs (1)
+## Open Decree-Needs (0)
 
-| ID | Priority | Domain | Topic |
-|----|----------|--------|-------|
-| decree-need-047 | P2 | encounter-tables | — |
+All decree-needs addressed.
 
 ## Summary by Category
 
 | Category | Open | In-Progress | Resolved | Total |
 |----------|------|-------------|----------|-------|
 | bug | 1 | 17 | 30 | 50 |
-| ptu-rule | 5 | 62 | 39 | 107 |
-| feature | 0 | 20 | 3 | 24 |
+| ptu-rule | 6 | 62 | 39 | 108 |
+| feature | 1 | 20 | 3 | 25 |
 | ux | 5 | 8 | 2 | 16 |
-| decree | 1 | 0 | 46 | 47 |
+| decree | 0 | 0 | 47 | 47 |
 | refactoring | 17 | 15 | 3 | 48 |
 | docs | 0 | 0 | 16 | 16 |
