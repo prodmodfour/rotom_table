@@ -300,6 +300,28 @@ export function useEncounterActions(options: EncounterActionsOptions) {
           }
         }
       }
+
+      // Linked movement: update Living Weapon partner position locally (feature-005 P2)
+      // PTU p.306: wielder and weapon share position and movement pool.
+      // Server already synced positions; update local state + shared movement pool.
+      if (!localCombatant.mountState && encounterStore.encounter.wieldRelationships?.length) {
+        const wieldRel = encounterStore.encounter.wieldRelationships.find(
+          r => r.wielderId === combatantId || r.weaponId === combatantId
+        )
+        if (wieldRel && distanceMoved > 0) {
+          // Update shared movement pool
+          wieldRel.movementUsedThisRound = (wieldRel.movementUsedThisRound ?? 0) + distanceMoved
+
+          // Sync partner position
+          const partnerId = wieldRel.wielderId === combatantId
+            ? wieldRel.weaponId
+            : wieldRel.wielderId
+          const partner = encounterStore.encounter.combatants.find(c => c.id === partnerId)
+          if (partner) {
+            partner.position = { ...position }
+          }
+        }
+      }
     }
     refreshUndoRedoState()
     await broadcastUpdate()
