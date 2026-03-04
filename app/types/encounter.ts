@@ -79,6 +79,10 @@ export interface Combatant {
   /** Whether this combatant forfeits their next round turn (Advanced Priority penalty) */
   skipNextRound?: boolean;
 
+  // P2 Rider class feature usage tracking (feature-004)
+  // Scene-limited features (Lean In, Overrun) track uses per scene.
+  featureUsage?: Record<string, { usedThisScene: number; maxPerScene: number }>;
+
   // Mount relationship (PTU p.218, feature-004)
   // Present when this combatant is part of a mounted pair.
   // Rider (trainer) and mount (Pokemon) each carry a MountState pointing to each other.

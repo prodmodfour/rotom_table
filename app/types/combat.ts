@@ -46,6 +46,10 @@ export interface MountState {
    * Reset each round by resetCombatantsForNewRound.
    */
   movementRemaining: number
+  /** P2: Original Speed Evasion before Ride as One modification (restored on dismount) */
+  originalSpeedEvasion?: number
+  /** P2: Ride as One — whether the initiative swap occurred this round */
+  rideAsOneSwapped?: boolean
 }
 
 // Status conditions (PTU 1.05)
@@ -118,6 +122,10 @@ export interface TurnState {
   forfeitStandardAction?: boolean;
   /** Whether this combatant forfeits their Shift Action next turn (item received) */
   forfeitShiftAction?: boolean;
+
+  // P2 (feature-004): Distance tracking for Run Up / Overrun
+  /** Distance moved this turn in meters (for Run Up, Overrun, etc.). Reset to 0 at turn start. */
+  distanceMovedThisTurn?: number;
 }
 
 // Source-tracked combat stage modification (decree-005)
