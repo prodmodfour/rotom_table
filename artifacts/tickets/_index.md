@@ -1,8 +1,8 @@
 ---
-generated_at: 2026-03-04T13:07:13.159Z
-total_tickets: 302
+generated_at: 2026-03-04T14:22:38.058Z
+total_tickets: 303
 open: 26
-in_progress: 121
+in_progress: 122
 resolved: 137
 ---
 
@@ -39,7 +39,7 @@ resolved: 137
 | refactoring-119 | refactoring | P4 | — | refactoring-119: Update stale interrupt.post.ts file header  |
 | refactoring-126 | refactoring | P4 | pokemon-lifecycle | The outer catch block in `[id].put.ts` (line ~90) and `index |
 
-## In-Progress Tickets (121)
+## In-Progress Tickets (122)
 
 | ID | Category | Priority | Domain | Source |
 |----|----------|----------|--------|--------|
@@ -99,6 +99,7 @@ resolved: 137
 | feature-018 | feature | P2 | scenes | matrix-gap (Scenes SG-1) |
 | feature-022 | feature | P2 | pokemon-lifecycle | matrix-gap (GAP-PLC-3) |
 | feature-023 | feature | P2 | player-view+capture+healing | matrix-gap (GAP-CAP-1 + GAP-HEAL-1) |
+| refactoring-125 | refactoring | P2 | encounter | code-review-295 C1 |
 | bug-042 | bug | P2 | — | code-review-264 HIGH-001 |
 | bug-050 | bug | P3 | combat | code-review-319 MEDIUM-001 |
 | ptu-rule-086 | ptu-rule | P3 | capture | capture-audit.md (capture-R005) |
@@ -178,5 +179,5 @@ All decree-needs addressed.
 | feature | 0 | 20 | 3 | 24 |
 | ux | 5 | 8 | 2 | 16 |
 | decree | 0 | 0 | 45 | 45 |
-| refactoring | 15 | 14 | 3 | 45 |
+| refactoring | 15 | 15 | 3 | 46 |
 | docs | 0 | 0 | 16 | 16 |
