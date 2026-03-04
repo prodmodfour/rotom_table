@@ -16,8 +16,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 app/
 ├── pages/           # File-based routing (gm/, group/, player/)
 ├── layouts/         # Role-based layouts (gm, group, player, default)
-├── components/      # 156 auto-imported components by domain
-├── composables/     # 54 auto-imported composables for shared logic
+├── components/      # 157 auto-imported components by domain
+├── composables/     # 57 auto-imported composables for shared logic
 ├── stores/          # 16 Pinia stores for state management
 ├── types/           # 15 TypeScript type definition files
 ├── utils/           # captureRate, diceRoller, restHealing

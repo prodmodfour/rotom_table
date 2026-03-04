@@ -1,6 +1,6 @@
 # Encounter Components
 
-38 components managing PTU combat. Parent page: `pages/gm/index.vue` (GM) and `pages/group/index.vue` (Group view).
+39 components managing PTU combat. Parent page: `pages/gm/index.vue` (GM) and `pages/group/index.vue` (Group view).
 
 ## Turn Lifecycle (5 Phases)
 
@@ -21,7 +21,7 @@
 
 For status moves (no damage base), MoveTargetModal skips the damage section entirely.
 
-## Component Categories (38 components, 11 categories)
+## Component Categories (39 components, 12 categories)
 
 **Turn Flow (5):** DeclarationPanel, DeclarationSummary, PriorityActionPanel, HoldActionButton, SignificancePanel
 
@@ -43,16 +43,18 @@ For status moves (no damage base), MoveTargetModal skips the damage section enti
 
 **Weather (1):** WeatherEffectIndicator
 
+**Notifications (1):** GmToastContainer
+
 **Encounter Setup (3):** BudgetIndicator, EnvironmentSelector, GMActionModal
 
-## Composable Delegation (11 encounter composables)
+## Composable Delegation (13 encounter composables)
 
 | Composable | Purpose | Used by |
 |---|---|---|
 | `useCombat` | Stage multipliers, HP calc, evasions, injuries, XP | CombatantCard, GroupCombatantCard, PlayerCombatantCard |
 | `useMoveCalculation` | Accuracy, damage, range/LoS, STAB, targeting | MoveTargetModal |
 | `useDamageCalculation` | Damage base chart, rolled/set damage modes | DamageSection |
-| `useEncounterActions` | GM action handlers (damage, heal, stages, status, moves, grid) | pages/gm/index.vue (parent) |
+| `useEncounterActions` | GM action handlers (damage, heal, stages, status, moves, grid); uses useGmToast for notifications | pages/gm/index.vue (parent) |
 | `useEncounterHistory` | Undo/redo with 50-snapshot ring buffer | pages/gm/index.vue (parent) |
 | `useEncounterBudget` | Difficulty budget analysis (PTU p.460) | BudgetIndicator (via parent) |
 | `useSwitching` | Switch, recall, release workflows (Standard/Shift action cost) | SwitchPokemonModal |
@@ -61,6 +63,8 @@ For status moves (no damage base), MoveTargetModal skips the damage section enti
 | `useSwitchModalState` | Switch modal open/close, trainer/pokemon ID resolution | pages/gm/index.vue (parent) |
 | `useCombatantDisplay` | Name resolution for Pokemon (nickname/species) and humans | MoveTargetModal, UseItemModal, TargetSelector |
 | `useEncounterStore()` | Core encounter state, turn management, combatant CRUD | DeclarationPanel, GMActionModal, MoveTargetModal, CombatantCard, PriorityActionPanel, SwitchPokemonModal, SignificancePanel, UseItemModal, XpDistributionModal |
+| `useCombatantSwitchButtons` | Switch button visibility/disabled logic (extracted from CombatantGmActions) | CombatantGmActions |
+| `useGmToast` | Non-blocking GM toast notifications | GmToastContainer, useEncounterActions |
 | `useFlankingDetection()` | Flanking penalty overlay on target selection | MoveTargetModal |
 
 Shared composables also used: `useTypeChart` (MoveButton), `usePokemonSprite` / `useTrainerSprite` (all card components), `useWebSocket` (PlayerRequestPanel, SignificancePanel).
