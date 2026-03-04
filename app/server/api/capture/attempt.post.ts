@@ -50,7 +50,11 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    // Validate threshold if provided
+    // Validate threshold if provided.
+    // The server trusts the client-provided threshold because this is a single-user
+    // GM tool (no adversarial clients), and full server-side recomputation would
+    // require encounter context (combatant positions, terrain grid, flanking
+    // geometry) that is not available in this endpoint.
     const threshold = body.accuracyThreshold ?? 6
     if (typeof threshold !== 'number' || !Number.isInteger(threshold) || threshold < 1) {
       throw createError({
