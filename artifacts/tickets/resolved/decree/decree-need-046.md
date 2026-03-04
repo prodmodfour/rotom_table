@@ -3,7 +3,8 @@ id: decree-need-046
 title: "Should faint clearing expand to Other category conditions (Stuck, Slowed, Trapped, Tripped, Vulnerable)?"
 priority: P3
 severity: medium
-status: open
+status: addressed
+decree_id: decree-047
 domain: combat
 source: code-review-327 HIGH-001
 created_by: slave-collector (plan-20260304-144401)
