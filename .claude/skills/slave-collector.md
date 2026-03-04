@@ -508,7 +508,7 @@ If push fails (remote has new commits), pull with `--ff-only` first and retry. I
 - healing domain: failed — investigate slave-4 worktree at .worktrees/slave-4-matrix-healing-rules
 
 ### Suggested Next Plan
-Based on updated state, the next `/create_slave_plan` should prioritize:
+Based on updated state, the next `/survey` should prioritize:
 1. <recommendation>
 2. <recommendation>
 ```

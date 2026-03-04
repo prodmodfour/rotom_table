@@ -125,7 +125,7 @@ The Feature Matrix drives the dev loop. Every PTU rule is extracted, every app c
 ### Cross-Ecosystem Flow
 
 ```
-Master Planner ── reads matrix + audit ──→ creates bug/feature/ptu-rule tickets
+Orchestrator Survey ── reads matrix + audit ──→ creates bug/feature/ptu-rule tickets
                                                    ↓
                                              Dev Developer (slave)
                                                    ↓

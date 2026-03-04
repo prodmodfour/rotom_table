@@ -266,8 +266,8 @@ All skills cite and enforce the decree going forward
 
 - Decrees override all skill-level rulings (including Game Logic Reviewer)
 - Decree violations are CRITICAL severity in reviews
-- Master Planner never assigns decree-needs to slaves (they require human)
-- Master Planner reports open decree-needs in its plan summary
+- Orchestrator survey never assigns decree-needs to slaves (they require human)
+- Orchestrator survey reports open decree-needs in its summary
 
 ## UX Exploration Sessions
 
