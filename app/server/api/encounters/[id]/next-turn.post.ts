@@ -18,7 +18,7 @@ import { prisma } from '~/server/utils/prisma'
 import { v4 as uuidv4 } from 'uuid'
 import { buildEncounterResponse } from '~/server/services/encounter.service'
 import { syncEntityToDatabase } from '~/server/services/entity-update.service'
-import { calculateDamage, applyDamageToEntity, applyFaintStatus } from '~/server/services/combatant.service'
+import { calculateDamage, applyDamageToEntity, applyFaintStatus, updateStatusConditions } from '~/server/services/combatant.service'
 import { getTickDamageEntries, getCombatantName } from '~/server/services/status-automation.service'
 import type { TickDamageResult } from '~/server/services/status-automation.service'
 import { broadcastToEncounter } from '~/server/utils/websocket'
@@ -27,7 +27,7 @@ import { checkHeavilyInjured, applyHeavilyInjuredPenalty, checkDeath } from '~/u
 import { clearMountOnFaint } from '~/server/services/mounting.service'
 import { getWeatherTickForCombatant } from '~/server/services/weather-automation.service'
 import type { WeatherTickResult, WeatherAbilityResult } from '~/server/services/weather-automation.service'
-import { isDamagingWeather } from '~/utils/weatherRules'
+import { isDamagingWeather, getCombatantAbilities, WEATHER_STATUS_CURE_ABILITIES, CURABLE_PERSISTENT_STATUSES } from '~/utils/weatherRules'
 import {
   resetResolvingTrainerTurnState,
   resetAllTrainersForResolution,
@@ -197,6 +197,57 @@ export default defineEventHandler(async (event) => {
       )
       combatants = turnEndResult.combatants
       weatherAbilityResults.push(...turnEndResult.results)
+    }
+
+    // --- P2: Hydration / Leaf Guard status cure at TURN END (PTU p.320) ---
+    // Hydration: cure one persistent status at turn end in Rain
+    // Leaf Guard: cure one persistent status at turn end in Sun
+    // Process after weather ability effects but before tick damage.
+    // Skip during declaration phase (declaration is not a real turn).
+    let weatherStatusCure: { combatantId: string; combatantName: string; ability: string; cured: string } | null = null
+
+    if (currentCombatant && currentPhase !== 'trainer_declaration' && weather && currentCombatant.entity.currentHp > 0) {
+      const abilities = getCombatantAbilities(currentCombatant)
+
+      for (const cureEntry of WEATHER_STATUS_CURE_ABILITIES) {
+        if (weather !== cureEntry.weather) continue
+        if (!abilities.some(a => a.toLowerCase() === cureEntry.ability.toLowerCase())) continue
+
+        // Find the first curable persistent status
+        const entityStatuses: StatusCondition[] = currentCombatant.entity.statusConditions ?? []
+        const curableStatus = entityStatuses.find(s =>
+          (CURABLE_PERSISTENT_STATUSES as string[]).includes(s)
+        ) as StatusCondition | undefined
+
+        if (curableStatus) {
+          // Use updateStatusConditions for clean CS reversal (decree-005)
+          const statusResult = updateStatusConditions(currentCombatant, [], [curableStatus])
+
+          // Reset Badly Poisoned counter if cured
+          if (curableStatus === 'Badly Poisoned') {
+            currentCombatant.badlyPoisonedRound = 0
+          }
+
+          const curedName = currentCombatant.type === 'pokemon'
+            ? ((currentCombatant.entity as any).nickname || (currentCombatant.entity as any).species)
+            : (currentCombatant.entity as any).name
+
+          weatherStatusCure = {
+            combatantId: currentCombatant.id,
+            combatantName: curedName,
+            ability: cureEntry.ability,
+            cured: curableStatus
+          }
+
+          // Sync to database (status change + potential stage changes from decree-005)
+          await syncEntityToDatabase(currentCombatant, {
+            statusConditions: currentCombatant.entity.statusConditions,
+            ...(statusResult.stageChanges ? { stageModifiers: currentCombatant.entity.stageModifiers } : {})
+          })
+
+          break // Only cure one status per turn
+        }
+      }
     }
 
     // --- Tick damage processing at turn end (PTU p.246-247) ---
@@ -661,6 +712,28 @@ export default defineEventHandler(async (event) => {
       updateData.moveLog = JSON.stringify(moveLog)
     }
 
+    // P2: Add weather status cure to move log
+    if (weatherStatusCure) {
+      const moveLog = JSON.parse((updateData.moveLog as string) || encounter.moveLog || '[]')
+      moveLog.push({
+        id: uuidv4(),
+        timestamp: new Date(),
+        round: encounter.currentRound,
+        actorId: weatherStatusCure.combatantId,
+        actorName: weatherStatusCure.combatantName,
+        moveName: `${weatherStatusCure.ability} (Cure)`,
+        damageClass: 'Status',
+        targets: [{
+          id: weatherStatusCure.combatantId,
+          name: weatherStatusCure.combatantName,
+          hit: true,
+          effect: `Cured ${weatherStatusCure.cured}`
+        }],
+        notes: `${weatherStatusCure.ability}: cured ${weatherStatusCure.cured} in ${weather === 'rain' ? 'Rain' : 'Sun'}`
+      })
+      updateData.moveLog = JSON.stringify(moveLog)
+    }
+
     const updatedRecord = await prisma.encounter.update({
       where: { id },
       data: updateData
@@ -717,6 +790,20 @@ export default defineEventHandler(async (event) => {
       })
     }
 
+    // P2: Broadcast weather status cure via WebSocket
+    if (weatherStatusCure) {
+      broadcastToEncounter(id, {
+        type: 'status_change',
+        data: {
+          encounterId: id,
+          combatantId: weatherStatusCure.combatantId,
+          combatantName: weatherStatusCure.combatantName,
+          statusRemoved: weatherStatusCure.cured,
+          source: weatherStatusCure.ability
+        }
+      })
+    }
+
     const response = buildEncounterResponse(updatedRecord, combatants, {
       ...(clearDeclarations && { declarations: [], switchActions: [] }),
       ...(updateData.moveLog && { moveLog: JSON.parse(updateData.moveLog as string) }),
@@ -731,7 +818,8 @@ export default defineEventHandler(async (event) => {
       ...(holdReleaseTriggered.length > 0 && { holdReleaseTriggered }),
       ...(actionForfeitApplied && { actionForfeitApplied }),
       ...(weatherTickResult && { weatherTick: weatherTickResult }),
-      ...(weatherAbilityResults.length > 0 && { weatherAbilityEffects: weatherAbilityResults })
+      ...(weatherAbilityResults.length > 0 && { weatherAbilityEffects: weatherAbilityResults }),
+      ...(weatherStatusCure && { weatherStatusCure })
     }
   } catch (error: unknown) {
     if (error && typeof error === 'object' && 'statusCode' in error) throw error
