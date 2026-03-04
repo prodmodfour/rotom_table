@@ -7,6 +7,8 @@
 import { loadEncounter, findCombatant } from '~/server/services/encounter.service'
 import { calculateDamage, calculateEvasion, calculateAccuracyThreshold } from '~/utils/damageCalculation'
 import { computeEquipmentBonuses } from '~/utils/equipmentBonuses'
+import { getEffectiveEquipmentBonuses, getEffectiveMoveList } from '~/server/services/living-weapon.service'
+import { reconstructWieldRelationships } from '~/server/services/living-weapon-state'
 import { ZERO_EVASION_CONDITIONS } from '~/constants/statusConditions'
 import { checkFlankingMultiTile, FLANKING_EVASION_PENALTY } from '~/utils/flankingGeometry'
 import { isEnemySide } from '~/utils/combatSides'
@@ -177,11 +179,14 @@ export default defineEventHandler(async (event) => {
     const attacker = findCombatant(combatants, body.attackerId)
     const target = findCombatant(combatants, body.targetId)
 
-    // Find move in attacker's move list
+    // Reconstruct wield relationships for Living Weapon equipment overlay
+    const wieldRelationships = reconstructWieldRelationships(combatants)
+
+    // Find move in attacker's move list (including Living Weapon moves if wielded)
     let move: Move | undefined
     if (attacker.type === 'pokemon') {
-      const pokemon = attacker.entity as Pokemon
-      move = pokemon.moves?.find(
+      const effectiveMoves = getEffectiveMoveList(wieldRelationships, combatants, attacker)
+      move = effectiveMoves.find(
         (m) => m.name.toLowerCase() === body.moveName.toLowerCase()
       )
     }
@@ -214,10 +219,11 @@ export default defineEventHandler(async (event) => {
     const targetData = getEntityStats(target, move.damageClass)
 
     // Auto-compute equipment DR for human targets (PTU p.293-294)
+    // Uses effective equipment (accounts for Living Weapon overlay)
     // Caller-provided DR overrides base equipment DR (for manual GM adjustments)
     let effectiveDR = body.damageReduction
     const targetEquipBonuses = target.type === 'human'
-      ? computeEquipmentBonuses((target.entity as HumanCharacter).equipment ?? {})
+      ? getEffectiveEquipmentBonuses(wieldRelationships, target)
       : null
     if (effectiveDR === undefined && targetEquipBonuses) {
       effectiveDR = targetEquipBonuses.damageReduction
@@ -237,9 +243,7 @@ export default defineEventHandler(async (event) => {
     let attackBonus = 0
     let defenseBonus = 0
     if (attacker.type === 'human') {
-      const attackerEquipBonuses = computeEquipmentBonuses(
-        (attacker.entity as HumanCharacter).equipment ?? {}
-      )
+      const attackerEquipBonuses = getEffectiveEquipmentBonuses(wieldRelationships, attacker)
       attackBonus = attackerEquipBonuses.statBonuses[isPhysical ? 'attack' : 'specialAttack'] ?? 0
     }
     if (targetEquipBonuses) {
