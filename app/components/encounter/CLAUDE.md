@@ -1,6 +1,6 @@
 # Encounter Components
 
-37 components managing PTU combat. Parent page: `pages/gm/index.vue` (GM) and `pages/group/index.vue` (Group view).
+38 components managing PTU combat. Parent page: `pages/gm/index.vue` (GM) and `pages/group/index.vue` (Group view).
 
 ## Turn Lifecycle (5 Phases)
 
@@ -21,7 +21,7 @@
 
 For status moves (no damage base), MoveTargetModal skips the damage section entirely.
 
-## Component Categories (37 components, 11 categories)
+## Component Categories (38 components, 11 categories)
 
 **Turn Flow (5):** DeclarationPanel, DeclarationSummary, PriorityActionPanel, HoldActionButton, SignificancePanel
 
@@ -43,7 +43,7 @@ For status moves (no damage base), MoveTargetModal skips the damage section enti
 
 **Weather (1):** WeatherEffectIndicator
 
-**Encounter Setup (2):** BudgetIndicator, GMActionModal
+**Encounter Setup (3):** BudgetIndicator, EnvironmentSelector, GMActionModal
 
 ## Composable Delegation (11 encounter composables)
 

@@ -29,7 +29,7 @@ If you need Pokemon, call one of these. Never build Pokemon records ad-hoc in AP
 | `combatant.service.ts` | ~697 | Damage calc, healing, status conditions, stage mods, combatant construction |
 | `csv-import.service.ts` | ~405 | Parse PTU character sheet CSVs, create trainer + Pokemon DB records |
 | `encounter-generation.service.ts` | ~125 | Weighted random species selection with diversity enforcement for spawn tables |
-| `encounter.service.ts` | ~495 | Encounter CRUD, initiative sorting, turn management, response building |
+| `encounter.service.ts` | ~514 | Encounter CRUD, initiative sorting, turn management, response building |
 | `entity-builder.service.ts` | ~128 | Transform Prisma records into typed Pokemon/HumanCharacter entities |
 | `entity-update.service.ts` | ~141 | Sync combatant state changes back to Pokemon/HumanCharacter DB rows |
 | `evolution.service.ts` | ~715 | Species evolution: stat recalc, Base Relations validation, full execution |
