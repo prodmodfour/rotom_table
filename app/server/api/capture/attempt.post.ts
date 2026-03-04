@@ -208,7 +208,7 @@ export default defineEventHandler(async (event) => {
       }
     } else if (ballDef?.postCaptureEffect === 'loyalty_plus_one') {
       // Friend Ball: +1 Loyalty (PTU p.279)
-      const currentLoyalty = (pokemon as any).loyalty ?? 2
+      const currentLoyalty = (pokemon as any).loyalty ?? 3
       const newLoyalty = Math.min(6, currentLoyalty + 1)
       await prisma.pokemon.update({
         where: { id: body.pokemonId },
