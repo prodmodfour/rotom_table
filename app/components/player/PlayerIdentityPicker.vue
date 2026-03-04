@@ -2,7 +2,7 @@
   <div class="player-identity-picker">
     <div class="picker-overlay">
       <div class="picker-content">
-        <h1 class="picker-title">PTU Session Helper</h1>
+        <h1 class="picker-title">Rotom Table</h1>
         <p class="picker-subtitle">Select your character to continue</p>
 
         <div v-if="loading" class="picker-loading">
