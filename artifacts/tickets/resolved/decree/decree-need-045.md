@@ -3,7 +3,8 @@ id: decree-need-045
 title: "No Guard ability definition: core (evasion-based) vs playtest (+3/-3 attack rolls)"
 priority: low
 severity: medium
-status: open
+status: addressed
+decree_id: decree-046
 domain: combat
 source: rules-review-294
 created_by: game-logic-reviewer
