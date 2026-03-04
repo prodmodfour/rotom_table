@@ -1,7 +1,9 @@
 import type { Move, Combatant, Pokemon, HumanCharacter, GridPosition } from '~/types'
+import type { WieldRelationship } from '~/types/combat'
 import type { DiceRollResult } from '~/utils/diceRoller'
 import { roll } from '~/utils/diceRoller'
-import { computeEquipmentBonuses } from '~/utils/equipmentBonuses'
+import { computeEquipmentBonuses, computeEffectiveEquipment } from '~/utils/equipmentBonuses'
+import { LIVING_WEAPON_CONFIG } from '~/constants/livingWeapon'
 import { computeTargetEvasions } from '~/utils/evasionCalculation'
 import { getEffectivenessClass } from '~/utils/typeEffectiveness'
 import { getWeatherDamageModifier } from '~/utils/damageCalculation'
@@ -76,6 +78,28 @@ export function useMoveCalculation(
   const { parseRange, isInRange, closestCellPair } = useRangeParser()
   const terrainStore = useTerrainStore()
   const encounterStore = useEncounterStore()
+
+  /**
+   * Get effective equipment bonuses for a combatant, accounting for
+   * Living Weapon equipment overlay when the combatant is wielding one.
+   * Client-side counterpart of getEffectiveEquipmentBonuses from living-weapon.service.ts.
+   */
+  const getEffectiveEquipBonuses = (combatant: Combatant) => {
+    if (combatant.type !== 'human') {
+      return computeEquipmentBonuses({})
+    }
+    const human = combatant.entity as HumanCharacter
+    let equipment = human.equipment ?? {}
+    const wieldRels = encounterStore.encounter?.wieldRelationships ?? []
+    const wieldRel = wieldRels.find(r => r.wielderId === combatant.id)
+    if (wieldRel) {
+      const config = LIVING_WEAPON_CONFIG[wieldRel.weaponSpecies]
+      if (config) {
+        equipment = computeEffectiveEquipment(equipment, config, wieldRel.isFainted)
+      }
+    }
+    return computeEquipmentBonuses(equipment)
+  }
 
   // State
   const selectedTargets = ref<string[]>([])
@@ -372,7 +396,9 @@ export function useMoveCalculation(
     const target = targets.value.find(t => t.id === targetId)
     if (!target || !target.entity) return 0
 
-    const evasions = computeTargetEvasions(target, evasionDeps)
+    // Pass wield relationships so equipment overlay affects evasion
+    const wieldRels = encounterStore.encounter?.wieldRelationships ?? []
+    const evasions = computeTargetEvasions(target, evasionDeps, wieldRels)
 
     // PTU p.234: Speed Evasion may be applied to any Move with an accuracy check.
     // Auto-select the highest applicable evasion (rational defender always picks best).
@@ -392,7 +418,8 @@ export function useMoveCalculation(
     const target = targets.value.find(t => t.id === targetId)
     if (!target || !target.entity) return 'Evasion'
 
-    const evasions = computeTargetEvasions(target, evasionDeps)
+    const wieldRels = encounterStore.encounter?.wieldRelationships ?? []
+    const evasions = computeTargetEvasions(target, evasionDeps, wieldRels)
 
     if (move.value.damageClass === 'Physical') {
       return evasions.speed > evasions.physical ? 'Speed Evasion' : 'Phys Evasion'
@@ -487,9 +514,10 @@ export function useMoveCalculation(
     const stages = getStageModifiers(entity)
 
     // Focus stat bonus for human attackers: +5 AFTER combat stages (PTU p.295)
+    // Uses effective equipment (accounts for Living Weapon overlay)
     let focusBonus = 0
     if (actor.value.type === 'human') {
-      const equipBonuses = computeEquipmentBonuses((entity as HumanCharacter).equipment ?? {})
+      const equipBonuses = getEffectiveEquipBonuses(actor.value)
       const statKey = move.value.damageClass === 'Physical' ? 'attack' : 'specialAttack'
       focusBonus = equipBonuses.statBonuses[statKey] ?? 0
     }
@@ -561,10 +589,11 @@ export function useMoveCalculation(
       const stages = getStageModifiers(entity)
 
       // Focus defense bonus for human targets: +5 AFTER combat stages (PTU p.295)
+      // Uses effective equipment (accounts for Living Weapon overlay)
       let focusDefBonus = 0
       let equipmentDR = 0
       if (target.type === 'human') {
-        const equipBonuses = computeEquipmentBonuses((entity as HumanCharacter).equipment ?? {})
+        const equipBonuses = getEffectiveEquipBonuses(target)
         const defKey = move.value.damageClass === 'Physical' ? 'defense' : 'specialDefense'
         focusDefBonus = equipBonuses.statBonuses[defKey] ?? 0
         equipmentDR = equipBonuses.damageReduction

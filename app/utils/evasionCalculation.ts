@@ -1,6 +1,8 @@
 import type { Combatant, Pokemon, HumanCharacter, StatusCondition } from '~/types'
+import type { WieldRelationship } from '~/types/combat'
 import { ZERO_EVASION_CONDITIONS } from '~/constants/statusConditions'
-import { computeEquipmentBonuses } from '~/utils/equipmentBonuses'
+import { computeEquipmentBonuses, computeEffectiveEquipment } from '~/utils/equipmentBonuses'
+import { LIVING_WEAPON_CONFIG } from '~/constants/livingWeapon'
 
 export interface EvasionValues {
   physical: number
@@ -31,10 +33,14 @@ export interface EvasionDependencies {
  * PTU p.246-247: Vulnerable, Frozen, and Asleep set evasion to 0.
  * Checks both entity.statusConditions and combatant.tempConditions
  * (Take a Breather applies Vulnerable via tempConditions).
+ *
+ * When wieldRelationships is provided, accounts for Living Weapon equipment
+ * overlay (which may change evasion bonuses, e.g., Doublade +2, Aegislash shield).
  */
 export function computeTargetEvasions(
   target: Combatant,
-  deps: EvasionDependencies
+  deps: EvasionDependencies,
+  wieldRelationships?: WieldRelationship[]
 ): EvasionValues {
   const entity = target.entity
 
@@ -56,7 +62,18 @@ export function computeTargetEvasions(
   let focusSpDefBonus = 0
   let focusSpeedBonus = 0
   if (target.type === 'human') {
-    const equipBonuses = computeEquipmentBonuses((entity as HumanCharacter).equipment ?? {})
+    // Compute equipment bonuses, accounting for Living Weapon overlay if present
+    let equipment = (entity as HumanCharacter).equipment ?? {}
+    if (wieldRelationships) {
+      const wieldRel = wieldRelationships.find(r => r.wielderId === target.id)
+      if (wieldRel) {
+        const config = LIVING_WEAPON_CONFIG[wieldRel.weaponSpecies]
+        if (config) {
+          equipment = computeEffectiveEquipment(equipment, config, wieldRel.isFainted)
+        }
+      }
+    }
+    const equipBonuses = computeEquipmentBonuses(equipment)
     evasionBonus += equipBonuses.evasionBonus
     focusDefBonus = equipBonuses.statBonuses.defense ?? 0
     focusSpDefBonus = equipBonuses.statBonuses.specialDefense ?? 0
