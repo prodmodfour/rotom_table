@@ -29,31 +29,40 @@ export default defineEventHandler(async (event) => {
     const dbUpdates: Promise<unknown>[] = []
 
     const updatedCombatants = combatants.map((combatant: Combatant) => {
-      if (combatant.type !== 'pokemon') {
-        return combatant
+      // P2: Clear Rider class feature usage on scene transition
+      let updatedCombatant = combatant
+      if (combatant.featureUsage && Object.keys(combatant.featureUsage).length > 0) {
+        updatedCombatant = {
+          ...combatant,
+          featureUsage: undefined
+        }
       }
 
-      const entity = combatant.entity as Pokemon
+      if (updatedCombatant.type !== 'pokemon') {
+        return updatedCombatant
+      }
+
+      const entity = updatedCombatant.entity as Pokemon
       const moves: Move[] = entity.moves || []
       const resetMoves = resetSceneUsage(moves)
 
       // Only create a new combatant if moves actually changed
-      if (resetMoves.every((m, i) => m === moves[i])) {
-        return combatant
+      if (resetMoves.every((m, i) => m === moves[i]) && updatedCombatant === combatant) {
+        return updatedCombatant
       }
 
       // Sync to database if the combatant has a DB record
-      if (combatant.entityId) {
+      if (updatedCombatant.entityId) {
         dbUpdates.push(
           prisma.pokemon.update({
-            where: { id: combatant.entityId },
+            where: { id: updatedCombatant.entityId },
             data: { moves: JSON.stringify(resetMoves) }
           })
         )
       }
 
       return {
-        ...combatant,
+        ...updatedCombatant,
         entity: {
           ...entity,
           moves: resetMoves
