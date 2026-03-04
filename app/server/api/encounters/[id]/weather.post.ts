@@ -15,8 +15,9 @@
 import { prisma } from '~/server/utils/prisma'
 import { loadEncounter, buildEncounterResponse } from '~/server/services/encounter.service'
 import { syncEntityToDatabase } from '~/server/services/entity-update.service'
-import { getWeatherCSBonuses } from '~/utils/weatherRules'
+import { getWeatherCSBonuses, getForecastType, getCombatantAbilities, getWeatherEvasionBonuses } from '~/utils/weatherRules'
 import type { StageModifiers, StageSource } from '~/types/combat'
+import type { Pokemon } from '~/types/character'
 
 const PTU_WEATHER_DURATION = 5
 
@@ -117,6 +118,69 @@ export default defineEventHandler(async (event) => {
             ]
           }
           modified = true
+        }
+
+        // P2: Apply weather evasion bonuses (Snow Cloak, Sand Veil)
+        // Tracked as evasion CS source for clean reversal (decree-005)
+        const evasionBonuses = getWeatherEvasionBonuses(combatant, weather)
+        if (evasionBonuses.length > 0) {
+          const entity = combatant.entity
+          if (!entity.stageModifiers) {
+            entity.stageModifiers = createDefaultStageModifiers()
+          }
+
+          for (const eBonus of evasionBonuses) {
+            const current = entity.stageModifiers.evasion || 0
+            const newValue = Math.min(6, current + eBonus.bonus)
+            const actualDelta = newValue - current
+
+            entity.stageModifiers = {
+              ...entity.stageModifiers,
+              evasion: newValue
+            }
+
+            combatant.stageSources = [
+              ...(combatant.stageSources ?? []),
+              { stat: 'evasion', value: actualDelta, source: `weather:${weather}:${eBonus.ability}` }
+            ]
+          }
+          modified = true
+        }
+      }
+
+      // P2: Forecast type changes (PTU p.319)
+      // When weather changes, update type for all combatants with Forecast ability
+      if (combatant.type === 'pokemon') {
+        const abilities = getCombatantAbilities(combatant)
+        const hasForecast = abilities.some(a => a.toLowerCase() === 'forecast')
+
+        if (hasForecast) {
+          const pokemon = combatant.entity as Pokemon
+
+          if (weather) {
+            // Save original types (only if not already saved from a previous weather change)
+            if (!combatant.forecastOriginalTypes) {
+              combatant.forecastOriginalTypes = {
+                type1: pokemon.types[0],
+                type2: pokemon.types.length > 1 ? pokemon.types[1] : null
+              }
+            }
+
+            // Apply new weather type
+            const newType = getForecastType(weather)
+            pokemon.types = [newType] as any
+            modified = true
+          } else {
+            // Weather cleared — restore original types
+            if (combatant.forecastOriginalTypes) {
+              const orig = combatant.forecastOriginalTypes
+              pokemon.types = orig.type2
+                ? [orig.type1, orig.type2] as any
+                : [orig.type1] as any
+              combatant.forecastOriginalTypes = undefined
+              modified = true
+            }
+          }
         }
       }
 
