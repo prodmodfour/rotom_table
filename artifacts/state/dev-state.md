@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-03-04T15:25:00
-updated_by: slave-collector (plan-20260304-144401)
+last_updated: 2026-03-04T19:15:00
+updated_by: slave-collector (plan-20260304-172253)
 ---
 
 # Dev Ecosystem State
@@ -36,7 +36,8 @@ updated_by: slave-collector (plan-20260304-144401)
 | ptu-rule-045 | P3 | **resolved** | Equipment/armor system — P0+P1+P2 all APPROVED. code-review-132 APPROVED (M1: SLOT_ICONS duplication → refactoring-069), rules-review-122 APPROVED |
 | ptu-rule-055 | P3 | **resolved** | XP calculation — P0+P1+P2 all APPROVED. code-review-131 APPROVED, rules-review-121 APPROVED |
 | ptu-rule-056 | P3 | **resolved** | Character creation form — P0+P1+P2 all approved. H1 fix applied (moved `_create-form.scss` from `additionalData` to `css` array). code-review-138 CHANGES_REQUIRED → fixed |
-| ptu-rule-058 | P3 | **P2-implemented** | Encounter density/significance — P0+P1+H1 fix all APPROVED. P2 (Environmental Modifier Framework) implemented by slave-4 (plan-20260304-144401): 9 commits. **Needs review** |
+| ptu-rule-058 | P3 | **P2-CHANGES_REQUIRED** | Encounter density/significance — P0+P1+H1 fix all APPROVED. P2 (Environmental Modifier Framework) implemented by slave-4 (plan-20260304-144401): 9 commits. Reviewed by slave-3 (plan-20260304-172253): code-review-330 **CHANGES_REQUIRED** (2H+3M) + rules-review-302 **APPROVED** (1H decree-need-047 filed, non-blocking). **Needs fix cycle** |
+| ptu-rule-134 | P1 | **in-progress** | Revert Other conditions to clearsOnFaint: false per decree-047. Implemented by slave-1 (plan-20260304-172253): 2 commits. clearsOnFaint set to false for Stuck/Slowed/Trapped/Tripped/Vulnerable. refactoring-106 resolution log updated. **Needs review** |
 | ptu-rule-060 | P3 | **resolved** | Level-budget/significance — P0 C1 fix + P1 significance multiplier all APPROVED. code-review-141 APPROVED (M1/M2 non-blocking → refactoring-072, 073), rules-review-131 APPROVED |
 | ptu-rule-077 | P3 | **resolved** | Focus (Speed) initiative/evasion — fix implemented, APPROVED (code-review-125 + rules-review-115) |
 | ptu-rule-078 | P3 | **resolved** | Trainer class associated skills — H1+H2 fix APPROVED. code-review-142 APPROVED, rules-review-132 APPROVED. All 39 classes correct |
@@ -142,7 +143,17 @@ updated_by: slave-collector (plan-20260304-144401)
 
 ## Active Developer Work
 
-**Current task:** Session 111 collection complete. 5 slaves merged (16 commits), 0 skipped. 2 dev slaves + 3 reviewer slaves.
+**Current task:** Session 112 collection complete. 3 slaves merged (6 commits), 0 skipped. 2 dev slaves + 1 reviewer slave.
+
+**Session 112 (2026-03-04, plan-20260304-172253):**
+- **slave-1** (developer): ptu-rule-134+refactoring-106-fix — 2 commits: Set clearsOnFaint: false for 5 Other category conditions (Stuck, Slowed, Trapped, Tripped, Vulnerable) per decree-047. Updated refactoring-106 resolution log. → **in-progress, needs review**
+- **slave-2** (developer): refactoring-125-fix — 2 commits: Added CombatantGmActions entry to app-surface.md (code-review-329 M1 fix). Updated refactoring-125 resolution log. → **fix-cycle-done, needs re-review**
+- **slave-3** (reviewers): ptu-rule-058-p2 — code-review-330 **CHANGES_REQUIRED** (2H: computed accuracy penalty, preset divergence on dismiss; 3M: field naming, sign convention, discriminated union type) + rules-review-302 **APPROVED** (1H: Dark Cave penalty deviates from RAW → decree-need-047 filed). → **needs fix cycle**
+
+**Smoke test:** PASSED (all 3 views render correctly)
+**Tickets needing fix cycle:** ptu-rule-058 P2 (code-review-330 2H+3M)
+**Tickets needing review:** ptu-rule-134 (first implementation), refactoring-125 fix cycle (re-review)
+**Tickets filed:** decree-need-047 (Dark Cave Blindness penalty vs RAW), refactoring-130 (environment preset '{}' vs null DB)
 
 **Session 111 (2026-03-04, plan-20260304-144401):**
 - **slave-5** (developer): bug-001 — 1 commit: Ticket moved to resolved (swim/sky cell fix already applied in prior session). → **resolved**
