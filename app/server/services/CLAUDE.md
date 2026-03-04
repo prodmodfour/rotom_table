@@ -45,7 +45,7 @@ If you need Pokemon, call one of these. Never build Pokemon records ad-hoc in AP
 | `ball-condition.service.ts` | ~185 | Build Poke Ball condition context from encounter state for conditional ball modifiers |
 | `mounting.service.ts` | ~561 | Trainer-Pokemon mount/dismount logic, movement sharing, faint auto-dismount |
 | `living-weapon.service.ts` | ~533 | Living Weapon engage/disengage, wield state queries, faint penalty, auto-disengage, equipment overlay, weapon moves |
-| `weather-automation.service.ts` | ~222 | Weather damage ticks at turn start (Hail, Sandstorm) with type/ability immunities; weather ability effects (Ice Body, Rain Dish, Sun Blanket, Solar Power, Dry Skin, Desert Weather) |
+| `weather-automation.service.ts` | ~192 | Weather damage ticks at turn start (Hail, Sandstorm) with type/ability immunities; weather ability effects (Ice Body, Rain Dish, Sun Blanket, Solar Power, Dry Skin, Desert Weather). Note: `WEATHER_ABILITY_EFFECTS` constant lives in `app/utils/weatherRules.ts` |
 | `living-weapon-state.ts` | ~51 | Reconstruct wieldRelationships from combatant flags for WebSocket state sync |
 
 ## Dependency Map
