@@ -1,8 +1,8 @@
 # Implementation Log
 
-## Status: p1-implemented
+## Status: implemented
 
-P0 implemented (Sections A-D) + fix cycle applied. P1 implemented (Sections E-I) + fix cycle applied. P2 remains.
+P0 implemented (Sections A-D) + fix cycle applied. P1 implemented (Sections E-I) + fix cycle applied. P2 implemented (Sections J-N) + bug-050 fixed.
 
 ---
 
@@ -15,6 +15,45 @@ P0 implemented (Sections A-D) + fix cycle applied. P1 implemented (Sections E-I)
 | 2026-03-03 | P0 fix cycle | 8 commits: code-review-297 (C1+H1-H3+M1-M3) + rules-review-270 (HIGH#1-#2+MEDIUM#1) + bug-046 + decree-043 |
 | 2026-03-04 | P1 implemented | 12 commits: equipment overlay, weapon moves, evasion refresh, integration across all 4 code paths + faint state sync |
 | 2026-03-04 | P1 fix cycle | 6 commits: code-review-316 (1H+2M) + rules-review-289 (1H+2M). Weapon move DB +1 mod, Weapon keyword STAB exclusion, getEffectiveEquipBonuses extraction, GM move UI injection, encounter reload wield state, app-surface update |
+| 2026-03-04 | P2 implemented | 12 commits: bug-050 fix, WieldRelationship P2 fields, VTT shared movement, No Guard suppression, Aegislash forced Blade forme, Weaponize intercept, Soulstealer healing (3 code paths) |
+
+---
+
+## P2 Commits
+
+| Commit | Section | Description |
+|--------|---------|-------------|
+| c3b07416 | bug-050 | Fix moveKeywords passthrough in calculate-damage.post.ts |
+| 1d01abf7 | J/L | Add movementUsedThisRound and wasInBladeFormeOnEngage to WieldRelationship |
+| c4f405c4 | J-N | Add all P2 service functions (shared movement, No Guard, Aegislash, Weaponize, Soulstealer) |
+| cf4aac7c | J | Integrate shared movement pool into useGridMovement composable |
+| 822e44f1 | J | Add linked position sync to position.post.ts endpoint |
+| 74e61f15 | J | Track shared movement pool in handleTokenMove (useEncounterActions) |
+| 42fe84e8 | K | Enforce No Guard suppression in calculate-damage.post.ts |
+| 27177c73 | L | Aegislash forced Blade forme + position sync on engage |
+| 03f837c0 | L | Aegislash forme revert on disengage + wasInBladeFormeOnEngage on Combatant |
+| 61378ad5 | M | Weaponize Free Action intercept support in intercept-melee.post.ts |
+| cf5ba7a7 | N | Soulstealer healing in damage.post.ts |
+| c1a7c0ea | N | Soulstealer healing in move.post.ts (L2 duplicate path) |
+| 6db8c8bb | N | Soulstealer healing in aoo-resolve.post.ts (L2 duplicate path) |
+
+## P2 Files Changed
+
+### Modified Files
+- `app/types/combat.ts` — WieldRelationship P2 fields (movementUsedThisRound, wasInBladeFormeOnEngage)
+- `app/types/encounter.ts` — Combatant.wasInBladeFormeOnEngage field
+- `app/server/services/living-weapon.service.ts` — All P2 functions (syncWeaponPosition, handleLinkedMovement, getWieldedMovementSpeed, resetWieldMovementPools, isNoGuardActive, swapAegislashStance, isAegislashBladeForm, canUseWeaponize, checkSoulstealer, applySoulstealerHealing)
+- `app/server/services/living-weapon-state.ts` — movementUsedThisRound default in reconstruction
+- `app/server/api/encounters/[id]/calculate-damage.post.ts` — moveKeywords passthrough + No Guard suppression
+- `app/server/api/encounters/[id]/position.post.ts` — Living Weapon linked position sync
+- `app/server/api/encounters/[id]/damage.post.ts` — Soulstealer healing integration
+- `app/server/api/encounters/[id]/move.post.ts` — Soulstealer healing integration
+- `app/server/api/encounters/[id]/aoo-resolve.post.ts` — Soulstealer healing integration
+- `app/server/api/encounters/[id]/intercept-melee.post.ts` — Weaponize Free Action intercept
+- `app/server/api/encounters/[id]/living-weapon/engage.post.ts` — Aegislash Blade forme + position sync
+- `app/server/api/encounters/[id]/living-weapon/disengage.post.ts` — Aegislash forme revert
+- `app/composables/useGridMovement.ts` — Shared movement pool integration
+- `app/composables/useEncounterActions.ts` — Local movement pool tracking
 
 ---
 

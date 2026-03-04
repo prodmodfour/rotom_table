@@ -4,7 +4,7 @@ ticket_id: feature-005
 category: FEATURE_GAP
 scope: FULL
 domain: combat
-status: p1-implemented
+status: implemented
 dependencies:
   - design-equipment-001
 related:
