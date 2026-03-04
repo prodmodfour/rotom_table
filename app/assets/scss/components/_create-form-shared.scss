@@ -62,7 +62,7 @@
 // ===========================================
 // Used by ClassFeatureSection and EdgeSelectionSection.
 // Variant modifiers (--class, --feature, --edge, --skill-edge)
-// remain in each component's scoped styles.
+// are defined in the shared _tags.scss partial.
 .tag {
   display: inline-flex;
   align-items: center;
