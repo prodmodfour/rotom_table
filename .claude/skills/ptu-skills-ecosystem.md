@@ -279,7 +279,7 @@ artifacts/
 2. Execute + collect → all three merge to master in one pass
 
 ### Stale Artifact Detection
-Master planner checks timestamps on startup:
+Orchestrator survey checks timestamps on startup:
 - App code changed after capability mapping → re-map, re-analyze, re-audit
 - Developer commit after latest approved review → re-review needed
 

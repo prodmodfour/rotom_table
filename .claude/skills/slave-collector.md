@@ -375,7 +375,7 @@ If the script fails, warn the user but do NOT block cleanup. Indexes are a conve
 
 ## Step 6c: Artifact Cleanup
 
-After merging, filing tickets, and regenerating indexes, clean up resolved tickets and stale reviews so `open/`, `in-progress/`, and `reviews/active/` only contain genuinely active work. This prevents false signals in future master planner runs.
+After merging, filing tickets, and regenerating indexes, clean up resolved tickets and stale reviews so `open/`, `in-progress/`, and `reviews/active/` only contain genuinely active work. This prevents false signals in future orchestrator survey runs.
 
 ### 6c-1. Move Resolved Tickets
 
