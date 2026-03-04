@@ -1,24 +1,21 @@
 ---
-generated_at: 2026-03-04T22:24:05.885Z
+generated_at: 2026-03-04T22:25:03.174Z
 total_tickets: 310
-open: 51
-in_progress: 3
-resolved: 256
+open: 47
+in_progress: 1
+resolved: 262
 ---
 
 # Tickets Index
 
-## Open Tickets (51)
+## Open Tickets (47)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
 | bug-051 | bug | P1 | tooling | Tickets index generator uses frontmatter status instead of d |
 | feature-025 | feature | P2 | encounter-tables | Per decree-048, implement per-combatant vision capability tr |
-| refactoring-097 | refactoring | P2 | combat | refactoring-097: Replace blocking alert() with non-blocking  |
 | refactoring-002 | refactoring | P3 | vtt-grid | Legacy terrain types `'difficult'` and `'rough'` are still v |
 | refactoring-098 | refactoring | P3 | combat | refactoring-098: Refactor entity mutation in heavily injured |
-| refactoring-108 | refactoring | P3 | — | refactoring-108: Extract switch button computeds from Combat |
-| refactoring-111 | refactoring | P3 | vtt-grid | refactoring-111: Extract drawMovementArrow from useIsometric |
 | refactoring-112 | refactoring | P3 | combat | Refactoring-112: Decompose encounter store into focused sub- |
 | refactoring-113 | refactoring | P3 | combat | refactoring-113: Wire or remove autoDeclineFaintedReactor in |
 | refactoring-117 | refactoring | P3 | — | refactoring-117: Extract out-of-turn actions from encounter. |
@@ -26,7 +23,6 @@ resolved: 256
 | refactoring-128 | refactoring | P3 | combat | `useMoveCalculation.ts` is now 806 lines, exceeding the 800- |
 | refactoring-129 | refactoring | P3 | combat | Per decree-047, whether Other category conditions clear on f |
 | refactoring-131 | refactoring | P3 | cross-cutting | refactoring-131: Replace remaining alert() calls with useGmT |
-| bug-047 | bug | P4 | capture | bug-047: Friend Ball loyalty fallback default mismatch |
 | ptu-rule-095 | ptu-rule | P4 | vtt-grid | ptu-rule-095: Disengage maneuver missing from combatManeuver |
 | ptu-rule-121 | ptu-rule | P4 | combat | The Sprint endpoint (`app/server/api/encounters/[id]/sprint. |
 | ptu-rule-125 | ptu-rule | P4 | character-lifecycle | ptu-rule-125: Populate grantedCapabilities on all capability |
@@ -64,13 +60,11 @@ resolved: 256
 | refactoring-130 | refactoring | P4 | encounter-tables | When clearing an environment preset, the endpoint stores `'{ |
 | refactoring-132 | refactoring | P4 | combat | refactoring-132: Add type-narrowing helper for Combatant ent |
 
-## In-Progress Tickets (3)
+## In-Progress Tickets (1)
 
 | ID | Category | Priority | Domain | Source |
 |----|----------|----------|--------|--------|
-| refactoring-106 | refactoring | P2 | combat | decree-038 |
 | ptu-rule-058 | ptu-rule | P3 | encounter-tables | — |
-| refactoring-096 | refactoring | P4 | character-lifecycle | code-review-215 MED-03 |
 
 ## Open Decree-Needs (0)
 
@@ -80,10 +74,10 @@ All decree-needs addressed.
 
 | Category | Open | In-Progress | Resolved | Total |
 |----------|------|-------------|----------|-------|
-| bug | 2 | 0 | 49 | 51 |
+| bug | 1 | 0 | 50 | 51 |
 | ptu-rule | 6 | 1 | 99 | 106 |
 | feature | 1 | 0 | 24 | 25 |
 | ux | 6 | 0 | 10 | 16 |
 | decree | 0 | 0 | 47 | 47 |
-| refactoring | 36 | 2 | 11 | 49 |
+| refactoring | 33 | 0 | 16 | 49 |
 | docs | 0 | 0 | 16 | 16 |
