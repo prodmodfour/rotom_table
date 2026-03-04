@@ -7,7 +7,7 @@ description: Merge all completed slave branches to master. Reads the slave plan 
 
 You are the slave collector. You merge all completed slave work to master, update state files, and clean up. You are the only entity that writes to master after a slave plan executes.
 
-**Lifecycle:** Sync remote → Read plan + status → Determine merge set → Propose to user → Merge branches → Update state files → Write follow-up tickets → Cleanup → Push to remote → Final report → Die
+**Lifecycle:** Sync remote → Read plan + status → Determine merge set → Propose to user → Merge branches → Update state files → Write follow-up tickets → Artifact cleanup → Worktree cleanup → Push to remote → Final report → Die
 
 ## Step 0: Sync with Remote
 
@@ -373,6 +373,72 @@ git commit -m "chore: regenerate artifact indexes after collection"
 
 If the script fails, warn the user but do NOT block cleanup. Indexes are a convenience optimization, not a critical path.
 
+## Step 6c: Artifact Cleanup
+
+After merging, filing tickets, and regenerating indexes, clean up resolved tickets and stale reviews so `open/`, `in-progress/`, and `reviews/active/` only contain genuinely active work. This prevents false signals in future master planner runs.
+
+### 6c-1. Move Resolved Tickets
+
+Scan all `.md` files in `artifacts/tickets/open/` and `artifacts/tickets/in-progress/` (recursively, across all category subdirectories).
+
+For each ticket file, check whether it should be moved to `artifacts/tickets/resolved/<category>/`:
+
+**Detection — cross-reference `artifacts/state/dev-state.md`:**
+Read the dev-state's ticket status tables. Any ticket marked as "resolved", "APPROVED", or "feature complete" should be in `resolved/`. Move it if it's still in `open/` or `in-progress/`.
+
+**Also check for duplicates:** If the same ticket ID exists in both `open/` and `in-progress/`, delete the `open/` copy (the `in-progress/` copy is authoritative since someone moved it there to work on it).
+
+**Also fix misplaced tickets:** If a ticket in `open/` has an active CHANGES_REQUIRED review (meaning work has started), move it to `in-progress/` instead.
+
+```bash
+mkdir -p artifacts/tickets/resolved/<category>
+mv artifacts/tickets/<source>/<category>/<ticket>.md artifacts/tickets/resolved/<category>/
+```
+
+### 6c-2. Archive Stale Reviews
+
+Scan all `.md` files in `artifacts/reviews/active/`.
+
+A review should be archived if:
+1. **Any verdict** AND its target ticket is now in `artifacts/tickets/resolved/` — the review is superseded by later work
+2. **APPROVED/PASS verdict** — should always be in archive, not active
+
+**Exception — never archive:**
+- Reviews whose target ticket is still in `open/` or `in-progress/`. These are active reviews regardless of verdict.
+
+**Archive destination:** `artifacts/reviews/archive/YYYY-MM/` based on the review's `reviewed_at:` frontmatter date.
+
+```bash
+mkdir -p artifacts/reviews/archive/<YYYY-MM>
+mv artifacts/reviews/active/<review>.md artifacts/reviews/archive/<YYYY-MM>/
+```
+
+### 6c-3. Commit and Re-Regenerate Indexes
+
+If any tickets were moved or reviews were archived:
+
+```bash
+git add artifacts/tickets/ artifacts/reviews/
+git commit -m "chore: cleanup resolved tickets and stale reviews after collection"
+
+node scripts/regenerate-artifact-indexes.mjs
+git add artifacts/_index.md artifacts/reviews/_index.md \
+       artifacts/tickets/_index.md artifacts/designs/_index.md \
+       artifacts/matrix/_index.md decrees/_index.md
+git commit -m "chore: regenerate artifact indexes after cleanup"
+```
+
+### 6c-4. Report Cleanup Counts
+
+Record for inclusion in the Step 8 Final Report:
+
+```markdown
+### Artifact Cleanup
+- **Tickets moved to resolved:** <count> (<list of IDs>)
+- **Reviews archived:** <count>
+- **Duplicates deleted:** <count>
+```
+
 ## Step 7: Cleanup
 
 ### 7a. Successfully Merged Slaves
@@ -430,6 +496,11 @@ If push fails (remote has new commits), pull with `--ff-only` first and retry. I
 | Slave | Type | Target | Reason |
 |-------|------|--------|--------|
 | 4 | matrix | healing-rules | failed — error in extraction |
+
+### Artifact Cleanup
+- **Tickets moved to resolved:** <count> (<list of IDs>)
+- **Reviews archived:** <count>
+- **Duplicates deleted:** <count>
 
 ### Follow-Up Actions
 - ptu-rule-058: APPROVED — no further action needed
