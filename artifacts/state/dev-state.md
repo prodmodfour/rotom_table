@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-03-04T01:00:00
-updated_by: slave-collector (plan-20260304-000900)
+last_updated: 2026-03-04T08:30:00
+updated_by: slave-collector (plan-20260304-012646)
 ---
 
 # Dev Ecosystem State
@@ -90,7 +90,7 @@ updated_by: slave-collector (plan-20260304-000900)
 | ptu-rule-128 | P3 | **resolved** | Sleep does not clear on recall or encounter end. Resolved by slave-6 (plan-20260301-110550). Asleep and Bad Sleep set to clearsOnRecall: false, clearsOnEncounterEnd: false. Part of decree-038 compliance |
 | ptu-rule-129 | P3 | **APPROVED** | Roar forced recall blocked by Trapped condition per decree-039. Fixed by slave-5 (plan-20260303-175043): 6 commits. Reviewed: code-review-308 **CHANGES_REQUIRED** (1H+2M). Fix cycle by slave-1 (plan-20260303-202535): 5 commits. Re-reviewed by slave-3 (plan-20260304-000900): code-review-311 **APPROVED** + rules-review-284 **APPROVED**. All code-review-308 issues resolved. Feature complete |
 | ptu-rule-130 | P4 | **open** | Fainted recall+release pair should not apply League switch restriction — pair detection hardcodes isFaintedSwitch: false. Source: rules-review-225 M1. Filed by slave-collector (plan-20260301-143720) |
-| ptu-rule-131 | P3 | **CHANGES_REQUIRED** | Poke Ball accuracy check should use central calculateAccuracyThreshold utility per decree-042. Implemented by slave-2 (plan-20260303-202535): 7 commits. Reviewed by slave-4 (plan-20260304-000900): code-review-312 **CHANGES_REQUIRED** (1C: double Math.max clamping diverges from move system, 1H: misleading comment re useMoveCalculation, 2M: server trust documentation, resolution log hashes) + rules-review-285 **CHANGES_REQUIRED** (1H: same double-clamping, 1M: doc clarity). Needs fix cycle |
+| ptu-rule-131 | P3 | **fix-cycle-done** | Poke Ball accuracy check should use central calculateAccuracyThreshold utility per decree-042. Implemented by slave-2 (plan-20260303-202535): 7 commits. Reviewed by slave-4 (plan-20260304-000900): code-review-312 **CHANGES_REQUIRED** + rules-review-285 **CHANGES_REQUIRED**. Fix cycle by slave-1 (plan-20260304-012646): 5 commits — eliminated double Math.max clamping (C1), corrected misleading comment (H1), added server trust rationale (M1), clarified targetSpeedEvasion doc (rules MED-1), updated resolution log (M2). Needs re-review |
 | ptu-rule-132 | P3 | **resolved** | Evolution species XP not hooked into capturedSpecies tracking. Fixed by slave-3 (plan-20260301-204809). Fix cycle (doc fixes) completed by slave-3 (plan-20260301-223500). Resolved |
 
 ### Feature Tickets (`tickets/feature/`)
@@ -99,8 +99,8 @@ updated_by: slave-collector (plan-20260304-000900)
 | feature-001 | P3 | **resolved** | B2W2 trainer sprites — single-phase design complete, P0 APPROVED (code-review-149 + rules-review-139). Closed by slave-3 (plan-20260224-162105) | single-phase |
 | feature-002 | P2 | **P2-APPROVED** | 3D isometric grid — P2 fix cycle 2 APPROVED (code-review-160 + rules-review-150). All tiers complete | multi-phase |
 | feature-003 | P1 | **Track-A-P2-APPROVED + Track-B-P1-APPROVED + Track-C-P1-APPROVED** | Player View — Track A P2 APPROVED: code-review-188 APPROVED (`:deep()` fix complete). Track B P1 APPROVED (code-review-162). Track C P1 APPROVED (code-review-163 + rules-review-152). All tracks P0+P1+P2 complete | multi-phase-parallel |
-| feature-004 | P3 | **P2-implemented** | Pokemon Mounting / Rider System — design spec created by slave-1 (plan-20260228-153856). P0 APPROVED. P1 APPROVED. P2 implemented by slave-2 (plan-20260304-000900): 14 commits — Rider class features (Agility Training doubling, Ramming Speed, Conqueror's March, Ride as One, Lean In, Cavalier's Reprisal, Overrun), distanceMovedThisTurn tracking, featureUsage scene reset, MountControls UI. Needs P2 review | multi-phase |
-| feature-005 | P3 | **P0-APPROVED** | Living Weapon System (Honedge Line) — design spec created by slave-2 (plan-20260228-153856). P0 implemented by slave-3 (plan-20260303-065350): 15 commits. Reviewed by slave-6 (plan-20260303-074602): code-review-297 CHANGES_REQUIRED + rules-review-270 CHANGES_REQUIRED. Fix cycle by slave-1 (plan-20260303-131425): 9 commits. Re-reviewed by slave-4 (plan-20260303-150824): code-review-301 **APPROVED** + rules-review-274 **APPROVED**. All code-review-297 + rules-review-270 issues verified resolved. P0 complete | multi-phase |
+| feature-004 | P3 | **P2-CHANGES_REQUIRED** | Pokemon Mounting / Rider System — P0 APPROVED. P1 APPROVED. P2 implemented by slave-2 (plan-20260304-000900): 14 commits. Reviewed by slave-3 (plan-20260304-012646): code-review-314 **CHANGES_REQUIRED** (1C: Ride as One evasion ineffective for accuracy calc, 2H: Agility Training tempCondition cleared at turn end + 5 dead utility functions, 3M: typo ConquerorsMarsh, app-surface.md, direct turnState mutation) + rules-review-287 **CHANGES_REQUIRED** (1H: Lean In applyResistStep skips step for 2.0x, 1M: ConquerorsMarsh typo). Needs fix cycle | multi-phase |
+| feature-005 | P3 | **P1-implemented** | Living Weapon System (Honedge Line) — P0 APPROVED (code-review-301 + rules-review-274). P1 implemented by slave-4 (plan-20260304-012646): 13 commits — equipment overlay, dual-wield evasion, shield DR, fainted penalty, weapon moves, refreshCombatantBonuses, initiative/damage/evasion integration. Needs P1 review | multi-phase |
 | feature-006 | P1 | **P2-APPROVED** | Pokemon Evolution System — P0 APPROVED. P1 APPROVED. P2 APPROVED. P2 fix cycle re-review: code-review-290 **APPROVED** + rules-review-266 **APPROVED** (plan-20260302-224650). All code-review-248 + rules-review-224 issues verified resolved. Feature complete | multi-phase |
 | feature-007 | P1 | **P1-APPROVED** | Pokemon Level-Up Allocation UI — P0 APPROVED. P1 fix cycle APPROVED: code-review-243 **APPROVED** (M1: loose MoveDetail types → refactoring-109, M2: canAssignAbility UX → refactoring-110) + rules-review-219 **APPROVED** (all 9 mechanics verified, 0 issues). All code-review-238 + rules-review-214 issues resolved. **Feature complete** (design has P0+P1 only, no P2 tier) | multi-phase |
 | feature-008 | P1 | **P1-APPROVED** | Trainer Level-Up Milestone Workflow — P0 APPROVED. P1 fix cycle re-review: code-review-291 **APPROVED** + rules-review-267 **APPROVED** (plan-20260302-224650). All code-review-239 + rules-review-206 issues verified resolved. **Feature complete** (design has P0+P1 only, no P2 tier) | multi-phase |
@@ -113,7 +113,7 @@ updated_by: slave-collector (plan-20260304-000900)
 | feature-016 | P2 | **P2-APPROVED** | Priority / Interrupt / Attack of Opportunity System — P0 APPROVED. P1 APPROVED. P2 APPROVED: code-review-279 **APPROVED** (2 MED: distanceMoved uses budget not actual → refactoring-123, hardcoded speed=20 in InterceptPrompt → refactoring-124) + rules-review-255 **APPROVED** (0 issues, all code-review-273 + rules-review-249 issues verified resolved). **Feature complete** (all tiers approved) | multi-phase |
 
 | feature-017 | P2 | **P2-APPROVED** | Poke Ball Type System — P0 APPROVED. P1 APPROVED. P2 fix cycle done by slave-5 (plan-20260303-074602): 9 commits. Re-reviewed by slave-5 (plan-20260303-131425): code-review-299 **APPROVED** + rules-review-272 **APPROVED**. All code-review-295 issues verified resolved. **Feature complete** | multi-phase |
-| feature-018 | P2 | **P1-fix-done** | Weather Effect Automation — P0 APPROVED. P1 implemented by slave-2 (plan-20260303-191515). Reviewed by slave-4 (plan-20260303-202535): code-review-310 **CHANGES_REQUIRED** (1C+1H+1M). P1 fix cycle by slave-1 (plan-20260304-000900): 5 commits — applied weather DB modifier in useMoveCalculation (C1), added newHp/fainted to WeatherAbilityResult broadcast (H1), deferred Desert Weather fire resistance to P2 (M1). Needs P1 re-review | multi-phase |
+| feature-018 | P2 | **P1-APPROVED** | Weather Effect Automation — P0 APPROVED. P1 implemented by slave-2 (plan-20260303-191515). P1 fix cycle by slave-1 (plan-20260304-000900). P1 re-review by slave-2 (plan-20260304-012646): code-review-313 **APPROVED** + rules-review-286 **APPROVED**. All code-review-310 issues resolved. Ready for P2 | multi-phase |
 | feature-019 | P2 | **APPROVED** | VTT Status-Movement Integration — Tripped combatants blocked from VTT movement (R025). Stuck (R022) and Slowed (R024) pre-existing. Reviewed by slave-7 (plan-20260301-223500): code-review-265 **APPROVED** (0 issues, PTU faithful, consistent pattern, thorough documentation) + rules-review-241 **APPROVED** (all 3 mechanics verified correct, 46 tests passing, 0 issues). Feature complete | partial |
 | feature-020 | P2 | **P2-APPROVED** | Healing Item System — P0 APPROVED. P1 APPROVED. P2 APPROVED. P2 fix cycle re-review: code-review-293 **APPROVED** (plan-20260302-224650). All code-review-287 issues verified resolved. Rules-review-263 already APPROVED. **Feature complete** | multi-phase |
 | feature-021 | P2 | **APPROVED** | Derived Capability Calculations — implemented by slave-4 (plan-20260303-065350). Fix cycle by slave-2 (plan-20260303-131425). Re-reviewed by slave-2 (plan-20260303-165227): code-review-303 **APPROVED** + rules-review-276 **APPROVED**. All code-review-298 issues verified resolved. **Feature complete** | partial |
@@ -142,19 +142,18 @@ updated_by: slave-collector (plan-20260304-000900)
 
 ## Active Developer Work
 
-**Current task:** Session 102 collection complete. 4 slaves merged (23 commits), 0 skipped. 2 dev slaves + 2 reviewer slaves.
+**Current task:** Session 103 collection complete. 4 slaves merged (22 commits), 0 skipped. 2 dev slaves + 2 reviewer slaves.
 
-**Session 102 (2026-03-04, plan-20260304-000900):**
-- **slave-1** (developer): feature-018-p1-fix — 5 commits: Fix cycle for Weather Effect Automation P1 addressing code-review-310. Applied weather DB modifier in useMoveCalculation effectiveDB (C1), added newHp/fainted to WeatherAbilityResult type and broadcast (H1), deferred Desert Weather Sun fire resistance to P2 (M1). → **fix-done, needs re-review**
-- **slave-2** (developer): feature-004-p2 — 14 commits: Rider trainer class features. Agility Training doubling, Ramming Speed, Conqueror's March, Ride as One speed evasion sharing, Lean In, Cavalier's Reprisal opportunity detection, Overrun, distanceMovedThisTurn tracking, featureUsage scene reset, MountControls UI. → **P2-implemented, needs review**
-- **slave-3** (reviewers): ptu-rule-129 re-review — code-review-311 **APPROVED** (all 3 code-review-308 issues resolved, 0 new) + rules-review-284 **APPROVED** (all mechanics verified, decree-039/044 compliant). → ptu-rule-129 **APPROVED, feature complete**
-- **slave-4** (reviewers): ptu-rule-131 review — code-review-312 **CHANGES_REQUIRED** (1C: double Math.max clamping, 1H: misleading useMoveCalculation comment, 2M: server trust doc + resolution log hashes) + rules-review-285 **CHANGES_REQUIRED** (1H: same double-clamping, 1M: doc clarity). → ptu-rule-131 **CHANGES_REQUIRED, needs fix cycle**
+**Session 103 (2026-03-04, plan-20260304-012646):**
+- **slave-1** (developer): ptu-rule-131-fix — 5 commits: Fix cycle addressing code-review-312 + rules-review-285. Eliminated double Math.max(1,...) clamping in Poke Ball accuracy (C1), corrected misleading comment about useMoveCalculation (H1), added server trust rationale comment (M1), clarified targetSpeedEvasion doc (rules MED-1), updated resolution log with correct hashes (M2). → **fix-done, needs re-review**
+- **slave-2** (reviewers): feature-018-p1-rereview — code-review-313 **APPROVED** (all 3 code-review-310 issues resolved, 0 new) + rules-review-286 **APPROVED** (all mechanics verified, decree-045 compliant). → feature-018 **P1-APPROVED, ready for P2**
+- **slave-3** (reviewers): feature-004-p2-review — code-review-314 **CHANGES_REQUIRED** (1C: Ride as One evasion ineffective for accuracy calc, 2H: Agility Training tempCondition cleared at turn end + 5 dead utility functions, 3M: ConquerorsMarsh typo + app-surface.md + direct turnState mutation) + rules-review-287 **CHANGES_REQUIRED** (1H: Lean In applyResistStep skips step for 2.0x, 1M: ConquerorsMarsh typo). → feature-004 **P2-CHANGES_REQUIRED, needs fix cycle**
+- **slave-4** (developer): feature-005-p1 — 13 commits: Living Weapon P1. Equipment overlay (computeEffectiveEquipment), getEffectiveEquipmentBonuses, weapon move injection, refreshCombatantEquipmentBonuses, initiative/damage/evasion integration, faint/heal/revive evasion refresh. → **P1-implemented, needs review**
 
 **Smoke test:** PASSED (all 3 views render)
-**Tickets APPROVED:** ptu-rule-129 (both re-reviews passed — feature complete)
-**Tickets needing fix cycle:** ptu-rule-131 (code-review-312 1C+1H+2M + rules-review-285 1H+1M)
-**Tickets needing re-review:** feature-018 P1 (fix cycle done)
-**Tickets needing first review:** feature-004 P2 (new implementation)
+**Tickets APPROVED:** feature-018 P1 (both re-reviews passed — ready for P2)
+**Tickets needing fix cycle:** feature-004 P2 (code-review-314 1C+2H+3M + rules-review-287 1H+1M), ptu-rule-131 (fix done, needs re-review)
+**Tickets needing first review:** feature-005 P1 (new implementation)
 **Migration needed:** `npx prisma db push` for feature-022 loyalty field (still pending from session 101)
 
 **Session 101 (2026-03-03, plan-20260303-202535):**
@@ -891,6 +890,14 @@ updated_by: slave-collector (plan-20260304-000900)
 
 ## Review Status
 
+### Session 103 Reviews (plan-20260304-012646)
+| Review ID | Target | Verdict | Reviewer | Date |
+|-----------|--------|---------|----------|------|
+| code-review-313 | feature-018 P1 re-review (Weather Effect Automation fix cycle) | APPROVED (all 3 code-review-310 issues resolved, 0 new. Client-side weather DB modifier correct, WebSocket broadcast sends actual newHp/fainted, Desert Weather deferred to P2) | senior-reviewer | 2026-03-04 |
+| rules-review-286 | feature-018 P1 re-review (Weather Effect Automation fix cycle) | APPROVED (5 mechanics verified, decree-045 compliant. Rain/Sun +/-5 DB correct, Sun Blanket 1/10th correct) | game-logic-reviewer | 2026-03-04 |
+| code-review-314 | feature-004 P2 first review (Rider Class Features: 14 commits, 7 features) | CHANGES_REQUIRED (1C: Ride as One evasion sharing ineffective for accuracy calc — calculate-damage.post.ts recalculates from scratch, 2H: Agility Training tempCondition auto-cleared at turn end + 5 dead utility functions, 3M: ConquerorsMarsh typo + app-surface.md + direct turnState mutation in component) | senior-reviewer | 2026-03-04 |
+| rules-review-287 | feature-004 P2 first review (Rider Class Features: 16 mechanics verified) | CHANGES_REQUIRED (1H: Lean In applyResistStep skips step for 2.0x — Doubly SE should go to 1.5x not 1.0x, 1M: ConquerorsMarsh typo. 14 other mechanics correct, decree-003/004/040 compliant) | game-logic-reviewer | 2026-03-04 |
+
 ### Session 101 Reviews (plan-20260303-202535)
 | Review ID | Target | Verdict | Reviewer | Date |
 |-----------|--------|---------|----------|------|
@@ -1364,6 +1371,21 @@ updated_by: slave-collector (plan-20260304-000900)
 | Open tickets (P4) | 10 (refactoring-060/062/076/078/079/084 + ux-002/006/007/008) |
 | Total open | 16 |
 | Total resolved | 159 (feature-002 fully resolved) |
+
+## Session Summary (2026-03-04, session 103 — plan-20260304-012646)
+
+**Slave collection plan-20260304-012646:** 4 slaves merged (22 commits total). 2 dev slaves + 2 reviewer slaves, all completed successfully.
+- **slave-1** (developer): ptu-rule-131 fix — 5 commits (eliminated double Math.max clamping, corrected misleading comment, added server trust rationale, clarified doc, updated resolution log)
+- **slave-2** (reviewers): feature-018 P1 re-review — code-review-313 **APPROVED** + rules-review-286 **APPROVED** → **feature-018 P1 complete, ready for P2**
+- **slave-3** (reviewers): feature-004 P2 review — code-review-314 **CHANGES_REQUIRED** (1C+2H+3M) + rules-review-287 **CHANGES_REQUIRED** (1H+1M)
+- **slave-4** (developer): feature-005 P1 — 13 commits (equipment overlay, dual-wield evasion, shield DR, fainted penalty, weapon moves, integration points)
+
+**Smoke test:** PASSED (all 3 views render)
+**Tickets APPROVED:** 1 (feature-018 P1 — both re-reviews passed, ready for P2)
+**Tickets needing fix cycle:** 1 (feature-004 P2 — code-review-314 1C+2H+3M + rules-review-287 1H+1M)
+**Tickets needing re-review:** ptu-rule-131 (fix cycle done)
+**New implementations needing review:** feature-005 P1 (Living Weapon equipment integration)
+**CLAUDE.md updates:** 3 files (app/composables/CLAUDE.md — useMoveCalculation size, app/server/services/CLAUDE.md — living-weapon.service.ts line count + largest hybrid gotcha, artifacts/CLAUDE.md — design count)
 
 ## Session Summary (2026-03-03, session 101 — plan-20260303-202535)
 
