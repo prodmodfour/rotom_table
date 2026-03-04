@@ -85,12 +85,12 @@ export function applyTrainerXp(input: TrainerXpInput): TrainerXpResult {
 }
 
 /**
- * Check if a species is new for a trainer (not in their capturedSpecies list).
+ * Check if a species is new for a trainer (not in their ownedSpecies list).
  * Case-insensitive comparison with whitespace trimming.
  */
-export function isNewSpecies(species: string, capturedSpecies: string[]): boolean {
+export function isNewSpecies(species: string, ownedSpecies: string[]): boolean {
   const normalized = species.toLowerCase().trim()
-  return !capturedSpecies.some(s => s.toLowerCase().trim() === normalized)
+  return !ownedSpecies.some(s => s.toLowerCase().trim() === normalized)
 }
 
 /**

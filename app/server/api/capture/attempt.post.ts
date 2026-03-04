@@ -229,11 +229,11 @@ export default defineEventHandler(async (event) => {
     // Check for new species -> +1 trainer XP (PTU Core p.461)
     const trainerRecord = await prisma.humanCharacter.findUnique({
       where: { id: body.trainerId },
-      select: { capturedSpecies: true, trainerXp: true, level: true, name: true }
+      select: { ownedSpecies: true, trainerXp: true, level: true, name: true }
     })
 
     if (trainerRecord) {
-      const existingSpecies: string[] = JSON.parse(trainerRecord.capturedSpecies || '[]')
+      const existingSpecies: string[] = JSON.parse(trainerRecord.ownedSpecies || '[]')
       const normalizedSpecies = pokemon.species.toLowerCase().trim()
 
       if (isNewSpecies(pokemon.species, existingSpecies)) {
@@ -248,7 +248,7 @@ export default defineEventHandler(async (event) => {
         await prisma.humanCharacter.update({
           where: { id: body.trainerId },
           data: {
-            capturedSpecies: JSON.stringify(updatedSpecies),
+            ownedSpecies: JSON.stringify(updatedSpecies),
             trainerXp: xpCalc.newXp,
             level: xpCalc.newLevel
           }

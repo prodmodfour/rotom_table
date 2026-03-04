@@ -47,7 +47,7 @@ export default defineEventHandler(async (event) => {
 
     // Trainer Experience fields
     if (body.trainerXp !== undefined) updateData.trainerXp = body.trainerXp
-    if (body.capturedSpecies !== undefined) updateData.capturedSpecies = JSON.stringify(body.capturedSpecies)
+    if (body.ownedSpecies !== undefined) updateData.ownedSpecies = JSON.stringify(body.ownedSpecies)
 
     // Healing-related fields
     if (body.maxHp !== undefined) updateData.maxHp = body.maxHp

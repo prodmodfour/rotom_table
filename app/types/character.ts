@@ -281,7 +281,7 @@ export interface HumanCharacter {
 
   // Trainer Experience (PTU Core p.461)
   trainerXp: number;            // Experience bank (0-9 normally)
-  capturedSpecies: string[];     // Species captured by this trainer (lowercase)
+  ownedSpecies: string[];        // Species owned by this trainer — catches, hatches, evolves (lowercase)
 
   // Library
   isInLibrary: boolean;

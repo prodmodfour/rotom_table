@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
     select: {
       trainerXp: true,
       level: true,
-      capturedSpecies: true
+      ownedSpecies: true
     }
   })
 
@@ -38,7 +38,7 @@ export default defineEventHandler(async (event) => {
       trainerXp: character.trainerXp,
       level: character.level,
       xpToNextLevel: isMaxLevel ? null : TRAINER_XP_PER_LEVEL - character.trainerXp,
-      capturedSpecies: JSON.parse(character.capturedSpecies || '[]')
+      ownedSpecies: JSON.parse(character.ownedSpecies || '[]')
     }
   }
 })

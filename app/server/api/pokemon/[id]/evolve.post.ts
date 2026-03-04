@@ -213,11 +213,11 @@ export default defineEventHandler(async (event) => {
     if (ownerId) {
       const trainerRecord = await prisma.humanCharacter.findUnique({
         where: { id: ownerId },
-        select: { capturedSpecies: true, trainerXp: true, level: true, name: true }
+        select: { ownedSpecies: true, trainerXp: true, level: true, name: true }
       })
 
       if (trainerRecord) {
-        const existingSpecies: string[] = JSON.parse(trainerRecord.capturedSpecies || '[]')
+        const existingSpecies: string[] = JSON.parse(trainerRecord.ownedSpecies || '[]')
         const evolvedSpecies = result.changes.newSpecies
         const normalizedSpecies = evolvedSpecies.toLowerCase().trim()
 
@@ -233,7 +233,7 @@ export default defineEventHandler(async (event) => {
           await prisma.humanCharacter.update({
             where: { id: ownerId },
             data: {
-              capturedSpecies: JSON.stringify(updatedSpecies),
+              ownedSpecies: JSON.stringify(updatedSpecies),
               trainerXp: xpCalc.newXp,
               level: xpCalc.newLevel
             }

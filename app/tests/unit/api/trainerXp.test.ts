@@ -64,7 +64,7 @@ function createCharacter(overrides: Record<string, unknown> = {}) {
     name: 'Ash',
     level: 5,
     trainerXp: 3,
-    capturedSpecies: '[]',
+    ownedSpecies: '[]',
     trainerClasses: '[]',
     skills: '{}',
     features: '[]',
