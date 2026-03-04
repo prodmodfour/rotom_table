@@ -426,6 +426,9 @@ const {
   refreshUndoRedoState
 })
 
+// GM toast notifications (non-blocking combat alerts)
+const { showToast } = useGmToast()
+
 // Breather shift state — shown when Take a Breather requires the GM to shift the token
 const pendingBreatherShift = ref<BreatherShiftResult | null>(null)
 
@@ -535,13 +538,13 @@ const nextTurn = async () => {
       : 'Unknown'
 
     if (penalty.hpLost > 0) {
-      alert(`${name} lost ${penalty.hpLost} HP from Heavily Injured penalty (Standard Action taken).`)
+      showToast(`${name} lost ${penalty.hpLost} HP from Heavily Injured penalty (Standard Action taken).`, 'warning')
     }
     if (penalty.isDead) {
       const cause = penalty.deathCause === 'injuries'
         ? '10+ injuries'
         : 'HP below death threshold'
-      alert(`${name} has DIED! Cause: ${cause}. Use the Override button on their card to revoke.`)
+      showToast(`${name} has DIED! Cause: ${cause}. Use the Override button on their card to revoke.`, 'critical')
     }
   }
 }
