@@ -1,14 +1,14 @@
 ---
-generated_at: 2026-03-04T12:26:40.918Z
+generated_at: 2026-03-04T13:07:13.159Z
 total_tickets: 302
-open: 27
+open: 26
 in_progress: 121
-resolved: 136
+resolved: 137
 ---
 
 # Tickets Index
 
-## Open Tickets (27)
+## Open Tickets (26)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
@@ -38,7 +38,6 @@ resolved: 136
 | refactoring-118 | refactoring | P4 | — | refactoring-118: Remove unused flankingMap destructure in Gr |
 | refactoring-119 | refactoring | P4 | — | refactoring-119: Update stale interrupt.post.ts file header  |
 | refactoring-126 | refactoring | P4 | pokemon-lifecycle | The outer catch block in `[id].put.ts` (line ~90) and `index |
-| decree-need-045 | decree | low | combat | The No Guard ability has two different definitions in the PT |
 
 ## In-Progress Tickets (121)
 
@@ -166,11 +165,9 @@ resolved: 136
 | refactoring-092 | refactoring | P4 | encounter-tables | code-review-207 M1 |
 | refactoring-093 | refactoring | P4 | combat | code-review-207 M2 |
 
-## Open Decree-Needs (1)
+## Open Decree-Needs (0)
 
-| ID | Priority | Domain | Topic |
-|----|----------|--------|-------|
-| decree-need-045 | low | combat | — |
+All decree-needs addressed.
 
 ## Summary by Category
 
@@ -180,6 +177,6 @@ resolved: 136
 | ptu-rule | 5 | 61 | 39 | 106 |
 | feature | 0 | 20 | 3 | 24 |
 | ux | 5 | 8 | 2 | 16 |
-| decree | 1 | 0 | 44 | 45 |
+| decree | 0 | 0 | 45 | 45 |
 | refactoring | 15 | 14 | 3 | 45 |
 | docs | 0 | 0 | 16 | 16 |

@@ -1,13 +1,13 @@
 ---
-generated_at: 2026-03-04T12:26:40.950Z
-total_decrees: 46
-active: 45
+generated_at: 2026-03-04T13:07:13.165Z
+total_decrees: 47
+active: 46
 superseded: 0
 ---
 
 # Decrees Index
 
-## Active Decrees (45)
+## Active Decrees (46)
 
 | Decree ID | Domain | Topic | Title |
 |-----------|--------|-------|-------|
@@ -56,3 +56,4 @@ superseded: 0
 | decree-043 | combat | living-weapon-skill-rank-gate | Combat Skill Rank gates Living Weapon move access, not engagement |
 | decree-044 | combat | bound-condition-removal | Remove phantom 'Bound' condition; only Trapped blocks recall (RAW) |
 | decree-045 | combat | sun-blanket-healing-fraction | Use Tick (1/10th max HP) for Sun Blanket healing, not 1/16th |
+| decree-046 | combat | no-guard-definition | Use playtest +3/-3 flat accuracy version of No Guard |
