@@ -50,6 +50,8 @@ export interface MountState {
   originalSpeedEvasion?: number
   /** P2: Ride as One — whether the initiative swap occurred this round */
   rideAsOneSwapped?: boolean
+  /** P2: Whether Agility Training is currently active (persistent, not cleared at turn end) */
+  agilityTrainingActive?: boolean
 }
 
 // Status conditions (PTU 1.05)

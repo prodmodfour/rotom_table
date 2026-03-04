@@ -1141,8 +1141,9 @@ export const useEncounterStore = defineStore('encounter', {
 
     /**
      * Toggle Agility Training on/off for a mounted pair.
-     * When active: mount gets 'Agile' temp condition. Rider feature doubles the bonus.
-     * This is a client-side toggle that the GM uses as a reminder.
+     * Stored as a persistent flag on mountState (not tempConditions) so it
+     * survives turn-end clearing. Cleared automatically on dismount.
+     * Rider feature doubles the Training bonus: +2 Movement, +8 Initiative.
      */
     toggleAgilityTraining(combatantId: string) {
       if (!this.encounter) return
@@ -1152,13 +1153,22 @@ export const useEncounterStore = defineStore('encounter', {
       // Find the mount (the one with isMounted=false)
       const mountId = combatant.mountState.isMounted ? combatant.mountState.partnerId : combatantId
       const mount = this.encounter.combatants.find(c => c.id === mountId)
-      if (!mount) return
+      if (!mount?.mountState) return
 
-      const tempConditions = mount.tempConditions ?? []
-      if (tempConditions.includes('Agile')) {
-        mount.tempConditions = tempConditions.filter(c => c !== 'Agile')
-      } else {
-        mount.tempConditions = [...tempConditions, 'Agile']
+      const newActive = !mount.mountState.agilityTrainingActive
+      mount.mountState = {
+        ...mount.mountState,
+        agilityTrainingActive: newActive
+      }
+
+      // Also set on rider for consistency
+      const riderId = combatant.mountState.isMounted ? combatantId : combatant.mountState.partnerId
+      const rider = this.encounter.combatants.find(c => c.id === riderId)
+      if (rider?.mountState) {
+        rider.mountState = {
+          ...rider.mountState,
+          agilityTrainingActive: newActive
+        }
       }
     },
 

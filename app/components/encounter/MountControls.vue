@@ -411,11 +411,11 @@ const mountHasRunUp = computed(() => {
   return mount ? hasRunUp(mount) : false
 })
 
-// Agility Training active (check mount's tempConditions for 'Agile')
+// Agility Training active (persistent flag on mountState, not tempConditions)
 const isAgilityTrainingActive = computed(() => {
   const mount = mountCombatant.value
-  if (!mount) return false
-  return (mount.tempConditions ?? []).includes('Agile')
+  if (!mount?.mountState) return false
+  return mount.mountState.agilityTrainingActive === true
 })
 
 // Conqueror's March active
