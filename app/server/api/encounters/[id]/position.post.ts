@@ -1,5 +1,6 @@
 import { prisma } from '~/server/utils/prisma'
 import { ptuDiagonalDistance } from '~/utils/gridDistance'
+import { reconstructWieldRelationships } from '~/server/services/living-weapon-state'
 import type { GridConfig, GridPosition, Combatant } from '~/types'
 
 interface PositionUpdateBody {
@@ -112,10 +113,38 @@ export default defineEventHandler(async (event) => {
         }
       }
     } else {
-      // Non-mounted: standard single-combatant position update
-      combatants[combatantIndex] = {
-        ...movingCombatant,
-        position: body.position
+      // Check for Living Weapon linked movement (feature-005 P2, PTU p.306)
+      // Wielder and weapon share position; when one moves, the other follows.
+      const wieldRelationships = reconstructWieldRelationships(combatants)
+      const wieldRel = wieldRelationships.find(
+        r => r.wielderId === body.combatantId || r.weaponId === body.combatantId
+      )
+
+      if (wieldRel) {
+        const partnerId = wieldRel.wielderId === body.combatantId
+          ? wieldRel.weaponId
+          : wieldRel.wielderId
+        const partnerIndex = combatants.findIndex(c => c.id === partnerId)
+
+        // Update moving combatant position
+        combatants[combatantIndex] = {
+          ...movingCombatant,
+          position: body.position
+        }
+
+        // Sync partner position
+        if (partnerIndex !== -1) {
+          combatants[partnerIndex] = {
+            ...combatants[partnerIndex],
+            position: { ...body.position }
+          }
+        }
+      } else {
+        // Non-mounted, non-wielded: standard single-combatant position update
+        combatants[combatantIndex] = {
+          ...movingCombatant,
+          position: body.position
+        }
       }
     }
 
