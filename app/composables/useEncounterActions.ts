@@ -304,13 +304,20 @@ export function useEncounterActions(options: EncounterActionsOptions) {
       // Linked movement: update Living Weapon partner position locally (feature-005 P2)
       // PTU p.306: wielder and weapon share position and movement pool.
       // Server already synced positions; update local state + shared movement pool.
+      // M1: Use immutable update pattern instead of direct mutation.
       if (!localCombatant.mountState && encounterStore.encounter.wieldRelationships?.length) {
-        const wieldRel = encounterStore.encounter.wieldRelationships.find(
+        const wieldRelIndex = encounterStore.encounter.wieldRelationships.findIndex(
           r => r.wielderId === combatantId || r.weaponId === combatantId
         )
-        if (wieldRel && distanceMoved > 0) {
-          // Update shared movement pool
-          wieldRel.movementUsedThisRound = (wieldRel.movementUsedThisRound ?? 0) + distanceMoved
+        if (wieldRelIndex !== -1 && distanceMoved > 0) {
+          const wieldRel = encounterStore.encounter.wieldRelationships[wieldRelIndex]
+
+          // Immutable update of shared movement pool
+          encounterStore.encounter.wieldRelationships = encounterStore.encounter.wieldRelationships.map(
+            (r, i) => i === wieldRelIndex
+              ? { ...r, movementUsedThisRound: (r.movementUsedThisRound ?? 0) + distanceMoved }
+              : r
+          )
 
           // Sync partner position
           const partnerId = wieldRel.wielderId === combatantId
