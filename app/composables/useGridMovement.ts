@@ -145,6 +145,23 @@ export function useGridMovement(options: UseGridMovementOptions) {
       return combatant.mountState.movementRemaining
     }
 
+    // Living Weapon shared movement pool (PTU p.306, feature-005 P2)
+    // Wielder and weapon share the wielder's Movement Speed per round.
+    const encounter = encounterStore.encounter
+    if (encounter?.wieldRelationships?.length) {
+      const wieldRel = encounter.wieldRelationships.find(
+        r => r.wielderId === combatantId || r.weaponId === combatantId
+      )
+      if (wieldRel) {
+        const wielder = encounter.combatants.find(c => c.id === wieldRel.wielderId)
+        if (wielder) {
+          const wielderSpeed = getOverlandSpeed(wielder)
+          const remaining = wielderSpeed - (wieldRel.movementUsedThisRound ?? 0)
+          return Math.max(0, remaining)
+        }
+      }
+    }
+
     if (options.getMovementSpeed) {
       return options.getMovementSpeed(combatantId)
     }
@@ -201,6 +218,24 @@ export function useGridMovement(options: UseGridMovementOptions) {
     // Returning it directly avoids double-applying modifiers to a shrinking budget.
     if (combatant?.mountState) {
       return combatant.mountState.movementRemaining
+    }
+
+    // Living Weapon shared movement pool (PTU p.306, feature-005 P2)
+    if (combatant) {
+      const encounter = encounterStore.encounter
+      if (encounter?.wieldRelationships?.length) {
+        const wieldRel = encounter.wieldRelationships.find(
+          r => r.wielderId === combatantId || r.weaponId === combatantId
+        )
+        if (wieldRel) {
+          const wielder = encounter.combatants.find(c => c.id === wieldRel.wielderId)
+          if (wielder) {
+            const wielderSpeed = getOverlandSpeed(wielder)
+            const remaining = wielderSpeed - (wieldRel.movementUsedThisRound ?? 0)
+            return Math.max(0, remaining)
+          }
+        }
+      }
     }
 
     // Base speed: use callback if provided, otherwise derive from combatant
