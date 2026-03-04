@@ -37,6 +37,7 @@ import {
   skipUncommandablePokemon,
   decrementWeather,
   reverseWeatherCSBonuses,
+  reverseForecastTypeChanges,
   applyWeatherAbilityEffects
 } from '~/server/utils/turn-helpers'
 import type { TrainerDeclaration } from '~/types/combat'
@@ -473,8 +474,10 @@ export default defineEventHandler(async (event) => {
     // P1: Reverse weather CS bonuses if weather expired this round.
     // weatherBeforeAdvance was captured before turn progression; if it was non-null
     // but weather is now null, the weather expired via decrementWeather.
+    // P2: Also reverse Forecast type changes.
     if (weatherBeforeAdvance && !weather) {
       reverseWeatherCSBonuses(combatants)
+      reverseForecastTypeChanges(combatants)
     }
 
     // Check if heavily injured penalty defeated the current combatant

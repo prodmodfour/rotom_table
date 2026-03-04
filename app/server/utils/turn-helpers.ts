@@ -10,6 +10,7 @@ import { getOverlandSpeed } from '~/utils/combatantCapabilities'
 import { applyMovementModifiers } from '~/utils/movementModifiers'
 import type { TrainerDeclaration, StageSource } from '~/types/combat'
 import { getWeatherAbilityEffects } from '~/server/services/weather-automation.service'
+import { getCombatantAbilities } from '~/utils/weatherRules'
 import type { WeatherAbilityResult } from '~/server/services/weather-automation.service'
 import { calculateDamage, applyDamageToEntity, applyFaintStatus } from '~/server/services/combatant.service'
 import { syncEntityToDatabase } from '~/server/services/entity-update.service'
@@ -257,6 +258,31 @@ export function reverseWeatherCSBonuses(combatants: any[]): void {
     entity.stageModifiers = updatedModifiers
 
     combatant.stageSources = stageSources.filter((s: StageSource) => !s.source.startsWith('weather:'))
+  }
+}
+
+/**
+ * Reverse Forecast type changes for all combatants (P2).
+ * Called when weather expires via decrementWeather.
+ * Restores original types from forecastOriginalTypes.
+ *
+ * Mutates combatant objects directly (acceptable: freshly parsed from JSON).
+ */
+export function reverseForecastTypeChanges(combatants: any[]): void {
+  for (const combatant of combatants) {
+    if (combatant.type !== 'pokemon') continue
+    if (!combatant.forecastOriginalTypes) continue
+
+    const abilities = getCombatantAbilities(combatant)
+    const hasForecast = abilities.some(a => a.toLowerCase() === 'forecast')
+    if (!hasForecast) continue
+
+    const orig = combatant.forecastOriginalTypes
+    const pokemon = combatant.entity
+    pokemon.types = orig.type2
+      ? [orig.type1, orig.type2]
+      : [orig.type1]
+    combatant.forecastOriginalTypes = undefined
   }
 }
 
