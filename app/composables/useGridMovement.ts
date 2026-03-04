@@ -147,6 +147,8 @@ export function useGridMovement(options: UseGridMovementOptions) {
 
     // Living Weapon shared movement pool (PTU p.306, feature-005 P2)
     // Wielder and weapon share the wielder's Movement Speed per round.
+    // rules-MEDIUM-002: Apply movement modifiers (Slowed, Stuck, Speed CS, Sprint)
+    // to the wielder's base speed before computing remaining pool.
     const encounter = encounterStore.encounter
     if (encounter?.wieldRelationships?.length) {
       const wieldRel = encounter.wieldRelationships.find(
@@ -155,8 +157,10 @@ export function useGridMovement(options: UseGridMovementOptions) {
       if (wieldRel) {
         const wielder = encounter.combatants.find(c => c.id === wieldRel.wielderId)
         if (wielder) {
-          const wielderSpeed = getOverlandSpeed(wielder)
-          const remaining = wielderSpeed - (wieldRel.movementUsedThisRound ?? 0)
+          const baseSpeed = getOverlandSpeed(wielder)
+          const weather = encounter.weather ?? null
+          const modifiedSpeed = applyMovementModifiers(wielder, baseSpeed, weather)
+          const remaining = modifiedSpeed - (wieldRel.movementUsedThisRound ?? 0)
           return Math.max(0, remaining)
         }
       }
@@ -221,6 +225,7 @@ export function useGridMovement(options: UseGridMovementOptions) {
     }
 
     // Living Weapon shared movement pool (PTU p.306, feature-005 P2)
+    // rules-MEDIUM-002: Apply movement modifiers to wielder's base speed.
     if (combatant) {
       const encounter = encounterStore.encounter
       if (encounter?.wieldRelationships?.length) {
@@ -230,8 +235,10 @@ export function useGridMovement(options: UseGridMovementOptions) {
         if (wieldRel) {
           const wielder = encounter.combatants.find(c => c.id === wieldRel.wielderId)
           if (wielder) {
-            const wielderSpeed = getOverlandSpeed(wielder)
-            const remaining = wielderSpeed - (wieldRel.movementUsedThisRound ?? 0)
+            const baseSpeed = getOverlandSpeed(wielder)
+            const weather = encounter.weather ?? null
+            const modifiedSpeed = applyMovementModifiers(wielder, baseSpeed, weather)
+            const remaining = modifiedSpeed - (wieldRel.movementUsedThisRound ?? 0)
             return Math.max(0, remaining)
           }
         }
