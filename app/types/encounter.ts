@@ -94,6 +94,12 @@ export interface Combatant {
   /** If this combatant is a Pokemon currently being wielded as a Living Weapon */
   wieldedByTrainerId?: string;
 
+  // Forecast ability: original types before weather-based type change (P2, feature-018)
+  // Combat-scoped — not persisted to the Pokemon DB record.
+  // Present only on Pokemon combatants with the Forecast ability while weather is active.
+  /** Original types stored when Forecast changes the Pokemon's type due to weather */
+  forecastOriginalTypes?: { type1: string; type2: string | null };
+
   // Reference to actual data
   entity: Pokemon | HumanCharacter;
 }
