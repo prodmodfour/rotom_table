@@ -11,6 +11,8 @@ import { calculateDamage, applyDamageToEntity, applyFaintStatus } from '~/server
 import { syncDamageToDatabase, syncStagesToDatabase } from '~/server/services/entity-update.service'
 import { checkHeavilyInjured, applyHeavilyInjuredPenalty, checkDeath } from '~/utils/injuryMechanics'
 import { clearMountOnFaint } from '~/server/services/mounting.service'
+import { refreshCombatantEquipmentBonuses } from '~/server/services/living-weapon.service'
+import { reconstructWieldRelationships } from '~/server/services/living-weapon-state'
 import { triggersDismountCheck, buildDismountCheckInfo, hasRiderFeature } from '~/utils/mountingRules'
 import { areAdjacent } from '~/utils/adjacency'
 import { CAVALIERS_REPRISAL_AP_COST } from '~/constants/trainerClasses'
@@ -188,8 +190,20 @@ export default defineEventHandler(async (event) => {
 
     // Living Weapon fainted state (feature-005, PTU p.305):
     // Fainted Living Weapons remain wielded (not auto-disengaged) but with -2 penalty.
-    // The isFainted flag on WieldRelationship is derived from entity HP during reconstruction,
-    // so no explicit update is needed here.
+    // The isFainted flag on WieldRelationship is derived from entity HP during reconstruction.
+    // When a wielded Pokemon faints, refresh the wielder's evasion to apply the -2 penalty.
+    if (faintedFromAnySource && combatant.wieldedByTrainerId) {
+      const wieldRels = reconstructWieldRelationships(combatants)
+      const wielder = combatants.find(c => c.id === combatant.wieldedByTrainerId)
+      if (wielder) {
+        const refreshed = refreshCombatantEquipmentBonuses(wieldRels, wielder)
+        // Apply updated evasion values to the wielder in the combatants array
+        const wielderIdx = combatants.findIndex(c => c.id === wielder.id)
+        if (wielderIdx >= 0) {
+          combatants[wielderIdx] = refreshed
+        }
+      }
+    }
 
     // Track defeated enemies for XP
     let defeatedEnemies = JSON.parse(record.defeatedEnemies)
