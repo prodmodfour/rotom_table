@@ -94,7 +94,7 @@
             :disabled="isConquerorsMarchActive || riderStandardUsed"
             @click="handleActivateConquerorsMarch"
           >
-            <PhPath :size="12" />
+            <PhArrowFatRight :size="12" />
             Conqueror's March
           </button>
           <div v-if="isConquerorsMarchActive" class="mount-controls__feature-active">
@@ -206,7 +206,7 @@
 
 <script setup lang="ts">
 import type { Combatant, Pokemon, HumanCharacter } from '~/types'
-import { PhHorse, PhShieldChevron, PhSword, PhPath, PhHandshake, PhShield, PhLightning } from '@phosphor-icons/vue'
+import { PhHorse, PhShieldChevron, PhSword, PhArrowFatRight, PhHandshake, PhShield, PhLightning } from '@phosphor-icons/vue'
 import {
   isMountable, hasMountedProwess, getMountActionCost, hasExpertMountingSkill,
   getMountCapacity, countCurrentRiders, hasRiderClass, hasRiderFeature,
