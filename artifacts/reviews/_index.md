@@ -1,13 +1,13 @@
 ---
-generated_at: 2026-03-04T11:44:21.686Z
-total_reviews: 337
-active_count: 150
-approved_count: 182
+generated_at: 2026-03-04T12:26:40.905Z
+total_reviews: 342
+active_count: 153
+approved_count: 184
 ---
 
 # Reviews Index
 
-## Active Reviews (150)
+## Active Reviews (153)
 
 | Review ID | Verdict | Target | Reviewer | Date |
 |-----------|---------|--------|----------|------|
@@ -123,6 +123,8 @@ approved_count: 182
 | code-review-314 | CHANGES_REQUIRED | feature-004 | senior-reviewer | 2026-03-04 |
 | code-review-316 | CHANGES_REQUIRED | feature-005 | senior-reviewer | 2026-03-04 |
 | code-review-317 | CHANGES_REQUIRED | feature-018 | senior-reviewer | 2026-03-04 |
+| code-review-321 | CHANGES_REQUIRED | feature-005 | senior-reviewer | 2026-03-04 |
+| code-review-322 | CHANGES_REQUIRED | ux-012 | senior-reviewer | 2026-03-04 |
 | rules-review-034 | CHANGES_REQUIRED | bug-002 | game-logic-reviewer | 2026-02-18 |
 | rules-review-039 | CHANGES_REQUIRED | ptu-rule-034, ptu-rule-035 | game-logic-reviewer | 2026-02-18 |
 | rules-review-047 | MIXED | — | game-logic-reviewer | 2026-02-19 |
@@ -160,12 +162,14 @@ approved_count: 182
 | rules-review-285 | CHANGES_REQUIRED | ptu-rule-131 | game-logic-reviewer | 2026-03-04 |
 | rules-review-287 | CHANGES_REQUIRED | feature-004 | game-logic-reviewer | 2026-03-04 |
 | rules-review-289 | CHANGES_REQUIRED | feature-005 | game-logic-reviewer | 2026-03-04 |
+| rules-review-294 | CHANGES_REQUIRED | feature-005 | game-logic-reviewer | 2026-03-04 |
 | rules-review-test-integrity-001 | CHANGES_REQUIRED | — | — | 2026-02-16 |
 
 ## Recently Approved (last 10)
 
 | Review ID | Target | Reviewer | Date |
 |-----------|--------|----------|------|
+| code-review-323 | refactoring-114 | senior-reviewer | 2026-03-04 |
 | code-review-320 | feature-018 | senior-reviewer | 2026-03-04 |
 | code-review-319 | feature-005 | senior-reviewer | 2026-03-04 |
 | code-review-318 | feature-004 | senior-reviewer | 2026-03-04 |
@@ -175,13 +179,12 @@ approved_count: 182
 | code-review-309 | feature-022 | senior-reviewer | 2026-03-03 |
 | code-review-307 | bug-044 | senior-reviewer | 2026-03-03 |
 | code-review-305 | feature-004 | senior-reviewer | 2026-03-03 |
-| code-review-304 | feature-018 | senior-reviewer | 2026-03-03 |
 
 ## Stats
 
-- Active reviews: 337
-- Needs action: 150
-- Approved/Pass (active): 182
+- Active reviews: 342
+- Needs action: 153
+- Approved/Pass (active): 184
 - Archived: 297
-- Total (active + archived): 634
-- Unique targets reviewed: 90
+- Total (active + archived): 639
+- Unique targets reviewed: 92

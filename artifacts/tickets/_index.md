@@ -1,8 +1,8 @@
 ---
-generated_at: 2026-03-04T11:44:21.697Z
-total_tickets: 301
+generated_at: 2026-03-04T12:26:40.918Z
+total_tickets: 302
 open: 27
-in_progress: 120
+in_progress: 121
 resolved: 136
 ---
 
@@ -13,7 +13,6 @@ resolved: 136
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
 | ptu-rule-131 | ptu-rule | P2 | combat | `rollAccuracyCheck()` in `app/composables/useCapture.ts` rei |
-| feature-024 | feature | P3 | testing | No unit tests exist for any Living Weapon code (code-review- |
 | refactoring-108 | refactoring | P3 | — | refactoring-108: Extract switch button computeds from Combat |
 | refactoring-112 | refactoring | P3 | combat | Refactoring-112: Decompose encounter store into focused sub- |
 | refactoring-113 | refactoring | P3 | combat | refactoring-113: Wire or remove autoDeclineFaintedReactor in |
@@ -39,8 +38,9 @@ resolved: 136
 | refactoring-118 | refactoring | P4 | — | refactoring-118: Remove unused flankingMap destructure in Gr |
 | refactoring-119 | refactoring | P4 | — | refactoring-119: Update stale interrupt.post.ts file header  |
 | refactoring-126 | refactoring | P4 | pokemon-lifecycle | The outer catch block in `[id].put.ts` (line ~90) and `index |
+| decree-need-045 | decree | low | combat | The No Guard ability has two different definitions in the PT |
 
-## In-Progress Tickets (120)
+## In-Progress Tickets (121)
 
 | ID | Category | Priority | Domain | Source |
 |----|----------|----------|--------|--------|
@@ -116,6 +116,7 @@ resolved: 136
 | ptu-rule-128 | ptu-rule | P3 | combat | decree-038 |
 | ptu-rule-131 | ptu-rule | P3 | capture | code-review-281 M2 |
 | feature-005 | feature | P3 | combat | user-request |
+| feature-024 | feature | P3 | testing | code-review-297 H3 |
 | ux-012 | ux | P3 | — | code-review-227 (M2) |
 | refactoring-002 | refactoring | P3 | vtt-grid | code-review-185 HIGH-2 |
 | refactoring-114 | refactoring | P3 | character-lifecycle | rules-review-229 (carried from rules-review-222 M1) |
@@ -165,9 +166,11 @@ resolved: 136
 | refactoring-092 | refactoring | P4 | encounter-tables | code-review-207 M1 |
 | refactoring-093 | refactoring | P4 | combat | code-review-207 M2 |
 
-## Open Decree-Needs (0)
+## Open Decree-Needs (1)
 
-All decree-needs addressed.
+| ID | Priority | Domain | Topic |
+|----|----------|--------|-------|
+| decree-need-045 | low | combat | — |
 
 ## Summary by Category
 
@@ -175,8 +178,8 @@ All decree-needs addressed.
 |----------|------|-------------|----------|-------|
 | bug | 1 | 18 | 29 | 50 |
 | ptu-rule | 5 | 61 | 39 | 106 |
-| feature | 1 | 19 | 3 | 24 |
+| feature | 0 | 20 | 3 | 24 |
 | ux | 5 | 8 | 2 | 16 |
-| decree | 0 | 0 | 44 | 44 |
+| decree | 1 | 0 | 44 | 45 |
 | refactoring | 15 | 14 | 3 | 45 |
 | docs | 0 | 0 | 16 | 16 |
