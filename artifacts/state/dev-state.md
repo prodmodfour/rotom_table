@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-03-04T14:20:00
-updated_by: slave-collector (plan-20260304-132346)
+last_updated: 2026-03-04T15:25:00
+updated_by: slave-collector (plan-20260304-144401)
 ---
 
 # Dev Ecosystem State
@@ -36,7 +36,7 @@ updated_by: slave-collector (plan-20260304-132346)
 | ptu-rule-045 | P3 | **resolved** | Equipment/armor system — P0+P1+P2 all APPROVED. code-review-132 APPROVED (M1: SLOT_ICONS duplication → refactoring-069), rules-review-122 APPROVED |
 | ptu-rule-055 | P3 | **resolved** | XP calculation — P0+P1+P2 all APPROVED. code-review-131 APPROVED, rules-review-121 APPROVED |
 | ptu-rule-056 | P3 | **resolved** | Character creation form — P0+P1+P2 all approved. H1 fix applied (moved `_create-form.scss` from `additionalData` to `css` array). code-review-138 CHANGES_REQUIRED → fixed |
-| ptu-rule-058 | P3 | **resolved** | Encounter density/significance — P0+P1+H1 fix all APPROVED. code-review-131 APPROVED, rules-review-121 APPROVED |
+| ptu-rule-058 | P3 | **P2-implemented** | Encounter density/significance — P0+P1+H1 fix all APPROVED. P2 (Environmental Modifier Framework) implemented by slave-4 (plan-20260304-144401): 9 commits. **Needs review** |
 | ptu-rule-060 | P3 | **resolved** | Level-budget/significance — P0 C1 fix + P1 significance multiplier all APPROVED. code-review-141 APPROVED (M1/M2 non-blocking → refactoring-072, 073), rules-review-131 APPROVED |
 | ptu-rule-077 | P3 | **resolved** | Focus (Speed) initiative/evasion — fix implemented, APPROVED (code-review-125 + rules-review-115) |
 | ptu-rule-078 | P3 | **resolved** | Trainer class associated skills — H1+H2 fix APPROVED. code-review-142 APPROVED, rules-review-132 APPROVED. All 39 classes correct |
@@ -119,7 +119,7 @@ updated_by: slave-collector (plan-20260304-132346)
 | feature-021 | P2 | **APPROVED** | Derived Capability Calculations — implemented by slave-4 (plan-20260303-065350). Fix cycle by slave-2 (plan-20260303-131425). Re-reviewed by slave-2 (plan-20260303-165227): code-review-303 **APPROVED** + rules-review-276 **APPROVED**. All code-review-298 issues verified resolved. **Feature complete** | partial |
 | feature-023 | P2 | **P2-APPROVED** | Player Capture & Healing Interfaces — P0 APPROVED. P1 APPROVED. P2 APPROVED. P2 fix cycle re-review: code-review-294 **APPROVED** (plan-20260302-224650). All code-review-288 issues verified resolved. Rules-review-264 already APPROVED. **Feature complete** | multi-phase |
 | feature-022 | P2 | **APPROVED** | Pokemon Loyalty System — PARTIAL scope. Fix cycle by slave-1 (plan-20260303-191515). Re-reviewed by slave-3 (plan-20260303-202535): code-review-309 **APPROVED** (all 6 code-review-306 issues verified resolved, 0 new) + rules-review-282 **APPROVED** (all rules-review-279 issues resolved, 0 new). `prisma db push` completed (schema already in sync). Remaining: as-any removal (5 locations documented in ticket). Out of scope: command checks (R049), loyalty-gated evolution | partial |
-| feature-024 | P3 | **fix-cycle-done** | Living Weapon unit test coverage — engage validation, disengage clearing, state reconstruction, homebrew fallback, getLivingWeaponConfig. Implemented by slave-4 (plan-20260304-115403): 4 commits. Reviewed by slave-3 (plan-20260304-124517): code-review-324 **CHANGES_REQUIRED** (1H+1M). Fix cycle by slave-3 (plan-20260304-132346): 2 commits — removed duplicate vi.mock (H1), added .toEqual for reference equality (M1). **Needs re-review** | single-phase |
+| feature-024 | P3 | **APPROVED** | Living Weapon unit test coverage — engage validation, disengage clearing, state reconstruction, homebrew fallback, getLivingWeaponConfig. Implemented by slave-4 (plan-20260304-115403): 4 commits. Reviewed by slave-3 (plan-20260304-124517): code-review-324 **CHANGES_REQUIRED** (1H+1M). Fix cycle by slave-3 (plan-20260304-132346): 2 commits. Re-reviewed (plan-20260304-144401): code-review-328 **APPROVED** + rules-review-300 **APPROVED**. Feature complete | single-phase |
 
 ### UX Tickets (`tickets/ux/`)
 | Ticket | Priority | Status | Summary |
@@ -142,18 +142,19 @@ updated_by: slave-collector (plan-20260304-132346)
 
 ## Active Developer Work
 
-**Current task:** Session 110 collection complete. 4 slaves merged (11 commits), 0 skipped. 2 dev slaves + 2 reviewer slaves.
+**Current task:** Session 111 collection complete. 5 slaves merged (16 commits), 0 skipped. 2 dev slaves + 3 reviewer slaves.
 
-**Session 110 (2026-03-04, plan-20260304-132346):**
-- **slave-1** (reviewers): feature-005-p2-rereview — code-review-325 **APPROVED** (0 issues, all 7 code-review-321 + 5 rules-review-294 issues resolved) + rules-review-297 **APPROVED** (0 issues). → feature-005 **P2-APPROVED, feature complete**
-- **slave-2** (reviewers): ux-012-rereview — code-review-326 **APPROVED** (1M: commit hash in resolution log, non-blocking) + rules-review-298 **APPROVED** (0 issues). → ux-012 **APPROVED, feature complete**
-- **slave-3** (developer): feature-024-fix — 2 commits: Removed duplicate vi.mock dead code (H1), fixed reference equality assertion (M1). → **fix-cycle-done, needs re-review**
-- **slave-4** (developer): refactoring-125 — 5 commits: Extracted CombatantGmActions.vue from CombatantCard.vue (930→566 lines). → **refactoring done, needs review**
+**Session 111 (2026-03-04, plan-20260304-144401):**
+- **slave-5** (developer): bug-001 — 1 commit: Ticket moved to resolved (swim/sky cell fix already applied in prior session). → **resolved**
+- **slave-4** (developer): ptu-rule-058-p2 — 9 commits: Environmental Modifier Framework (EnvironmentPreset types, 3 built-in presets, GM UI, accuracy penalty integration, Prisma schema update). → **P2 implemented, needs review**
+- **slave-1** (reviewers): refactoring-106+ptu-rule-128 — code-review-327 **CHANGES_REQUIRED** (1H: faint clearing expanded to Other conditions beyond RAW p.248, 1M: encounter-end clearing expanded) + rules-review-299 **APPROVED** (all 9 mechanics verified). → **needs fix cycle**
+- **slave-2** (reviewers): feature-024-fix re-review — code-review-328 **APPROVED** (both H1+M1 resolved) + rules-review-300 **APPROVED** (decree-043 compliant). → feature-024 **APPROVED, feature complete**
+- **slave-3** (reviewers): refactoring-125 — code-review-329 **CHANGES_REQUIRED** (1M: app-surface.md not updated) + rules-review-301 **APPROVED** (all mechanics preserved). → **needs fix cycle**
 
 **Smoke test:** PASSED (all 3 views render correctly)
-**Tickets APPROVED:** feature-005 P2 (both re-reviews passed — all tiers complete), ux-012 (both re-reviews passed)
-**Tickets needing re-review:** feature-024 (fix cycle done)
-**Tickets needing review:** refactoring-125 (first implementation)
+**Tickets APPROVED:** feature-024 (both re-reviews passed — feature complete)
+**Tickets needing fix cycle:** refactoring-106 (code-review-327 1H+1M), refactoring-125 (code-review-329 1M)
+**Tickets needing review:** ptu-rule-058 P2 (first implementation)
 
 **Session 106 (2026-03-04, plan-20260304-104014):**
 - **slave-1** (developer): feature-018-p2-fix — 5 commits: Fix cycle addressing code-review-317 (1H+3M). Server-side weather threading for mount speed calcs (H1), Sand Force bonus before min-1 clamp (M1), WEATHER_ABILITY_EFFECTS moved to client utils (M3), app-surface.md updated (M2), ticket updated. → **fix-cycle-done, needs re-review**
@@ -909,6 +910,16 @@ updated_by: slave-collector (plan-20260304-132346)
 
 ## Review Status
 
+### Session 111 Reviews (plan-20260304-144401)
+| Review ID | Target | Verdict | Reviewer | Date |
+|-----------|--------|---------|----------|------|
+| code-review-327 | refactoring-106+ptu-rule-128 first review (status condition behavior decoupling, 8 commits, 6 source files) | CHANGES_REQUIRED (1H: clearsOnFaint expanded to Other conditions beyond RAW p.248, 1M: clearsOnEncounterEnd expanded to Other conditions beyond old behavior) | senior-reviewer | 2026-03-04 |
+| rules-review-299 | refactoring-106+ptu-rule-128 first review (9 mechanics verified: condition categories, recall/encounter-end/faint/breather clearing, capture rate, rest healing, Sleep persistence) | APPROVED (all 9 mechanics correct, decree-038 fully compliant, no regressions) | game-logic-reviewer | 2026-03-04 |
+| code-review-328 | feature-024 fix cycle re-review (2 commits addressing code-review-324 H1+M1) | APPROVED (H1 dead vi.mock removed, M1 reference equality documented, 0 new issues) | senior-reviewer | 2026-03-04 |
+| rules-review-300 | feature-024 fix cycle re-review (Living Weapon skill rank gating verified) | APPROVED (decree-043 compliant, meetsSkillRequirement scoped to move access not engagement) | game-logic-reviewer | 2026-03-04 |
+| code-review-329 | refactoring-125 first review (CombatantGmActions extraction, 5 commits) | CHANGES_REQUIRED (1M: app-surface.md not updated with new component) | senior-reviewer | 2026-03-04 |
+| rules-review-301 | refactoring-125 first review (8 mechanics verified: extraction logic preservation, switch/faint/force actions, damage/heal/stages/status/tempHp forwarding) | APPROVED (pure refactoring, all game logic byte-identical, decree-034 preserved) | game-logic-reviewer | 2026-03-04 |
+
 ### Session 110 Reviews (plan-20260304-132346)
 | Review ID | Target | Verdict | Reviewer | Date |
 |-----------|--------|---------|----------|------|
@@ -1425,10 +1436,10 @@ updated_by: slave-collector (plan-20260304-132346)
 | refactoring-094 | P4 | **resolved** | Remove trivial combatantsOnGrid passthrough — APPROVED (code-review-213 + rules-review-189, plan-20260228-020000) |
 | refactoring-095 | P4 | **fix-cycle-needs-rereview** | Guard addEdge() against Skill Edge string injection. Fix cycle by slave-4 (plan-20260228-093200): addEdge error feedback added, unit tests for addEdge guard, app-surface.md updated. Bundled with ptu-rule-119 fix cycle. Needs re-review |
 | refactoring-096 | P4 | **needs-fix-cycle** | Tag color styles harmonized: extracted shared _tags.scss partial. code-review-224 **CHANGES_REQUIRED** (H1: CSS specificity regression in player sheet, M1: stale comment in _create-form-shared.scss). rules-review-200 **APPROVED**. Needs fix cycle |
-| refactoring-106 | P2 | **resolved** | Decouple condition behaviors from category arrays per decree-038. Per-condition behavior flags (clearsOnRecall, clearsOnEncounterEnd, clearsOnFaint). Resolved by slave-6 (plan-20260301-110550): 6 refactoring commits + 1 Sleep fix commit. All 7 consumer files updated |
+| refactoring-106 | P2 | **needs-fix-cycle** | Decouple condition behaviors from category arrays per decree-038. Per-condition behavior flags (clearsOnRecall, clearsOnEncounterEnd, clearsOnFaint). Resolved by slave-6 (plan-20260301-110550): 6 refactoring commits + 1 Sleep fix commit. Reviewed (plan-20260304-144401): code-review-327 **CHANGES_REQUIRED** (1H: faint clearing expanded to Other conditions beyond RAW, 1M: encounter-end clearing expanded) + rules-review-299 **APPROVED**. Needs fix cycle |
 | refactoring-107 | P4 | **open** | Duplicated `.btn` / `.counter` / `.tag` / `.selected-tags` SCSS across LevelUpEdgeSection, LevelUpFeatureSection, LevelUpClassSection, LevelUpModal (~40-50 lines each). Extract to shared SCSS partial. Source: code-review-239 M1. Filed by slave-collector (plan-20260301-110550) |
 | refactoring-112 | P3 | **open** | Decompose encounter store into focused sub-modules (970 lines, 5+ responsibility clusters). Source: code-review-249 M1. Filed by slave-collector (plan-20260301-143720) |
-| refactoring-125 | P3 | **in-progress** | CombatantCard.vue exceeds 800-line limit (930 lines). Extracted CombatantGmActions.vue (396 lines). CombatantCard reduced to 566 lines. Implemented by slave-4 (plan-20260304-132346): 5 commits. **Needs review** |
+| refactoring-125 | P3 | **needs-fix-cycle** | CombatantCard.vue exceeds 800-line limit (930 lines). Extracted CombatantGmActions.vue (396 lines). CombatantCard reduced to 566 lines. Implemented by slave-4 (plan-20260304-132346): 5 commits. Reviewed (plan-20260304-144401): code-review-329 **CHANGES_REQUIRED** (1M: app-surface.md not updated) + rules-review-301 **APPROVED**. Needs fix cycle |
 
 ## Code Health
 
@@ -1442,6 +1453,21 @@ updated_by: slave-collector (plan-20260304-132346)
 | Open tickets (P4) | 10 (refactoring-060/062/076/078/079/084 + ux-002/006/007/008) |
 | Total open | 16 |
 | Total resolved | 159 (feature-002 fully resolved) |
+
+## Session Summary (2026-03-04, session 111 — plan-20260304-144401)
+
+**Slave collection plan-20260304-144401:** 5 slaves merged (16 commits total). 2 dev slaves + 3 reviewer slaves, all completed successfully.
+- **slave-5** (developer): bug-001 — 1 commit (ticket moved to resolved, swim/sky cell fix already applied)
+- **slave-4** (developer): ptu-rule-058-p2 — 9 commits (EnvironmentPreset types, 3 built-in presets, Prisma schema, server endpoint, store management, EnvironmentSelector.vue, accuracy penalty integration, GM sidebar integration)
+- **slave-1** (reviewers): refactoring-106+ptu-rule-128 review — code-review-327 **CHANGES_REQUIRED** (1H+1M) + rules-review-299 **APPROVED** (9 mechanics verified)
+- **slave-2** (reviewers): feature-024 fix re-review — code-review-328 **APPROVED** + rules-review-300 **APPROVED**
+- **slave-3** (reviewers): refactoring-125 review — code-review-329 **CHANGES_REQUIRED** (1M) + rules-review-301 **APPROVED**
+
+**Smoke test:** PASSED (all 3 views render correctly)
+**Tickets APPROVED:** feature-024 (both re-reviews passed — feature complete)
+**Tickets needing fix cycle:** refactoring-106 (1H: faint clearing expanded beyond RAW, 1M: encounter-end clearing expanded), refactoring-125 (1M: app-surface.md)
+**Tickets needing review:** ptu-rule-058 P2 (first implementation, 9 commits)
+**CLAUDE.md updates:** 8 files (encounter components 37→38, API endpoints 156→157, encounter.ts types 244→295 lines, encounter store ~1620→~1656 lines, useMoveCalculation 25→28KB, encounter.service ~495→~514 lines, root CLAUDE.md counts)
 
 ## Session Summary (2026-03-04, session 110 — plan-20260304-132346)
 

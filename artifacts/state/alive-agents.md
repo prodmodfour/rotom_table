@@ -479,3 +479,8 @@
 | plan-20260304-132346/slave-2 | reviewers | ux-012-rereview | APPROVED | 2026-03-04T13:42:00Z | 4b272ce0, 3497ea48 |
 | plan-20260304-132346/slave-3 | developer | feature-024-fix | success | 2026-03-04T13:31:15Z | e250a53f, cc691946 |
 | plan-20260304-132346/slave-4 | developer | refactoring-125 | success | 2026-03-04T13:36:00Z | 53fcd7e8, 28c31aa3, 9c237a93, 99e7caf5, 9845b562 |
+| plan-20260304-144401/slave-1 | reviewers | refactoring-106+ptu-rule-128 | CHANGES_REQUIRED | 2026-03-04T14:52:00Z | dc197237, 1cb9f9a3 |
+| plan-20260304-144401/slave-2 | reviewers | feature-024-fix | APPROVED | 2026-03-04T14:53:30Z | f7e2e68a, 04d368c9 |
+| plan-20260304-144401/slave-3 | reviewers | refactoring-125 | CHANGES_REQUIRED | 2026-03-04T14:56:00Z | b9ae8ac1, 3f4b3df6 |
+| plan-20260304-144401/slave-4 | developer | ptu-rule-058-p2 | success | 2026-03-04T15:04:00Z | 58f502d7, bb640c74, 582efc38, 9564494d, c98218e8, 23f1fb52, ca41f198, 16275466, b2d2f80e |
+| plan-20260304-144401/slave-5 | developer | bug-001 | success | 2026-03-04T14:52:00Z | 24c7fe6d |
