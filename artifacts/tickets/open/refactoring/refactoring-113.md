@@ -3,7 +3,7 @@ ticket: refactoring-113
 category: EXT-DEAD-CODE
 priority: P3
 severity: LOW
-status: open
+status: in-progress
 domain: combat
 source: code-review-251 MED-001 + rules-review-227 M-1
 created_by: slave-collector (plan-20260301-152500)
@@ -34,3 +34,7 @@ Either:
 - UX annoyance: GM sees stale AoO prompt for fainted reactor
 - Dead code: unused import
 - No correctness risk (guarded at resolve time)
+
+## Resolution Log
+
+- `2237e3fb` — Removed dead `autoDeclineFaintedReactor` import from `aoo-resolve.post.ts`. The CRIT-001 guard at resolve time provides sufficient coverage; the stale prompt UX annoyance is low priority. Files changed: `app/server/api/encounters/[id]/aoo-resolve.post.ts`.
