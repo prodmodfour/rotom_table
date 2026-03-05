@@ -1,24 +1,28 @@
 ---
-generated_at: 2026-03-05T18:42:34.547Z
-total_tickets: 360
-open: 62
+generated_at: 2026-03-05T23:02:18.338Z
+total_tickets: 364
+open: 66
 in_progress: 1
 resolved: 297
 ---
 
 # Tickets Index
 
-## Open Tickets (62)
+## Open Tickets (66)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
 | bug-056 | bug | P1 | character-lifecycle | When a character gains enough XP to auto-level past a milest |
+| bug-064 | bug | P1 | character-lifecycle, combat | The character detail page (`/gm/characters/[id]`) fails to r |
+| bug-065 | bug | P1 | encounter-tables | The `/gm/encounter-tables` page returns HTTP 500 because it  |
+| bug-066 | bug | P1 | encounter-tables | Both encounter table editor pages (`/gm/habitats/:id` and `/ |
 | ptu-rule-151 | ptu-rule | P1 | healing | The Heavily Injured status has a secondary trigger: "taking  |
 | bug-057 | bug | P2 | character-lifecycle | The character POST and PUT API endpoints do not enforce a ma |
 | bug-058 | bug | P2 | combat | PTU distinguishes "HP loss" (e.g., Belly Drum, Life Orb reco |
 | bug-060 | bug | P2 | encounter-tables | When exporting and re-importing encounter tables, the densit |
 | bug-062 | bug | P2 | scenes | `resetSceneUsage()` exists to clear scene-frequency move cou |
 | bug-063 | bug | P2 | vtt-grid | `Math.max(modifiedSpeed, 2)` is applied after the Slowed con |
+| bug-067 | bug | P2 | player-view | The PlayerPokemonCard summary renders correctly (sprite, nam |
 | ptu-rule-147 | ptu-rule | P2 | combat | Round counter exists but there is no per-effect duration tra |
 | ptu-rule-149 | ptu-rule | P2 | combat | The VTT allows tokens to be repositioned freely without enfo |
 | ptu-rule-150 | ptu-rule | P2 | healing | No "set HP" or "lose HP" flag exists to distinguish direct H |
@@ -89,7 +93,7 @@ All decree-needs addressed.
 
 | Category | Open | In-Progress | Resolved | Total |
 |----------|------|-------------|----------|-------|
-| bug | 9 | 0 | 54 | 63 |
+| bug | 13 | 0 | 54 | 67 |
 | ptu-rule | 15 | 0 | 107 | 122 |
 | feature | 2 | 0 | 25 | 27 |
 | ux | 8 | 0 | 10 | 18 |
