@@ -12,6 +12,7 @@ affected_files:
   - app/server/api/capture/attempt.post.ts
   - app/server/services/entity-builder.service.ts
   - app/server/api/pokemon/index.post.ts
+  - app/server/utils/serializers.ts
 ---
 
 ## Summary
@@ -40,5 +41,7 @@ Per decree-049, wild-caught Pokemon should default to Loyalty 2 (Wary) instead o
 - `280d5a65` — `app/server/api/pokemon/index.post.ts`: Origin-aware loyalty default (wild→2, others→3) for manual Pokemon creation
 - `1cce5e80` — `app/server/services/entity-builder.service.ts`: Origin-aware loyalty fallback (wild/captured→2, others→3) when DB value is null
 - `pokemon-generator.service.ts`: Already had correct `getStartingLoyalty()` function mapping captured/wild→2, others→3 (no changes needed)
-- `serializers.ts`: `?? 3` fallbacks left unchanged per ticket — they handle null/undefined for legacy records where origin is unknown
 - `csv-import.service.ts`: Routes through `createPokemonRecord` which already uses `getStartingLoyalty` (no changes needed)
+- **Fix cycle (code-review-332):**
+- `34253689` — `app/server/api/pokemon/index.post.ts`: Added 'captured' origin to loyalty default check (was missing, only checked 'wild')
+- `1210a44b` — `app/server/utils/serializers.ts`: Changed `?? 3` fallbacks to origin-aware logic in both `serializeLinkedPokemon` and `serializePokemon` (wild/captured→2, others→3)
