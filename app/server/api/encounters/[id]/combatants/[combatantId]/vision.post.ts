@@ -9,6 +9,7 @@
  */
 import { prisma } from '~/server/utils/prisma'
 import { buildEncounterResponse } from '~/server/services/encounter.service'
+import { notifyEncounterUpdate } from '~/server/utils/websocket'
 
 export default defineEventHandler(async (event) => {
   const encounterId = getRouterParam(event, 'id')
@@ -87,6 +88,10 @@ export default defineEventHandler(async (event) => {
 
     // Return full encounter response (standard pattern)
     const response = buildEncounterResponse(updatedRecord, combatants)
+
+    // Broadcast to connected clients (Group View, Player View)
+    notifyEncounterUpdate(encounterId, response)
+
     return { success: true, data: response }
   } catch (error: unknown) {
     if (error && typeof error === 'object' && 'statusCode' in error) throw error
