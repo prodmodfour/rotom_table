@@ -12,8 +12,9 @@ import { ptuDiagonalDistance } from '~/utils/gridDistance'
 import { sortByInitiativeWithRollOff } from '~/server/services/encounter.service'
 import { findPlacementPosition } from '~/server/services/grid-placement.service'
 import { prisma } from '~/server/utils/prisma'
-import { RECALL_CLEARED_CONDITIONS } from '~/constants/statusConditions'
-import type { Combatant } from '~/types'
+import { RECALL_CLEARED_CONDITIONS, getConditionDef } from '~/constants/statusConditions'
+import { shouldClearOnRecall } from '~/constants/conditionSourceRules'
+import type { Combatant, ConditionInstance, StatusCondition } from '~/types'
 import type { SwitchAction } from '~/types/combat'
 import type { GridPosition } from '~/types/spatial'
 
@@ -760,17 +761,27 @@ function canFitAt(
  * Apply recall side-effects to a Pokemon's DB record.
  * PTU p.247-248: volatile conditions cleared, temp HP lost, combat stages reset.
  *
+ * Per decree-047: Other conditions use source-aware clearing when
+ * conditionInstances are provided. Without instances, falls back
+ * to static clearsOnRecall flags (backward compat).
+ *
  * Shared by switch.post.ts and recall.post.ts to avoid duplicated logic.
  */
-export async function applyRecallSideEffects(entityId: string): Promise<void> {
+export async function applyRecallSideEffects(
+  entityId: string,
+  conditionInstances?: ConditionInstance[]
+): Promise<void> {
   const dbRecord = await prisma.pokemon.findUnique({
     where: { id: entityId }
   })
   if (!dbRecord) return
 
-  const currentStatuses: string[] = JSON.parse(dbRecord.statusConditions || '[]')
-  const recallClearedSet = new Set(RECALL_CLEARED_CONDITIONS as string[])
-  const persistentOnly = currentStatuses.filter(s => !recallClearedSet.has(s))
+  const currentStatuses: StatusCondition[] = JSON.parse(dbRecord.statusConditions || '[]')
+
+  const persistentOnly = currentStatuses.filter((status: StatusCondition) => {
+    const instance = conditionInstances?.find(i => i.condition === status)
+    return !shouldClearOnRecall(status, instance)
+  })
 
   await prisma.pokemon.update({
     where: { id: entityId },

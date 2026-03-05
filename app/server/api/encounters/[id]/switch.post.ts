@@ -229,7 +229,8 @@ export default defineEventHandler(async (event) => {
 
     // 2c. Apply recall side-effects on the recalled Pokemon's DB record
     // PTU p.247-248: volatile conditions cleared, temp HP lost, combat stages reset
-    await applyRecallSideEffects(recalledCombatant.entityId)
+    // Source-aware clearing for Other conditions (decree-047)
+    await applyRecallSideEffects(recalledCombatant.entityId, recalledCombatant.conditionInstances)
 
     // 3. Build new combatant from DB entity
     const releasedEntity = buildPokemonEntityFromRecord(releasedPokemonRecord!)

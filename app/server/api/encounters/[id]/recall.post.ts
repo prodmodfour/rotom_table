@@ -190,8 +190,8 @@ export default defineEventHandler(async (event) => {
       const wieldResult = clearWieldOnRemoval(currentCombatants, wieldRelationships, combatantId)
       currentCombatants = wieldResult.combatants
 
-      // Apply recall side-effects on DB record
-      await applyRecallSideEffects(pokemon.entityId)
+      // Apply recall side-effects on DB record (source-aware, decree-047)
+      await applyRecallSideEffects(pokemon.entityId, pokemon.conditionInstances)
 
       // Build switch action record
       // Track fainted state at time of recall for pair detection (ptu-rule-130)
