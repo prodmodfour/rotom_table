@@ -21,7 +21,7 @@ app/
 ├── stores/          # 16 Pinia stores for state management
 ├── types/           # 15 TypeScript type definition files
 ├── utils/           # captureRate, diceRoller, restHealing
-├── constants/       # combatManeuvers, statusConditions
+├── constants/       # combatManeuvers, statusConditions, conditionSourceRules
 ├── prisma/          # Schema, seeds, database
 ├── tests/           # Vitest (unit) + e2e artifacts (tickets, matrix, reviews)
 ├── server/
