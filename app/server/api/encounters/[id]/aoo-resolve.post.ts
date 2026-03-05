@@ -18,7 +18,7 @@
 import { prisma } from '~/server/utils/prisma'
 import { v4 as uuidv4 } from 'uuid'
 import { loadEncounter, buildEncounterResponse, getEntityName } from '~/server/services/encounter.service'
-import { resolveAoOAction, canUseAoO, autoDeclineFaintedReactor, getStruggleAttackStats } from '~/server/services/out-of-turn.service'
+import { resolveAoOAction, canUseAoO, getStruggleAttackStats } from '~/server/services/out-of-turn.service'
 import { calculateDamage, applyDamageToEntity, applyFaintStatus } from '~/server/services/combatant.service'
 import { syncEntityToDatabase } from '~/server/services/entity-update.service'
 import { checkSoulstealer, applySoulstealerHealing } from '~/server/services/living-weapon.service'
