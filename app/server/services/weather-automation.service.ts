@@ -18,6 +18,7 @@ import {
   isDamagingWeather,
   isPtuWeather,
   isImmuneToWeatherDamage,
+  getWeatherDamageReduction,
   getCombatantAbilities,
   WEATHER_ABILITY_EFFECTS
 } from '~/utils/weatherRules'
@@ -99,8 +100,19 @@ export function getWeatherTickForCombatant(
   }
 
   // Calculate weather tick damage
-  const tickDamage = calculateTickDamage(combatant.entity.maxHp)
+  const rawTickDamage = calculateTickDamage(combatant.entity.maxHp)
   const weatherLabel = weather === 'hail' ? 'Hail' : 'Sandstorm'
+
+  // Check for damage reduction abilities (e.g. Permafrost subtracts 5)
+  const reduction = getWeatherDamageReduction(combatant)
+  let tickDamage = rawTickDamage
+  let formula = `${weatherLabel}: 1/10 max HP (${rawTickDamage})`
+
+  if (reduction.reduction > 0) {
+    // Apply reduction, minimum 1 damage per decree-001
+    tickDamage = Math.max(1, rawTickDamage - reduction.reduction)
+    formula = `${weatherLabel}: 1/10 max HP (${rawTickDamage}) - ${reduction.ability} (${reduction.reduction}) = ${tickDamage}`
+  }
 
   return {
     shouldApply: true,
@@ -110,7 +122,7 @@ export function getWeatherTickForCombatant(
       weather,
       effect: 'damage',
       amount: tickDamage,
-      formula: `${weatherLabel}: 1/10 max HP (${tickDamage})`,
+      formula,
       // newHp, injuryGained, fainted will be filled by the caller after applying damage
       newHp: 0,
       injuryGained: false,
