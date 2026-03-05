@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-03-05T14:45:00
-updated_by: slave-collector (plan-1772695906)
+last_updated: 2026-03-05T16:00:00
+updated_by: orchestrator-survey
 ---
 
 # Dev Ecosystem State
@@ -68,7 +68,7 @@ updated_by: slave-collector (plan-1772695906)
 | refactoring-113 | P3 | open | Wire or remove autoDeclineFaintedReactor in aoo-resolve.post.ts |
 | refactoring-115 | P4 | open | switching.service.ts exceeds 800-line limit (811 lines) |
 | refactoring-116 | P4 | open | XpDistributionModal.vue exceeds 800-line file limit (1016 lines) |
-| refactoring-117 | P3 | open | Extract loyalty calculation to shared utility |
+| refactoring-117 | P3 | open | Extract out-of-turn actions from encounter.ts store |
 | refactoring-118 | P4 | open | Remove unused flankingMap destructure in GridCanvas.vue |
 | refactoring-119 | P4 | open | Update stale interrupt.post.ts file header comment |
 | refactoring-121 | P4 | open | Add flanking_update to WebSocketEvent union type |
@@ -115,10 +115,10 @@ updated_by: slave-collector (plan-1772695906)
 | Last updated | 2026-03-05 |
 | Open tickets (P0) | 0 |
 | Open tickets (P1) | 0 |
-| Open tickets (P2) | 1 (feature-025) |
+| Open tickets (P2) | 0 |
 | Open tickets (P3) | 5 |
-| Open tickets (P4) | 41 |
-| In-progress tickets | 2 (feature-025, ptu-rule-135) |
-| Total open + in-progress | 48 |
-| Needing fix cycles | ptu-rule-135 (code-review-332: 1H+1M), bug-054 (timer leak from code-review-334/334b) |
-| Needing review | feature-025 (code-review-331 fixes complete, needs re-review) |
+| Open tickets (P4) | 44 |
+| In-progress tickets | 2 (feature-025 P2, ptu-rule-135 P4) |
+| Total open + in-progress | 51 |
+| Needing fix cycles | ptu-rule-135 (code-review-332: 2 issues — ISSUE-1 missing captured origin, ISSUE-2 serializer consistency) |
+| Needing review | feature-025 (code-review-331 fixes committed in session 117, needs re-review) |
