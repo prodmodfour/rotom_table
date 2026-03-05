@@ -39,6 +39,15 @@ export default defineEventHandler(async (event) => {
       sprintApplied = true
     }
 
+    // Mark as having used standard + shift actions — PTU p.245:
+    // Sprint uses the Standard Action, and the Sprint movement IS the shift
+    combatant.turnState = {
+      ...combatant.turnState,
+      standardActionUsed: true,
+      shiftActionUsed: true,
+      hasActed: true
+    }
+
     // Add to move log
     const moveLog = JSON.parse(record.moveLog)
     const entityName = getEntityName(combatant)
