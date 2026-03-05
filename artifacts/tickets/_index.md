@@ -1,40 +1,38 @@
 ---
-generated_at: 2026-03-04T23:31:39.829Z
-total_tickets: 314
-open: 48
-in_progress: 2
-resolved: 264
+generated_at: 2026-03-05T07:12:39.109Z
+total_tickets: 321
+open: 50
+in_progress: 1
+resolved: 270
 ---
 
 # Tickets Index
 
-## Open Tickets (48)
+## Open Tickets (50)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
-| refactoring-002 | refactoring | P3 | vtt-grid | Legacy terrain types `'difficult'` and `'rough'` are still v |
+| bug-053 | bug | P2 | encounter-tables | Two related issues prevent vision state from syncing across  |
 | refactoring-098 | refactoring | P3 | combat | refactoring-098: Refactor entity mutation in heavily injured |
-| refactoring-112 | refactoring | P3 | combat | Refactoring-112: Decompose encounter store into focused sub- |
 | refactoring-113 | refactoring | P3 | combat | refactoring-113: Wire or remove autoDeclineFaintedReactor in |
 | refactoring-117 | refactoring | P3 | — | refactoring-117: Extract out-of-turn actions from encounter. |
 | refactoring-122 | refactoring | P3 | vtt-grid, player-view | refactoring-122: Wire receivedFlankingMap into group/player  |
 | refactoring-128 | refactoring | P3 | combat | `useMoveCalculation.ts` is now 806 lines, exceeding the 800- |
 | refactoring-129 | refactoring | P3 | combat | Per decree-047, whether Other category conditions clear on f |
-| refactoring-131 | refactoring | P3 | cross-cutting | refactoring-131: Replace remaining alert() calls with useGmT |
 | bug-052 | bug | P4 | character-lifecycle | `PlayerCharacterSheet.vue` renders feature tags with bare `c |
-| ptu-rule-095 | ptu-rule | P4 | vtt-grid | ptu-rule-095: Disengage maneuver missing from combatManeuver |
 | ptu-rule-121 | ptu-rule | P4 | combat | The Sprint endpoint (`app/server/api/encounters/[id]/sprint. |
 | ptu-rule-125 | ptu-rule | P4 | character-lifecycle | ptu-rule-125: Populate grantedCapabilities on all capability |
 | ptu-rule-126 | ptu-rule | P4 | combat | ptu-rule-126: Snow Boots conditional Overland speed penalty  |
 | ptu-rule-130 | ptu-rule | P4 | combat | PTU-Rule-130: Fainted recall+release pair should not apply L |
 | ptu-rule-133 | ptu-rule | P4 | scenes | ptu-rule-133: Permafrost ability weather damage reduction no |
-| ptu-rule-135 | ptu-rule | P4 | capture | Per decree-049, wild-caught Pokemon should default to Loyalt |
 | ux-006 | ux | P4 | — | ux-006: PTU injury markers may leak precise HP info in playe |
 | ux-011 | ux | P4 | character-lifecycle | ux-011: Custom item form missing grantedCapabilities input f |
 | ux-013 | ux | P4 | character-lifecycle | ux-013: Stacked bonus Skill Edge rank-up display shows incor |
 | ux-014 | ux | P4 | pokemon-lifecycle | UX-014: Evolution undo snapshot staleness warning |
 | ux-015 | ux | P4 | pokemon-lifecycle | UX-015: Replace alert() with inline UI for evolution prevent |
 | ux-016 | ux | P4 | combat | ux-016: hasActed flag not set when all three actions individ |
+| ux-017 | ux | P4 | encounter-tables | The Dim Cave preset description says "Negated by Darkvision" |
+| ux-018 | ux | P4 | encounter-tables | Dim Cave description says "Negated by Darkvision" and Dark C |
 | refactoring-086 | refactoring | P4 | combat | `app/composables/useMoveCalculation.ts` is 801 lines, exceed |
 | refactoring-087 | refactoring | P4 | vtt-grid | `app/tests/unit/stores/terrain.test.ts` is 811 lines, exceed |
 | refactoring-088 | refactoring | P4 | vtt-grid | `combatantsOnGrid` in `useMoveCalculation.ts` falls back to  |
@@ -59,14 +57,17 @@ resolved: 264
 | refactoring-126 | refactoring | P4 | pokemon-lifecycle | The outer catch block in `[id].put.ts` (line ~90) and `index |
 | refactoring-130 | refactoring | P4 | encounter-tables | When clearing an environment preset, the endpoint stores `'{ |
 | refactoring-132 | refactoring | P4 | combat | refactoring-132: Add type-narrowing helper for Combatant ent |
+| refactoring-133 | refactoring | P4 | encounter-tables | The `source` parameter in the vision toggle API endpoint (`v |
+| refactoring-134 | refactoring | P4 | combat | The `toggleVisionCapability` action in encounter store uses  |
+| refactoring-135 | refactoring | P4 | encounter-tables | The `source` parameter in the vision toggle API endpoint is  |
 | docs-017 | docs | P4 | tooling | The bug-047 ticket resolution log references stale commit ha |
+| docs-018 | docs | P4 | docs | The `app-surface.md` reference document was not updated when |
 
-## In-Progress Tickets (2)
+## In-Progress Tickets (1)
 
 | ID | Category | Priority | Domain | Source |
 |----|----------|----------|--------|--------|
 | feature-025 | feature | P2 | encounter-tables | decree-048 |
-| ptu-rule-058 | ptu-rule | P3 | encounter-tables | — |
 
 ## Open Decree-Needs (0)
 
@@ -76,10 +77,10 @@ All decree-needs addressed.
 
 | Category | Open | In-Progress | Resolved | Total |
 |----------|------|-------------|----------|-------|
-| bug | 1 | 0 | 51 | 52 |
-| ptu-rule | 7 | 1 | 99 | 107 |
+| bug | 2 | 0 | 51 | 53 |
+| ptu-rule | 5 | 0 | 102 | 107 |
 | feature | 0 | 1 | 24 | 25 |
-| ux | 6 | 0 | 10 | 16 |
+| ux | 8 | 0 | 10 | 18 |
 | decree | 0 | 0 | 48 | 48 |
-| refactoring | 33 | 0 | 16 | 49 |
-| docs | 1 | 0 | 16 | 17 |
+| refactoring | 33 | 0 | 19 | 52 |
+| docs | 2 | 0 | 16 | 18 |
