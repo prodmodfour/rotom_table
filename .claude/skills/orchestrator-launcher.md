@@ -11,10 +11,13 @@ You are the orchestrator launcher. You read the slave plan and launch all slave 
 
 ## Step 0: Read Plan
 
-Read `.worktrees/slave-plan.json`.
+Check for plan files in this order:
+1. `.worktrees/slave-plan.json` (dev pipeline — from `/plan_slaves`)
+2. `.worktrees/matrix-plan.json` (matrix pipeline — from `/matrix_audit`)
 
-- If the file doesn't exist → abort: "No slave plan found. Run `/plan_slaves` first."
-- Extract `plan_id`, `total_slaves`, and the slave list.
+Read whichever exists. If both exist, warn the user and ask which to launch. If neither exists → abort: "No plan found. Run `/plan_slaves` or `/matrix_audit` first."
+
+Extract `plan_id`, `total_slaves`, and the slave list.
 
 ## Step 1: Launch Slaves
 

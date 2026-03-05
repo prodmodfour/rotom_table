@@ -23,9 +23,12 @@ If this fails (diverged history), warn the user and abort — do not force-pull 
 
 ### 1a. Read Plan
 
-Read `.worktrees/slave-plan.json`. If missing, check for `.worktrees/slave-plan.partial.json`.
+Check for plan files in this order:
+1. `.worktrees/slave-plan.json` (dev pipeline)
+2. `.worktrees/matrix-plan.json` (matrix pipeline)
+3. `.worktrees/slave-plan.partial.json` or `.worktrees/matrix-plan.partial.json` (partial plans from prior failures)
 
-If neither exists → abort: "No slave plan found. Nothing to collect."
+Read whichever exists. If both `slave-plan.json` and `matrix-plan.json` exist, warn the user and ask which to collect. If none exist → abort: "No plan found. Nothing to collect."
 
 Extract `plan_id`, `total_slaves`, `slaves`, `merge_order`, `conflict_zones`.
 
@@ -254,9 +257,11 @@ If none needed updating: `### CLAUDE.md Updates: None needed`
 
 After ALL merges are complete, make a single atomic state update commit:
 
-### 5a. Update `dev-state.md`
+### 5a. Update State Files (Plan-Type Dependent)
 
-For each merged dev/reviewer slave:
+**If collecting a dev plan (`slave-plan.json`):**
+
+Update `artifacts/state/dev-state.md`:
 - Update the specific ticket row (status, summary)
 - Update "Active Developer Work" section (add new session, keep only last 3 sessions)
 - Update "Code Health" counts
@@ -268,11 +273,23 @@ For each merged dev/reviewer slave:
 - **No Session Summary section.** The "Active Developer Work" last-3-sessions block replaces it.
 - **Target size:** dev-state.md should stay under 200 lines. If it exceeds this, prune more aggressively.
 
+**If collecting a matrix plan (`matrix-plan.json`):**
+
+Update `artifacts/state/test-state.md`:
+- Update domain progress rows (which stages are now done/fresh/stale)
+- Update coverage scores from new matrix.md files
+- Update `last_updated` timestamp
+
 ### 5b. Commit State Updates
 
 ```bash
+# For dev plans:
 git add artifacts/state/dev-state.md
 git commit -m "orchestrator: collect-slaves for plan-<plan_id>"
+
+# For matrix plans:
+git add artifacts/state/test-state.md
+git commit -m "matrix: collect for matrix-<plan_id>"
 ```
 
 Only stage files that actually changed.
@@ -439,8 +456,8 @@ For each failed slave:
 
 ### 7c. Plan File Cleanup
 
-- If ALL slaves succeeded: delete `.worktrees/slave-plan.json`
-- If partial (some failed/skipped): rename to `.worktrees/slave-plan.partial.json`
+- If ALL slaves succeeded: delete the plan file (`.worktrees/slave-plan.json` or `.worktrees/matrix-plan.json`)
+- If partial (some failed/skipped): rename to `.worktrees/<plan-file>.partial.json`
 
 ## Step 7b: Push to Remote
 
