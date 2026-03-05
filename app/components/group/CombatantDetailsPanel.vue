@@ -165,6 +165,11 @@
       </div>
     </div>
 
+    <!-- P2: Flanking indicator (PTU p.232: -2 evasion penalty) -->
+    <div v-if="isFlanked" class="combatant-details__flanking">
+      <span class="flanking-badge">Flanked</span>
+    </div>
+
     <!-- Combat Stages (if any non-zero, player-side only) -->
     <div v-if="isPlayerSide && hasNonZeroStages" class="combatant-details__section">
       <h4>Combat Stages</h4>
@@ -186,6 +191,8 @@ import { getEffectiveMaxHp } from '~/utils/restHealing'
 
 const props = defineProps<{
   combatant: Combatant | null
+  /** P2: Whether the current combatant is flanked (from receivedFlankingMap) */
+  isFlanked?: boolean
 }>()
 
 const { getSpriteUrl } = usePokemonSprite()
@@ -466,6 +473,10 @@ const formatFrequency = (freq: string): string => {
     padding: $spacing-sm;
   }
 
+  &__flanking {
+    margin-bottom: $spacing-xs;
+  }
+
   &__section {
     h4 {
       font-size: $font-size-sm;
@@ -689,6 +700,18 @@ const formatFrequency = (freq: string): string => {
   &--confused, &--confusion { background: $type-psychic; color: #fff; }
   &--flinched, &--flinch { background: $type-dark; color: #fff; }
   &--infatuated, &--infatuation { background: $type-fairy; color: #000; }
+}
+
+// Flanking badge (PTU p.232)
+.flanking-badge {
+  display: inline-block;
+  padding: 2px $spacing-xs;
+  font-size: $font-size-xs;
+  font-weight: 600;
+  color: $color-warning;
+  background: rgba($color-warning, 0.2);
+  border: 1px solid rgba($color-warning, 0.4);
+  border-radius: $border-radius-sm;
 }
 
 .stages-grid {
