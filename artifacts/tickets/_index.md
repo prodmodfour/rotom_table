@@ -1,21 +1,19 @@
 ---
-generated_at: 2026-03-05T17:23:48.408Z
-total_tickets: 359
-open: 63
+generated_at: 2026-03-05T17:24:26.970Z
+total_tickets: 357
+open: 61
 in_progress: 1
 resolved: 295
 ---
 
 # Tickets Index
 
-## Open Tickets (63)
+## Open Tickets (61)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
-| bug-053 | bug | P0 | healing | Two decree violations in AP management endpoints: |
 | bug-056 | bug | P1 | character-lifecycle | When a character gains enough XP to auto-level past a milest |
 | ptu-rule-151 | ptu-rule | P1 | healing | The Heavily Injured status has a secondary trigger: "taking  |
-| bug-054 | bug | P2 | encounter-tables | `calculateEncounterBudget` references "PTU Core p. 473" whic |
 | bug-057 | bug | P2 | character-lifecycle | The character POST and PUT API endpoints do not enforce a ma |
 | bug-058 | bug | P2 | combat | PTU distinguishes "HP loss" (e.g., Belly Drum, Life Orb reco |
 | bug-060 | bug | P2 | encounter-tables | When exporting and re-importing encounter tables, the densit |
@@ -93,7 +91,7 @@ resolved: 295
 
 | Category | Open | In-Progress | Resolved | Total |
 |----------|------|-------------|----------|-------|
-| bug | 11 | 0 | 54 | 65 |
+| bug | 9 | 0 | 54 | 63 |
 | ptu-rule | 14 | 0 | 107 | 121 |
 | feature | 0 | 0 | 25 | 25 |
 | ux | 8 | 0 | 10 | 18 |
