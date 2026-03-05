@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-03-05T20:00:00
-updated_by: orchestrator-survey (0b refresh)
+last_updated: 2026-03-05T23:30:00
+updated_by: slave-collector (plan-1772711294)
 ---
 
 # Dev Ecosystem State
@@ -31,6 +31,17 @@ updated_by: orchestrator-survey (0b refresh)
 |--------|----------|--------|---------|
 | docs-017 | P4 | open | bug-047 resolution log has stale commit hashes and missing affected_files |
 
+### PTU Rule Tickets (`tickets/open/ptu-rule/`)
+| Ticket | Priority | Status | Summary |
+|--------|----------|--------|---------|
+| ptu-rule-141 | P4 | open | Gas Mask uses fabricated capability name in grantedCapabilities |
+| ptu-rule-142 | P4 | open | Implement Permafrost Burn/Poison status tick damage reduction |
+
+### Decree-Need Tickets (`tickets/open/decree/`)
+| Ticket | Priority | Status | Summary |
+|--------|----------|--------|---------|
+| decree-need-049 | P4 | open | Sprint shift action consumption ambiguity |
+
 ### Refactoring Tickets (`tickets/open/refactoring/`)
 | Ticket | Priority | Status | Summary |
 |--------|----------|--------|---------|
@@ -43,7 +54,7 @@ updated_by: orchestrator-survey (0b refresh)
 | refactoring-107 | P4 | open | Extract duplicated SCSS from level-up P1 components |
 | refactoring-109 | P4 | open | Tighten MoveDetail interface types in MoveLearningPanel |
 | refactoring-110 | P4 | open | Hide Level 40 ability button when Level 20 milestone incomplete |
-| refactoring-115 | P4 | open | switching.service.ts exceeds 800-line limit (811 lines) |
+| refactoring-115 | P4 | open | switching.service.ts exceeds 800-line limit (now 839 lines) |
 | refactoring-116 | P4 | open | XpDistributionModal.vue exceeds 800-line file limit (1016 lines) |
 | refactoring-118 | P4 | open | Remove unused flankingMap destructure in GridCanvas.vue |
 | refactoring-119 | P4 | open | Update stale interrupt.post.ts file header comment |
@@ -57,22 +68,26 @@ updated_by: orchestrator-survey (0b refresh)
 | refactoring-137 | P4 | open | toggleVisionCapability uses direct getHistory() instead of delegated captureSnapshot |
 | refactoring-138 | P4 | open | Remaining entity mutation sites in aoo-resolve, breather, healing-item, living-weapon |
 | refactoring-140 | P4 | open | Update stale 'mutates entity' comment in damage.post.ts |
+| refactoring-141 | P4 | open | Remove redundant useAction('standard') call for Sprint and Breather |
+| refactoring-142 | P4 | open | Add unit tests for computeEquipmentBonuses including conditionalSpeedPenalties |
+| refactoring-143 | P4 | open | Add unit tests for checkRecallReleasePair including isFaintedSwitch path |
+| refactoring-144 | P4 | open | Update decree-001 citation comments in weather tick minimum floor |
 
 ### In-Progress Tickets
 | Ticket | Priority | Status | Summary |
 |--------|----------|--------|---------|
-| ptu-rule-121 | P4 | **in-progress** | Sprint endpoint action consumption — implemented (slave-6), needs review |
-| ptu-rule-125 | P4 | **in-progress** | grantedCapabilities on equipment — implemented (slave-7), needs review |
-| ptu-rule-126 | P4 | **in-progress** | Snow Boots conditional penalty — implemented (slave-7), needs review |
-| ptu-rule-130 | P4 | **in-progress** | Fainted recall+release League exemption — implemented (slave-8), needs review |
-| ptu-rule-133 | P4 | **in-progress** | Permafrost weather damage reduction — implemented (slave-9), needs review |
-| refactoring-129 | P3 | **in-progress** | Condition source-tracking design spec — complete (slave-10), needs review |
+| refactoring-129 | P3 | **in-progress** | Condition source-tracking — implemented (P0+P1 complete), needs code+rules review |
 
 ## Active Developer Work
 
-**Current status:** Session 119 collection complete. No active slaves.
+**Current status:** Session 120 collection complete. No active slaves.
 
-**Last session (119, 2026-03-05, plan-1772707228):**
+**Last session (120, 2026-03-05, plan-1772711294):**
+- slave-1 (dev): refactoring-129 — 15 commits. Full condition source-tracking implementation (P0+P1): ConditionSourceType/ConditionInstance types, conditionSourceRules.ts, source-aware faint/recall/encounter-end clearing, GM view source labels, Dead/Fainted instance tracking.
+- slave-2–9 (matrix): Re-mapped 8 domains (combat, character-lifecycle, encounter-tables, pokemon-lifecycle, vtt-grid, healing, scenes, capture).
+- slave-10–14 (review): ptu-rule-121 **APPROVED**, ptu-rule-125 **APPROVED**, ptu-rule-126 **PASS**, ptu-rule-130 **APPROVED**, ptu-rule-133 **APPROVED**. All 5 tickets resolved.
+
+**Session 119 (2026-03-05, plan-1772707228):**
 - slave-1–5 (review): bug-054+refactoring-139 **APPROVED**, refactoring-117 **APPROVED**, refactoring-128 **APPROVED**, bug-055 **APPROVED**, ptu-rule-135 **APPROVED**. All 6 tickets resolved.
 - slave-6 (dev): ptu-rule-121 — 2 commits. Sprint action consumption added.
 - slave-7 (dev): ptu-rule-125+126 — 3 commits. Equipment grantedCapabilities + Snow Boots penalty.
@@ -88,14 +103,6 @@ updated_by: orchestrator-survey (0b refresh)
 - slave-5 (dev): refactoring-113+117+128 — 7 commits. Removed dead import, extracted useOutOfTurnState (encounter store 1132→723 lines), shared getEffectiveEquipBonuses.
 - slave-6 (dev): ptu-rule-135 fix cycle — 3 commits. Added 'captured' origin check, origin-aware serializer fallbacks.
 
-**Session 117 (2026-03-05, plan-1772695906):**
-- slave-1 (dev): feature-025 — 6 commits. Fixed all 5 code-review-331 issues (CRIT-1 WS propagation, HIGH-1 broadcast, HIGH-2 alert→error, MED-1 source validation, MED-2 app-surface). Also resolves bug-053, refactoring-133, refactoring-134, refactoring-135, docs-018.
-- slave-2 (review): ptu-rule-135 — 2 commits. code-review-332 **CHANGES_REQUIRED** (2 issues). rules-review-313 APPROVED WITH NOTES.
-- slave-3 (review): refactoring-112 — 1 commit. code-review-333 **APPROVED**.
-- slave-4 (review): refactoring-131 — 1 commit. code-review-334b **CHANGES_REQUIRED** (H1 timer leak, M1 map iteration, M2 newline — tickets filed).
-- slave-5 (dev): refactoring-098 — 5 commits. Immutable spread patterns in damage/next-turn/move endpoints + combatant.service.ts.
-- slave-6 (dev): refactoring-122 — 9 commits. Wired receivedFlankingMap into group + player views.
-
 ## Code Health
 
 | Metric | Value |
@@ -105,8 +112,8 @@ updated_by: orchestrator-survey (0b refresh)
 | Open tickets (P1) | 0 |
 | Open tickets (P2) | 0 |
 | Open tickets (P3) | 0 |
-| Open tickets (P4) | 33 |
-| In-progress tickets | 6 (ptu-rule-121, ptu-rule-125, ptu-rule-126, ptu-rule-130, ptu-rule-133, refactoring-129) |
-| Total open + in-progress | 39 |
-| Needing review | ptu-rule-121, ptu-rule-125, ptu-rule-126, ptu-rule-130, ptu-rule-133, refactoring-129 |
-| Resolved this session | bug-054, bug-055, refactoring-117, refactoring-128, refactoring-139, ptu-rule-135 |
+| Open tickets (P4) | 40 |
+| In-progress tickets | 1 (refactoring-129) |
+| Total open + in-progress | 41 |
+| Needing review | refactoring-129 |
+| Resolved this session | ptu-rule-121, ptu-rule-125, ptu-rule-126, ptu-rule-130, ptu-rule-133 |

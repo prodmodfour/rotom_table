@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-02-28T08:30:00
-updated_by: slave-collector (plan-20260228-072000)
+last_updated: 2026-03-05T23:30:00
+updated_by: slave-collector (plan-1772711294)
 ---
 
 # Matrix Ecosystem State
@@ -9,109 +9,67 @@ updated_by: slave-collector (plan-20260228-072000)
 
 | Domain | Rules | Capabilities | Matrix | Audit | Tickets | Coverage |
 |--------|-------|-------------|--------|-------|---------|----------|
-| combat | done (135) | **FRESH** | **FRESH** | **FRESH** (52 audited: 40C/3I/4A) | created | 71.9% (82 impl + 25 partial + 5 unreachable / 135 effective) |
-| capture | done (33) | **FRESH** | **FRESH** | **FRESH** (26 audited: 22C/1I/1A) | created | 70.3% (20 impl + 2 partial + 3 unreachable / 32 effective) |
-| healing | done (42) | **FRESH** | **FRESH** | **FRESH** (32 audited: 25C/3I/2A/2Amb) | created | 65.0% (22 impl + 5 partial + 3 unreachable / 40 effective) |
-| pokemon-lifecycle | done (68) | **FRESH** | **FRESH** | **FRESH** (26 audited: 22C/1I/2A/1Amb) | created | 72.2% (35 impl + 8 partial / 54 effective) |
-| character-lifecycle | done (68) | **FRESH** | **FRESH** | **FRESH** (34 audited: 29C/1I/4A) | created | 73.3% (38 impl + 12 partial / 60 effective) |
-| encounter-tables | done (27) | **FRESH** | **FRESH** | **FRESH** (14 audited: 9C/1I/3A/1Amb) | created | 77.5% (14 impl + 3 partial / 20 effective) |
-| scenes | done (42) | **FRESH** | **FRESH** | **FRESH** (22 audited: 19C/3A) | created | 70.0% (17 impl + 8 partial / 30 effective) |
-| vtt-grid | done (42) | **FRESH** | **FRESH** | **FRESH** (27 audited: 22C/5A) | created | 65.3% (19 impl + 9 partial / 36 effective) |
-| player-view | — | **FRESH** (new) | — | — | — | — (first-time mapping) |
+| combat | done (135) | **FRESH** (session 120) | stale | stale | created | 71.9% (stale) |
+| capture | done (33) | **FRESH** (session 120) | stale | stale | created | 70.3% (stale) |
+| healing | done (42) | **FRESH** (session 120) | stale | stale | created | 65.0% (stale) |
+| pokemon-lifecycle | done (68) | **FRESH** (session 120) | stale | stale | created | 72.2% (stale) |
+| character-lifecycle | done (68) | **FRESH** (session 120) | stale | stale | created | 73.3% (stale) |
+| encounter-tables | done (27) | **FRESH** (session 120) | stale | stale | created | 77.5% (stale) |
+| scenes | done (42) | **FRESH** (session 120) | stale | stale | created | 70.0% (stale) |
+| vtt-grid | done (42) | **FRESH** (session 120) | stale | stale | created | 65.3% (stale) |
+| player-view | — | **FRESH** (session 120) | — | — | — | — (first-time mapping) |
 
-**Overall: Full pipeline FRESH (session 59). All 8 domains: capabilities re-mapped (session 57) + coverage matrices re-analyzed (session 58) + audits re-run (session 59). All domains now have FRESH Rules + Capabilities + Matrix + Audit. Ready for M2 ticket creation where needed. player-view domain has fresh capabilities but no rules catalog or matrix yet.**
+**Overall: Capabilities re-mapped in session 120 (plan-1772711294, slaves 2-9). Matrix + Audit remain stale from session 59 (2026-02-28). Coverage percentages are stale — need matrix re-analysis against fresh capabilities. Sessions 12–120 added major new implementations (equipment, XP, character creation, isometric grid, player view, condition source tracking, Sprint, Snow Boots, Permafrost, fainted recall exemption).**
 
 ## Active Work
 
-All 8 domains now fully audited in session 59 (plan-20260228-072000, slaves 2+3+4) against fresh matrices from session 58. Full pipeline is FRESH for all 8 domains. player-view domain has fresh capabilities but no rules catalog or matrix yet.
-
-Session 59 audit highlights:
-- **combat:** 3 incorrect (R035 League two-phase HIGH, R082 Struggle Expert MEDIUM, R113 Sprint action LOW), 4 approximation. decree-021 non-compliant
-- **capture:** 1 incorrect (R018 owned Pokemon capturable HIGH), 1 approximation
-- **healing:** 3 incorrect (R033 new-day boundAp CRITICAL, R015 fainted clearing HIGH, R007 no min-1 MEDIUM), 2 ambiguous
-- **pokemon-lifecycle:** 1 incorrect (R058 significance floor vs round HIGH), 2 approximation, 1 ambiguous
-- **encounter-tables:** 1 incorrect (R008 significance presets HIGH), 3 approximation, 1 ambiguous
-- **character-lifecycle:** 1 incorrect (R041 MEDIUM), 4 approximation
-- **scenes:** 0 incorrect, 3 approximation
-- **vtt-grid:** 0 incorrect, 5 approximation (R003 multi-tile HIGH)
+Session 120 (plan-1772711294) re-mapped all 8 domain capabilities. Matrix/Audit pipeline is next.
 
 ## Staleness Status
 
-All 8 domains are stale due to sessions 5–13 code changes. Re-mapping is now urgent — session 13 added P1 implementations on top of session 12's P0 implementations.
+Capabilities are now **FRESH** for all 8 domains + player-view. Matrix and Audit columns are stale — they were last run in session 59 against old capability sets. Coverage percentages are outdated.
 
-**Session 13 changes (4 P1/P0 implementations + follow-up fixes):**
-- **combat:** ptu-rule-045 P1 — DR from armor in damage calc, evasion from shields, Focus stat bonuses, Heavy Armor speed CS (major new capabilities in damage calc + combatant builder + move calculation composable)
-- **pokemon-lifecycle:** ptu-rule-055 P1 — XpDistributionModal, encounter store actions, end-encounter integration, xpDistributed safety flag (major new capabilities)
-- **character-lifecycle:** ptu-rule-056 P1 — Trainer class constants, ClassFeatureSection, EdgeSelectionSection, useCharacterCreation state management (major new capabilities)
-- **encounter-tables:** ptu-rule-058 P0 — Density separated from spawn count, DENSITY_SUGGESTIONS, explicit count spinner, densityMultiplier removed from UI (significant capability change)
+### Code changes since last matrix/audit (sessions 12–120)
 
-**Combined sessions 12+13 impact per domain:**
-1. **combat** — Equipment P0+P1: 4 API endpoints, 1 constants file, 1 utility, equipment bonuses in damage calc + combatant builder + move composable + evasion
-2. **pokemon-lifecycle** — XP P0+P1: 2 API endpoints, 1 utility, 1 modal component, store actions, end-encounter integration
-3. **character-lifecycle** — Char creation P0+P1: 3 constants files, 5 components, 1 composable, 1 validation utility
-4. **encounter-tables** — Density P0: type changes, service refactoring, UI changes, store changes
+**combat domain:**
+- ptu-rule-045 P0+P1+P2: Equipment system (DR, evasion, Focus bonuses, Heavy Armor speed, equipment UI)
+- ptu-rule-077: Focus (Speed) stat bonuses for initiative + evasion
+- ptu-rule-079: Helmet conditional DR stacking
+- ptu-rule-121: Sprint action consumption
+- ptu-rule-126: Snow Boots conditional speed penalty
+- ptu-rule-130: Fainted recall+release League exemption
+- ptu-rule-133: Permafrost weather damage reduction
+- refactoring-129: Condition source-tracking (ConditionInstance, source-aware clearing)
+
+**pokemon-lifecycle domain:**
+- ptu-rule-055 P1+P2: XP distribution modal, level-up notifications
+
+**character-lifecycle domain:**
+- ptu-rule-056 P1+P2: Trainer class creation, biography fields
+- ptu-rule-078: Trainer class associatedSkills corrections
+- ptu-rule-080: Level-aware stat/skill/edge validation
+- feature-001 P0: Trainer sprites catalog (180 sprites)
+
+**encounter-tables domain:**
+- ptu-rule-058 P0+P1: Density separation, significance tiers
+- ptu-rule-060 P0+P1: Encounter budgets, significance presets
+- ptu-rule-125: Equipment grantedCapabilities
+
+**vtt-grid domain:**
+- feature-002 P0+P1+P2: Isometric grid, camera controls, overlays, fog of war, terrain painting, measurement modes
+
+**player-view domain (NEW):**
+- feature-003 Track A P0: Player identity, combat actions, encounter view
+- feature-003 Track B P0: JSON export/import, server-info endpoint
+- feature-003 Track C P0: WebSocket sync, player scene view, keepalive
 
 ## Audit Correction
 
-- **combat-R010** (evasion CS treatment): Original audit classified as "Approximation" — Game Logic Reviewer (rules-review-102) independently confirmed the implementation was already correct per PTU's two-part evasion system. Audit item should be reclassified as "Correct" on next re-audit.
-
-## Session 14 Changes (additional staleness)
-
-- **combat:** ptu-rule-077 fix — Focus (Speed) stat bonuses now applied to initiative + evasion (combatant.service.ts, useMoveCalculation.ts, useCombat.ts, damageCalculation.ts, calculate-damage endpoint)
-- **combat:** ptu-rule-045 P2 — HumanEquipmentTab.vue, EquipmentCatalogBrowser.vue, CharacterModal + GM page wiring
-- **encounter-tables:** ptu-rule-060 P0 — encounterBudget.ts utility, useEncounterBudget composable, BudgetIndicator component, GenerateEncounterModal + StartEncounterModal extensions
-- **encounter-tables:** ptu-rule-058 P1 fixes — NaN guards, null guard, WS broadcast, utility extraction in SignificancePanel + XpDistributionModal + experienceCalculation.ts
-- **pokemon-lifecycle:** ptu-rule-055 P2 — LevelUpNotification.vue, add-experience endpoint, XpDistributionModal level-up integration
-- **character-lifecycle:** ptu-rule-056 P2 — BiographySection.vue, useCharacterCreation biography fields, gm/create.vue quick/full-create mode toggle
-
-## Session 16 Changes (additional staleness)
-
-- **combat:** ptu-rule-079 fix — Helmet conditional DR now stacks with manual DR override in calculate-damage endpoint
-- **character-lifecycle:** ptu-rule-078 fix — Corrected ~28 trainer class associatedSkills in trainerClasses.ts
-- **character-lifecycle:** ptu-rule-080 fix — Level-aware stat allocation, skill rank caps, edges/features validation in characterCreationValidation.ts, trainerStats.ts, useCharacterCreation.ts, create.vue
-- **encounter-tables:** ptu-rule-060 P0 fixes — SCSS mixin ancestor selector, BudgetGuide extraction from GenerateEncounterModal, PC-only player count filter in scenes page
-
-## Session 18 Changes (additional staleness)
-
-- **encounter-tables:** ptu-rule-060 P1 significance — significanceTier Prisma column, tier selector in StartEncounterModal + GenerateEncounterModal, API endpoints, encounter store, parent page wiring
-- **vtt-grid:** feature-002 P0 isometric grid — useIsometricProjection, useIsometricCamera, useIsometricRendering, isometricCamera store, IsometricCanvas + CameraControls components, GridSettingsPanel + VTTContainer feature flag, Prisma schema isometric columns
-- **character-lifecycle:** ptu-rule-078 H1+H2 fix — Juggler +Guile, Dancer +Athletics in trainerClasses.ts
-- **NEW DOMAIN: player-view:** feature-003 P0 Track A — playerIdentity store, usePlayerIdentity composable, player-view API, 8 player components, WebSocket player role, player page + layout
-
-## Session 19 Changes (additional staleness)
-
-- **character-lifecycle:** ptu-rule-056 H1 fix — moved `_create-form.scss` from `additionalData` to `css` array in nuxt.config.ts
-- **character-lifecycle:** feature-001 P0 — trainerSprites.ts catalog (180 sprites), useTrainerSprite.ts composable, TrainerSpritePicker.vue modal, 17 avatar rendering integration points across components
-- **encounter-tables:** ptu-rule-060 reviewed APPROVED — no code changes, but capabilities are now verified
-- **character-lifecycle:** ptu-rule-078 reviewed APPROVED — no code changes, but capabilities are now verified
-
-## Session 20 Changes (additional staleness)
-
-- **player-view:** feature-003 P0 fix cycle — PlayerTab type to types/player.ts, shared _player-view.scss, $player-nav-clearance variable, evasion bonus fix, WS character_update listener, polling backoff, aria-label, inline error
-- **vtt-grid:** feature-002 P0 fix cycle — EncounterRecord isometric fields, server-side validation, template endpoint propagation, contextmenu Vue directive, bounding box fix, dead animation removal, sorted cell cache, canvas path optimization
-- **character-lifecycle:** feature-001 P0 reviewed — code-review-143 CHANGES_REQUIRED, rules-review-133 APPROVED (no code changes, just review artifacts)
-
-## Session 21 Changes (additional staleness)
-
-- **character-lifecycle:** feature-001 P0 fix cycle — defineProps crash fix in HumanCard.vue, avatar error handling standardized to reactive null-out across 12 files (HumanCard, CharacterModal, PlayerLobbyView, gm/characters/[id], gm/create, QuickCreateForm, GMActionModal, InitiativeTracker, VTTToken, CombatantDetailsPanel), app-surface.md update
-- **player-view:** feature-003 P0 APPROVED — no code changes, review artifacts only (code-review-144, rules-review-134)
-- **vtt-grid:** feature-002 P0 APPROVED — no code changes, review artifacts only (code-review-145, rules-review-135)
-
-## Session 24 Changes (additional staleness)
-
-- **player-view:** feature-003 P1 fix cycle — canBeCommanded check in usePlayerCombat + PlayerCombatActions, SCSS extraction to _player-combat-actions.scss (new file), alert→toast notifications, isMyTurn dedup via composable in PlayerEncounterView, dead PlayerActionPanel.vue deleted, nuxt.config.ts updated
-- **vtt-grid:** feature-002 P1 fix cycle — combatantCanFly/getSkySpeed extracted to app/utils/combatantCapabilities.ts (new file), pathfinding extracted to app/composables/usePathfinding.ts (new file), elevation cost in A* heuristic fixed, isValidMove passes elevation to A*, sprite cache re-render + clearSpriteCache, combatant ID-only watcher, diamond hit detection, movement preview terrain elevation
-- **character-lifecycle:** feature-001 P0 APPROVED — no code changes, review artifacts only (code-review-149, rules-review-139)
-
-## Session 26 Changes (additional staleness)
-
-- **player-view:** feature-003 Track B P0 — JSON export endpoint, JSON import endpoint (Zod validation, conservative edit scope), server-info endpoint (LAN address), useCharacterExportImport composable, PlayerCharacterSheet export/import buttons, ServerAddressDisplay component in GM layout
-- **player-view:** feature-003 Track C P0 — player-sync types, WebSocketEvent union expansion (keepalive, scene_sync, player_action_ack, player_turn_notify, etc.), WS server handlers (player identify with characterId, keepalive, scene_request, pendingRequests with 60s TTL), useWebSocket keepalive + reconnect identity storage, usePlayerScene composable, PlayerSceneView component, usePlayerWebSocket orchestration composable, REST fallback endpoint, Scene tab in player nav, scene broadcast to group+player clients
-- **vtt-grid:** feature-002 P2 — useIsometricOverlays composable (fog/terrain/measurement rendering), isometric fog of war (per-column 3-state), terrain painting through isometric projection with elevation brush, all 5 measurement modes as isometric diamond overlays (distance/burst/cone/line/blast), R key direction cycling, 3D distance display, terrain elevation 3D side faces, GroupGridCanvas isometric rendering with camera sync, camera angle grid settings
+- **combat-R010** (evasion CS treatment): Should be reclassified as "Correct" on next re-audit per rules-review-102.
 
 ## Recommended Next Steps
 
-1. Re-map all 8 domains + add player-view domain — sessions 12-26 added major new capabilities
-2. Review feature-003 Track B P0 + Track C P0 (new implementations, no prior review)
-3. Review feature-002 P2 (new implementation, no prior review)
-4. feature-001 P1 (P0 APPROVED, closed as single-phase — revisit if P1 is desired)
+1. Re-run Matrix analysis against fresh capabilities for all 8 domains
+2. Re-run Audit against updated matrices
+3. Create M2 tickets from audit findings
+4. player-view domain needs rules catalog before matrix can be built
