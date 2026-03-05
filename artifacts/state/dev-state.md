@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-03-05T00:35:00
-updated_by: collector-plan-1772668105
+last_updated: 2026-03-05T12:00:00
+updated_by: survey
 ---
 
 # Dev Ecosystem State
@@ -38,7 +38,7 @@ updated_by: collector-plan-1772668105
 | ux-014 | P4 | open | Evolution undo snapshot staleness warning |
 | ux-015 | P4 | open | Replace alert() with inline UI for evolution prevention messages |
 | ux-016 | P4 | open | hasActed flag not set when all three actions individually exhausted |
-| ux-017 | P4 | open | (new from prior session) |
+| ux-017 | P4 | open | Preset descriptions misleadingly imply tier-specific vision negation |
 | ux-018 | P4 | open | Environment preset descriptions imply tier-specific vision negation |
 
 ### Docs Tickets (`tickets/open/docs/`)
@@ -82,7 +82,7 @@ updated_by: collector-plan-1772668105
 | refactoring-129 | P3 | open | Design source-tracking for applied conditions |
 | refactoring-130 | P4 | open | Environment preset clearing stores '{}' instead of null in database |
 | refactoring-132 | P4 | open | Extract shared significance preset utilities |
-| refactoring-133 | P4 | open | (new from prior session) |
+| refactoring-133 | P4 | open | Validate `source` parameter in vision toggle API endpoint |
 | refactoring-134 | P4 | open | alert() reintroduced in toggleVisionCapability store action |
 | refactoring-135 | P4 | open | Vision toggle API lacks source parameter validation |
 
@@ -114,10 +114,10 @@ updated_by: collector-plan-1772668105
 | Last updated | 2026-03-05 |
 | Open tickets (P0) | 0 |
 | Open tickets (P1) | 0 |
-| Open tickets (P2) | 2 (bug-053 vision WS, feature-025 needs fix cycle) |
+| Open tickets (P2) | 1 (bug-053 vision WS sync) |
 | Open tickets (P3) | 6 |
-| Open tickets (P4) | 36 |
-| In-progress tickets | 1 (feature-025) |
-| Total open + in-progress | 45 |
+| Open tickets (P4) | 43 |
+| In-progress tickets | 1 (feature-025, P2) |
+| Total open + in-progress | 51 |
 | Needing fix cycles | feature-025 (code-review-331: 1C+2H+2M) |
-| Needing review | ptu-rule-135, refactoring-112, refactoring-131 (newly completed, no reviews) |
+| Needing review | (none — ptu-rule-135, refactoring-112, refactoring-131 now resolved but merged without review) |
