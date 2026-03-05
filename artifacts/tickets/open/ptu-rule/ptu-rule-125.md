@@ -7,7 +7,7 @@ domain: character-lifecycle
 source: code-review-222 M-02 + rules-review-198 MED-02
 created_by: slave-collector (plan-20260228-153856)
 created_at: 2026-02-28
-status: open
+status: in-progress
 ---
 
 # ptu-rule-125: Populate grantedCapabilities on all capability-granting catalog entries
@@ -42,3 +42,12 @@ grantedCapabilities: ['Gas Mask Immunity']
 ## Impact
 
 Low — these capabilities (Darkvision, Gilled) have no mechanical impact in the current combat/VTT systems. This is a catalog completeness improvement for display consistency in the equipment UI bonuses section.
+
+## Resolution Log
+
+- **Commit:** 0cd02f3a — `feat: populate grantedCapabilities on capability-granting equipment`
+- **Files changed:** `app/constants/equipment.ts`
+- **What was done:**
+  - Added `grantedCapabilities: ['Darkvision']` to Dark Vision Goggles
+  - Added `grantedCapabilities: ['Gas Mask Immunity']` to Gas Mask
+  - Added Re-Breather as new head slot entry with `grantedCapabilities: ['Gilled']`, cost $4000 (PTU p.293)

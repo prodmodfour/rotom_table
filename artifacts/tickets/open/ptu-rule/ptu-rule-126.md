@@ -7,7 +7,7 @@ domain: combat
 source: rules-review-198 MED-01
 created_by: slave-collector (plan-20260228-153856)
 created_at: 2026-02-28
-status: open
+status: in-progress
 ---
 
 # ptu-rule-126: Snow Boots conditional Overland speed penalty not mechanically enforced
@@ -33,3 +33,17 @@ Requires the terrain system to distinguish "ice or deep snow" from general Tundr
 ## Impact
 
 Minor — a trainer wearing Snow Boots on Tundra terrain has Overland Speed 1 higher than it should be. The penalty is documented in the item description for manual GM adjustment.
+
+## Resolution Log
+
+- **Commit:** 126fd9cc — `feat: add Snow Boots conditional Overland speed penalty`
+- **Files changed:** `app/types/character.ts`, `app/utils/equipmentBonuses.ts`, `app/constants/equipment.ts`, `app/server/services/living-weapon.service.ts`, `app/server/api/characters/[id]/equipment.put.ts`, `app/components/character/tabs/HumanEquipmentTab.vue`, `app/components/character/EquipmentCatalogBrowser.vue`, `app/tests/unit/composables/useMoveCalculation.test.ts`, `app/tests/unit/services/living-weapon.service.test.ts`
+- **What was done:**
+  - Added `conditionalSpeedPenalty` field to `EquippedItem` type interface
+  - Added `conditionalSpeedPenalties` array to `EquipmentCombatBonuses` interface
+  - Populated Snow Boots with `conditionalSpeedPenalty: { amount: -1, condition: 'On ice or deep snow' }`
+  - Collected penalties in `computeEquipmentBonuses()` alongside conditionalDR
+  - Displayed penalties in equipment UI (HumanEquipmentTab, EquipmentCatalogBrowser)
+  - Added Zod validation for the new field in equipment PUT endpoint
+  - Updated test mocks for new EquipmentCombatBonuses shape
+- **Limitation:** Penalty is NOT auto-enforced during movement. The terrain system lacks ice/deep-snow granularity within Tundra terrain. The penalty data is stored and displayed for GM reference, ready for future terrain support.
