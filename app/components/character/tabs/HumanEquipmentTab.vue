@@ -176,6 +176,7 @@ const emit = defineEmits<{
   'equipment-changed-in-encounter': [equipment: EquipmentSlots]
 }>()
 
+const { showToast } = useGmToast()
 const saving = ref(false)
 const showCatalog = ref(false)
 const customSlot = ref<EquipmentSlot | null>(null)
@@ -252,7 +253,7 @@ async function equipItem(slot: EquipmentSlot, item: EquippedItem) {
     }
   } catch (error: any) {
     // On failure, leave dropdown at selected value so user can retry
-    alert(`Failed to equip ${item.name}: ${error.data?.message || error.message || 'Unknown error'}`)
+    showToast(`Failed to equip ${item.name}: ${error.data?.message || error.message || 'Unknown error'}`, 'error')
   } finally {
     saving.value = false
   }
@@ -272,7 +273,7 @@ async function unequipSlot(slot: EquipmentSlot) {
       }
     }
   } catch (error: any) {
-    alert(`Failed to unequip item: ${error.data?.message || error.message || 'Unknown error'}`)
+    showToast(`Failed to unequip item: ${error.data?.message || error.message || 'Unknown error'}`, 'error')
   } finally {
     saving.value = false
   }

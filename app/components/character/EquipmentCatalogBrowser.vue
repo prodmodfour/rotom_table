@@ -118,6 +118,7 @@ const emit = defineEmits<{
   equipped: [equipment: EquipmentSlots]
 }>()
 
+const { showToast } = useGmToast()
 const selectedSlot = ref<EquipmentSlot | ''>('')
 const searchQuery = ref('')
 const saving = ref(false)
@@ -190,7 +191,7 @@ async function equipToCharacter(item: EquippedItem) {
       emit('equipped', response.data.slots)
     }
   } catch (error: any) {
-    alert(`Failed to equip ${item.name}: ${error.data?.message || error.message || 'Unknown error'}`)
+    showToast(`Failed to equip ${item.name}: ${error.data?.message || error.message || 'Unknown error'}`, 'error')
   } finally {
     saving.value = false
   }
