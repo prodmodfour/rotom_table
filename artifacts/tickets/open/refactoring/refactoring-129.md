@@ -3,7 +3,7 @@ id: refactoring-129
 title: "Design source-tracking for applied conditions to support source-dependent clearing"
 priority: P3
 severity: low
-status: open
+status: in-progress
 domain: combat
 source: decree-047
 created_by: decree-facilitator
@@ -31,3 +31,7 @@ This is a design task — requires a design spec before implementation begins.
 
 - decree-038 established per-condition behavior flags; this extends the principle to per-instance behavior based on source.
 - Low priority — the RAW default (clearsOnFaint: false) is a safe interim. Source-dependent clearing is a future enhancement.
+
+## Resolution Log
+
+- **da23d460** — Design spec created: `artifacts/designs/design-condition-source-tracking-129/` (5 files: _index.md, shared-specs.md, spec-p0.md, spec-p1.md, testing-strategy.md). Full-scope design with P0 (data model + faint clearing) and P1 (UI + extended clearing) tiers.
