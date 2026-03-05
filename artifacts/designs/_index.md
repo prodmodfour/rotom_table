@@ -1,5 +1,5 @@
 ---
-generated_at: 2026-03-05T11:18:03.234Z
+generated_at: 2026-03-05T11:28:00.773Z
 total_designs: 29
 ---
 
@@ -8,7 +8,7 @@ total_designs: 29
 | Design ID | Domain | Status | Ticket | Scope | Category |
 |-----------|--------|--------|--------|-------|----------|
 | design-char-creation-001 | character-lifecycle | implemented | ptu-rule-056 | FULL | FEATURE_GAP |
-| design-condition-source-tracking-129 | combat | complete | refactoring-129 | FULL | REFACTORING |
+| design-condition-source-tracking-129 | combat | validated | refactoring-129 | FULL | REFACTORING |
 | design-darkvision-tracking-001 | encounter-tables, combat | p0-implemented | feature-025 | FULL | FEATURE |
 | design-density-significance-001 | encounter-tables | p2-implemented | ptu-rule-058 | FULL | PTU_INCORRECT |
 | design-equipment-001 | combat | p1-complete | ptu-rule-045 | FULL | FEATURE_GAP |
