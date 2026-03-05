@@ -40,7 +40,7 @@ updated_by: slave-collector (plan-1772711294)
 ### Decree-Need Tickets (`tickets/open/decree/`)
 | Ticket | Priority | Status | Summary |
 |--------|----------|--------|---------|
-| decree-need-049 | P4 | open | Sprint shift action consumption ambiguity |
+| decree-need-049 | P3 | open | Sprint shift action consumption ambiguity |
 
 ### Refactoring Tickets (`tickets/open/refactoring/`)
 | Ticket | Priority | Status | Summary |
@@ -111,8 +111,8 @@ updated_by: slave-collector (plan-1772711294)
 | Open tickets (P0) | 0 |
 | Open tickets (P1) | 0 |
 | Open tickets (P2) | 0 |
-| Open tickets (P3) | 0 |
-| Open tickets (P4) | 40 |
+| Open tickets (P3) | 1 |
+| Open tickets (P4) | 39 |
 | In-progress tickets | 1 (refactoring-129) |
 | Total open + in-progress | 41 |
 | Needing review | refactoring-129 |
