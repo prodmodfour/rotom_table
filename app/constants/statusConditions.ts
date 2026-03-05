@@ -253,11 +253,11 @@ export const ENCOUNTER_END_CLEARED_CONDITIONS: StatusCondition[] =
   ALL_CONDITION_DEFS.filter(d => d.clearsOnEncounterEnd).map(d => d.name)
 
 /**
- * Conditions cleared on faint.
- * Derived from per-condition clearsOnFaint flags (decree-038).
- * PTU p.248: "automatically cured of all Persistent and Volatile Status Conditions"
- * Other category conditions are excluded per decree-047 (only Persistent + Volatile clear on faint).
- * Source-dependent clearing for Other conditions is future work (refactoring-129).
+ * Conditions that ALWAYS clear on faint (Persistent + Volatile).
+ * Per decree-047: Other conditions are NOT in this list. Their faint-clearing
+ * behavior is source-dependent and handled by shouldClearOnFaint() at runtime
+ * (see conditionSourceRules.ts). This array remains accurate for Persistent
+ * and Volatile conditions.
  */
 export const FAINT_CLEARED_CONDITIONS: StatusCondition[] =
   ALL_CONDITION_DEFS.filter(d => d.clearsOnFaint).map(d => d.name)
