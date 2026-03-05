@@ -38,6 +38,10 @@
         <div class="initiative-entry__info">
           <span class="initiative-entry__name">{{ getCombatantName(combatant) }}</span>
           <span
+            v-if="flankingMap?.[combatant.id]?.isFlanked"
+            class="initiative-entry__flanked"
+          >Flanked</span>
+          <span
             v-if="!combatant.turnState?.canBeCommanded && combatant.entity.currentHp > 0"
             class="initiative-entry__restricted"
           >Cannot Act</span>
@@ -56,7 +60,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Combatant, Pokemon, HumanCharacter } from '~/types'
+import type { Combatant, Pokemon, HumanCharacter, FlankingMap } from '~/types'
 import { getEffectiveMaxHp } from '~/utils/restHealing'
 
 const PHASE_TITLES: Record<string, string> = {
@@ -69,6 +73,8 @@ const props = defineProps<{
   combatants: Combatant[]
   currentTurnId?: string
   currentPhase?: string
+  /** P2: Flanking map from GM broadcast — combatantId -> FlankingStatus */
+  flankingMap?: FlankingMap
 }>()
 
 const phaseTitle = computed(() => {
@@ -277,6 +283,22 @@ const getHpClass = (combatant: Combatant): string => {
 
     @media (min-width: 3000px) {
       font-size: $font-size-md;
+    }
+  }
+
+  &__flanked {
+    font-size: 9px;
+    font-weight: 600;
+    color: $color-warning;
+    background: rgba($color-warning, 0.15);
+    border: 1px solid rgba($color-warning, 0.3);
+    border-radius: 3px;
+    padding: 0 3px;
+    white-space: nowrap;
+
+    @media (min-width: 3000px) {
+      font-size: $font-size-xs;
+      padding: 1px $spacing-xs;
     }
   }
 
