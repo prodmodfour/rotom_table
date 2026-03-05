@@ -29,3 +29,9 @@ Set `standardActionUsed: true` (and optionally `shiftActionUsed: true` since the
 ## Affected Files
 
 - `app/server/api/encounters/[id]/sprint.post.ts` — Add action consumption tracking
+
+## Resolution Log
+
+- **Commit:** 81fa60e0 — `fix: consume standard and shift actions when using Sprint`
+- **Change:** Added `turnState` update setting `standardActionUsed: true`, `shiftActionUsed: true`, and `hasActed: true` after applying the Sprint tempCondition, matching the breather endpoint pattern (lines 172-178 of breather.post.ts).
+- **Files changed:** `app/server/api/encounters/[id]/sprint.post.ts` (9 lines added)
