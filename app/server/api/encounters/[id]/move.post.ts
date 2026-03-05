@@ -93,7 +93,7 @@ export default defineEventHandler(async (event) => {
 
       // Apply damage using PTU mechanics (temp HP, injuries, faint + status clearing)
       if (targetDamage > 0) {
-        const entity = target.entity
+        let entity = target.entity
         const hpBeforeDamage = entity.currentHp
 
         const damageResult = calculateDamage(
@@ -105,6 +105,7 @@ export default defineEventHandler(async (event) => {
         )
 
         applyDamageToEntity(target, damageResult)
+        entity = target.entity
 
         // Unclamped HP after damage (before heavily injured penalty)
         const unclampedAfterDamage = hpBeforeDamage - damageResult.hpDamage
@@ -117,12 +118,14 @@ export default defineEventHandler(async (event) => {
         if (hiCheck.isHeavilyInjured && entity.currentHp > 0) {
           const penalty = applyHeavilyInjuredPenalty(entity.currentHp, damageResult.newInjuries)
           heavilyInjuredHpLoss = penalty.hpLost
-          entity.currentHp = penalty.newHp
+          target.entity = { ...entity, currentHp: penalty.newHp }
+          entity = target.entity
 
           // Check if heavily injured penalty caused fainting (decree-005: must clear
           // persistent/volatile conditions and reverse their CS effects)
           if (penalty.newHp === 0 && !damageResult.fainted) {
             applyFaintStatus(target)
+            entity = target.entity
           }
         }
 
@@ -139,7 +142,8 @@ export default defineEventHandler(async (event) => {
         if (deathResult.isDead) {
           const conditions: StatusCondition[] = entity.statusConditions || []
           if (!conditions.includes('Dead')) {
-            entity.statusConditions = ['Dead', ...conditions.filter((s: StatusCondition) => s !== 'Dead')]
+            target.entity = { ...entity, statusConditions: ['Dead', ...conditions.filter((s: StatusCondition) => s !== 'Dead')] }
+            entity = target.entity
           }
         }
 
