@@ -3,7 +3,7 @@ id: ptu-rule-135
 title: "Wild captures should default to Loyalty 2 (Wary) per decree-049"
 priority: P4
 severity: LOW
-status: open
+status: in-progress
 domain: capture
 source: decree-049
 created_by: decree-facilitator (plan-1772664485)
@@ -33,3 +33,12 @@ Per decree-049, wild-caught Pokemon should default to Loyalty 2 (Wary) instead o
 - The `origin` enum values are: `wild`, `hatched`, `gifted`, `starter`, `custom`
 - Friend Ball post-capture effect (Loyalty +1) still applies after the origin-based default, so wild captures with Friend Ball would end at Loyalty 3
 - PTU RAW: "Most caught wild Pokemon will begin at [Loyalty 2]" (05-pokemon.md:1468-1470)
+
+## Resolution Log
+
+- `81b9cef3` — `app/server/api/capture/attempt.post.ts`: Set `loyalty: 2` explicitly on capture success; updated Friend Ball effect to use base loyalty 2 instead of `?? 3`
+- `280d5a65` — `app/server/api/pokemon/index.post.ts`: Origin-aware loyalty default (wild→2, others→3) for manual Pokemon creation
+- `1cce5e80` — `app/server/services/entity-builder.service.ts`: Origin-aware loyalty fallback (wild/captured→2, others→3) when DB value is null
+- `pokemon-generator.service.ts`: Already had correct `getStartingLoyalty()` function mapping captured/wild→2, others→3 (no changes needed)
+- `serializers.ts`: `?? 3` fallbacks left unchanged per ticket — they handle null/undefined for legacy records where origin is unknown
+- `csv-import.service.ts`: Routes through `createPokemonRecord` which already uses `getStartingLoyalty` (no changes needed)
