@@ -8,7 +8,8 @@ priority: P3
 source: rules-review-ptu-rule-121 (M1)
 created_by: game-logic-reviewer
 created_at: 2026-03-05
-status: open
+status: addressed
+decree_id: decree-050
 tags: [combat, sprint, action-economy, maneuver]
 ---
 
