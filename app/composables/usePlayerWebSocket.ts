@@ -27,7 +27,8 @@ export function usePlayerWebSocket() {
     joinEncounter,
     send,
     onMessage,
-    resetAndReconnect
+    resetAndReconnect,
+    receivedFlankingMap
   } = useWebSocket()
   const playerStore = usePlayerIdentityStore()
   const encounterStore = useEncounterStore()
@@ -287,6 +288,8 @@ export function usePlayerWebSocket() {
     // Action acknowledgment (for toast display)
     lastActionAck: readonly(lastActionAck),
     // Turn notification (for tab switch + visual flash)
-    turnNotification: readonly(turnNotification)
+    turnNotification: readonly(turnNotification),
+    // P2: Flanking map received from GM broadcast
+    receivedFlankingMap
   }
 }
