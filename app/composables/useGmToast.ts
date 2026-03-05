@@ -71,10 +71,10 @@ export function useGmToast() {
   /** Dismiss all toasts */
   const dismissAll = (): void => {
     toasts.value = []
-    for (const [id, timer] of timers) {
+    for (const timer of timers.values()) {
       clearTimeout(timer)
-      timers.delete(id)
     }
+    timers.clear()
   }
 
   return {
