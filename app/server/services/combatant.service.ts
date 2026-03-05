@@ -281,6 +281,12 @@ export function applyHealingToEntity(
           (s: StatusCondition) => s !== 'Fainted'
         )
       }
+      // Also remove Fainted from conditionInstances (decree-047)
+      if (combatant.conditionInstances) {
+        combatant.conditionInstances = combatant.conditionInstances.filter(
+          i => i.condition !== 'Fainted'
+        )
+      }
       result.faintedRemoved = true
     } else {
       combatant.entity = { ...combatant.entity, currentHp: newHp }
