@@ -1,14 +1,14 @@
 ---
-generated_at: 2026-03-05T17:52:05.539Z
-total_tickets: 359
-open: 61
+generated_at: 2026-03-05T18:42:34.547Z
+total_tickets: 360
+open: 62
 in_progress: 1
 resolved: 297
 ---
 
 # Tickets Index
 
-## Open Tickets (61)
+## Open Tickets (62)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
@@ -22,6 +22,7 @@ resolved: 297
 | ptu-rule-147 | ptu-rule | P2 | combat | Round counter exists but there is no per-effect duration tra |
 | ptu-rule-149 | ptu-rule | P2 | combat | The VTT allows tokens to be repositioned freely without enfo |
 | ptu-rule-150 | ptu-rule | P2 | healing | No "set HP" or "lose HP" flag exists to distinguish direct H |
+| ptu-rule-155 | ptu-rule | P2 | player-view | The player-view implementation audit found that R156-R160 an |
 | feature-026 | feature | P2 | character-lifecycle | Implement automatic parsing of `[+Stat]` tags in PTU feature |
 | feature-027 | feature | P2 | character-lifecycle | Migrate the edge data model from `string[]` to an array of s |
 | bug-059 | bug | P3 | combat | `Math.trunc` is used instead of `Math.floor` in movementModi |
@@ -89,7 +90,7 @@ All decree-needs addressed.
 | Category | Open | In-Progress | Resolved | Total |
 |----------|------|-------------|----------|-------|
 | bug | 9 | 0 | 54 | 63 |
-| ptu-rule | 14 | 0 | 107 | 121 |
+| ptu-rule | 15 | 0 | 107 | 122 |
 | feature | 2 | 0 | 25 | 27 |
 | ux | 8 | 0 | 10 | 18 |
 | decree | 0 | 0 | 51 | 51 |
