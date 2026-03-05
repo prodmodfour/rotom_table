@@ -117,6 +117,7 @@ const emit = defineEmits<{
 }>()
 
 const { awardXp, isProcessing } = useTrainerXp()
+const { showToast } = useGmToast()
 
 const showCustomInput = ref(false)
 const customAmount = ref<number | null>(null)
@@ -148,7 +149,7 @@ async function processXpAward(amount: number, reason: string) {
 
     return result
   } catch (e) {
-    alert(`Failed to award XP: ${e instanceof Error ? e.message : 'Unknown error'}`)
+    showToast(`Failed to award XP: ${e instanceof Error ? e.message : 'Unknown error'}`, 'error')
     throw e
   }
 }

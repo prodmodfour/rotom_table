@@ -315,6 +315,7 @@ definePageMeta({
 
 const route = useRoute()
 const router = useRouter()
+const { showToast } = useGmToast()
 const libraryStore = useLibraryStore()
 const { getSpriteUrl } = usePokemonSprite()
 
@@ -513,7 +514,7 @@ const saveChanges = async () => {
     router.replace({ query: {} })
   } catch (e) {
     console.error('Failed to save character:', e)
-    alert('Failed to save changes')
+    showToast('Failed to save changes', 'error')
   } finally {
     saving.value = false
   }
