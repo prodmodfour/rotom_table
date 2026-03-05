@@ -1,9 +1,9 @@
 ---
-generated_at: 2026-03-05T13:15:59.585Z
+generated_at: 2026-03-05T13:17:40.579Z
 total_tickets: 335
 open: 40
-in_progress: 6
-resolved: 289
+in_progress: 1
+resolved: 294
 ---
 
 # Tickets Index
@@ -53,16 +53,11 @@ resolved: 289
 | refactoring-144 | refactoring | P4 | combat | refactoring-144: Update decree-001 citation in weather tick  |
 | docs-017 | docs | P4 | tooling | The bug-047 ticket resolution log references stale commit ha |
 
-## In-Progress Tickets (6)
+## In-Progress Tickets (1)
 
 | ID | Category | Priority | Domain | Source |
 |----|----------|----------|--------|--------|
 | refactoring-129 | refactoring | P3 | combat | decree-047 |
-| ptu-rule-121 | ptu-rule | P4 | combat | combat-audit-report (R113, 2026-02-28) |
-| ptu-rule-125 | ptu-rule | P4 | character-lifecycle | code-review-222 M-02 + rules-review-198 MED-02 |
-| ptu-rule-126 | ptu-rule | P4 | combat | rules-review-198 MED-01 |
-| ptu-rule-130 | ptu-rule | P4 | combat | rules-review-225 MEDIUM-001 |
-| ptu-rule-133 | ptu-rule | P4 | scenes | rules-review-275 MED-001 |
 
 ## Open Decree-Needs (1)
 
@@ -75,7 +70,7 @@ resolved: 289
 | Category | Open | In-Progress | Resolved | Total |
 |----------|------|-------------|----------|-------|
 | bug | 1 | 0 | 54 | 55 |
-| ptu-rule | 2 | 5 | 102 | 109 |
+| ptu-rule | 2 | 0 | 107 | 109 |
 | feature | 0 | 0 | 25 | 25 |
 | ux | 8 | 0 | 10 | 18 |
 | decree | 1 | 0 | 48 | 49 |
