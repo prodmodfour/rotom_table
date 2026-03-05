@@ -5,12 +5,16 @@ import {
   loadEncounter, findCombatant, saveEncounterCombatants,
   buildEncounterResponse, reorderInitiativeAfterSpeedChange, saveInitiativeReorder
 } from '~/server/services/encounter.service'
-import { updateStatusConditions, validateStatusConditions } from '~/server/services/combatant.service'
+import { updateStatusConditions, validateStatusConditions, type ConditionSource } from '~/server/services/combatant.service'
 import { syncEntityToDatabase } from '~/server/services/entity-update.service'
 import { getStatusCsEffect } from '~/constants/statusConditions'
 import { findImmuneStatuses } from '~/utils/typeStatusImmunity'
 import { findNaturewalkImmuneStatuses, getCombatantNaturewalks } from '~/utils/combatantCapabilities'
-import type { StatusCondition, Pokemon, TerrainCell } from '~/types'
+import type { StatusCondition, ConditionSourceType, Pokemon, TerrainCell } from '~/types'
+
+const VALID_SOURCE_TYPES: ConditionSourceType[] = [
+  'move', 'ability', 'terrain', 'weather', 'item', 'environment', 'manual', 'system', 'unknown'
+]
 
 export default defineEventHandler(async (event) => {
   const id = getRouterParam(event, 'id')
@@ -100,8 +104,26 @@ export default defineEventHandler(async (event) => {
       }
     }
 
+    // Extract optional condition source metadata (decree-047)
+    let conditionSource: ConditionSource | undefined
+    if (body.source) {
+      if (!body.source.type || !VALID_SOURCE_TYPES.includes(body.source.type)) {
+        throw createError({
+          statusCode: 400,
+          message: `Invalid source type: ${body.source.type}. Valid types: ${VALID_SOURCE_TYPES.join(', ')}`
+        })
+      }
+      if (!body.source.label || typeof body.source.label !== 'string') {
+        throw createError({
+          statusCode: 400,
+          message: 'source.label must be a non-empty string'
+        })
+      }
+      conditionSource = { type: body.source.type, label: body.source.label }
+    }
+
     // Update status conditions using service (auto-applies/reverses CS per decree-005)
-    const statusResult = updateStatusConditions(combatant, addStatuses, removeStatuses)
+    const statusResult = updateStatusConditions(combatant, addStatuses, removeStatuses, conditionSource)
 
     // Track Badly Poisoned escalation round (P0 tick damage)
     // Initialize to 1 when adding, reset to 0 when removing
