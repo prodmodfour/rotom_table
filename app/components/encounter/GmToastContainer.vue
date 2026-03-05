@@ -33,7 +33,9 @@ import {
 } from '@phosphor-icons/vue'
 import type { GmToastSeverity } from '~/composables/useGmToast'
 
-const { toasts, dismissToast } = useGmToast()
+const { toasts, dismissToast, dismissAll } = useGmToast()
+
+onUnmounted(() => dismissAll())
 
 const severityIcon = (severity: GmToastSeverity) => {
   switch (severity) {
