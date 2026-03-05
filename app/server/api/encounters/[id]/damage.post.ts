@@ -43,7 +43,7 @@ export default defineEventHandler(async (event) => {
     const { record } = loaded
     let combatants = loaded.combatants
     const combatant = findCombatant(combatants, body.combatantId)
-    const entity = combatant.entity
+    let entity = combatant.entity
     const isLeagueBattle = record.battleType === 'trainer'
 
     // Capture pre-damage HP for unclamped calculation
@@ -74,12 +74,14 @@ export default defineEventHandler(async (event) => {
     if (heavilyInjuredCheck.isHeavilyInjured && entity.currentHp > 0) {
       const penalty = applyHeavilyInjuredPenalty(entity.currentHp, damageResult.newInjuries)
       heavilyInjuredHpLoss = penalty.hpLost
-      entity.currentHp = penalty.newHp
+      combatant.entity = { ...entity, currentHp: penalty.newHp }
+      entity = combatant.entity
 
       // Check if heavily injured penalty caused fainting (decree-005: must clear
       // persistent/volatile conditions and reverse their CS effects)
       if (penalty.newHp === 0 && !damageResult.fainted) {
         applyFaintStatus(combatant)
+        entity = combatant.entity
       }
     }
 
@@ -99,7 +101,8 @@ export default defineEventHandler(async (event) => {
     if (deathCheck.isDead && !body.suppressDeath) {
       const currentConditions: StatusCondition[] = entity.statusConditions || []
       if (!currentConditions.includes('Dead')) {
-        entity.statusConditions = ['Dead', ...currentConditions.filter(s => s !== 'Dead')]
+        combatant.entity = { ...entity, statusConditions: ['Dead', ...currentConditions.filter(s => s !== 'Dead')] }
+        entity = combatant.entity
       }
     }
 
