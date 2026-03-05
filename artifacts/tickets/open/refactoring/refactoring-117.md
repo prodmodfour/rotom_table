@@ -3,7 +3,7 @@ ticket_id: refactoring-117
 category: EXT-GOD
 priority: P3
 severity: MEDIUM
-status: open
+status: in-progress
 source: code-review-259 MED-002
 created_by: slave-collector (plan-20260301-204809)
 created_at: 2026-03-01
@@ -26,3 +26,8 @@ Extract out-of-turn action store actions into a composable (e.g., `useOutOfTurnA
 ## Impact
 
 Code health. The store is the largest file in the codebase and will continue growing as P2 adds more out-of-turn mechanics. Should be addressed before P2 of feature-016.
+
+## Resolution Log
+
+- `9a3e58a9` — Created `app/composables/useOutOfTurnState.ts` with 11 out-of-turn reactive getters extracted from encounter store.
+- `bccd63ac` — Removed out-of-turn getters from `app/stores/encounter.ts` (784 -> 723 lines). Updated `PriorityActionPanel.vue` and `gm/index.vue` to use the new composable. Store wrapper actions retained (thin delegation to `useEncounterOutOfTurn`).
