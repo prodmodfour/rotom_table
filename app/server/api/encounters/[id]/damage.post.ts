@@ -102,6 +102,12 @@ export default defineEventHandler(async (event) => {
       const currentConditions: StatusCondition[] = entity.statusConditions || []
       if (!currentConditions.includes('Dead')) {
         combatant.entity = { ...entity, statusConditions: ['Dead', ...currentConditions.filter(s => s !== 'Dead')] }
+        // Add Dead to conditionInstances (decree-047)
+        if (!combatant.conditionInstances) combatant.conditionInstances = []
+        combatant.conditionInstances = [
+          { condition: 'Dead', sourceType: 'system', sourceLabel: deathCheck.cause || 'Death' },
+          ...combatant.conditionInstances.filter(i => i.condition !== 'Dead')
+        ]
         entity = combatant.entity
       }
     }
