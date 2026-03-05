@@ -69,6 +69,9 @@
         </span>
       </div>
 
+      <!-- P2: Flanking indicator (PTU p.232: -2 evasion penalty) -->
+      <span v-if="isFlanked" class="player-combatant__flanked">Flanked</span>
+
       <!-- Injuries (visible for own/allies) -->
       <span v-if="visibility.showInjuries && injuries > 0" class="player-combatant__injuries">
         {{ injuries }} {{ injuries === 1 ? 'injury' : 'injuries' }}
@@ -85,6 +88,8 @@ const props = defineProps<{
   isCurrentTurn: boolean
   myCharacterId: string
   myPokemonIds: string[]
+  /** P2: Whether this combatant is currently flanked (from GM broadcast) */
+  isFlanked?: boolean
 }>()
 
 const { getCombatantName } = useCombatantDisplay()
@@ -276,6 +281,17 @@ const visibility = computed(() => {
     gap: 2px;
   }
 
+  &__flanked {
+    font-size: 9px;
+    font-weight: 600;
+    color: $color-warning;
+    background: rgba($color-warning, 0.15);
+    border: 1px solid rgba($color-warning, 0.3);
+    border-radius: 3px;
+    padding: 0 3px;
+    width: fit-content;
+  }
+
   &__injuries {
     font-size: 10px;
     color: $color-danger;
@@ -342,6 +358,11 @@ const visibility = computed(() => {
 
     &__type {
       font-size: $font-size-4k-sm;
+    }
+
+    &__flanked {
+      font-size: $font-size-4k-sm;
+      padding: 1px $spacing-4k-sm;
     }
 
     &__injuries {
