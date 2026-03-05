@@ -40,7 +40,7 @@ Build a summary:
 | 1 | developer | ptu-rule-079 | completed | 3 | — |
 | 2 | developer | ptu-rule-080 | completed | 2 | — |
 | 3 | reviewers | ptu-rule-058 | completed | 0 | APPROVED |
-| 4 | matrix | healing-rules | failed | 0 | — |
+| 4 | developer | feature-042 | failed | 0 | — |
 
 ### 1c. Check for Still-Running Slaves
 
@@ -57,9 +57,9 @@ If any slave has `"status": "running"`:
 
 Report the merge set to the user.
 
-## Step 3: Propose to User
+## Step 3: Show Merge Plan
 
-Show the merge plan:
+Show the merge plan, then proceed immediately to Step 4:
 
 ```markdown
 ## Merge Plan for plan-<id>
@@ -78,10 +78,8 @@ Show the merge plan:
 - Slaves 1 and 2 both modify capture domain — merging 1 first, then rebasing 2
 - Slave 3 has no code conflicts (review artifacts only)
 
-Say "go" to proceed with merge.
+Proceeding with merge...
 ```
-
-Wait for user confirmation.
 
 ## Step 4: Merge Branches Sequentially
 
@@ -124,7 +122,7 @@ Merged slave-<N> (<type>: <target>) — <commit_count> commits
 
 ## Step 4b: Startup Smoke Test
 
-After all dev slave merges complete, verify the app actually starts and renders. **Skip this step if no dev slaves were merged** (reviewer/matrix-only collections have no code changes).
+After all dev slave merges complete, verify the app actually starts and renders. **Skip this step if no dev slaves were merged** (reviewer-only collections have no code changes).
 
 Uses `playwright-cli` to open a real browser and verify pages load.
 
@@ -199,7 +197,7 @@ Uses `playwright-cli` to open a real browser and verify pages load.
 
 ## Step 4c: Update Descendant CLAUDE.md Files
 
-After merges and smoke test, check whether any merged dev slave changes require updates to descendant CLAUDE.md files. **Skip this step if no dev slaves were merged** (reviewer/matrix-only collections don't change code).
+After merges and smoke test, check whether any merged dev slave changes require updates to descendant CLAUDE.md files. **Skip this step if no dev slaves were merged** (reviewer-only collections don't change code).
 
 ### 4c-1. Identify Affected Directories
 
@@ -270,19 +268,10 @@ For each merged dev/reviewer slave:
 - **No Session Summary section.** The "Active Developer Work" last-3-sessions block replaces it.
 - **Target size:** dev-state.md should stay under 200 lines. If it exceeds this, prune more aggressively.
 
-### 5b. Update `test-state.md`
-
-For each merged matrix slave:
-- Update domain progress row (Rules → Capabilities → Matrix → Audit → Browser → Tickets)
-- Update coverage scores
-- Update active work section
-- If a browser auditor slave was merged, update the Browser column with present/absent/error/unreachable counts
-
-### 5c. Commit State Updates
+### 5b. Commit State Updates
 
 ```bash
 git add artifacts/state/dev-state.md
-git add artifacts/state/test-state.md
 git commit -m "orchestrator: collect-slaves for plan-<plan_id>"
 ```
 
@@ -328,13 +317,7 @@ If any reviewer slave produced a verdict of `CHANGES_REQUIRED`:
 - The C/H issues are NOT separate tickets — they are the fix cycle for the target
 - Note in the final report that re-work is needed for those targets
 
-### 6e. M2 Ticket Creation Conditions
-
-If any matrix slave completed and the domain now has matrix + audit both done:
-- Check if tickets have already been created for that domain
-- If not, note in the final report: "Domain <X> ready for M2 ticket creation. Run `/survey` to include this."
-
-### 6f. Report Filed Tickets
+### 6e. Report Filed Tickets
 
 List all filed tickets in the final report:
 ```markdown
@@ -493,7 +476,7 @@ If push fails (remote has new commits), pull with `--ff-only` first and retry. I
 ### Skipped Slaves
 | Slave | Type | Target | Reason |
 |-------|------|--------|--------|
-| 4 | matrix | healing-rules | failed — error in extraction |
+| 4 | developer | feature-042 | failed — implementation error |
 
 ### Artifact Cleanup
 - **Tickets moved to resolved:** <count> (<list of IDs>)
@@ -503,7 +486,7 @@ If push fails (remote has new commits), pull with `--ff-only` first and retry. I
 ### Follow-Up Actions
 - ptu-rule-058: APPROVED — no further action needed
 - ptu-rule-079: needs review — suggest including in next slave plan
-- healing domain: failed — investigate slave-4 worktree at .worktrees/slave-4-matrix-healing-rules
+- feature-042: failed — investigate slave-4 worktree at .worktrees/slave-4-developer-feature-042
 
 ### Suggested Next Plan
 Based on updated state, the next `/survey` should prioritize:

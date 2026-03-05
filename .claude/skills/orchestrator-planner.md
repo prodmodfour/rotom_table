@@ -22,9 +22,24 @@ Read `.worktrees/work-queue.json`.
 
 ## Step 1: Parallelization Analysis
 
-For every pair of work items in the queue, classify using the parallelization rules from `references/orchestration-tables.md`.
+### 1a. Handle Subsumed Items
 
-Build a dependency DAG of work items.
+Scan all items for `subsumes` fields. If item A subsumes item B and both are in the queue:
+- Remove B from the active queue
+- Note in the plan summary: "Skipped <B> — subsumed by <A>"
+- If A fails during execution, B re-enters the queue in the next survey cycle (no data lost)
+
+### 1b. Build Dependency DAG
+
+For every pair of remaining work items, determine if they can parallelize:
+
+1. **File-level conflict detection (preferred):** If both items have non-empty `affected_files`, check for overlap. Overlapping files = serial dependency. No overlap = safe to parallelize, even within the same domain.
+
+2. **Domain-level fallback:** If either item has empty `affected_files`, fall back to the parallelization rules from `references/orchestration-tables.md` (same domain = serial).
+
+3. **`related_to` ordering:** If two items are `related_to` each other and would otherwise be independent, prefer ordering the higher-priority one first in `merge_order` (no hard dependency, just ordering preference).
+
+Build the DAG from these constraints.
 
 ## Step 2: Assign to Slaves
 
@@ -33,7 +48,7 @@ Group items into N slaves:
 2. Each slave gets one or more non-conflicting items (but typically one — keep it simple)
 3. Items with dependencies go to later slaves or the same slave (serialized within)
 4. Compute `merge_order` via topological sort of the dependency DAG
-5. Identify `conflict_zones` — pairs of slaves that modify overlapping files
+5. Identify `conflict_zones` — pairs of slaves that modify overlapping files (use `affected_files` when available, fall back to domain)
 
 Assign `slave_id` (1-based), `branch_name`, and `worktree_path` for each slave.
 
@@ -73,7 +88,7 @@ Write `.worktrees/slave-plan.json` with this schema:
   "slaves": [
     {
       "slave_id": 1,
-      "task_type": "developer|reviewers|matrix|code-health",
+      "task_type": "developer|reviewers|code-health",
       "target": "<ticket-id or domain-stage>",
       "description": "<human-readable task>",
       "agent_types": ["developer"] | ["senior-reviewer", "game-logic-reviewer"],
@@ -96,7 +111,7 @@ Write `.worktrees/slave-plan.json` with this schema:
         "BRANCH_NAME": "{{RESOLVED_AT_SLAVE_TIME}}"
       },
       "output_expectations": {
-        "artifact_type": "code|review|matrix",
+        "artifact_type": "code|review",
         "artifact_paths": [],
         "modifies_domains": []
       }
@@ -106,7 +121,10 @@ Write `.worktrees/slave-plan.json` with this schema:
   "conflict_zones": {
     "high_risk": [{"slaves": [2, 5], "files": ["..."], "resolution": "..."}],
     "no_conflict": [{"slaves": [1, 3], "reason": "..."}]
-  }
+  },
+  "skipped_subsumed": [
+    {"target": "refactoring-086", "subsumed_by": "refactoring-128"}
+  ]
 }
 ```
 
@@ -124,13 +142,16 @@ Show a summary table to the user:
 | 1 | slave-1 | developer | ptu-rule-079 | Fix capture rate modifier | — | A |
 | 2 | slave-2 | developer | ptu-rule-080 | Fix evasion calculation | — | A |
 | 3 | slave-3 | reviewers | ptu-rule-058 | Review capture fix | — | A |
-| 4 | slave-4 | matrix | healing-rules | Extract healing rules | — | B |
 
 ### Merge Order
 1 → 2 → 3 → 4
 
+### Subsumed (Skipped)
+- refactoring-086 (useMoveCalculation.ts file limit) — subsumed by refactoring-128
+
 ### Conflict Zones
 - **No conflict:** slaves 1, 3 (different domains)
+- **No conflict:** slaves 4, 5 (same domain, disjoint files)
 - **High risk:** slaves 1, 2 (both modify capture composable) — merge 1 first
 
 ### Next Step

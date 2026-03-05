@@ -21,32 +21,21 @@ Categories label *what kind of work* an item is — they are **NOT a priority or
 
 **D2 detection:** Cross-reference in-progress tickets (P2+) against active CHANGES_REQUIRED reviews. For each in-progress ticket at P2 or higher, find its latest CHANGES_REQUIRED review. If found, this ticket is D2. Flag any CRITICAL correctness bugs (wrong game values, data loss, logic errors, security) for escalation. File size violations are CRITICAL review severity but are NOT "correctness bugs" for escalation purposes.
 
-## M1-M7 Matrix Ecosystem Priorities
+## M1-M7 Matrix Ecosystem Priorities (Separate System)
+
+**Matrix work is decoupled from the dev orchestration pipeline.** The human decides when to trigger matrix audits. These categories are retained as reference for the matrix system but are NOT scanned, promoted, or queued by `/survey` or `/plan_slaves`.
 
 | Priority | Condition | Agent Type |
 |----------|-----------|-----------|
-| M1 | Audit has CRITICAL incorrect items, no ticket yet | **Survey creates P0 bug tickets** → Developer |
-| M2 | Matrix + audit complete, tickets not yet created | **Survey processes matrix**: create tickets |
-| M3 | App code changed since last capability mapping | Capability Mapper (re-map) — **only when no D1-D5 work exists** |
-| M4 | Active domain has incomplete matrix stages | Next skill in sequence — **only when no D1-D5 work exists** |
-| M5 | Audit has AMBIGUOUS items | Game Logic Reviewer — **only when no D1-D5 work exists** |
+| M1 | Audit has CRITICAL incorrect items, no ticket yet | Create P0 bug tickets → Developer |
+| M2 | Matrix + audit complete, tickets not yet created | Process matrix: create tickets |
+| M3 | App code changed since last capability mapping | Capability Mapper (re-map) |
+| M4 | Active domain has incomplete matrix stages | Next skill in sequence |
+| M5 | Audit has AMBIGUOUS items | Game Logic Reviewer |
 | M6 | Domain fully processed, all tickets created | Report, suggest next domain |
 | M7 | All domains complete | Report overall coverage |
 
-## Matrix Maintenance Trigger
-
-M1/M2 are always processed inline by the survey (ticket creation). M3-M5 enter the work queue **only when no D1-D5 items exist** in the current queue. This ensures:
-
-- Dev work always takes priority over matrix maintenance
-- Matrix pipelines refresh when there's bandwidth, not during active development
-- Stale matrices get validated before falling through to D8 refactoring or D9 code health
-- One pipeline stage per domain per survey — natural progression across cycles
-
-When triggered, the survey promotes the **next needed stage** for each stale domain:
-- Capabilities stale → M3 (Capability Mapper re-map)
-- Capabilities fresh, matrix stale → M4 (Coverage Analyzer)
-- Matrix fresh, audit stale → M4 (Implementation Auditor)
-- Audit complete, no tickets → M2 (already handled inline)
+When the human triggers a matrix audit, M2 ticket creation converts matrix findings into dev tickets, which then appear in the next `/survey` as normal D1-D9 items.
 
 ## Parallelization Rules
 
@@ -56,17 +45,14 @@ When triggered, the survey promotes the **next needed stage** for each stale dom
 | Dev ticket + its review | No | Review needs commits |
 | Senior reviewer + game logic reviewer (same target) | Yes | Different concerns, separate panes |
 | Multiple reviews for different targets | Yes | Independent |
-| Rule Extractor + Capability Mapper (same domain) | Yes | Different inputs/outputs |
-| Coverage Analyzer after extractor+mapper | No | Needs both outputs |
-| Multiple capability remaps (different domains) | Yes | Different output files |
-| Dev + Matrix ecosystems | Yes | Different concerns |
 | Code Health Auditor + dev work | Yes | Auditor reads only |
-| Browser Auditor + other matrix skills (same domain) | No | Needs completed audit first |
-| Browser Auditor + dev work | Yes | Browser auditor is read-only |
-| Multiple Browser Auditors | No | Single port 3000 constraint |
-| Dev tickets on same domain | Serial | Merge conflict risk |
+| Dev tickets on same domain (no file data) | Serial | Merge conflict risk — domain-level fallback |
+| Dev tickets on same domain (disjoint files) | Yes | File-level check shows no overlap — safe |
+| Dev tickets on same domain (overlapping files) | Serial | File-level check confirms conflict |
 
 ## Template Mapping
+
+### Dev Pipeline Templates
 
 | Agent Type | Template File | Source Skill (reference only) |
 |---|---|---|
@@ -74,12 +60,17 @@ When triggered, the survey promotes the **next needed stage** for each stale dom
 | Senior Reviewer | `templates/agent-senior-reviewer.md` | `ptu-session-helper-senior-reviewer.md` |
 | Game Logic Reviewer | `templates/agent-game-logic-reviewer.md` | `game-logic-reviewer.md` |
 | Code Health Auditor | `templates/agent-code-health-auditor.md` | `code-health-auditor.md` |
+| Retrospective Analyst | `templates/agent-retrospective-analyst.md` | `retrospective-analyst.md` |
+
+### Matrix Pipeline Templates (Separate System — Human-Triggered)
+
+| Agent Type | Template File | Source Skill (reference only) |
+|---|---|---|
 | Rule Extractor | `templates/agent-rule-extractor.md` | `ptu-rule-extractor.md` |
 | Capability Mapper | `templates/agent-capability-mapper.md` | `app-capability-mapper.md` |
 | Coverage Analyzer | `templates/agent-coverage-analyzer.md` | `coverage-analyzer.md` |
 | Implementation Auditor | `templates/agent-implementation-auditor.md` | `implementation-auditor.md` |
 | Browser Auditor | `templates/agent-browser-auditor.md` | `browser-auditor.md` |
-| Retrospective Analyst | `templates/agent-retrospective-analyst.md` | `retrospective-analyst.md` |
 
 **Template fallback:** If a template produces poor agent results (incomplete output, wrong format), fall back to embedding the full skill file for that launch. Note this in the plan.
 
@@ -117,9 +108,9 @@ When triggered, the survey promotes the **next needed stage** for each stale dom
 - **`{{BRANCH_NAME}}`** — Set to `{{RESOLVED_AT_SLAVE_TIME}}`
 - **`{{PREVIOUS_REVIEW}}`** — Prior review artifact if re-review
 - **`{{RELEVANT_DECREES}}`** — Active decrees from `decrees/` matching the slave's domain
-- **`{{CAPABILITY_INDEX}}`** — (Browser Auditor only) Read `artifacts/matrix/<domain>/capabilities/_index.md`
-- **`{{MATRIX_ACCESSIBLE_FROM}}`** — (Browser Auditor only) Read `artifacts/matrix/<domain>/matrix.md` accessible_from data
-- **`{{VIEW_MAP}}`** — (Browser Auditor only) Read `.claude/skills/references/browser-audit-routes.md`
+- **`{{CAPABILITY_INDEX}}`** — (Matrix pipeline only — Browser Auditor) Read `artifacts/matrix/<domain>/capabilities/_index.md`
+- **`{{MATRIX_ACCESSIBLE_FROM}}`** — (Matrix pipeline only — Browser Auditor) Read `artifacts/matrix/<domain>/matrix.md` accessible_from data
+- **`{{VIEW_MAP}}`** — (Matrix pipeline only — Browser Auditor) Read `.claude/skills/references/browser-audit-routes.md`
 
 ## Domain List
 

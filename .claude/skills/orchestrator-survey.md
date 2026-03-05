@@ -1,15 +1,17 @@
 ---
 name: orchestrator-survey
-description: Phase 1 of orchestration. Syncs remote, reads full pipeline state, builds a work queue of ALL actionable items (D1-D9 + M1-M7), runs inline M2 ticket creation and D3b design pre-flight, writes work-queue.json, and presents a summary. Does NOT assign slaves or launch anything.
+description: Phase 1 of orchestration. Syncs remote, reads full pipeline state, builds a work queue of ALL actionable dev items (D1-D9), runs D3b design pre-flight, writes work-queue.json, and presents a summary. Does NOT assign slaves or launch anything. Matrix work (M1-M7) is a separate system triggered by the human.
 ---
 
 # Orchestrator Survey
 
-You are the orchestrator survey. You analyze the full pipeline state and produce a comprehensive work queue. You do NOT assign slaves, write slave plans, or launch anything — that happens in `/plan_slaves`.
+You are the orchestrator survey. You analyze the full pipeline state and produce a comprehensive work queue of dev items. You do NOT assign slaves, write slave plans, or launch anything — that happens in `/plan_slaves`.
 
 **Lifecycle:** Sync remote → Read state → Build work queue → Write work-queue.json → Present summary → Die
 
-**References:** Read `.claude/skills/references/orchestration-tables.md` for D1-D9 categories, M1-M7 matrix priorities, and the domain list.
+**References:** Read `.claude/skills/references/orchestration-tables.md` for D1-D9 categories and the domain list.
+
+**Matrix work (M1-M7) is a separate system.** The human decides when to run matrix audits. This survey does NOT scan matrix staleness, create M2 tickets, or promote M3/M4 maintenance work.
 
 ## Step 0: Sync with Remote
 
@@ -20,6 +22,85 @@ git pull origin master --ff-only
 ```
 
 If this fails (diverged history), warn the user and abort — do not force-pull or rebase without confirmation.
+
+## Step 0b: Refresh Pipeline State
+
+Before reading any state, reconcile the artifact ecosystem so the survey works from ground truth — not stale caches. This step fixes the drift that accumulates between collections.
+
+**This step is mechanical housekeeping. Skip analysis — just reconcile and move on.**
+
+### 0b-1. Reconcile Ticket Locations
+
+Cross-reference ticket files against review verdicts to find misplaced tickets:
+
+1. **Scan `artifacts/reviews/active/`** and **`artifacts/reviews/archive/`** (all subdirectories) — build a map of `{target_ticket → latest_verdict}` (use `ticket_id` or `target_report` frontmatter). For tickets with multiple reviews, the highest-numbered review_id wins.
+
+2. **For each ticket in `artifacts/tickets/open/`** (all category subdirectories):
+   - If the ticket has an `APPROVED` or `PASS` latest verdict (and no subsequent `CHANGES_REQUIRED`) → move to `artifacts/tickets/resolved/<category>/`
+   - If the ticket has a `CHANGES_REQUIRED` review → move to `artifacts/tickets/in-progress/<category>/`
+
+3. **For each ticket in `artifacts/tickets/in-progress/`**:
+   - If the ticket has an `APPROVED` or `PASS` latest verdict → move to `artifacts/tickets/resolved/<category>/`
+
+4. **Check for decree-need tickets resolved by decrees:**
+   - Read `decrees/` directory for decree files with `resolves:` or `decree_need:` frontmatter
+   - If a decree-need ticket in `open/decree/` is resolved by an active decree → move to `resolved/decree/`
+
+```bash
+mkdir -p artifacts/tickets/resolved/{bug,ptu-rule,feature,ux,decree,refactoring,docs}
+# Then mv commands for each misplaced ticket
+```
+
+### 0b-2. Archive Completed Reviews
+
+Move reviews from `active/` to `archive/` when their work is done:
+
+1. **APPROVED/PASS reviews** whose target ticket is now in `resolved/` → move to `archive/YYYY-MM/` (based on `reviewed_at` date)
+2. **Any verdict** whose target ticket is in `resolved/` → move to `archive/YYYY-MM/`
+
+**Never archive** reviews whose target is still in `open/` or `in-progress/`.
+
+```bash
+mkdir -p artifacts/reviews/archive/YYYY-MM
+# Then mv commands for each stale review
+```
+
+### 0b-3. Regenerate Artifact Indexes
+
+```bash
+node scripts/regenerate-artifact-indexes.mjs
+```
+
+This rebuilds all `_index.md` files from the (now-reconciled) filesystem.
+
+### 0b-4. Reconcile dev-state.md
+
+Read `artifacts/state/dev-state.md` and fix it to match filesystem reality:
+
+1. **Remove rows for resolved tickets** — any ticket ID that now lives in `tickets/resolved/` should be removed from the Open Tickets tables
+2. **Fix status mismatches** — if a ticket is in `in-progress/` but dev-state says "open" (or vice versa), fix the status column
+3. **Update Code Health counts** — recount open tickets by priority from the filesystem, update the table
+4. **Update `last_updated` and `updated_by`** frontmatter
+
+Do NOT rewrite the Active Developer Work or session history sections — those are historical records. Only fix the ticket tables and counts.
+
+### 0b-5. Commit Refreshed State
+
+If any files changed (tickets moved, reviews archived, indexes regenerated, dev-state fixed):
+
+```bash
+git add artifacts/ decrees/_index.md
+git commit -m "chore: refresh pipeline state before survey"
+```
+
+If nothing changed, skip the commit.
+
+**Report a one-line summary** of what was cleaned up:
+```
+Refreshed state: moved N tickets to resolved, archived M reviews, fixed K dev-state rows.
+```
+
+If nothing needed fixing: `Pipeline state is fresh — no cleanup needed.`
 
 ## Step 1: Read Coordination State
 
@@ -56,8 +137,7 @@ If index files exist, read them for a fast summary instead of scanning hundreds 
 2. `artifacts/tickets/_index.md` — open/in-progress tickets with ID, category, priority, domain
 3. `artifacts/reviews/_index.md` — active reviews (CHANGES_REQUIRED/FAIL), recent approvals
 4. `artifacts/designs/_index.md` — design status, tier completion
-5. `artifacts/matrix/_index.md` — per-domain coverage, pipeline completeness, staleness
-6. `decrees/_index.md` — active decrees by domain
+5. `decrees/_index.md` — active decrees by domain
 
 Record raw data from these indexes. Do NOT analyze or filter yet — analysis happens in Step 2.
 
@@ -71,7 +151,6 @@ If `_index.md` files don't exist, fall back to scanning directories:
 - `artifacts/refactoring/`
 - `artifacts/reviews/active/`
 - `artifacts/designs/`
-- `artifacts/matrix/`
 - `artifacts/lessons/`
 - `decrees/`
 
@@ -89,11 +168,11 @@ Report open decree-need tickets: "N decree-need tickets await human ruling. Run 
 
 ## Step 2: Build Full Work Queue
 
-**CRITICAL: Your work queue MUST include EVERY actionable item — every open ticket, every in-progress ticket with CHANGES_REQUIRED reviews, every pending review, and every incomplete matrix stage. Missing items = broken plan = wasted parallelism. Scan ALL sources from Step 1, not just the first few.**
+**CRITICAL: Your work queue MUST include EVERY actionable dev item — every open ticket, every in-progress ticket with CHANGES_REQUIRED reviews, and every pending review. Missing items = broken plan = wasted parallelism. Scan ALL sources from Step 1, not just the first few.**
 
 ### 2a. Categorize All Work Items
 
-Walk through the raw data from Step 1 and tag each item with its category using the D1-D9 table from `references/orchestration-tables.md`.
+Walk through the raw data from Step 1 and tag each item with its category using the D1-D9 table from `references/orchestration-tables.md`. Only dev categories (D1-D9) — matrix work (M1-M7) is excluded.
 
 ### 2b. Sort by Priority
 
@@ -102,7 +181,7 @@ Walk through the raw data from Step 1 and tag each item with its category using 
 **Developer assignment order:**
 1. **Escalated CHANGES_REQUIRED** — only if review found CRITICAL severity correctness bugs
 2. **Highest P-level actionable ticket** — P0 > P1 > P2 > P3 > P4, regardless of category
-3. **Within same P-level**, prefer: fix cycles (D2) > open tickets > designs > matrix maintenance (M3/M4) > refactoring
+3. **Within same P-level**, prefer: fix cycles (D2) > open tickets > designs > refactoring
 4. **Within same P-level and category**, prefer: extensibility impact > scope size
 
 **Reviewer assignment (always parallel with dev work):**
@@ -110,24 +189,7 @@ Walk through the raw data from Step 1 and tag each item with its category using 
 - Re-reviews after CHANGES_REQUIRED fixes → reviewer slaves every plan
 - Reviews NEVER block or delay developer assignments
 
-### 2c. M2 Ticket Creation (Inline)
-
-When M2 items exist (matrix + audit complete, tickets not yet created), create tickets **inline during Step 2** before including them in the work queue:
-
-1. Read `matrix/<domain>/matrix.md` and `matrix/<domain>/audit/` directory
-2. Create **bug tickets** for each `Incorrect` audit item → `tickets/open/bug/bug-<NNN>.md`
-3. Create **feature tickets** for each `Missing` matrix item → `tickets/open/feature/feature-<NNN>.md`
-4. Create **feature tickets** for each `Subsystem-Missing` matrix item → `tickets/open/feature/feature-<NNN>.md` (one ticket per subsystem, not per rule — list all affected rules in the ticket body)
-5. Create **feature tickets** for each `Partial` matrix item → `tickets/open/feature/feature-<NNN>.md` (one ticket per gap cluster — group related Partial rules that form a coherent feature. Include what exists vs what's missing. Use the gap descriptions in the matrix as the ticket summary.)
-6. Create **feature tickets** for each `Implemented-Unreachable` cluster → `tickets/open/feature/feature-<NNN>.md` (group by actor+view)
-7. Create **ptu-rule tickets** for each `Approximation` audit item → `tickets/open/ptu-rule/ptu-rule-<NNN>.md`
-8. Skip `Correct`, `Out of Scope`, `Ambiguous` items
-9. All tickets include `matrix_source` frontmatter
-10. Commit tickets to master immediately (they're data, not code)
-11. Push to remote: `git push origin master`
-12. Then include the newly-created tickets in the work queue
-
-### 2d. D3b: Design Pre-Flight Validation (Inline)
+### 2c. D3b: Design Pre-Flight Validation (Inline)
 
 When a design has `status: complete`, run a pre-flight check **inline during Step 2** (not as a slave). This takes ~2 minutes and prevents mid-implementation blockers.
 
@@ -147,9 +209,27 @@ When a design has `status: complete`, run a pre-flight check **inline during Ste
 
 **On fail (open questions found):** Leave status as `complete`, create decree-need tickets, report the blockers. The design stays out of D7 until questions are resolved and the next plan re-runs D3b.
 
+### 2d. Dependency Hints
+
+For each work item, enrich with lightweight dependency data. These are hints for the planner — not a full DAG.
+
+**1. `affected_files`** — Extract from the ticket's "Affected Files" or "Files" frontmatter/section. If the ticket has no such section, leave as an empty list. Do NOT scan the codebase to discover files — just use what the ticket already says.
+
+**2. `subsumes`** — If completing item A would make item B unnecessary, add B's target ID to A's `subsumes` list. Common patterns:
+- File extraction refactoring (e.g., "extract X from Y.ts") subsumes a file-size-limit ticket for Y.ts
+- A feature ticket that replaces a component subsumes a bug ticket for that same component
+- Only flag obvious cases visible from ticket descriptions. Do not speculate.
+
+**3. `related_to`** — If two items are potential duplicates or touch the same affected file(s), link them bidirectionally. Common patterns:
+- Ticket description explicitly mentions another ticket ID (e.g., "possible dup of ux-017")
+- Two items share an `affected_files` entry (after resolving both)
+- Same domain alone is NOT sufficient — there must be a concrete file or description signal.
+
+All three fields are optional lists (default `[]`). Most items will only have `affected_files`.
+
 ### 2e. Emit Work Queue
 
-Collect every actionable item into a flat list with: `{priority, category, target, agent_types, launch_mode, description, domain}`.
+Collect every actionable dev item into a flat list with: `{priority, category, target, agent_types, launch_mode, description, domain, affected_files, subsumes, related_to}`.
 
 **Completeness check — verify you have not missed items:**
 - Count open tickets from indexes. Count items in your queue tagged as open tickets. These MUST match.
@@ -157,50 +237,11 @@ Collect every actionable item into a flat list with: `{priority, category, targe
 - Count pending reviews (D6). Count reviewer items in your queue. These MUST match.
 - If any count is off, re-scan the source you missed.
 
-## Step 3: Staleness Detection
+**Dependency hint check:**
+- Every item with `subsumes` targets must reference items that actually exist in the queue.
+- Every `related_to` link should be bidirectional (if A relates to B, B relates to A).
 
-Compare timestamps across stages:
-- App code changed after capability mapping → re-map needed
-- Re-mapped capabilities → matrix stale, re-analyze needed
-- Developer commit after latest approved review → re-review needed
-
-For code changes, check `git log --oneline -10` and map to domains via `references/app-surface.md`.
-
-## Step 3a: Matrix Maintenance Promotion (Conditional)
-
-After staleness detection, check if the work queue contains any D1-D5 items:
-
-- **If D1-D5 items exist** → skip this step entirely. Dev work takes priority.
-- **If NO D1-D5 items exist** → promote stale matrix domains into actionable work queue items.
-
-This ensures the "no urgent dev work" state is validated — stale matrices may reveal new bugs/gaps that *should* be D1-D5 work.
-
-**For each stale domain** identified in Step 3, determine the **next needed pipeline stage** and add one work item:
-
-1. **Capabilities stale** (app code changed since last capability mapping) → add:
-   `{priority: "P3", category: "M3", target: "<domain>-remap", agent_types: ["capability-mapper"], launch_mode: "single", description: "Re-map capabilities for <domain> (stale since <commit>)", domain: "<domain>"}`
-
-2. **Capabilities fresh, matrix stale** (capabilities updated since last coverage analysis) → add:
-   `{priority: "P3", category: "M4", target: "<domain>-coverage", agent_types: ["coverage-analyzer"], launch_mode: "single", description: "Re-run coverage analysis for <domain>", domain: "<domain>"}`
-
-3. **Matrix fresh, audit stale/missing** (matrix updated since last audit) → add:
-   `{priority: "P3", category: "M4", target: "<domain>-audit", agent_types: ["implementation-auditor"], launch_mode: "single", description: "Re-audit <domain> implementation correctness", domain: "<domain>"}`
-
-4. **Audit complete, no tickets** → already handled by M2 in Step 2c.
-
-**One stage per domain per survey.** Don't queue the entire pipeline for a domain — just the next step. The following survey will detect the next stale stage and promote it. This creates natural pipeline progression across survey cycles.
-
-**Sorting:** M3/M4 items at P3 sort below any D6/D7 items at the same P-level but above D8 refactoring. Within M3/M4, prefer domains with the most code churn since last mapping.
-
-**Multiple stale domains can run in parallel** — see the parallelization rules in `references/orchestration-tables.md` (Capability Mapper across domains = parallel, Coverage Analyzer needs mapper output = serial per domain).
-
-Update the queue's `summary` to include:
-- `"matrix_maintenance_triggered": true`
-- `"m3_items": N`
-- `"m4_items": N`
-- `"stale_domains_promoted": ["combat", "healing", ...]`
-
-## Step 4: Write work-queue.json
+## Step 3: Write work-queue.json
 
 Write `.worktrees/work-queue.json` with this schema:
 
@@ -212,13 +253,14 @@ Write `.worktrees/work-queue.json` with this schema:
   "items": [
     { "priority": "P0", "category": "D1", "target": "bug-001",
       "agent_types": ["developer"], "launch_mode": "single",
-      "description": "...", "domain": "capture" }
+      "description": "...", "domain": "capture",
+      "affected_files": ["app/server/api/capture/attempt.post.ts"],
+      "subsumes": [], "related_to": [] }
   ],
   "summary": {
     "total_items": 5,
     "by_category": {"D1": 1, "D2": 2},
     "decree_needs_pending": 2,
-    "m2_tickets_created": 3,
     "d3b_validated": 1
   }
 }
@@ -226,7 +268,7 @@ Write `.worktrees/work-queue.json` with this schema:
 
 Ensure the `.worktrees/` directory exists before writing.
 
-## Step 5: Present Summary
+## Step 4: Present Summary
 
 Show the work queue to the user:
 
@@ -244,11 +286,8 @@ Show the work queue to the user:
 ### Summary
 - **Total items:** N
 - **By category:** D1: 1, D2: 2, D6: 1
-- **M2 tickets created:** 3
 - **D3b designs validated:** 1
 - **Decree-needs pending:** 2 (run `/address_design_decrees`)
-- **Matrix maintenance triggered:** Yes/No (only when D1-D5 queue is empty)
-- **Staleness detected:** capabilities for healing domain (re-map needed)
 
 ### Next Step
 Run `/plan_slaves` to assign work to parallel slaves.
@@ -266,4 +305,4 @@ Run `/plan_slaves` to assign work to parallel slaves.
 - Approve code changes (defer to Senior Reviewer)
 - Execute work items (slaves do that)
 - Persist across multiple surveys (one survey, then die)
-- Write artifacts other than work-queue.json and tickets (M2)
+- Write artifacts other than work-queue.json and state refresh housekeeping (Step 0b)
