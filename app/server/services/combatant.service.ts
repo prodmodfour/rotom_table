@@ -166,28 +166,57 @@ export function applyDamageToEntity(
 }
 
 /**
- * Apply Fainted status to a combatant, clearing conditions with clearsOnFaint
- * flag and reversing their CS effects (decree-005, decree-038, PTU p.248).
+ * Apply Fainted status to a combatant, clearing conditions based on
+ * both static flags and source-dependent rules (decree-047).
+ *
+ * For Persistent/Volatile: always clears on faint (PTU p.248).
+ * For Other: consults the condition instance's source type (decree-047).
+ *   - Move/ability/item sourced: clears (effect dissipates)
+ *   - Terrain/weather/environment/manual: persists (source still active)
+ *   - Unknown: uses static flag (clearsOnFaint: false, safe default)
+ *
+ * Also reverses CS effects for cleared conditions (decree-005).
  *
  * Use this whenever a combatant faints from ANY source (damage, heavily injured
  * penalty, tick damage, etc.) to ensure consistent faint handling.
  */
 export function applyFaintStatus(combatant: Combatant): void {
   const entity = combatant.entity
-  const faintClearedSet = new Set<string>(FAINT_CLEARED_CONDITIONS)
+  const currentConditions: StatusCondition[] = entity.statusConditions || []
+  const instances = combatant.conditionInstances || []
 
-  // Reverse CS effects from conditions being cleared (decree-005)
-  const conditionsBeingCleared = (entity.statusConditions || []).filter(
-    (s: StatusCondition) => faintClearedSet.has(s)
-  )
-  for (const condition of conditionsBeingCleared) {
+  // Determine which conditions to clear vs keep
+  const conditionsToKeep: StatusCondition[] = []
+  const conditionsToRemove: StatusCondition[] = []
+
+  for (const condition of currentConditions) {
+    if (condition === 'Fainted') continue // Don't double-add
+
+    // Find the matching instance for source lookup
+    const instance = instances.find(i => i.condition === condition)
+    if (shouldClearOnFaint(condition, instance)) {
+      conditionsToRemove.push(condition)
+    } else {
+      conditionsToKeep.push(condition)
+    }
+  }
+
+  // Reverse CS effects for cleared conditions (decree-005)
+  for (const condition of conditionsToRemove) {
     reverseStatusCsEffects(combatant, condition)
   }
 
-  const survivingConditions = (combatant.entity.statusConditions || []).filter(
-    (s: StatusCondition) => !faintClearedSet.has(s) && s !== 'Fainted'
-  )
-  combatant.entity = { ...combatant.entity, statusConditions: ['Fainted', ...survivingConditions] }
+  // Update entity.statusConditions
+  combatant.entity = {
+    ...combatant.entity,
+    statusConditions: ['Fainted', ...conditionsToKeep]
+  }
+
+  // Update conditionInstances: remove cleared, add Fainted
+  combatant.conditionInstances = [
+    { condition: 'Fainted', sourceType: 'system', sourceLabel: 'Fainted from damage' },
+    ...instances.filter(i => !conditionsToRemove.includes(i.condition) && i.condition !== 'Fainted')
+  ]
 }
 
 // ============================================
