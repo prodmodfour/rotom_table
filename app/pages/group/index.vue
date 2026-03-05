@@ -22,7 +22,10 @@ useHead({
 })
 
 const groupViewTabsStore = useGroupViewTabsStore()
-const { isConnected, send, onMessage } = useWebSocket()
+const { isConnected, send, onMessage, receivedFlankingMap } = useWebSocket()
+
+// Provide flanking map to descendant encounter components
+provide('receivedFlankingMap', receivedFlankingMap)
 
 // WebSocket event handling for group view
 useGroupViewWebSocket({ send, isConnected, onMessage })
