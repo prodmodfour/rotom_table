@@ -199,6 +199,7 @@ const emit = defineEmits<{
   evolved: [result: Record<string, unknown>]
 }>()
 
+const { showToast } = useGmToast()
 const statKeys = ['hp', 'attack', 'defense', 'specialAttack', 'specialDefense', 'speed'] as const
 
 // Step management
@@ -424,7 +425,7 @@ async function handleEvolve(): Promise<void> {
     }
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Evolution failed'
-    alert(`Evolution failed: ${message}`)
+    showToast(`Evolution failed: ${message}`, 'error')
   } finally {
     evolving.value = false
   }

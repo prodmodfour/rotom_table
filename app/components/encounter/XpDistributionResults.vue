@@ -117,6 +117,7 @@ const emit = defineEmits<{
 }>()
 
 const router = useRouter()
+const { showToast } = useGmToast()
 const { getSpriteUrl } = usePokemonSprite()
 
 const hasLevelUps = computed(() =>
@@ -184,7 +185,7 @@ function openEvolutionConfirmModal(
   evo: EvolutionOptionData
 ): void {
   if (!pokemon || !evo.targetBaseStats) {
-    alert('Target species data not found.')
+    showToast('Target species data not found.', 'error')
     return
   }
   evolutionModal.pokemonId = pokemon.id
@@ -233,12 +234,12 @@ async function handleEvolveClick(payload: { pokemonId: string; species: string }
 
     // P2: Check for prevention items
     if (checkResponse.data.preventedByItem) {
-      alert(`This Pokemon cannot evolve while holding an ${checkResponse.data.preventedByItem}.`)
+      showToast(`This Pokemon cannot evolve while holding an ${checkResponse.data.preventedByItem}.`, 'warning')
       return
     }
 
     if (!checkResponse.success || checkResponse.data.available.length === 0) {
-      alert('No evolutions currently available for this Pokemon.')
+      showToast('No evolutions currently available for this Pokemon.', 'warning')
       return
     }
 
@@ -261,7 +262,7 @@ async function handleEvolveClick(payload: { pokemonId: string; species: string }
     }>(`/api/pokemon/${payload.pokemonId}`)
 
     if (!pokemonResponse.success) {
-      alert('Failed to load Pokemon data.')
+      showToast('Failed to load Pokemon data.', 'error')
       return
     }
 
@@ -276,7 +277,7 @@ async function handleEvolveClick(payload: { pokemonId: string; species: string }
     }
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Failed to check evolution'
-    alert(`Evolution check failed: ${message}`)
+    showToast(`Evolution check failed: ${message}`, 'error')
   }
 }
 
