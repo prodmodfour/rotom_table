@@ -95,6 +95,7 @@ export const EQUIPMENT_CATALOG: Record<string, EquippedItem> = {
     name: 'Snow Boots',
     slot: 'feet',
     grantedCapabilities: ['Naturewalk (Tundra)'],
+    conditionalSpeedPenalty: { amount: -1, condition: 'On ice or deep snow' },
     cost: 1500,
     description: 'Naturewalk (Tundra), -1 Overland on ice/deep snow.',
   },

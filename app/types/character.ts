@@ -122,6 +122,11 @@ export interface EquippedItem {
     damageReduction: number;
     appliesSlowed: boolean;
   };
+  // Conditional speed penalty (not auto-applied; tracked for GM reference)
+  conditionalSpeedPenalty?: {      // e.g., Snow Boots: -1 Overland on ice/deep snow
+    amount: number;                // Negative value (e.g., -1)
+    condition: string;             // Human-readable: "On ice or deep snow"
+  };
   // Granted capabilities (e.g., Snow Boots → Naturewalk (Tundra), PTU p.293)
   grantedCapabilities?: string[];  // ["Naturewalk (Tundra)"], ["Naturewalk (Forest)"]
   // General

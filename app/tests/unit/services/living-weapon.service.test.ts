@@ -31,6 +31,7 @@ vi.mock('~/utils/equipmentBonuses', () => ({
     statBonuses: {},
     speedDefaultCS: 0,
     conditionalDR: [],
+    conditionalSpeedPenalties: [],
   }),
   computeEffectiveEquipment: (eq: unknown) => eq,
   getEquipmentGrantedCapabilities: () => [],

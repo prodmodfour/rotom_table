@@ -72,6 +72,9 @@
                   <span v-if="item.conditionalDR" class="item-bonus item-bonus--conditional">
                     {{ item.conditionalDR.amount }} DR ({{ item.conditionalDR.condition }})
                   </span>
+                  <span v-if="item.conditionalSpeedPenalty" class="item-bonus item-bonus--conditional">
+                    {{ item.conditionalSpeedPenalty.amount }} Overland ({{ item.conditionalSpeedPenalty.condition }})
+                  </span>
                   <span v-if="item.canReady" class="item-bonus item-bonus--ready">
                     Can Ready
                   </span>

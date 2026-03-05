@@ -19,6 +19,7 @@ vi.mock('~/utils/equipmentBonuses', () => ({
     damageReduction: 0,
     statBonuses: {},
     conditionalDR: [],
+    conditionalSpeedPenalties: [],
   })),
 }))
 

@@ -31,6 +31,10 @@ const equippedItemSchema = z.object({
     damageReduction: z.number().int().min(0).max(100),
     appliesSlowed: z.boolean()
   }).optional(),
+  conditionalSpeedPenalty: z.object({
+    amount: z.number().int().min(-10).max(0),
+    condition: z.string().min(1)
+  }).optional(),
   grantedCapabilities: z.array(z.string().min(1)).optional(),
   description: z.string().optional(),
   cost: z.number().int().min(0).optional(),

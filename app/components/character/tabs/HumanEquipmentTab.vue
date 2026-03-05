@@ -146,6 +146,14 @@
           <span>{{ cdr.amount }} DR vs {{ cdr.condition }}</span>
         </div>
         <div
+          v-for="csp in bonuses.conditionalSpeedPenalties"
+          :key="csp.condition"
+          class="bonus-tag bonus-tag--conditional"
+        >
+          <PhWarning :size="14" weight="bold" />
+          <span>{{ csp.amount }} Overland ({{ csp.condition }})</span>
+        </div>
+        <div
           v-for="cap in grantedCapabilities"
           :key="cap"
           class="bonus-tag bonus-tag--capability"
@@ -215,6 +223,7 @@ const hasBonuses = computed(() => {
     b.speedDefaultCS < 0 ||
     Object.keys(b.statBonuses).length > 0 ||
     b.conditionalDR.length > 0 ||
+    b.conditionalSpeedPenalties.length > 0 ||
     grantedCapabilities.value.length > 0
   )
 })

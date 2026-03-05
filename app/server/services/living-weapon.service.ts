@@ -405,6 +405,7 @@ export function getEffectiveEquipmentBonuses(
       statBonuses: {},
       speedDefaultCS: 0,
       conditionalDR: [],
+      conditionalSpeedPenalties: [],
     }
   }
 
