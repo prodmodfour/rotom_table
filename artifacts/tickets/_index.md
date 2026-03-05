@@ -1,24 +1,19 @@
 ---
-generated_at: 2026-03-05T09:58:22.647Z
+generated_at: 2026-03-05T10:02:15.842Z
 total_tickets: 328
-open: 50
-in_progress: 2
-resolved: 276
+open: 44
+in_progress: 6
+resolved: 278
 ---
 
 # Tickets Index
 
-## Open Tickets (50)
+## Open Tickets (44)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
-| bug-054 | bug | P3 | multiple | GmToastContainer.vue (now in the GM layout) has no `onUnmoun |
-| refactoring-113 | refactoring | P3 | combat | refactoring-113: Wire or remove autoDeclineFaintedReactor in |
-| refactoring-117 | refactoring | P3 | — | refactoring-117: Extract out-of-turn actions from encounter. |
-| refactoring-128 | refactoring | P3 | combat | `useMoveCalculation.ts` is now 806 lines, exceeding the 800- |
 | refactoring-129 | refactoring | P3 | combat | Per decree-047, whether Other category conditions clear on f |
 | bug-052 | bug | P4 | character-lifecycle | `PlayerCharacterSheet.vue` renders feature tags with bare `c |
-| bug-055 | bug | P4 | pokemon-lifecycle | In `gm/pokemon/[id].vue` (lines 418-421), evolution ineligib |
 | ptu-rule-121 | ptu-rule | P4 | combat | The Sprint endpoint (`app/server/api/encounters/[id]/sprint. |
 | ptu-rule-125 | ptu-rule | P4 | character-lifecycle | ptu-rule-125: Populate grantedCapabilities on all capability |
 | ptu-rule-126 | ptu-rule | P4 | combat | ptu-rule-126: Snow Boots conditional Overland speed penalty  |
@@ -59,16 +54,19 @@ resolved: 276
 | refactoring-136 | refactoring | P4 | encounter-tables | `useEncounterOutOfTurn` defines and exports `enterBetweenTur |
 | refactoring-137 | refactoring | P4 | encounter-tables | `toggleVisionCapability` (encounter store line 567) calls `g |
 | refactoring-138 | refactoring | P4 | combat | Refactoring-098 converted the primary damage/next-turn/move  |
-| refactoring-139 | refactoring | P4 | multiple | In `useGmToast.ts` (lines 72-78), `dismissAll()` iterates th |
 | refactoring-140 | refactoring | P4 | combat | After refactoring-098 converted entity mutations to immutabl |
 | docs-017 | docs | P4 | tooling | The bug-047 ticket resolution log references stale commit ha |
 
-## In-Progress Tickets (2)
+## In-Progress Tickets (6)
 
 | ID | Category | Priority | Domain | Source |
 |----|----------|----------|--------|--------|
-| feature-025 | feature | P2 | encounter-tables | decree-048 |
+| bug-054 | bug | P3 | multiple | code-review-334 HIGH-1 + code-review-334b H1 |
+| refactoring-117 | refactoring | P3 | — | code-review-259 MED-002 |
+| refactoring-128 | refactoring | P3 | combat | code-review-316 MED-001 |
+| bug-055 | bug | P4 | pokemon-lifecycle | code-review-334b M2 |
 | ptu-rule-135 | ptu-rule | P4 | capture | decree-049 |
+| refactoring-139 | refactoring | P4 | multiple | code-review-334 MEDIUM-1 + code-review-334b M1 |
 
 ## Open Decree-Needs (0)
 
@@ -78,10 +76,10 @@ All decree-needs addressed.
 
 | Category | Open | In-Progress | Resolved | Total |
 |----------|------|-------------|----------|-------|
-| bug | 3 | 0 | 52 | 55 |
+| bug | 1 | 2 | 52 | 55 |
 | ptu-rule | 5 | 1 | 101 | 107 |
-| feature | 0 | 1 | 24 | 25 |
+| feature | 0 | 0 | 25 | 25 |
 | ux | 8 | 0 | 10 | 18 |
 | decree | 0 | 0 | 48 | 48 |
-| refactoring | 33 | 0 | 24 | 57 |
+| refactoring | 29 | 3 | 25 | 57 |
 | docs | 1 | 0 | 17 | 18 |
