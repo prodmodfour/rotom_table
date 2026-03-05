@@ -103,18 +103,24 @@ A Game Master aid application for Pokemon Tabletop United (PTU) 1.05 in-person t
 ### Installation
 
 ```bash
+# Install dependencies (from the app/ directory)
 cd app
 npm install
 ```
 
+The `postinstall` script automatically runs `nuxt prepare` and `prisma generate`, so this handles Nuxt type generation and the Prisma client.
+
 ### Database Setup
 
 ```bash
+# Push the schema to SQLite (creates the database file)
 npx prisma db push
+
+# Seed with PTU 1.05 moves from CSV data
 npx prisma db seed
 ```
 
-This creates the database and seeds it with all PTU 1.05 moves from the included CSV data.
+The database is SQLite (file-based), so no external database server is needed.
 
 ### Development
 
@@ -132,6 +138,10 @@ The app will be available at:
 npm run build
 node .output/server/index.mjs
 ```
+
+### Optional: Imp Discord Bot
+
+The Discord bot (`scripts/imp/`) is separate from the main app and not required to run it. To set it up, copy `.env.example` to `.env` at the project root and fill in the Discord token and channel IDs.
 
 ## Usage
 
