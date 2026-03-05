@@ -5,6 +5,7 @@ category: CODE-HEALTH
 priority: P3
 severity: LOW
 domain: combat
+status: in-progress
 source: code review of slave-4 (plan-20260228-173500)
 created_by: slave-collector (plan-20260228-173500)
 ---
@@ -30,3 +31,18 @@ Create new entity objects with spread operator instead of mutating in place. App
 - Code health: enforces project coding standards
 - Maintainability: easier to reason about state changes
 - Low urgency: mutation is safe here since objects are freshly parsed, but inconsistent with conventions
+
+## Resolution Log
+
+- `3f9488ca` — `damage.post.ts`: replaced `entity.currentHp` and `entity.statusConditions` mutations with `combatant.entity` spread reassignment
+- `2c164356` — `next-turn.post.ts`: replaced `entity.currentHp` and `entity.statusConditions` mutations with `currentCombatant.entity` spread reassignment
+- `5bb485f0` — `move.post.ts`: replaced `entity.currentHp` and `entity.statusConditions` mutations with `target.entity` spread reassignment
+- `a46404d8` — `combatant.service.ts`: converted `applyDamageToEntity`, `applyFaintStatus`, `applyHealingToEntity`, `updateStatusConditions`, `applyStatusCsEffects`, `reverseStatusCsEffects`, and `updateStageModifiers` to immutable spread patterns
+
+### Additional mutation sites found (L2 grep)
+
+The following files also mutate entity fields directly but were out of scope for this ticket:
+- `aoo-resolve.post.ts` — `trigger.entity.statusConditions` mutation for Dead status (same pattern)
+- `breather.post.ts` — `entity.statusConditions` and `entity.temporaryHp` mutations
+- `healing-item.service.ts` — `entity.currentHp`, `entity.statusConditions`, `entity.injuries` mutations
+- `living-weapon-abilities.service.ts` — `entity.currentHp` and `entity.injuries` mutations
