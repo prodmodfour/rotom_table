@@ -995,6 +995,7 @@ onMounted(async () => {
 
 .trainer-xp-result-row {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: $spacing-md;
   padding: $spacing-sm $spacing-md;
@@ -1026,7 +1027,7 @@ onMounted(async () => {
   }
 
   &__milestone {
-    grid-column: 1 / -1;
+    width: 100%;
     display: flex;
     align-items: center;
     gap: $spacing-sm;
