@@ -16,6 +16,9 @@ export const TRAINER_MAX_LEVEL = 50
 /** XP required per trainer level */
 export const TRAINER_XP_PER_LEVEL = 10
 
+/** Trainer milestone levels requiring player/GM choices (PTU Core p.19-21) */
+export const TRAINER_MILESTONE_LEVELS = [5, 10, 20, 30, 40] as const
+
 /**
  * Input for applying XP to a trainer's experience bank.
  */
@@ -35,6 +38,8 @@ export interface TrainerXpResult {
   newXp: number
   newLevel: number
   levelsGained: number
+  /** Milestone levels crossed during this XP application (5, 10, 20, 30, 40) */
+  milestoneLevelsCrossed: number[]
 }
 
 /**
@@ -56,7 +61,8 @@ export function applyTrainerXp(input: TrainerXpInput): TrainerXpResult {
       xpAdded: xpToAdd,
       newXp: rawTotal,
       newLevel: currentLevel,
-      levelsGained: 0
+      levelsGained: 0,
+      milestoneLevelsCrossed: []
     }
   }
 
@@ -74,13 +80,19 @@ export function applyTrainerXp(input: TrainerXpInput): TrainerXpResult {
     ? rawTotal - (actualLevelsGained * TRAINER_XP_PER_LEVEL)
     : remainingXp
 
+  // Identify milestone levels crossed (exclusive of currentLevel, inclusive of newLevel)
+  const milestoneLevelsCrossed = TRAINER_MILESTONE_LEVELS.filter(
+    ml => ml > currentLevel && ml <= newLevel
+  )
+
   return {
     previousXp: currentXp,
     previousLevel: currentLevel,
     xpAdded: xpToAdd,
     newXp,
     newLevel,
-    levelsGained: actualLevelsGained
+    levelsGained: actualLevelsGained,
+    milestoneLevelsCrossed
   }
 }
 
