@@ -1,5 +1,7 @@
 import { prisma } from '~/server/utils/prisma'
 import { calculateSceneEndAp } from '~/utils/restHealing'
+import { resetSceneUsage } from '~/utils/moveFrequency'
+import type { Move } from '~/types/character'
 
 /**
  * Restore AP for all characters in a scene at scene end.
@@ -71,4 +73,70 @@ export async function restoreSceneAp(charactersJson: string): Promise<number> {
   )
 
   return dbCharacters.length
+}
+
+/**
+ * Reset scene-frequency move counters for all Pokemon in a scene.
+ *
+ * Scene-frequency moves (Scene, Scene x2, Scene x3) and EOT cooldowns
+ * must reset at scene boundaries. This reads each Pokemon's moves from
+ * the database, applies resetSceneUsage(), and persists any changes.
+ *
+ * @param pokemonJson - The raw JSON string from scene.pokemon
+ * @returns The number of Pokemon whose moves were reset
+ */
+export async function resetScenePokemonMoves(pokemonJson: string): Promise<number> {
+  let pokemonRefs: Array<{ id?: string }>
+  try {
+    pokemonRefs = JSON.parse(pokemonJson || '[]')
+  } catch {
+    console.error('resetScenePokemonMoves: failed to parse pokemon JSON, skipping move reset')
+    return 0
+  }
+
+  const pokemonIds = pokemonRefs
+    .map(p => p.id)
+    .filter((pid): pid is string => !!pid)
+
+  if (pokemonIds.length === 0) {
+    return 0
+  }
+
+  const dbPokemon = await prisma.pokemon.findMany({
+    where: { id: { in: pokemonIds } },
+    select: { id: true, moves: true }
+  })
+
+  if (dbPokemon.length === 0) {
+    return 0
+  }
+
+  const updates: Promise<unknown>[] = []
+
+  for (const poke of dbPokemon) {
+    let moves: Move[]
+    try {
+      moves = JSON.parse(poke.moves || '[]')
+    } catch {
+      continue
+    }
+
+    const resetMoves = resetSceneUsage(moves)
+    const movesChanged = !resetMoves.every((m, i) => m === moves[i])
+
+    if (movesChanged) {
+      updates.push(
+        prisma.pokemon.update({
+          where: { id: poke.id },
+          data: { moves: JSON.stringify(resetMoves) }
+        })
+      )
+    }
+  }
+
+  if (updates.length > 0) {
+    await Promise.all(updates)
+  }
+
+  return updates.length
 }

@@ -1,6 +1,6 @@
 import { prisma } from '~/server/utils/prisma'
 import { broadcastToGroupAndPlayers } from '~/server/utils/websocket'
-import { restoreSceneAp } from '~/server/services/scene.service'
+import { restoreSceneAp, resetScenePokemonMoves } from '~/server/services/scene.service'
 
 export default defineEventHandler(async (event) => {
   try {
@@ -30,6 +30,9 @@ export default defineEventHandler(async (event) => {
 
     // Restore AP for all characters in the scene
     const apRestoredCount = await restoreSceneAp(sceneData.characters)
+
+    // Reset scene-frequency move counters for all Pokemon in the scene
+    await resetScenePokemonMoves(sceneData.pokemon)
 
     // Clear GroupViewState if it was pointing to this scene
     await prisma.groupViewState.updateMany({

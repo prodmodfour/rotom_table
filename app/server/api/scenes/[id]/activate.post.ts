@@ -1,6 +1,6 @@
 import { prisma } from '~/server/utils/prisma'
 import { broadcastToGroupAndPlayers } from '~/server/utils/websocket'
-import { restoreSceneAp } from '~/server/services/scene.service'
+import { restoreSceneAp, resetScenePokemonMoves } from '~/server/services/scene.service'
 
 export default defineEventHandler(async (event) => {
   try {
@@ -21,6 +21,7 @@ export default defineEventHandler(async (event) => {
 
     for (const activeScene of activeScenes) {
       await restoreSceneAp(activeScene.characters)
+      await resetScenePokemonMoves(activeScene.pokemon)
     }
 
     // Deactivate all other scenes
