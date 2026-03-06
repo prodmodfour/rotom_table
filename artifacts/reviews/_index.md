@@ -1,8 +1,8 @@
 ---
-generated_at: 2026-03-06T11:30:56.444Z
-total_reviews: 15
+generated_at: 2026-03-06T11:31:48.390Z
+total_reviews: 10
 active_count: 7
-approved_count: 7
+approved_count: 2
 ---
 
 # Reviews Index
@@ -23,19 +23,14 @@ approved_count: 7
 
 | Review ID | Target | Reviewer | Date |
 |-----------|--------|----------|------|
-| code-review-357 | bug-067 | senior-reviewer | 2026-03-06 |
-| code-review-356 | bug-063 | senior-reviewer | 2026-03-06 |
-| code-review-355 | bug-062 | senior-reviewer | 2026-03-06 |
-| code-review-350 | bug-065+bug-066 | senior-reviewer | 2026-03-06 |
-| code-review-349 | bug-064 | senior-reviewer | 2026-03-06 |
 | rules-review-316 | ptu-rule-151 | game-logic-reviewer | 2026-03-06 |
 | rules-review-315 | bug-056 | game-logic-reviewer | 2026-03-06 |
 
 ## Stats
 
-- Active reviews: 15
+- Active reviews: 10
 - Needs action: 7
-- Approved/Pass (active): 7
-- Archived: 684
+- Approved/Pass (active): 2
+- Archived: 689
 - Total (active + archived): 699
-- Unique targets reviewed: 12
+- Unique targets reviewed: 7

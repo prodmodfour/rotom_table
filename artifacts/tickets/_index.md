@@ -1,9 +1,9 @@
 ---
-generated_at: 2026-03-06T11:30:56.456Z
+generated_at: 2026-03-06T11:31:48.400Z
 total_tickets: 372
 open: 61
-in_progress: 13
-resolved: 298
+in_progress: 7
+resolved: 304
 ---
 
 # Tickets Index
@@ -74,21 +74,15 @@ resolved: 298
 | refactoring-144 | refactoring | P4 | combat | refactoring-144: Update decree-001 citation in weather tick  |
 | docs-017 | docs | P4 | tooling | The bug-047 ticket resolution log references stale commit ha |
 
-## In-Progress Tickets (13)
+## In-Progress Tickets (7)
 
 | ID | Category | Priority | Domain | Source |
 |----|----------|----------|--------|--------|
 | bug-056 | bug | P1 | character-lifecycle | character-lifecycle-audit.md (session 121, R054) |
-| bug-064 | bug | P1 | character-lifecycle, combat | browser-audit character-lifecycle + combat (plan matrix-1772736514) |
-| bug-065 | bug | P1 | encounter-tables | browser-audit encounter-tables (plan matrix-1772736514) |
-| bug-066 | bug | P1 | encounter-tables | browser-audit encounter-tables (plan matrix-1772736514) |
 | ptu-rule-151 | ptu-rule | P1 | healing | healing-audit.md (session 121, R016 supplemental approximation) |
 | bug-057 | bug | P2 | character-lifecycle | character-lifecycle-audit.md (session 121, R040) |
 | bug-058 | bug | P2 | combat | combat-audit.md (session 121, R031) |
 | bug-060 | bug | P2 | encounter-tables | encounter-tables-audit.md (session 121, C017) |
-| bug-062 | bug | P2 | scenes | scenes-audit.md (session 121, R038) |
-| bug-063 | bug | P2 | vtt-grid | vtt-grid-audit.md (session 121, R027) |
-| bug-067 | bug | P2 | player-view | browser-audit player-view (plan matrix-1772736514) |
 | ptu-rule-150 | ptu-rule | P2 | healing | healing-audit.md (session 121, R012/R035 approximation) |
 | refactoring-129 | refactoring | P3 | combat | decree-047 |
 
@@ -102,7 +96,7 @@ resolved: 298
 
 | Category | Open | In-Progress | Resolved | Total |
 |----------|------|-------------|----------|-------|
-| bug | 4 | 10 | 54 | 68 |
+| bug | 4 | 4 | 60 | 68 |
 | ptu-rule | 17 | 2 | 107 | 126 |
 | feature | 2 | 0 | 25 | 27 |
 | ux | 8 | 0 | 10 | 18 |
