@@ -134,11 +134,11 @@
             <span class="combat-item__value">{{ character.temporaryHp ?? 0 }}</span>
           </div>
         </div>
-        <div v-if="character.statusConditions.length > 0" class="combat-statuses">
+        <div v-if="(character.statusConditions ?? []).length > 0" class="combat-statuses">
           <span class="combat-item__label">Status</span>
           <div class="status-badges">
             <span
-              v-for="status in character.statusConditions"
+              v-for="status in character.statusConditions ?? []"
               :key="status.name"
               class="player-status-badge"
             >
@@ -329,7 +329,7 @@ const hpColorClass = computed(() => {
 // Stats
 const statEntries = computed(() => {
   const stats = props.character.stats
-  const stages = props.character.stageModifiers
+  const stages = props.character.stageModifiers ?? {}
   const hpTooltip = `Max HP = Level (${props.character.level}) x2 + HP Base (${stats.hp}) x3 + 10 = ${props.character.maxHp}`
   return [
     { key: 'hp', label: 'HP Base', value: stats.hp, stage: stages.hp ?? 0, tooltip: hpTooltip },
@@ -350,17 +350,17 @@ const equipBonuses = computed(() =>
 const physEvasion = computed(() => {
   const { evasionBonus, statBonuses } = equipBonuses.value
   const defBonus = statBonuses.defense ?? 0
-  return calculateEvasion(props.character.stats.defense, props.character.stageModifiers.defense ?? 0, evasionBonus, defBonus)
+  return calculateEvasion(props.character.stats.defense, (props.character.stageModifiers ?? {}).defense ?? 0, evasionBonus, defBonus)
 })
 const specEvasion = computed(() => {
   const { evasionBonus, statBonuses } = equipBonuses.value
   const spDefBonus = statBonuses.specialDefense ?? 0
-  return calculateEvasion(props.character.stats.specialDefense, props.character.stageModifiers.specialDefense ?? 0, evasionBonus, spDefBonus)
+  return calculateEvasion(props.character.stats.specialDefense, (props.character.stageModifiers ?? {}).specialDefense ?? 0, evasionBonus, spDefBonus)
 })
 const spdEvasion = computed(() => {
   const { evasionBonus, statBonuses } = equipBonuses.value
   const spdBonus = statBonuses.speed ?? 0
-  return calculateEvasion(props.character.stats.speed, props.character.stageModifiers.speed ?? 0, evasionBonus, spdBonus)
+  return calculateEvasion(props.character.stats.speed, (props.character.stageModifiers ?? {}).speed ?? 0, evasionBonus, spdBonus)
 })
 
 // Skills sorted alphabetically
