@@ -8,6 +8,7 @@ import { prisma } from '~/server/utils/prisma'
 import { getCell, parseNumber } from '~/server/utils/csv-parser'
 import { createPokemonRecord } from '~/server/services/pokemon-generator.service'
 import type { GeneratedPokemonData, MoveDetail } from '~/server/services/pokemon-generator.service'
+import { validateTrainerLevel } from '~/utils/trainerExperience'
 
 // --- Parsed data types ---
 
@@ -298,6 +299,12 @@ export function parsePokemonSheet(rows: string[][]): ParsedPokemon {
 export async function createTrainerFromCSV(
   trainer: ParsedTrainer
 ): Promise<{ id: string; name: string; level: number; playedBy: string | null }> {
+  // Validate trainer level bounds
+  const levelError = validateTrainerLevel(trainer.level)
+  if (levelError) {
+    throw new Error(`CSV import failed for "${trainer.name}": ${levelError}`)
+  }
+
   const skillsJson: Record<string, string> = {}
   for (const [skillName, data] of Object.entries(trainer.skills)) {
     skillsJson[skillName] = data.rank
