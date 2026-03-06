@@ -1,14 +1,14 @@
 ---
-generated_at: 2026-03-06T14:54:30.418Z
-total_tickets: 373
-open: 60
+generated_at: 2026-03-06T16:02:29.237Z
+total_tickets: 375
+open: 62
 in_progress: 7
 resolved: 306
 ---
 
 # Tickets Index
 
-## Open Tickets (60)
+## Open Tickets (62)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
@@ -71,6 +71,8 @@ resolved: 306
 | refactoring-142 | refactoring | P4 | combat | refactoring-142: Add unit tests for computeEquipmentBonuses |
 | refactoring-143 | refactoring | P4 | combat | refactoring-143: Add unit tests for checkRecallReleasePair |
 | refactoring-144 | refactoring | P4 | combat | refactoring-144: Update decree-001 citation in weather tick  |
+| refactoring-146 | refactoring | P4 | combat | `breather.post.ts` clears volatile conditions at line 133 bu |
+| refactoring-147 | refactoring | P4 | combat | In `next-turn.post.ts` (around line 154), the deferred heavi |
 | docs-017 | docs | P4 | tooling | The bug-047 ticket resolution log references stale commit ha |
 
 ## In-Progress Tickets (7)
@@ -98,5 +100,5 @@ All decree-needs addressed.
 | feature | 2 | 0 | 25 | 27 |
 | ux | 8 | 0 | 10 | 18 |
 | decree | 0 | 0 | 53 | 53 |
-| refactoring | 28 | 1 | 33 | 62 |
+| refactoring | 30 | 1 | 33 | 64 |
 | docs | 1 | 0 | 17 | 18 |
