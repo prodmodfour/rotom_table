@@ -298,6 +298,7 @@
       v-if="showLevelUpModal && character"
       :character="character"
       :target-level="levelUpTargetLevel"
+      :from-level="levelUpFromLevel"
       @complete="onLevelUpComplete"
       @cancel="onLevelUpCancel"
     />
@@ -336,6 +337,7 @@ const showSpritePicker = ref(false)
 // --- Level-Up Modal State ---
 const showLevelUpModal = ref(false)
 const levelUpTargetLevel = ref(0)
+const levelUpFromLevel = ref<number | undefined>(undefined)
 const isApplyingLevelUp = ref(false)
 
 // Watch for level increase in edit mode — intercept and open level-up modal
@@ -347,12 +349,14 @@ watch(() => editData.value.level, (newVal, oldVal) => {
 
   // Revert the raw input change — the modal will handle it
   editData.value = { ...editData.value, level: oldVal }
+  levelUpFromLevel.value = oldVal
   levelUpTargetLevel.value = newVal
   showLevelUpModal.value = true
 })
 
 // Handle XP-triggered level-up
 function handleXpLevelUp(payload: { oldLevel: number; newLevel: number; character: HumanCharacter }) {
+  levelUpFromLevel.value = payload.oldLevel
   levelUpTargetLevel.value = payload.newLevel
   showLevelUpModal.value = true
 }
@@ -362,20 +366,35 @@ async function handleXpChanged(_payload: { newXp: number; newLevel: number }) {
   await loadCharacter()
 }
 
-// Handle level-up completion
+// Handle level-up completion — auto-save to server
 async function onLevelUpComplete(updatedData: Partial<HumanCharacter>) {
   isApplyingLevelUp.value = true
+  showLevelUpModal.value = false
+
+  try {
+    // Save level-up results (stats, edges, features, milestones) to the server
+    if (character.value) {
+      await libraryStore.updateHuman(character.value.id, updatedData)
+      await loadCharacter()
+    }
+  } catch (e) {
+    console.error('Failed to save level-up results:', e)
+    showToast('Failed to save level-up changes', 'error')
+  }
+
+  // Also update editData for consistency if in edit mode
   editData.value = {
     ...editData.value,
     ...updatedData
   }
-  showLevelUpModal.value = false
   await nextTick()
   isApplyingLevelUp.value = false
+  levelUpFromLevel.value = undefined
 }
 
 function onLevelUpCancel() {
   showLevelUpModal.value = false
+  levelUpFromLevel.value = undefined
 }
 
 // Resolved avatar URL — uses editData when editing for live preview, else character
