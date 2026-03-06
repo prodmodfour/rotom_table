@@ -631,6 +631,7 @@ describe('Import/Export API', () => {
           {
             name: 'Night',
             description: 'Night time',
+            densityMultiplier: 1.0,
             levelMin: null,
             levelMax: null,
             entries: [
@@ -649,6 +650,47 @@ describe('Import/Export API', () => {
       expect(result.table.name).toBe('Route 1 Grass')
       expect(result.table.density).toBe('dense')
       expect(result.table.entries[0].speciesName).toBe('Bulbasaur')
+    })
+
+    it('should include densityMultiplier on exported modifications', async () => {
+      mockGetRouterParam.mockReturnValue('table-456')
+
+      const mockTable = {
+        id: 'table-456',
+        name: 'Dense Forest',
+        description: null,
+        imageUrl: null,
+        density: 'moderate',
+        levelMin: 5,
+        levelMax: 15,
+        entries: [],
+        modifications: [
+          {
+            name: 'Rainy Day',
+            description: 'More water types',
+            densityMultiplier: 2.5,
+            levelMin: null,
+            levelMax: null,
+            entries: []
+          },
+          {
+            name: 'Drought',
+            description: 'Fewer encounters',
+            densityMultiplier: 0.5,
+            levelMin: 5,
+            levelMax: 10,
+            entries: []
+          }
+        ]
+      }
+
+      mockPrisma.encounterTable.findUnique.mockResolvedValue(mockTable)
+
+      const { default: handler } = await import('~/server/api/encounter-tables/[id]/export.get')
+      const result = await handler(mockEvent as any)
+
+      expect(result.table.modifications[0].densityMultiplier).toBe(2.5)
+      expect(result.table.modifications[1].densityMultiplier).toBe(0.5)
     })
   })
 
@@ -848,6 +890,196 @@ describe('Import/Export API', () => {
         expect.objectContaining({
           data: expect.objectContaining({
             density: 'moderate'
+          })
+        })
+      )
+    })
+
+    it('should preserve densityMultiplier on imported modifications', async () => {
+      mockReadBody.mockResolvedValue({
+        version: '1.0',
+        table: {
+          name: 'Multiplier Table',
+          levelRange: { min: 1, max: 10 },
+          entries: [],
+          modifications: [
+            {
+              name: 'Rainy Day',
+              description: 'More water types',
+              densityMultiplier: 2.5,
+              entries: []
+            }
+          ]
+        }
+      })
+
+      mockPrisma.encounterTable.findMany.mockResolvedValue([])
+      mockPrisma.speciesData.findMany.mockResolvedValue([])
+      mockPrisma.encounterTable.create.mockResolvedValue({
+        id: 'new-table',
+        name: 'Multiplier Table',
+        density: 'moderate',
+        levelMin: 1,
+        levelMax: 10,
+        entries: [],
+        modifications: [
+          {
+            id: 'mod-1',
+            parentTableId: 'new-table',
+            name: 'Rainy Day',
+            description: 'More water types',
+            densityMultiplier: 2.5,
+            levelMin: null,
+            levelMax: null,
+            entries: [],
+            createdAt: new Date(),
+            updatedAt: new Date()
+          }
+        ],
+        createdAt: new Date(),
+        updatedAt: new Date()
+      })
+
+      const { default: handler } = await import('~/server/api/encounter-tables/import.post')
+      const result = await handler(mockEvent as any)
+
+      expect(result.success).toBe(true)
+      expect(mockPrisma.encounterTable.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({
+            modifications: expect.objectContaining({
+              create: expect.arrayContaining([
+                expect.objectContaining({
+                  densityMultiplier: 2.5
+                })
+              ])
+            })
+          })
+        })
+      )
+    })
+
+    it('should fall back to 1.0 when densityMultiplier is missing on import', async () => {
+      mockReadBody.mockResolvedValue({
+        version: '1.0',
+        table: {
+          name: 'Old Export No Multiplier',
+          levelRange: { min: 1, max: 5 },
+          entries: [],
+          modifications: [
+            {
+              name: 'Night',
+              description: 'Night time',
+              entries: []
+            }
+          ]
+        }
+      })
+
+      mockPrisma.encounterTable.findMany.mockResolvedValue([])
+      mockPrisma.speciesData.findMany.mockResolvedValue([])
+      mockPrisma.encounterTable.create.mockResolvedValue({
+        id: 'new-table',
+        name: 'Old Export No Multiplier',
+        density: 'moderate',
+        levelMin: 1,
+        levelMax: 5,
+        entries: [],
+        modifications: [
+          {
+            id: 'mod-1',
+            parentTableId: 'new-table',
+            name: 'Night',
+            description: 'Night time',
+            densityMultiplier: 1.0,
+            levelMin: null,
+            levelMax: null,
+            entries: [],
+            createdAt: new Date(),
+            updatedAt: new Date()
+          }
+        ],
+        createdAt: new Date(),
+        updatedAt: new Date()
+      })
+
+      const { default: handler } = await import('~/server/api/encounter-tables/import.post')
+      const result = await handler(mockEvent as any)
+
+      expect(result.success).toBe(true)
+      expect(mockPrisma.encounterTable.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({
+            modifications: expect.objectContaining({
+              create: expect.arrayContaining([
+                expect.objectContaining({
+                  densityMultiplier: 1.0
+                })
+              ])
+            })
+          })
+        })
+      )
+    })
+
+    it('should fall back to 1.0 when densityMultiplier is invalid on import', async () => {
+      mockReadBody.mockResolvedValue({
+        version: '1.0',
+        table: {
+          name: 'Bad Multiplier Table',
+          levelRange: { min: 1, max: 5 },
+          entries: [],
+          modifications: [
+            {
+              name: 'Corrupt',
+              densityMultiplier: -2,
+              entries: []
+            }
+          ]
+        }
+      })
+
+      mockPrisma.encounterTable.findMany.mockResolvedValue([])
+      mockPrisma.speciesData.findMany.mockResolvedValue([])
+      mockPrisma.encounterTable.create.mockResolvedValue({
+        id: 'new-table',
+        name: 'Bad Multiplier Table',
+        density: 'moderate',
+        levelMin: 1,
+        levelMax: 5,
+        entries: [],
+        modifications: [
+          {
+            id: 'mod-1',
+            parentTableId: 'new-table',
+            name: 'Corrupt',
+            description: null,
+            densityMultiplier: 1.0,
+            levelMin: null,
+            levelMax: null,
+            entries: [],
+            createdAt: new Date(),
+            updatedAt: new Date()
+          }
+        ],
+        createdAt: new Date(),
+        updatedAt: new Date()
+      })
+
+      const { default: handler } = await import('~/server/api/encounter-tables/import.post')
+      const result = await handler(mockEvent as any)
+
+      expect(result.success).toBe(true)
+      expect(mockPrisma.encounterTable.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({
+            modifications: expect.objectContaining({
+              create: expect.arrayContaining([
+                expect.objectContaining({
+                  densityMultiplier: 1.0
+                })
+              ])
+            })
           })
         })
       )
