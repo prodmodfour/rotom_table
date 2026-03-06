@@ -52,7 +52,11 @@ function serializeLinkedPokemon(p: Pokemon) {
     loyalty: (p as any).loyalty ?? (p.origin === 'wild' || p.origin === 'captured' ? 2 : 3),
     shiny: p.shiny,
     gender: p.gender,
-    spriteUrl: p.spriteUrl
+    spriteUrl: p.spriteUrl,
+    statusConditions: JSON.parse(p.statusConditions),
+    stageModifiers: JSON.parse(p.stageModifiers),
+    injuries: p.injuries,
+    temporaryHp: p.temporaryHp
   }
 }
 
