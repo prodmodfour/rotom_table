@@ -1,14 +1,14 @@
 ---
-generated_at: 2026-03-06T13:11:58.853Z
+generated_at: 2026-03-06T14:54:30.418Z
 total_tickets: 373
-open: 61
+open: 60
 in_progress: 7
-resolved: 305
+resolved: 306
 ---
 
 # Tickets Index
 
-## Open Tickets (61)
+## Open Tickets (60)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
@@ -16,7 +16,6 @@ resolved: 305
 | ptu-rule-149 | ptu-rule | P2 | combat | The VTT allows tokens to be repositioned freely without enfo |
 | ptu-rule-155 | ptu-rule | P2 | player-view | The player-view implementation audit found that R156-R160 an |
 | ptu-rule-156 | ptu-rule | P2 | combat | Per decree-053, terrain/weather-sourced Other conditions mus |
-| ptu-rule-157 | ptu-rule | P2 | combat | The `switch.post.ts` endpoint performs standard Pokemon swit |
 | feature-026 | feature | P2 | character-lifecycle | Implement automatic parsing of `[+Stat]` tags in PTU feature |
 | feature-027 | feature | P2 | character-lifecycle | Migrate the edge data model from `string[]` to an array of s |
 | bug-059 | bug | P3 | combat | `Math.trunc` is used instead of `Math.floor` in movementModi |
@@ -95,7 +94,7 @@ All decree-needs addressed.
 | Category | Open | In-Progress | Resolved | Total |
 |----------|------|-------------|----------|-------|
 | bug | 5 | 4 | 60 | 69 |
-| ptu-rule | 17 | 2 | 107 | 126 |
+| ptu-rule | 16 | 2 | 108 | 126 |
 | feature | 2 | 0 | 25 | 27 |
 | ux | 8 | 0 | 10 | 18 |
 | decree | 0 | 0 | 53 | 53 |
