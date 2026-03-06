@@ -46,6 +46,7 @@ export default defineEventHandler(async (event) => {
         name: table.name,
         description: table.description,
         imageUrl: table.imageUrl,
+        density: table.density,
         levelRange: {
           min: table.levelMin,
           max: table.levelMax
