@@ -21,6 +21,7 @@ interface ImportModEntry {
 interface ImportModification {
   name: string
   description?: string | null
+  densityMultiplier?: number | null
   levelRange?: ImportLevelRange | null
   entries?: ImportModEntry[]
 }
@@ -179,6 +180,9 @@ export default defineEventHandler(async (event) => {
           create: (tableData.modifications || []).map((mod: ImportModification) => ({
             name: mod.name,
             description: mod.description,
+            densityMultiplier: typeof mod.densityMultiplier === 'number' && mod.densityMultiplier > 0
+              ? mod.densityMultiplier
+              : 1.0,
             levelMin: mod.levelRange?.min ?? null,
             levelMax: mod.levelRange?.max ?? null,
             entries: {
