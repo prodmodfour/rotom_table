@@ -1,14 +1,14 @@
 ---
-generated_at: 2026-03-06T10:16:04.331Z
-total_tickets: 366
-open: 55
+generated_at: 2026-03-06T11:30:56.456Z
+total_tickets: 372
+open: 61
 in_progress: 13
 resolved: 298
 ---
 
 # Tickets Index
 
-## Open Tickets (55)
+## Open Tickets (61)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
@@ -16,10 +16,12 @@ resolved: 298
 | ptu-rule-149 | ptu-rule | P2 | combat | The VTT allows tokens to be repositioned freely without enfo |
 | ptu-rule-155 | ptu-rule | P2 | player-view | The player-view implementation audit found that R156-R160 an |
 | ptu-rule-156 | ptu-rule | P2 | combat | Per decree-053, terrain/weather-sourced Other conditions mus |
+| ptu-rule-157 | ptu-rule | P2 | combat | The `switch.post.ts` endpoint performs standard Pokemon swit |
 | feature-026 | feature | P2 | character-lifecycle | Implement automatic parsing of `[+Stat]` tags in PTU feature |
 | feature-027 | feature | P2 | character-lifecycle | Migrate the edge data model from `string[]` to an array of s |
 | bug-059 | bug | P3 | combat | `Math.trunc` is used instead of `Math.floor` in movementModi |
 | bug-061 | bug | P3 | healing | The AP drain injury healing pathway does not validate that t |
+| bug-068 | bug | P3 | encounter-tables | The `densityMultiplier` field on the `TableModification` mod |
 | ptu-rule-143 | ptu-rule | P3 | combat | Per decree-050, Sprint consumes only the Standard Action (PT |
 | ptu-rule-144 | ptu-rule | P3 | character-lifecycle | At level 5 (Amateur milestone), lifestyle stat points should |
 | ptu-rule-145 | ptu-rule | P3 | character-lifecycle | Level 30 and 40 milestones grant bonus edges/features with s |
@@ -28,9 +30,13 @@ resolved: 298
 | ptu-rule-152 | ptu-rule | P3 | scenes | PTU distinguishes natural weather (narrative, affects travel |
 | ptu-rule-153 | ptu-rule | P3 | scenes | The `naturewalkBypassesTerrain()` utility exists and correct |
 | ptu-rule-154 | ptu-rule | P3 | scenes | Hazard terrain type exists visually on the VTT but has no me |
+| ptu-rule-158 | ptu-rule | P3 | combat | `pass.post.ts` sets `standardActionUsed: true` (line 34) as  |
+| decree-need-053 | decree | P3 | combat | The new `HpReductionType` system (bug-058) skips Temporary H |
+| refactoring-145 | refactoring | P3 | combat | The heavily injured standard-action faint penalty (ptu-rule- |
 | bug-052 | bug | P4 | character-lifecycle | `PlayerCharacterSheet.vue` renders feature tags with bare `c |
 | ptu-rule-141 | ptu-rule | P4 | character-lifecycle | ptu-rule-141: Gas Mask grantedCapabilities uses fabricated c |
 | ptu-rule-142 | ptu-rule | P4 | combat | ptu-rule-142: Implement Permafrost Burn/Poison status tick d |
+| ptu-rule-159 | ptu-rule | P4 | combat | Marker injuries fire immediately during `calculateDamage` in |
 | ux-006 | ux | P4 | — | ux-006: PTU injury markers may leak precise HP info in playe |
 | ux-011 | ux | P4 | character-lifecycle | ux-011: Custom item form missing grantedCapabilities input f |
 | ux-013 | ux | P4 | character-lifecycle | ux-013: Stacked bonus Skill Edge rank-up display shows incor |
@@ -86,18 +92,20 @@ resolved: 298
 | ptu-rule-150 | ptu-rule | P2 | healing | healing-audit.md (session 121, R012/R035 approximation) |
 | refactoring-129 | refactoring | P3 | combat | decree-047 |
 
-## Open Decree-Needs (0)
+## Open Decree-Needs (1)
 
-All decree-needs addressed.
+| ID | Priority | Domain | Topic |
+|----|----------|--------|-------|
+| decree-need-053 | P3 | combat | — |
 
 ## Summary by Category
 
 | Category | Open | In-Progress | Resolved | Total |
 |----------|------|-------------|----------|-------|
-| bug | 3 | 10 | 54 | 67 |
-| ptu-rule | 14 | 2 | 107 | 123 |
+| bug | 4 | 10 | 54 | 68 |
+| ptu-rule | 17 | 2 | 107 | 126 |
 | feature | 2 | 0 | 25 | 27 |
 | ux | 8 | 0 | 10 | 18 |
-| decree | 0 | 0 | 52 | 52 |
-| refactoring | 27 | 1 | 33 | 61 |
+| decree | 1 | 0 | 52 | 53 |
+| refactoring | 28 | 1 | 33 | 62 |
 | docs | 1 | 0 | 17 | 18 |
