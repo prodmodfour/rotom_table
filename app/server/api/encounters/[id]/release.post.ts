@@ -28,7 +28,8 @@ import {
   findAdjacentPosition,
   markActionUsed,
   checkRecallReleasePair,
-  canSwitchedPokemonBeCommanded
+  canSwitchedPokemonBeCommanded,
+  applyTerrainWeatherConditions
 } from '~/server/services/switching.service'
 import { applyFaintStatus } from '~/server/services/combatant.service'
 import { syncEntityToDatabase } from '~/server/services/entity-update.service'
@@ -220,6 +221,9 @@ export default defineEventHandler(async (event) => {
 
       // Add to combatants
       currentCombatants = [...currentCombatants, newCombatant]
+
+      // Re-apply terrain/weather conditions on send-out (decree-053)
+      applyTerrainWeatherConditions(newCombatant, currentCombatants, record.weather)
 
       // Section K: Determine immediate-act eligibility (Full Contact only)
       const currentCombatantForInit = currentTurnOrder[currentTurnIndex]
