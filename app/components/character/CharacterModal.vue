@@ -251,6 +251,7 @@
       v-if="showLevelUpModal && !isPokemon"
       :character="humanData"
       :target-level="levelUpTargetLevel"
+      :from-level="levelUpFromLevel"
       @complete="onLevelUpComplete"
       @cancel="onLevelUpCancel"
     />
@@ -350,6 +351,7 @@ const save = () => {
 
 // --- XP Panel Handlers ---
 function handleXpLevelUp(payload: { oldLevel: number; newLevel: number; character: HumanCharacter }) {
+  levelUpFromLevel.value = payload.oldLevel
   levelUpTargetLevel.value = payload.newLevel
   showLevelUpModal.value = true
 }
@@ -368,6 +370,7 @@ function handleXpChanged(payload: { newXp: number; newLevel: number }) {
 // --- Level-Up Modal State (Human characters only) ---
 const showLevelUpModal = ref(false)
 const levelUpTargetLevel = ref(0)
+const levelUpFromLevel = ref<number | undefined>(undefined)
 const isApplyingLevelUp = ref(false)
 
 // Watch for level increase in edit mode on human characters
@@ -379,23 +382,40 @@ watch(() => editData.value.level, (newVal: number | undefined, oldVal: number | 
 
   // Revert the raw input change — the modal will handle it
   editData.value = { ...editData.value, level: oldVal }
+  levelUpFromLevel.value = oldVal
   levelUpTargetLevel.value = newVal
   showLevelUpModal.value = true
 })
 
 async function onLevelUpComplete(updatedData: Record<string, unknown>) {
   isApplyingLevelUp.value = true
+  showLevelUpModal.value = false
+
+  // Auto-save level-up results to the server
+  try {
+    await $fetch(`/api/characters/${humanData.value.id}`, {
+      method: 'PUT',
+      body: updatedData
+    })
+    emit('refresh')
+  } catch (e) {
+    console.error('Failed to save level-up results:', e)
+    alert('Failed to save level-up changes')
+  }
+
+  // Also update editData for consistency
   editData.value = {
     ...editData.value,
     ...updatedData
   }
-  showLevelUpModal.value = false
   await nextTick()
   isApplyingLevelUp.value = false
+  levelUpFromLevel.value = undefined
 }
 
 function onLevelUpCancel() {
   showLevelUpModal.value = false
+  levelUpFromLevel.value = undefined
 }
 
 // Equipment state (tracked locally for reactivity on equip/unequip)
