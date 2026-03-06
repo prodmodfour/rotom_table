@@ -95,30 +95,30 @@ const xpAmount = ref<number>(1)
 const reason = ref('')
 const isAwarding = ref(false)
 
-function getLevelUpPreview(char: { level: number; trainerXp: number }): number | null {
+/** Memoized XP preview results — one applyTrainerXp call per character */
+const xpPreviewResults = computed(() => {
   const amount = xpAmount.value
-  if (!amount || amount <= 0) return null
+  if (!amount || amount <= 0) return new Map<string, ReturnType<typeof applyTrainerXp>>()
 
-  const result = applyTrainerXp({
-    currentXp: char.trainerXp,
-    currentLevel: char.level,
-    xpToAdd: amount
-  })
+  const map = new Map<string, ReturnType<typeof applyTrainerXp>>()
+  for (const char of props.characters) {
+    map.set(char.id, applyTrainerXp({
+      currentXp: char.trainerXp,
+      currentLevel: char.level,
+      xpToAdd: amount
+    }))
+  }
+  return map
+})
 
-  return result.levelsGained > 0 ? result.newLevel : null
+function getLevelUpPreview(char: SceneCharacterXp): number | null {
+  const result = xpPreviewResults.value.get(char.id)
+  if (!result || result.levelsGained <= 0) return null
+  return result.newLevel
 }
 
-function getMilestonePreview(char: { level: number; trainerXp: number }): number[] {
-  const amount = xpAmount.value
-  if (!amount || amount <= 0) return []
-
-  const result = applyTrainerXp({
-    currentXp: char.trainerXp,
-    currentLevel: char.level,
-    xpToAdd: amount
-  })
-
-  return result.milestoneLevelsCrossed
+function getMilestonePreview(char: SceneCharacterXp): number[] {
+  return xpPreviewResults.value.get(char.id)?.milestoneLevelsCrossed ?? []
 }
 
 async function handleAward() {
