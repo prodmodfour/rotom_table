@@ -71,7 +71,7 @@
 
 <script setup lang="ts">
 import { PhX } from '@phosphor-icons/vue'
-import { applyTrainerXp, TRAINER_MILESTONE_LEVELS } from '~/utils/trainerExperience'
+import { applyTrainerXp } from '~/utils/trainerExperience'
 
 interface SceneCharacterXp {
   id: string
