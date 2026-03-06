@@ -8,7 +8,7 @@
 |-----------|-------|---------|
 | `SceneCanvas.vue` | 481 | Main drag-and-drop canvas — positions character avatars and Pokemon sprites via percentage-based layout |
 | `SceneAddPanel.vue` | 333 | Right sidebar to add characters and Pokemon to a scene (tabs: Characters, Pokemon) |
-| `ScenePropertiesPanel.vue` | 165 | Right sidebar for location name, background URL, description, weather |
+| `ScenePropertiesPanel.vue` | 175 | Right sidebar for location name, background URL, description, weather |
 | `SceneGroupsPanel.vue` | 188 | Left sidebar for creating/managing named entity groups with resize handles |
 | `SceneHabitatPanel.vue` | 316 | Right sidebar linking scene to encounter table for random Pokemon generation |
 | `ScenePokemonList.vue` | 214 | Sub-component of SceneAddPanel: expandable per-character Pokemon lists |
