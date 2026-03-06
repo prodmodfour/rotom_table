@@ -34,15 +34,15 @@
     </div>
 
     <div class="encounter-header__actions">
-      <!-- Weather Control -->
+      <!-- Weather Condition Control (PTU p.341: game Weather Conditions, not natural weather) -->
       <div class="weather-control">
         <select
           class="weather-select"
           :value="encounter.weather ?? ''"
           @change="handleWeatherChange"
-          title="Set weather condition"
+          title="Set game Weather Condition (PTU p.341) — has mechanical combat effects. Not the same as natural weather."
         >
-          <option value="">No Weather</option>
+          <option value="">No Weather Condition</option>
           <option value="sunny">Sunny</option>
           <option value="rain">Rain</option>
           <option value="sandstorm">Sandstorm</option>
