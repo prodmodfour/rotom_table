@@ -1,30 +1,19 @@
 ---
-generated_at: 2026-03-06T10:02:34.696Z
+generated_at: 2026-03-06T10:03:17.138Z
 total_tickets: 365
-open: 66
-in_progress: 2
+open: 55
+in_progress: 13
 resolved: 297
 ---
 
 # Tickets Index
 
-## Open Tickets (66)
+## Open Tickets (55)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
-| bug-056 | bug | P1 | character-lifecycle | When a character gains enough XP to auto-level past a milest |
-| bug-064 | bug | P1 | character-lifecycle, combat | The character detail page (`/gm/characters/[id]`) fails to r |
-| bug-065 | bug | P1 | encounter-tables | The `/gm/encounter-tables` page returns HTTP 500 because it  |
-| bug-066 | bug | P1 | encounter-tables | Both encounter table editor pages (`/gm/habitats/:id` and `/ |
-| ptu-rule-151 | ptu-rule | P1 | healing | The Heavily Injured status has a secondary trigger: "taking  |
-| bug-057 | bug | P2 | character-lifecycle | The character POST and PUT API endpoints do not enforce a ma |
-| bug-058 | bug | P2 | combat | PTU distinguishes "HP loss" (e.g., Belly Drum, Life Orb reco |
-| bug-060 | bug | P2 | encounter-tables | When exporting and re-importing encounter tables, the densit |
-| bug-062 | bug | P2 | scenes | `resetSceneUsage()` exists to clear scene-frequency move cou |
-| bug-063 | bug | P2 | vtt-grid | `Math.max(modifiedSpeed, 2)` is applied after the Slowed con |
 | ptu-rule-147 | ptu-rule | P2 | combat | Round counter exists but there is no per-effect duration tra |
 | ptu-rule-149 | ptu-rule | P2 | combat | The VTT allows tokens to be repositioned freely without enfo |
-| ptu-rule-150 | ptu-rule | P2 | healing | No "set HP" or "lose HP" flag exists to distinguish direct H |
 | ptu-rule-155 | ptu-rule | P2 | player-view | The player-view implementation audit found that R156-R160 an |
 | feature-026 | feature | P2 | character-lifecycle | Implement automatic parsing of `[+Stat]` tags in PTU feature |
 | feature-027 | feature | P2 | character-lifecycle | Migrate the edge data model from `string[]` to an array of s |
@@ -79,11 +68,22 @@ resolved: 297
 | refactoring-144 | refactoring | P4 | combat | refactoring-144: Update decree-001 citation in weather tick  |
 | docs-017 | docs | P4 | tooling | The bug-047 ticket resolution log references stale commit ha |
 
-## In-Progress Tickets (2)
+## In-Progress Tickets (13)
 
 | ID | Category | Priority | Domain | Source |
 |----|----------|----------|--------|--------|
+| bug-056 | bug | P1 | character-lifecycle | character-lifecycle-audit.md (session 121, R054) |
+| bug-064 | bug | P1 | character-lifecycle, combat | browser-audit character-lifecycle + combat (plan matrix-1772736514) |
+| bug-065 | bug | P1 | encounter-tables | browser-audit encounter-tables (plan matrix-1772736514) |
+| bug-066 | bug | P1 | encounter-tables | browser-audit encounter-tables (plan matrix-1772736514) |
+| ptu-rule-151 | ptu-rule | P1 | healing | healing-audit.md (session 121, R016 supplemental approximation) |
+| bug-057 | bug | P2 | character-lifecycle | character-lifecycle-audit.md (session 121, R040) |
+| bug-058 | bug | P2 | combat | combat-audit.md (session 121, R031) |
+| bug-060 | bug | P2 | encounter-tables | encounter-tables-audit.md (session 121, C017) |
+| bug-062 | bug | P2 | scenes | scenes-audit.md (session 121, R038) |
+| bug-063 | bug | P2 | vtt-grid | vtt-grid-audit.md (session 121, R027) |
 | bug-067 | bug | P2 | player-view | browser-audit player-view (plan matrix-1772736514) |
+| ptu-rule-150 | ptu-rule | P2 | healing | healing-audit.md (session 121, R012/R035 approximation) |
 | refactoring-129 | refactoring | P3 | combat | decree-047 |
 
 ## Open Decree-Needs (1)
@@ -96,8 +96,8 @@ resolved: 297
 
 | Category | Open | In-Progress | Resolved | Total |
 |----------|------|-------------|----------|-------|
-| bug | 12 | 1 | 54 | 67 |
-| ptu-rule | 15 | 0 | 107 | 122 |
+| bug | 3 | 10 | 54 | 67 |
+| ptu-rule | 13 | 2 | 107 | 122 |
 | feature | 2 | 0 | 25 | 27 |
 | ux | 8 | 0 | 10 | 18 |
 | decree | 1 | 0 | 51 | 52 |
