@@ -47,7 +47,8 @@ export function useTrainerXp() {
         xpAdded: response.data.xpAdded,
         newXp: response.data.newXp,
         newLevel: response.data.newLevel,
-        levelsGained: response.data.levelsGained
+        levelsGained: response.data.levelsGained,
+        milestoneLevelsCrossed: response.data.milestoneLevelsCrossed ?? []
       }
 
       lastResult.value = result
