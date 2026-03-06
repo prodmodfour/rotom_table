@@ -136,6 +136,11 @@ export interface TurnState {
   // P2 (feature-004): Distance tracking for Run Up / Overrun
   /** Distance moved this turn in meters (for Run Up, Overrun, etc.). Reset to 0 at turn start. */
   distanceMovedThisTurn?: number;
+
+  // Heavily Injured standard-action penalty (PTU p.250, ptu-rule-151)
+  // Set when the penalty has been applied this turn so next-turn.post.ts doesn't double-apply.
+  /** Whether the heavily injured standard-action HP loss was already applied this turn */
+  heavilyInjuredPenaltyApplied?: boolean;
 }
 
 // ============================================================
