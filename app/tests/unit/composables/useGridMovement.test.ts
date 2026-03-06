@@ -318,22 +318,22 @@ describe('applyMovementModifiers', () => {
   })
 
   describe('condition interactions', () => {
-    it('Slowed + Speed CS positive: halve first, then add bonus', () => {
+    it('Slowed + Speed CS positive: CS first, then halve (PTU: CS modifies base, Slowed halves result)', () => {
       const combatant = makeCombatant({
         statusConditions: ['Slowed'],
         stageModifiers: { speed: 6 }
       })
-      // Slowed: floor(5/2) = 2, then CS +6: 2 + 3 = 5
-      expect(applyMovementModifiers(combatant, 5)).toBe(5)
+      // CS +6: 5 + 3 = 8, then Slowed: floor(8/2) = 4
+      expect(applyMovementModifiers(combatant, 5)).toBe(4)
     })
 
-    it('Slowed + Speed CS negative: halve first, then penalty with floor of 2', () => {
+    it('Slowed + Speed CS negative: CS floor of 2 first, then Slowed halves to 1', () => {
       const combatant = makeCombatant({
         statusConditions: ['Slowed'],
         stageModifiers: { speed: -6 }
       })
-      // Slowed: floor(5/2) = 2, then CS -6: 2 + (-3) = -1, min floor 2
-      expect(applyMovementModifiers(combatant, 5)).toBe(2)
+      // CS -6: 5 + (-3) = 2, floor 2, then Slowed: floor(2/2) = 1
+      expect(applyMovementModifiers(combatant, 5)).toBe(1)
     })
 
     it('Slowed + Sprint: halve first, then +50%', () => {
@@ -345,14 +345,29 @@ describe('applyMovementModifiers', () => {
       expect(applyMovementModifiers(combatant, 6)).toBe(4)
     })
 
-    it('Slowed + Speed CS + Sprint: all three in order', () => {
+    it('Slowed + Speed CS + Sprint: CS first, then Slowed, then Sprint', () => {
       const combatant = makeCombatant({
         statusConditions: ['Slowed'],
         stageModifiers: { speed: 4 },
         tempConditions: ['Sprint']
       })
-      // Slowed: floor(8/2) = 4, CS +4: 4 + 2 = 6, Sprint: floor(6 * 1.5) = 9
-      expect(applyMovementModifiers(combatant, 8)).toBe(9)
+      // CS +4: 8 + 2 = 10, Slowed: floor(10/2) = 5, Sprint: floor(5 * 1.5) = 7
+      expect(applyMovementModifiers(combatant, 8)).toBe(7)
+    })
+
+    it('Slowed on base 4m: should halve to 2 (bug-063 regression test)', () => {
+      const combatant = makeCombatant({ statusConditions: ['Slowed'] })
+      // Base 4, Slowed: floor(4/2) = 2
+      expect(applyMovementModifiers(combatant, 4)).toBe(2)
+    })
+
+    it('Slowed + negative CS on base 4m: Slowed should still reduce below CS floor (bug-063)', () => {
+      const combatant = makeCombatant({
+        statusConditions: ['Slowed'],
+        stageModifiers: { speed: -4 }
+      })
+      // CS -4: 4 + (-2) = 2, floor 2, then Slowed: floor(2/2) = 1
+      expect(applyMovementModifiers(combatant, 4)).toBe(1)
     })
 
     it('Stuck + Slowed: Stuck wins (returns 0 immediately)', () => {
