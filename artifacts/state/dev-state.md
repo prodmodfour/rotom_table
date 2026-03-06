@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-03-05T23:10:00
-updated_by: orchestrator-survey
+last_updated: 2026-03-06T10:00:00
+updated_by: slave-collector (plan-1772755770)
 ---
 
 # Dev Ecosystem State
@@ -9,30 +9,18 @@ updated_by: orchestrator-survey
 
 ## Open Tickets
 
-### Bug Tickets (`tickets/open/bug/`) — 13 open
+### Bug Tickets (`tickets/open/bug/`) — 3 open
 | Ticket | Priority | Status | Summary |
 |--------|----------|--------|---------|
-| bug-056 | P1 | open | Character auto-level past milestone skips milestone grants |
-| bug-064 | P1 | open | Character detail page fails — SCSS $spacing-xs undefined |
-| bug-065 | P1 | open | Encounter tables page HTTP 500 — missing upload-simple.svg |
-| bug-066 | P1 | open | Encounter table editor name mismatch (EncounterTableTableEditor) |
-| bug-057 | P2 | open | Character POST/PUT missing max stat enforcement |
-| bug-058 | P2 | open | No distinction between HP loss and damage for Belly Drum etc |
-| bug-060 | P2 | open | Encounter table export/import loses density significance |
-| bug-062 | P2 | open | resetSceneUsage() exists but scene-frequency move counts not cleared |
-| bug-063 | P2 | open | Slowed speed floor applied after condition instead of before |
-| bug-067 | P2 | open | PlayerPokemonCard expansion crash |
 | bug-059 | P3 | open | Math.trunc vs Math.floor in movementModifier |
 | bug-061 | P3 | open | AP drain injury healing missing validation |
 | bug-052 | P4 | open | PlayerCharacterSheet.vue uses bare tag class instead of tag--feature variant |
 
-### PTU Rule Tickets (`tickets/open/ptu-rule/`) — 15 open
+### PTU Rule Tickets (`tickets/open/ptu-rule/`) — 13 open
 | Ticket | Priority | Status | Summary |
 |--------|----------|--------|---------|
-| ptu-rule-151 | P1 | open | Heavily Injured trigger on 50%+ single-hit missing |
 | ptu-rule-147 | P2 | open | No per-effect duration tracking for combat stages |
 | ptu-rule-149 | P2 | open | VTT allows free token repositioning without movement enforcement |
-| ptu-rule-150 | P2 | open | No "set HP" vs "lose HP" flag for direct HP modification |
 | ptu-rule-155 | P2 | open | Player-view R156-R160 implementation gaps |
 | ptu-rule-143 | P3 | open | Sprint should not consume Shift Action (decree-050) |
 | ptu-rule-144 | P3 | open | Amateur milestone lifestyle stat points missing |
@@ -102,48 +90,61 @@ updated_by: orchestrator-survey
 ### Decree-Need Tickets (`tickets/open/decree/`)
 *(All decree-needs resolved)*
 
-### In-Progress Tickets — 1
+### In-Progress Tickets — 11
 | Ticket | Priority | Status | Summary |
 |--------|----------|--------|---------|
-| refactoring-129 | P3 | **in-progress** | Condition source-tracking — implemented (P0+P1 complete), needs code+rules review |
+| refactoring-129 | P3 | **in-progress** | Condition source-tracking — CHANGES_REQUIRED (code-review-347, rules-review-314) |
+| bug-056 | P1 | **in-progress** | XP auto-level milestone choices — fix implemented, needs review |
+| bug-064 | P1 | **in-progress** | SCSS $spacing-xs undefined — fix implemented, needs review |
+| bug-065 | P1 | **in-progress** | Missing upload-simple.svg icon — fix implemented, needs review |
+| bug-066 | P1 | **in-progress** | EncounterTableTableEditor name mismatch — fix implemented, needs review |
+| ptu-rule-151 | P1 | **in-progress** | Heavily Injured standard action faint trigger — implemented, needs review |
+| bug-057 | P2 | **in-progress** | Max trainer level (50) enforcement — fix implemented, needs review |
+| bug-058 | P2 | **in-progress** | HP-loss pathway (Belly Drum/Life Orb) — implemented, needs review |
+| ptu-rule-150 | P2 | **in-progress** | Set-HP/Lose-HP flag — implemented (via bug-058), needs review |
+| bug-060 | P2 | **in-progress** | Encounter table density export/import — fix implemented, needs review |
+| bug-062 | P2 | **in-progress** | Scene frequency reset wiring — fix implemented, needs review |
+| bug-063 | P2 | **in-progress** | Speed CS floor ordering — fix implemented, needs review |
+| bug-067 | P2 | **in-progress** | PlayerPokemonCard expansion crash — fix implemented, needs review |
 
 ## Active Developer Work
 
-**Current status:** Session 120 collection complete. No active slaves.
+**Current status:** Session 121 collection complete. No active slaves.
 
-**Last session (120, 2026-03-05, plan-1772711294):**
-- slave-1 (dev): refactoring-129 — 15 commits. Full condition source-tracking implementation (P0+P1): ConditionSourceType/ConditionInstance types, conditionSourceRules.ts, source-aware faint/recall/encounter-end clearing, GM view source labels, Dead/Fainted instance tracking.
-- slave-2–9 (matrix): Re-mapped 8 domains (combat, character-lifecycle, encounter-tables, pokemon-lifecycle, vtt-grid, healing, scenes, capture).
-- slave-10–14 (review): ptu-rule-121 **APPROVED**, ptu-rule-125 **APPROVED**, ptu-rule-126 **PASS**, ptu-rule-130 **APPROVED**, ptu-rule-133 **APPROVED**. All 5 tickets resolved.
+**Last session (121, 2026-03-06, plan-1772755770):**
+- slave-1 (dev): bug-064 — 2 commits. Added missing `@use '../variables' as *` to _level-up-shared.scss.
+- slave-2 (dev): bug-056 — 15 commits. Milestone detection in XP pipeline, queued milestone warnings in all XP distribution UIs, fromLevel prop to prevent LevelUpModal race condition.
+- slave-3 (dev): bug-065+066 — 4 commits. Added upload-simple.svg icon, fixed TableEditor/ImportTableModal component names.
+- slave-4 (dev): ptu-rule-151 — 12 commits. Heavily Injured standard-action faint penalty across 9 combat endpoints + next-turn guard.
+- slave-5 (dev): bug-058+ptu-rule-150 — 8 commits. HpReductionType enum (damage/hpLoss/setHp), bypass massive damage for HP loss, GM damage type selector.
+- slave-6 (dev): bug-057 — 5 commits. validateTrainerLevel utility, enforced on create/update/CSV-import.
+- slave-7 (dev): bug-060 — 5 commits. Density field in export, restore on import, species warnings in import modal.
+- slave-8 (dev): bug-062 — 2 commits. resetSceneUsage called on scene activate/deactivate.
+- slave-9 (dev): bug-063 — 4 commits. Speed CS floor applied before Slowed, deduplicated speed calc in intercept service.
+- slave-10 (dev): bug-067 — 4 commits. Fixed serializer missing statusConditions/stageModifiers, added null guards in PlayerPokemonCard/PlayerCharacterSheet.
+- slave-11 (reviewers): refactoring-129 — code-review-347 + rules-review-314 = **CHANGES_REQUIRED**.
+
+**Session 120 (2026-03-05, plan-1772711294):**
+- slave-1 (dev): refactoring-129 — 15 commits. Full condition source-tracking (P0+P1).
+- slave-2–9 (matrix): Re-mapped 8 domains.
+- slave-10–14 (review): 5 reviews, all APPROVED.
 
 **Session 119 (2026-03-05, plan-1772707228):**
-- slave-1–5 (review): bug-054+refactoring-139 **APPROVED**, refactoring-117 **APPROVED**, refactoring-128 **APPROVED**, bug-055 **APPROVED**, ptu-rule-135 **APPROVED**. All 6 tickets resolved.
-- slave-6 (dev): ptu-rule-121 — 2 commits. Sprint action consumption added.
-- slave-7 (dev): ptu-rule-125+126 — 3 commits. Equipment grantedCapabilities + Snow Boots penalty.
-- slave-8 (dev): ptu-rule-130 — 2 commits. Fainted recall+release League switch exemption.
-- slave-9 (dev): ptu-rule-133 — 3 commits. Permafrost weather damage reduction.
-- slave-10 (dev): refactoring-129 — 2 commits. Full design spec for condition source tracking.
-
-**Session 118 (2026-03-05, plan-1772702519):**
-- slave-1 (review): feature-025 re-review → code-review-339 **APPROVED**. Feature complete.
-- slave-2 (review): refactoring-098 → code-review-340 **APPROVED**. Immutable patterns verified.
-- slave-3 (review): refactoring-122 → code-review-341 **APPROVED**. Flanking badge wiring verified.
-- slave-4 (dev): bug-054+055+refactoring-139 — 4 commits. Timer leak cleanup, Map iteration fix, newline→semicolons in toast.
-- slave-5 (dev): refactoring-113+117+128 — 7 commits. Removed dead import, extracted useOutOfTurnState (encounter store 1132→723 lines), shared getEffectiveEquipBonuses.
-- slave-6 (dev): ptu-rule-135 fix cycle — 3 commits. Added 'captured' origin check, origin-aware serializer fallbacks.
+- slave-1–5 (review): 6 tickets APPROVED.
+- slave-6–10 (dev): ptu-rule-121, ptu-rule-125+126, ptu-rule-130, ptu-rule-133, refactoring-129 design spec.
 
 ## Code Health
 
 | Metric | Value |
 |--------|-------|
-| Last updated | 2026-03-05 |
+| Last updated | 2026-03-06 |
 | Open tickets (P0) | 0 |
-| Open tickets (P1) | 5 |
-| Open tickets (P2) | 12 |
-| Open tickets (P3) | 10 |
-| Open tickets (P4) | 39 |
-| In-progress tickets | 1 (refactoring-129) |
+| Open tickets (P1) | 0 |
+| Open tickets (P2) | 7 |
+| Open tickets (P3) | 12 |
+| Open tickets (P4) | 35 |
+| In-progress tickets | 13 (10 dev bug/rule fixes, refactoring-129, ptu-rule-150, bug-067) |
 | Total open + in-progress | 67 |
 | Decree-needs pending | 0 |
-| Needing review | refactoring-129 |
-| Resolved this session | ptu-rule-121, ptu-rule-125, ptu-rule-126, ptu-rule-130, ptu-rule-133 |
+| Needing review | 12 newly implemented fixes + refactoring-129 rework |
+| Smoke test | PASSED (all 3 views render) |
