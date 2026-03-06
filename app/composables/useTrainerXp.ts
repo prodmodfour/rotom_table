@@ -14,7 +14,11 @@ export function useTrainerXp() {
   const isProcessing = ref(false)
   const error = ref<string | null>(null)
   const lastResult = ref<TrainerXpResult | null>(null)
-  const pendingLevelUp = ref<{ oldLevel: number; newLevel: number } | null>(null)
+  const pendingLevelUp = ref<{
+    oldLevel: number
+    newLevel: number
+    milestoneLevelsCrossed: number[]
+  } | null>(null)
 
   /**
    * Award XP to a trainer. Returns the result including any level changes.
@@ -52,7 +56,8 @@ export function useTrainerXp() {
       if (result.levelsGained > 0) {
         pendingLevelUp.value = {
           oldLevel: result.previousLevel,
-          newLevel: result.newLevel
+          newLevel: result.newLevel,
+          milestoneLevelsCrossed: result.milestoneLevelsCrossed
         }
       }
 
