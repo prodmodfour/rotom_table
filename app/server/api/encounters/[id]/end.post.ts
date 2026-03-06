@@ -88,9 +88,15 @@ export default defineEventHandler(async (event) => {
         }
       }
 
+      // Filter conditionInstances to match cleared statusConditions (decree-047)
+      const updatedInstances = (combatant.conditionInstances || []).filter(
+        i => clearedConditions.includes(i.condition)
+      )
+
       return {
         ...combatant,
         stageSources: [],
+        conditionInstances: updatedInstances,
         entity: updatedEntity
       }
     })
