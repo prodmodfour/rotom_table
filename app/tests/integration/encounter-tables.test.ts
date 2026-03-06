@@ -621,6 +621,7 @@ describe('Import/Export API', () => {
         name: 'Route 1 Grass',
         description: 'Wild Pokemon',
         imageUrl: null,
+        density: 'dense',
         levelMin: 2,
         levelMax: 5,
         entries: [
@@ -646,6 +647,7 @@ describe('Import/Export API', () => {
 
       expect(result.version).toBe('1.0')
       expect(result.table.name).toBe('Route 1 Grass')
+      expect(result.table.density).toBe('dense')
       expect(result.table.entries[0].speciesName).toBe('Bulbasaur')
     })
   })
@@ -657,6 +659,7 @@ describe('Import/Export API', () => {
         table: {
           name: 'Imported Table',
           description: 'Imported from export',
+          density: 'dense',
           levelRange: { min: 5, max: 10 },
           entries: [
             { speciesName: 'Bulbasaur', weight: 10 }
@@ -674,6 +677,7 @@ describe('Import/Export API', () => {
         name: 'Imported Table',
         description: 'Imported from export',
         imageUrl: null,
+        density: 'dense',
         levelMin: 5,
         levelMax: 10,
         entries: [
@@ -689,6 +693,14 @@ describe('Import/Export API', () => {
 
       expect(result.success).toBe(true)
       expect(result.data.name).toBe('Imported Table')
+      expect(result.data.density).toBe('dense')
+      expect(mockPrisma.encounterTable.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({
+            density: 'dense'
+          })
+        })
+      )
     })
 
     it('should append number to duplicate table names', async () => {
