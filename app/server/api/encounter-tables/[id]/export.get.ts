@@ -61,6 +61,7 @@ export default defineEventHandler(async (event) => {
         modifications: table.modifications.map(mod => ({
           name: mod.name,
           description: mod.description,
+          densityMultiplier: mod.densityMultiplier,
           levelRange: mod.levelMin && mod.levelMax
             ? { min: mod.levelMin, max: mod.levelMax }
             : null,
