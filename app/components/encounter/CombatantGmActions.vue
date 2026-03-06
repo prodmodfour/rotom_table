@@ -209,6 +209,7 @@ const applyDamage = () => {
   if (damageInput.value > 0) {
     emit('damage', props.combatant.id, damageInput.value, lossTypeInput.value)
     damageInput.value = 0
+    lossTypeInput.value = 'damage'
   }
 }
 
