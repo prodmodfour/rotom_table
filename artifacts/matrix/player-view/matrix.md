@@ -17,15 +17,15 @@ Coverage = (Implemented + 0.5 * Partial + 0.5 * Implemented-Unreachable) / (Tota
 |---------------|-------|-------|
 | **Total Rules** | 207 | |
 | **Implemented** | 96 | App covers these rules, accessible to correct actor |
-| **Implemented-Unreachable** | 11 | Code exists but intended actor (player) cannot reach it |
-| **Partial** | 35 | App covers part of the rule |
+| **Implemented-Unreachable** | 8 | Code exists but intended actor (player) cannot reach it |
+| **Partial** | 38 | App covers part of the rule |
 | **Missing** | 24 | No capability for this rule |
 | **Subsystem-Missing** | 18 | Entire product surface absent |
 | **Out of Scope** | 23 | Outside app's purpose |
 
 ```
-= (96 + 0.5 * 35 + 0.5 * 11) / (207 - 23) * 100
-= (96 + 17.5 + 5.5) / 184 * 100
+= (96 + 0.5 * 38 + 0.5 * 8) / (207 - 23) * 100
+= (96 + 19 + 4) / 184 * 100
 = 119 / 184 * 100
 = 64.7%
 ```
@@ -275,11 +275,11 @@ Coverage = (Implemented + 0.5 * Partial + 0.5 * Implemented-Unreachable) / (Tota
 
 | Rule ID | Rule Name | Category | Actor | Classification | Accessible From | Matching Capabilities | Gap Priority | Notes |
 |---------|-----------|----------|-------|----------------|----------------|-----------------------|-------------|-------|
-| R156 | Poke Ball Throw Action | workflow | player | Implemented-Unreachable | gm | — | P1 | Capture system exists (server endpoints, useCapture composable) but only accessible from GM view |
+| R156 | Poke Ball Throw Action | workflow | player | Partial | player | — | P1 | Player can initiate capture via PlayerCapturePanel (target selection, request to GM); execution/resolution is GM-side |
 | R157 | Natural 20 Capture Bonus | modifier | system | Implemented-Unreachable | gm | — | P1 | Server implements; not reachable from player view |
 | R158 | Capture Roll (Core) | formula | player | Implemented-Unreachable | gm | — | P1 | Capture roll formula implemented server-side; player can't initiate |
-| R159 | Capture Rate Calculation (Core) | formula | system | Implemented-Unreachable | gm | — | P1 | captureRate.ts utility exists; not exposed to player |
-| R160 | Capture Rate - HP Modifiers | modifier | system | Implemented-Unreachable | gm | — | P1 | Implemented in captureRate.ts; not reachable from player view |
+| R159 | Capture Rate Calculation (Core) | formula | system | Partial | player | — | P1 | Capture rate preview visible to player via CaptureRateDisplay (usePlayerCapture fetches from server or estimates locally); actual capture determination is GM-side |
+| R160 | Capture Rate - HP Modifiers | modifier | system | Partial | player | — | P1 | HP modifiers visible in capture rate breakdown shown to player via CaptureRateDisplay; calculation is server-side |
 | R161 | Capture Rate - Evolution Stage Modifiers | modifier | system | Out of Scope | — | — | — | Server-side formula detail |
 | R162 | Capture Rate - Status/Injury Modifiers | modifier | system | Out of Scope | — | — | — | Server-side formula detail |
 | R163 | KO'd Pokemon Cannot Be Captured | constraint | system | Implemented | player | — | — | Server validates; no bypass possible |
@@ -421,18 +421,18 @@ Coverage = (Implemented + 0.5 * Partial + 0.5 * Implemented-Unreachable) / (Tota
 
 ---
 
-### Gap 2: Pokemon Capture (Player-Initiated) (IMPLEMENTED-UNREACHABLE)
+### Gap 2: Pokemon Capture (Player-Initiated) (PARTIALLY IMPLEMENTED)
 
-**Missing subsystem:** Capture logic exists but is only accessible from the GM view.
+**Subsystem status:** Player can initiate capture requests via PlayerCapturePanel.vue and usePlayerCombat.requestCapture(). Capture rate preview is shown via CaptureRateDisplay (usePlayerCapture fetches from server or estimates locally). Actual capture resolution (accuracy roll, 1d100 capture roll) remains GM-side.
 
-**Affected rules:** R156, R157, R158, R159, R160, R164 (6 rules)
+**Affected rules:** R157, R158, R164 (3 rules still Implemented-Unreachable); R156, R159, R160 reclassified to Partial
 
-**Impact:** Players cannot throw Poke Balls from their view. The GM must execute captures on behalf of the player. This is a core PTU player action.
+**Impact:** Players can select a wild target, view capture rate preview with HP/status breakdown, and send a capture request to the GM. The GM still must approve and execute the capture roll. Remaining gap is that R157 (nat 20 bonus) and R158 (capture roll execution) are server-only, and R164 (errata d20 system) is inactive per decree-013.
 
-**Suggested feature ticket:**
-- **Title:** Player View: Poke Ball throwing during encounters
-- **Priority:** P1
-- **Scope:** Add a "Throw Poke Ball" standard action to PlayerCombatActions that triggers the capture flow. Needs ball selection (from inventory), target selection, and result display. May use the existing GM-approval request pattern or direct execution.
+**Remaining work:**
+- **Ball type selection** — PlayerCapturePanel defaults to Poke Ball; no ball picker from inventory yet
+- **Capture result display** — Player does not see the capture roll result in their view
+- **Priority:** P2 (core request flow exists; polish items remain)
 
 ---
 
@@ -526,7 +526,7 @@ None identified. Basic session flow (view character, view team, participate in e
 | R048 | Standard action options incomplete | Partial |
 | R059 | Pokemon standard action options incomplete | Partial |
 | R143 | Fainted recovery (player item usage) | Implemented-Unreachable |
-| R156-R160, R164 | Capture from player view | Implemented-Unreachable |
+| R157, R158, R164 | Capture roll execution (server-side) | Implemented-Unreachable |
 
 ### P2 (Situational, workaround exists)
 
@@ -655,8 +655,8 @@ Prioritized list of items requiring Implementation Auditor verification. Ordered
 | 42 | R018 | Base Relations Rule | GM-only | Validation correctness |
 | 43 | R021 | Level-Up Workflow | GM-only | Level-up produces correct stat changes |
 | 44 | R143 | Fainted Recovery | GM-only | Revive/healing logic correctness |
-| 45 | R156-R160 | Capture System | GM-only | Capture rate calculations correct |
-| 46 | R164 | Errata Capture System | GM-only | d20 capture system correctness |
+| 45 | R157, R158 | Capture Roll Execution | GM-only | Accuracy roll + 1d100 capture roll server-side |
+| 46 | R164 | Errata Capture System | GM-only | d20 capture system (inactive per decree-013) |
 | 47 | R191 | Player Assigns Stats | GM-only | Stat allocation UI in GM view |
 
 ### Tier 7: Partial Items (Verify Present Portion)
@@ -672,6 +672,9 @@ Prioritized list of items requiring Implementation Auditor verification. Ordered
 | 54 | R200 | Weather Display | C065 | Weather badge in scene view |
 | 55 | R203 | Healing Items | C043, C038 | Items in inventory + combat request |
 | 56 | R207 | Feature Tags | C017 | Feature names shown as tags |
+| 57 | R156 | Poke Ball Throw Action | — | PlayerCapturePanel target selection + request to GM |
+| 58 | R159 | Capture Rate Calculation | — | CaptureRateDisplay shows rate preview via usePlayerCapture |
+| 59 | R160 | Capture Rate HP Modifiers | — | HP modifier visible in capture rate breakdown |
 
 ---
 
@@ -840,11 +843,11 @@ Counts verified from the Precise Per-Rule Classification table below.
 | 153 | R153 | Partial |
 | 154 | R154 | Out of Scope |
 | 155 | R155 | Out of Scope |
-| 156 | R156 | Implemented-Unreachable |
+| 156 | R156 | Partial |
 | 157 | R157 | Implemented-Unreachable |
 | 158 | R158 | Implemented-Unreachable |
-| 159 | R159 | Implemented-Unreachable |
-| 160 | R160 | Implemented-Unreachable |
+| 159 | R159 | Partial |
+| 160 | R160 | Partial |
 | 161 | R161 | Out of Scope |
 | 162 | R162 | Out of Scope |
 | 163 | R163 | Implemented |
