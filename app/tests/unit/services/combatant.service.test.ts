@@ -12,10 +12,11 @@ vi.mock('uuid', () => ({
 
 import {
   buildCombatantFromEntity,
-  createDefaultStageModifiers
+  createDefaultStageModifiers,
+  calculateDamage
 } from '~/server/services/combatant.service'
 import type { BuildCombatantOptions } from '~/server/services/combatant.service'
-import type { Pokemon, HumanCharacter, StageModifiers } from '~/types'
+import type { Pokemon, HumanCharacter, StageModifiers, HpReductionType } from '~/types'
 
 // --- Helpers ---
 
@@ -742,6 +743,172 @@ describe('combatant.service — buildCombatantFromEntity', () => {
       })
 
       expect(combatant.position).toBeUndefined()
+    })
+  })
+})
+
+// ============================================
+// calculateDamage — lossType parameter tests
+// ============================================
+
+describe('combatant.service — calculateDamage lossType', () => {
+  // Common test values:
+  // maxHp = 100, so 50% threshold = 50, massive damage triggers at 50+
+  // Marker at 50 (50%), 0 (0%), -50 (-50%), -100 (-100%)
+  const maxHp = 100
+  const noInjuries = 0
+
+  describe('default backward compatibility', () => {
+    it('defaults to damage type when lossType is omitted', () => {
+      const result = calculateDamage(60, 80, maxHp, 0, noInjuries)
+      expect(result.lossType).toBe('damage')
+    })
+
+    it('triggers massive damage when lossType is omitted and damage >= 50% maxHp', () => {
+      const result = calculateDamage(50, 80, maxHp, 0, noInjuries)
+      expect(result.massiveDamageInjury).toBe(true)
+    })
+  })
+
+  describe('damage type (standard attack damage)', () => {
+    it('returns lossType damage in result', () => {
+      const result = calculateDamage(30, 80, maxHp, 0, noInjuries, 'damage')
+      expect(result.lossType).toBe('damage')
+    })
+
+    it('triggers massive damage injury when hpDamage >= 50% maxHp', () => {
+      const result = calculateDamage(50, 80, maxHp, 0, noInjuries, 'damage')
+      expect(result.massiveDamageInjury).toBe(true)
+      expect(result.totalNewInjuries).toBeGreaterThanOrEqual(1)
+    })
+
+    it('absorbs temp HP first', () => {
+      const result = calculateDamage(30, 80, maxHp, 20, noInjuries, 'damage')
+      expect(result.tempHpAbsorbed).toBe(20)
+      expect(result.hpDamage).toBe(10)
+      expect(result.newHp).toBe(70)
+      expect(result.newTempHp).toBe(0)
+    })
+
+    it('counts marker injuries on threshold crossings', () => {
+      // HP goes from 60 to 10 (crosses 50% marker at 50)
+      const result = calculateDamage(50, 60, maxHp, 0, noInjuries, 'damage')
+      expect(result.markerInjuries).toBe(1)
+      expect(result.markersCrossed).toContain(50)
+    })
+  })
+
+  describe('hpLoss type (Belly Drum, Life Orb)', () => {
+    it('returns lossType hpLoss in result', () => {
+      const result = calculateDamage(30, 80, maxHp, 0, noInjuries, 'hpLoss')
+      expect(result.lossType).toBe('hpLoss')
+    })
+
+    it('skips massive damage injury even when loss >= 50% maxHp', () => {
+      // 50 HP loss from 80 HP — would be massive damage for 'damage' type
+      const result = calculateDamage(50, 80, maxHp, 0, noInjuries, 'hpLoss')
+      expect(result.massiveDamageInjury).toBe(false)
+    })
+
+    it('does NOT absorb temp HP (bypasses temp HP)', () => {
+      const result = calculateDamage(30, 80, maxHp, 20, noInjuries, 'hpLoss')
+      expect(result.tempHpAbsorbed).toBe(0)
+      expect(result.hpDamage).toBe(30)
+      expect(result.newHp).toBe(50)
+      expect(result.newTempHp).toBe(20) // temp HP preserved
+    })
+
+    it('still counts marker injuries on threshold crossings', () => {
+      // HP goes from 60 to 10 (crosses 50% marker at 50)
+      const result = calculateDamage(50, 60, maxHp, 0, noInjuries, 'hpLoss')
+      expect(result.markerInjuries).toBe(1)
+      expect(result.markersCrossed).toContain(50)
+    })
+
+    it('still causes fainting at 0 HP', () => {
+      const result = calculateDamage(80, 80, maxHp, 0, noInjuries, 'hpLoss')
+      expect(result.fainted).toBe(true)
+      expect(result.newHp).toBe(0)
+    })
+
+    it('accumulates only marker injuries, not massive damage', () => {
+      // 90 HP loss from 90 HP — crosses 50% (50) and 0% (0) markers
+      // Massive damage would trigger (90 >= 50) for 'damage', but not for 'hpLoss'
+      const result = calculateDamage(90, 90, maxHp, 0, noInjuries, 'hpLoss')
+      expect(result.massiveDamageInjury).toBe(false)
+      expect(result.markerInjuries).toBe(2) // crossed 50 and 0
+      expect(result.totalNewInjuries).toBe(2) // markers only, no massive damage
+    })
+  })
+
+  describe('setHp type (Pain Split, Endeavor)', () => {
+    it('returns lossType setHp in result', () => {
+      const result = calculateDamage(30, 80, maxHp, 0, noInjuries, 'setHp')
+      expect(result.lossType).toBe('setHp')
+    })
+
+    it('skips massive damage injury even when loss >= 50% maxHp', () => {
+      const result = calculateDamage(60, 80, maxHp, 0, noInjuries, 'setHp')
+      expect(result.massiveDamageInjury).toBe(false)
+    })
+
+    it('does NOT absorb temp HP (bypasses temp HP)', () => {
+      const result = calculateDamage(30, 80, maxHp, 20, noInjuries, 'setHp')
+      expect(result.tempHpAbsorbed).toBe(0)
+      expect(result.hpDamage).toBe(30)
+      expect(result.newTempHp).toBe(20) // temp HP preserved
+    })
+
+    it('still counts marker injuries on threshold crossings', () => {
+      // HP goes from 60 to 10 (crosses 50% marker at 50)
+      const result = calculateDamage(50, 60, maxHp, 0, noInjuries, 'setHp')
+      expect(result.markerInjuries).toBe(1)
+      expect(result.markersCrossed).toContain(50)
+    })
+
+    it('still causes fainting at 0 HP', () => {
+      const result = calculateDamage(80, 80, maxHp, 0, noInjuries, 'setHp')
+      expect(result.fainted).toBe(true)
+    })
+  })
+
+  describe('injury accumulation across lossTypes', () => {
+    it('adds marker injuries to existing injury count for all types', () => {
+      const existingInjuries = 3
+      // HP 60 -> 10, crossing 50% marker
+      const dmg = calculateDamage(50, 60, maxHp, 0, existingInjuries, 'damage')
+      const loss = calculateDamage(50, 60, maxHp, 0, existingInjuries, 'hpLoss')
+      const set = calculateDamage(50, 60, maxHp, 0, existingInjuries, 'setHp')
+
+      // All should have 1 marker injury added to 3 existing
+      // damage also gets massive damage (50 >= 50)
+      expect(dmg.newInjuries).toBe(existingInjuries + 1 + 1) // +1 marker +1 massive
+      expect(loss.newInjuries).toBe(existingInjuries + 1) // +1 marker only
+      expect(set.newInjuries).toBe(existingInjuries + 1) // +1 marker only
+    })
+  })
+
+  describe('temp HP interaction by lossType', () => {
+    it('damage absorbs all temp HP when damage <= temp HP', () => {
+      const result = calculateDamage(15, 80, maxHp, 20, noInjuries, 'damage')
+      expect(result.tempHpAbsorbed).toBe(15)
+      expect(result.hpDamage).toBe(0)
+      expect(result.newHp).toBe(80)
+      expect(result.newTempHp).toBe(5)
+    })
+
+    it('hpLoss preserves temp HP entirely', () => {
+      const result = calculateDamage(15, 80, maxHp, 20, noInjuries, 'hpLoss')
+      expect(result.tempHpAbsorbed).toBe(0)
+      expect(result.newTempHp).toBe(20)
+      expect(result.newHp).toBe(65)
+    })
+
+    it('setHp preserves temp HP entirely', () => {
+      const result = calculateDamage(15, 80, maxHp, 20, noInjuries, 'setHp')
+      expect(result.tempHpAbsorbed).toBe(0)
+      expect(result.newTempHp).toBe(20)
+      expect(result.newHp).toBe(65)
     })
   })
 })
