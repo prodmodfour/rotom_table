@@ -37,7 +37,8 @@ import {
   markActionUsed,
   buildSwitchAction,
   canSwitchedPokemonBeCommanded,
-  applyRecallSideEffects
+  applyRecallSideEffects,
+  applyTerrainWeatherConditions
 } from '~/server/services/switching.service'
 import { clearWieldOnRemoval } from '~/server/services/living-weapon.service'
 import { reconstructWieldRelationships } from '~/server/services/living-weapon-state'
@@ -260,6 +261,9 @@ export default defineEventHandler(async (event) => {
 
     // 5. Add new combatant to combatants array
     const updatedCombatants = [...cleanedRemovalResult.combatants, newCombatant]
+
+    // 5a. Re-apply terrain/weather conditions on send-out (decree-053)
+    applyTerrainWeatherConditions(newCombatant, cleanedRemovalResult.combatants, record.weather)
 
     // 5b. Section K: Determine immediate-act eligibility (Full Contact only)
     // PTU p.229: Released Pokemon whose initiative has already passed may act immediately.
