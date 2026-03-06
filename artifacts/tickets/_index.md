@@ -1,33 +1,27 @@
 ---
-generated_at: 2026-03-06T18:06:27.822Z
+generated_at: 2026-03-06T18:07:11.105Z
 total_tickets: 375
-open: 62
-in_progress: 2
-resolved: 311
+open: 56
+in_progress: 5
+resolved: 314
 ---
 
 # Tickets Index
 
-## Open Tickets (62)
+## Open Tickets (56)
 
 | ID | Category | Priority | Domain | Summary |
 |----|----------|----------|--------|--------|
 | ptu-rule-147 | ptu-rule | P2 | combat | Round counter exists but there is no per-effect duration tra |
 | ptu-rule-149 | ptu-rule | P2 | combat | The VTT allows tokens to be repositioned freely without enfo |
-| ptu-rule-155 | ptu-rule | P2 | player-view | The player-view implementation audit found that R156-R160 an |
-| ptu-rule-156 | ptu-rule | P2 | combat | Per decree-053, terrain/weather-sourced Other conditions mus |
-| feature-026 | feature | P2 | character-lifecycle | Implement automatic parsing of `[+Stat]` tags in PTU feature |
 | feature-027 | feature | P2 | character-lifecycle | Migrate the edge data model from `string[]` to an array of s |
 | bug-059 | bug | P3 | combat | `Math.trunc` is used instead of `Math.floor` in movementModi |
-| bug-061 | bug | P3 | healing | The AP drain injury healing pathway does not validate that t |
-| bug-068 | bug | P3 | encounter-tables | The `densityMultiplier` field on the `TableModification` mod |
 | bug-069 | bug | P3 | combat | Per decree-054, the `HpReductionType` union must be expanded |
 | ptu-rule-143 | ptu-rule | P3 | combat | Per decree-050, Sprint consumes only the Standard Action (PT |
 | ptu-rule-144 | ptu-rule | P3 | character-lifecycle | At level 5 (Amateur milestone), lifestyle stat points should |
 | ptu-rule-145 | ptu-rule | P3 | character-lifecycle | Level 30 and 40 milestones grant bonus edges/features with s |
 | ptu-rule-146 | ptu-rule | P3 | combat | PTU defaults to rolled damage. The app defaults to set damag |
 | ptu-rule-148 | ptu-rule | P3 | combat | When a Pokemon is released mid-round after initiative has pa |
-| ptu-rule-152 | ptu-rule | P3 | scenes | PTU distinguishes natural weather (narrative, affects travel |
 | ptu-rule-153 | ptu-rule | P3 | scenes | The `naturewalkBypassesTerrain()` utility exists and correct |
 | ptu-rule-154 | ptu-rule | P3 | scenes | Hazard terrain type exists visually on the VTT but has no me |
 | ptu-rule-158 | ptu-rule | P3 | combat | `pass.post.ts` sets `standardActionUsed: true` (line 34) as  |
@@ -75,12 +69,15 @@ resolved: 311
 | refactoring-147 | refactoring | P4 | combat | In `next-turn.post.ts` (around line 154), the deferred heavi |
 | docs-017 | docs | P4 | tooling | The bug-047 ticket resolution log references stale commit ha |
 
-## In-Progress Tickets (2)
+## In-Progress Tickets (5)
 
 | ID | Category | Priority | Domain | Source |
 |----|----------|----------|--------|--------|
-| bug-057 | bug | P2 | character-lifecycle | character-lifecycle-audit.md (session 121, R040) |
-| bug-058 | bug | P2 | combat | combat-audit.md (session 121, R031) |
+| ptu-rule-156 | ptu-rule | P2 | combat | decree-053 |
+| feature-026 | feature | P2 | character-lifecycle | decree-051 |
+| bug-061 | bug | P3 | healing | healing-audit.md (session 121, R024) |
+| bug-068 | bug | P3 | encounter-tables | code-review-354 M2 |
+| ptu-rule-152 | ptu-rule | P3 | scenes | scenes-audit.md (session 121, R010 approximation) |
 
 ## Open Decree-Needs (0)
 
@@ -90,9 +87,9 @@ All decree-needs addressed.
 
 | Category | Open | In-Progress | Resolved | Total |
 |----------|------|-------------|----------|-------|
-| bug | 5 | 2 | 62 | 69 |
-| ptu-rule | 16 | 0 | 110 | 126 |
-| feature | 2 | 0 | 25 | 27 |
+| bug | 3 | 2 | 64 | 69 |
+| ptu-rule | 13 | 2 | 111 | 126 |
+| feature | 1 | 1 | 25 | 27 |
 | ux | 8 | 0 | 10 | 18 |
 | decree | 0 | 0 | 53 | 53 |
 | refactoring | 30 | 0 | 34 | 64 |
