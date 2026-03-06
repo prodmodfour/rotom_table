@@ -33,6 +33,10 @@
         <span class="healing-status__value">{{ healingInfo.injuriesHealedToday }} / 3</span>
       </div>
       <div v-if="entityType === 'character'" class="healing-status__item">
+        <span class="healing-status__label">Current AP</span>
+        <span class="healing-status__value" :class="{ 'text-danger': currentAp < 2 }">{{ currentAp }}</span>
+      </div>
+      <div v-if="entityType === 'character'" class="healing-status__item">
         <span class="healing-status__label">Drained AP</span>
         <span class="healing-status__value">{{ drainedAp }}</span>
       </div>
@@ -115,7 +119,7 @@
         <p>Drain 2 AP to heal 1 injury as an Extended Action. Subject to daily injury limit.</p>
         <button
           class="btn btn--secondary"
-          :disabled="healingLoading || healingInfo?.injuriesRemainingToday <= 0"
+          :disabled="healingLoading || healingInfo?.injuriesRemainingToday <= 0 || currentAp < 2"
           @click="handleHealInjury('drain_ap')"
         >
           {{ healingLoading ? 'Healing...' : 'Drain 2 AP' }}
@@ -160,6 +164,12 @@ const injuries = computed(() => props.entity.injuries || 0)
 const drainedAp = computed(() => {
   if (props.entityType === 'character') {
     return (props.entity as HumanCharacter).drainedAp || 0
+  }
+  return 0
+})
+const currentAp = computed(() => {
+  if (props.entityType === 'character') {
+    return (props.entity as HumanCharacter).currentAp || 0
   }
   return 0
 })
