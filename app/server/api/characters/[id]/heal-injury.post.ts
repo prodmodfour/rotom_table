@@ -62,6 +62,18 @@ export default defineEventHandler(async (event) => {
   }
 
   if (method === 'drain_ap') {
+    // Validate character has enough AP to drain
+    if (character.currentAp < 2) {
+      return {
+        success: false,
+        message: `Not enough AP to drain. Need 2 AP but only have ${character.currentAp}.`,
+        data: {
+          injuries: character.injuries,
+          currentAp: character.currentAp
+        }
+      }
+    }
+
     // Drain 2 AP to heal 1 injury
     const newDrainedAp = character.drainedAp + 2
     const newCurrentAp = Math.max(0, character.currentAp - 2)
