@@ -1,9 +1,9 @@
 ---
-generated_at: 2026-03-06T10:03:17.138Z
-total_tickets: 365
+generated_at: 2026-03-06T10:12:30.344Z
+total_tickets: 366
 open: 55
 in_progress: 13
-resolved: 297
+resolved: 298
 ---
 
 # Tickets Index
@@ -15,6 +15,7 @@ resolved: 297
 | ptu-rule-147 | ptu-rule | P2 | combat | Round counter exists but there is no per-effect duration tra |
 | ptu-rule-149 | ptu-rule | P2 | combat | The VTT allows tokens to be repositioned freely without enfo |
 | ptu-rule-155 | ptu-rule | P2 | player-view | The player-view implementation audit found that R156-R160 an |
+| ptu-rule-156 | ptu-rule | P2 | combat | Per decree-053, terrain/weather-sourced Other conditions mus |
 | feature-026 | feature | P2 | character-lifecycle | Implement automatic parsing of `[+Stat]` tags in PTU feature |
 | feature-027 | feature | P2 | character-lifecycle | Migrate the edge data model from `string[]` to an array of s |
 | bug-059 | bug | P3 | combat | `Math.trunc` is used instead of `Math.floor` in movementModi |
@@ -27,7 +28,6 @@ resolved: 297
 | ptu-rule-152 | ptu-rule | P3 | scenes | PTU distinguishes natural weather (narrative, affects travel |
 | ptu-rule-153 | ptu-rule | P3 | scenes | The `naturewalkBypassesTerrain()` utility exists and correct |
 | ptu-rule-154 | ptu-rule | P3 | scenes | Hazard terrain type exists visually on the VTT but has no me |
-| decree-need-052 | decree | P3 | combat | The condition source-tracking implementation (refactoring-12 |
 | bug-052 | bug | P4 | character-lifecycle | `PlayerCharacterSheet.vue` renders feature tags with bare `c |
 | ptu-rule-141 | ptu-rule | P4 | character-lifecycle | ptu-rule-141: Gas Mask grantedCapabilities uses fabricated c |
 | ptu-rule-142 | ptu-rule | P4 | combat | ptu-rule-142: Implement Permafrost Burn/Poison status tick d |
@@ -86,20 +86,18 @@ resolved: 297
 | ptu-rule-150 | ptu-rule | P2 | healing | healing-audit.md (session 121, R012/R035 approximation) |
 | refactoring-129 | refactoring | P3 | combat | decree-047 |
 
-## Open Decree-Needs (1)
+## Open Decree-Needs (0)
 
-| ID | Priority | Domain | Topic |
-|----|----------|--------|-------|
-| decree-need-052 | P3 | combat | — |
+All decree-needs addressed.
 
 ## Summary by Category
 
 | Category | Open | In-Progress | Resolved | Total |
 |----------|------|-------------|----------|-------|
 | bug | 3 | 10 | 54 | 67 |
-| ptu-rule | 13 | 2 | 107 | 122 |
+| ptu-rule | 14 | 2 | 107 | 123 |
 | feature | 2 | 0 | 25 | 27 |
 | ux | 8 | 0 | 10 | 18 |
-| decree | 1 | 0 | 51 | 52 |
+| decree | 0 | 0 | 52 | 52 |
 | refactoring | 27 | 1 | 33 | 61 |
 | docs | 1 | 0 | 17 | 18 |

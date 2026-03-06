@@ -3,7 +3,8 @@ id: decree-need-052
 title: "Should source-dependent clearing apply to recall (not just faint)?"
 priority: P3
 severity: MEDIUM
-status: open
+status: addressed
+decree_id: decree-053
 domain: combat
 source: rules-review-314 MEDIUM-001
 created_by: slave-collector (plan-1772755770)

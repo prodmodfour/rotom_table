@@ -1,13 +1,13 @@
 ---
-generated_at: 2026-03-06T10:03:17.147Z
-total_decrees: 53
-active: 52
+generated_at: 2026-03-06T10:12:30.353Z
+total_decrees: 54
+active: 53
 superseded: 0
 ---
 
 # Decrees Index
 
-## Active Decrees (52)
+## Active Decrees (53)
 
 | Decree ID | Domain | Topic | Title |
 |-----------|--------|-------|-------|
@@ -63,3 +63,4 @@ superseded: 0
 | decree-050 | combat | sprint-action-cost | Sprint consumes only the Standard Action, not the Shift Action |
 | decree-051 | character-lifecycle | auto-parse-stat-feature-tags | Auto-parse [+Stat] feature tags and apply stat bonuses automatically |
 | decree-052 | character-lifecycle | structured-edge-metadata | Store edges as structured objects with type-specific metadata fields |
+| decree-053 | combat | recall-source-dependent-clearing | Other conditions clear on recall per RAW, then re-apply on send-out if source persists |
