@@ -26,7 +26,7 @@ If you need Pokemon, call one of these. Never build Pokemon records ad-hoc in AP
 
 | File | Lines | Description |
 |---|---|---|
-| `combatant.service.ts` | ~774 | Damage calc, healing, status conditions, stage mods, combatant construction |
+| `combatant.service.ts` | ~797 | Damage calc, healing, status conditions, stage mods, combatant construction, HP-loss pathway (hpLoss/setHp bypass injury) |
 | `csv-import.service.ts` | ~405 | Parse PTU character sheet CSVs, create trainer + Pokemon DB records |
 | `encounter-generation.service.ts` | ~125 | Weighted random species selection with diversity enforcement for spawn tables |
 | `encounter.service.ts` | ~514 | Encounter CRUD, initiative sorting, turn management, response building |
@@ -35,11 +35,11 @@ If you need Pokemon, call one of these. Never build Pokemon records ad-hoc in AP
 | `evolution.service.ts` | ~715 | Species evolution: stat recalc, Base Relations validation, full execution |
 | `grid-placement.service.ts` | ~147 | Auto-place combatant tokens on VTT grid by side, size-to-token mapping |
 | `healing-item.service.ts` | ~372 | Healing item validation and application (HP restore, status cure, revive, combat action economy) |
-| `intercept.service.ts` | ~732 | Intercept Melee/Ranged (PTU p.242) — eligibility, detection, resolution |
+| `intercept.service.ts` | ~689 | Intercept Melee/Ranged (PTU p.242) — eligibility, detection, resolution |
 | `out-of-turn.service.ts` | ~752 | AoO, Hold Action, Priority Actions, Interrupt framework |
 | `pokemon-generator.service.ts` | ~540 | Canonical Pokemon creation: generate data, persist, build combatants |
 | `rest-healing.service.ts` | ~130 | Daily move refresh for Extended Rest (rolling window rule) |
-| `scene.service.ts` | ~74 | Scene-end AP restoration for characters |
+| `scene.service.ts` | ~142 | Scene-end AP restoration for characters, scene frequency reset on scene transitions |
 | `status-automation.service.ts` | ~151 | Tick damage at turn end (Burn, Poison, Badly Poisoned, Cursed) |
 | `switching.service.ts` | ~839 | Pokemon switch validation, recall range, initiative insertion, action tracking |
 | `ball-condition.service.ts` | ~185 | Build Poke Ball condition context from encounter state for conditional ball modifiers |

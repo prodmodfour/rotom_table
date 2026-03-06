@@ -7,7 +7,7 @@
 | File | Lines | Source | Key Types |
 |------|-------|--------|-----------|
 | `index.ts` | 44 | Barrel re-export | Exports all below |
-| `combat.ts` | 367 | Hand-written | StatusCondition, ActionType, TurnPhase, StageModifiers, TurnState, CombatSide, OutOfTurnAction, MountState, WieldRelationship, ConditionSourceType, ConditionInstance |
+| `combat.ts` | 372 | Hand-written | StatusCondition, ActionType, TurnPhase, StageModifiers, TurnState, CombatSide, OutOfTurnAction, MountState, WieldRelationship, ConditionSourceType, ConditionInstance, HpReductionType |
 | `spatial.ts` | 131 | Hand-written | GridPosition, GridConfig, TokenState, TerrainCell, TerrainFlags, MovementPath, RangeType, ParsedRange |
 | `character.ts` | 294 | Prisma-derived | HumanCharacter, Pokemon, Move, Ability, Stats, EquipmentSlots, PokemonOrigin |
 | `encounter.ts` | 338 | Prisma-derived | Combatant (includes mountState, wieldMovementUsed, forecastOriginalTypes, visionState, conditionInstances), Encounter, MoveLogEntry, EnvironmentEffect (discriminated union), EnvironmentPreset, MovementPreview, EncounterSnapshot, LibraryFilters |
