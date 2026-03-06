@@ -46,7 +46,7 @@
         </div>
 
         <div class="form-group">
-          <label>Weather</label>
+          <label>Natural Weather</label>
           <select
             :value="scene.weather"
             @change="emit('update:scene', 'weather', ($event.target as HTMLSelectElement).value || null)"
@@ -62,6 +62,7 @@
             <option value="heavy_rain">Heavy Rain</option>
             <option value="strong_winds">Strong Winds</option>
           </select>
+          <span class="form-hint">Narrative only. Game Weather Conditions with combat effects are set separately in encounters.</span>
         </div>
       </div>
     </template>
@@ -160,6 +161,15 @@ const emit = defineEmits<{
 
   textarea {
     resize: vertical;
+  }
+
+  .form-hint {
+    display: block;
+    margin-top: $spacing-xs;
+    font-size: 11px;
+    color: $color-text-muted;
+    line-height: 1.3;
+    opacity: 0.8;
   }
 }
 </style>
