@@ -4,6 +4,20 @@
  * Pure functions for weather damage, immunity, and modifier calculations.
  * Weather conditions defined in PTU pp.341-342 (10-indices-and-reference.md).
  *
+ * IMPORTANT DISTINCTION (PTU p.341):
+ * - "Natural weather" (narrative): A bright sunny day, normal rain, etc.
+ *   Stored on Scene.weather. Has NO mechanical combat effects.
+ * - "Game Weather Conditions" (mechanical): Triggered by moves (Rain Dance,
+ *   Sunny Day, Hail, Sandstorm) or abilities (Drizzle, Drought, etc.).
+ *   Stored on Encounter.weather. Has full mechanical effects below.
+ *
+ * PTU p.341: "Note that despite their names, Weather Conditions are not
+ * usually found as natural occurrences. A bright and sunny day does not
+ * count as Sunny Weather, nor does rain count as Rainy Weather."
+ *
+ * All functions in this file operate on encounter-level game Weather
+ * Conditions, not scene-level natural weather.
+ *
  * Tick = 1/10th max HP (PTU p.246): Math.max(1, Math.floor(maxHp / 10))
  *
  * Four PTU weather conditions with mechanical effects:
