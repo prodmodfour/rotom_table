@@ -8,7 +8,8 @@
  * - At-Will: unlimited
  *
  * After damage, applies:
- * - Heavily Injured penalty (PTU p.250): 5+ injuries = extra HP loss on taking damage
+ * - Heavily Injured penalty on targets (PTU p.250): 5+ injuries = extra HP loss on taking damage
+ * - Heavily Injured penalty on actor (PTU p.250): 5+ injuries = extra HP loss on taking Standard Action
  * - Death check (PTU p.251): 10+ injuries or HP below threshold
  * - League Battle exemption: HP-based death suppressed (decree-021)
  */
@@ -244,6 +245,61 @@ export default defineEventHandler(async (event) => {
       standardActionUsed: true
     }
 
+    // --- Heavily Injured penalty on ACTOR for taking a Standard Action (PTU p.250) ---
+    // "Whenever a Heavily Injured Trainer or Pokemon takes a Standard Action during combat,
+    // ...they lose Hit Points equal to the number of Injuries they currently have."
+    // This is separate from the damage-trigger penalty applied to targets above.
+    let actorHeavilyInjuredHpLoss = 0
+    {
+      let actorEntity = actor.entity
+      const actorInjuries = actorEntity.injuries || 0
+      const actorHiCheck = checkHeavilyInjured(actorInjuries)
+
+      if (actorHiCheck.isHeavilyInjured && actorEntity.currentHp > 0) {
+        const penalty = applyHeavilyInjuredPenalty(actorEntity.currentHp, actorInjuries)
+        actorHeavilyInjuredHpLoss = penalty.hpLost
+        actor.entity = { ...actorEntity, currentHp: penalty.newHp }
+        actorEntity = actor.entity
+
+        if (penalty.newHp === 0) {
+          applyFaintStatus(actor)
+          actorEntity = actor.entity
+        }
+
+        // Death check after heavily injured penalty
+        const actorDeathResult = checkDeath(
+          actorEntity.currentHp,
+          actorEntity.maxHp,
+          actorInjuries,
+          isLeagueBattle,
+          penalty.unclampedHp
+        )
+
+        if (actorDeathResult.isDead) {
+          const conditions: StatusCondition[] = actorEntity.statusConditions || []
+          if (!conditions.includes('Dead')) {
+            actor.entity = { ...actorEntity, statusConditions: ['Dead', ...conditions.filter((s: StatusCondition) => s !== 'Dead')] }
+            actorEntity = actor.entity
+          }
+        }
+
+        // Sync actor's HP/status to database
+        if (penalty.hpLost > 0 && actor.entityId) {
+          dbUpdates.push(syncEntityToDatabase(actor, {
+            currentHp: actorEntity.currentHp,
+            statusConditions: actorEntity.statusConditions,
+            ...(penalty.newHp === 0 && actorEntity.stageModifiers ? { stageModifiers: actorEntity.stageModifiers } : {})
+          }))
+        }
+
+        // Mark penalty as applied so next-turn.post.ts doesn't double-apply
+        actor.turnState = {
+          ...actor.turnState,
+          heavilyInjuredPenaltyApplied: true
+        }
+      }
+    }
+
     // P2: Soulstealer ability check (PTU p.2417-2423, feature-005)
     // If the actor has Soulstealer and any target fainted from this move, heal the actor.
     let soulstealerResult: { hpHealed: number; injuriesRemoved: number; isKill: boolean } | null = null
@@ -300,7 +356,14 @@ export default defineEventHandler(async (event) => {
       success: true,
       data: response,
       ...(targetResults.length > 0 && { targetResults }),
-      ...(soulstealerResult && { soulstealer: { actorId: body.actorId, ...soulstealerResult } })
+      ...(soulstealerResult && { soulstealer: { actorId: body.actorId, ...soulstealerResult } }),
+      ...(actorHeavilyInjuredHpLoss > 0 && {
+        actorHeavilyInjured: {
+          actorId: body.actorId,
+          hpLost: actorHeavilyInjuredHpLoss,
+          fainted: actor.entity.currentHp === 0
+        }
+      })
     }
   } catch (error: unknown) {
     if (error && typeof error === 'object' && 'statusCode' in error) throw error
