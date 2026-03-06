@@ -23,7 +23,7 @@ import {
   getEntityName
 } from '~/server/services/encounter.service'
 import { buildPokemonEntityFromRecord } from '~/server/services/entity-builder.service'
-import { buildCombatantFromEntity } from '~/server/services/combatant.service'
+import { buildCombatantFromEntity, applyFaintStatus } from '~/server/services/combatant.service'
 import { sizeToTokenSize } from '~/server/services/grid-placement.service'
 import {
   validateSwitch,
@@ -41,8 +41,11 @@ import {
 } from '~/server/services/switching.service'
 import { clearWieldOnRemoval } from '~/server/services/living-weapon.service'
 import { reconstructWieldRelationships } from '~/server/services/living-weapon-state'
+import { syncEntityToDatabase } from '~/server/services/entity-update.service'
+import { checkHeavilyInjured, applyHeavilyInjuredPenalty, checkDeath } from '~/utils/injuryMechanics'
 import { broadcastToEncounter } from '~/server/utils/websocket'
 import type { SwitchAction } from '~/types/combat'
+import type { StatusCondition } from '~/types'
 
 export default defineEventHandler(async (event) => {
   const id = getRouterParam(event, 'id')
@@ -295,6 +298,8 @@ export default defineEventHandler(async (event) => {
     })
 
     // 8. Mark action as used (mode-dependent)
+    let heavilyInjuredHpLoss = 0
+    let heavilyInjuredCombatantId: string | null = null
     if (isForcedSwitch) {
       // Forced switch: no action cost — do NOT mark any action as used
     } else if (isFaintedSwitch) {
@@ -311,6 +316,52 @@ export default defineEventHandler(async (event) => {
       const updatedInitiator = updatedCombatants.find(c => c.id === initiatingCombatantId)
       if (updatedInitiator) {
         markActionUsed(updatedInitiator, 'standard')
+
+        // --- Heavily Injured penalty on Standard Action (PTU p.250, ptu-rule-151) ---
+        // "Whenever a Heavily Injured Trainer or Pokemon takes a Standard Action during combat,
+        // ...they lose Hit Points equal to the number of Injuries they currently have."
+        let entity = updatedInitiator.entity
+        const injuries = entity.injuries || 0
+        const hiCheck = checkHeavilyInjured(injuries)
+
+        if (hiCheck.isHeavilyInjured && entity.currentHp > 0) {
+          const penalty = applyHeavilyInjuredPenalty(entity.currentHp, injuries)
+          heavilyInjuredHpLoss = penalty.hpLost
+          heavilyInjuredCombatantId = initiatingCombatantId
+          updatedInitiator.entity = { ...entity, currentHp: penalty.newHp }
+          entity = updatedInitiator.entity
+
+          if (penalty.newHp === 0) {
+            applyFaintStatus(updatedInitiator)
+            entity = updatedInitiator.entity
+          }
+
+          const deathResult = checkDeath(
+            entity.currentHp, entity.maxHp, injuries,
+            isLeague, penalty.unclampedHp
+          )
+
+          if (deathResult.isDead) {
+            const conditions: StatusCondition[] = entity.statusConditions || []
+            if (!conditions.includes('Dead')) {
+              updatedInitiator.entity = { ...entity, statusConditions: ['Dead', ...conditions.filter((s: StatusCondition) => s !== 'Dead')] }
+              entity = updatedInitiator.entity
+            }
+          }
+
+          if (penalty.hpLost > 0 && updatedInitiator.entityId) {
+            await syncEntityToDatabase(updatedInitiator, {
+              currentHp: entity.currentHp,
+              statusConditions: entity.statusConditions,
+              ...(penalty.newHp === 0 && entity.stageModifiers ? { stageModifiers: entity.stageModifiers } : {})
+            })
+          }
+
+          updatedInitiator.turnState = {
+            ...updatedInitiator.turnState,
+            heavilyInjuredPenaltyApplied: true
+          }
+        }
       }
     }
 
@@ -383,7 +434,14 @@ export default defineEventHandler(async (event) => {
           canActThisRound,
           canActImmediately
         }
-      }
+      },
+      ...(heavilyInjuredHpLoss > 0 && {
+        heavilyInjuredPenalty: {
+          combatantId: heavilyInjuredCombatantId,
+          hpLost: heavilyInjuredHpLoss,
+          fainted: updatedCombatants.find(c => c.id === heavilyInjuredCombatantId)?.entity.currentHp === 0
+        }
+      })
     }
   } catch (error: unknown) {
     if (error && typeof error === 'object' && 'statusCode' in error) throw error
