@@ -93,7 +93,7 @@
         <LevelUpSummary
           v-if="currentStep === 'summary'"
           :character-name="character.name"
-          :from-level="character.level"
+          :from-level="fromLevel ?? character.level"
           :to-level="targetLevel"
           :stat-allocations="levelUp.statAllocations"
           :current-stats="character.stats"
