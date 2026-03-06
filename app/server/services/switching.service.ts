@@ -793,6 +793,94 @@ export async function applyRecallSideEffects(
 }
 
 // ============================================
+// SEND-OUT RE-APPLY HOOK (decree-053)
+// ============================================
+
+/**
+ * Re-apply terrain/weather-sourced Other conditions to a newly sent-out Pokemon.
+ *
+ * Per decree-053: conditions clear on recall (RAW p.248), but automatically
+ * re-apply on send-out if the source is still active. This prevents the GM
+ * from needing to manually re-apply conditions after a recall/switch.
+ *
+ * Strategy: scan existing combatants for terrain/weather/environment-sourced
+ * Other conditions. If any are found, apply the same conditions to the new
+ * combatant with matching source metadata. This leverages the fact that if
+ * the GM applied "Stuck (terrain: Quicksand)" to other combatants, the
+ * newly entered Pokemon should also receive it.
+ *
+ * Also checks the encounter's active weather for weather-sourced conditions.
+ */
+export function applyTerrainWeatherConditions(
+  newCombatant: Combatant,
+  existingCombatants: Combatant[],
+  weather?: string | null
+): { applied: ConditionInstance[] } {
+  const applied: ConditionInstance[] = []
+
+  // Source types that persist in the environment and should re-apply on send-out
+  const persistingSourceTypes: Set<string> = new Set(['terrain', 'weather', 'environment'])
+
+  // Collect unique terrain/weather/environment-sourced conditions from active combatants
+  const sourceConditions = new Map<string, ConditionInstance>()
+
+  for (const combatant of existingCombatants) {
+    // Skip the new combatant itself, fainted combatants, and removed combatants
+    if (combatant.id === newCombatant.id) continue
+    if (combatant.entity.currentHp <= 0) continue
+
+    const instances = combatant.conditionInstances || []
+    for (const instance of instances) {
+      if (!persistingSourceTypes.has(instance.sourceType)) continue
+
+      // For weather-sourced conditions, verify the weather is still active
+      if (instance.sourceType === 'weather' && (!weather || weather === '')) continue
+
+      // Use condition+sourceType+sourceLabel as dedup key
+      const key = `${instance.condition}|${instance.sourceType}|${instance.sourceLabel}`
+      if (!sourceConditions.has(key)) {
+        sourceConditions.set(key, instance)
+      }
+    }
+  }
+
+  if (sourceConditions.size === 0) {
+    return { applied }
+  }
+
+  // Apply each persisting condition to the new combatant
+  const currentStatuses: StatusCondition[] = newCombatant.entity.statusConditions || []
+  const currentInstances = newCombatant.conditionInstances || []
+
+  for (const [, sourceInstance] of sourceConditions) {
+    // Skip if the combatant already has this condition
+    if (currentStatuses.includes(sourceInstance.condition)) continue
+
+    // Add to entity statusConditions
+    currentStatuses.push(sourceInstance.condition)
+
+    // Add condition instance with matching source metadata
+    const newInstance: ConditionInstance = {
+      condition: sourceInstance.condition,
+      sourceType: sourceInstance.sourceType,
+      sourceLabel: sourceInstance.sourceLabel
+    }
+    currentInstances.push(newInstance)
+    applied.push(newInstance)
+  }
+
+  if (applied.length > 0) {
+    newCombatant.entity = {
+      ...newCombatant.entity,
+      statusConditions: [...currentStatuses]
+    }
+    newCombatant.conditionInstances = [...currentInstances]
+  }
+
+  return { applied }
+}
+
+// ============================================
 // RECALL+RELEASE PAIR DETECTION (P2 — Section N)
 // ============================================
 
