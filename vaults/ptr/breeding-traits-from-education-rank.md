@@ -1,0 +1,1 @@
+Removed in PTR. Trainer skill no longer influences breeding outcomes — see [[breeding-not-trainer-influenced]]. The baby's traits come from species and parent inheritance, not breeder choice — see [[hatched-pokemon-trait-pool]].

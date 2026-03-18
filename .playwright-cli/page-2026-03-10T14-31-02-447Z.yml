@@ -1,0 +1,266 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e7]:
+        - heading "Rotom Table" [level=1] [ref=e8]
+        - generic [ref=e9]: GM View
+      - navigation [ref=e10]:
+        - link "Encounter" [ref=e11] [cursor=pointer]:
+          - /url: /gm
+          - generic [ref=e12]: Encounter
+        - link "Encounters" [ref=e13] [cursor=pointer]:
+          - /url: /gm/encounters
+          - generic [ref=e14]: Encounters
+        - link "Scenes" [ref=e15] [cursor=pointer]:
+          - /url: /gm/scenes
+          - img [ref=e16]
+          - generic [ref=e19]: Scenes
+        - link "Habitats" [ref=e20] [cursor=pointer]:
+          - /url: /gm/habitats
+          - generic [ref=e21]: Habitats
+        - link "Sheets" [ref=e22] [cursor=pointer]:
+          - /url: /gm/sheets
+          - generic [ref=e23]: Sheets
+        - link "Create" [ref=e24] [cursor=pointer]:
+          - /url: /gm/create
+          - generic [ref=e25]: Create
+        - link "Map" [ref=e26] [cursor=pointer]:
+          - /url: /gm/map
+          - generic [ref=e27]: Map
+      - generic [ref=e28]:
+        - button "Connect" [ref=e30] [cursor=pointer]:
+          - img [ref=e31]
+          - generic [ref=e34]: Connect
+        - generic [ref=e35]:
+          - generic [ref=e36]: "Group View:"
+          - generic [ref=e37]:
+            - button "Lobby" [ref=e38] [cursor=pointer]:
+              - img [ref=e39]
+            - button "Scene" [ref=e42] [cursor=pointer]:
+              - img [ref=e43]
+            - button "Encounter" [ref=e46] [cursor=pointer]:
+              - img [ref=e47]
+            - button "Map" [ref=e50] [cursor=pointer]:
+              - img [ref=e51]
+        - button "Advance Day" [ref=e54] [cursor=pointer]:
+          - generic [ref=e55]: Advance Day
+        - link "Group View" [ref=e56] [cursor=pointer]:
+          - /url: /group
+          - generic [ref=e57]: Group View
+    - main [ref=e58]:
+      - generic [ref=e59]:
+        - generic [ref=e60]:
+          - link "← Back to Sheets" [ref=e61] [cursor=pointer]:
+            - /url: /gm/sheets
+          - button "Edit" [ref=e63] [cursor=pointer]
+        - generic [ref=e350]:
+          - generic [ref=e351]:
+            - generic [ref=e353]: A
+            - generic [ref=e354]:
+              - generic [ref=e355]:
+                - generic [ref=e356]:
+                  - generic [ref=e357]: Name
+                  - textbox [disabled] [ref=e358]: Aurora
+                - generic [ref=e359]:
+                  - generic [ref=e360]: Played By
+                  - textbox [disabled] [ref=e361]: Clio
+              - generic [ref=e362]:
+                - generic [ref=e363]:
+                  - generic [ref=e364]: Level
+                  - spinbutton [disabled] [ref=e365]: "2"
+                - generic [ref=e366]:
+                  - generic [ref=e367]: Age
+                  - spinbutton [disabled] [ref=e368]: "27"
+                - generic [ref=e369]:
+                  - generic [ref=e370]: Gender
+                  - textbox [disabled] [ref=e371]: F
+                - generic [ref=e372]:
+                  - generic [ref=e373]: Type
+                  - combobox [disabled] [ref=e374]:
+                    - option "Player" [selected]
+                    - option "NPC"
+          - generic [ref=e375]:
+            - generic [ref=e376]:
+              - heading "Trainer Experience" [level=4] [ref=e377]
+              - generic [ref=e378]: 1 / 10 XP
+            - generic [ref=e381]:
+              - button "-1" [ref=e382] [cursor=pointer]
+              - button "+1" [ref=e383] [cursor=pointer]
+              - button "+2" [ref=e384] [cursor=pointer]
+              - button "+3" [ref=e385] [cursor=pointer]
+              - button "+5" [ref=e386] [cursor=pointer]
+              - button "Custom" [ref=e387] [cursor=pointer]
+          - generic [ref=e388]:
+            - button "Stats" [ref=e389] [cursor=pointer]
+            - button "Classes" [ref=e390] [cursor=pointer]
+            - button "Skills" [ref=e391] [cursor=pointer]
+            - button "Equipment" [ref=e392] [cursor=pointer]
+            - button "Pokemon" [ref=e393] [cursor=pointer]
+            - button "Healing" [ref=e394] [cursor=pointer]
+            - button "Notes" [ref=e395] [cursor=pointer]
+          - generic [ref=e397]:
+            - generic [ref=e398]:
+              - generic [ref=e399]:
+                - generic [ref=e400]: HP
+                - generic [ref=e401]:
+                  - generic [ref=e402]: "12"
+                  - generic [ref=e403]: 48 / 48
+              - generic [ref=e404]:
+                - generic [ref=e405]: Attack
+                - text: "5"
+              - generic [ref=e406]:
+                - generic [ref=e407]: Defense
+                - text: "7"
+              - generic [ref=e408]:
+                - generic [ref=e409]: Sp. Atk
+                - text: "7"
+              - generic [ref=e410]:
+                - generic [ref=e411]: Sp. Def
+                - text: "8"
+              - generic [ref=e412]:
+                - generic [ref=e413]: Speed
+                - text: "8"
+            - generic [ref=e414]:
+              - generic [ref=e415]:
+                - generic [ref=e416]: Height (cm)
+                - spinbutton [disabled] [ref=e417]
+              - generic [ref=e418]:
+                - generic [ref=e419]: Weight (kg)
+                - spinbutton [disabled] [ref=e420]
+              - generic [ref=e421]:
+                - generic [ref=e422]: Money
+                - spinbutton [disabled] [ref=e423]: "1700"
+            - generic [ref=e424]:
+              - heading "Capabilities" [level=4] [ref=e425]
+              - generic [ref=e426]:
+                - generic [ref=e427]:
+                  - generic [ref=e428]: Power
+                  - text: "4"
+                - generic [ref=e429]:
+                  - generic [ref=e430]: High Jump
+                  - text: 0m
+                - generic [ref=e431]:
+                  - generic [ref=e432]: Long Jump
+                  - text: 1m
+                - generic [ref=e433]:
+                  - generic [ref=e434]: Overland
+                  - text: "5"
+                - generic [ref=e435]:
+                  - generic [ref=e436]: Swimming
+                  - text: "2"
+                - generic [ref=e437]:
+                  - generic [ref=e438]: Throwing Range
+                  - text: 6m
+                - generic [ref=e439]:
+                  - generic [ref=e440]: Weight Class
+                  - text: —
+        - generic [ref=e442]:
+          - generic [ref=e443]:
+            - generic [ref=e444]:
+              - 'heading "Level Up: Aurora" [level=2] [ref=e445]'
+              - generic [ref=e446]: Level 1 -> 2
+            - generic [ref=e447]:
+              - generic [ref=e448]: Stats (1/3)
+              - button "x" [ref=e449] [cursor=pointer]
+          - generic [ref=e450]:
+            - generic [ref=e451]:
+              - generic [ref=e452]:
+                - generic [ref=e453]: Stat Points
+                - generic [ref=e454]: "+1"
+              - generic [ref=e455]:
+                - generic [ref=e456]: Edges
+                - generic [ref=e457]: "+2"
+            - generic [ref=e458]:
+              - generic [ref=e459]:
+                - heading "Stat Allocation" [level=3] [ref=e460]
+                - generic [ref=e461]:
+                  - text: "Points Remaining:"
+                  - strong [ref=e462]: "1"
+                  - text: / 1
+              - generic [ref=e463]:
+                - generic [ref=e464]:
+                  - generic [ref=e465]: HP
+                  - generic [ref=e466]: "12"
+                  - generic [ref=e467]: +
+                  - generic [ref=e468]:
+                    - button "-" [disabled] [ref=e469]
+                    - generic [ref=e470]: "0"
+                    - button "+" [ref=e471] [cursor=pointer]
+                  - generic [ref=e472]: =
+                  - generic [ref=e473]: "12"
+                - generic [ref=e474]:
+                  - generic [ref=e475]: Attack
+                  - generic [ref=e476]: "5"
+                  - generic [ref=e477]: +
+                  - generic [ref=e478]:
+                    - button "-" [disabled] [ref=e479]
+                    - generic [ref=e480]: "0"
+                    - button "+" [ref=e481] [cursor=pointer]
+                  - generic [ref=e482]: =
+                  - generic [ref=e483]: "5"
+                - generic [ref=e484]:
+                  - generic [ref=e485]: Defense
+                  - generic [ref=e486]: "7"
+                  - generic [ref=e487]: +
+                  - generic [ref=e488]:
+                    - button "-" [disabled] [ref=e489]
+                    - generic [ref=e490]: "0"
+                    - button "+" [ref=e491] [cursor=pointer]
+                  - generic [ref=e492]: =
+                  - generic [ref=e493]: "7"
+                - generic [ref=e494]:
+                  - generic [ref=e495]: Sp. Attack
+                  - generic [ref=e496]: "7"
+                  - generic [ref=e497]: +
+                  - generic [ref=e498]:
+                    - button "-" [disabled] [ref=e499]
+                    - generic [ref=e500]: "0"
+                    - button "+" [ref=e501] [cursor=pointer]
+                  - generic [ref=e502]: =
+                  - generic [ref=e503]: "7"
+                - generic [ref=e504]:
+                  - generic [ref=e505]: Sp. Defense
+                  - generic [ref=e506]: "8"
+                  - generic [ref=e507]: +
+                  - generic [ref=e508]:
+                    - button "-" [disabled] [ref=e509]
+                    - generic [ref=e510]: "0"
+                    - button "+" [ref=e511] [cursor=pointer]
+                  - generic [ref=e512]: =
+                  - generic [ref=e513]: "8"
+                - generic [ref=e514]:
+                  - generic [ref=e515]: Speed
+                  - generic [ref=e516]: "8"
+                  - generic [ref=e517]: +
+                  - generic [ref=e518]:
+                    - button "-" [disabled] [ref=e519]
+                    - generic [ref=e520]: "0"
+                    - button "+" [ref=e521] [cursor=pointer]
+                  - generic [ref=e522]: =
+                  - generic [ref=e523]: "8"
+              - generic [ref=e524]:
+                - generic [ref=e525]:
+                  - generic [ref=e526]: Max HP
+                  - generic [ref=e527]: "48"
+                  - generic [ref=e528]: "->"
+                  - generic [ref=e529]: "50"
+                - generic [ref=e530]:
+                  - generic [ref=e531]: Physical Evasion
+                  - generic [ref=e532]: "1"
+                - generic [ref=e533]:
+                  - generic [ref=e534]: Special Evasion
+                  - generic [ref=e535]: "1"
+                - generic [ref=e536]:
+                  - generic [ref=e537]: Speed Evasion
+                  - generic [ref=e538]: "1"
+          - generic [ref=e539]:
+            - button "Cancel" [ref=e540] [cursor=pointer]
+            - button "Next" [ref=e541] [cursor=pointer]
+  - generic [ref=e154]:
+    - button "Toggle Nuxt DevTools" [ref=e155] [cursor=pointer]:
+      - img [ref=e156]
+    - generic "Page load time" [ref=e159]:
+      - generic [ref=e160]: "636"
+      - generic [ref=e161]: ms
+    - button "Toggle Component Inspector" [ref=e163] [cursor=pointer]:
+      - img [ref=e164]

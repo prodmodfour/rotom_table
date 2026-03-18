@@ -1,0 +1,285 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e7]:
+        - heading "Rotom Table" [level=1] [ref=e8]
+        - generic [ref=e9]: GM View
+      - navigation [ref=e10]:
+        - link "Encounter" [ref=e11] [cursor=pointer]:
+          - /url: /gm
+          - generic [ref=e12]: Encounter
+        - link "Encounters" [ref=e13] [cursor=pointer]:
+          - /url: /gm/encounters
+          - generic [ref=e14]: Encounters
+        - link "Scenes" [ref=e15] [cursor=pointer]:
+          - /url: /gm/scenes
+          - img [ref=e16]
+          - generic [ref=e19]: Scenes
+        - link "Habitats" [ref=e20] [cursor=pointer]:
+          - /url: /gm/habitats
+          - generic [ref=e21]: Habitats
+        - link "Sheets" [ref=e22] [cursor=pointer]:
+          - /url: /gm/sheets
+          - generic [ref=e23]: Sheets
+        - link "Create" [ref=e24] [cursor=pointer]:
+          - /url: /gm/create
+          - generic [ref=e25]: Create
+        - link "Map" [ref=e26] [cursor=pointer]:
+          - /url: /gm/map
+          - generic [ref=e27]: Map
+      - generic [ref=e28]:
+        - button "Connect" [ref=e30] [cursor=pointer]:
+          - img [ref=e31]
+          - generic [ref=e34]: Connect
+        - generic [ref=e35]:
+          - generic [ref=e36]: "Group View:"
+          - generic [ref=e37]:
+            - button "Lobby" [ref=e38] [cursor=pointer]:
+              - img [ref=e39]
+            - button "Scene" [ref=e42] [cursor=pointer]:
+              - img [ref=e43]
+            - button "Encounter" [ref=e46] [cursor=pointer]:
+              - img [ref=e47]
+            - button "Map" [ref=e50] [cursor=pointer]:
+              - img [ref=e51]
+        - button "Advance Day" [ref=e54] [cursor=pointer]:
+          - generic [ref=e55]: Advance Day
+        - link "Group View" [ref=e56] [cursor=pointer]:
+          - /url: /group
+          - generic [ref=e57]: Group View
+    - main [ref=e58]:
+      - generic [ref=e90]:
+        - generic [ref=e91]:
+          - generic [ref=e92]:
+            - heading "New Encounter" [level=2] [ref=e93]
+            - generic [ref=e94]:
+              - generic [ref=e95]: Trainer Battle
+              - generic [ref=e96]: Round 1
+              - generic "Trainers declare actions from lowest to highest speed (decree-021)" [ref=e3403]: Declaration (Low → High)
+          - generic [ref=e97]:
+            - combobox "Set game Weather Condition (PTU p.341) — has mechanical combat effects. Not the same as natural weather." [ref=e99] [cursor=pointer]:
+              - option "No Weather Condition" [selected]
+              - option "Sunny"
+              - option "Rain"
+              - option "Sandstorm"
+              - option "Hail"
+              - option "Snow"
+              - option "Fog"
+              - option "Harsh Sunlight"
+              - option "Heavy Rain"
+              - option "Strong Winds"
+            - button "Serve to Group" [ref=e100] [cursor=pointer]
+            - generic [ref=e101]:
+              - button "Undo" [disabled] [ref=e102]
+              - button "Redo" [disabled] [ref=e103]
+            - button "Next Turn" [ref=e3404] [cursor=pointer]
+            - button "End Encounter" [ref=e105] [cursor=pointer]
+            - button "Save Template" [ref=e106] [cursor=pointer]
+            - button "Keyboard shortcuts (?)" [ref=e107] [cursor=pointer]
+        - generic [ref=e108]:
+          - generic [ref=e109]:
+            - button "List View" [ref=e110] [cursor=pointer]
+            - button "Grid View" [ref=e111] [cursor=pointer]
+          - generic [ref=e112]:
+            - generic [ref=e113]: "Damage Mode:"
+            - button "Set" [ref=e114] [cursor=pointer]
+            - button "Rolled" [ref=e115] [cursor=pointer]
+        - generic [ref=e3405]:
+          - generic [ref=e3406]:
+            - img [ref=e3407]
+            - generic [ref=e3410]: Declaration Phase
+            - generic [ref=e3411]: 1 of 1
+          - generic [ref=e3412]:
+            - generic [ref=e3413]: Ash
+            - generic [ref=e3414]: "Speed: 5"
+          - generic [ref=e3415]:
+            - generic [ref=e3416]: Action Type
+            - combobox [ref=e3417] [cursor=pointer]:
+              - option "Select action..." [disabled]
+              - option "Command Pokemon" [selected]
+              - option "Switch Pokemon"
+              - option "Use Item"
+              - option "Use Feature"
+              - option "Orders"
+              - option "Pass"
+            - generic [ref=e3418]: Description
+            - textbox "Describe the declared action..." [active] [ref=e3419]: Tackle attack
+            - button "Declare & Next" [ref=e3420] [cursor=pointer]:
+              - img [ref=e3421]
+              - text: Declare & Next
+        - generic [ref=e116]:
+          - generic [ref=e117]:
+            - generic [ref=e3424]:
+              - heading "Current Turn Declaration (Low → High)" [level=3] [ref=e3425]:
+                - text: Current Turn
+                - generic [ref=e3426]: Declaration (Low → High)
+              - generic [ref=e3427]:
+                - generic [ref=e3430]: A
+                - generic [ref=e3431]:
+                  - generic [ref=e3432]:
+                    - generic [ref=e3433]: Ash
+                    - generic [ref=e3434]: Lv.30
+                  - generic [ref=e3436]:
+                    - generic [ref=e3437]: HP
+                    - generic [ref=e3441]: 10/10
+                  - generic [ref=e3442]: "Init: 5"
+                - generic [ref=e3443]:
+                  - generic [ref=e3444]:
+                    - spinbutton [ref=e3445]: "0"
+                    - button "-HP" [ref=e3446] [cursor=pointer]
+                    - 'combobox "HP reduction type: Damage (injuries), HP Loss (no massive damage), Set HP (no massive damage)" [ref=e3447] [cursor=pointer]':
+                      - option "DMG" [selected]
+                      - option "Loss"
+                      - option "Set"
+                  - generic [ref=e3448]:
+                    - spinbutton [ref=e3449]: "0"
+                    - button "+HP" [ref=e3450] [cursor=pointer]
+                  - generic [ref=e3451]:
+                    - button "+T" [ref=e3452] [cursor=pointer]
+                    - button "CS" [ref=e3453] [cursor=pointer]
+                    - button "ST" [ref=e3454] [cursor=pointer]
+                  - button "Item" [ref=e3455] [cursor=pointer]:
+                    - img [ref=e3456]
+                    - text: Item
+                  - button "Act" [ref=e3459] [cursor=pointer]
+                  - button "Remove" [ref=e3460] [cursor=pointer]
+            - generic [ref=e118]:
+              - generic [ref=e119]:
+                - generic [ref=e120]:
+                  - heading "Players" [level=3] [ref=e121]
+                  - button "+ Add" [ref=e122] [cursor=pointer]
+                - generic [ref=e1759]:
+                  - generic [ref=e1762]: A
+                  - generic [ref=e1763]:
+                    - generic [ref=e1764]:
+                      - generic [ref=e1765]: Ash
+                      - generic [ref=e1766]: Lv.30
+                    - generic [ref=e1768]:
+                      - generic [ref=e1769]: HP
+                      - generic [ref=e1773]: 10/10
+                    - generic [ref=e1774]: "Init: 5"
+                  - generic [ref=e1775]:
+                    - generic [ref=e1776]:
+                      - spinbutton [ref=e1777]: "0"
+                      - button "-HP" [ref=e1778] [cursor=pointer]
+                      - 'combobox "HP reduction type: Damage (injuries), HP Loss (no massive damage), Set HP (no massive damage)" [ref=e1779] [cursor=pointer]':
+                        - option "DMG" [selected]
+                        - option "Loss"
+                        - option "Set"
+                    - generic [ref=e1780]:
+                      - spinbutton [ref=e1781]: "0"
+                      - button "+HP" [ref=e1782] [cursor=pointer]
+                    - generic [ref=e1783]:
+                      - button "+T" [ref=e1784] [cursor=pointer]
+                      - button "CS" [ref=e1785] [cursor=pointer]
+                      - button "ST" [ref=e1786] [cursor=pointer]
+                    - button "Item" [ref=e1787] [cursor=pointer]:
+                      - img [ref=e1788]
+                      - text: Item
+                    - button "Act" [ref=e1791] [cursor=pointer]
+                    - button "Remove" [ref=e1792] [cursor=pointer]
+              - generic [ref=e125]:
+                - generic [ref=e126]:
+                  - heading "Allies" [level=3] [ref=e127]
+                  - button "+ Add" [ref=e128] [cursor=pointer]
+                - paragraph [ref=e130]: No allies
+              - generic [ref=e131]:
+                - generic [ref=e132]:
+                  - heading "Enemies" [level=3] [ref=e133]
+                  - button "+ Add" [ref=e134] [cursor=pointer]
+                - generic [ref=e3333]:
+                  - img "Alolan Grimer 1" [ref=e3335]
+                  - generic [ref=e3336]:
+                    - generic [ref=e3337]:
+                      - generic [ref=e3338]: Alolan Grimer 1
+                      - generic [ref=e3339]: Lv.15
+                    - generic [ref=e3340]:
+                      - generic [ref=e3341]: Poison
+                      - generic [ref=e3342]: Dark
+                    - generic [ref=e3344]:
+                      - generic [ref=e3345]: HP
+                      - generic [ref=e3349]: 277/277
+                    - generic [ref=e3350]: "Init: 25"
+                    - generic [ref=e3351]:
+                      - generic [ref=e3352]:
+                        - generic [ref=e3353]: Trainer
+                        - combobox [ref=e3354]:
+                          - option "Ash" [selected]
+                      - generic [ref=e3355]:
+                        - generic [ref=e3357]: Capture
+                        - generic [ref=e3358]:
+                          - generic [ref=e3359]: Ball Type
+                          - button "Basic Ball +0" [ref=e3360] [cursor=pointer]:
+                            - generic [ref=e3361]: Basic Ball
+                            - generic [ref=e3362]: "+0"
+                            - img [ref=e3363]
+                        - generic [ref=e3366]:
+                          - generic [ref=e3367]: Capture Conditions
+                          - generic [ref=e3368] [cursor=pointer]:
+                            - checkbox "Target was baited (Lure Ball)" [ref=e3369]
+                            - generic [ref=e3370]: Target was baited (Lure Ball)
+                          - generic [ref=e3371] [cursor=pointer]:
+                            - checkbox "Dark / low-light (Dusk Ball)" [ref=e3372]
+                            - generic [ref=e3373]: Dark / low-light (Dusk Ball)
+                          - generic [ref=e3374] [cursor=pointer]:
+                            - checkbox "Underwater / underground (Dive Ball)" [ref=e3375]
+                            - generic [ref=e3376]: Underwater / underground (Dive Ball)
+                        - generic [ref=e3377]:
+                          - generic [ref=e3378]:
+                            - generic [ref=e3379]: ◉
+                            - generic [ref=e3380]: Capture Rate
+                          - generic [ref=e3381]: 50%
+                          - generic [ref=e3382]: Moderate
+                        - button "Throw Basic Ball" [ref=e3384] [cursor=pointer]
+                  - generic [ref=e3385]:
+                    - generic [ref=e3386]:
+                      - spinbutton [ref=e3387]: "0"
+                      - button "-HP" [ref=e3388] [cursor=pointer]
+                      - 'combobox "HP reduction type: Damage (injuries), HP Loss (no massive damage), Set HP (no massive damage)" [ref=e3389] [cursor=pointer]':
+                        - option "DMG" [selected]
+                        - option "Loss"
+                        - option "Set"
+                    - generic [ref=e3390]:
+                      - spinbutton [ref=e3391]: "0"
+                      - button "+HP" [ref=e3392] [cursor=pointer]
+                    - generic [ref=e3393]:
+                      - button "+T" [ref=e3394] [cursor=pointer]
+                      - button "CS" [ref=e3395] [cursor=pointer]
+                      - button "ST" [ref=e3396] [cursor=pointer]
+                    - button "Item" [ref=e3397] [cursor=pointer]:
+                      - img [ref=e3398]
+                      - text: Item
+                    - button "Act" [ref=e3401] [cursor=pointer]
+                    - button "Remove" [ref=e3402] [cursor=pointer]
+          - generic [ref=e137]:
+            - generic [ref=e138]:
+              - heading "Combat Log" [level=3] [ref=e139]
+              - paragraph [ref=e141]: No actions yet
+            - generic [ref=e142]:
+              - generic [ref=e143]:
+                - generic [ref=e144]: Environment
+                - generic [ref=e145]: None
+              - generic [ref=e146]:
+                - generic [ref=e147]: Environment Preset
+                - combobox [ref=e148] [cursor=pointer]:
+                  - option "None" [selected]
+                  - option "Dim Cave (Blindness)"
+                  - option "Dark Cave (Total Blindness)"
+                  - option "Frozen Lake"
+                  - option "Hazard Factory"
+                  - option "Custom..."
+            - generic [ref=e149]:
+              - generic [ref=e150]:
+                - generic [ref=e151]: XP Significance
+                - generic [ref=e152]: x1.0
+              - generic [ref=e153]:
+                - paragraph [ref=e154]: No defeated enemies yet.
+                - paragraph [ref=e155]: XP breakdown will appear after enemies are defeated.
+  - generic [ref=e76]:
+    - button "Toggle Nuxt DevTools" [ref=e77] [cursor=pointer]:
+      - img [ref=e78]
+    - generic "Page load time" [ref=e81]:
+      - generic [ref=e82]: "359"
+      - generic [ref=e83]: ms
+    - button "Toggle Component Inspector" [ref=e85] [cursor=pointer]:
+      - img [ref=e86]

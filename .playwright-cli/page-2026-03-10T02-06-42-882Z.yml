@@ -1,0 +1,78 @@
+- generic [ref=e1]:
+  - generic [ref=e4]:
+    - banner [ref=e89]:
+      - generic [ref=e90]:
+        - generic [ref=e91]: Hassan
+        - status "Connected - LAN (Local) - 3ms" [ref=e472] [cursor=pointer]:
+          - 'button "Connection: Connected. Tap for details." [ref=e93]'
+      - button "Switch character" [ref=e94] [cursor=pointer]:
+        - img [ref=e95]
+    - main [ref=e98]:
+      - region "Encounter view" [ref=e413]:
+        - generic [ref=e414]:
+          - generic [ref=e415]:
+            - generic [ref=e416]:
+              - 'heading "Route Forest: Wild Oddish" [level=2] [ref=e417]'
+              - generic [ref=e418]: Round 1
+            - generic [ref=e419]:
+              - generic [ref=e420]: "Current Turn:"
+              - generic [ref=e421]: Oddish
+          - generic [ref=e424]:
+            - generic:
+              - generic [ref=e426] [cursor=pointer]:
+                - img "Oddish" [ref=e428]
+                - generic:
+                  - generic: Oddish
+                  - generic: Lv.10
+              - generic [ref=e431] [cursor=pointer]:
+                - img "Growlithe 9" [ref=e433]
+                - generic:
+                  - generic: Growlithe 9
+                  - generic: Lv.15
+            - generic [ref=e436]:
+              - button "+" [ref=e437] [cursor=pointer]
+              - generic [ref=e438]: 100%
+              - button "-" [ref=e439] [cursor=pointer]
+              - button "⌂" [ref=e440] [cursor=pointer]
+          - generic [ref=e441]:
+            - generic [ref=e442]:
+              - heading "Players" [level=3] [ref=e443]
+              - generic [ref=e445]:
+                - img "Growlithe 9" [ref=e446]
+                - generic [ref=e447]:
+                  - generic [ref=e449]: Growlithe 9
+                  - generic [ref=e451]: Fire
+                  - generic [ref=e455]: 43 / 43
+            - generic [ref=e456]:
+              - heading "Enemies" [level=3] [ref=e457]
+              - generic [ref=e459]:
+                - img "Oddish" [ref=e460]
+                - generic [ref=e461]:
+                  - generic [ref=e462]:
+                    - generic [ref=e463]: Oddish
+                    - generic [ref=e464]: Turn
+                  - generic [ref=e465]:
+                    - generic [ref=e466]: Grass
+                    - generic [ref=e467]: Poison
+                  - generic [ref=e471]: 100%
+    - navigation "Player navigation" [ref=e199]:
+      - button "Character" [ref=e200] [cursor=pointer]:
+        - img [ref=e201]
+        - generic [ref=e204]: Character
+      - button "Team" [ref=e205] [cursor=pointer]:
+        - img [ref=e206]
+        - generic [ref=e209]: Team
+      - button "Encounter" [active] [ref=e210] [cursor=pointer]:
+        - img [ref=e211]
+        - generic [ref=e214]: Encounter
+      - button "Scene" [ref=e215] [cursor=pointer]:
+        - img [ref=e216]
+        - generic [ref=e219]: Scene
+  - generic [ref=e75]:
+    - button "Toggle Nuxt DevTools" [ref=e76] [cursor=pointer]:
+      - img [ref=e77]
+    - generic "Page load time" [ref=e80]:
+      - generic [ref=e81]: "118"
+      - generic [ref=e82]: ms
+    - button "Toggle Component Inspector" [ref=e84] [cursor=pointer]:
+      - img [ref=e85]

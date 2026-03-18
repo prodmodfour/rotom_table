@@ -1,0 +1,10 @@
+- Loyalty is now no longer a secret value.
+- Loyalty describes the relationship between a pokemon and its trainer
+- Now Command, Charm or Persuade Checks
+	- DC 20 for 0
+	- DC 10 for 1
+	- DC 5 for 2
+	- No check for rank 3
+- Intercept for trainer moved to rank 4. Inercept attacks aimed at any ally moved to rank 4
+- Rank 5: +1 to training checks
+- Rank 6: +3 to training checks

@@ -1,0 +1,1 @@
+Removed in PTR. There is no Inheritance Move List. Breeding is purely about [[innate-traits]], not moves — see [[no-move-inheritance]]. The strategic value of breeding comes from the [[inheritable-traits-list]] instead.

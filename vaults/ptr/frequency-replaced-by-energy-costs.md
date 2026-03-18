@@ -1,0 +1,1 @@
+PTR removes the frequency system entirely. The old hierarchy of At-Will, EOT, Scene, and Daily (see [[scene-frequency-definition]]) is replaced by [[move-energy-cost|Energy Costs]] drawn from the [[energy-resource]] pool.

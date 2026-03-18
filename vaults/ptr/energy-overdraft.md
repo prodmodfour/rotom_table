@@ -1,0 +1,1 @@
+A character can spend more [[energy-resource|Energy]] than they currently have. Doing so causes 3 levels of [[fatigue-levels|Fatigue]]. Energy cannot go below 0 — the floor is still 0 regardless of how much is overdrafted.

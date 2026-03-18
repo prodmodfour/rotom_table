@@ -1,0 +1,200 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e7]:
+        - heading "Rotom Table" [level=1] [ref=e8]
+        - generic [ref=e9]: GM View
+      - navigation [ref=e10]:
+        - link "Encounter" [ref=e11] [cursor=pointer]:
+          - /url: /gm
+          - generic [ref=e12]: Encounter
+        - link "Encounters" [ref=e13] [cursor=pointer]:
+          - /url: /gm/encounters
+          - generic [ref=e14]: Encounters
+        - link "Scenes" [ref=e15] [cursor=pointer]:
+          - /url: /gm/scenes
+          - img [ref=e16]
+          - generic [ref=e19]: Scenes
+        - link "Habitats" [ref=e20] [cursor=pointer]:
+          - /url: /gm/habitats
+          - generic [ref=e21]: Habitats
+        - link "Sheets" [ref=e22] [cursor=pointer]:
+          - /url: /gm/sheets
+          - generic [ref=e23]: Sheets
+        - link "Create" [ref=e24] [cursor=pointer]:
+          - /url: /gm/create
+          - generic [ref=e25]: Create
+        - link "Map" [ref=e26] [cursor=pointer]:
+          - /url: /gm/map
+          - generic [ref=e27]: Map
+      - generic [ref=e28]:
+        - button "Connect" [ref=e30] [cursor=pointer]:
+          - img [ref=e31]
+          - generic [ref=e34]: Connect
+        - generic [ref=e35]:
+          - generic [ref=e36]: "Group View:"
+          - generic [ref=e37]:
+            - button "Lobby" [ref=e38] [cursor=pointer]:
+              - img [ref=e39]
+            - button "Scene" [ref=e42] [cursor=pointer]:
+              - img [ref=e43]
+            - button "Encounter" [ref=e46] [cursor=pointer]:
+              - img [ref=e47]
+            - button "Map" [ref=e50] [cursor=pointer]:
+              - img [ref=e51]
+        - button "Advance Day" [ref=e54] [cursor=pointer]:
+          - generic [ref=e55]: Advance Day
+        - link "Group View" [ref=e56] [cursor=pointer]:
+          - /url: /group
+          - generic [ref=e57]: Group View
+    - main [ref=e58]:
+      - generic [ref=e59]:
+        - generic [ref=e60]:
+          - generic [ref=e61]:
+            - heading "Encounter Library" [level=1] [ref=e62]
+            - generic [ref=e63]: 8 templates
+          - button "+ New Template" [ref=e65] [cursor=pointer]
+        - generic [ref=e66]:
+          - textbox "Search templates..." [ref=e68]
+          - combobox [ref=e70] [cursor=pointer]:
+            - option "All Categories"
+            - option "Wild Battle" [selected]
+          - generic [ref=e71]:
+            - combobox [ref=e72] [cursor=pointer]:
+              - option "Recently Updated" [selected]
+              - option "Recently Created"
+              - option "Name"
+            - button "↓" [ref=e73] [cursor=pointer]
+        - generic [ref=e74]:
+          - generic [ref=e230]:
+            - generic [ref=e231]:
+              - heading "Vs Spiritomb" [level=3] [ref=e232]
+              - generic [ref=e233]:
+                - button "Load" [ref=e234] [cursor=pointer]:
+                  - img "Load" [ref=e235]
+                - button "Duplicate" [ref=e236] [cursor=pointer]:
+                  - img "Duplicate" [ref=e237]
+                - button "Edit" [ref=e238] [cursor=pointer]:
+                  - img "Edit" [ref=e239]
+                - button "Delete" [ref=e240] [cursor=pointer]:
+                  - img "Delete" [ref=e241]
+            - paragraph [ref=e242]: "Created from encounter: Vs Spiritomb"
+            - generic [ref=e243]:
+              - generic [ref=e244]:
+                - generic [ref=e245]: "Type:"
+                - generic [ref=e246]: wild
+              - generic [ref=e247]:
+                - generic [ref=e248]: "Combatants:"
+                - generic [ref=e249]: "5"
+              - generic [ref=e250]:
+                - generic [ref=e251]: "Grid:"
+                - generic [ref=e252]: 20x15
+            - generic [ref=e253]:
+              - generic [ref=e254]: Combatants
+              - generic [ref=e255]:
+                - generic [ref=e256]:
+                  - generic [ref=e258]: Spiritomb
+                  - generic [ref=e259]: pokemon
+                - generic [ref=e260]:
+                  - generic [ref=e262]: Yamask
+                  - generic [ref=e263]: pokemon
+                - generic [ref=e264]:
+                  - generic [ref=e266]: Yamask
+                  - generic [ref=e267]: pokemon
+                - generic [ref=e268]:
+                  - generic [ref=e270]: Honedge
+                  - generic [ref=e271]: pokemon
+                - generic [ref=e272]:
+                  - generic [ref=e274]: Golett
+                  - generic [ref=e275]: pokemon
+            - generic [ref=e276]: Wild Battle
+          - generic [ref=e277]:
+            - generic [ref=e278]:
+              - heading "Vs Thievul" [level=3] [ref=e279]
+              - generic [ref=e280]:
+                - button "Load" [ref=e281] [cursor=pointer]:
+                  - img "Load" [ref=e282]
+                - button "Duplicate" [ref=e283] [cursor=pointer]:
+                  - img "Duplicate" [ref=e284]
+                - button "Edit" [ref=e285] [cursor=pointer]:
+                  - img "Edit" [ref=e286]
+                - button "Delete" [ref=e287] [cursor=pointer]:
+                  - img "Delete" [ref=e288]
+            - paragraph [ref=e289]: "Created from encounter: Vs Thievul"
+            - generic [ref=e290]:
+              - generic [ref=e291]:
+                - generic [ref=e292]: "Type:"
+                - generic [ref=e293]: wild
+              - generic [ref=e294]:
+                - generic [ref=e295]: "Combatants:"
+                - generic [ref=e296]: "6"
+              - generic [ref=e297]:
+                - generic [ref=e298]: "Grid:"
+                - generic [ref=e299]: 20x15
+            - generic [ref=e300]:
+              - generic [ref=e301]: Combatants
+              - generic [ref=e302]:
+                - generic [ref=e303]:
+                  - generic [ref=e305]: Thievul
+                  - generic [ref=e306]: pokemon
+                - generic [ref=e307]:
+                  - generic [ref=e309]: Nickit
+                  - generic [ref=e310]: pokemon
+                - generic [ref=e311]:
+                  - generic [ref=e313]: Nickit
+                  - generic [ref=e314]: pokemon
+                - generic [ref=e315]:
+                  - generic [ref=e317]: Nickit
+                  - generic [ref=e318]: pokemon
+                - generic [ref=e319]:
+                  - generic [ref=e321]: Nickit
+                  - generic [ref=e322]: pokemon
+                - generic [ref=e323]: +1 more
+            - generic [ref=e324]: Wild Battle
+          - generic [ref=e325]:
+            - generic [ref=e326]:
+              - heading "Vs Carvanha" [level=3] [ref=e327]
+              - generic [ref=e328]:
+                - button "Load" [ref=e329] [cursor=pointer]:
+                  - img "Load" [ref=e330]
+                - button "Duplicate" [ref=e331] [cursor=pointer]:
+                  - img "Duplicate" [ref=e332]
+                - button "Edit" [ref=e333] [cursor=pointer]:
+                  - img "Edit" [ref=e334]
+                - button "Delete" [ref=e335] [cursor=pointer]:
+                  - img "Delete" [ref=e336]
+            - paragraph [ref=e337]: "Created from encounter: Vs Carvanha"
+            - generic [ref=e338]:
+              - generic [ref=e339]:
+                - generic [ref=e340]: "Type:"
+                - generic [ref=e341]: wild
+              - generic [ref=e342]:
+                - generic [ref=e343]: "Combatants:"
+                - generic [ref=e344]: "4"
+              - generic [ref=e345]:
+                - generic [ref=e346]: "Grid:"
+                - generic [ref=e347]: 20x15
+            - generic [ref=e348]:
+              - generic [ref=e349]: Combatants
+              - generic [ref=e350]:
+                - generic [ref=e351]:
+                  - generic [ref=e353]: Carvanha
+                  - generic [ref=e354]: pokemon
+                - generic [ref=e355]:
+                  - generic [ref=e357]: Carvanha
+                  - generic [ref=e358]: pokemon
+                - generic [ref=e359]:
+                  - generic [ref=e361]: Carvanha
+                  - generic [ref=e362]: pokemon
+                - generic [ref=e363]:
+                  - generic [ref=e365]: Carvanha
+                  - generic [ref=e366]: pokemon
+            - generic [ref=e367]: Wild Battle
+  - generic [ref=e368]:
+    - button "Toggle Nuxt DevTools" [ref=e369] [cursor=pointer]:
+      - img [ref=e370]
+    - generic "Page load time" [ref=e373]:
+      - generic [ref=e374]: "265"
+      - generic [ref=e375]: ms
+    - button "Toggle Component Inspector" [ref=e377] [cursor=pointer]:
+      - img [ref=e378]

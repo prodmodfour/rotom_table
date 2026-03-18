@@ -1,0 +1,107 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e4]:
+    - banner [ref=e565]:
+      - generic [ref=e566]:
+        - generic [ref=e567]: Hassan
+        - status "Connected - LAN (Local) - 4ms" [ref=e696] [cursor=pointer]:
+          - 'button "Connection: Connected. Tap for details." [ref=e569]'
+      - button "Switch character" [ref=e570] [cursor=pointer]:
+        - img [ref=e571]
+    - main [ref=e574]:
+      - region "Character sheet" [ref=e575]:
+        - region "Character identity and HP" [ref=e576]:
+          - generic [ref=e577]:
+            - generic [ref=e579]: H
+            - generic [ref=e580]:
+              - heading "Hassan" [level=2] [ref=e581]
+              - generic [ref=e582]: Lv. 1
+              - generic [ref=e583]: Ace Trainer / Elite Trainer
+          - generic [ref=e587]: 45 / 45 HP
+        - region "Character data actions" [ref=e588]:
+          - button "Export character data as JSON" [ref=e589] [cursor=pointer]:
+            - img [ref=e590]
+            - generic [ref=e593]: Export Character
+          - button "Import character data from JSON" [ref=e594] [cursor=pointer]:
+            - img [ref=e595]
+            - generic [ref=e598]: Import Character
+        - generic [ref=e599]:
+          - button "Stats" [expanded] [ref=e600] [cursor=pointer]:
+            - generic [ref=e601]: Stats
+            - img [ref=e602]
+          - generic [ref=e605]:
+            - generic "Max HP = Level (1) x2 + HP Base (11) x3 + 10 = 45" [ref=e606]:
+              - generic [ref=e607]: HP Base
+              - generic [ref=e608]: "11"
+            - generic [ref=e609]:
+              - generic [ref=e610]: ATK
+              - generic [ref=e611]: "5"
+            - generic [ref=e612]:
+              - generic [ref=e613]: DEF
+              - generic [ref=e614]: "7"
+            - generic [ref=e615]:
+              - generic [ref=e616]: SPA
+              - generic [ref=e617]: "5"
+            - generic [ref=e618]:
+              - generic [ref=e619]: SPD
+              - generic [ref=e620]: "7"
+            - generic [ref=e621]:
+              - generic [ref=e622]: SPE
+              - generic [ref=e623]: "11"
+        - generic [ref=e624]:
+          - button "Combat Info" [expanded] [ref=e625] [cursor=pointer]:
+            - generic [ref=e626]: Combat Info
+            - img [ref=e627]
+          - generic [ref=e630]:
+            - generic [ref=e631]:
+              - generic [ref=e632]:
+                - generic [ref=e633]: Phys Evasion
+                - generic [ref=e634]: "1"
+              - generic [ref=e635]:
+                - generic [ref=e636]: Spec Evasion
+                - generic [ref=e637]: "1"
+              - generic [ref=e638]:
+                - generic [ref=e639]: Spd Evasion
+                - generic [ref=e640]: "2"
+            - generic [ref=e641]:
+              - generic [ref=e642]:
+                - generic [ref=e643]: AP
+                - generic [ref=e644]: "5"
+              - generic [ref=e645]:
+                - generic [ref=e646]: Injuries
+                - generic [ref=e647]: "0"
+              - generic [ref=e648]:
+                - generic [ref=e649]: Temp HP
+                - generic [ref=e650]: "0"
+        - button "Skills" [ref=e652] [cursor=pointer]:
+          - generic [ref=e653]: Skills
+          - img [ref=e654]
+        - button "Features & Edges" [ref=e658] [cursor=pointer]:
+          - generic [ref=e659]: Features & Edges
+          - img [ref=e660]
+        - button "Equipment" [ref=e664] [cursor=pointer]:
+          - generic [ref=e665]: Equipment
+          - img [ref=e666]
+        - button "Inventory (0P)" [ref=e670] [cursor=pointer]:
+          - generic [ref=e671]: Inventory (0P)
+          - img [ref=e672]
+    - navigation "Player navigation" [ref=e675]:
+      - button "Character" [ref=e676] [cursor=pointer]:
+        - img [ref=e677]
+        - generic [ref=e680]: Character
+      - button "Team" [ref=e681] [cursor=pointer]:
+        - img [ref=e682]
+        - generic [ref=e685]: Team
+      - button "Encounter" [ref=e686] [cursor=pointer]:
+        - img [ref=e687]
+        - generic [ref=e690]: Encounter
+      - button "Scene" [ref=e691] [cursor=pointer]:
+        - img [ref=e692]
+        - generic [ref=e695]: Scene
+  - generic [ref=e75]:
+    - button "Toggle Nuxt DevTools" [ref=e76] [cursor=pointer]:
+      - img [ref=e77]
+    - generic "Page load time" [ref=e80]:
+      - generic [ref=e81]: "118"
+      - generic [ref=e82]: ms
+    - button "Toggle Component Inspector" [ref=e84] [cursor=pointer]:
+      - img [ref=e85]

@@ -1,0 +1,5 @@
+- The Documentation vault is here: vaults/documentation
+- This vault records how the PTR system will be implemented as the rotom_table app.
+- It contains app design philosophy, architecture decisions, implementation details, and design patterns.
+- It does not contain code.
+- This vault follows Zettelkasten: .claude/context_injections/zettelkasten.md

@@ -1,0 +1,535 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e7]:
+        - heading "Rotom Table" [level=1] [ref=e8]
+        - generic [ref=e9]: GM View
+      - navigation [ref=e10]:
+        - link "Encounter" [ref=e11] [cursor=pointer]:
+          - /url: /gm
+          - generic [ref=e12]: Encounter
+        - link "Encounters" [ref=e13] [cursor=pointer]:
+          - /url: /gm/encounters
+          - generic [ref=e14]: Encounters
+        - link "Scenes" [ref=e15] [cursor=pointer]:
+          - /url: /gm/scenes
+          - img [ref=e16]
+          - generic [ref=e19]: Scenes
+        - link "Habitats" [ref=e20] [cursor=pointer]:
+          - /url: /gm/habitats
+          - generic [ref=e21]: Habitats
+        - link "Sheets" [ref=e22] [cursor=pointer]:
+          - /url: /gm/sheets
+          - generic [ref=e23]: Sheets
+        - link "Create" [ref=e24] [cursor=pointer]:
+          - /url: /gm/create
+          - generic [ref=e25]: Create
+        - link "Map" [ref=e26] [cursor=pointer]:
+          - /url: /gm/map
+          - generic [ref=e27]: Map
+      - generic [ref=e28]:
+        - button "Connect" [ref=e30] [cursor=pointer]:
+          - img [ref=e31]
+          - generic [ref=e34]: Connect
+        - generic [ref=e35]:
+          - generic [ref=e36]: "Group View:"
+          - generic [ref=e37]:
+            - button "Lobby" [ref=e38] [cursor=pointer]:
+              - img [ref=e39]
+            - button "Scene" [ref=e42] [cursor=pointer]:
+              - img [ref=e43]
+            - button "Encounter" [ref=e46] [cursor=pointer]:
+              - img [ref=e47]
+            - button "Map" [ref=e50] [cursor=pointer]:
+              - img [ref=e51]
+        - button "Advance Day" [ref=e54] [cursor=pointer]:
+          - generic [ref=e55]: Advance Day
+        - link "Group View" [ref=e56] [cursor=pointer]:
+          - /url: /group
+          - generic [ref=e57]: Group View
+    - main [ref=e58]:
+      - generic [ref=e395]:
+        - generic [ref=e396]:
+          - generic [ref=e397]:
+            - heading "Vs Thievul" [level=2] [ref=e398]
+            - generic [ref=e399]:
+              - generic [ref=e400]: Full Contact
+              - generic [ref=e401]: Round 1
+          - generic [ref=e402]:
+            - combobox "Set game Weather Condition (PTU p.341) — has mechanical combat effects. Not the same as natural weather." [ref=e404] [cursor=pointer]:
+              - option "No Weather Condition" [selected]
+              - option "Sunny"
+              - option "Rain"
+              - option "Sandstorm"
+              - option "Hail"
+              - option "Snow"
+              - option "Fog"
+              - option "Harsh Sunlight"
+              - option "Heavy Rain"
+              - option "Strong Winds"
+            - button "Serve to Group" [ref=e405] [cursor=pointer]
+            - generic [ref=e406]:
+              - button "Undo" [disabled] [ref=e407]
+              - button "Redo" [disabled] [ref=e408]
+            - button "Start Combat" [ref=e409] [cursor=pointer]
+            - button "End Encounter" [ref=e410] [cursor=pointer]
+            - button "Save Template" [ref=e411] [cursor=pointer]
+            - button "Keyboard shortcuts (?)" [ref=e412] [cursor=pointer]
+        - generic [ref=e413]:
+          - generic [ref=e414]:
+            - button "List View" [ref=e415] [cursor=pointer]
+            - button "Grid View" [ref=e416] [cursor=pointer]
+          - generic [ref=e417]:
+            - generic [ref=e418]: "Damage Mode:"
+            - button "Set" [ref=e419] [cursor=pointer]
+            - button "Rolled" [ref=e420] [cursor=pointer]
+        - generic [ref=e421]:
+          - generic [ref=e423]:
+            - generic [ref=e424]:
+              - generic [ref=e425]:
+                - heading "Players" [level=3] [ref=e426]
+                - button "+ Add" [ref=e427] [cursor=pointer]
+              - generic [ref=e2225]:
+                - generic [ref=e2228]: A
+                - generic [ref=e2229]:
+                  - generic [ref=e2230]:
+                    - generic [ref=e2231]: Ash
+                    - generic [ref=e2232]: Lv.30
+                  - generic [ref=e2234]:
+                    - generic [ref=e2235]: HP
+                    - generic [ref=e2239]: 10/10
+                  - generic [ref=e2240]: "Init: 5"
+                - generic [ref=e2241]:
+                  - generic [ref=e2242]:
+                    - spinbutton [ref=e2243]: "0"
+                    - button "-HP" [ref=e2244] [cursor=pointer]
+                    - 'combobox "HP reduction type: Damage (injuries), HP Loss (no massive damage), Set HP (no massive damage)" [ref=e2245] [cursor=pointer]':
+                      - option "DMG" [selected]
+                      - option "Loss"
+                      - option "Set"
+                  - generic [ref=e2246]:
+                    - spinbutton [ref=e2247]: "0"
+                    - button "+HP" [ref=e2248] [cursor=pointer]
+                  - generic [ref=e2249]:
+                    - button "+T" [ref=e2250] [cursor=pointer]
+                    - button "CS" [ref=e2251] [cursor=pointer]
+                    - button "ST" [ref=e2252] [cursor=pointer]
+                  - button "Item" [ref=e2253] [cursor=pointer]:
+                    - img [ref=e2254]
+                    - text: Item
+                  - button "Act" [ref=e2257] [cursor=pointer]
+                  - button "Remove" [ref=e2258] [cursor=pointer]
+            - generic [ref=e430]:
+              - generic [ref=e431]:
+                - heading "Allies" [level=3] [ref=e432]
+                - button "+ Add" [ref=e433] [cursor=pointer]
+              - paragraph [ref=e435]: No allies
+            - generic [ref=e436]:
+              - generic [ref=e437]:
+                - heading "Enemies" [level=3] [ref=e438]
+                - button "+ Add" [ref=e439] [cursor=pointer]
+              - generic [ref=e440]:
+                - generic [ref=e441]:
+                  - img "Thievul" [ref=e443]
+                  - generic [ref=e444]:
+                    - generic [ref=e445]:
+                      - generic [ref=e446]: Thievul
+                      - generic [ref=e447]: Lv.15
+                    - generic [ref=e449]: Dark
+                    - generic [ref=e451]:
+                      - generic [ref=e452]: HP
+                      - generic [ref=e456]: 49/49
+                    - generic [ref=e457]: "Init: 22"
+                    - generic [ref=e2259]:
+                      - generic [ref=e2260]:
+                        - generic [ref=e2261]: Trainer
+                        - combobox [ref=e2262]:
+                          - option "Ash" [selected]
+                      - generic [ref=e2263]:
+                        - generic [ref=e2265]: Capture
+                        - generic [ref=e2266]:
+                          - generic [ref=e2267]: Ball Type
+                          - button "Great Ball -10" [ref=e2646] [cursor=pointer]:
+                            - generic [ref=e2269]: Great Ball
+                            - generic [ref=e2270]: "-10"
+                            - img [ref=e2271]
+                        - generic [ref=e2274]:
+                          - generic [ref=e2275]: Capture Conditions
+                          - generic [ref=e2276] [cursor=pointer]:
+                            - checkbox "Target was baited (Lure Ball)" [ref=e2277]
+                            - generic [ref=e2278]: Target was baited (Lure Ball)
+                          - generic [ref=e2279] [cursor=pointer]:
+                            - checkbox "Dark / low-light (Dusk Ball)" [ref=e2280]
+                            - generic [ref=e2281]: Dark / low-light (Dusk Ball)
+                          - generic [ref=e2282] [cursor=pointer]:
+                            - checkbox "Underwater / underground (Dive Ball)" [ref=e2283]
+                            - generic [ref=e2284]: Underwater / underground (Dive Ball)
+                        - generic [ref=e2285]:
+                          - generic [ref=e2286]:
+                            - generic [ref=e2287]: ◉
+                            - generic [ref=e2288]: Capture Rate
+                          - generic [ref=e2289]: 30%
+                          - generic [ref=e2290]: Difficult
+                        - button "Throw Great Ball" [ref=e2653] [cursor=pointer]
+                        - generic [ref=e2652]: "[POST] \"/api/capture/attempt\": 404 Server Error"
+                  - generic [ref=e458]:
+                    - generic [ref=e459]:
+                      - spinbutton [ref=e460]: "0"
+                      - button "-HP" [ref=e461] [cursor=pointer]
+                      - 'combobox "HP reduction type: Damage (injuries), HP Loss (no massive damage), Set HP (no massive damage)" [ref=e462] [cursor=pointer]':
+                        - option "DMG" [selected]
+                        - option "Loss"
+                        - option "Set"
+                    - generic [ref=e463]:
+                      - spinbutton [ref=e464]: "0"
+                      - button "+HP" [ref=e465] [cursor=pointer]
+                    - generic [ref=e466]:
+                      - button "+T" [ref=e467] [cursor=pointer]
+                      - button "CS" [ref=e468] [cursor=pointer]
+                      - button "ST" [ref=e469] [cursor=pointer]
+                    - button "Item" [ref=e470] [cursor=pointer]:
+                      - img [ref=e471]
+                      - text: Item
+                    - button "Act" [ref=e474] [cursor=pointer]
+                    - button "Remove" [ref=e475] [cursor=pointer]
+                - generic [ref=e476]:
+                  - img "Nickit" [ref=e478]
+                  - generic [ref=e479]:
+                    - generic [ref=e480]:
+                      - generic [ref=e481]: Nickit
+                      - generic [ref=e482]: Lv.1
+                    - generic [ref=e484]: Dark
+                    - generic [ref=e486]:
+                      - generic [ref=e487]: HP
+                      - generic [ref=e491]: 32/32
+                    - generic [ref=e492]: "Init: 8"
+                    - generic [ref=e2293]:
+                      - generic [ref=e2294]:
+                        - generic [ref=e2295]: Trainer
+                        - combobox [ref=e2296]:
+                          - option "Ash" [selected]
+                      - generic [ref=e2297]:
+                        - generic [ref=e2299]: Capture
+                        - generic [ref=e2300]:
+                          - generic [ref=e2301]: Ball Type
+                          - button "Basic Ball +0" [ref=e2302] [cursor=pointer]:
+                            - generic [ref=e2303]: Basic Ball
+                            - generic [ref=e2304]: "+0"
+                            - img [ref=e2305]
+                        - generic [ref=e2308]:
+                          - generic [ref=e2309]: Capture Conditions
+                          - generic [ref=e2310] [cursor=pointer]:
+                            - checkbox "Target was baited (Lure Ball)" [ref=e2311]
+                            - generic [ref=e2312]: Target was baited (Lure Ball)
+                          - generic [ref=e2313] [cursor=pointer]:
+                            - checkbox "Dark / low-light (Dusk Ball)" [ref=e2314]
+                            - generic [ref=e2315]: Dark / low-light (Dusk Ball)
+                          - generic [ref=e2316] [cursor=pointer]:
+                            - checkbox "Underwater / underground (Dive Ball)" [ref=e2317]
+                            - generic [ref=e2318]: Underwater / underground (Dive Ball)
+                        - generic [ref=e2319]:
+                          - generic [ref=e2320]:
+                            - generic [ref=e2321]: ◉
+                            - generic [ref=e2322]: Capture Rate
+                          - generic [ref=e2323]: 68%
+                          - generic [ref=e2324]: Easy
+                        - button "Throw Basic Ball" [ref=e2326] [cursor=pointer]
+                  - generic [ref=e493]:
+                    - generic [ref=e494]:
+                      - spinbutton [ref=e495]: "0"
+                      - button "-HP" [ref=e496] [cursor=pointer]
+                      - 'combobox "HP reduction type: Damage (injuries), HP Loss (no massive damage), Set HP (no massive damage)" [ref=e497] [cursor=pointer]':
+                        - option "DMG" [selected]
+                        - option "Loss"
+                        - option "Set"
+                    - generic [ref=e498]:
+                      - spinbutton [ref=e499]: "0"
+                      - button "+HP" [ref=e500] [cursor=pointer]
+                    - generic [ref=e501]:
+                      - button "+T" [ref=e502] [cursor=pointer]
+                      - button "CS" [ref=e503] [cursor=pointer]
+                      - button "ST" [ref=e504] [cursor=pointer]
+                    - button "Item" [ref=e505] [cursor=pointer]:
+                      - img [ref=e506]
+                      - text: Item
+                    - button "Act" [ref=e509] [cursor=pointer]
+                    - button "Remove" [ref=e510] [cursor=pointer]
+                - generic [ref=e511]:
+                  - img "Nickit" [ref=e513]
+                  - generic [ref=e514]:
+                    - generic [ref=e515]:
+                      - generic [ref=e516]: Nickit
+                      - generic [ref=e517]: Lv.1
+                    - generic [ref=e519]: Dark
+                    - generic [ref=e521]:
+                      - generic [ref=e522]: HP
+                      - generic [ref=e526]: 32/32
+                    - generic [ref=e527]: "Init: 4"
+                    - generic [ref=e2327]:
+                      - generic [ref=e2328]:
+                        - generic [ref=e2329]: Trainer
+                        - combobox [ref=e2330]:
+                          - option "Ash" [selected]
+                      - generic [ref=e2331]:
+                        - generic [ref=e2333]: Capture
+                        - generic [ref=e2334]:
+                          - generic [ref=e2335]: Ball Type
+                          - button "Basic Ball +0" [ref=e2336] [cursor=pointer]:
+                            - generic [ref=e2337]: Basic Ball
+                            - generic [ref=e2338]: "+0"
+                            - img [ref=e2339]
+                        - generic [ref=e2342]:
+                          - generic [ref=e2343]: Capture Conditions
+                          - generic [ref=e2344] [cursor=pointer]:
+                            - checkbox "Target was baited (Lure Ball)" [ref=e2345]
+                            - generic [ref=e2346]: Target was baited (Lure Ball)
+                          - generic [ref=e2347] [cursor=pointer]:
+                            - checkbox "Dark / low-light (Dusk Ball)" [ref=e2348]
+                            - generic [ref=e2349]: Dark / low-light (Dusk Ball)
+                          - generic [ref=e2350] [cursor=pointer]:
+                            - checkbox "Underwater / underground (Dive Ball)" [ref=e2351]
+                            - generic [ref=e2352]: Underwater / underground (Dive Ball)
+                        - generic [ref=e2353]:
+                          - generic [ref=e2354]:
+                            - generic [ref=e2355]: ◉
+                            - generic [ref=e2356]: Capture Rate
+                          - generic [ref=e2357]: 68%
+                          - generic [ref=e2358]: Easy
+                        - button "Throw Basic Ball" [ref=e2360] [cursor=pointer]
+                  - generic [ref=e528]:
+                    - generic [ref=e529]:
+                      - spinbutton [ref=e530]: "0"
+                      - button "-HP" [ref=e531] [cursor=pointer]
+                      - 'combobox "HP reduction type: Damage (injuries), HP Loss (no massive damage), Set HP (no massive damage)" [ref=e532] [cursor=pointer]':
+                        - option "DMG" [selected]
+                        - option "Loss"
+                        - option "Set"
+                    - generic [ref=e533]:
+                      - spinbutton [ref=e534]: "0"
+                      - button "+HP" [ref=e535] [cursor=pointer]
+                    - generic [ref=e536]:
+                      - button "+T" [ref=e537] [cursor=pointer]
+                      - button "CS" [ref=e538] [cursor=pointer]
+                      - button "ST" [ref=e539] [cursor=pointer]
+                    - button "Item" [ref=e540] [cursor=pointer]:
+                      - img [ref=e541]
+                      - text: Item
+                    - button "Act" [ref=e544] [cursor=pointer]
+                    - button "Remove" [ref=e545] [cursor=pointer]
+                - generic [ref=e546]:
+                  - img "Nickit" [ref=e548]
+                  - generic [ref=e549]:
+                    - generic [ref=e550]:
+                      - generic [ref=e551]: Nickit
+                      - generic [ref=e552]: Lv.1
+                    - generic [ref=e554]: Dark
+                    - generic [ref=e556]:
+                      - generic [ref=e557]: HP
+                      - generic [ref=e561]: 26/26
+                    - generic [ref=e562]: "Init: 8"
+                    - generic [ref=e2361]:
+                      - generic [ref=e2362]:
+                        - generic [ref=e2363]: Trainer
+                        - combobox [ref=e2364]:
+                          - option "Ash" [selected]
+                      - generic [ref=e2365]:
+                        - generic [ref=e2367]: Capture
+                        - generic [ref=e2368]:
+                          - generic [ref=e2369]: Ball Type
+                          - button "Basic Ball +0" [ref=e2370] [cursor=pointer]:
+                            - generic [ref=e2371]: Basic Ball
+                            - generic [ref=e2372]: "+0"
+                            - img [ref=e2373]
+                        - generic [ref=e2376]:
+                          - generic [ref=e2377]: Capture Conditions
+                          - generic [ref=e2378] [cursor=pointer]:
+                            - checkbox "Target was baited (Lure Ball)" [ref=e2379]
+                            - generic [ref=e2380]: Target was baited (Lure Ball)
+                          - generic [ref=e2381] [cursor=pointer]:
+                            - checkbox "Dark / low-light (Dusk Ball)" [ref=e2382]
+                            - generic [ref=e2383]: Dark / low-light (Dusk Ball)
+                          - generic [ref=e2384] [cursor=pointer]:
+                            - checkbox "Underwater / underground (Dive Ball)" [ref=e2385]
+                            - generic [ref=e2386]: Underwater / underground (Dive Ball)
+                        - generic [ref=e2387]:
+                          - generic [ref=e2388]:
+                            - generic [ref=e2389]: ◉
+                            - generic [ref=e2390]: Capture Rate
+                          - generic [ref=e2391]: 68%
+                          - generic [ref=e2392]: Easy
+                        - button "Throw Basic Ball" [ref=e2394] [cursor=pointer]
+                  - generic [ref=e563]:
+                    - generic [ref=e564]:
+                      - spinbutton [ref=e565]: "0"
+                      - button "-HP" [ref=e566] [cursor=pointer]
+                      - 'combobox "HP reduction type: Damage (injuries), HP Loss (no massive damage), Set HP (no massive damage)" [ref=e567] [cursor=pointer]':
+                        - option "DMG" [selected]
+                        - option "Loss"
+                        - option "Set"
+                    - generic [ref=e568]:
+                      - spinbutton [ref=e569]: "0"
+                      - button "+HP" [ref=e570] [cursor=pointer]
+                    - generic [ref=e571]:
+                      - button "+T" [ref=e572] [cursor=pointer]
+                      - button "CS" [ref=e573] [cursor=pointer]
+                      - button "ST" [ref=e574] [cursor=pointer]
+                    - button "Item" [ref=e575] [cursor=pointer]:
+                      - img [ref=e576]
+                      - text: Item
+                    - button "Act" [ref=e579] [cursor=pointer]
+                    - button "Remove" [ref=e580] [cursor=pointer]
+                - generic [ref=e581]:
+                  - img "Nickit" [ref=e583]
+                  - generic [ref=e584]:
+                    - generic [ref=e585]:
+                      - generic [ref=e586]: Nickit
+                      - generic [ref=e587]: Lv.1
+                    - generic [ref=e589]: Dark
+                    - generic [ref=e591]:
+                      - generic [ref=e592]: HP
+                      - generic [ref=e596]: 26/26
+                    - generic [ref=e597]: "Init: 8"
+                    - generic [ref=e2395]:
+                      - generic [ref=e2396]:
+                        - generic [ref=e2397]: Trainer
+                        - combobox [ref=e2398]:
+                          - option "Ash" [selected]
+                      - generic [ref=e2399]:
+                        - generic [ref=e2401]: Capture
+                        - generic [ref=e2402]:
+                          - generic [ref=e2403]: Ball Type
+                          - button "Basic Ball +0" [ref=e2404] [cursor=pointer]:
+                            - generic [ref=e2405]: Basic Ball
+                            - generic [ref=e2406]: "+0"
+                            - img [ref=e2407]
+                        - generic [ref=e2410]:
+                          - generic [ref=e2411]: Capture Conditions
+                          - generic [ref=e2412] [cursor=pointer]:
+                            - checkbox "Target was baited (Lure Ball)" [ref=e2413]
+                            - generic [ref=e2414]: Target was baited (Lure Ball)
+                          - generic [ref=e2415] [cursor=pointer]:
+                            - checkbox "Dark / low-light (Dusk Ball)" [ref=e2416]
+                            - generic [ref=e2417]: Dark / low-light (Dusk Ball)
+                          - generic [ref=e2418] [cursor=pointer]:
+                            - checkbox "Underwater / underground (Dive Ball)" [ref=e2419]
+                            - generic [ref=e2420]: Underwater / underground (Dive Ball)
+                        - generic [ref=e2421]:
+                          - generic [ref=e2422]:
+                            - generic [ref=e2423]: ◉
+                            - generic [ref=e2424]: Capture Rate
+                          - generic [ref=e2425]: 68%
+                          - generic [ref=e2426]: Easy
+                        - button "Throw Basic Ball" [ref=e2428] [cursor=pointer]
+                  - generic [ref=e598]:
+                    - generic [ref=e599]:
+                      - spinbutton [ref=e600]: "0"
+                      - button "-HP" [ref=e601] [cursor=pointer]
+                      - 'combobox "HP reduction type: Damage (injuries), HP Loss (no massive damage), Set HP (no massive damage)" [ref=e602] [cursor=pointer]':
+                        - option "DMG" [selected]
+                        - option "Loss"
+                        - option "Set"
+                    - generic [ref=e603]:
+                      - spinbutton [ref=e604]: "0"
+                      - button "+HP" [ref=e605] [cursor=pointer]
+                    - generic [ref=e606]:
+                      - button "+T" [ref=e607] [cursor=pointer]
+                      - button "CS" [ref=e608] [cursor=pointer]
+                      - button "ST" [ref=e609] [cursor=pointer]
+                    - button "Item" [ref=e610] [cursor=pointer]:
+                      - img [ref=e611]
+                      - text: Item
+                    - button "Act" [ref=e614] [cursor=pointer]
+                    - button "Remove" [ref=e615] [cursor=pointer]
+                - generic [ref=e616]:
+                  - img "Nickit" [ref=e618]
+                  - generic [ref=e619]:
+                    - generic [ref=e620]:
+                      - generic [ref=e621]: Nickit
+                      - generic [ref=e622]: Lv.1
+                    - generic [ref=e624]: Dark
+                    - generic [ref=e626]:
+                      - generic [ref=e627]: HP
+                      - generic [ref=e631]: 32/32
+                    - generic [ref=e632]: "Init: 6"
+                    - generic [ref=e2429]:
+                      - generic [ref=e2430]:
+                        - generic [ref=e2431]: Trainer
+                        - combobox [ref=e2432]:
+                          - option "Ash" [selected]
+                      - generic [ref=e2433]:
+                        - generic [ref=e2435]: Capture
+                        - generic [ref=e2436]:
+                          - generic [ref=e2437]: Ball Type
+                          - button "Basic Ball +0" [ref=e2438] [cursor=pointer]:
+                            - generic [ref=e2439]: Basic Ball
+                            - generic [ref=e2440]: "+0"
+                            - img [ref=e2441]
+                        - generic [ref=e2444]:
+                          - generic [ref=e2445]: Capture Conditions
+                          - generic [ref=e2446] [cursor=pointer]:
+                            - checkbox "Target was baited (Lure Ball)" [ref=e2447]
+                            - generic [ref=e2448]: Target was baited (Lure Ball)
+                          - generic [ref=e2449] [cursor=pointer]:
+                            - checkbox "Dark / low-light (Dusk Ball)" [ref=e2450]
+                            - generic [ref=e2451]: Dark / low-light (Dusk Ball)
+                          - generic [ref=e2452] [cursor=pointer]:
+                            - checkbox "Underwater / underground (Dive Ball)" [ref=e2453]
+                            - generic [ref=e2454]: Underwater / underground (Dive Ball)
+                        - generic [ref=e2455]:
+                          - generic [ref=e2456]:
+                            - generic [ref=e2457]: ◉
+                            - generic [ref=e2458]: Capture Rate
+                          - generic [ref=e2459]: 68%
+                          - generic [ref=e2460]: Easy
+                        - button "Throw Basic Ball" [ref=e2462] [cursor=pointer]
+                  - generic [ref=e633]:
+                    - generic [ref=e634]:
+                      - spinbutton [ref=e635]: "0"
+                      - button "-HP" [ref=e636] [cursor=pointer]
+                      - 'combobox "HP reduction type: Damage (injuries), HP Loss (no massive damage), Set HP (no massive damage)" [ref=e637] [cursor=pointer]':
+                        - option "DMG" [selected]
+                        - option "Loss"
+                        - option "Set"
+                    - generic [ref=e638]:
+                      - spinbutton [ref=e639]: "0"
+                      - button "+HP" [ref=e640] [cursor=pointer]
+                    - generic [ref=e641]:
+                      - button "+T" [ref=e642] [cursor=pointer]
+                      - button "CS" [ref=e643] [cursor=pointer]
+                      - button "ST" [ref=e644] [cursor=pointer]
+                    - button "Item" [ref=e645] [cursor=pointer]:
+                      - img [ref=e646]
+                      - text: Item
+                    - button "Act" [ref=e649] [cursor=pointer]
+                    - button "Remove" [ref=e650] [cursor=pointer]
+          - generic [ref=e651]:
+            - generic [ref=e652]:
+              - heading "Combat Log" [level=3] [ref=e653]
+              - paragraph [ref=e655]: No actions yet
+            - generic [ref=e656]:
+              - generic [ref=e657]:
+                - generic [ref=e658]: Environment
+                - generic [ref=e659]: None
+              - generic [ref=e660]:
+                - generic [ref=e661]: Environment Preset
+                - combobox [ref=e662] [cursor=pointer]:
+                  - option "None" [selected]
+                  - option "Dim Cave (Blindness)"
+                  - option "Dark Cave (Total Blindness)"
+                  - option "Frozen Lake"
+                  - option "Hazard Factory"
+                  - option "Custom..."
+            - generic [ref=e663]:
+              - generic [ref=e664]:
+                - generic [ref=e665]: XP Significance
+                - generic [ref=e666]: x1.0
+              - generic [ref=e667]:
+                - paragraph [ref=e668]: No defeated enemies yet.
+                - paragraph [ref=e669]: XP breakdown will appear after enemies are defeated.
+  - generic [ref=e368]:
+    - button "Toggle Nuxt DevTools" [ref=e369] [cursor=pointer]:
+      - img [ref=e370]
+    - generic "Page load time" [ref=e373]:
+      - generic [ref=e375]: "-"
+    - button "Toggle Component Inspector" [ref=e377] [cursor=pointer]:
+      - img [ref=e378]

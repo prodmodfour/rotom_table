@@ -1,0 +1,9 @@
+- Training no longer gives xp
+- Getting rid of training features
+- Getting rid of orders (some may be revived as Traits)
+- Training is now used to unlock Traits or moves if that move has 
+	- X Training successes (DC Y)
+- One success per training session
+- Each session 1 hour. 
+- 1 Pokemon per training session. 
+- Multiple training sessions per day possible. If 1 exceeded for a pokemon, make a DC (10 + number os sessions today) check. If failed, gain an injury. This is jsut a D20 with potential bonuses from either traits from the trainer or pokemon

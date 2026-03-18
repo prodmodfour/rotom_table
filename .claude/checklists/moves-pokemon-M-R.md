@@ -1,0 +1,169 @@
+# Pokemon Moves M–R
+
+- [ ] Mach Punch
+- [ ] Magical Leaf
+- [ ] Magma Storm
+- [ ] Magnet Bomb
+- [ ] Magnet Rise
+- [ ] Magnetic Flux
+- [ ] Magnitude
+- [ ] Mat Block
+- [ ] Me First
+- [ ] Mean Look
+- [ ] Meditate
+- [ ] Mega Drain
+- [ ] Mega Kick
+- [ ] Mega Punch
+- [ ] Megahorn
+- [ ] Memento
+- [ ] Metal Burst
+- [ ] Metal Claw
+- [ ] Metal Sound
+- [ ] Meteor Assault
+- [ ] Meteor Beam
+- [ ] Meteor Mash
+- [ ] Metronome
+- [ ] Milk Drink
+- [ ] Mimic
+- [ ] Mind Blown
+- [ ] Mind Reader
+- [ ] Minimize
+- [ ] Miracle Eye
+- [ ] Mirror Coat
+- [ ] Mirror Move
+- [ ] Mirror Shot
+- [ ] Mist
+- [ ] Mist Ball
+- [ ] Misty Explosion
+- [ ] Misty Terrain
+- [ ] Moonblast
+- [ ] Moongeist Beam
+- [ ] Moonlight
+- [ ] Morning Sun
+- [ ] Mountain Gale
+- [ ] Mud Bomb
+- [ ] Mud Shot
+- [ ] Mud Sport
+- [ ] Mud-Slap
+- [ ] Muddy Water
+- [ ] Multi-Attack
+- [ ] Mystical Fire
+- [ ] Mystical Power
+- [ ] Nasty Plot
+- [ ] Natural Gift
+- [ ] Nature Power
+- [ ] Nature's Madness
+- [ ] Needle Arm
+- [ ] Night Daze
+- [ ] Night Shade
+- [ ] Night Slash
+- [ ] Nightmare
+- [ ] No Retreat
+- [ ] Noble Roar
+- [ ] Nuzzle
+- [ ] Oblivion Wing
+- [ ] Obstruct
+- [ ] Octazooka
+- [ ] Octolock
+- [ ] Odor Sleuth
+- [ ] Ominous Wind
+- [ ] Origin Pulse
+- [ ] Outrage
+- [ ] Overdrive
+- [ ] Overheat
+- [ ] Pain Split
+- [ ] Parabolic Charge
+- [ ] Parting Shot
+- [ ] Pay Day
+- [ ] Payback
+- [ ] Peck
+- [ ] Perish Song
+- [ ] Petal Blizzard
+- [ ] Petal Dance
+- [ ] Phantom Force
+- [ ] Photon Geyser
+- [ ] Pin Missile
+- [ ] Plasma Fists
+- [ ] Play Nice
+- [ ] Play Rough
+- [ ] Pluck
+- [ ] Poison Fang
+- [ ] Poison Gas
+- [ ] Poison Jab
+- [ ] Poison Powder
+- [ ] Poison Sting
+- [ ] Poison Tail
+- [ ] Pollen Puff
+- [ ] Poltergeist
+- [ ] Pound
+- [ ] Powder
+- [ ] Powder Snow
+- [ ] Power Gem
+- [ ] Power Shift
+- [ ] Power Split
+- [ ] Power Swap
+- [ ] Power Trick
+- [ ] Power Trip
+- [ ] Power Whip
+- [ ] Power-Up Punch
+- [ ] Precipice Blades
+- [ ] Present
+- [ ] Prismatic Laser
+- [ ] Protect
+- [ ] Psybeam
+- [ ] Psych Up
+- [ ] Psychic
+- [ ] Psychic Fangs
+- [ ] Psychic Terrain
+- [ ] Psycho Boost
+- [ ] Psycho Cut
+- [ ] Psycho Shift
+- [ ] Psyshield Bash
+- [ ] Psyshock
+- [ ] Psystrike
+- [ ] Psywave
+- [ ] Punishment
+- [ ] Purify
+- [ ] Pursuit
+- [ ] Pyro Ball
+- [ ] Quash
+- [ ] Quick Attack
+- [ ] Quick Guard
+- [ ] Quiver Dance
+- [ ] Rage
+- [ ] Rage Powder
+- [ ] Raging Fury
+- [ ] Rain Dance
+- [ ] Rapid Spin
+- [ ] Razor Leaf
+- [ ] Razor Shell
+- [ ] Razor Wind
+- [ ] Recover
+- [ ] Recycle
+- [ ] Reflect
+- [ ] Reflect Type
+- [ ] Refresh
+- [ ] Relic Song
+- [ ] Rest
+- [ ] Retaliate
+- [ ] Return
+- [ ] Revelation Dance
+- [ ] Revenge
+- [ ] Reversal
+- [ ] Rising Voltage
+- [ ] Roar
+- [ ] Roar of Time
+- [ ] Rock Blast
+- [ ] Rock Climb
+- [ ] Rock Polish
+- [ ] Rock Slide
+- [ ] Rock Smash
+- [ ] Rock Throw
+- [ ] Rock Tomb
+- [ ] Rock Wrecker
+- [ ] Role Play
+- [ ] Rolling Kick
+- [ ] Rollout
+- [ ] Roost
+- [ ] Rototiller
+- [ ] Round

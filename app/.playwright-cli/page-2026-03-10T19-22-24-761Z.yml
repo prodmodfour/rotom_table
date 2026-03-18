@@ -1,0 +1,35 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e4]:
+    - generic [ref=e5]:
+      - heading "Rotom Table" [level=1] [ref=e6]
+      - paragraph [ref=e7]: Pokemon Tabletop United 1.05
+    - generic [ref=e8]:
+      - link "GM View Full control over encounters, characters, and combat" [ref=e9] [cursor=pointer]:
+        - /url: /gm
+        - heading "GM View" [level=2] [ref=e11]
+        - paragraph [ref=e12]: Full control over encounters, characters, and combat
+      - link "Group View Simplified view optimized for TV display" [ref=e13] [cursor=pointer]:
+        - /url: /group
+        - heading "Group View" [level=2] [ref=e15]
+        - paragraph [ref=e16]: Simplified view optimized for TV display
+    - generic [ref=e17]:
+      - heading "Quick Start" [level=3] [ref=e18]
+      - list [ref=e19]:
+        - listitem [ref=e20]:
+          - text: Open
+          - strong [ref=e21]: GM View
+          - text: on your laptop
+        - listitem [ref=e22]:
+          - text: Open
+          - strong [ref=e23]: Group View
+          - text: on your TV (via browser or cast)
+        - listitem [ref=e24]: Create or load characters in the Library
+        - listitem [ref=e25]: Start an encounter and serve it to the group!
+  - generic [ref=e26]:
+    - button "Toggle Nuxt DevTools" [ref=e27] [cursor=pointer]:
+      - img [ref=e28]
+    - generic "Page load time" [ref=e31]:
+      - generic [ref=e32]: "91"
+      - generic [ref=e33]: ms
+    - button "Toggle Component Inspector" [ref=e35] [cursor=pointer]:
+      - img [ref=e36]

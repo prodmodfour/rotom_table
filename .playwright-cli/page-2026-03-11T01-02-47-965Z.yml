@@ -1,0 +1,76 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e7]:
+        - heading "Rotom Table" [level=1] [ref=e8]
+        - generic [ref=e9]: GM View
+      - navigation [ref=e10]:
+        - link "Encounter" [ref=e11] [cursor=pointer]:
+          - /url: /gm
+          - generic [ref=e12]: Encounter
+        - link "Encounters" [ref=e13] [cursor=pointer]:
+          - /url: /gm/encounters
+          - generic [ref=e14]: Encounters
+        - link "Scenes" [ref=e15] [cursor=pointer]:
+          - /url: /gm/scenes
+          - img [ref=e16]
+          - generic [ref=e19]: Scenes
+        - link "Habitats" [ref=e20] [cursor=pointer]:
+          - /url: /gm/habitats
+          - generic [ref=e21]: Habitats
+        - link "Sheets" [ref=e22] [cursor=pointer]:
+          - /url: /gm/sheets
+          - generic [ref=e23]: Sheets
+        - link "Create" [ref=e24] [cursor=pointer]:
+          - /url: /gm/create
+          - generic [ref=e25]: Create
+        - link "Map" [ref=e26] [cursor=pointer]:
+          - /url: /gm/map
+          - generic [ref=e27]: Map
+      - generic [ref=e28]:
+        - button "Connect" [ref=e30] [cursor=pointer]:
+          - img [ref=e31]
+          - generic [ref=e34]: Connect
+        - generic [ref=e35]:
+          - generic [ref=e36]: "Group View:"
+          - generic [ref=e37]:
+            - button "Lobby" [ref=e38] [cursor=pointer]:
+              - img [ref=e39]
+            - button "Scene" [ref=e42] [cursor=pointer]:
+              - img [ref=e43]
+            - button "Encounter" [ref=e46] [cursor=pointer]:
+              - img [ref=e47]
+            - button "Map" [ref=e50] [cursor=pointer]:
+              - img [ref=e51]
+        - button "Advance Day" [ref=e54] [cursor=pointer]:
+          - generic [ref=e55]: Advance Day
+        - link "Group View" [ref=e56] [cursor=pointer]:
+          - /url: /group
+          - generic [ref=e57]: Group View
+    - main [ref=e58]:
+      - generic [ref=e61]:
+        - heading "No Active Encounter" [level=2] [ref=e62]
+        - paragraph [ref=e63]: Start a new encounter or load an existing one.
+        - generic [ref=e64]:
+          - generic [ref=e65]:
+            - generic [ref=e66]: Encounter Name
+            - textbox "Route 1 Wild Battle" [ref=e67]
+          - generic [ref=e68]:
+            - generic [ref=e69]: Battle Type
+            - combobox [ref=e70] [cursor=pointer]:
+              - option "Trainer Battle" [selected]
+              - option "Full Contact"
+          - button "Start New Encounter" [ref=e71] [cursor=pointer]
+          - generic [ref=e72]:
+            - generic [ref=e73]: or
+            - button "Load from Template" [ref=e74] [cursor=pointer]
+            - link "Browse Library" [ref=e75] [cursor=pointer]:
+              - /url: /gm/encounters
+  - generic [ref=e76]:
+    - button "Toggle Nuxt DevTools" [ref=e77] [cursor=pointer]:
+      - img [ref=e78]
+    - generic "Page load time" [ref=e81]:
+      - generic [ref=e82]: "124"
+      - generic [ref=e83]: ms
+    - button "Toggle Component Inspector" [ref=e85] [cursor=pointer]:
+      - img [ref=e86]

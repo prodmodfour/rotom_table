@@ -7,7 +7,7 @@
  */
 
 import type { EquippedItem, EquipmentSlot } from '~/types/character'
-import { PhBaseballCap, PhTShirt, PhSword, PhHandPalm, PhSneakerMove, PhRing } from '@phosphor-icons/vue'
+import { PhBaseballCap, PhTShirt, PhSword, PhHandPalm, PhSneakerMove, PhCircle } from '@phosphor-icons/vue'
 import type { Component } from 'vue'
 
 export const EQUIPMENT_CATALOG: Record<string, EquippedItem> = {
@@ -167,7 +167,7 @@ export const SLOT_ICONS: Record<EquipmentSlot, Component> = {
   mainHand: PhSword,
   offHand: PhHandPalm,
   feet: PhSneakerMove,
-  accessory: PhRing
+  accessory: PhCircle
 }
 
 /** Human-readable labels for stat keys (used in equipment bonus display) */

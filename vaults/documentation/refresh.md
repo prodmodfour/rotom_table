@@ -1,0 +1,22 @@
+Refresh is stored in [[movedata-reference-table]] with `damageClass: "Status"`, `type: "Normal"`, `damageBase: null`, `frequency: "Scene x2"`, `ac: null`, `range: "Self"`.
+
+## Frequency
+
+Scene x2 frequency is enforced by the [[move-frequency-system]]. `checkMoveFrequency` checks the `usedThisScene` counter against a limit of 2, with [[scene-frequency-eot-restriction|EOT pacing]] between uses. The counter resets via [[scene-activation-resets-move-counters]].
+
+## Resolution
+
+As a Status move, Refresh skips the [[damage-flow-pipeline]]. No accuracy roll is needed (AC is null).
+
+## Effect
+
+The [[type-status-immunity-utility]] prevents Burn application on Fire-types. Once applied, [[status-tick-automation]] handles tick damage and [[status-cs-auto-apply-with-tracking]] applies the -2 Defense CS. The [[type-status-immunity-utility]] prevents Poison application on Poison-type and Steel-type targets. Once applied, [[status-tick-automation]] handles tick damage.
+
+## Ability Interactions
+
+No ability-interaction flags are set in the [[moves-csv-source-file]].
+
+## See also
+
+- [[faint-and-revival-effects]] — Faint clears Persistent conditions
+- [[status-capture-bonus-hierarchy]] — status conditions modify capture rate

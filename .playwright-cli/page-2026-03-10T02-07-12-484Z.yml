@@ -1,0 +1,64 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e497]:
+    - heading "Rotom Table" [level=1] [ref=e498]
+    - paragraph [ref=e499]: Select your character to continue
+    - generic [ref=e500]:
+      - button "Select Ash, Level 30" [ref=e501] [cursor=pointer]:
+        - generic [ref=e503]: A
+        - generic [ref=e504]:
+          - generic [ref=e505]: Ash
+          - generic [ref=e506]: Lv. 30
+      - button "Select Aurora, Level 1" [ref=e507] [cursor=pointer]:
+        - generic [ref=e509]: A
+        - generic [ref=e510]:
+          - generic [ref=e511]: Aurora
+          - generic [ref=e512]: Lv. 1
+        - img "Sabre" [ref=e514]
+      - button "Select Clara, Level 1" [ref=e515] [cursor=pointer]:
+        - generic [ref=e517]: C
+        - generic [ref=e518]:
+          - generic [ref=e519]: Clara
+          - generic [ref=e520]: Lv. 1
+        - img "Clippy" [ref=e522]
+      - button "Select Hassan, Level 1, Ace Trainer / Elite Trainer" [ref=e523] [cursor=pointer]:
+        - generic [ref=e525]: H
+        - generic [ref=e526]:
+          - generic [ref=e527]: Hassan
+          - generic [ref=e528]: Ace Trainer / Elite Trainer
+          - generic [ref=e529]: Lv. 1
+        - img "Chomps" [ref=e531]
+      - button "Select Marilena, Level 1, Hobbyist / Channeler / Sage / Researcher / Witch Hunter" [ref=e532] [cursor=pointer]:
+        - generic [ref=e534]: M
+        - generic [ref=e535]:
+          - generic [ref=e536]: Marilena
+          - generic [ref=e537]: Hobbyist / Channeler / Sage / Researcher / Witch Hunter
+          - generic [ref=e538]: Lv. 1
+        - img "Iris" [ref=e540]
+      - button "Select Test Trainer, Level 10" [ref=e541] [cursor=pointer]:
+        - generic [ref=e543]: T
+        - generic [ref=e544]:
+          - generic [ref=e545]: Test Trainer
+          - generic [ref=e546]: Lv. 10
+      - button "Select Trainer Ash, Level 5" [ref=e547] [cursor=pointer]:
+        - generic [ref=e549]: T
+        - generic [ref=e550]:
+          - generic [ref=e551]: Trainer Ash
+          - generic [ref=e552]: Lv. 5
+      - button "Select Trainer Red, Level 5" [ref=e553] [cursor=pointer]:
+        - generic [ref=e555]: T
+        - generic [ref=e556]:
+          - generic [ref=e557]: Trainer Red
+          - generic [ref=e558]: Lv. 5
+      - button "Select Trainer Red, Level 5" [ref=e559] [cursor=pointer]:
+        - generic [ref=e561]: T
+        - generic [ref=e562]:
+          - generic [ref=e563]: Trainer Red
+          - generic [ref=e564]: Lv. 5
+  - generic [ref=e75]:
+    - button "Toggle Nuxt DevTools" [ref=e76] [cursor=pointer]:
+      - img [ref=e77]
+    - generic "Page load time" [ref=e80]:
+      - generic [ref=e81]: "118"
+      - generic [ref=e82]: ms
+    - button "Toggle Component Inspector" [ref=e84] [cursor=pointer]:
+      - img [ref=e85]

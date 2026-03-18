@@ -1,0 +1,160 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e7]:
+        - heading "Rotom Table" [level=1] [ref=e8]
+        - generic [ref=e9]: GM View
+      - navigation [ref=e10]:
+        - link "Encounter" [ref=e11] [cursor=pointer]:
+          - /url: /gm
+          - generic [ref=e12]: Encounter
+        - link "Encounters" [ref=e13] [cursor=pointer]:
+          - /url: /gm/encounters
+          - generic [ref=e14]: Encounters
+        - link "Scenes" [ref=e15] [cursor=pointer]:
+          - /url: /gm/scenes
+          - img [ref=e16]
+          - generic [ref=e19]: Scenes
+        - link "Habitats" [ref=e20] [cursor=pointer]:
+          - /url: /gm/habitats
+          - generic [ref=e21]: Habitats
+        - link "Sheets" [ref=e22] [cursor=pointer]:
+          - /url: /gm/sheets
+          - generic [ref=e23]: Sheets
+        - link "Create" [ref=e24] [cursor=pointer]:
+          - /url: /gm/create
+          - generic [ref=e25]: Create
+        - link "Map" [ref=e26] [cursor=pointer]:
+          - /url: /gm/map
+          - generic [ref=e27]: Map
+      - generic [ref=e28]:
+        - button "Connect" [ref=e30] [cursor=pointer]:
+          - img [ref=e31]
+          - generic [ref=e34]: Connect
+        - generic [ref=e35]:
+          - generic [ref=e36]: "Group View:"
+          - generic [ref=e37]:
+            - button "Lobby" [ref=e38] [cursor=pointer]:
+              - img [ref=e39]
+            - button "Scene" [ref=e42] [cursor=pointer]:
+              - img [ref=e43]
+            - button "Encounter" [ref=e46] [cursor=pointer]:
+              - img [ref=e47]
+            - button "Map" [ref=e50] [cursor=pointer]:
+              - img [ref=e51]
+        - button "Advance Day" [ref=e54] [cursor=pointer]:
+          - generic [ref=e55]: Advance Day
+        - link "Group View" [ref=e56] [cursor=pointer]:
+          - /url: /group
+          - generic [ref=e57]: Group View
+    - main [ref=e58]:
+      - generic [ref=e59]:
+        - generic [ref=e60]:
+          - link "← Back to Sheets" [ref=e61] [cursor=pointer]:
+            - /url: /gm/sheets
+          - button "Edit" [ref=e63] [cursor=pointer]
+        - generic [ref=e64]:
+          - generic [ref=e65]:
+            - generic [ref=e67]: H
+            - generic [ref=e68]:
+              - generic [ref=e69]:
+                - generic [ref=e70]:
+                  - generic [ref=e71]: Name
+                  - textbox [disabled] [ref=e72]: Hassan
+                - generic [ref=e73]:
+                  - generic [ref=e74]: Played By
+                  - textbox [disabled] [ref=e75]: Igbunu
+              - generic [ref=e76]:
+                - generic [ref=e77]:
+                  - generic [ref=e78]: Level
+                  - spinbutton [disabled] [ref=e79]: "1"
+                - generic [ref=e80]:
+                  - generic [ref=e81]: Age
+                  - spinbutton [disabled] [ref=e82]: "20"
+                - generic [ref=e83]:
+                  - generic [ref=e84]: Gender
+                  - textbox [disabled] [ref=e85]: Male
+                - generic [ref=e86]:
+                  - generic [ref=e87]: Type
+                  - combobox [disabled] [ref=e88]:
+                    - option "Player" [selected]
+                    - option "NPC"
+          - generic [ref=e89]:
+            - generic [ref=e90]:
+              - heading "Trainer Experience" [level=4] [ref=e91]
+              - generic [ref=e92]: 0 / 10 XP
+            - generic [ref=e94]:
+              - button "-1" [disabled] [ref=e95]
+              - button "+1" [ref=e96] [cursor=pointer]
+              - button "+2" [ref=e97] [cursor=pointer]
+              - button "+3" [ref=e98] [cursor=pointer]
+              - button "+5" [ref=e99] [cursor=pointer]
+              - button "Custom" [ref=e100] [cursor=pointer]
+          - generic [ref=e101]:
+            - button "Stats" [ref=e102] [cursor=pointer]
+            - button "Classes" [ref=e103] [cursor=pointer]
+            - button "Skills" [active] [ref=e104] [cursor=pointer]
+            - button "Equipment" [ref=e105] [cursor=pointer]
+            - button "Pokemon" [ref=e106] [cursor=pointer]
+            - button "Healing" [ref=e107] [cursor=pointer]
+            - button "Notes" [ref=e108] [cursor=pointer]
+          - generic [ref=e189]:
+            - generic [ref=e190]:
+              - generic [ref=e191]: Acrobatics
+              - generic [ref=e192]: Untrained
+            - generic [ref=e193]:
+              - generic [ref=e194]: Athletics
+              - generic [ref=e195]: Untrained
+            - generic [ref=e196]:
+              - generic [ref=e197]: Charm
+              - generic [ref=e198]: Untrained
+            - generic [ref=e199]:
+              - generic [ref=e200]: Combat
+              - generic [ref=e201]: Untrained
+            - generic [ref=e202]:
+              - generic [ref=e203]: Command
+              - generic [ref=e204]: Novice
+            - generic [ref=e205]:
+              - generic [ref=e206]: General Ed
+              - generic [ref=e207]: Untrained
+            - generic [ref=e208]:
+              - generic [ref=e209]: Medicine Ed
+              - generic [ref=e210]: Untrained
+            - generic [ref=e211]:
+              - generic [ref=e212]: Occult Ed
+              - generic [ref=e213]: Pathetic
+            - generic [ref=e214]:
+              - generic [ref=e215]: Pokémon Ed
+              - generic [ref=e216]: Untrained
+            - generic [ref=e217]:
+              - generic [ref=e218]: Technology Ed
+              - generic [ref=e219]: Pathetic
+            - generic [ref=e220]:
+              - generic [ref=e221]: Focus
+              - generic [ref=e222]: Untrained
+            - generic [ref=e223]:
+              - generic [ref=e224]: Guile
+              - generic [ref=e225]: Untrained
+            - generic [ref=e226]:
+              - generic [ref=e227]: Intimidate
+              - generic [ref=e228]: Pathetic
+            - generic [ref=e229]:
+              - generic [ref=e230]: Intuition
+              - generic [ref=e231]: Adept
+            - generic [ref=e232]:
+              - generic [ref=e233]: Perception
+              - generic [ref=e234]: Novice
+            - generic [ref=e235]:
+              - generic [ref=e236]: Stealth
+              - generic [ref=e237]: Untrained
+            - generic [ref=e238]:
+              - generic [ref=e239]: Survival
+              - generic [ref=e240]: Novice
+  - generic [ref=e154]:
+    - button "Toggle Nuxt DevTools" [ref=e155] [cursor=pointer]:
+      - img [ref=e156]
+    - generic "Page load time" [ref=e159]:
+      - generic [ref=e160]: "149"
+      - generic [ref=e161]: ms
+    - button "Toggle Component Inspector" [ref=e163] [cursor=pointer]:
+      - img [ref=e164]

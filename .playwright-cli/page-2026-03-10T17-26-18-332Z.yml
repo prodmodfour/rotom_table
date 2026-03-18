@@ -1,0 +1,41 @@
+- generic [ref=e1]:
+  - generic [ref=e4]:
+    - banner [ref=e89]:
+      - generic [ref=e90]:
+        - generic [ref=e91]: Hassan
+        - status "Connected - LAN (Local) - 2ms" [ref=e231] [cursor=pointer]:
+          - 'button "Connection: Connected. Tap for details." [ref=e93]'
+      - button "Switch character" [ref=e94] [cursor=pointer]:
+        - img [ref=e95]
+    - main [ref=e98]:
+      - region "Encounter view" [ref=e237]:
+        - generic [ref=e238]:
+          - generic [ref=e240]:
+            - heading "New Encounter" [level=2] [ref=e241]
+            - generic [ref=e242]: Round 1
+          - generic [ref=e247]:
+            - button "+" [ref=e248] [cursor=pointer]
+            - generic [ref=e249]: 100%
+            - button "-" [ref=e250] [cursor=pointer]
+            - button "⌂" [ref=e251] [cursor=pointer]
+    - navigation "Player navigation" [ref=e199]:
+      - button "Character" [ref=e200] [cursor=pointer]:
+        - img [ref=e201]
+        - generic [ref=e204]: Character
+      - button "Team" [ref=e205] [cursor=pointer]:
+        - img [ref=e206]
+        - generic [ref=e209]: Team
+      - button "Encounter" [active] [ref=e210] [cursor=pointer]:
+        - img [ref=e211]
+        - generic [ref=e214]: Encounter
+      - button "Scene" [ref=e215] [cursor=pointer]:
+        - img [ref=e216]
+        - generic [ref=e219]: Scene
+  - generic [ref=e75]:
+    - button "Toggle Nuxt DevTools" [ref=e76] [cursor=pointer]:
+      - img [ref=e77]
+    - generic "Page load time" [ref=e80]:
+      - generic [ref=e81]: "67"
+      - generic [ref=e82]: ms
+    - button "Toggle Component Inspector" [ref=e84] [cursor=pointer]:
+      - img [ref=e85]

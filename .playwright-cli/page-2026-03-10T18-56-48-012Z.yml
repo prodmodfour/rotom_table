@@ -1,0 +1,2574 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e7]:
+        - heading "Rotom Table" [level=1] [ref=e8]
+        - generic [ref=e9]: GM View
+      - navigation [ref=e10]:
+        - link "Encounter" [ref=e11] [cursor=pointer]:
+          - /url: /gm
+          - generic [ref=e12]: Encounter
+        - link "Encounters" [ref=e13] [cursor=pointer]:
+          - /url: /gm/encounters
+          - generic [ref=e14]: Encounters
+        - link "Scenes" [ref=e15] [cursor=pointer]:
+          - /url: /gm/scenes
+          - img [ref=e16]
+          - generic [ref=e19]: Scenes
+        - link "Habitats" [ref=e20] [cursor=pointer]:
+          - /url: /gm/habitats
+          - generic [ref=e21]: Habitats
+        - link "Sheets" [ref=e22] [cursor=pointer]:
+          - /url: /gm/sheets
+          - generic [ref=e23]: Sheets
+        - link "Create" [ref=e24] [cursor=pointer]:
+          - /url: /gm/create
+          - generic [ref=e25]: Create
+        - link "Map" [ref=e26] [cursor=pointer]:
+          - /url: /gm/map
+          - generic [ref=e27]: Map
+      - generic [ref=e28]:
+        - button "Connect" [ref=e30] [cursor=pointer]:
+          - img [ref=e31]
+          - generic [ref=e34]: Connect
+        - generic [ref=e35]:
+          - generic [ref=e36]: "Group View:"
+          - generic [ref=e37]:
+            - button "Lobby" [ref=e38] [cursor=pointer]:
+              - img [ref=e39]
+            - button "Scene" [ref=e42] [cursor=pointer]:
+              - img [ref=e43]
+            - button "Encounter" [ref=e46] [cursor=pointer]:
+              - img [ref=e47]
+            - button "Map" [ref=e50] [cursor=pointer]:
+              - img [ref=e51]
+        - button "Advance Day" [ref=e54] [cursor=pointer]:
+          - generic [ref=e55]: Advance Day
+        - link "Group View" [ref=e56] [cursor=pointer]:
+          - /url: /group
+          - generic [ref=e57]: Group View
+    - main [ref=e58]:
+      - generic [ref=e59]:
+        - generic [ref=e60]:
+          - heading "Character Library" [level=2] [ref=e61]
+          - generic [ref=e62]:
+            - button "Manage" [ref=e63] [cursor=pointer]
+            - link "+ New Character" [ref=e64] [cursor=pointer]:
+              - /url: /gm/create
+        - generic [ref=e65]:
+          - textbox "Search..." [ref=e67]
+          - combobox [ref=e69] [cursor=pointer]:
+            - option "All Types" [selected]
+            - option "Humans Only"
+            - option "Pokemon Only"
+          - combobox [ref=e71] [cursor=pointer]:
+            - option "All Characters" [selected]
+            - option "Players"
+            - option "NPCs"
+          - combobox [ref=e73] [cursor=pointer]:
+            - option "All Origins" [selected]
+            - option "Manual"
+            - option "Wild"
+            - option "Captured"
+            - option "Template"
+            - option "Imported"
+          - combobox [ref=e75] [cursor=pointer]:
+            - option "Sort by Name" [selected]
+            - option "Sort by Level"
+          - button "Reset" [ref=e76] [cursor=pointer]
+        - generic [ref=e77]:
+          - generic [ref=e78]:
+            - heading "Players (9)" [level=3] [ref=e79]
+            - generic [ref=e80]:
+              - 'link "A Ash Player Level 30 HP: 10/10 SPD: 5" [ref=e81] [cursor=pointer]':
+                - /url: /gm/characters/fb369387-3318-40b1-81f9-ee494a9904d4
+                - generic [ref=e83]: A
+                - generic [ref=e84]:
+                  - generic [ref=e85]:
+                    - heading "Ash" [level=3] [ref=e86]
+                    - generic [ref=e87]: Player
+                  - generic [ref=e88]: Level 30
+                  - generic [ref=e89]:
+                    - generic [ref=e90]: "HP: 10/10"
+                    - generic [ref=e91]: "SPD: 5"
+              - 'link "A Aurora Player Level 1 HP: 48/48 SPD: 8 Vulpix [Alola]" [ref=e92] [cursor=pointer]':
+                - /url: /gm/characters/43c7ea6e-b283-4d70-a7f3-cc63fa5f9bbf
+                - generic [ref=e94]: A
+                - generic [ref=e95]:
+                  - generic [ref=e96]:
+                    - heading "Aurora" [level=3] [ref=e97]
+                    - generic [ref=e98]: Player
+                  - generic [ref=e99]: Level 1
+                  - generic [ref=e100]:
+                    - generic [ref=e101]: "HP: 48/48"
+                    - generic [ref=e102]: "SPD: 8"
+                  - generic "Sabre" [ref=e104]:
+                    - img "Vulpix [Alola]" [ref=e105]
+              - 'link "C Clara Player Level 1 HP: 51/51 SPD: 8 Impidimp" [ref=e106] [cursor=pointer]':
+                - /url: /gm/characters/72f010ef-24d5-481e-b6c7-8a725ed9750f
+                - generic [ref=e108]: C
+                - generic [ref=e109]:
+                  - generic [ref=e110]:
+                    - heading "Clara" [level=3] [ref=e111]
+                    - generic [ref=e112]: Player
+                  - generic [ref=e113]: Level 1
+                  - generic [ref=e114]:
+                    - generic [ref=e115]: "HP: 51/51"
+                    - generic [ref=e116]: "SPD: 8"
+                  - generic "Clippy" [ref=e118]:
+                    - img "Impidimp" [ref=e119]
+              - 'link "H Hassan Player Level 1 HP: 45/45 SPD: 11 Gible" [ref=e120] [cursor=pointer]':
+                - /url: /gm/characters/256b3959-2b2e-46bf-b775-87c39c84c2d0
+                - generic [ref=e122]: H
+                - generic [ref=e123]:
+                  - generic [ref=e124]:
+                    - heading "Hassan" [level=3] [ref=e125]
+                    - generic [ref=e126]: Player
+                  - generic [ref=e127]: Level 1
+                  - generic [ref=e128]:
+                    - generic [ref=e129]: "HP: 45/45"
+                    - generic [ref=e130]: "SPD: 11"
+                  - generic "Chomps" [ref=e132]:
+                    - img "Gible" [ref=e133]
+              - 'link "M Marilena Player Level 1 HP: 51/51 SPD: 7 Misdreavus" [ref=e134] [cursor=pointer]':
+                - /url: /gm/characters/af1b9636-aba7-4e23-acc1-833a7a08807b
+                - generic [ref=e136]: M
+                - generic [ref=e137]:
+                  - generic [ref=e138]:
+                    - heading "Marilena" [level=3] [ref=e139]
+                    - generic [ref=e140]: Player
+                  - generic [ref=e141]: Level 1
+                  - generic [ref=e142]:
+                    - generic [ref=e143]: "HP: 51/51"
+                    - generic [ref=e144]: "SPD: 7"
+                  - generic "Iris" [ref=e146]:
+                    - img "Misdreavus" [ref=e147]
+              - 'link "T Test Trainer Player Level 10 HP: 10/10 SPD: 5" [ref=e148] [cursor=pointer]':
+                - /url: /gm/characters/da392371-5632-4425-a28b-07b086541050
+                - generic [ref=e150]: T
+                - generic [ref=e151]:
+                  - generic [ref=e152]:
+                    - heading "Test Trainer" [level=3] [ref=e153]
+                    - generic [ref=e154]: Player
+                  - generic [ref=e155]: Level 10
+                  - generic [ref=e156]:
+                    - generic [ref=e157]: "HP: 10/10"
+                    - generic [ref=e158]: "SPD: 5"
+              - 'link "T Trainer Ash Player Level 5 HP: 10/10 SPD: 5" [ref=e159] [cursor=pointer]':
+                - /url: /gm/characters/657e959b-1fb2-4146-b81c-d67cdcdc2816
+                - generic [ref=e161]: T
+                - generic [ref=e162]:
+                  - generic [ref=e163]:
+                    - heading "Trainer Ash" [level=3] [ref=e164]
+                    - generic [ref=e165]: Player
+                  - generic [ref=e166]: Level 5
+                  - generic [ref=e167]:
+                    - generic [ref=e168]: "HP: 10/10"
+                    - generic [ref=e169]: "SPD: 5"
+              - 'link "T Trainer Red Player Level 5 HP: 10/10 SPD: 5" [ref=e170] [cursor=pointer]':
+                - /url: /gm/characters/8a12fc9e-fadf-4288-8cb3-c16c7428bea6
+                - generic [ref=e172]: T
+                - generic [ref=e173]:
+                  - generic [ref=e174]:
+                    - heading "Trainer Red" [level=3] [ref=e175]
+                    - generic [ref=e176]: Player
+                  - generic [ref=e177]: Level 5
+                  - generic [ref=e178]:
+                    - generic [ref=e179]: "HP: 10/10"
+                    - generic [ref=e180]: "SPD: 5"
+              - 'link "T Trainer Red Player Level 5 HP: 10/10 SPD: 5" [ref=e181] [cursor=pointer]':
+                - /url: /gm/characters/210d85a6-a865-45f7-87dd-c1af7719bdd7
+                - generic [ref=e183]: T
+                - generic [ref=e184]:
+                  - generic [ref=e185]:
+                    - heading "Trainer Red" [level=3] [ref=e186]
+                    - generic [ref=e187]: Player
+                  - generic [ref=e188]: Level 5
+                  - generic [ref=e189]:
+                    - generic [ref=e190]: "HP: 10/10"
+                    - generic [ref=e191]: "SPD: 5"
+          - generic [ref=e192]:
+            - heading "Pokemon (183)" [level=3] [ref=e193]
+            - generic [ref=e195]:
+              - button "No Location 183" [ref=e196] [cursor=pointer]:
+                - img [ref=e197]
+                - generic [ref=e200]: No Location
+                - generic [ref=e201]: "183"
+                - img [ref=e202]
+              - generic [ref=e205]:
+                - link "Alolan Grimer 1 Alolan Grimer 1 Wild Alolan Grimer Poison Dark Level 15 HP 277/277" [ref=e206] [cursor=pointer]:
+                  - /url: /gm/pokemon/047a9e1c-2f0a-455a-aec2-e37a43434f67
+                  - img "Alolan Grimer 1" [ref=e208]
+                  - generic [ref=e209]:
+                    - generic [ref=e210]:
+                      - heading "Alolan Grimer 1" [level=3] [ref=e211]
+                      - generic [ref=e212]: Wild
+                    - generic [ref=e213]: Alolan Grimer
+                    - generic [ref=e214]:
+                      - generic [ref=e215]: Poison
+                      - generic [ref=e216]: Dark
+                    - generic [ref=e217]: Level 15
+                    - generic [ref=e219]:
+                      - generic [ref=e220]: HP
+                      - generic [ref=e224]: 277/277
+                - link "Barboach 1 Barboach 1 Wild Barboach Water Ground Level 13 HP 44/44" [ref=e225] [cursor=pointer]:
+                  - /url: /gm/pokemon/d1cb32d0-28b3-4fb7-98ff-71368b6dd412
+                  - img "Barboach 1" [ref=e227]
+                  - generic [ref=e228]:
+                    - generic [ref=e229]:
+                      - heading "Barboach 1" [level=3] [ref=e230]
+                      - generic [ref=e231]: Wild
+                    - generic [ref=e232]: Barboach
+                    - generic [ref=e233]:
+                      - generic [ref=e234]: Water
+                      - generic [ref=e235]: Ground
+                    - generic [ref=e236]: Level 13
+                    - generic [ref=e238]:
+                      - generic [ref=e239]: HP
+                      - generic [ref=e243]: 44/44
+                - link "Bibarel 1 Bibarel 1 Wild Bibarel Normal Water Level 15 HP 61/61" [ref=e244] [cursor=pointer]:
+                  - /url: /gm/pokemon/3ecfc9e1-b383-42c9-810e-26f4412216b2
+                  - img "Bibarel 1" [ref=e246]
+                  - generic [ref=e247]:
+                    - generic [ref=e248]:
+                      - heading "Bibarel 1" [level=3] [ref=e249]
+                      - generic [ref=e250]: Wild
+                    - generic [ref=e251]: Bibarel
+                    - generic [ref=e252]:
+                      - generic [ref=e253]: Normal
+                      - generic [ref=e254]: Water
+                    - generic [ref=e255]: Level 15
+                    - generic [ref=e257]:
+                      - generic [ref=e258]: HP
+                      - generic [ref=e262]: 61/61
+                - link "Bulbasaur 1 Bulbasaur 1 Bulbasaur Grass Poison Level 10 HP 35/35" [ref=e263] [cursor=pointer]:
+                  - /url: /gm/pokemon/6dff200e-6a34-40af-8040-b9cc6306d76e
+                  - img "Bulbasaur 1" [ref=e265]
+                  - generic [ref=e266]:
+                    - heading "Bulbasaur 1" [level=3] [ref=e268]
+                    - generic [ref=e269]: Bulbasaur
+                    - generic [ref=e270]:
+                      - generic [ref=e271]: Grass
+                      - generic [ref=e272]: Poison
+                    - generic [ref=e273]: Level 10
+                    - generic [ref=e275]:
+                      - generic [ref=e276]: HP
+                      - generic [ref=e280]: 35/35
+                - link "Bulbasaur 10 Bulbasaur 10 Bulbasaur Grass Poison Level 10 HP 35/35" [ref=e281] [cursor=pointer]:
+                  - /url: /gm/pokemon/ba0450e0-6519-4c15-a051-ad2700467c6d
+                  - img "Bulbasaur 10" [ref=e283]
+                  - generic [ref=e284]:
+                    - heading "Bulbasaur 10" [level=3] [ref=e286]
+                    - generic [ref=e287]: Bulbasaur
+                    - generic [ref=e288]:
+                      - generic [ref=e289]: Grass
+                      - generic [ref=e290]: Poison
+                    - generic [ref=e291]: Level 10
+                    - generic [ref=e293]:
+                      - generic [ref=e294]: HP
+                      - generic [ref=e298]: 35/35
+                - link "Bulbasaur 3 Bulbasaur 3 Bulbasaur Grass Poison Level 10 HP 35/35" [ref=e299] [cursor=pointer]:
+                  - /url: /gm/pokemon/6d10b7ac-2b39-4ede-abd2-711b169417d9
+                  - img "Bulbasaur 3" [ref=e301]
+                  - generic [ref=e302]:
+                    - heading "Bulbasaur 3" [level=3] [ref=e304]
+                    - generic [ref=e305]: Bulbasaur
+                    - generic [ref=e306]:
+                      - generic [ref=e307]: Grass
+                      - generic [ref=e308]: Poison
+                    - generic [ref=e309]: Level 10
+                    - generic [ref=e311]:
+                      - generic [ref=e312]: HP
+                      - generic [ref=e316]: 35/35
+                - link "Bulbasaur 5 Bulbasaur 5 Bulbasaur Grass Poison Level 10 HP 35/35" [ref=e317] [cursor=pointer]:
+                  - /url: /gm/pokemon/bb28a207-d74a-4474-83f5-7c138f948dc3
+                  - img "Bulbasaur 5" [ref=e319]
+                  - generic [ref=e320]:
+                    - heading "Bulbasaur 5" [level=3] [ref=e322]
+                    - generic [ref=e323]: Bulbasaur
+                    - generic [ref=e324]:
+                      - generic [ref=e325]: Grass
+                      - generic [ref=e326]: Poison
+                    - generic [ref=e327]: Level 10
+                    - generic [ref=e329]:
+                      - generic [ref=e330]: HP
+                      - generic [ref=e334]: 35/35
+                - link "Bulbasaur 6 Bulbasaur 6 Bulbasaur Grass Poison Level 10 HP 35/35" [ref=e335] [cursor=pointer]:
+                  - /url: /gm/pokemon/279de3f3-160d-4067-8db8-892271e8a7b2
+                  - img "Bulbasaur 6" [ref=e337]
+                  - generic [ref=e338]:
+                    - heading "Bulbasaur 6" [level=3] [ref=e340]
+                    - generic [ref=e341]: Bulbasaur
+                    - generic [ref=e342]:
+                      - generic [ref=e343]: Grass
+                      - generic [ref=e344]: Poison
+                    - generic [ref=e345]: Level 10
+                    - generic [ref=e347]:
+                      - generic [ref=e348]: HP
+                      - generic [ref=e352]: 35/35
+                - link "Bulbasaur 6 Bulbasaur 6 Bulbasaur Grass Poison Level 10 HP 35/35" [ref=e353] [cursor=pointer]:
+                  - /url: /gm/pokemon/e75fd8fd-7a8d-415b-b862-a43ef06ea712
+                  - img "Bulbasaur 6" [ref=e355]
+                  - generic [ref=e356]:
+                    - heading "Bulbasaur 6" [level=3] [ref=e358]
+                    - generic [ref=e359]: Bulbasaur
+                    - generic [ref=e360]:
+                      - generic [ref=e361]: Grass
+                      - generic [ref=e362]: Poison
+                    - generic [ref=e363]: Level 10
+                    - generic [ref=e365]:
+                      - generic [ref=e366]: HP
+                      - generic [ref=e370]: 35/35
+                - link "Bulbasaur 8 Bulbasaur 8 Bulbasaur Grass Poison Level 10 HP 35/35" [ref=e371] [cursor=pointer]:
+                  - /url: /gm/pokemon/97e94854-fbe3-47b4-8e2f-8f112b5b8cd2
+                  - img "Bulbasaur 8" [ref=e373]
+                  - generic [ref=e374]:
+                    - heading "Bulbasaur 8" [level=3] [ref=e376]
+                    - generic [ref=e377]: Bulbasaur
+                    - generic [ref=e378]:
+                      - generic [ref=e379]: Grass
+                      - generic [ref=e380]: Poison
+                    - generic [ref=e381]: Level 10
+                    - generic [ref=e383]:
+                      - generic [ref=e384]: HP
+                      - generic [ref=e388]: 35/35
+                - link "Bulbasaur 8 Bulbasaur 8 Bulbasaur Grass Poison Level 15 HP 15/40 2 Injuries" [ref=e389] [cursor=pointer]:
+                  - /url: /gm/pokemon/df6fe651-ab17-4dca-b6d8-fe8e17dd5fbd
+                  - img "Bulbasaur 8" [ref=e391]
+                  - generic [ref=e392]:
+                    - heading "Bulbasaur 8" [level=3] [ref=e394]
+                    - generic [ref=e395]: Bulbasaur
+                    - generic [ref=e396]:
+                      - generic [ref=e397]: Grass
+                      - generic [ref=e398]: Poison
+                    - generic [ref=e399]: Level 15
+                    - generic [ref=e401]:
+                      - generic [ref=e402]: HP
+                      - generic [ref=e406]: 15/40
+                    - generic [ref=e408]: 2 Injuries
+                - link "Carvanha 1 Carvanha 1 Wild Carvanha Water Dark Level 5 HP 30/30" [ref=e409] [cursor=pointer]:
+                  - /url: /gm/pokemon/ec9f0267-a994-45d3-9fd0-3266fd118ab4
+                  - img "Carvanha 1" [ref=e411]
+                  - generic [ref=e412]:
+                    - generic [ref=e413]:
+                      - heading "Carvanha 1" [level=3] [ref=e414]
+                      - generic [ref=e415]: Wild
+                    - generic [ref=e416]: Carvanha
+                    - generic [ref=e417]:
+                      - generic [ref=e418]: Water
+                      - generic [ref=e419]: Dark
+                    - generic [ref=e420]: Level 5
+                    - generic [ref=e422]:
+                      - generic [ref=e423]: HP
+                      - generic [ref=e427]: 30/30
+                - link "Carvanha 2 Carvanha 2 Wild Carvanha Water Dark Level 5 HP 30/30" [ref=e428] [cursor=pointer]:
+                  - /url: /gm/pokemon/62094ae9-3bf8-474c-b61d-f823082f58e7
+                  - img "Carvanha 2" [ref=e430]
+                  - generic [ref=e431]:
+                    - generic [ref=e432]:
+                      - heading "Carvanha 2" [level=3] [ref=e433]
+                      - generic [ref=e434]: Wild
+                    - generic [ref=e435]: Carvanha
+                    - generic [ref=e436]:
+                      - generic [ref=e437]: Water
+                      - generic [ref=e438]: Dark
+                    - generic [ref=e439]: Level 5
+                    - generic [ref=e441]:
+                      - generic [ref=e442]: HP
+                      - generic [ref=e446]: 30/30
+                - link "Carvanha 3 Carvanha 3 Wild Carvanha Water Dark Level 5 HP 30/30" [ref=e447] [cursor=pointer]:
+                  - /url: /gm/pokemon/8f74cb00-8d68-45f4-b351-24e942cc64ce
+                  - img "Carvanha 3" [ref=e449]
+                  - generic [ref=e450]:
+                    - generic [ref=e451]:
+                      - heading "Carvanha 3" [level=3] [ref=e452]
+                      - generic [ref=e453]: Wild
+                    - generic [ref=e454]: Carvanha
+                    - generic [ref=e455]:
+                      - generic [ref=e456]: Water
+                      - generic [ref=e457]: Dark
+                    - generic [ref=e458]: Level 5
+                    - generic [ref=e460]:
+                      - generic [ref=e461]: HP
+                      - generic [ref=e465]: 30/30
+                - link "Carvanha 4 Carvanha 4 Wild Carvanha Water Dark Level 5 HP 30/30" [ref=e466] [cursor=pointer]:
+                  - /url: /gm/pokemon/11756769-adcd-4040-ae7e-592add5b477e
+                  - img "Carvanha 4" [ref=e468]
+                  - generic [ref=e469]:
+                    - generic [ref=e470]:
+                      - heading "Carvanha 4" [level=3] [ref=e471]
+                      - generic [ref=e472]: Wild
+                    - generic [ref=e473]: Carvanha
+                    - generic [ref=e474]:
+                      - generic [ref=e475]: Water
+                      - generic [ref=e476]: Dark
+                    - generic [ref=e477]: Level 5
+                    - generic [ref=e479]:
+                      - generic [ref=e480]: HP
+                      - generic [ref=e484]: 30/30
+                - link "Caterpie 1 Caterpie 1 Caterpie Bug Level 8 HP 0/33 Burned Fainted 2 Injuries" [ref=e485] [cursor=pointer]:
+                  - /url: /gm/pokemon/9ed8dfa6-f877-4aef-aff9-caca4684c298
+                  - img "Caterpie 1" [ref=e3412]
+                  - generic [ref=e487]:
+                    - heading "Caterpie 1" [level=3] [ref=e489]
+                    - generic [ref=e490]: Caterpie
+                    - generic [ref=e492]: Bug
+                    - generic [ref=e493]: Level 8
+                    - generic [ref=e495]:
+                      - generic [ref=e496]: HP
+                      - generic [ref=e499]: 0/33
+                    - generic [ref=e500]:
+                      - generic [ref=e501]: Burned
+                      - generic [ref=e502]: Fainted
+                    - generic [ref=e504]: 2 Injuries
+                - link "Caterpie 2 Caterpie 2 Caterpie Bug Level 8 HP 0/33 Burned Fainted 2 Injuries" [ref=e505] [cursor=pointer]:
+                  - /url: /gm/pokemon/d0bacd02-67b6-4a43-8025-55750c9d2fe3
+                  - img "Caterpie 2" [ref=e3413]
+                  - generic [ref=e507]:
+                    - heading "Caterpie 2" [level=3] [ref=e509]
+                    - generic [ref=e510]: Caterpie
+                    - generic [ref=e512]: Bug
+                    - generic [ref=e513]: Level 8
+                    - generic [ref=e515]:
+                      - generic [ref=e516]: HP
+                      - generic [ref=e519]: 0/33
+                    - generic [ref=e520]:
+                      - generic [ref=e521]: Burned
+                      - generic [ref=e522]: Fainted
+                    - generic [ref=e524]: 2 Injuries
+                - link "Caterpie 3 Caterpie 3 Caterpie Bug Level 8 HP 0/33 Burned Fainted 2 Injuries" [ref=e525] [cursor=pointer]:
+                  - /url: /gm/pokemon/64f06f01-0cdc-4c34-b2ee-1e6fb02e98d9
+                  - img "Caterpie 3" [ref=e3414]
+                  - generic [ref=e527]:
+                    - heading "Caterpie 3" [level=3] [ref=e529]
+                    - generic [ref=e530]: Caterpie
+                    - generic [ref=e532]: Bug
+                    - generic [ref=e533]: Level 8
+                    - generic [ref=e535]:
+                      - generic [ref=e536]: HP
+                      - generic [ref=e539]: 0/33
+                    - generic [ref=e540]:
+                      - generic [ref=e541]: Burned
+                      - generic [ref=e542]: Fainted
+                    - generic [ref=e544]: 2 Injuries
+                - link "Caterpie 4 Caterpie 4 Caterpie Bug Level 8 HP 15/33 2 Injuries" [ref=e545] [cursor=pointer]:
+                  - /url: /gm/pokemon/5cd508fb-e61a-4677-b75f-ed78f5b1022a
+                  - img "Caterpie 4" [ref=e3415]
+                  - generic [ref=e547]:
+                    - heading "Caterpie 4" [level=3] [ref=e549]
+                    - generic [ref=e550]: Caterpie
+                    - generic [ref=e552]: Bug
+                    - generic [ref=e553]: Level 8
+                    - generic [ref=e555]:
+                      - generic [ref=e556]: HP
+                      - generic [ref=e560]: 15/33
+                    - generic [ref=e562]: 2 Injuries
+                - link "Charmander 1 Charmander 1 Charmander Fire Level 10 HP 18/32" [ref=e563] [cursor=pointer]:
+                  - /url: /gm/pokemon/28f84336-acb5-4c13-956a-aec4e532284d
+                  - img "Charmander 1" [ref=e3416]
+                  - generic [ref=e565]:
+                    - heading "Charmander 1" [level=3] [ref=e567]
+                    - generic [ref=e568]: Charmander
+                    - generic [ref=e570]: Fire
+                    - generic [ref=e571]: Level 10
+                    - generic [ref=e573]:
+                      - generic [ref=e574]: HP
+                      - generic [ref=e578]: 18/32
+                - link "Charmander 11 Charmander 11 Charmander Fire Level 11 HP 33/33" [ref=e579] [cursor=pointer]:
+                  - /url: /gm/pokemon/cf63086f-4416-4ff5-a75b-c0d00d7f80e5
+                  - img "Charmander 11" [ref=e3417]
+                  - generic [ref=e581]:
+                    - heading "Charmander 11" [level=3] [ref=e583]
+                    - generic [ref=e584]: Charmander
+                    - generic [ref=e586]: Fire
+                    - generic [ref=e587]: Level 11
+                    - generic [ref=e589]:
+                      - generic [ref=e590]: HP
+                      - generic [ref=e594]: 33/33
+                - link "Charmander 11 Charmander 11 Charmander Fire Level 11 HP 18/33" [ref=e595] [cursor=pointer]:
+                  - /url: /gm/pokemon/eb6666e8-a9cc-4fda-9013-d99b9e92cc59
+                  - img "Charmander 11" [ref=e3418]
+                  - generic [ref=e597]:
+                    - heading "Charmander 11" [level=3] [ref=e599]
+                    - generic [ref=e600]: Charmander
+                    - generic [ref=e602]: Fire
+                    - generic [ref=e603]: Level 11
+                    - generic [ref=e605]:
+                      - generic [ref=e606]: HP
+                      - generic [ref=e610]: 18/33
+                - link "Charmander 12 Charmander 12 Charmander Fire Level 12 HP 34/34" [ref=e611] [cursor=pointer]:
+                  - /url: /gm/pokemon/9109f4b3-4f76-44d1-9d43-34e86aa18de9
+                  - img "Charmander 12" [ref=e3419]
+                  - generic [ref=e613]:
+                    - heading "Charmander 12" [level=3] [ref=e615]
+                    - generic [ref=e616]: Charmander
+                    - generic [ref=e618]: Fire
+                    - generic [ref=e619]: Level 12
+                    - generic [ref=e621]:
+                      - generic [ref=e622]: HP
+                      - generic [ref=e626]: 34/34
+                - link "Charmander 12 Charmander 12 Template Charmander Fire Level 12 HP 40/40" [ref=e627] [cursor=pointer]:
+                  - /url: /gm/pokemon/199b7177-6925-40dd-a931-d91dcb42fcf2
+                  - img "Charmander 12" [ref=e3420]
+                  - generic [ref=e629]:
+                    - generic [ref=e630]:
+                      - heading "Charmander 12" [level=3] [ref=e631]
+                      - generic [ref=e632]: Template
+                    - generic [ref=e633]: Charmander
+                    - generic [ref=e635]: Fire
+                    - generic [ref=e636]: Level 12
+                    - generic [ref=e638]:
+                      - generic [ref=e639]: HP
+                      - generic [ref=e643]: 40/40
+                - link "Charmander 12 Charmander 12 Template Charmander Fire Level 12 HP 34/34" [ref=e644] [cursor=pointer]:
+                  - /url: /gm/pokemon/bd38bde6-2892-4ab3-9a58-a2c716aebe05
+                  - img "Charmander 12" [ref=e3421]
+                  - generic [ref=e646]:
+                    - generic [ref=e647]:
+                      - heading "Charmander 12" [level=3] [ref=e648]
+                      - generic [ref=e649]: Template
+                    - generic [ref=e650]: Charmander
+                    - generic [ref=e652]: Fire
+                    - generic [ref=e653]: Level 12
+                    - generic [ref=e655]:
+                      - generic [ref=e656]: HP
+                      - generic [ref=e660]: 34/34
+                - link "Charmander 13 Charmander 13 Charmander Fire Level 10 HP 0/32 Fainted 2 Injuries" [ref=e661] [cursor=pointer]:
+                  - /url: /gm/pokemon/13000261-6ff5-447d-bf29-6af98733a60e
+                  - img "Charmander 13" [ref=e3422]
+                  - generic [ref=e663]:
+                    - heading "Charmander 13" [level=3] [ref=e665]
+                    - generic [ref=e666]: Charmander
+                    - generic [ref=e668]: Fire
+                    - generic [ref=e669]: Level 10
+                    - generic [ref=e671]:
+                      - generic [ref=e672]: HP
+                      - generic [ref=e675]: 0/32
+                    - generic [ref=e677]: Fainted
+                    - generic [ref=e679]: 2 Injuries
+                - link "Charmander 14 Charmander 14 Charmander Fire Level 13 HP 35/35" [ref=e680] [cursor=pointer]:
+                  - /url: /gm/pokemon/5bc5d324-3674-45d5-a3fa-d9c1b4e19efc
+                  - img "Charmander 14" [ref=e3423]
+                  - generic [ref=e682]:
+                    - heading "Charmander 14" [level=3] [ref=e684]
+                    - generic [ref=e685]: Charmander
+                    - generic [ref=e687]: Fire
+                    - generic [ref=e688]: Level 13
+                    - generic [ref=e690]:
+                      - generic [ref=e691]: HP
+                      - generic [ref=e695]: 35/35
+                - link "Charmander 16 Charmander 16 Charmander Fire Level 12 HP 34/34" [ref=e696] [cursor=pointer]:
+                  - /url: /gm/pokemon/ac64572e-9941-4867-a54a-a21b7072aa45
+                  - img "Charmander 16" [ref=e3424]
+                  - generic [ref=e698]:
+                    - heading "Charmander 16" [level=3] [ref=e700]
+                    - generic [ref=e701]: Charmander
+                    - generic [ref=e703]: Fire
+                    - generic [ref=e704]: Level 12
+                    - generic [ref=e706]:
+                      - generic [ref=e707]: HP
+                      - generic [ref=e711]: 34/34
+                - link "Charmander 16 Charmander 16 Template Charmander Fire Level 12 HP 46/46" [ref=e712] [cursor=pointer]:
+                  - /url: /gm/pokemon/f1b54a93-3910-46ae-8e3e-c2d3e00b0031
+                  - img "Charmander 16" [ref=e3425]
+                  - generic [ref=e714]:
+                    - generic [ref=e715]:
+                      - heading "Charmander 16" [level=3] [ref=e716]
+                      - generic [ref=e717]: Template
+                    - generic [ref=e718]: Charmander
+                    - generic [ref=e720]: Fire
+                    - generic [ref=e721]: Level 12
+                    - generic [ref=e723]:
+                      - generic [ref=e724]: HP
+                      - generic [ref=e728]: 46/46
+                - link "Charmander 18 Charmander 18 Template Charmander Fire Level 12 HP 37/37" [ref=e729] [cursor=pointer]:
+                  - /url: /gm/pokemon/56fd4022-c661-401a-a992-22b2a2d8d221
+                  - img "Charmander 18" [ref=e3426]
+                  - generic [ref=e731]:
+                    - generic [ref=e732]:
+                      - heading "Charmander 18" [level=3] [ref=e733]
+                      - generic [ref=e734]: Template
+                    - generic [ref=e735]: Charmander
+                    - generic [ref=e737]: Fire
+                    - generic [ref=e738]: Level 12
+                    - generic [ref=e740]:
+                      - generic [ref=e741]: HP
+                      - generic [ref=e745]: 37/37
+                - link "Charmander 19 Charmander 19 Charmander Fire Level 12 HP 34/34" [ref=e746] [cursor=pointer]:
+                  - /url: /gm/pokemon/8e472e5f-6c54-4545-807a-82e92a22fa63
+                  - img "Charmander 19" [ref=e3427]
+                  - generic [ref=e748]:
+                    - heading "Charmander 19" [level=3] [ref=e750]
+                    - generic [ref=e751]: Charmander
+                    - generic [ref=e753]: Fire
+                    - generic [ref=e754]: Level 12
+                    - generic [ref=e756]:
+                      - generic [ref=e757]: HP
+                      - generic [ref=e761]: 34/34
+                - link "Charmander 19 Charmander 19 Template Charmander Fire Level 12 HP 46/46" [ref=e762] [cursor=pointer]:
+                  - /url: /gm/pokemon/81c911b8-a3f2-466e-808a-5daa46f3bd50
+                  - img "Charmander 19" [ref=e3428]
+                  - generic [ref=e764]:
+                    - generic [ref=e765]:
+                      - heading "Charmander 19" [level=3] [ref=e766]
+                      - generic [ref=e767]: Template
+                    - generic [ref=e768]: Charmander
+                    - generic [ref=e770]: Fire
+                    - generic [ref=e771]: Level 12
+                    - generic [ref=e773]:
+                      - generic [ref=e774]: HP
+                      - generic [ref=e778]: 46/46
+                - link "Charmander 21 Charmander 21 Charmander Fire Level 13 HP 35/35" [ref=e779] [cursor=pointer]:
+                  - /url: /gm/pokemon/b795f6d0-b261-48fa-b70d-73c398cb2905
+                  - img "Charmander 21" [ref=e3429]
+                  - generic [ref=e781]:
+                    - heading "Charmander 21" [level=3] [ref=e783]
+                    - generic [ref=e784]: Charmander
+                    - generic [ref=e786]: Fire
+                    - generic [ref=e787]: Level 13
+                    - generic [ref=e789]:
+                      - generic [ref=e790]: HP
+                      - generic [ref=e794]: 35/35
+                - link "Charmander 22 Charmander 22 Charmander Fire Level 13 HP 35/35" [ref=e795] [cursor=pointer]:
+                  - /url: /gm/pokemon/c79dc267-ad1e-41b7-966a-f8c1a26db0b2
+                  - img "Charmander 22" [ref=e3430]
+                  - generic [ref=e797]:
+                    - heading "Charmander 22" [level=3] [ref=e799]
+                    - generic [ref=e800]: Charmander
+                    - generic [ref=e802]: Fire
+                    - generic [ref=e803]: Level 13
+                    - generic [ref=e805]:
+                      - generic [ref=e806]: HP
+                      - generic [ref=e810]: 35/35
+                - link "Charmander 23 Charmander 23 Charmander Fire Level 12 HP 34/34" [ref=e811] [cursor=pointer]:
+                  - /url: /gm/pokemon/685e5496-bf4d-4410-9e8e-9b59247257ea
+                  - img "Charmander 23" [ref=e3431]
+                  - generic [ref=e813]:
+                    - heading "Charmander 23" [level=3] [ref=e815]
+                    - generic [ref=e816]: Charmander
+                    - generic [ref=e818]: Fire
+                    - generic [ref=e819]: Level 12
+                    - generic [ref=e821]:
+                      - generic [ref=e822]: HP
+                      - generic [ref=e826]: 34/34
+                - link "Charmander 23 Charmander 23 Template Charmander Fire Level 12 HP 37/37" [ref=e827] [cursor=pointer]:
+                  - /url: /gm/pokemon/6e415e98-ba30-4907-8f49-09a812c5ae2e
+                  - img "Charmander 23" [ref=e3432]
+                  - generic [ref=e829]:
+                    - generic [ref=e830]:
+                      - heading "Charmander 23" [level=3] [ref=e831]
+                      - generic [ref=e832]: Template
+                    - generic [ref=e833]: Charmander
+                    - generic [ref=e835]: Fire
+                    - generic [ref=e836]: Level 12
+                    - generic [ref=e838]:
+                      - generic [ref=e839]: HP
+                      - generic [ref=e843]: 37/37
+                - link "Charmander 27 Charmander 27 Charmander Fire Level 10 HP 12/32 2 Injuries" [ref=e844] [cursor=pointer]:
+                  - /url: /gm/pokemon/f187c527-da4a-4b8e-a332-50200cd6ea48
+                  - img "Charmander 27" [ref=e3433]
+                  - generic [ref=e846]:
+                    - heading "Charmander 27" [level=3] [ref=e848]
+                    - generic [ref=e849]: Charmander
+                    - generic [ref=e851]: Fire
+                    - generic [ref=e852]: Level 10
+                    - generic [ref=e854]:
+                      - generic [ref=e855]: HP
+                      - generic [ref=e859]: 12/32
+                    - generic [ref=e861]: 2 Injuries
+                - link "Charmander 27 Charmander 27 Charmander Fire Level 13 HP 35/35" [ref=e862] [cursor=pointer]:
+                  - /url: /gm/pokemon/ae436410-1683-48ee-9ebc-998f7b7bd59b
+                  - img "Charmander 27" [ref=e3434]
+                  - generic [ref=e864]:
+                    - heading "Charmander 27" [level=3] [ref=e866]
+                    - generic [ref=e867]: Charmander
+                    - generic [ref=e869]: Fire
+                    - generic [ref=e870]: Level 13
+                    - generic [ref=e872]:
+                      - generic [ref=e873]: HP
+                      - generic [ref=e877]: 35/35
+                - link "Charmander 28 Charmander 28 Charmander Fire Level 13 HP 35/35" [ref=e878] [cursor=pointer]:
+                  - /url: /gm/pokemon/70dcf727-6a78-457b-afae-8f889842aa84
+                  - img "Charmander 28" [ref=e3435]
+                  - generic [ref=e880]:
+                    - heading "Charmander 28" [level=3] [ref=e882]
+                    - generic [ref=e883]: Charmander
+                    - generic [ref=e885]: Fire
+                    - generic [ref=e886]: Level 13
+                    - generic [ref=e888]:
+                      - generic [ref=e889]: HP
+                      - generic [ref=e893]: 35/35
+                - link "Charmander 29 Charmander 29 Charmander Fire Level 10 HP 32/32" [ref=e894] [cursor=pointer]:
+                  - /url: /gm/pokemon/0f6bb6c1-0e4a-4eb8-8385-e4c9b1ec8bd7
+                  - img "Charmander 29" [ref=e3436]
+                  - generic [ref=e896]:
+                    - heading "Charmander 29" [level=3] [ref=e898]
+                    - generic [ref=e899]: Charmander
+                    - generic [ref=e901]: Fire
+                    - generic [ref=e902]: Level 10
+                    - generic [ref=e904]:
+                      - generic [ref=e905]: HP
+                      - generic [ref=e909]: 32/32
+                - link "Charmander 5 Charmander 5 Charmander Fire Level 11 HP 33/33" [ref=e910] [cursor=pointer]:
+                  - /url: /gm/pokemon/5cb96e28-f1dd-4ae0-aa25-35802590af01
+                  - img "Charmander 5" [ref=e3437]
+                  - generic [ref=e912]:
+                    - heading "Charmander 5" [level=3] [ref=e914]
+                    - generic [ref=e915]: Charmander
+                    - generic [ref=e917]: Fire
+                    - generic [ref=e918]: Level 11
+                    - generic [ref=e920]:
+                      - generic [ref=e921]: HP
+                      - generic [ref=e925]: 33/33
+                - link "Charmander 5 Charmander 5 Charmander Fire Level 10 HP 0/32 Fainted 2 Injuries" [ref=e926] [cursor=pointer]:
+                  - /url: /gm/pokemon/249720b5-d6ab-49ef-a4ff-fc17d3cdf9b3
+                  - img "Charmander 5" [ref=e3438]
+                  - generic [ref=e928]:
+                    - heading "Charmander 5" [level=3] [ref=e930]
+                    - generic [ref=e931]: Charmander
+                    - generic [ref=e933]: Fire
+                    - generic [ref=e934]: Level 10
+                    - generic [ref=e936]:
+                      - generic [ref=e937]: HP
+                      - generic [ref=e940]: 0/32
+                    - generic [ref=e942]: Fainted
+                    - generic [ref=e944]: 2 Injuries
+                - link "Charmander 6 Charmander 6 Charmander Fire Level 10 HP 32/32" [ref=e945] [cursor=pointer]:
+                  - /url: /gm/pokemon/e607a17d-6c12-40bd-bc40-929dbb2e1d9f
+                  - img "Charmander 6" [ref=e3439]
+                  - generic [ref=e947]:
+                    - heading "Charmander 6" [level=3] [ref=e949]
+                    - generic [ref=e950]: Charmander
+                    - generic [ref=e952]: Fire
+                    - generic [ref=e953]: Level 10
+                    - generic [ref=e955]:
+                      - generic [ref=e956]: HP
+                      - generic [ref=e960]: 32/32
+                - link "Charmander 6 Charmander 6 Charmander Fire Level 10 HP 32/32" [ref=e961] [cursor=pointer]:
+                  - /url: /gm/pokemon/2907cdb8-1a6c-4d03-8005-9142b722f15b
+                  - img "Charmander 6" [ref=e3440]
+                  - generic [ref=e963]:
+                    - heading "Charmander 6" [level=3] [ref=e965]
+                    - generic [ref=e966]: Charmander
+                    - generic [ref=e968]: Fire
+                    - generic [ref=e969]: Level 10
+                    - generic [ref=e971]:
+                      - generic [ref=e972]: HP
+                      - generic [ref=e976]: 32/32
+                - link "Charmander 7 Charmander 7 Charmander Fire Level 11 HP 33/33" [ref=e977] [cursor=pointer]:
+                  - /url: /gm/pokemon/0bd1ad78-23c0-4083-84e0-9937a5b462f5
+                  - img "Charmander 7" [ref=e3441]
+                  - generic [ref=e979]:
+                    - heading "Charmander 7" [level=3] [ref=e981]
+                    - generic [ref=e982]: Charmander
+                    - generic [ref=e984]: Fire
+                    - generic [ref=e985]: Level 11
+                    - generic [ref=e987]:
+                      - generic [ref=e988]: HP
+                      - generic [ref=e992]: 33/33
+                - link "Charmander 8 Charmander 8 Charmander Fire Level 10 HP 18/32" [ref=e993] [cursor=pointer]:
+                  - /url: /gm/pokemon/5789af1f-a1d8-459f-ab6c-c96b115323c3
+                  - img "Charmander 8" [ref=e3442]
+                  - generic [ref=e995]:
+                    - heading "Charmander 8" [level=3] [ref=e997]
+                    - generic [ref=e998]: Charmander
+                    - generic [ref=e1000]: Fire
+                    - generic [ref=e1001]: Level 10
+                    - generic [ref=e1003]:
+                      - generic [ref=e1004]: HP
+                      - generic [ref=e1008]: 18/32
+                - link "Charmander 9 Charmander 9 Charmander Fire Level 10 HP 32/32" [ref=e1009] [cursor=pointer]:
+                  - /url: /gm/pokemon/3bd0a8c0-c926-4cee-a9ad-ca5ddc1443e7
+                  - img "Charmander 9" [ref=e3443]
+                  - generic [ref=e1011]:
+                    - heading "Charmander 9" [level=3] [ref=e1013]
+                    - generic [ref=e1014]: Charmander
+                    - generic [ref=e1016]: Fire
+                    - generic [ref=e1017]: Level 10
+                    - generic [ref=e1019]:
+                      - generic [ref=e1020]: HP
+                      - generic [ref=e1024]: 32/32
+                - link "Chomps Chomps Gible Dragon Ground Level 10 HP 47/47" [ref=e1025] [cursor=pointer]:
+                  - /url: /gm/pokemon/0cc3eaf3-5d9b-4adb-996f-500751f930c0
+                  - img "Chomps" [ref=e1027]
+                  - generic [ref=e1028]:
+                    - heading "Chomps" [level=3] [ref=e1030]
+                    - generic [ref=e1031]: Gible
+                    - generic [ref=e1032]:
+                      - generic [ref=e1033]: Dragon
+                      - generic [ref=e1034]: Ground
+                    - generic [ref=e1035]: Level 10
+                    - generic [ref=e1037]:
+                      - generic [ref=e1038]: HP
+                      - generic [ref=e1042]: 47/47
+                - link "Clippy Clippy Impidimp Dark Fairy Level 10 HP 50/50" [ref=e1043] [cursor=pointer]:
+                  - /url: /gm/pokemon/d5b285c9-c3a9-468e-bb4f-f918d675534c
+                  - img "Clippy" [ref=e1045]
+                  - generic [ref=e1046]:
+                    - heading "Clippy" [level=3] [ref=e1048]
+                    - generic [ref=e1049]: Impidimp
+                    - generic [ref=e1050]:
+                      - generic [ref=e1051]: Dark
+                      - generic [ref=e1052]: Fairy
+                    - generic [ref=e1053]: Level 10
+                    - generic [ref=e1055]:
+                      - generic [ref=e1056]: HP
+                      - generic [ref=e1060]: 50/50
+                - link "Corphish 1 Corphish 1 Wild Corphish Water Level 7 HP 29/29" [ref=e1061] [cursor=pointer]:
+                  - /url: /gm/pokemon/acde0bb0-5de2-419d-a089-9add0929fbc8
+                  - img "Corphish 1" [ref=e3444]
+                  - generic [ref=e1063]:
+                    - generic [ref=e1064]:
+                      - heading "Corphish 1" [level=3] [ref=e1065]
+                      - generic [ref=e1066]: Wild
+                    - generic [ref=e1067]: Corphish
+                    - generic [ref=e1069]: Water
+                    - generic [ref=e1070]: Level 7
+                    - generic [ref=e1072]:
+                      - generic [ref=e1073]: HP
+                      - generic [ref=e1077]: 29/29
+                - link "Cutiefly 1 Cutiefly 1 Wild Cutiefly Bug Fairy Level 5 HP 27/27" [ref=e1078] [cursor=pointer]:
+                  - /url: /gm/pokemon/12701a1b-4490-4532-82aa-6317f340b897
+                  - img "Cutiefly 1" [ref=e3445]
+                  - generic [ref=e1080]:
+                    - generic [ref=e1081]:
+                      - heading "Cutiefly 1" [level=3] [ref=e1082]
+                      - generic [ref=e1083]: Wild
+                    - generic [ref=e1084]: Cutiefly
+                    - generic [ref=e1085]:
+                      - generic [ref=e1086]: Bug
+                      - generic [ref=e1087]: Fairy
+                    - generic [ref=e1088]: Level 5
+                    - generic [ref=e1090]:
+                      - generic [ref=e1091]: HP
+                      - generic [ref=e1095]: 27/27
+                - link "Eevee 1 Eevee 1 Wild Eevee Normal Level 8 HP 45/45" [ref=e1096] [cursor=pointer]:
+                  - /url: /gm/pokemon/051c28e1-7978-44e7-9bc0-f06d8c35cad4
+                  - img "Eevee 1" [ref=e3446]
+                  - generic [ref=e1098]:
+                    - generic [ref=e1099]:
+                      - heading "Eevee 1" [level=3] [ref=e1100]
+                      - generic [ref=e1101]: Wild
+                    - generic [ref=e1102]: Eevee
+                    - generic [ref=e1104]: Normal
+                    - generic [ref=e1105]: Level 8
+                    - generic [ref=e1107]:
+                      - generic [ref=e1108]: HP
+                      - generic [ref=e1112]: 45/45
+                - link "Eevee 2 Eevee 2 Eevee Normal Level 13 HP 41/41 Paralyzed" [ref=e1113] [cursor=pointer]:
+                  - /url: /gm/pokemon/1e0a9c4f-a50f-4aa5-9fce-f448d11f8607
+                  - img "Eevee 2" [ref=e3447]
+                  - generic [ref=e1115]:
+                    - heading "Eevee 2" [level=3] [ref=e1117]
+                    - generic [ref=e1118]: Eevee
+                    - generic [ref=e1120]: Normal
+                    - generic [ref=e1121]: Level 13
+                    - generic [ref=e1123]:
+                      - generic [ref=e1124]: HP
+                      - generic [ref=e1128]: 41/41
+                    - generic [ref=e1130]: Paralyzed
+                - link "Eevee 3 Eevee 3 Eevee Normal Level 13 HP 41/41 Paralyzed" [ref=e1131] [cursor=pointer]:
+                  - /url: /gm/pokemon/ef2190d4-568c-48d8-808e-e2330dd8098e
+                  - img "Eevee 3" [ref=e3448]
+                  - generic [ref=e1133]:
+                    - heading "Eevee 3" [level=3] [ref=e1135]
+                    - generic [ref=e1136]: Eevee
+                    - generic [ref=e1138]: Normal
+                    - generic [ref=e1139]: Level 13
+                    - generic [ref=e1141]:
+                      - generic [ref=e1142]: HP
+                      - generic [ref=e1146]: 41/41
+                    - generic [ref=e1148]: Paralyzed
+                - link "Eevee 4 Eevee 4 Eevee Normal Level 13 HP 41/41 Paralyzed" [ref=e1149] [cursor=pointer]:
+                  - /url: /gm/pokemon/6ffa826e-2e36-4db6-a2bf-cdb41b4b7c5d
+                  - img "Eevee 4" [ref=e3449]
+                  - generic [ref=e1151]:
+                    - heading "Eevee 4" [level=3] [ref=e1153]
+                    - generic [ref=e1154]: Eevee
+                    - generic [ref=e1156]: Normal
+                    - generic [ref=e1157]: Level 13
+                    - generic [ref=e1159]:
+                      - generic [ref=e1160]: HP
+                      - generic [ref=e1164]: 41/41
+                    - generic [ref=e1166]: Paralyzed
+                - link "Gible 2 Gible 2 Wild Gible Dragon Ground Level 10 HP 44/44" [ref=e1167] [cursor=pointer]:
+                  - /url: /gm/pokemon/181159c2-11ea-45a0-b3b0-053e0ab055a5
+                  - img "Gible 2" [ref=e1169]
+                  - generic [ref=e1170]:
+                    - generic [ref=e1171]:
+                      - heading "Gible 2" [level=3] [ref=e1172]
+                      - generic [ref=e1173]: Wild
+                    - generic [ref=e1174]: Gible
+                    - generic [ref=e1175]:
+                      - generic [ref=e1176]: Dragon
+                      - generic [ref=e1177]: Ground
+                    - generic [ref=e1178]: Level 10
+                    - generic [ref=e1180]:
+                      - generic [ref=e1181]: HP
+                      - generic [ref=e1185]: 44/44
+                - link "Golett 1 Golett 1 Wild Golett Ground Ghost Level 3 HP 31/31" [ref=e1186] [cursor=pointer]:
+                  - /url: /gm/pokemon/91b19f17-27c7-4997-b82e-33a19a72f52c
+                  - img "Golett 1" [ref=e3450]
+                  - generic [ref=e1188]:
+                    - generic [ref=e1189]:
+                      - heading "Golett 1" [level=3] [ref=e1190]
+                      - generic [ref=e1191]: Wild
+                    - generic [ref=e1192]: Golett
+                    - generic [ref=e1193]:
+                      - generic [ref=e1194]: Ground
+                      - generic [ref=e1195]: Ghost
+                    - generic [ref=e1196]: Level 3
+                    - generic [ref=e1198]:
+                      - generic [ref=e1199]: HP
+                      - generic [ref=e1203]: 31/31
+                - link "Golett 2 Golett 2 Template Golett Ground Ghost Level 3 HP 40/40" [ref=e1204] [cursor=pointer]:
+                  - /url: /gm/pokemon/c85157fe-d86f-4dbf-b6ce-dabcdd603c56
+                  - img "Golett 2" [ref=e3451]
+                  - generic [ref=e1206]:
+                    - generic [ref=e1207]:
+                      - heading "Golett 2" [level=3] [ref=e1208]
+                      - generic [ref=e1209]: Template
+                    - generic [ref=e1210]: Golett
+                    - generic [ref=e1211]:
+                      - generic [ref=e1212]: Ground
+                      - generic [ref=e1213]: Ghost
+                    - generic [ref=e1214]: Level 3
+                    - generic [ref=e1216]:
+                      - generic [ref=e1217]: HP
+                      - generic [ref=e1221]: 40/40
+                - link "Growlithe 1 Growlithe 1 Growlithe Fire Level 15 HP 43/43" [ref=e1222] [cursor=pointer]:
+                  - /url: /gm/pokemon/061f68a7-8979-439e-a4f3-7cff4b19e422
+                  - img "Growlithe 1" [ref=e3452]
+                  - generic [ref=e1224]:
+                    - heading "Growlithe 1" [level=3] [ref=e1226]
+                    - generic [ref=e1227]: Growlithe
+                    - generic [ref=e1229]: Fire
+                    - generic [ref=e1230]: Level 15
+                    - generic [ref=e1232]:
+                      - generic [ref=e1233]: HP
+                      - generic [ref=e1237]: 43/43
+                - link "Growlithe 2 Growlithe 2 Growlithe Fire Level 15 HP 43/43" [ref=e1238] [cursor=pointer]:
+                  - /url: /gm/pokemon/07497170-dd27-4db6-b60e-fff19ef5098b
+                  - img "Growlithe 2" [ref=e3453]
+                  - generic [ref=e1240]:
+                    - heading "Growlithe 2" [level=3] [ref=e1242]
+                    - generic [ref=e1243]: Growlithe
+                    - generic [ref=e1245]: Fire
+                    - generic [ref=e1246]: Level 15
+                    - generic [ref=e1248]:
+                      - generic [ref=e1249]: HP
+                      - generic [ref=e1253]: 43/43
+                - link "Growlithe 3 Growlithe 3 Growlithe Fire Level 15 HP 43/43" [ref=e1254] [cursor=pointer]:
+                  - /url: /gm/pokemon/6174c539-c542-4f50-8b91-9668097262e2
+                  - img "Growlithe 3" [ref=e3454]
+                  - generic [ref=e1256]:
+                    - heading "Growlithe 3" [level=3] [ref=e1258]
+                    - generic [ref=e1259]: Growlithe
+                    - generic [ref=e1261]: Fire
+                    - generic [ref=e1262]: Level 15
+                    - generic [ref=e1264]:
+                      - generic [ref=e1265]: HP
+                      - generic [ref=e1269]: 43/43
+                - link "Growlithe 4 Growlithe 4 Growlithe Fire Level 15 HP 43/43" [ref=e1270] [cursor=pointer]:
+                  - /url: /gm/pokemon/467522c2-8a59-4e2d-952c-187846504909
+                  - img "Growlithe 4" [ref=e3455]
+                  - generic [ref=e1272]:
+                    - heading "Growlithe 4" [level=3] [ref=e1274]
+                    - generic [ref=e1275]: Growlithe
+                    - generic [ref=e1277]: Fire
+                    - generic [ref=e1278]: Level 15
+                    - generic [ref=e1280]:
+                      - generic [ref=e1281]: HP
+                      - generic [ref=e1285]: 43/43
+                - link "Growlithe 5 Growlithe 5 Growlithe Fire Level 15 HP 43/43" [ref=e1286] [cursor=pointer]:
+                  - /url: /gm/pokemon/74c68704-e1e4-49a8-8f0f-38bd76f043f3
+                  - img "Growlithe 5" [ref=e3456]
+                  - generic [ref=e1288]:
+                    - heading "Growlithe 5" [level=3] [ref=e1290]
+                    - generic [ref=e1291]: Growlithe
+                    - generic [ref=e1293]: Fire
+                    - generic [ref=e1294]: Level 15
+                    - generic [ref=e1296]:
+                      - generic [ref=e1297]: HP
+                      - generic [ref=e1301]: 43/43
+                - link "Growlithe 6 Growlithe 6 Growlithe Fire Level 15 HP 43/43" [ref=e1302] [cursor=pointer]:
+                  - /url: /gm/pokemon/f8eebff1-0197-464b-afdd-57761cdbe114
+                  - img "Growlithe 6" [ref=e3457]
+                  - generic [ref=e1304]:
+                    - heading "Growlithe 6" [level=3] [ref=e1306]
+                    - generic [ref=e1307]: Growlithe
+                    - generic [ref=e1309]: Fire
+                    - generic [ref=e1310]: Level 15
+                    - generic [ref=e1312]:
+                      - generic [ref=e1313]: HP
+                      - generic [ref=e1317]: 43/43
+                - link "Growlithe 8 Growlithe 8 Growlithe Fire Level 15 HP 43/43" [ref=e1318] [cursor=pointer]:
+                  - /url: /gm/pokemon/741e03d1-53ec-4421-9b81-ff481f2e9ad3
+                  - img "Growlithe 8" [ref=e3458]
+                  - generic [ref=e1320]:
+                    - heading "Growlithe 8" [level=3] [ref=e1322]
+                    - generic [ref=e1323]: Growlithe
+                    - generic [ref=e1325]: Fire
+                    - generic [ref=e1326]: Level 15
+                    - generic [ref=e1328]:
+                      - generic [ref=e1329]: HP
+                      - generic [ref=e1333]: 43/43
+                - link "Growlithe 9 Growlithe 9 Growlithe Fire Level 15 HP 43/43" [ref=e1334] [cursor=pointer]:
+                  - /url: /gm/pokemon/327f85ec-b43b-44b9-a3b1-66b1aaa858ef
+                  - img "Growlithe 9" [ref=e3459]
+                  - generic [ref=e1336]:
+                    - heading "Growlithe 9" [level=3] [ref=e1338]
+                    - generic [ref=e1339]: Growlithe
+                    - generic [ref=e1341]: Fire
+                    - generic [ref=e1342]: Level 15
+                    - generic [ref=e1344]:
+                      - generic [ref=e1345]: HP
+                      - generic [ref=e1349]: 43/43
+                - link "Honedge 1 Honedge 1 Wild Honedge Steel Ghost Level 3 HP 28/28" [ref=e1350] [cursor=pointer]:
+                  - /url: /gm/pokemon/614ceae2-9245-4f74-90c2-58db81ad9fa5
+                  - img "Honedge 1" [ref=e3460]
+                  - generic [ref=e1352]:
+                    - generic [ref=e1353]:
+                      - heading "Honedge 1" [level=3] [ref=e1354]
+                      - generic [ref=e1355]: Wild
+                    - generic [ref=e1356]: Honedge
+                    - generic [ref=e1357]:
+                      - generic [ref=e1358]: Steel
+                      - generic [ref=e1359]: Ghost
+                    - generic [ref=e1360]: Level 3
+                    - generic [ref=e1362]:
+                      - generic [ref=e1363]: HP
+                      - generic [ref=e1367]: 28/28
+                - link "Honedge 2 Honedge 2 Template Honedge Steel Ghost Level 3 HP 34/34" [ref=e1368] [cursor=pointer]:
+                  - /url: /gm/pokemon/69e1ec45-44d0-4a19-84c6-2f8ef39ae9ec
+                  - img "Honedge 2" [ref=e3461]
+                  - generic [ref=e1370]:
+                    - generic [ref=e1371]:
+                      - heading "Honedge 2" [level=3] [ref=e1372]
+                      - generic [ref=e1373]: Template
+                    - generic [ref=e1374]: Honedge
+                    - generic [ref=e1375]:
+                      - generic [ref=e1376]: Steel
+                      - generic [ref=e1377]: Ghost
+                    - generic [ref=e1378]: Level 3
+                    - generic [ref=e1380]:
+                      - generic [ref=e1381]: HP
+                      - generic [ref=e1385]: 34/34
+                - link "Hoothoot 1 Hoothoot 1 Wild Hoothoot Normal Flying Level 6 HP 37/37" [ref=e1386] [cursor=pointer]:
+                  - /url: /gm/pokemon/be2ccbf3-eced-4217-a78f-4659cebd02a5
+                  - img "Hoothoot 1" [ref=e3462]
+                  - generic [ref=e1388]:
+                    - generic [ref=e1389]:
+                      - heading "Hoothoot 1" [level=3] [ref=e1390]
+                      - generic [ref=e1391]: Wild
+                    - generic [ref=e1392]: Hoothoot
+                    - generic [ref=e1393]:
+                      - generic [ref=e1394]: Normal
+                      - generic [ref=e1395]: Flying
+                    - generic [ref=e1396]: Level 6
+                    - generic [ref=e1398]:
+                      - generic [ref=e1399]: HP
+                      - generic [ref=e1403]: 37/37
+                - link "Houndour 1 Houndour 1 Wild Houndour Dark Fire Level 9 HP 37/37" [ref=e1404] [cursor=pointer]:
+                  - /url: /gm/pokemon/78381a8e-dde1-46cc-86e0-f840ab1ee296
+                  - img "Houndour 1" [ref=e3463]
+                  - generic [ref=e1406]:
+                    - generic [ref=e1407]:
+                      - heading "Houndour 1" [level=3] [ref=e1408]
+                      - generic [ref=e1409]: Wild
+                    - generic [ref=e1410]: Houndour
+                    - generic [ref=e1411]:
+                      - generic [ref=e1412]: Dark
+                      - generic [ref=e1413]: Fire
+                    - generic [ref=e1414]: Level 9
+                    - generic [ref=e1416]:
+                      - generic [ref=e1417]: HP
+                      - generic [ref=e1421]: 37/37
+                - link "Houndour 2 Houndour 2 Wild Houndour Dark Fire Level 15 HP 49/49" [ref=e1422] [cursor=pointer]:
+                  - /url: /gm/pokemon/d4557cc2-5c91-4bc2-8b5f-976f3a6662eb
+                  - img "Houndour 2" [ref=e3464]
+                  - generic [ref=e1424]:
+                    - generic [ref=e1425]:
+                      - heading "Houndour 2" [level=3] [ref=e1426]
+                      - generic [ref=e1427]: Wild
+                    - generic [ref=e1428]: Houndour
+                    - generic [ref=e1429]:
+                      - generic [ref=e1430]: Dark
+                      - generic [ref=e1431]: Fire
+                    - generic [ref=e1432]: Level 15
+                    - generic [ref=e1434]:
+                      - generic [ref=e1435]: HP
+                      - generic [ref=e1439]: 49/49
+                - link "Houndour 3 Houndour 3 Wild Houndour Dark Fire Level 7 HP 12/35 1 Injury" [ref=e1440] [cursor=pointer]:
+                  - /url: /gm/pokemon/4fb51f14-b9a2-483c-a516-437512d1ea15
+                  - img "Houndour 3" [ref=e3465]
+                  - generic [ref=e1442]:
+                    - generic [ref=e1443]:
+                      - heading "Houndour 3" [level=3] [ref=e1444]
+                      - generic [ref=e1445]: Wild
+                    - generic [ref=e1446]: Houndour
+                    - generic [ref=e1447]:
+                      - generic [ref=e1448]: Dark
+                      - generic [ref=e1449]: Fire
+                    - generic [ref=e1450]: Level 7
+                    - generic [ref=e1452]:
+                      - generic [ref=e1453]: HP
+                      - generic [ref=e1457]: 12/35
+                    - generic [ref=e1459]: 1 Injury
+                - link "Impidimp 2 Impidimp 2 Wild Impidimp Dark Fairy Level 10 HP 38/38" [ref=e1460] [cursor=pointer]:
+                  - /url: /gm/pokemon/16671214-4d5c-4eb5-9b98-56d872650f6e
+                  - img "Impidimp 2" [ref=e1462]
+                  - generic [ref=e1463]:
+                    - generic [ref=e1464]:
+                      - heading "Impidimp 2" [level=3] [ref=e1465]
+                      - generic [ref=e1466]: Wild
+                    - generic [ref=e1467]: Impidimp
+                    - generic [ref=e1468]:
+                      - generic [ref=e1469]: Dark
+                      - generic [ref=e1470]: Fairy
+                    - generic [ref=e1471]: Level 10
+                    - generic [ref=e1473]:
+                      - generic [ref=e1474]: HP
+                      - generic [ref=e1478]: 38/38
+                - link "Iris Iris Misdreavus Ghost Level 10 HP 44/44" [ref=e1479] [cursor=pointer]:
+                  - /url: /gm/pokemon/28f47229-6953-4493-b5de-facf6dbe3586
+                  - img "Iris" [ref=e1481]
+                  - generic [ref=e1482]:
+                    - heading "Iris" [level=3] [ref=e1484]
+                    - generic [ref=e1485]: Misdreavus
+                    - generic [ref=e1487]: Ghost
+                    - generic [ref=e1488]: Level 10
+                    - generic [ref=e1490]:
+                      - generic [ref=e1491]: HP
+                      - generic [ref=e1495]: 44/44
+                - link "Lillipup 1 Lillipup 1 Wild Lillipup Normal Level 8 HP 39/39" [ref=e1496] [cursor=pointer]:
+                  - /url: /gm/pokemon/9d08db08-452e-42cf-b15b-f81edf014583
+                  - img "Lillipup 1" [ref=e3466]
+                  - generic [ref=e1498]:
+                    - generic [ref=e1499]:
+                      - heading "Lillipup 1" [level=3] [ref=e1500]
+                      - generic [ref=e1501]: Wild
+                    - generic [ref=e1502]: Lillipup
+                    - generic [ref=e1504]: Normal
+                    - generic [ref=e1505]: Level 8
+                    - generic [ref=e1507]:
+                      - generic [ref=e1508]: HP
+                      - generic [ref=e1512]: 39/39
+                - link "Lillipup 2 Lillipup 2 Wild Lillipup Normal Level 10 HP 38/38" [ref=e1513] [cursor=pointer]:
+                  - /url: /gm/pokemon/3084d740-2098-4245-a3af-26e538b1f225
+                  - img "Lillipup 2" [ref=e3467]
+                  - generic [ref=e1515]:
+                    - generic [ref=e1516]:
+                      - heading "Lillipup 2" [level=3] [ref=e1517]
+                      - generic [ref=e1518]: Wild
+                    - generic [ref=e1519]: Lillipup
+                    - generic [ref=e1521]: Normal
+                    - generic [ref=e1522]: Level 10
+                    - generic [ref=e1524]:
+                      - generic [ref=e1525]: HP
+                      - generic [ref=e1529]: 38/38
+                - link "Lillipup 3 Lillipup 3 Wild Lillipup Normal Level 7 HP 32/32" [ref=e1530] [cursor=pointer]:
+                  - /url: /gm/pokemon/01b95d4a-15f9-4d24-bc90-7eff370a1e23
+                  - img "Lillipup 3" [ref=e3468]
+                  - generic [ref=e1532]:
+                    - generic [ref=e1533]:
+                      - heading "Lillipup 3" [level=3] [ref=e1534]
+                      - generic [ref=e1535]: Wild
+                    - generic [ref=e1536]: Lillipup
+                    - generic [ref=e1538]: Normal
+                    - generic [ref=e1539]: Level 7
+                    - generic [ref=e1541]:
+                      - generic [ref=e1542]: HP
+                      - generic [ref=e1546]: 32/32
+                - link "Lillipup 4 Lillipup 4 Wild Lillipup Normal Level 7 HP 0/35 Fainted 1 Injury" [ref=e1547] [cursor=pointer]:
+                  - /url: /gm/pokemon/5246c2f2-3249-499c-8f12-3bca599689a9
+                  - img "Lillipup 4" [ref=e3469]
+                  - generic [ref=e1549]:
+                    - generic [ref=e1550]:
+                      - heading "Lillipup 4" [level=3] [ref=e1551]
+                      - generic [ref=e1552]: Wild
+                    - generic [ref=e1553]: Lillipup
+                    - generic [ref=e1555]: Normal
+                    - generic [ref=e1556]: Level 7
+                    - generic [ref=e1558]:
+                      - generic [ref=e1559]: HP
+                      - generic [ref=e1562]: 0/35
+                    - generic [ref=e1564]: Fainted
+                    - generic [ref=e1566]: 1 Injury
+                - link "Lillipup 5 Lillipup 5 Wild Lillipup Normal Level 8 HP 0/33 Fainted 1 Injury" [ref=e1567] [cursor=pointer]:
+                  - /url: /gm/pokemon/804cb126-c487-431e-9aa8-fdc768e67804
+                  - img "Lillipup 5" [ref=e3470]
+                  - generic [ref=e1569]:
+                    - generic [ref=e1570]:
+                      - heading "Lillipup 5" [level=3] [ref=e1571]
+                      - generic [ref=e1572]: Wild
+                    - generic [ref=e1573]: Lillipup
+                    - generic [ref=e1575]: Normal
+                    - generic [ref=e1576]: Level 8
+                    - generic [ref=e1578]:
+                      - generic [ref=e1579]: HP
+                      - generic [ref=e1582]: 0/33
+                    - generic [ref=e1584]: Fainted
+                    - generic [ref=e1586]: 1 Injury
+                - link "Lillipup 6 Lillipup 6 Wild Lillipup Normal Level 8 HP 0/33 Fainted 1 Injury" [ref=e1587] [cursor=pointer]:
+                  - /url: /gm/pokemon/533e24ce-e4c3-42b0-a511-d14d8ca72859
+                  - img "Lillipup 6" [ref=e3471]
+                  - generic [ref=e1589]:
+                    - generic [ref=e1590]:
+                      - heading "Lillipup 6" [level=3] [ref=e1591]
+                      - generic [ref=e1592]: Wild
+                    - generic [ref=e1593]: Lillipup
+                    - generic [ref=e1595]: Normal
+                    - generic [ref=e1596]: Level 8
+                    - generic [ref=e1598]:
+                      - generic [ref=e1599]: HP
+                      - generic [ref=e1602]: 0/33
+                    - generic [ref=e1604]: Fainted
+                    - generic [ref=e1606]: 1 Injury
+                - link "Lillipup 7 Lillipup 7 Wild Lillipup Normal Level 6 HP 31/31" [ref=e1607] [cursor=pointer]:
+                  - /url: /gm/pokemon/06608e2a-731b-490d-b8e0-d3ae74faeea2
+                  - img "Lillipup 7" [ref=e3472]
+                  - generic [ref=e1609]:
+                    - generic [ref=e1610]:
+                      - heading "Lillipup 7" [level=3] [ref=e1611]
+                      - generic [ref=e1612]: Wild
+                    - generic [ref=e1613]: Lillipup
+                    - generic [ref=e1615]: Normal
+                    - generic [ref=e1616]: Level 6
+                    - generic [ref=e1618]:
+                      - generic [ref=e1619]: HP
+                      - generic [ref=e1623]: 31/31
+                - link "Lillipup 8 Lillipup 8 Wild Lillipup Normal Level 7 HP 35/35" [ref=e1624] [cursor=pointer]:
+                  - /url: /gm/pokemon/493f3708-fc23-4568-b1ed-eb2e9819cbb7
+                  - img "Lillipup 8" [ref=e3473]
+                  - generic [ref=e1626]:
+                    - generic [ref=e1627]:
+                      - heading "Lillipup 8" [level=3] [ref=e1628]
+                      - generic [ref=e1629]: Wild
+                    - generic [ref=e1630]: Lillipup
+                    - generic [ref=e1632]: Normal
+                    - generic [ref=e1633]: Level 7
+                    - generic [ref=e1635]:
+                      - generic [ref=e1636]: HP
+                      - generic [ref=e1640]: 35/35
+                - link "Machop 1 Machop 1 Machop Fighting Level 10 HP 41/41" [ref=e1641] [cursor=pointer]:
+                  - /url: /gm/pokemon/2135fdc3-b9d4-492e-a0f1-8503f8f04edc
+                  - img "Machop 1" [ref=e3474]
+                  - generic [ref=e1643]:
+                    - heading "Machop 1" [level=3] [ref=e1645]
+                    - generic [ref=e1646]: Machop
+                    - generic [ref=e1648]: Fighting
+                    - generic [ref=e1649]: Level 10
+                    - generic [ref=e1651]:
+                      - generic [ref=e1652]: HP
+                      - generic [ref=e1656]: 41/41
+                - link "Machop 2 Machop 2 Machop Fighting Level 10 HP 41/41" [ref=e1657] [cursor=pointer]:
+                  - /url: /gm/pokemon/0c1ca315-fa7b-4cf2-b842-89deab0730b5
+                  - img "Machop 2" [ref=e3475]
+                  - generic [ref=e1659]:
+                    - heading "Machop 2" [level=3] [ref=e1661]
+                    - generic [ref=e1662]: Machop
+                    - generic [ref=e1664]: Fighting
+                    - generic [ref=e1665]: Level 10
+                    - generic [ref=e1667]:
+                      - generic [ref=e1668]: HP
+                      - generic [ref=e1672]: 41/41
+                - link "Machop 3 Machop 3 Machop Fighting Level 10 HP 41/41" [ref=e1673] [cursor=pointer]:
+                  - /url: /gm/pokemon/d3dbc41c-0247-419c-8514-59ad448f2694
+                  - img "Machop 3" [ref=e3476]
+                  - generic [ref=e1675]:
+                    - heading "Machop 3" [level=3] [ref=e1677]
+                    - generic [ref=e1678]: Machop
+                    - generic [ref=e1680]: Fighting
+                    - generic [ref=e1681]: Level 10
+                    - generic [ref=e1683]:
+                      - generic [ref=e1684]: HP
+                      - generic [ref=e1688]: 41/41
+                - link "Magikarp 1 Magikarp 1 Wild Magikarp Water Level 10 HP 26/26" [ref=e1689] [cursor=pointer]:
+                  - /url: /gm/pokemon/0c20dbb9-893e-4bba-94f8-b648417db234
+                  - img "Magikarp 1" [ref=e3477]
+                  - generic [ref=e1691]:
+                    - generic [ref=e1692]:
+                      - heading "Magikarp 1" [level=3] [ref=e1693]
+                      - generic [ref=e1694]: Wild
+                    - generic [ref=e1695]: Magikarp
+                    - generic [ref=e1697]: Water
+                    - generic [ref=e1698]: Level 10
+                    - generic [ref=e1700]:
+                      - generic [ref=e1701]: HP
+                      - generic [ref=e1705]: 26/26
+                - link "Magikarp 2 Magikarp 2 Wild Magikarp Water Level 9 HP 25/25" [ref=e1706] [cursor=pointer]:
+                  - /url: /gm/pokemon/93ae4745-d4fd-47e3-abcc-edeb3f070b0e
+                  - img "Magikarp 2" [ref=e3478]
+                  - generic [ref=e1708]:
+                    - generic [ref=e1709]:
+                      - heading "Magikarp 2" [level=3] [ref=e1710]
+                      - generic [ref=e1711]: Wild
+                    - generic [ref=e1712]: Magikarp
+                    - generic [ref=e1714]: Water
+                    - generic [ref=e1715]: Level 9
+                    - generic [ref=e1717]:
+                      - generic [ref=e1718]: HP
+                      - generic [ref=e1722]: 25/25
+                - link "Magikarp 3 Magikarp 3 Wild Magikarp Water Level 11 HP 27/27" [ref=e1723] [cursor=pointer]:
+                  - /url: /gm/pokemon/397fef69-fe3b-4001-9f50-8c0190f8a8f1
+                  - img "Magikarp 3" [ref=e3479]
+                  - generic [ref=e1725]:
+                    - generic [ref=e1726]:
+                      - heading "Magikarp 3" [level=3] [ref=e1727]
+                      - generic [ref=e1728]: Wild
+                    - generic [ref=e1729]: Magikarp
+                    - generic [ref=e1731]: Water
+                    - generic [ref=e1732]: Level 11
+                    - generic [ref=e1734]:
+                      - generic [ref=e1735]: HP
+                      - generic [ref=e1739]: 27/27
+                - link "Magikarp 4 Magikarp 4 Wild Magikarp Water Level 13 HP 29/29" [ref=e1740] [cursor=pointer]:
+                  - /url: /gm/pokemon/2552cc2a-62e7-4d8b-a1e7-bd6ebcb185bb
+                  - img "Magikarp 4" [ref=e3480]
+                  - generic [ref=e1742]:
+                    - generic [ref=e1743]:
+                      - heading "Magikarp 4" [level=3] [ref=e1744]
+                      - generic [ref=e1745]: Wild
+                    - generic [ref=e1746]: Magikarp
+                    - generic [ref=e1748]: Water
+                    - generic [ref=e1749]: Level 13
+                    - generic [ref=e1751]:
+                      - generic [ref=e1752]: HP
+                      - generic [ref=e1756]: 29/29
+                - link "Misdreavus 2 Misdreavus 2 Wild Misdreavus Ghost Level 10 HP 44/44" [ref=e1757] [cursor=pointer]:
+                  - /url: /gm/pokemon/fc1ec7f1-e656-45ed-ab55-f5a1b26d19b6
+                  - img "Misdreavus 2" [ref=e1759]
+                  - generic [ref=e1760]:
+                    - generic [ref=e1761]:
+                      - heading "Misdreavus 2" [level=3] [ref=e1762]
+                      - generic [ref=e1763]: Wild
+                    - generic [ref=e1764]: Misdreavus
+                    - generic [ref=e1766]: Ghost
+                    - generic [ref=e1767]: Level 10
+                    - generic [ref=e1769]:
+                      - generic [ref=e1770]: HP
+                      - generic [ref=e1774]: 44/44
+                - link "Nickit 1 Nickit 1 Wild Nickit Dark Level 1 HP 23/23" [ref=e1775] [cursor=pointer]:
+                  - /url: /gm/pokemon/713df24a-bc57-491a-ab51-42dfb3089295
+                  - img "Nickit 1" [ref=e3481]
+                  - generic [ref=e1777]:
+                    - generic [ref=e1778]:
+                      - heading "Nickit 1" [level=3] [ref=e1779]
+                      - generic [ref=e1780]: Wild
+                    - generic [ref=e1781]: Nickit
+                    - generic [ref=e1783]: Dark
+                    - generic [ref=e1784]: Level 1
+                    - generic [ref=e1786]:
+                      - generic [ref=e1787]: HP
+                      - generic [ref=e1791]: 23/23
+                - link "Nickit 10 Nickit 10 Template Nickit Dark Level 1 HP 26/26" [ref=e1792] [cursor=pointer]:
+                  - /url: /gm/pokemon/665aa07e-c566-401d-b60b-60c303e00b1a
+                  - img "Nickit 10" [ref=e3482]
+                  - generic [ref=e1794]:
+                    - generic [ref=e1795]:
+                      - heading "Nickit 10" [level=3] [ref=e1796]
+                      - generic [ref=e1797]: Template
+                    - generic [ref=e1798]: Nickit
+                    - generic [ref=e1800]: Dark
+                    - generic [ref=e1801]: Level 1
+                    - generic [ref=e1803]:
+                      - generic [ref=e1804]: HP
+                      - generic [ref=e1808]: 26/26
+                - link "Nickit 11 Nickit 11 Template Nickit Dark Level 1 HP 32/32" [ref=e1809] [cursor=pointer]:
+                  - /url: /gm/pokemon/e2823a01-ef4e-4beb-89b3-78097915447a
+                  - img "Nickit 11" [ref=e3483]
+                  - generic [ref=e1811]:
+                    - generic [ref=e1812]:
+                      - heading "Nickit 11" [level=3] [ref=e1813]
+                      - generic [ref=e1814]: Template
+                    - generic [ref=e1815]: Nickit
+                    - generic [ref=e1817]: Dark
+                    - generic [ref=e1818]: Level 1
+                    - generic [ref=e1820]:
+                      - generic [ref=e1821]: HP
+                      - generic [ref=e1825]: 32/32
+                - link "Nickit 2 Nickit 2 Wild Nickit Dark Level 1 HP 23/23" [ref=e1826] [cursor=pointer]:
+                  - /url: /gm/pokemon/e2993cab-a7e2-4251-9024-f4b235e100eb
+                  - img "Nickit 2" [ref=e3484]
+                  - generic [ref=e1828]:
+                    - generic [ref=e1829]:
+                      - heading "Nickit 2" [level=3] [ref=e1830]
+                      - generic [ref=e1831]: Wild
+                    - generic [ref=e1832]: Nickit
+                    - generic [ref=e1834]: Dark
+                    - generic [ref=e1835]: Level 1
+                    - generic [ref=e1837]:
+                      - generic [ref=e1838]: HP
+                      - generic [ref=e1842]: 23/23
+                - link "Nickit 3 Nickit 3 Wild Nickit Dark Level 1 HP 23/23" [ref=e1843] [cursor=pointer]:
+                  - /url: /gm/pokemon/5e9afd94-7bd6-42ea-b449-4bb172df27f6
+                  - img "Nickit 3" [ref=e3485]
+                  - generic [ref=e1845]:
+                    - generic [ref=e1846]:
+                      - heading "Nickit 3" [level=3] [ref=e1847]
+                      - generic [ref=e1848]: Wild
+                    - generic [ref=e1849]: Nickit
+                    - generic [ref=e1851]: Dark
+                    - generic [ref=e1852]: Level 1
+                    - generic [ref=e1854]:
+                      - generic [ref=e1855]: HP
+                      - generic [ref=e1859]: 23/23
+                - link "Nickit 4 Nickit 4 Wild Nickit Dark Level 1 HP 23/23" [ref=e1860] [cursor=pointer]:
+                  - /url: /gm/pokemon/8844c3d9-aa76-4e5e-b28f-4a71ad4822c2
+                  - img "Nickit 4" [ref=e3486]
+                  - generic [ref=e1862]:
+                    - generic [ref=e1863]:
+                      - heading "Nickit 4" [level=3] [ref=e1864]
+                      - generic [ref=e1865]: Wild
+                    - generic [ref=e1866]: Nickit
+                    - generic [ref=e1868]: Dark
+                    - generic [ref=e1869]: Level 1
+                    - generic [ref=e1871]:
+                      - generic [ref=e1872]: HP
+                      - generic [ref=e1876]: 23/23
+                - link "Nickit 5 Nickit 5 Wild Nickit Dark Level 1 HP 23/23" [ref=e1877] [cursor=pointer]:
+                  - /url: /gm/pokemon/19831306-a3f6-4717-bb11-30906c59fd62
+                  - img "Nickit 5" [ref=e3487]
+                  - generic [ref=e1879]:
+                    - generic [ref=e1880]:
+                      - heading "Nickit 5" [level=3] [ref=e1881]
+                      - generic [ref=e1882]: Wild
+                    - generic [ref=e1883]: Nickit
+                    - generic [ref=e1885]: Dark
+                    - generic [ref=e1886]: Level 1
+                    - generic [ref=e1888]:
+                      - generic [ref=e1889]: HP
+                      - generic [ref=e1893]: 23/23
+                - link "Nickit 6 Nickit 6 Wild Nickit Dark Level 9 HP 0/34 Fainted 1 Injury" [ref=e1894] [cursor=pointer]:
+                  - /url: /gm/pokemon/2733826b-b281-4604-bb57-3f1cf0148f61
+                  - img "Nickit 6" [ref=e3488]
+                  - generic [ref=e1896]:
+                    - generic [ref=e1897]:
+                      - heading "Nickit 6" [level=3] [ref=e1898]
+                      - generic [ref=e1899]: Wild
+                    - generic [ref=e1900]: Nickit
+                    - generic [ref=e1902]: Dark
+                    - generic [ref=e1903]: Level 9
+                    - generic [ref=e1905]:
+                      - generic [ref=e1906]: HP
+                      - generic [ref=e1909]: 0/34
+                    - generic [ref=e1911]: Fainted
+                    - generic [ref=e1913]: 1 Injury
+                - link "Nickit 7 Nickit 7 Template Nickit Dark Level 1 HP 32/32" [ref=e1914] [cursor=pointer]:
+                  - /url: /gm/pokemon/d10836be-2129-42bf-9f80-d847e19437be
+                  - img "Nickit 7" [ref=e3489]
+                  - generic [ref=e1916]:
+                    - generic [ref=e1917]:
+                      - heading "Nickit 7" [level=3] [ref=e1918]
+                      - generic [ref=e1919]: Template
+                    - generic [ref=e1920]: Nickit
+                    - generic [ref=e1922]: Dark
+                    - generic [ref=e1923]: Level 1
+                    - generic [ref=e1925]:
+                      - generic [ref=e1926]: HP
+                      - generic [ref=e1930]: 32/32
+                - link "Nickit 8 Nickit 8 Template Nickit Dark Level 1 HP 32/32" [ref=e1931] [cursor=pointer]:
+                  - /url: /gm/pokemon/1654e064-67ac-415a-a9c3-3a20651dff7e
+                  - img "Nickit 8" [ref=e3490]
+                  - generic [ref=e1933]:
+                    - generic [ref=e1934]:
+                      - heading "Nickit 8" [level=3] [ref=e1935]
+                      - generic [ref=e1936]: Template
+                    - generic [ref=e1937]: Nickit
+                    - generic [ref=e1939]: Dark
+                    - generic [ref=e1940]: Level 1
+                    - generic [ref=e1942]:
+                      - generic [ref=e1943]: HP
+                      - generic [ref=e1947]: 32/32
+                - link "Nickit 9 Nickit 9 Template Nickit Dark Level 1 HP 26/26" [ref=e1948] [cursor=pointer]:
+                  - /url: /gm/pokemon/721b532b-5690-4ea4-a0c2-e68f40de3796
+                  - img "Nickit 9" [ref=e3491]
+                  - generic [ref=e1950]:
+                    - generic [ref=e1951]:
+                      - heading "Nickit 9" [level=3] [ref=e1952]
+                      - generic [ref=e1953]: Template
+                    - generic [ref=e1954]: Nickit
+                    - generic [ref=e1956]: Dark
+                    - generic [ref=e1957]: Level 1
+                    - generic [ref=e1959]:
+                      - generic [ref=e1960]: HP
+                      - generic [ref=e1964]: 26/26
+                - link "Oddish 1 Oddish 1 Wild Oddish Grass Poison Level 10 HP 41/41" [ref=e1965] [cursor=pointer]:
+                  - /url: /gm/pokemon/92a19755-0005-4fb1-9e57-d48087a65f53
+                  - img "Oddish 1" [ref=e1967]
+                  - generic [ref=e1968]:
+                    - generic [ref=e1969]:
+                      - heading "Oddish 1" [level=3] [ref=e1970]
+                      - generic [ref=e1971]: Wild
+                    - generic [ref=e1972]: Oddish
+                    - generic [ref=e1973]:
+                      - generic [ref=e1974]: Grass
+                      - generic [ref=e1975]: Poison
+                    - generic [ref=e1976]: Level 10
+                    - generic [ref=e1978]:
+                      - generic [ref=e1979]: HP
+                      - generic [ref=e1983]: 41/41
+                - link "Oddish 11 Oddish 11 Oddish Grass Poison Level 45 HP 1/70 Paralyzed 1 Injury" [ref=e1984] [cursor=pointer]:
+                  - /url: /gm/pokemon/52020ba5-3fc1-4d34-ad0c-1b1ab65b84a4
+                  - img "Oddish 11" [ref=e1986]
+                  - generic [ref=e1987]:
+                    - heading "Oddish 11" [level=3] [ref=e1989]
+                    - generic [ref=e1990]: Oddish
+                    - generic [ref=e1991]:
+                      - generic [ref=e1992]: Grass
+                      - generic [ref=e1993]: Poison
+                    - generic [ref=e1994]: Level 45
+                    - generic [ref=e1996]:
+                      - generic [ref=e1997]: HP
+                      - generic [ref=e2001]: 1/70
+                    - generic [ref=e2003]: Paralyzed
+                    - generic [ref=e2005]: 1 Injury
+                - link "Oddish 12 Oddish 12 Wild Oddish Grass Poison Level 10 HP 38/38" [ref=e2006] [cursor=pointer]:
+                  - /url: /gm/pokemon/d3b77b3a-34aa-4788-9adf-7db998945adc
+                  - img "Oddish 12" [ref=e2008]
+                  - generic [ref=e2009]:
+                    - generic [ref=e2010]:
+                      - heading "Oddish 12" [level=3] [ref=e2011]
+                      - generic [ref=e2012]: Wild
+                    - generic [ref=e2013]: Oddish
+                    - generic [ref=e2014]:
+                      - generic [ref=e2015]: Grass
+                      - generic [ref=e2016]: Poison
+                    - generic [ref=e2017]: Level 10
+                    - generic [ref=e2019]:
+                      - generic [ref=e2020]: HP
+                      - generic [ref=e2024]: 38/38
+                - link "Oddish 13 Oddish 13 Oddish Grass Poison Level 45 HP 1/70 2 Injuries" [ref=e2025] [cursor=pointer]:
+                  - /url: /gm/pokemon/d81094ab-2388-43c8-84e4-07844057fdf3
+                  - img "Oddish 13" [ref=e2027]
+                  - generic [ref=e2028]:
+                    - heading "Oddish 13" [level=3] [ref=e2030]
+                    - generic [ref=e2031]: Oddish
+                    - generic [ref=e2032]:
+                      - generic [ref=e2033]: Grass
+                      - generic [ref=e2034]: Poison
+                    - generic [ref=e2035]: Level 45
+                    - generic [ref=e2037]:
+                      - generic [ref=e2038]: HP
+                      - generic [ref=e2042]: 1/70
+                    - generic [ref=e2044]: 2 Injuries
+                - link "Oddish 13 Oddish 13 Wild Oddish Grass Poison Level 10 HP 35/35" [ref=e2045] [cursor=pointer]:
+                  - /url: /gm/pokemon/257d5508-0549-4120-8c34-72064efa9d2c
+                  - img "Oddish 13" [ref=e2047]
+                  - generic [ref=e2048]:
+                    - generic [ref=e2049]:
+                      - heading "Oddish 13" [level=3] [ref=e2050]
+                      - generic [ref=e2051]: Wild
+                    - generic [ref=e2052]: Oddish
+                    - generic [ref=e2053]:
+                      - generic [ref=e2054]: Grass
+                      - generic [ref=e2055]: Poison
+                    - generic [ref=e2056]: Level 10
+                    - generic [ref=e2058]:
+                      - generic [ref=e2059]: HP
+                      - generic [ref=e2063]: 35/35
+                - link "Oddish 13 Oddish 13 Wild Oddish Grass Poison Level 10 HP 44/44" [ref=e2064] [cursor=pointer]:
+                  - /url: /gm/pokemon/fac2628c-5939-4aec-bfc4-e9bf8f410a1c
+                  - img "Oddish 13" [ref=e2066]
+                  - generic [ref=e2067]:
+                    - generic [ref=e2068]:
+                      - heading "Oddish 13" [level=3] [ref=e2069]
+                      - generic [ref=e2070]: Wild
+                    - generic [ref=e2071]: Oddish
+                    - generic [ref=e2072]:
+                      - generic [ref=e2073]: Grass
+                      - generic [ref=e2074]: Poison
+                    - generic [ref=e2075]: Level 10
+                    - generic [ref=e2077]:
+                      - generic [ref=e2078]: HP
+                      - generic [ref=e2082]: 44/44
+                - link "Oddish 14 Oddish 14 Oddish Grass Poison Level 8 HP 1/33 2 Injuries" [ref=e2083] [cursor=pointer]:
+                  - /url: /gm/pokemon/404bc92f-fe26-40d8-bb19-98d518a46af4
+                  - img "Oddish 14" [ref=e2085]
+                  - generic [ref=e2086]:
+                    - heading "Oddish 14" [level=3] [ref=e2088]
+                    - generic [ref=e2089]: Oddish
+                    - generic [ref=e2090]:
+                      - generic [ref=e2091]: Grass
+                      - generic [ref=e2092]: Poison
+                    - generic [ref=e2093]: Level 8
+                    - generic [ref=e2095]:
+                      - generic [ref=e2096]: HP
+                      - generic [ref=e2100]: 1/33
+                    - generic [ref=e2102]: 2 Injuries
+                - link "Oddish 16 Oddish 16 Wild Oddish Grass Poison Level 10 HP 38/38" [ref=e2103] [cursor=pointer]:
+                  - /url: /gm/pokemon/71ccf72c-a127-49e2-be59-7ef2802e5436
+                  - img "Oddish 16" [ref=e2105]
+                  - generic [ref=e2106]:
+                    - generic [ref=e2107]:
+                      - heading "Oddish 16" [level=3] [ref=e2108]
+                      - generic [ref=e2109]: Wild
+                    - generic [ref=e2110]: Oddish
+                    - generic [ref=e2111]:
+                      - generic [ref=e2112]: Grass
+                      - generic [ref=e2113]: Poison
+                    - generic [ref=e2114]: Level 10
+                    - generic [ref=e2116]:
+                      - generic [ref=e2117]: HP
+                      - generic [ref=e2121]: 38/38
+                - link "Oddish 2 Oddish 2 Wild Oddish Grass Poison Level 10 HP 44/44" [ref=e2122] [cursor=pointer]:
+                  - /url: /gm/pokemon/8b492757-322b-458e-a4d4-452193f3a009
+                  - img "Oddish 2" [ref=e2124]
+                  - generic [ref=e2125]:
+                    - generic [ref=e2126]:
+                      - heading "Oddish 2" [level=3] [ref=e2127]
+                      - generic [ref=e2128]: Wild
+                    - generic [ref=e2129]: Oddish
+                    - generic [ref=e2130]:
+                      - generic [ref=e2131]: Grass
+                      - generic [ref=e2132]: Poison
+                    - generic [ref=e2133]: Level 10
+                    - generic [ref=e2135]:
+                      - generic [ref=e2136]: HP
+                      - generic [ref=e2140]: 44/44
+                - link "Oddish 3 Oddish 3 Wild Oddish Grass Poison Level 10 HP 41/41" [ref=e2141] [cursor=pointer]:
+                  - /url: /gm/pokemon/4d1cda29-d357-4973-bfa4-edee3205514f
+                  - img "Oddish 3" [ref=e2143]
+                  - generic [ref=e2144]:
+                    - generic [ref=e2145]:
+                      - heading "Oddish 3" [level=3] [ref=e2146]
+                      - generic [ref=e2147]: Wild
+                    - generic [ref=e2148]: Oddish
+                    - generic [ref=e2149]:
+                      - generic [ref=e2150]: Grass
+                      - generic [ref=e2151]: Poison
+                    - generic [ref=e2152]: Level 10
+                    - generic [ref=e2154]:
+                      - generic [ref=e2155]: HP
+                      - generic [ref=e2159]: 41/41
+                - link "Oddish 4 Oddish 4 Wild Oddish Grass Poison Level 10 HP 47/47" [ref=e2160] [cursor=pointer]:
+                  - /url: /gm/pokemon/35806c3f-5c8a-408d-8866-89f9fc9124b1
+                  - img "Oddish 4" [ref=e2162]
+                  - generic [ref=e2163]:
+                    - generic [ref=e2164]:
+                      - heading "Oddish 4" [level=3] [ref=e2165]
+                      - generic [ref=e2166]: Wild
+                    - generic [ref=e2167]: Oddish
+                    - generic [ref=e2168]:
+                      - generic [ref=e2169]: Grass
+                      - generic [ref=e2170]: Poison
+                    - generic [ref=e2171]: Level 10
+                    - generic [ref=e2173]:
+                      - generic [ref=e2174]: HP
+                      - generic [ref=e2178]: 47/47
+                - link "Oddish 5 Oddish 5 Wild Oddish Grass Poison Level 10 HP 38/38" [ref=e2179] [cursor=pointer]:
+                  - /url: /gm/pokemon/a9c45dc5-6a09-4762-80ee-e4a6ed100540
+                  - img "Oddish 5" [ref=e2181]
+                  - generic [ref=e2182]:
+                    - generic [ref=e2183]:
+                      - heading "Oddish 5" [level=3] [ref=e2184]
+                      - generic [ref=e2185]: Wild
+                    - generic [ref=e2186]: Oddish
+                    - generic [ref=e2187]:
+                      - generic [ref=e2188]: Grass
+                      - generic [ref=e2189]: Poison
+                    - generic [ref=e2190]: Level 10
+                    - generic [ref=e2192]:
+                      - generic [ref=e2193]: HP
+                      - generic [ref=e2197]: 38/38
+                - link "Oddish 6 Oddish 6 Wild Oddish Grass Poison Level 10 HP 38/38" [ref=e2198] [cursor=pointer]:
+                  - /url: /gm/pokemon/51fa3c30-68a4-4632-b7c4-b1c42d986a38
+                  - img "Oddish 6" [ref=e2200]
+                  - generic [ref=e2201]:
+                    - generic [ref=e2202]:
+                      - heading "Oddish 6" [level=3] [ref=e2203]
+                      - generic [ref=e2204]: Wild
+                    - generic [ref=e2205]: Oddish
+                    - generic [ref=e2206]:
+                      - generic [ref=e2207]: Grass
+                      - generic [ref=e2208]: Poison
+                    - generic [ref=e2209]: Level 10
+                    - generic [ref=e2211]:
+                      - generic [ref=e2212]: HP
+                      - generic [ref=e2216]: 38/38
+                - link "Oddish 7 Oddish 7 Wild Oddish Grass Poison Level 10 HP 44/44" [ref=e2217] [cursor=pointer]:
+                  - /url: /gm/pokemon/cfb36e36-ab60-4b97-b70e-231b6ef3c0c0
+                  - img "Oddish 7" [ref=e2219]
+                  - generic [ref=e2220]:
+                    - generic [ref=e2221]:
+                      - heading "Oddish 7" [level=3] [ref=e2222]
+                      - generic [ref=e2223]: Wild
+                    - generic [ref=e2224]: Oddish
+                    - generic [ref=e2225]:
+                      - generic [ref=e2226]: Grass
+                      - generic [ref=e2227]: Poison
+                    - generic [ref=e2228]: Level 10
+                    - generic [ref=e2230]:
+                      - generic [ref=e2231]: HP
+                      - generic [ref=e2235]: 44/44
+                - link "Oddish 9 Oddish 9 Wild Oddish Grass Poison Level 10 HP 17/38 2 Injuries" [ref=e2236] [cursor=pointer]:
+                  - /url: /gm/pokemon/9c654224-6f95-436e-8ec6-afe73b8048c5
+                  - img "Oddish 9" [ref=e2238]
+                  - generic [ref=e2239]:
+                    - generic [ref=e2240]:
+                      - heading "Oddish 9" [level=3] [ref=e2241]
+                      - generic [ref=e2242]: Wild
+                    - generic [ref=e2243]: Oddish
+                    - generic [ref=e2244]:
+                      - generic [ref=e2245]: Grass
+                      - generic [ref=e2246]: Poison
+                    - generic [ref=e2247]: Level 10
+                    - generic [ref=e2249]:
+                      - generic [ref=e2250]: HP
+                      - generic [ref=e2254]: 17/38
+                    - generic [ref=e2256]: 2 Injuries
+                - link "Pidgey 1 Pidgey 1 Pidgey Normal Flying Level 10 HP 20/32" [ref=e2257] [cursor=pointer]:
+                  - /url: /gm/pokemon/17e400fb-77f2-413b-8590-f5bf11fb6fe0
+                  - img "Pidgey 1" [ref=e3492]
+                  - generic [ref=e2259]:
+                    - heading "Pidgey 1" [level=3] [ref=e2261]
+                    - generic [ref=e2262]: Pidgey
+                    - generic [ref=e2263]:
+                      - generic [ref=e2264]: Normal
+                      - generic [ref=e2265]: Flying
+                    - generic [ref=e2266]: Level 10
+                    - generic [ref=e2268]:
+                      - generic [ref=e2269]: HP
+                      - generic [ref=e2273]: 20/32
+                - link "Pidgey 2 Pidgey 2 Pidgey Normal Flying Level 10 HP 20/32" [ref=e2274] [cursor=pointer]:
+                  - /url: /gm/pokemon/bf475d92-28aa-4e7f-8975-8ca1c79c48c3
+                  - img "Pidgey 2" [ref=e3493]
+                  - generic [ref=e2276]:
+                    - heading "Pidgey 2" [level=3] [ref=e2278]
+                    - generic [ref=e2279]: Pidgey
+                    - generic [ref=e2280]:
+                      - generic [ref=e2281]: Normal
+                      - generic [ref=e2282]: Flying
+                    - generic [ref=e2283]: Level 10
+                    - generic [ref=e2285]:
+                      - generic [ref=e2286]: HP
+                      - generic [ref=e2290]: 20/32
+                - link "Pidgey 3 Pidgey 3 Pidgey Normal Flying Level 10 HP 20/32" [ref=e2291] [cursor=pointer]:
+                  - /url: /gm/pokemon/f04296ba-b1ed-444c-b56a-d54464c199db
+                  - img "Pidgey 3" [ref=e3494]
+                  - generic [ref=e2293]:
+                    - heading "Pidgey 3" [level=3] [ref=e2295]
+                    - generic [ref=e2296]: Pidgey
+                    - generic [ref=e2297]:
+                      - generic [ref=e2298]: Normal
+                      - generic [ref=e2299]: Flying
+                    - generic [ref=e2300]: Level 10
+                    - generic [ref=e2302]:
+                      - generic [ref=e2303]: HP
+                      - generic [ref=e2307]: 20/32
+                - link "Pidgey 4 Pidgey 4 Pidgey Normal Flying Level 10 HP 32/32" [ref=e2308] [cursor=pointer]:
+                  - /url: /gm/pokemon/92d0b026-3c5f-4a8f-a1aa-16218a1db4d3
+                  - img "Pidgey 4" [ref=e3495]
+                  - generic [ref=e2310]:
+                    - heading "Pidgey 4" [level=3] [ref=e2312]
+                    - generic [ref=e2313]: Pidgey
+                    - generic [ref=e2314]:
+                      - generic [ref=e2315]: Normal
+                      - generic [ref=e2316]: Flying
+                    - generic [ref=e2317]: Level 10
+                    - generic [ref=e2319]:
+                      - generic [ref=e2320]: HP
+                      - generic [ref=e2324]: 32/32
+                - link "pikachu 1 pikachu 1 Wild pikachu Normal Level 5 HP 30/30" [ref=e2325] [cursor=pointer]:
+                  - /url: /gm/pokemon/f53f9e0a-d591-4eb6-8ccb-963e01b22906
+                  - img "pikachu 1" [ref=e3496]
+                  - generic [ref=e2327]:
+                    - generic [ref=e2328]:
+                      - heading "pikachu 1" [level=3] [ref=e2329]
+                      - generic [ref=e2330]: Wild
+                    - generic [ref=e2331]: pikachu
+                    - generic [ref=e2333]: Normal
+                    - generic [ref=e2334]: Level 5
+                    - generic [ref=e2336]:
+                      - generic [ref=e2337]: HP
+                      - generic [ref=e2341]: 30/30
+                - link "Pikachu 1 Pikachu 1 Pikachu Electric Level 10 HP 32/32" [ref=e2342] [cursor=pointer]:
+                  - /url: /gm/pokemon/7fb3c14c-2eaa-4bf7-b3fe-23c678749d26
+                  - img "Pikachu 1" [ref=e3497]
+                  - generic [ref=e2344]:
+                    - heading "Pikachu 1" [level=3] [ref=e2346]
+                    - generic [ref=e2347]: Pikachu
+                    - generic [ref=e2349]: Electric
+                    - generic [ref=e2350]: Level 10
+                    - generic [ref=e2352]:
+                      - generic [ref=e2353]: HP
+                      - generic [ref=e2357]: 32/32
+                - link "Pikachu 2 Pikachu 2 Pikachu Electric Level 10 HP 32/32" [ref=e2358] [cursor=pointer]:
+                  - /url: /gm/pokemon/b6420356-cb49-4aac-9f76-2779e053817c
+                  - img "Pikachu 2" [ref=e3498]
+                  - generic [ref=e2360]:
+                    - heading "Pikachu 2" [level=3] [ref=e2362]
+                    - generic [ref=e2363]: Pikachu
+                    - generic [ref=e2365]: Electric
+                    - generic [ref=e2366]: Level 10
+                    - generic [ref=e2368]:
+                      - generic [ref=e2369]: HP
+                      - generic [ref=e2373]: 32/32
+                - link "Pikachu 4 Pikachu 4 Pikachu Electric Level 10 HP 32/32" [ref=e2374] [cursor=pointer]:
+                  - /url: /gm/pokemon/68981de1-9f2d-4b31-9099-8504d97f73a0
+                  - img "Pikachu 4" [ref=e3499]
+                  - generic [ref=e2376]:
+                    - heading "Pikachu 4" [level=3] [ref=e2378]
+                    - generic [ref=e2379]: Pikachu
+                    - generic [ref=e2381]: Electric
+                    - generic [ref=e2382]: Level 10
+                    - generic [ref=e2384]:
+                      - generic [ref=e2385]: HP
+                      - generic [ref=e2389]: 32/32
+                - link "Pikachu 4 Pikachu 4 Pikachu Electric Level 10 HP 32/32" [ref=e2390] [cursor=pointer]:
+                  - /url: /gm/pokemon/c3dcd407-bb83-47c4-8d06-41ac57b1c3e4
+                  - img "Pikachu 4" [ref=e3500]
+                  - generic [ref=e2392]:
+                    - heading "Pikachu 4" [level=3] [ref=e2394]
+                    - generic [ref=e2395]: Pikachu
+                    - generic [ref=e2397]: Electric
+                    - generic [ref=e2398]: Level 10
+                    - generic [ref=e2400]:
+                      - generic [ref=e2401]: HP
+                      - generic [ref=e2405]: 32/32
+                - link "Pikachu 5 Pikachu 5 Pikachu Electric Level 14 HP 36/36 Paralyzed" [ref=e2406] [cursor=pointer]:
+                  - /url: /gm/pokemon/844b0c69-9581-4e73-8f1e-a2b3afa54ba0
+                  - img "Pikachu 5" [ref=e3501]
+                  - generic [ref=e2408]:
+                    - heading "Pikachu 5" [level=3] [ref=e2410]
+                    - generic [ref=e2411]: Pikachu
+                    - generic [ref=e2413]: Electric
+                    - generic [ref=e2414]: Level 14
+                    - generic [ref=e2416]:
+                      - generic [ref=e2417]: HP
+                      - generic [ref=e2421]: 36/36
+                    - generic [ref=e2423]: Paralyzed
+                - link "Pikachu 6 Pikachu 6 Pikachu Electric Level 14 HP 36/36 Paralyzed" [ref=e2424] [cursor=pointer]:
+                  - /url: /gm/pokemon/c47893ae-d209-4b19-b50b-4f04aeeb248b
+                  - img "Pikachu 6" [ref=e3502]
+                  - generic [ref=e2426]:
+                    - heading "Pikachu 6" [level=3] [ref=e2428]
+                    - generic [ref=e2429]: Pikachu
+                    - generic [ref=e2431]: Electric
+                    - generic [ref=e2432]: Level 14
+                    - generic [ref=e2434]:
+                      - generic [ref=e2435]: HP
+                      - generic [ref=e2439]: 36/36
+                    - generic [ref=e2441]: Paralyzed
+                - link "Pikachu 7 Pikachu 7 Pikachu Electric Level 14 HP 36/36 Paralyzed" [ref=e2442] [cursor=pointer]:
+                  - /url: /gm/pokemon/006436c8-9682-42f6-8682-bd4eab84a50e
+                  - img "Pikachu 7" [ref=e3503]
+                  - generic [ref=e2444]:
+                    - heading "Pikachu 7" [level=3] [ref=e2446]
+                    - generic [ref=e2447]: Pikachu
+                    - generic [ref=e2449]: Electric
+                    - generic [ref=e2450]: Level 14
+                    - generic [ref=e2452]:
+                      - generic [ref=e2453]: HP
+                      - generic [ref=e2457]: 36/36
+                    - generic [ref=e2459]: Paralyzed
+                - link "Pikachu 8 Pikachu 8 Pikachu Electric Level 10 HP 32/32" [ref=e2460] [cursor=pointer]:
+                  - /url: /gm/pokemon/2365f1e2-8e2c-405f-b359-508f4f15a38e
+                  - img "Pikachu 8" [ref=e3504]
+                  - generic [ref=e2462]:
+                    - heading "Pikachu 8" [level=3] [ref=e2464]
+                    - generic [ref=e2465]: Pikachu
+                    - generic [ref=e2467]: Electric
+                    - generic [ref=e2468]: Level 10
+                    - generic [ref=e2470]:
+                      - generic [ref=e2471]: HP
+                      - generic [ref=e2475]: 32/32
+                - link "Psyduck 1 Psyduck 1 Psyduck Water Level 11 HP 36/36" [ref=e2476] [cursor=pointer]:
+                  - /url: /gm/pokemon/e0ff61ed-d22b-4b87-bdd5-318e8a2389d3
+                  - img "Psyduck 1" [ref=e3505]
+                  - generic [ref=e2478]:
+                    - heading "Psyduck 1" [level=3] [ref=e2480]
+                    - generic [ref=e2481]: Psyduck
+                    - generic [ref=e2483]: Water
+                    - generic [ref=e2484]: Level 11
+                    - generic [ref=e2486]:
+                      - generic [ref=e2487]: HP
+                      - generic [ref=e2491]: 36/36
+                - link "Psyduck 2 Psyduck 2 Psyduck Water Level 11 HP 36/36" [ref=e2492] [cursor=pointer]:
+                  - /url: /gm/pokemon/93da4a57-8fb0-428e-ba4a-dd6ffc4e833f
+                  - img "Psyduck 2" [ref=e3506]
+                  - generic [ref=e2494]:
+                    - heading "Psyduck 2" [level=3] [ref=e2496]
+                    - generic [ref=e2497]: Psyduck
+                    - generic [ref=e2499]: Water
+                    - generic [ref=e2500]: Level 11
+                    - generic [ref=e2502]:
+                      - generic [ref=e2503]: HP
+                      - generic [ref=e2507]: 36/36
+                - link "Psyduck 3 Psyduck 3 Psyduck Water Level 11 HP 36/36" [ref=e2508] [cursor=pointer]:
+                  - /url: /gm/pokemon/d76649b1-2ff0-4449-bcb5-eb6c1691a446
+                  - img "Psyduck 3" [ref=e3507]
+                  - generic [ref=e2510]:
+                    - heading "Psyduck 3" [level=3] [ref=e2512]
+                    - generic [ref=e2513]: Psyduck
+                    - generic [ref=e2515]: Water
+                    - generic [ref=e2516]: Level 11
+                    - generic [ref=e2518]:
+                      - generic [ref=e2519]: HP
+                      - generic [ref=e2523]: 36/36
+                - link "Psyduck 4 Psyduck 4 Psyduck Water Level 11 HP 36/36" [ref=e2524] [cursor=pointer]:
+                  - /url: /gm/pokemon/e0a4c6dc-6d39-4d9f-ae99-f307f5f04c96
+                  - img "Psyduck 4" [ref=e3508]
+                  - generic [ref=e2526]:
+                    - heading "Psyduck 4" [level=3] [ref=e2528]
+                    - generic [ref=e2529]: Psyduck
+                    - generic [ref=e2531]: Water
+                    - generic [ref=e2532]: Level 11
+                    - generic [ref=e2534]:
+                      - generic [ref=e2535]: HP
+                      - generic [ref=e2539]: 36/36
+                - link "Psyduck 5 Psyduck 5 Psyduck Water Level 11 HP 36/36" [ref=e2540] [cursor=pointer]:
+                  - /url: /gm/pokemon/b5967dd1-fb2e-4b3b-8348-8b3ccad9fb57
+                  - img "Psyduck 5" [ref=e3509]
+                  - generic [ref=e2542]:
+                    - heading "Psyduck 5" [level=3] [ref=e2544]
+                    - generic [ref=e2545]: Psyduck
+                    - generic [ref=e2547]: Water
+                    - generic [ref=e2548]: Level 11
+                    - generic [ref=e2550]:
+                      - generic [ref=e2551]: HP
+                      - generic [ref=e2555]: 36/36
+                - link "Rattata 1 Rattata 1 Rattata Normal Level 10 HP 29/29" [ref=e2556] [cursor=pointer]:
+                  - /url: /gm/pokemon/1d5a9686-f760-402c-ae48-0086cdbbef14
+                  - img "Rattata 1" [ref=e3510]
+                  - generic [ref=e2558]:
+                    - heading "Rattata 1" [level=3] [ref=e2560]
+                    - generic [ref=e2561]: Rattata
+                    - generic [ref=e2563]: Normal
+                    - generic [ref=e2564]: Level 10
+                    - generic [ref=e2566]:
+                      - generic [ref=e2567]: HP
+                      - generic [ref=e2571]: 29/29
+                - link "Rattata 1 Rattata 1 Rattata Normal Level 10 HP 29/29" [ref=e2572] [cursor=pointer]:
+                  - /url: /gm/pokemon/eac6f50c-579b-48f3-82c2-0077ac251bf4
+                  - img "Rattata 1" [ref=e3511]
+                  - generic [ref=e2574]:
+                    - heading "Rattata 1" [level=3] [ref=e2576]
+                    - generic [ref=e2577]: Rattata
+                    - generic [ref=e2579]: Normal
+                    - generic [ref=e2580]: Level 10
+                    - generic [ref=e2582]:
+                      - generic [ref=e2583]: HP
+                      - generic [ref=e2587]: 29/29
+                - link "Rattata 1 Rattata 1 Template Rattata Normal Level 10 HP 29/29" [ref=e2588] [cursor=pointer]:
+                  - /url: /gm/pokemon/4b2f43cd-9828-4bc1-a08f-4058a10ecabb
+                  - img "Rattata 1" [ref=e3512]
+                  - generic [ref=e2590]:
+                    - generic [ref=e2591]:
+                      - heading "Rattata 1" [level=3] [ref=e2592]
+                      - generic [ref=e2593]: Template
+                    - generic [ref=e2594]: Rattata
+                    - generic [ref=e2596]: Normal
+                    - generic [ref=e2597]: Level 10
+                    - generic [ref=e2599]:
+                      - generic [ref=e2600]: HP
+                      - generic [ref=e2604]: 29/29
+                - link "Rattata 1 Rattata 1 Template Rattata Normal Level 10 HP 32/32" [ref=e2605] [cursor=pointer]:
+                  - /url: /gm/pokemon/64c39d58-12cd-495b-999b-28b72e473504
+                  - img "Rattata 1" [ref=e3513]
+                  - generic [ref=e2607]:
+                    - generic [ref=e2608]:
+                      - heading "Rattata 1" [level=3] [ref=e2609]
+                      - generic [ref=e2610]: Template
+                    - generic [ref=e2611]: Rattata
+                    - generic [ref=e2613]: Normal
+                    - generic [ref=e2614]: Level 10
+                    - generic [ref=e2616]:
+                      - generic [ref=e2617]: HP
+                      - generic [ref=e2621]: 32/32
+                - link "Rattata 10 Rattata 10 Rattata Normal Level 10 HP 29/29" [ref=e2622] [cursor=pointer]:
+                  - /url: /gm/pokemon/652bd01d-3694-4b51-96f0-4e6fa23614b7
+                  - img "Rattata 10" [ref=e3514]
+                  - generic [ref=e2624]:
+                    - heading "Rattata 10" [level=3] [ref=e2626]
+                    - generic [ref=e2627]: Rattata
+                    - generic [ref=e2629]: Normal
+                    - generic [ref=e2630]: Level 10
+                    - generic [ref=e2632]:
+                      - generic [ref=e2633]: HP
+                      - generic [ref=e2637]: 29/29
+                - link "Rattata 11 Rattata 11 Rattata Normal Level 10 HP 29/29" [ref=e2638] [cursor=pointer]:
+                  - /url: /gm/pokemon/275e75e7-b549-4e04-aab6-21f830a1d2b2
+                  - img "Rattata 11" [ref=e3515]
+                  - generic [ref=e2640]:
+                    - heading "Rattata 11" [level=3] [ref=e2642]
+                    - generic [ref=e2643]: Rattata
+                    - generic [ref=e2645]: Normal
+                    - generic [ref=e2646]: Level 10
+                    - generic [ref=e2648]:
+                      - generic [ref=e2649]: HP
+                      - generic [ref=e2653]: 29/29
+                - link "Rattata 11 Rattata 11 Template Rattata Normal Level 10 HP 35/35" [ref=e2654] [cursor=pointer]:
+                  - /url: /gm/pokemon/0a958afa-c578-4864-8479-3da528ce11f1
+                  - img "Rattata 11" [ref=e3516]
+                  - generic [ref=e2656]:
+                    - generic [ref=e2657]:
+                      - heading "Rattata 11" [level=3] [ref=e2658]
+                      - generic [ref=e2659]: Template
+                    - generic [ref=e2660]: Rattata
+                    - generic [ref=e2662]: Normal
+                    - generic [ref=e2663]: Level 10
+                    - generic [ref=e2665]:
+                      - generic [ref=e2666]: HP
+                      - generic [ref=e2670]: 35/35
+                - link "Rattata 13 Rattata 13 Wild Rattata Normal Level 10 HP 12/32 1 Injury" [ref=e2671] [cursor=pointer]:
+                  - /url: /gm/pokemon/be32e52d-0937-4c40-bf5a-9560a40b3b27
+                  - img "Rattata 13" [ref=e3517]
+                  - generic [ref=e2673]:
+                    - generic [ref=e2674]:
+                      - heading "Rattata 13" [level=3] [ref=e2675]
+                      - generic [ref=e2676]: Wild
+                    - generic [ref=e2677]: Rattata
+                    - generic [ref=e2679]: Normal
+                    - generic [ref=e2680]: Level 10
+                    - generic [ref=e2682]:
+                      - generic [ref=e2683]: HP
+                      - generic [ref=e2687]: 12/32
+                    - generic [ref=e2689]: 1 Injury
+                - link "Rattata 14 Rattata 14 Rattata Normal Level 10 HP 29/29" [ref=e2690] [cursor=pointer]:
+                  - /url: /gm/pokemon/055c0353-b740-4ebd-aa60-c79ecf71121b
+                  - img "Rattata 14" [ref=e3518]
+                  - generic [ref=e2692]:
+                    - heading "Rattata 14" [level=3] [ref=e2694]
+                    - generic [ref=e2695]: Rattata
+                    - generic [ref=e2697]: Normal
+                    - generic [ref=e2698]: Level 10
+                    - generic [ref=e2700]:
+                      - generic [ref=e2701]: HP
+                      - generic [ref=e2705]: 29/29
+                - link "Rattata 15 Rattata 15 Wild Rattata Normal Level 10 HP 11/29 2 Injuries" [ref=e2706] [cursor=pointer]:
+                  - /url: /gm/pokemon/cd5b5196-a2e9-4d73-82df-eb82cc374637
+                  - img "Rattata 15" [ref=e3519]
+                  - generic [ref=e2708]:
+                    - generic [ref=e2709]:
+                      - heading "Rattata 15" [level=3] [ref=e2710]
+                      - generic [ref=e2711]: Wild
+                    - generic [ref=e2712]: Rattata
+                    - generic [ref=e2714]: Normal
+                    - generic [ref=e2715]: Level 10
+                    - generic [ref=e2717]:
+                      - generic [ref=e2718]: HP
+                      - generic [ref=e2722]: 11/29
+                    - generic [ref=e2724]: 2 Injuries
+                - link "Rattata 5 Rattata 5 Rattata Normal Level 10 HP 29/29" [ref=e2725] [cursor=pointer]:
+                  - /url: /gm/pokemon/dc46b0c8-8ada-4916-a7a9-e63529a61a60
+                  - img "Rattata 5" [ref=e3520]
+                  - generic [ref=e2727]:
+                    - heading "Rattata 5" [level=3] [ref=e2729]
+                    - generic [ref=e2730]: Rattata
+                    - generic [ref=e2732]: Normal
+                    - generic [ref=e2733]: Level 10
+                    - generic [ref=e2735]:
+                      - generic [ref=e2736]: HP
+                      - generic [ref=e2740]: 29/29
+                - link "Rattata 5 Rattata 5 Template Rattata Normal Level 10 HP 32/32" [ref=e2741] [cursor=pointer]:
+                  - /url: /gm/pokemon/8d5d0717-c4c9-49c1-b07d-f312b3d24483
+                  - img "Rattata 5" [ref=e3521]
+                  - generic [ref=e2743]:
+                    - generic [ref=e2744]:
+                      - heading "Rattata 5" [level=3] [ref=e2745]
+                      - generic [ref=e2746]: Template
+                    - generic [ref=e2747]: Rattata
+                    - generic [ref=e2749]: Normal
+                    - generic [ref=e2750]: Level 10
+                    - generic [ref=e2752]:
+                      - generic [ref=e2753]: HP
+                      - generic [ref=e2757]: 32/32
+                - link "Rattata 7 Rattata 7 Rattata Normal Level 10 HP 29/29" [ref=e2758] [cursor=pointer]:
+                  - /url: /gm/pokemon/ee470239-0f2e-4052-84b2-08cd4d565975
+                  - img "Rattata 7" [ref=e3522]
+                  - generic [ref=e2760]:
+                    - heading "Rattata 7" [level=3] [ref=e2762]
+                    - generic [ref=e2763]: Rattata
+                    - generic [ref=e2765]: Normal
+                    - generic [ref=e2766]: Level 10
+                    - generic [ref=e2768]:
+                      - generic [ref=e2769]: HP
+                      - generic [ref=e2773]: 29/29
+                - link "Rattata 7 Rattata 7 Template Rattata Normal Level 10 HP 29/29" [ref=e2774] [cursor=pointer]:
+                  - /url: /gm/pokemon/bb6516a7-8318-47d9-9f23-43deacba9ca6
+                  - img "Rattata 7" [ref=e3523]
+                  - generic [ref=e2776]:
+                    - generic [ref=e2777]:
+                      - heading "Rattata 7" [level=3] [ref=e2778]
+                      - generic [ref=e2779]: Template
+                    - generic [ref=e2780]: Rattata
+                    - generic [ref=e2782]: Normal
+                    - generic [ref=e2783]: Level 10
+                    - generic [ref=e2785]:
+                      - generic [ref=e2786]: HP
+                      - generic [ref=e2790]: 29/29
+                - link "Rattata 8 Rattata 8 Rattata Normal Level 10 HP 29/29" [ref=e2791] [cursor=pointer]:
+                  - /url: /gm/pokemon/9522044a-47aa-4395-b65f-7c546eec71d8
+                  - img "Rattata 8" [ref=e3524]
+                  - generic [ref=e2793]:
+                    - heading "Rattata 8" [level=3] [ref=e2795]
+                    - generic [ref=e2796]: Rattata
+                    - generic [ref=e2798]: Normal
+                    - generic [ref=e2799]: Level 10
+                    - generic [ref=e2801]:
+                      - generic [ref=e2802]: HP
+                      - generic [ref=e2806]: 29/29
+                - link "Rookidee 1 Rookidee 1 Wild Rookidee Flying Level 10 HP 32/32" [ref=e2807] [cursor=pointer]:
+                  - /url: /gm/pokemon/99108c03-85dd-4653-ae11-eae0b3b53586
+                  - img "Rookidee 1" [ref=e3525]
+                  - generic [ref=e2809]:
+                    - generic [ref=e2810]:
+                      - heading "Rookidee 1" [level=3] [ref=e2811]
+                      - generic [ref=e2812]: Wild
+                    - generic [ref=e2813]: Rookidee
+                    - generic [ref=e2815]: Flying
+                    - generic [ref=e2816]: Level 10
+                    - generic [ref=e2818]:
+                      - generic [ref=e2819]: HP
+                      - generic [ref=e2823]: 32/32
+                - link "Sabre Sabre Vulpix [Alola] Ice -- Level 10 HP 38/38" [ref=e2824] [cursor=pointer]:
+                  - /url: /gm/pokemon/fde769ae-6949-462c-84cd-98690e745a91
+                  - img "Sabre" [ref=e3526]
+                  - generic [ref=e2826]:
+                    - heading "Sabre" [level=3] [ref=e2828]
+                    - generic [ref=e2829]: Vulpix [Alola]
+                    - generic [ref=e2830]:
+                      - generic [ref=e2831]: Ice
+                      - generic [ref=e2832]: "--"
+                    - generic [ref=e2833]: Level 10
+                    - generic [ref=e2835]:
+                      - generic [ref=e2836]: HP
+                      - generic [ref=e2840]: 38/38
+                - link "Sewaddle 1 Sewaddle 1 Wild Sewaddle Bug Grass Level 7 HP 38/38" [ref=e2841] [cursor=pointer]:
+                  - /url: /gm/pokemon/2bb5fdfb-197d-4c2b-8241-90730bad15ed
+                  - img "Sewaddle 1" [ref=e3527]
+                  - generic [ref=e2843]:
+                    - generic [ref=e2844]:
+                      - heading "Sewaddle 1" [level=3] [ref=e2845]
+                      - generic [ref=e2846]: Wild
+                    - generic [ref=e2847]: Sewaddle
+                    - generic [ref=e2848]:
+                      - generic [ref=e2849]: Bug
+                      - generic [ref=e2850]: Grass
+                    - generic [ref=e2851]: Level 7
+                    - generic [ref=e2853]:
+                      - generic [ref=e2854]: HP
+                      - generic [ref=e2858]: 38/38
+                - link "Shroomish 1 Shroomish 1 Wild Shroomish Grass Level 5 HP 33/33" [ref=e2859] [cursor=pointer]:
+                  - /url: /gm/pokemon/f535b604-a03f-4897-84c3-2d0b0b1d5494
+                  - img "Shroomish 1" [ref=e3528]
+                  - generic [ref=e2861]:
+                    - generic [ref=e2862]:
+                      - heading "Shroomish 1" [level=3] [ref=e2863]
+                      - generic [ref=e2864]: Wild
+                    - generic [ref=e2865]: Shroomish
+                    - generic [ref=e2867]: Grass
+                    - generic [ref=e2868]: Level 5
+                    - generic [ref=e2870]:
+                      - generic [ref=e2871]: HP
+                      - generic [ref=e2875]: 33/33
+                - link "Shroomish 2 Shroomish 2 Wild Shroomish Grass Level 13 HP 0/47 Fainted 1 Injury" [ref=e2876] [cursor=pointer]:
+                  - /url: /gm/pokemon/32de19b0-44ae-4105-a086-014139a299cc
+                  - img "Shroomish 2" [ref=e3529]
+                  - generic [ref=e2878]:
+                    - generic [ref=e2879]:
+                      - heading "Shroomish 2" [level=3] [ref=e2880]
+                      - generic [ref=e2881]: Wild
+                    - generic [ref=e2882]: Shroomish
+                    - generic [ref=e2884]: Grass
+                    - generic [ref=e2885]: Level 13
+                    - generic [ref=e2887]:
+                      - generic [ref=e2888]: HP
+                      - generic [ref=e2891]: 0/47
+                    - generic [ref=e2893]: Fainted
+                    - generic [ref=e2895]: 1 Injury
+                - link "Skorupi 1 Skorupi 1 Wild Skorupi Poison Bug Level 18 HP 40/40" [ref=e2896] [cursor=pointer]:
+                  - /url: /gm/pokemon/895540b1-aed7-49ec-a706-1673212488a7
+                  - img "Skorupi 1" [ref=e3530]
+                  - generic [ref=e2898]:
+                    - generic [ref=e2899]:
+                      - heading "Skorupi 1" [level=3] [ref=e2900]
+                      - generic [ref=e2901]: Wild
+                    - generic [ref=e2902]: Skorupi
+                    - generic [ref=e2903]:
+                      - generic [ref=e2904]: Poison
+                      - generic [ref=e2905]: Bug
+                    - generic [ref=e2906]: Level 18
+                    - generic [ref=e2908]:
+                      - generic [ref=e2909]: HP
+                      - generic [ref=e2913]: 40/40
+                - link "Skorupi 2 Skorupi 2 Wild Skorupi Poison Bug Level 10 HP 32/32" [ref=e2914] [cursor=pointer]:
+                  - /url: /gm/pokemon/312a46fa-cced-48d0-97a8-e80da6710467
+                  - img "Skorupi 2" [ref=e3531]
+                  - generic [ref=e2916]:
+                    - generic [ref=e2917]:
+                      - heading "Skorupi 2" [level=3] [ref=e2918]
+                      - generic [ref=e2919]: Wild
+                    - generic [ref=e2920]: Skorupi
+                    - generic [ref=e2921]:
+                      - generic [ref=e2922]: Poison
+                      - generic [ref=e2923]: Bug
+                    - generic [ref=e2924]: Level 10
+                    - generic [ref=e2926]:
+                      - generic [ref=e2927]: HP
+                      - generic [ref=e2931]: 32/32
+                - link "Skorupi 3 Skorupi 3 Wild Skorupi Poison Bug Level 12 HP 37/37" [ref=e2932] [cursor=pointer]:
+                  - /url: /gm/pokemon/05e729d0-4a17-4dbc-b265-b98f72797f35
+                  - img "Skorupi 3" [ref=e3532]
+                  - generic [ref=e2934]:
+                    - generic [ref=e2935]:
+                      - heading "Skorupi 3" [level=3] [ref=e2936]
+                      - generic [ref=e2937]: Wild
+                    - generic [ref=e2938]: Skorupi
+                    - generic [ref=e2939]:
+                      - generic [ref=e2940]: Poison
+                      - generic [ref=e2941]: Bug
+                    - generic [ref=e2942]: Level 12
+                    - generic [ref=e2944]:
+                      - generic [ref=e2945]: HP
+                      - generic [ref=e2949]: 37/37
+                - link "Skorupi 4 Skorupi 4 Wild Skorupi Poison Bug Level 12 HP 37/37" [ref=e2950] [cursor=pointer]:
+                  - /url: /gm/pokemon/4a215019-19ce-48f4-b19f-9818a6eec625
+                  - img "Skorupi 4" [ref=e3533]
+                  - generic [ref=e2952]:
+                    - generic [ref=e2953]:
+                      - heading "Skorupi 4" [level=3] [ref=e2954]
+                      - generic [ref=e2955]: Wild
+                    - generic [ref=e2956]: Skorupi
+                    - generic [ref=e2957]:
+                      - generic [ref=e2958]: Poison
+                      - generic [ref=e2959]: Bug
+                    - generic [ref=e2960]: Level 12
+                    - generic [ref=e2962]:
+                      - generic [ref=e2963]: HP
+                      - generic [ref=e2967]: 37/37
+                - link "Smoliv 1 Smoliv 1 Wild Smoliv Grass Normal Level 8 HP 144/144" [ref=e2968] [cursor=pointer]:
+                  - /url: /gm/pokemon/82270889-af1d-4821-bd5a-8df89e886c08
+                  - img "Smoliv 1" [ref=e2970]
+                  - generic [ref=e2971]:
+                    - generic [ref=e2972]:
+                      - heading "Smoliv 1" [level=3] [ref=e2973]
+                      - generic [ref=e2974]: Wild
+                    - generic [ref=e2975]: Smoliv
+                    - generic [ref=e2976]:
+                      - generic [ref=e2977]: Grass
+                      - generic [ref=e2978]: Normal
+                    - generic [ref=e2979]: Level 8
+                    - generic [ref=e2981]:
+                      - generic [ref=e2982]: HP
+                      - generic [ref=e2986]: 144/144
+                - link "Smoliv 2 Smoliv 2 Wild Smoliv Grass Normal Level 3 HP 136/136" [ref=e2987] [cursor=pointer]:
+                  - /url: /gm/pokemon/840f2b83-bb8f-49f9-8ab0-15ea67dfe7c5
+                  - img "Smoliv 2" [ref=e2989]
+                  - generic [ref=e2990]:
+                    - generic [ref=e2991]:
+                      - heading "Smoliv 2" [level=3] [ref=e2992]
+                      - generic [ref=e2993]: Wild
+                    - generic [ref=e2994]: Smoliv
+                    - generic [ref=e2995]:
+                      - generic [ref=e2996]: Grass
+                      - generic [ref=e2997]: Normal
+                    - generic [ref=e2998]: Level 3
+                    - generic [ref=e3000]:
+                      - generic [ref=e3001]: HP
+                      - generic [ref=e3005]: 136/136
+                - link "Spiritomb 1 Spiritomb 1 Wild Spiritomb Ghost Dark Level 10 HP 35/35" [ref=e3006] [cursor=pointer]:
+                  - /url: /gm/pokemon/fa59695e-d3c5-4c26-ae16-3fc65b95f5b4
+                  - img "Spiritomb 1" [ref=e3534]
+                  - generic [ref=e3008]:
+                    - generic [ref=e3009]:
+                      - heading "Spiritomb 1" [level=3] [ref=e3010]
+                      - generic [ref=e3011]: Wild
+                    - generic [ref=e3012]: Spiritomb
+                    - generic [ref=e3013]:
+                      - generic [ref=e3014]: Ghost
+                      - generic [ref=e3015]: Dark
+                    - generic [ref=e3016]: Level 10
+                    - generic [ref=e3018]:
+                      - generic [ref=e3019]: HP
+                      - generic [ref=e3023]: 35/35
+                - link "Spiritomb 2 Spiritomb 2 Template Spiritomb Ghost Dark Level 10 HP 35/35" [ref=e3024] [cursor=pointer]:
+                  - /url: /gm/pokemon/0ed5db9a-aa6b-4368-8f0b-a3240bb2f5c4
+                  - img "Spiritomb 2" [ref=e3535]
+                  - generic [ref=e3026]:
+                    - generic [ref=e3027]:
+                      - heading "Spiritomb 2" [level=3] [ref=e3028]
+                      - generic [ref=e3029]: Template
+                    - generic [ref=e3030]: Spiritomb
+                    - generic [ref=e3031]:
+                      - generic [ref=e3032]: Ghost
+                      - generic [ref=e3033]: Dark
+                    - generic [ref=e3034]: Level 10
+                    - generic [ref=e3036]:
+                      - generic [ref=e3037]: HP
+                      - generic [ref=e3041]: 35/35
+                - link "Squirtle 1 Squirtle 1 Squirtle Water Level 13 HP 19/35" [ref=e3042] [cursor=pointer]:
+                  - /url: /gm/pokemon/8342f38f-087e-472b-9bb0-458f15e55084
+                  - img "Squirtle 1" [ref=e3536]
+                  - generic [ref=e3044]:
+                    - heading "Squirtle 1" [level=3] [ref=e3046]
+                    - generic [ref=e3047]: Squirtle
+                    - generic [ref=e3049]: Water
+                    - generic [ref=e3050]: Level 13
+                    - generic [ref=e3052]:
+                      - generic [ref=e3053]: HP
+                      - generic [ref=e3057]: 19/35
+                - link "Squirtle 2 Squirtle 2 Squirtle Water Level 13 HP 35/35" [ref=e3058] [cursor=pointer]:
+                  - /url: /gm/pokemon/8e35300a-c775-48ca-8781-00f6b906a84c
+                  - img "Squirtle 2" [ref=e3537]
+                  - generic [ref=e3060]:
+                    - heading "Squirtle 2" [level=3] [ref=e3062]
+                    - generic [ref=e3063]: Squirtle
+                    - generic [ref=e3065]: Water
+                    - generic [ref=e3066]: Level 13
+                    - generic [ref=e3068]:
+                      - generic [ref=e3069]: HP
+                      - generic [ref=e3073]: 35/35
+                - link "Squirtle 3 Squirtle 3 Squirtle Water Level 13 HP 18/35" [ref=e3074] [cursor=pointer]:
+                  - /url: /gm/pokemon/a3400411-ff09-474a-9435-16e9725cbfc4
+                  - img "Squirtle 3" [ref=e3538]
+                  - generic [ref=e3076]:
+                    - heading "Squirtle 3" [level=3] [ref=e3078]
+                    - generic [ref=e3079]: Squirtle
+                    - generic [ref=e3081]: Water
+                    - generic [ref=e3082]: Level 13
+                    - generic [ref=e3084]:
+                      - generic [ref=e3085]: HP
+                      - generic [ref=e3089]: 18/35
+                - link "TestChar 1 TestChar 1 TestChar Fire Level 10 HP 32/32" [ref=e3090] [cursor=pointer]:
+                  - /url: /gm/pokemon/68ffa0a8-68ab-4da6-91c8-03e0222bc181
+                  - img "TestChar 1" [ref=e3539]
+                  - generic [ref=e3092]:
+                    - heading "TestChar 1" [level=3] [ref=e3094]
+                    - generic [ref=e3095]: TestChar
+                    - generic [ref=e3097]: Fire
+                    - generic [ref=e3098]: Level 10
+                    - generic [ref=e3100]:
+                      - generic [ref=e3101]: HP
+                      - generic [ref=e3105]: 32/32
+                - link "Thievul 1 Thievul 1 Wild Thievul Dark Level 15 HP 46/46" [ref=e3106] [cursor=pointer]:
+                  - /url: /gm/pokemon/27e2d1cd-9238-4040-97be-092d9f70dda3
+                  - img "Thievul 1" [ref=e3108]
+                  - generic [ref=e3109]:
+                    - generic [ref=e3110]:
+                      - heading "Thievul 1" [level=3] [ref=e3111]
+                      - generic [ref=e3112]: Wild
+                    - generic [ref=e3113]: Thievul
+                    - generic [ref=e3115]: Dark
+                    - generic [ref=e3116]: Level 15
+                    - generic [ref=e3118]:
+                      - generic [ref=e3119]: HP
+                      - generic [ref=e3123]: 46/46
+                - link "Thievul 2 Thievul 2 Template Thievul Dark Level 15 HP 49/49" [ref=e3124] [cursor=pointer]:
+                  - /url: /gm/pokemon/4f85a3c8-5a69-4e75-aadd-cc99a0d9debb
+                  - img "Thievul 2" [ref=e3126]
+                  - generic [ref=e3127]:
+                    - generic [ref=e3128]:
+                      - heading "Thievul 2" [level=3] [ref=e3129]
+                      - generic [ref=e3130]: Template
+                    - generic [ref=e3131]: Thievul
+                    - generic [ref=e3133]: Dark
+                    - generic [ref=e3134]: Level 15
+                    - generic [ref=e3136]:
+                      - generic [ref=e3137]: HP
+                      - generic [ref=e3141]: 49/49
+                - link "Tympole 1 Tympole 1 Wild Tympole Water Level 13 HP 38/38" [ref=e3142] [cursor=pointer]:
+                  - /url: /gm/pokemon/0c49c9e8-a61b-4bd0-ad91-e2504fe300c6
+                  - img "Tympole 1" [ref=e3540]
+                  - generic [ref=e3144]:
+                    - generic [ref=e3145]:
+                      - heading "Tympole 1" [level=3] [ref=e3146]
+                      - generic [ref=e3147]: Wild
+                    - generic [ref=e3148]: Tympole
+                    - generic [ref=e3150]: Water
+                    - generic [ref=e3151]: Level 13
+                    - generic [ref=e3153]:
+                      - generic [ref=e3154]: HP
+                      - generic [ref=e3158]: 38/38
+                - link "Vulpix [Alola] 2 Vulpix [Alola] 2 Wild Vulpix [Alola] Normal Level 10 HP 38/38" [ref=e3159] [cursor=pointer]:
+                  - /url: /gm/pokemon/8ff0fa36-ee3f-408d-9e9b-54f003bd4fc9
+                  - img "Vulpix [Alola] 2" [ref=e3541]
+                  - generic [ref=e3161]:
+                    - generic [ref=e3162]:
+                      - heading "Vulpix [Alola] 2" [level=3] [ref=e3163]
+                      - generic [ref=e3164]: Wild
+                    - generic [ref=e3165]: Vulpix [Alola]
+                    - generic [ref=e3167]: Normal
+                    - generic [ref=e3168]: Level 10
+                    - generic [ref=e3170]:
+                      - generic [ref=e3171]: HP
+                      - generic [ref=e3175]: 38/38
+                - link "Vulpix 1 Vulpix 1 Wild Vulpix Fire Level 8 HP 30/30" [ref=e3176] [cursor=pointer]:
+                  - /url: /gm/pokemon/ee7d42f7-ac83-4c27-a1c2-048ae79f4c25
+                  - img "Vulpix 1" [ref=e3178]
+                  - generic [ref=e3179]:
+                    - generic [ref=e3180]:
+                      - heading "Vulpix 1" [level=3] [ref=e3181]
+                      - generic [ref=e3182]: Wild
+                    - generic [ref=e3183]: Vulpix
+                    - generic [ref=e3185]: Fire
+                    - generic [ref=e3186]: Level 8
+                    - generic [ref=e3188]:
+                      - generic [ref=e3189]: HP
+                      - generic [ref=e3193]: 30/30
+                - link "Yamask 1 Yamask 1 Wild Yamask Ghost Level 2 HP 24/24" [ref=e3194] [cursor=pointer]:
+                  - /url: /gm/pokemon/f321634e-702e-4d6a-a980-54f56a90e345
+                  - img "Yamask 1" [ref=e3542]
+                  - generic [ref=e3196]:
+                    - generic [ref=e3197]:
+                      - heading "Yamask 1" [level=3] [ref=e3198]
+                      - generic [ref=e3199]: Wild
+                    - generic [ref=e3200]: Yamask
+                    - generic [ref=e3202]: Ghost
+                    - generic [ref=e3203]: Level 2
+                    - generic [ref=e3205]:
+                      - generic [ref=e3206]: HP
+                      - generic [ref=e3210]: 24/24
+                - link "Yamask 10 Yamask 10 Wild Yamask Ghost Level 8 HP 30/30" [ref=e3211] [cursor=pointer]:
+                  - /url: /gm/pokemon/b00e9faa-a37c-4d8a-866e-78a7d110597f
+                  - img "Yamask 10" [ref=e3543]
+                  - generic [ref=e3213]:
+                    - generic [ref=e3214]:
+                      - heading "Yamask 10" [level=3] [ref=e3215]
+                      - generic [ref=e3216]: Wild
+                    - generic [ref=e3217]: Yamask
+                    - generic [ref=e3219]: Ghost
+                    - generic [ref=e3220]: Level 8
+                    - generic [ref=e3222]:
+                      - generic [ref=e3223]: HP
+                      - generic [ref=e3227]: 30/30
+                - link "Yamask 11 Yamask 11 Template Yamask Ghost Level 2 HP 30/30" [ref=e3228] [cursor=pointer]:
+                  - /url: /gm/pokemon/f6304d94-0fde-425c-9a6f-1060d921daaa
+                  - img "Yamask 11" [ref=e3544]
+                  - generic [ref=e3230]:
+                    - generic [ref=e3231]:
+                      - heading "Yamask 11" [level=3] [ref=e3232]
+                      - generic [ref=e3233]: Template
+                    - generic [ref=e3234]: Yamask
+                    - generic [ref=e3236]: Ghost
+                    - generic [ref=e3237]: Level 2
+                    - generic [ref=e3239]:
+                      - generic [ref=e3240]: HP
+                      - generic [ref=e3244]: 30/30
+                - link "Yamask 12 Yamask 12 Template Yamask Ghost Level 2 HP 30/30" [ref=e3245] [cursor=pointer]:
+                  - /url: /gm/pokemon/9fcc3ebc-2b4c-41bd-b66d-4c030c7e150b
+                  - img "Yamask 12" [ref=e3545]
+                  - generic [ref=e3247]:
+                    - generic [ref=e3248]:
+                      - heading "Yamask 12" [level=3] [ref=e3249]
+                      - generic [ref=e3250]: Template
+                    - generic [ref=e3251]: Yamask
+                    - generic [ref=e3253]: Ghost
+                    - generic [ref=e3254]: Level 2
+                    - generic [ref=e3256]:
+                      - generic [ref=e3257]: HP
+                      - generic [ref=e3261]: 30/30
+                - link "Yamask 2 Yamask 2 Wild Yamask Ghost Level 2 HP 24/24" [ref=e3262] [cursor=pointer]:
+                  - /url: /gm/pokemon/68077310-af79-473a-9ad9-119a8815866b
+                  - img "Yamask 2" [ref=e3546]
+                  - generic [ref=e3264]:
+                    - generic [ref=e3265]:
+                      - heading "Yamask 2" [level=3] [ref=e3266]
+                      - generic [ref=e3267]: Wild
+                    - generic [ref=e3268]: Yamask
+                    - generic [ref=e3270]: Ghost
+                    - generic [ref=e3271]: Level 2
+                    - generic [ref=e3273]:
+                      - generic [ref=e3274]: HP
+                      - generic [ref=e3278]: 24/24
+                - link "Yamask 3 Yamask 3 Wild Yamask Ghost Level 11 HP 36/36" [ref=e3279] [cursor=pointer]:
+                  - /url: /gm/pokemon/967f5b0c-cdc5-4d7f-b0b4-72ce9ebc2347
+                  - img "Yamask 3" [ref=e3547]
+                  - generic [ref=e3281]:
+                    - generic [ref=e3282]:
+                      - heading "Yamask 3" [level=3] [ref=e3283]
+                      - generic [ref=e3284]: Wild
+                    - generic [ref=e3285]: Yamask
+                    - generic [ref=e3287]: Ghost
+                    - generic [ref=e3288]: Level 11
+                    - generic [ref=e3290]:
+                      - generic [ref=e3291]: HP
+                      - generic [ref=e3295]: 36/36
+                - link "Yamask 4 Yamask 4 Wild Yamask Ghost Level 11 HP 42/42" [ref=e3296] [cursor=pointer]:
+                  - /url: /gm/pokemon/8df56d68-4bcd-46e1-bb4b-9e0e5110a975
+                  - img "Yamask 4" [ref=e3548]
+                  - generic [ref=e3298]:
+                    - generic [ref=e3299]:
+                      - heading "Yamask 4" [level=3] [ref=e3300]
+                      - generic [ref=e3301]: Wild
+                    - generic [ref=e3302]: Yamask
+                    - generic [ref=e3304]: Ghost
+                    - generic [ref=e3305]: Level 11
+                    - generic [ref=e3307]:
+                      - generic [ref=e3308]: HP
+                      - generic [ref=e3312]: 42/42
+                - link "Yamask 5 Yamask 5 Wild Yamask Ghost Level 8 HP 33/33" [ref=e3313] [cursor=pointer]:
+                  - /url: /gm/pokemon/64deea3d-de3b-4966-a7f3-1c15f8ddb3ae
+                  - img "Yamask 5" [ref=e3549]
+                  - generic [ref=e3315]:
+                    - generic [ref=e3316]:
+                      - heading "Yamask 5" [level=3] [ref=e3317]
+                      - generic [ref=e3318]: Wild
+                    - generic [ref=e3319]: Yamask
+                    - generic [ref=e3321]: Ghost
+                    - generic [ref=e3322]: Level 8
+                    - generic [ref=e3324]:
+                      - generic [ref=e3325]: HP
+                      - generic [ref=e3329]: 33/33
+                - link "Yamask 6 Yamask 6 Wild Yamask Ghost Level 14 HP 36/36" [ref=e3330] [cursor=pointer]:
+                  - /url: /gm/pokemon/da85a507-353b-47f9-90ba-6b794f41b586
+                  - img "Yamask 6" [ref=e3550]
+                  - generic [ref=e3332]:
+                    - generic [ref=e3333]:
+                      - heading "Yamask 6" [level=3] [ref=e3334]
+                      - generic [ref=e3335]: Wild
+                    - generic [ref=e3336]: Yamask
+                    - generic [ref=e3338]: Ghost
+                    - generic [ref=e3339]: Level 14
+                    - generic [ref=e3341]:
+                      - generic [ref=e3342]: HP
+                      - generic [ref=e3346]: 36/36
+                - link "Yamask 7 Yamask 7 Wild Yamask Ghost Level 8 HP 36/36" [ref=e3347] [cursor=pointer]:
+                  - /url: /gm/pokemon/dfd63f6b-f3df-4d2c-82c2-4053b24a2e6b
+                  - img "Yamask 7" [ref=e3551]
+                  - generic [ref=e3349]:
+                    - generic [ref=e3350]:
+                      - heading "Yamask 7" [level=3] [ref=e3351]
+                      - generic [ref=e3352]: Wild
+                    - generic [ref=e3353]: Yamask
+                    - generic [ref=e3355]: Ghost
+                    - generic [ref=e3356]: Level 8
+                    - generic [ref=e3358]:
+                      - generic [ref=e3359]: HP
+                      - generic [ref=e3363]: 36/36
+                - link "Yamask 8 Yamask 8 Wild Yamask Ghost Level 10 HP 32/32" [ref=e3364] [cursor=pointer]:
+                  - /url: /gm/pokemon/815b434f-e05b-4b50-bba0-4c0981ecd427
+                  - img "Yamask 8" [ref=e3552]
+                  - generic [ref=e3366]:
+                    - generic [ref=e3367]:
+                      - heading "Yamask 8" [level=3] [ref=e3368]
+                      - generic [ref=e3369]: Wild
+                    - generic [ref=e3370]: Yamask
+                    - generic [ref=e3372]: Ghost
+                    - generic [ref=e3373]: Level 10
+                    - generic [ref=e3375]:
+                      - generic [ref=e3376]: HP
+                      - generic [ref=e3380]: 32/32
+                - link "Yamask 9 Yamask 9 Wild Yamask Ghost Level 17 HP 42/42" [ref=e3381] [cursor=pointer]:
+                  - /url: /gm/pokemon/088635c5-9e94-49e7-8b1a-2c28d8172d9d
+                  - img "Yamask 9" [ref=e3553]
+                  - generic [ref=e3383]:
+                    - generic [ref=e3384]:
+                      - heading "Yamask 9" [level=3] [ref=e3385]
+                      - generic [ref=e3386]: Wild
+                    - generic [ref=e3387]: Yamask
+                    - generic [ref=e3389]: Ghost
+                    - generic [ref=e3390]: Level 17
+                    - generic [ref=e3392]:
+                      - generic [ref=e3393]: HP
+                      - generic [ref=e3397]: 42/42
+  - generic [ref=e3398]:
+    - button "Toggle Nuxt DevTools" [ref=e3399] [cursor=pointer]:
+      - img [ref=e3400]
+    - generic "Page load time" [ref=e3403]:
+      - generic [ref=e3404]: "55"
+      - generic [ref=e3405]: ms
+    - button "Toggle Component Inspector" [ref=e3407] [cursor=pointer]:
+      - img [ref=e3408]

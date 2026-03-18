@@ -1,0 +1,18 @@
+### Maturation
+- Involves:
+	- asking questions
+	- finding contradictions 
+	- sharpening definitions 
+	- discovering implicit connections
+	- atomising multi concept notes
+	- Finding gaps — something that is needed but doesn't exist yet
+	- Finding undefined references — concepts referenced but never defined
+	- Building on interesting areas
+	- Tying up loose ends — ideas started but not fully explored
+	- Expanding on loose ends — something that could be expanded upon but isn't
+	- Thinking of new ideas.
+	- Reconsidering decisions
+	- Construction
+	- Destruction
+	- Internal Alignment
+- A vault is mature when its ideas have become precise, consistent and fully explored.

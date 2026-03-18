@@ -1,0 +1,1 @@
+[[take-a-breather-resets-combat-state|Taking a Breather]] recovers 1 level of [[fatigue-levels|Fatigue]]. This is in addition to its existing effects of resetting combat stages, removing temp HP, and curing volatile conditions.

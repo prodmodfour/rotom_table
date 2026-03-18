@@ -1,0 +1,24 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e536]:
+    - banner [ref=e537]:
+      - generic [ref=e538]:
+        - heading "New Encounter" [level=1] [ref=e539]
+        - generic [ref=e540]: Round 1
+    - main [ref=e541]:
+      - generic [ref=e544]:
+        - generic [ref=e545]:
+          - heading "Battle Grid" [level=3] [ref=e546]
+          - generic [ref=e547]: 20×15
+        - generic [ref=e551]:
+          - button "+" [ref=e552] [cursor=pointer]
+          - generic [ref=e553]: 100%
+          - button "-" [ref=e554] [cursor=pointer]
+          - button "⌂" [ref=e555] [cursor=pointer]
+  - generic [ref=e130]:
+    - button "Toggle Nuxt DevTools" [ref=e131] [cursor=pointer]:
+      - img [ref=e132]
+    - generic "Page load time" [ref=e135]:
+      - generic [ref=e136]: "37"
+      - generic [ref=e137]: ms
+    - button "Toggle Component Inspector" [ref=e139] [cursor=pointer]:
+      - img [ref=e140]

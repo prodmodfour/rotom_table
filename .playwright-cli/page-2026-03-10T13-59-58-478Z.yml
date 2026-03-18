@@ -1,0 +1,354 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e7]:
+        - heading "Rotom Table" [level=1] [ref=e8]
+        - generic [ref=e9]: GM View
+      - navigation [ref=e10]:
+        - link "Encounter" [ref=e11] [cursor=pointer]:
+          - /url: /gm
+          - generic [ref=e12]: Encounter
+        - link "Encounters" [ref=e13] [cursor=pointer]:
+          - /url: /gm/encounters
+          - generic [ref=e14]: Encounters
+        - link "Scenes" [ref=e15] [cursor=pointer]:
+          - /url: /gm/scenes
+          - img [ref=e16]
+          - generic [ref=e19]: Scenes
+        - link "Habitats" [ref=e20] [cursor=pointer]:
+          - /url: /gm/habitats
+          - generic [ref=e21]: Habitats
+        - link "Sheets" [ref=e22] [cursor=pointer]:
+          - /url: /gm/sheets
+          - generic [ref=e23]: Sheets
+        - link "Create" [ref=e24] [cursor=pointer]:
+          - /url: /gm/create
+          - generic [ref=e25]: Create
+        - link "Map" [ref=e26] [cursor=pointer]:
+          - /url: /gm/map
+          - generic [ref=e27]: Map
+      - generic [ref=e28]:
+        - button "Connect" [ref=e30] [cursor=pointer]:
+          - img [ref=e31]
+          - generic [ref=e34]: Connect
+        - generic [ref=e35]:
+          - generic [ref=e36]: "Group View:"
+          - generic [ref=e37]:
+            - button "Lobby" [ref=e38] [cursor=pointer]:
+              - img [ref=e39]
+            - button "Scene" [ref=e42] [cursor=pointer]:
+              - img [ref=e43]
+            - button "Encounter" [ref=e46] [cursor=pointer]:
+              - img [ref=e47]
+            - button "Map" [ref=e50] [cursor=pointer]:
+              - img [ref=e51]
+        - button "Advance Day" [ref=e54] [cursor=pointer]:
+          - generic [ref=e55]: Advance Day
+        - link "Group View" [ref=e56] [cursor=pointer]:
+          - /url: /group
+          - generic [ref=e57]: Group View
+    - main [ref=e58]:
+      - generic [ref=e59]:
+        - generic [ref=e60]:
+          - heading "Encounter Tables" [level=1] [ref=e61]
+          - paragraph [ref=e62]: Manage habitats and encounter pools for wild Pokemon generation
+          - button "+ New Table" [ref=e63] [cursor=pointer]
+        - generic [ref=e64]:
+          - generic [ref=e65]:
+            - textbox "Search tables..." [ref=e66]
+            - combobox [ref=e67] [cursor=pointer]:
+              - option "Sort by Name" [selected]
+              - option "Sort by Created"
+              - option "Sort by Updated"
+          - generic [ref=e68]:
+            - link "Bramblewick - Backyards & Apiaries Lv. 3-10 Moderate 5 species Behind homes, near the bee hives and woodpiles. Cutiefly Sewaddle Skorupi Combee Heracross" [ref=e69] [cursor=pointer]:
+              - /url: /gm/habitats/32b13c2e-912d-4f42-88d2-a05f25c4e08d
+              - generic [ref=e72]:
+                - heading "Bramblewick - Backyards & Apiaries" [level=3] [ref=e73]
+                - paragraph [ref=e74]:
+                  - generic [ref=e75]: Lv. 3-10
+                  - generic [ref=e76]: Moderate
+                  - generic [ref=e77]: 5 species
+              - paragraph [ref=e78]: Behind homes, near the bee hives and woodpiles.
+              - generic [ref=e79]:
+                - generic "Cutiefly" [ref=e80]:
+                  - img "Cutiefly" [ref=e81]
+                - generic "Sewaddle" [ref=e82]:
+                  - img "Sewaddle" [ref=e83]
+                - generic "Skorupi" [ref=e84]:
+                  - img "Skorupi" [ref=e85]
+                - generic "Combee" [ref=e86]:
+                  - img "Combee" [ref=e87]
+                - generic "Heracross" [ref=e88]:
+                  - img "Heracross" [ref=e89]
+            - 'link "Bramblewick - General Lv. 3-10 Moderate 8 species A small timber-and-thatch village at the forest''s edge. Known for berry preserves and honey. Lanes, gardens, and berry stalls. Cutiefly Smoliv Lillipup Buneary Shroomish Hoothoot Vulpix Vespiquen Sub-habitats: Night" [ref=e90] [cursor=pointer]':
+              - /url: /gm/habitats/aae2fa5b-1e81-44a3-b621-94fa63910984
+              - generic [ref=e93]:
+                - heading "Bramblewick - General" [level=3] [ref=e94]
+                - paragraph [ref=e95]:
+                  - generic [ref=e96]: Lv. 3-10
+                  - generic [ref=e97]: Moderate
+                  - generic [ref=e98]: 8 species
+              - paragraph [ref=e99]: A small timber-and-thatch village at the forest's edge. Known for berry preserves and honey. Lanes, gardens, and berry stalls.
+              - generic [ref=e100]:
+                - generic "Cutiefly" [ref=e101]:
+                  - img "Cutiefly" [ref=e102]
+                - generic "Smoliv" [ref=e103]:
+                  - img "Smoliv" [ref=e104]
+                - generic "Lillipup" [ref=e105]:
+                  - img "Lillipup" [ref=e106]
+                - generic "Buneary" [ref=e107]:
+                  - img "Buneary" [ref=e108]
+                - generic "Shroomish" [ref=e109]:
+                  - img "Shroomish" [ref=e110]
+                - generic "Hoothoot" [ref=e111]:
+                  - img "Hoothoot" [ref=e112]
+                - generic "Vulpix" [ref=e113]:
+                  - img "Vulpix" [ref=e114]
+                - generic "Vespiquen" [ref=e115]:
+                  - img "Vespiquen" [ref=e116]
+              - generic [ref=e117]:
+                - generic [ref=e118]: "Sub-habitats:"
+                - generic [ref=e119]: Night
+            - link "Bramblewick Road Lv. 3-10 Moderate 6 species The road from Bramblewick to the forest. Hedgerows and verge trees. Nickit Lillipup Buneary Poochyena Zigzagoon Rookidee" [ref=e120] [cursor=pointer]:
+              - /url: /gm/habitats/5ca3fcae-2099-4765-93fa-21fb2e16a2ba
+              - generic [ref=e123]:
+                - heading "Bramblewick Road" [level=3] [ref=e124]
+                - paragraph [ref=e125]:
+                  - generic [ref=e126]: Lv. 3-10
+                  - generic [ref=e127]: Moderate
+                  - generic [ref=e128]: 6 species
+              - paragraph [ref=e129]: The road from Bramblewick to the forest. Hedgerows and verge trees.
+              - generic [ref=e130]:
+                - generic "Nickit" [ref=e131]:
+                  - img "Nickit" [ref=e132]
+                - generic "Lillipup" [ref=e133]:
+                  - img "Lillipup" [ref=e134]
+                - generic "Buneary" [ref=e135]:
+                  - img "Buneary" [ref=e136]
+                - generic "Poochyena" [ref=e137]:
+                  - img "Poochyena" [ref=e138]
+                - generic "Zigzagoon" [ref=e139]:
+                  - img "Zigzagoon" [ref=e140]
+                - generic "Rookidee" [ref=e141]:
+                  - img "Rookidee" [ref=e142]
+            - 'link "Greywater Aqueduct Lv. 8-18 Moderate 11 species Old stone channels carrying river water uphill to the castle cisterns and moat. Damp, echoing, and perfect for smell/track themed encounters. Bibarel Alolan Grimer Stunfisk Bidoof Barboach Wooper Dwebble Rattata +3 Sub-habitats: Maintenance Tunnels" [ref=e143] [cursor=pointer]':
+              - /url: /gm/habitats/5f61f73a-8629-4706-aa5e-020a9a2c7cf5
+              - generic [ref=e146]:
+                - heading "Greywater Aqueduct" [level=3] [ref=e147]
+                - paragraph [ref=e148]:
+                  - generic [ref=e149]: Lv. 8-18
+                  - generic [ref=e150]: Moderate
+                  - generic [ref=e151]: 11 species
+              - paragraph [ref=e152]: Old stone channels carrying river water uphill to the castle cisterns and moat. Damp, echoing, and perfect for smell/track themed encounters.
+              - generic [ref=e153]:
+                - generic "Bibarel" [ref=e154]:
+                  - img "Bibarel" [ref=e155]
+                - generic "Alolan Grimer" [ref=e156]:
+                  - img "Alolan Grimer" [ref=e157]
+                - generic "Stunfisk" [ref=e158]:
+                  - img "Stunfisk" [ref=e159]
+                - generic "Bidoof" [ref=e160]:
+                  - img "Bidoof" [ref=e161]
+                - generic "Barboach" [ref=e162]:
+                  - img "Barboach" [ref=e163]
+                - generic "Wooper" [ref=e164]:
+                  - img "Wooper" [ref=e165]
+                - generic "Dwebble" [ref=e166]:
+                  - img "Dwebble" [ref=e167]
+                - generic "Rattata" [ref=e168]:
+                  - img "Rattata" [ref=e169]
+                - generic [ref=e170]: "+3"
+              - generic [ref=e171]:
+                - generic [ref=e172]: "Sub-habitats:"
+                - generic [ref=e173]: Maintenance Tunnels
+            - 'link "Phasmosa''s Castle - General Lv. 3-12 Moderate 2 species A haunted keep: old metal, old stone, old memories. Courtyards and halls. Yamask Honedge" [ref=e174] [cursor=pointer]':
+              - /url: /gm/habitats/1b306a2d-185b-47fb-bbe1-538acb9e83d5
+              - generic [ref=e177]:
+                - heading "Phasmosa's Castle - General" [level=3] [ref=e178]
+                - paragraph [ref=e179]:
+                  - generic [ref=e180]: Lv. 3-12
+                  - generic [ref=e181]: Moderate
+                  - generic [ref=e182]: 2 species
+              - paragraph [ref=e183]: "A haunted keep: old metal, old stone, old memories. Courtyards and halls."
+              - generic [ref=e184]:
+                - generic "Yamask" [ref=e185]:
+                  - img "Yamask" [ref=e186]
+                - generic "Honedge" [ref=e187]:
+                  - img "Honedge" [ref=e188]
+            - link "Phasmosa's Castle - Grounds Lv. 5-12 Moderate 4 species The overgrown outer ring of the castle. Yamask Skorupi Houndour Murkrow" [ref=e189] [cursor=pointer]:
+              - /url: /gm/habitats/a6d659b2-a1cb-4b9b-9317-bb6bb56da8c9
+              - generic [ref=e192]:
+                - heading "Phasmosa's Castle - Grounds" [level=3] [ref=e193]
+                - paragraph [ref=e194]:
+                  - generic [ref=e195]: Lv. 5-12
+                  - generic [ref=e196]: Moderate
+                  - generic [ref=e197]: 4 species
+              - paragraph [ref=e198]: The overgrown outer ring of the castle.
+              - generic [ref=e199]:
+                - generic "Yamask" [ref=e200]:
+                  - img "Yamask" [ref=e201]
+                - generic "Skorupi" [ref=e202]:
+                  - img "Skorupi" [ref=e203]
+                - generic "Houndour" [ref=e204]:
+                  - img "Houndour" [ref=e205]
+                - generic "Murkrow" [ref=e206]:
+                  - img "Murkrow" [ref=e207]
+            - link "Rivermere - Docks & Waterwheels Lv. 5-15 Moderate 6 species The riverfront, docks, and water wheel areas. Tympole Magikarp Goldeen Corphish Barboach Clauncher" [ref=e208] [cursor=pointer]:
+              - /url: /gm/habitats/12dbc548-6a60-43db-9deb-6fda7f462d51
+              - generic [ref=e211]:
+                - heading "Rivermere - Docks & Waterwheels" [level=3] [ref=e212]
+                - paragraph [ref=e213]:
+                  - generic [ref=e214]: Lv. 5-15
+                  - generic [ref=e215]: Moderate
+                  - generic [ref=e216]: 6 species
+              - paragraph [ref=e217]: The riverfront, docks, and water wheel areas.
+              - generic [ref=e218]:
+                - generic "Tympole" [ref=e219]:
+                  - img "Tympole" [ref=e220]
+                - generic "Magikarp" [ref=e221]:
+                  - img "Magikarp" [ref=e222]
+                - generic "Goldeen" [ref=e223]:
+                  - img "Goldeen" [ref=e224]
+                - generic "Corphish" [ref=e225]:
+                  - img "Corphish" [ref=e226]
+                - generic "Barboach" [ref=e227]:
+                  - img "Barboach" [ref=e228]
+                - generic "Clauncher" [ref=e229]:
+                  - img "Clauncher" [ref=e230]
+            - 'link "Rivermere - General Lv. 5-12 Moderate 6 species A stony riverside town with an old bridge and waterwheels. Streets, bridge approaches, and market. Tympole Nickit Hoothoot Rattata Murkrow Eevee Sub-habitats: Day Night" [ref=e231] [cursor=pointer]':
+              - /url: /gm/habitats/0e74e2c4-221c-494f-b833-5008ec162eed
+              - generic [ref=e234]:
+                - heading "Rivermere - General" [level=3] [ref=e235]
+                - paragraph [ref=e236]:
+                  - generic [ref=e237]: Lv. 5-12
+                  - generic [ref=e238]: Moderate
+                  - generic [ref=e239]: 6 species
+              - paragraph [ref=e240]: A stony riverside town with an old bridge and waterwheels. Streets, bridge approaches, and market.
+              - generic [ref=e241]:
+                - generic "Tympole" [ref=e242]:
+                  - img "Tympole" [ref=e243]
+                - generic "Nickit" [ref=e244]:
+                  - img "Nickit" [ref=e245]
+                - generic "Hoothoot" [ref=e246]:
+                  - img "Hoothoot" [ref=e247]
+                - generic "Rattata" [ref=e248]:
+                  - img "Rattata" [ref=e249]
+                - generic "Murkrow" [ref=e250]:
+                  - img "Murkrow" [ref=e251]
+                - generic "Eevee" [ref=e252]:
+                  - img "Eevee" [ref=e253]
+              - generic [ref=e254]:
+                - generic [ref=e255]: "Sub-habitats:"
+                - generic [ref=e256]: Day
+                - generic [ref=e257]: Night
+            - 'link "Rivermere Causeway Lv. 5-12 Moderate 6 species The road from Rivermere toward the river and castle approach. Puddles and drainage ditches. Tympole Nickit Stunfisk Hoothoot Corphish Murkrow Sub-habitats: Castle Shadow Night" [ref=e258] [cursor=pointer]':
+              - /url: /gm/habitats/5fdf2210-423a-4469-b9f9-d85d855f4c28
+              - generic [ref=e261]:
+                - heading "Rivermere Causeway" [level=3] [ref=e262]
+                - paragraph [ref=e263]:
+                  - generic [ref=e264]: Lv. 5-12
+                  - generic [ref=e265]: Moderate
+                  - generic [ref=e266]: 6 species
+              - paragraph [ref=e267]: The road from Rivermere toward the river and castle approach. Puddles and drainage ditches.
+              - generic [ref=e268]:
+                - generic "Tympole" [ref=e269]:
+                  - img "Tympole" [ref=e270]
+                - generic "Nickit" [ref=e271]:
+                  - img "Nickit" [ref=e272]
+                - generic "Stunfisk" [ref=e273]:
+                  - img "Stunfisk" [ref=e274]
+                - generic "Hoothoot" [ref=e275]:
+                  - img "Hoothoot" [ref=e276]
+                - generic "Corphish" [ref=e277]:
+                  - img "Corphish" [ref=e278]
+                - generic "Murkrow" [ref=e279]:
+                  - img "Murkrow" [ref=e280]
+              - generic [ref=e281]:
+                - generic [ref=e282]: "Sub-habitats:"
+                - generic [ref=e283]: Castle Shadow
+                - generic [ref=e284]: Night
+            - 'link "Thickerby Forest - Forest Edge Lv. 3-10 Moderate 6 species Near the road, scattered hedges and scrubby trees. Nickit Smoliv Buneary Lillipup Eevee Zorua Sub-habitats: Day Dusk/Night" [ref=e285] [cursor=pointer]':
+              - /url: /gm/habitats/1de5ba08-ec0d-474a-85be-4cad0873032d
+              - generic [ref=e288]:
+                - heading "Thickerby Forest - Forest Edge" [level=3] [ref=e289]
+                - paragraph [ref=e290]:
+                  - generic [ref=e291]: Lv. 3-10
+                  - generic [ref=e292]: Moderate
+                  - generic [ref=e293]: 6 species
+              - paragraph [ref=e294]: Near the road, scattered hedges and scrubby trees.
+              - generic [ref=e295]:
+                - generic "Nickit" [ref=e296]:
+                  - img "Nickit" [ref=e297]
+                - generic "Smoliv" [ref=e298]:
+                  - img "Smoliv" [ref=e299]
+                - generic "Buneary" [ref=e300]:
+                  - img "Buneary" [ref=e301]
+                - generic "Lillipup" [ref=e302]:
+                  - img "Lillipup" [ref=e303]
+                - generic "Eevee" [ref=e304]:
+                  - img "Eevee" [ref=e305]
+                - generic "Zorua" [ref=e306]:
+                  - img "Zorua" [ref=e307]
+              - generic [ref=e308]:
+                - generic [ref=e309]: "Sub-habitats:"
+                - generic [ref=e310]: Day
+                - generic [ref=e311]: Dusk/Night
+            - 'link "Thickerby Forest - General Lv. 5-15 Moderate 12 species A dim, berry-thick woodland with lots of undergrowth and insects. Cutiefly Skorupi Nickit Smoliv Sewaddle Shroomish Seedot Hoothoot +4 Sub-habitats: Night" [ref=e312] [cursor=pointer]':
+              - /url: /gm/habitats/a2b0bad5-c18c-4a16-a7e4-5fe273a4566e
+              - generic [ref=e315]:
+                - heading "Thickerby Forest - General" [level=3] [ref=e316]
+                - paragraph [ref=e317]:
+                  - generic [ref=e318]: Lv. 5-15
+                  - generic [ref=e319]: Moderate
+                  - generic [ref=e320]: 12 species
+              - paragraph [ref=e321]: A dim, berry-thick woodland with lots of undergrowth and insects.
+              - generic [ref=e322]:
+                - generic "Cutiefly" [ref=e323]:
+                  - img "Cutiefly" [ref=e324]
+                - generic "Skorupi" [ref=e325]:
+                  - img "Skorupi" [ref=e326]
+                - generic "Nickit" [ref=e327]:
+                  - img "Nickit" [ref=e328]
+                - generic "Smoliv" [ref=e329]:
+                  - img "Smoliv" [ref=e330]
+                - generic "Sewaddle" [ref=e331]:
+                  - img "Sewaddle" [ref=e332]
+                - generic "Shroomish" [ref=e333]:
+                  - img "Shroomish" [ref=e334]
+                - generic "Seedot" [ref=e335]:
+                  - img "Seedot" [ref=e336]
+                - generic "Hoothoot" [ref=e337]:
+                  - img "Hoothoot" [ref=e338]
+                - generic [ref=e339]: "+4"
+              - generic [ref=e340]:
+                - generic [ref=e341]: "Sub-habitats:"
+                - generic [ref=e342]: Night
+            - link "Thickerby Forest - River Lv. 5-15 Moderate 5 species Fishing, surfing, and riverbank encounters. Magikarp Goldeen Tympole Barboach Corphish" [ref=e343] [cursor=pointer]:
+              - /url: /gm/habitats/b539d26d-55ab-4c91-9946-06259a5f4f56
+              - generic [ref=e346]:
+                - heading "Thickerby Forest - River" [level=3] [ref=e347]
+                - paragraph [ref=e348]:
+                  - generic [ref=e349]: Lv. 5-15
+                  - generic [ref=e350]: Moderate
+                  - generic [ref=e351]: 5 species
+              - paragraph [ref=e352]: Fishing, surfing, and riverbank encounters.
+              - generic [ref=e353]:
+                - generic "Magikarp" [ref=e354]:
+                  - img "Magikarp" [ref=e355]
+                - generic "Goldeen" [ref=e356]:
+                  - img "Goldeen" [ref=e357]
+                - generic "Tympole" [ref=e358]:
+                  - img "Tympole" [ref=e359]
+                - generic "Barboach" [ref=e360]:
+                  - img "Barboach" [ref=e361]
+                - generic "Corphish" [ref=e362]:
+                  - img "Corphish" [ref=e363]
+  - generic [ref=e364]:
+    - button "Toggle Nuxt DevTools" [ref=e365] [cursor=pointer]:
+      - img [ref=e366]
+    - generic "Page load time" [ref=e369]:
+      - generic [ref=e370]: "180"
+      - generic [ref=e371]: ms
+    - button "Toggle Component Inspector" [ref=e373] [cursor=pointer]:
+      - img [ref=e374]

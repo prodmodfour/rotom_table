@@ -1,0 +1,104 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e7]:
+        - heading "Rotom Table" [level=1] [ref=e8]
+        - generic [ref=e9]: GM View
+      - navigation [ref=e10]:
+        - link "Encounter" [ref=e11] [cursor=pointer]:
+          - /url: /gm
+          - generic [ref=e12]: Encounter
+        - link "Encounters" [ref=e13] [cursor=pointer]:
+          - /url: /gm/encounters
+          - generic [ref=e14]: Encounters
+        - link "Scenes" [ref=e15] [cursor=pointer]:
+          - /url: /gm/scenes
+          - img [ref=e16]
+          - generic [ref=e19]: Scenes
+        - link "Habitats" [ref=e20] [cursor=pointer]:
+          - /url: /gm/habitats
+          - generic [ref=e21]: Habitats
+        - link "Sheets" [ref=e22] [cursor=pointer]:
+          - /url: /gm/sheets
+          - generic [ref=e23]: Sheets
+        - link "Create" [ref=e24] [cursor=pointer]:
+          - /url: /gm/create
+          - generic [ref=e25]: Create
+        - link "Map" [ref=e26] [cursor=pointer]:
+          - /url: /gm/map
+          - generic [ref=e27]: Map
+      - generic [ref=e28]:
+        - button "Connect" [ref=e30] [cursor=pointer]:
+          - img [ref=e31]
+          - generic [ref=e34]: Connect
+        - generic [ref=e35]:
+          - generic [ref=e36]: "Group View:"
+          - generic [ref=e37]:
+            - button "Lobby" [ref=e38] [cursor=pointer]:
+              - img [ref=e39]
+            - button "Scene" [ref=e42] [cursor=pointer]:
+              - img [ref=e43]
+            - button "Encounter" [ref=e46] [cursor=pointer]:
+              - img [ref=e47]
+            - button "Map" [ref=e50] [cursor=pointer]:
+              - img [ref=e51]
+        - button "Advance Day" [ref=e54] [cursor=pointer]:
+          - generic [ref=e55]: Advance Day
+        - link "Group View" [ref=e56] [cursor=pointer]:
+          - /url: /group
+          - generic [ref=e57]: Group View
+    - main [ref=e58]:
+      - generic [ref=e3588]:
+        - generic [ref=e3589]:
+          - link "← Back to Sheets" [ref=e3590] [cursor=pointer]:
+            - /url: /gm/sheets
+          - generic [ref=e3591]:
+            - button "Evolve" [ref=e3592] [cursor=pointer]:
+              - img [ref=e3593]
+              - text: Evolve
+            - button "Edit" [ref=e3596] [cursor=pointer]
+        - generic [ref=e3597]:
+          - generic [ref=e3598]:
+            - img "Smeargle" [ref=e3600]
+            - generic [ref=e3601]:
+              - generic [ref=e3602]:
+                - generic [ref=e3603]:
+                  - generic [ref=e3604]: Species
+                  - textbox [disabled] [ref=e3605]: Smeargle
+                - generic [ref=e3606]:
+                  - generic [ref=e3607]: Nickname
+                  - textbox [disabled] [ref=e3608]: Move Tester
+              - generic [ref=e3609]:
+                - generic [ref=e3610]:
+                  - generic [ref=e3611]: Level
+                  - spinbutton [disabled] [ref=e3612]: "50"
+                - generic [ref=e3613]:
+                  - generic [ref=e3614]: EXP
+                  - spinbutton [disabled] [ref=e3615]: "0"
+                - generic [ref=e3616]:
+                  - generic [ref=e3617]: Gender
+                  - textbox [disabled] [ref=e3618]: Genderless
+                - generic [ref=e3619]:
+                  - generic [ref=e3620]: Shiny
+                  - checkbox [disabled] [ref=e3621] [cursor=pointer]
+              - generic [ref=e3623]:
+                - generic [ref=e3624]: Location
+                - textbox "e.g., Route 1" [disabled] [ref=e3625]
+              - generic [ref=e3627]: Normal
+          - generic [ref=e3628]:
+            - button "Stats" [ref=e3629] [cursor=pointer]
+            - button "Moves" [active] [ref=e3630] [cursor=pointer]
+            - button "Abilities" [ref=e3631] [cursor=pointer]
+            - button "Capabilities" [ref=e3632] [cursor=pointer]
+            - button "Skills" [ref=e3633] [cursor=pointer]
+            - button "Healing" [ref=e3634] [cursor=pointer]
+            - button "Notes" [ref=e3635] [cursor=pointer]
+          - paragraph [ref=e3674]: No moves recorded
+  - generic [ref=e3406]:
+    - button "Toggle Nuxt DevTools" [ref=e3407] [cursor=pointer]:
+      - img [ref=e3408]
+    - generic "Page load time" [ref=e3411]:
+      - generic [ref=e3412]: "665"
+      - generic [ref=e3413]: ms
+    - button "Toggle Component Inspector" [ref=e3415] [cursor=pointer]:
+      - img [ref=e3416]

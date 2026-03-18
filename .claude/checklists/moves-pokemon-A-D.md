@@ -1,0 +1,176 @@
+# Pokemon Moves A–D
+
+- [x] Absorb
+- [x] Accelerock
+- [x] Acid
+- [x] Acid Armor
+- [x] Acid Spray
+- [x] Acrobatics
+- [x] Acupressure
+- [x] Aerial Ace
+- [x] Aeroblast
+- [x] After You
+- [x] Agility
+- [x] Air Cutter
+- [x] Air Slash
+- [x] Ally Switch
+- [x] Amnesia
+- [x] Anchor Shot
+- [x] Ancient Power
+- [x] Apple Acid
+- [x] Aqua Jet
+- [x] Aqua Ring
+- [x] Aqua Tail
+- [x] Arm Thrust
+- [x] Aromatherapy
+- [x] Aromatic Mist
+- [x] Assist
+- [x] Assurance
+- [x] Astonish
+- [x] Astral Barrage
+- [x] Attack Order
+- [x] Attract
+- [x] Aura Sphere
+- [x] Aura Wheel
+- [x] Aurora Beam
+- [x] Aurora Veil
+- [x] Autotomize
+- [x] Avalanche
+- [x] Baby-Doll Eyes
+- [x] Baneful Bunker
+- [x] Barb Barrage
+- [x] Barrage
+- [x] Barrier
+- [x] Baton Pass
+- [x] Beak Blast
+- [x] Beat Up
+- [x] Behemoth Bash
+- [x] Behemoth Blade
+- [x] Belch
+- [x] Belly Drum
+- [x] Bestow
+- [x] Bide
+- [x] Bind
+- [x] Bite
+- [x] Bitter Malice
+- [x] Blast Burn
+- [x] Blaze Kick
+- [x] Bleakwind Storm
+- [x] Blizzard
+- [x] Block
+- [x] Blue Flare
+- [x] Body Press
+- [x] Body Slam
+- [x] Bolt Beak
+- [x] Bolt Strike
+- [x] Bone Club
+- [x] Bone Rush
+- [x] Bonemerang
+- [x] Boomburst
+- [x] Bounce
+- [x] Branch Poke
+- [x] Brave Bird
+- [x] Breaking Swipe
+- [x] Brick Break
+- [x] Brine
+- [x] Brutal Swing
+- [x] Bubble
+- [x] Bubblebeam
+- [x] Bug Bite
+- [x] Bug Buzz
+- [x] Bulk Up
+- [x] Bulldoze
+- [x] Bullet Punch
+- [x] Bullet Seed
+- [x] Burn Up
+- [x] Burning Jealousy
+- [x] Calm Mind
+- [x] Camouflage
+- [x] Captivate
+- [x] Ceaseless Edge
+- [x] Charge
+- [x] Charge Beam
+- [x] Charm
+- [x] Chatter
+- [x] Chip Away
+- [x] Chloroblast
+- [x] Circle Throw
+- [x] Clamp
+- [x] Clanging Scales
+- [x] Clangorous Soul
+- [x] Clear Smog
+- [x] Close Combat
+- [x] Coaching
+- [x] Coil
+- [x] Comet Punch
+- [x] Confide
+- [x] Confuse Ray
+- [x] Confusion
+- [x] Constrict
+- [x] Conversion
+- [x] Conversion2
+- [x] Copycat
+- [x] Core Enforcer
+- [x] Corrosive Gas
+- [x] Cosmic Power
+- [x] Cotton Guard
+- [x] Cotton Spore
+- [x] Counter
+- [x] Court Change
+- [x] Covet
+- [x] Crabhammer
+- [x] Crafty Shield
+- [x] Cross Chop
+- [x] Cross Poison
+- [x] Crunch
+- [x] Crush Claw
+- [x] Crush Grip
+- [x] Curse
+- [x] Cut
+- [x] Dark Pulse
+- [x] Dark Void
+- [x] Darkest Lariat
+- [x] Dazzling Gleam
+- [x] Decorate
+- [x] Defend Order
+- [x] Defense Curl
+- [x] Defog
+- [x] Destiny Bond
+- [x] Detect
+- [x] Diamond Storm
+- [x] Dig
+- [x] Dire Claw
+- [x] Disable
+- [x] Disarming Voice
+- [x] Discharge
+- [x] Dive
+- [x] Dizzy Punch
+- [x] Doom Desire
+- [x] Double Hit
+- [x] Double Iron Bash
+- [x] Double Kick
+- [x] Double Slap
+- [x] Double Team
+- [x] Double-Edge
+- [x] Draco Meteor
+- [x] Dragon Ascent
+- [x] Dragon Breath
+- [x] Dragon Claw
+- [x] Dragon Dance
+- [x] Dragon Darts
+- [x] Dragon Energy
+- [x] Dragon Hammer
+- [x] Dragon Pulse
+- [x] Dragon Rage
+- [x] Dragon Rush
+- [x] Dragon Tail
+- [x] Drain Punch
+- [x] Draining Kiss
+- [x] Dream Eater
+- [x] Drill Peck
+- [x] Drill Run
+- [x] Drum Beating
+- [x] Dual Chop
+- [x] Dual Wingbeat
+- [x] Dynamax Cannon
+- [x] Dynamic Punch

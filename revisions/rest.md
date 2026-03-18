@@ -1,0 +1,4 @@
+- Resting for 1 hour fully cures Fatigued.
+- AP mechanic removed and no longer relavant
+- Move frequency removed and no longer relavant
+- Rest unchanged.

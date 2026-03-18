@@ -1,0 +1,1 @@
+At the bottom of the [[capture-section-on-wild-pokemon-cards]], a prominent button reads **"Throw [Ball Name]"** (e.g., "Throw Great Ball", "Throw Basic Ball"). Clicking this button initiates a [[capture-attempt-accuracy-roll]], followed by a server-side capture attempt if the accuracy check succeeds.

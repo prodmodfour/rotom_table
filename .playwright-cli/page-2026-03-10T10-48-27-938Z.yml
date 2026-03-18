@@ -1,0 +1,12 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e5]:
+    - heading "500" [level=1] [ref=e6]
+    - paragraph [ref=e7]: The requested module '/_nuxt/node_modules/.cache/vite/client/deps/@phosphor-icons_vue.js?v=8b69e6e3' does not provide an export named 'PhRing'
+  - generic [ref=e8]:
+    - button "Toggle Nuxt DevTools" [ref=e9] [cursor=pointer]:
+      - img [ref=e10]
+    - generic "App load time" [ref=e13]:
+      - generic [ref=e14]: "491"
+      - generic [ref=e15]: ms
+    - button "Toggle Component Inspector" [ref=e17] [cursor=pointer]:
+      - img [ref=e18]

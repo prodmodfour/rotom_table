@@ -1,0 +1,206 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e7]:
+        - heading "Rotom Table" [level=1] [ref=e8]
+        - generic [ref=e9]: GM View
+      - navigation [ref=e10]:
+        - link "Encounter" [ref=e11] [cursor=pointer]:
+          - /url: /gm
+          - generic [ref=e12]: Encounter
+        - link "Encounters" [ref=e13] [cursor=pointer]:
+          - /url: /gm/encounters
+          - generic [ref=e14]: Encounters
+        - link "Scenes" [ref=e15] [cursor=pointer]:
+          - /url: /gm/scenes
+          - img [ref=e16]
+          - generic [ref=e19]: Scenes
+        - link "Habitats" [ref=e20] [cursor=pointer]:
+          - /url: /gm/habitats
+          - generic [ref=e21]: Habitats
+        - link "Sheets" [ref=e22] [cursor=pointer]:
+          - /url: /gm/sheets
+          - generic [ref=e23]: Sheets
+        - link "Create" [ref=e24] [cursor=pointer]:
+          - /url: /gm/create
+          - generic [ref=e25]: Create
+        - link "Map" [ref=e26] [cursor=pointer]:
+          - /url: /gm/map
+          - generic [ref=e27]: Map
+      - generic [ref=e28]:
+        - button "Connect" [ref=e30] [cursor=pointer]:
+          - img [ref=e31]
+          - generic [ref=e34]: Connect
+        - generic [ref=e35]:
+          - generic [ref=e36]: "Group View:"
+          - generic [ref=e37]:
+            - button "Lobby" [ref=e38] [cursor=pointer]:
+              - img [ref=e39]
+            - button "Scene" [ref=e42] [cursor=pointer]:
+              - img [ref=e43]
+            - button "Encounter" [ref=e46] [cursor=pointer]:
+              - img [ref=e47]
+            - button "Map" [ref=e50] [cursor=pointer]:
+              - img [ref=e51]
+        - button "Advance Day" [ref=e54] [cursor=pointer]:
+          - generic [ref=e55]: Advance Day
+        - link "Group View" [ref=e56] [cursor=pointer]:
+          - /url: /group
+          - generic [ref=e57]: Group View
+    - main [ref=e58]:
+      - generic [ref=e59]:
+        - generic [ref=e90]:
+          - generic [ref=e91]:
+            - generic [ref=e92]:
+              - heading "New Encounter" [level=2] [ref=e93]
+              - generic [ref=e94]:
+                - generic [ref=e95]: Trainer Battle
+                - generic [ref=e96]: Round 1
+            - generic [ref=e97]:
+              - combobox "Set game Weather Condition (PTU p.341) — has mechanical combat effects. Not the same as natural weather." [ref=e99] [cursor=pointer]:
+                - option "No Weather Condition" [selected]
+                - option "Sunny"
+                - option "Rain"
+                - option "Sandstorm"
+                - option "Hail"
+                - option "Snow"
+                - option "Fog"
+                - option "Harsh Sunlight"
+                - option "Heavy Rain"
+                - option "Strong Winds"
+              - button "Serve to Group" [ref=e100] [cursor=pointer]
+              - generic [ref=e101]:
+                - button "Undo" [disabled] [ref=e102]
+                - button "Redo" [disabled] [ref=e103]
+              - button "Start Combat" [disabled] [ref=e104]
+              - button "End Encounter" [ref=e105] [cursor=pointer]
+              - button "Save Template" [ref=e106] [cursor=pointer]
+              - button "Keyboard shortcuts (?)" [ref=e107] [cursor=pointer]
+          - generic [ref=e108]:
+            - generic [ref=e109]:
+              - button "List View" [ref=e110] [cursor=pointer]
+              - button "Grid View" [ref=e111] [cursor=pointer]
+            - generic [ref=e112]:
+              - generic [ref=e113]: "Damage Mode:"
+              - button "Set" [ref=e114] [cursor=pointer]
+              - button "Rolled" [ref=e115] [cursor=pointer]
+          - generic [ref=e116]:
+            - generic [ref=e118]:
+              - generic [ref=e119]:
+                - generic [ref=e120]:
+                  - heading "Players" [level=3] [ref=e121]
+                  - button "+ Add" [ref=e122] [cursor=pointer]
+                - paragraph [ref=e124]: No players added
+              - generic [ref=e125]:
+                - generic [ref=e126]:
+                  - heading "Allies" [level=3] [ref=e127]
+                  - button "+ Add" [ref=e128] [cursor=pointer]
+                - paragraph [ref=e130]: No allies
+              - generic [ref=e131]:
+                - generic [ref=e132]:
+                  - heading "Enemies" [level=3] [ref=e133]
+                  - button "+ Add" [ref=e134] [cursor=pointer]
+                - paragraph [ref=e136]: No enemies
+            - generic [ref=e137]:
+              - generic [ref=e138]:
+                - heading "Combat Log" [level=3] [ref=e139]
+                - paragraph [ref=e141]: No actions yet
+              - generic [ref=e142]:
+                - generic [ref=e143]:
+                  - generic [ref=e144]: Environment
+                  - generic [ref=e145]: None
+                - generic [ref=e146]:
+                  - generic [ref=e147]: Environment Preset
+                  - combobox [ref=e148] [cursor=pointer]:
+                    - option "None" [selected]
+                    - option "Dim Cave (Blindness)"
+                    - option "Dark Cave (Total Blindness)"
+                    - option "Frozen Lake"
+                    - option "Hazard Factory"
+                    - option "Custom..."
+              - generic [ref=e149]:
+                - generic [ref=e150]:
+                  - generic [ref=e151]: XP Significance
+                  - generic [ref=e152]: x1.0
+                - generic [ref=e153]:
+                  - paragraph [ref=e154]: No defeated enemies yet.
+                  - paragraph [ref=e155]: XP breakdown will appear after enemies are defeated.
+        - generic [ref=e157]:
+          - generic [ref=e158]:
+            - heading "Add Player" [level=2] [ref=e159]
+            - button "Close" [ref=e160] [cursor=pointer]:
+              - img "Close" [ref=e161]
+          - generic [ref=e162]:
+            - generic [ref=e163]:
+              - button "Pokemon" [ref=e164] [cursor=pointer]
+              - button "Humans" [active] [ref=e165] [cursor=pointer]
+            - textbox "Search..." [ref=e167]
+            - generic [ref=e168]:
+              - generic [ref=e1696] [cursor=pointer]:
+                - generic [ref=e1698]: A
+                - generic [ref=e1699]:
+                  - generic [ref=e1700]: Ash
+                  - generic [ref=e1701]: Lv.30
+                - generic [ref=e1702]: player
+              - generic [ref=e1703] [cursor=pointer]:
+                - generic [ref=e1705]: A
+                - generic [ref=e1706]:
+                  - generic [ref=e1707]: Aurora
+                  - generic [ref=e1708]: Lv.1
+                - generic [ref=e1709]: player
+              - generic [ref=e1710] [cursor=pointer]:
+                - generic [ref=e1712]: C
+                - generic [ref=e1713]:
+                  - generic [ref=e1714]: Clara
+                  - generic [ref=e1715]: Lv.1
+                - generic [ref=e1716]: player
+              - generic [ref=e1717] [cursor=pointer]:
+                - generic [ref=e1719]: H
+                - generic [ref=e1720]:
+                  - generic [ref=e1721]: Hassan
+                  - generic [ref=e1722]: Lv.1
+                - generic [ref=e1723]: player
+              - generic [ref=e1724] [cursor=pointer]:
+                - generic [ref=e1726]: M
+                - generic [ref=e1727]:
+                  - generic [ref=e1728]: Marilena
+                  - generic [ref=e1729]: Lv.1
+                - generic [ref=e1730]: player
+              - generic [ref=e1731] [cursor=pointer]:
+                - generic [ref=e1733]: T
+                - generic [ref=e1734]:
+                  - generic [ref=e1735]: Test Trainer
+                  - generic [ref=e1736]: Lv.10
+                - generic [ref=e1737]: player
+              - generic [ref=e1738] [cursor=pointer]:
+                - generic [ref=e1740]: T
+                - generic [ref=e1741]:
+                  - generic [ref=e1742]: Trainer Ash
+                  - generic [ref=e1743]: Lv.5
+                - generic [ref=e1744]: player
+              - generic [ref=e1745] [cursor=pointer]:
+                - generic [ref=e1747]: T
+                - generic [ref=e1748]:
+                  - generic [ref=e1749]: Trainer Red
+                  - generic [ref=e1750]: Lv.5
+                - generic [ref=e1751]: player
+              - generic [ref=e1752] [cursor=pointer]:
+                - generic [ref=e1754]: T
+                - generic [ref=e1755]:
+                  - generic [ref=e1756]: Trainer Red
+                  - generic [ref=e1757]: Lv.5
+                - generic [ref=e1758]: player
+            - generic [ref=e1693]:
+              - generic [ref=e1694]: Initiative Bonus
+              - spinbutton [ref=e1695]: "0"
+          - generic [ref=e1690]:
+            - button "Cancel" [ref=e1691] [cursor=pointer]
+            - button "Add to Battle" [ref=e1692] [cursor=pointer]
+  - generic [ref=e76]:
+    - button "Toggle Nuxt DevTools" [ref=e77] [cursor=pointer]:
+      - img [ref=e78]
+    - generic "Page load time" [ref=e81]:
+      - generic [ref=e82]: "359"
+      - generic [ref=e83]: ms
+    - button "Toggle Component Inspector" [ref=e85] [cursor=pointer]:
+      - img [ref=e86]

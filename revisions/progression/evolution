@@ -1,0 +1,26 @@
+  Core Concept
+
+  Evolution is triggered by species-specific unlock conditions. When a condition is met, evolution starts immediately. The trainer can cancel the evolution, which re-locks it. The condition must be met again
+  for evolution to re-trigger.
+
+  Unlock Conditions
+
+  Each Pokemon species defines its own evolution unlock conditions. Conditions can be combined with AND/OR logic.
+
+  Condition types include (not exhaustive):
+  - Item use — a specific item is used on the Pokemon (e.g., Fire Stone on Eevee)
+  - Held item + battle outcome — Pokemon wins a battle while holding a specific item (e.g., Scyther holding Steel Coat)
+  - Environmental — Pokemon spends time in a specific environment (e.g., Magneton in a high-magnetism area)
+  - Level threshold — Pokemon reaches a specific level (e.g., Charmander at level 16)
+  - Move known — Pokemon knows a specific move
+  - Gender — Pokemon is a specific gender
+
+  Cancellation and Re-locking
+
+  - When evolution starts, the trainer may cancel it
+  - Cancelling re-locks the evolution — it does not remain "available"
+  - The provoking condition must occur again to re-trigger (use another stone, win another battle, etc.)
+
+  Item Consumption
+
+  Items that provoke evolution (stones, etc.) are only consumed if the evolution completes. If the trainer cancels, the item is not spent.

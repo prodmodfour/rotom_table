@@ -1,0 +1,140 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e7]:
+        - heading "Rotom Table" [level=1] [ref=e8]
+        - generic [ref=e9]: GM View
+      - navigation [ref=e10]:
+        - link "Encounter" [ref=e11] [cursor=pointer]:
+          - /url: /gm
+          - generic [ref=e12]: Encounter
+        - link "Encounters" [ref=e13] [cursor=pointer]:
+          - /url: /gm/encounters
+          - generic [ref=e14]: Encounters
+        - link "Scenes" [ref=e15] [cursor=pointer]:
+          - /url: /gm/scenes
+          - img [ref=e16]
+          - generic [ref=e19]: Scenes
+        - link "Habitats" [ref=e20] [cursor=pointer]:
+          - /url: /gm/habitats
+          - generic [ref=e21]: Habitats
+        - link "Sheets" [ref=e22] [cursor=pointer]:
+          - /url: /gm/sheets
+          - generic [ref=e23]: Sheets
+        - link "Create" [ref=e24] [cursor=pointer]:
+          - /url: /gm/create
+          - generic [ref=e25]: Create
+        - link "Map" [ref=e26] [cursor=pointer]:
+          - /url: /gm/map
+          - generic [ref=e27]: Map
+      - generic [ref=e28]:
+        - button "Connect" [ref=e30] [cursor=pointer]:
+          - img [ref=e31]
+          - generic [ref=e34]: Connect
+        - generic [ref=e35]:
+          - generic [ref=e36]: "Group View:"
+          - generic [ref=e37]:
+            - button "Lobby" [ref=e38] [cursor=pointer]:
+              - img [ref=e39]
+            - button "Scene" [ref=e42] [cursor=pointer]:
+              - img [ref=e43]
+            - button "Encounter" [ref=e46] [cursor=pointer]:
+              - img [ref=e47]
+            - button "Map" [ref=e50] [cursor=pointer]:
+              - img [ref=e51]
+        - button "Advance Day" [ref=e54] [cursor=pointer]:
+          - generic [ref=e55]: Advance Day
+        - link "Group View" [ref=e56] [cursor=pointer]:
+          - /url: /group
+          - generic [ref=e57]: Group View
+    - main [ref=e58]:
+      - generic [ref=e59]:
+        - generic [ref=e60]:
+          - link "← Back to Sheets" [ref=e61] [cursor=pointer]:
+            - /url: /gm/sheets
+          - generic [ref=e62]:
+            - button "Evolve" [ref=e63] [cursor=pointer]:
+              - img [ref=e64]
+              - text: Evolve
+            - button "Edit" [ref=e67] [cursor=pointer]
+        - generic [ref=e68]:
+          - generic [ref=e69]:
+            - img "Alolan Grimer" [ref=e71]
+            - generic [ref=e72]:
+              - generic [ref=e73]:
+                - generic [ref=e74]:
+                  - generic [ref=e75]: Species
+                  - textbox [disabled] [ref=e76]: Alolan Grimer
+                - generic [ref=e77]:
+                  - generic [ref=e78]: Nickname
+                  - textbox [disabled] [ref=e79]: Alolan Grimer 1
+              - generic [ref=e80]:
+                - generic [ref=e81]:
+                  - generic [ref=e82]: Level
+                  - spinbutton [disabled] [ref=e83]: "15"
+                - generic [ref=e84]:
+                  - generic [ref=e85]: EXP
+                  - spinbutton [disabled] [ref=e86]: "0"
+                - generic [ref=e87]:
+                  - generic [ref=e88]: Gender
+                  - textbox [disabled] [ref=e89]: Male
+                - generic [ref=e90]:
+                  - generic [ref=e91]: Shiny
+                  - checkbox [disabled] [ref=e92] [cursor=pointer]
+              - generic [ref=e94]:
+                - generic [ref=e95]: Location
+                - textbox "e.g., Route 1" [disabled] [ref=e96]
+              - generic [ref=e97]:
+                - generic [ref=e98]: Poison
+                - generic [ref=e99]: Dark
+          - generic [ref=e100]:
+            - button "Stats" [ref=e101] [cursor=pointer]
+            - button "Moves" [ref=e102] [cursor=pointer]
+            - button "Abilities" [ref=e103] [cursor=pointer]
+            - button "Capabilities" [ref=e104] [cursor=pointer]
+            - button "Skills" [ref=e105] [cursor=pointer]
+            - button "Healing" [ref=e106] [cursor=pointer]
+            - button "Notes" [ref=e107] [cursor=pointer]
+          - generic [ref=e109]:
+            - generic [ref=e110]:
+              - generic [ref=e111]:
+                - generic [ref=e112]: HP
+                - generic [ref=e113]:
+                  - generic [ref=e114]: "80"
+                  - generic [ref=e115]: /
+              - generic [ref=e116]:
+                - generic [ref=e117]: Attack
+                - generic [ref=e118]:
+                  - generic [ref=e119]: "80"
+                  - generic [ref=e120]: "82"
+              - generic [ref=e121]:
+                - generic [ref=e122]: Defense
+                - generic [ref=e123]:
+                  - generic [ref=e124]: "50"
+                  - generic [ref=e125]: "54"
+              - generic [ref=e126]:
+                - generic [ref=e127]: Sp. Atk
+                - generic [ref=e128]:
+                  - generic [ref=e129]: "40"
+                  - generic [ref=e130]: "41"
+              - generic [ref=e131]:
+                - generic [ref=e132]: Sp. Def
+                - generic [ref=e133]:
+                  - generic [ref=e134]: "50"
+                  - generic [ref=e135]: "53"
+              - generic [ref=e136]:
+                - generic [ref=e137]: Speed
+                - generic [ref=e138]:
+                  - generic [ref=e139]: "25"
+                  - generic [ref=e140]: "25"
+            - generic [ref=e141]:
+              - heading "Nature" [level=4] [ref=e142]
+              - paragraph [ref=e143]: Hardy
+  - generic [ref=e144]:
+    - button "Toggle Nuxt DevTools" [ref=e145] [cursor=pointer]:
+      - img [ref=e146]
+    - generic "Page load time" [ref=e149]:
+      - generic [ref=e150]: "116"
+      - generic [ref=e151]: ms
+    - button "Toggle Component Inspector" [ref=e153] [cursor=pointer]:
+      - img [ref=e154]

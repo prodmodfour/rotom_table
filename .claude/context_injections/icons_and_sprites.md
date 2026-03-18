@@ -1,0 +1,3 @@
+- **Use Phosphor Icons** instead of emojis for UI elements (installed at project root)
+- Gen 5 and below: Pokemon Black 2/White 2 sprites
+- Gen 6+: Latest 3D game sprites

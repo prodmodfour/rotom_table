@@ -1,0 +1,4 @@
+- Traits and Moves are unlocked throughout play. 
+- Each Learned Trait or Move will have its own set of conditions for unlocking
+- We prefer to have roleplay conditions for unlock but may sometimes have simpler ones (e.g unlocked at level 4)
+- Sometimes the condition will be unnattainable for that instance of the pokemon (May require a specific gender, or to not have done something)

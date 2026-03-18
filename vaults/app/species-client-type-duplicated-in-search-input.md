@@ -1,0 +1,3 @@
+`PokemonSearchInput.vue` (`app/components/common/PokemonSearchInput.vue`) defines its own local `SpeciesData` interface with only `id`, `name`, and `types` fields, rather than importing the shared `SpeciesData` type from `types/species.ts`.
+
+The shared type includes the full set of fields (base stats, abilities, evolution data, movement, etc.), while this component only needs the three fields it defines. The [[species-autocomplete-loads-all-on-mount]] note describes both this component and the habitat `SpeciesAutocomplete`, which also works with the same minimal subset but doesn't define a local type.

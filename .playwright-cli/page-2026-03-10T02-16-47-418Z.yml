@@ -1,0 +1,164 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e7]:
+        - heading "Rotom Table" [level=1] [ref=e8]
+        - generic [ref=e9]: GM View
+      - navigation [ref=e10]:
+        - link "Encounter" [ref=e11] [cursor=pointer]:
+          - /url: /gm
+          - generic [ref=e12]: Encounter
+        - link "Encounters" [ref=e13] [cursor=pointer]:
+          - /url: /gm/encounters
+          - generic [ref=e14]: Encounters
+        - link "Scenes" [ref=e15] [cursor=pointer]:
+          - /url: /gm/scenes
+          - img [ref=e16]
+          - generic [ref=e19]: Scenes
+        - link "Habitats" [ref=e20] [cursor=pointer]:
+          - /url: /gm/habitats
+          - generic [ref=e21]: Habitats
+        - link "Sheets" [ref=e22] [cursor=pointer]:
+          - /url: /gm/sheets
+          - generic [ref=e23]: Sheets
+        - link "Create" [ref=e24] [cursor=pointer]:
+          - /url: /gm/create
+          - generic [ref=e25]: Create
+        - link "Map" [ref=e26] [cursor=pointer]:
+          - /url: /gm/map
+          - generic [ref=e27]: Map
+      - generic [ref=e28]:
+        - button "Connect" [ref=e30] [cursor=pointer]:
+          - img [ref=e31]
+          - generic [ref=e34]: Connect
+        - generic [ref=e35]:
+          - generic [ref=e36]: "Group View:"
+          - generic [ref=e37]:
+            - button "Lobby" [ref=e38] [cursor=pointer]:
+              - img [ref=e39]
+            - button "Scene" [ref=e42] [cursor=pointer]:
+              - img [ref=e43]
+            - button "Encounter" [ref=e46] [cursor=pointer]:
+              - img [ref=e47]
+            - button "Map" [ref=e50] [cursor=pointer]:
+              - img [ref=e51]
+        - button "Advance Day" [ref=e54] [cursor=pointer]:
+          - generic [ref=e55]: Advance Day
+        - link "Group View" [ref=e56] [cursor=pointer]:
+          - /url: /group
+          - generic [ref=e57]: Group View
+    - main [ref=e58]:
+      - generic [ref=e395]:
+        - generic [ref=e396]:
+          - generic [ref=e397]:
+            - heading "Vs Spiritomb" [level=2] [ref=e398]
+            - generic [ref=e399]:
+              - generic [ref=e400]: Full Contact
+              - generic [ref=e401]: Round 1
+          - generic [ref=e402]:
+            - combobox "Set game Weather Condition (PTU p.341) — has mechanical combat effects. Not the same as natural weather." [ref=e404] [cursor=pointer]:
+              - option "No Weather Condition" [selected]
+              - option "Sunny"
+              - option "Rain"
+              - option "Sandstorm"
+              - option "Hail"
+              - option "Snow"
+              - option "Fog"
+              - option "Harsh Sunlight"
+              - option "Heavy Rain"
+              - option "Strong Winds"
+            - button "Serve to Group" [ref=e405] [cursor=pointer]
+            - generic [ref=e406]:
+              - button "Undo" [disabled] [ref=e407]
+              - button "Redo" [disabled] [ref=e408]
+            - button "Start Combat" [ref=e409] [cursor=pointer]
+            - button "End Encounter" [ref=e410] [cursor=pointer]
+            - button "Save Template" [ref=e411] [cursor=pointer]
+            - button "Keyboard shortcuts (?)" [ref=e412] [cursor=pointer]
+        - generic [ref=e413]:
+          - generic [ref=e414]:
+            - button "List View" [ref=e415] [cursor=pointer]
+            - button "Grid View" [active] [ref=e416] [cursor=pointer]
+          - generic [ref=e417]:
+            - generic [ref=e418]: "Damage Mode:"
+            - button "Set" [ref=e419] [cursor=pointer]
+            - button "Rolled" [ref=e420] [cursor=pointer]
+        - generic [ref=e421]:
+          - generic [ref=e639]:
+            - generic [ref=e640]:
+              - generic [ref=e641]:
+                - heading "Battle Grid" [level=3] [ref=e642]
+                - generic [ref=e643]: 20×15
+              - generic [ref=e644]:
+                - button "Settings" [ref=e645] [cursor=pointer]
+                - button "Grid On" [ref=e646] [cursor=pointer]
+            - generic [ref=e648]:
+              - button "Distance" [ref=e649] [cursor=pointer]
+              - button "Burst" [ref=e650] [cursor=pointer]
+              - button "Cone" [ref=e651] [cursor=pointer]
+              - button "Line" [ref=e652] [cursor=pointer]
+              - button "Close Blast" [ref=e653] [cursor=pointer]
+            - button "Fog Off" [ref=e656] [cursor=pointer]
+            - generic [ref=e658]:
+              - generic:
+                - generic [ref=e660] [cursor=pointer]:
+                  - img "Spiritomb" [ref=e662]
+                  - generic:
+                    - generic: Spiritomb
+                    - generic: Lv.10
+                - generic [ref=e665] [cursor=pointer]:
+                  - img "Yamask" [ref=e667]
+                  - generic:
+                    - generic: Yamask
+                    - generic: Lv.2
+                - generic [ref=e670] [cursor=pointer]:
+                  - img "Yamask" [ref=e672]
+                  - generic:
+                    - generic: Yamask
+                    - generic: Lv.2
+                - generic [ref=e675] [cursor=pointer]:
+                  - img "Honedge" [ref=e677]
+                  - generic:
+                    - generic: Honedge
+                    - generic: Lv.3
+                - generic [ref=e680] [cursor=pointer]:
+                  - img "Golett" [ref=e682]
+                  - generic:
+                    - generic: Golett
+                    - generic: Lv.3
+              - generic [ref=e685]:
+                - button "+" [ref=e686] [cursor=pointer]
+                - generic [ref=e687]: 100%
+                - button "-" [ref=e688] [cursor=pointer]
+                - button "⌂" [ref=e689] [cursor=pointer]
+          - generic [ref=e619]:
+            - generic [ref=e620]:
+              - heading "Combat Log" [level=3] [ref=e621]
+              - paragraph [ref=e623]: No actions yet
+            - generic [ref=e624]:
+              - generic [ref=e625]:
+                - generic [ref=e626]: Environment
+                - generic [ref=e627]: None
+              - generic [ref=e628]:
+                - generic [ref=e629]: Environment Preset
+                - combobox [ref=e630] [cursor=pointer]:
+                  - option "None" [selected]
+                  - option "Dim Cave (Blindness)"
+                  - option "Dark Cave (Total Blindness)"
+                  - option "Frozen Lake"
+                  - option "Hazard Factory"
+                  - option "Custom..."
+            - generic [ref=e631]:
+              - generic [ref=e632]:
+                - generic [ref=e633]: XP Significance
+                - generic [ref=e634]: x1.0
+              - generic [ref=e635]:
+                - paragraph [ref=e636]: No defeated enemies yet.
+                - paragraph [ref=e637]: XP breakdown will appear after enemies are defeated.
+  - generic [ref=e368]:
+    - button "Toggle Nuxt DevTools" [ref=e369] [cursor=pointer]:
+      - img [ref=e370]
+    - generic "Page load time" [ref=e373]:
+      - generic [ref=e375]: "-"
+    - button "Toggle Component Inspector" [ref=e377] [cursor=pointer]:
+      - img [ref=e378]

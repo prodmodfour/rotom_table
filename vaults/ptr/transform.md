@@ -1,0 +1,3 @@
+Transform is a Normal-type [[type-effectiveness-excludes-status-moves|Status]] move with no Damage Base, At-Will frequency, no AC, and a range of 10, 1 Target.
+
+The user targets a Pokémon within 10 meters and assumes the form of the target. It gains all of the target's Moves and [[trait-definition|Traits]]; and copies its weight and height. Transform lasts until the user is switched out, Fainted, or until the end of the encounter. The user may choose to end the Transformation on its turn as a free action, regaining its previous Move List. The user's Stats do not change from using Transform. Transform cannot miss.

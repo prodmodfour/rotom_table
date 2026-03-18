@@ -1,0 +1,46 @@
+- generic [ref=e1]:
+  - generic [ref=e4]:
+    - banner [ref=e89]:
+      - generic [ref=e90]:
+        - generic [ref=e91]: Hassan
+        - status "Connected - LAN (Local) - 3ms" [ref=e472] [cursor=pointer]:
+          - 'button "Connection: Connected. Tap for details." [ref=e93]'
+      - button "Switch character" [ref=e94] [cursor=pointer]:
+        - img [ref=e95]
+    - main [ref=e98]:
+      - generic [ref=e473]:
+        - generic [ref=e474]:
+          - generic [ref=e475]:
+            - img [ref=e476]
+            - generic [ref=e479]: Group View
+          - generic [ref=e480]:
+            - generic [ref=e481]: "Current Tab:"
+            - generic [ref=e482]: Scene
+          - button "Request Lobby" [ref=e484] [cursor=pointer]:
+            - img [ref=e485]
+            - text: Request Lobby
+        - generic [ref=e489]:
+          - img [ref=e490]
+          - paragraph [ref=e493]: No active scene
+          - paragraph [ref=e494]: The GM has not started a scene yet.
+    - navigation "Player navigation" [ref=e199]:
+      - button "Character" [ref=e200] [cursor=pointer]:
+        - img [ref=e201]
+        - generic [ref=e204]: Character
+      - button "Team" [ref=e205] [cursor=pointer]:
+        - img [ref=e206]
+        - generic [ref=e209]: Team
+      - button "Encounter" [ref=e210] [cursor=pointer]:
+        - img [ref=e211]
+        - generic [ref=e214]: Encounter
+      - button "Scene" [active] [ref=e215] [cursor=pointer]:
+        - img [ref=e216]
+        - generic [ref=e219]: Scene
+  - generic [ref=e75]:
+    - button "Toggle Nuxt DevTools" [ref=e76] [cursor=pointer]:
+      - img [ref=e77]
+    - generic "Page load time" [ref=e80]:
+      - generic [ref=e81]: "118"
+      - generic [ref=e82]: ms
+    - button "Toggle Component Inspector" [ref=e84] [cursor=pointer]:
+      - img [ref=e85]

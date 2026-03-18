@@ -1,0 +1,1 @@
+"Move Tutor: [Move Name]" is a [[learned-traits|Learned Trait]] that Trainers or Pokemon can get, usually Trainers. Having this trait allows the character to serve as a [[move-tutors-as-unlock-conditions|Move Tutor]] for that specific move.

@@ -1,0 +1,189 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e7]:
+        - heading "Rotom Table" [level=1] [ref=e8]
+        - generic [ref=e9]: GM View
+      - navigation [ref=e10]:
+        - link "Encounter" [ref=e11] [cursor=pointer]:
+          - /url: /gm
+          - generic [ref=e12]: Encounter
+        - link "Encounters" [ref=e13] [cursor=pointer]:
+          - /url: /gm/encounters
+          - generic [ref=e14]: Encounters
+        - link "Scenes" [ref=e15] [cursor=pointer]:
+          - /url: /gm/scenes
+          - img [ref=e16]
+          - generic [ref=e19]: Scenes
+        - link "Habitats" [ref=e20] [cursor=pointer]:
+          - /url: /gm/habitats
+          - generic [ref=e21]: Habitats
+        - link "Sheets" [ref=e22] [cursor=pointer]:
+          - /url: /gm/sheets
+          - generic [ref=e23]: Sheets
+        - link "Create" [ref=e24] [cursor=pointer]:
+          - /url: /gm/create
+          - generic [ref=e25]: Create
+        - link "Map" [ref=e26] [cursor=pointer]:
+          - /url: /gm/map
+          - generic [ref=e27]: Map
+      - generic [ref=e28]:
+        - button "Connect" [ref=e30] [cursor=pointer]:
+          - img [ref=e31]
+          - generic [ref=e34]: Connect
+        - generic [ref=e35]:
+          - generic [ref=e36]: "Group View:"
+          - generic [ref=e37]:
+            - button "Lobby" [ref=e38] [cursor=pointer]:
+              - img [ref=e39]
+            - button "Scene" [ref=e42] [cursor=pointer]:
+              - img [ref=e43]
+            - button "Encounter" [ref=e46] [cursor=pointer]:
+              - img [ref=e47]
+            - button "Map" [ref=e50] [cursor=pointer]:
+              - img [ref=e51]
+        - button "Advance Day" [ref=e54] [cursor=pointer]:
+          - generic [ref=e55]: Advance Day
+        - link "Group View" [ref=e56] [cursor=pointer]:
+          - /url: /group
+          - generic [ref=e57]: Group View
+    - main [ref=e58]:
+      - generic [ref=e59]:
+        - generic [ref=e60]:
+          - link "← Back to Habitats" [ref=e61] [cursor=pointer]:
+            - /url: /gm/habitats
+          - heading "Bramblewick - Backyards & Apiaries" [level=2] [ref=e62]
+          - generic [ref=e63]:
+            - button "Settings" [ref=e64] [cursor=pointer]
+            - button "Generate" [ref=e65] [cursor=pointer]
+            - button "Delete" [ref=e66] [cursor=pointer]
+        - generic [ref=e67]:
+          - generic [ref=e68]:
+            - generic [ref=e69]: "Description:"
+            - generic [ref=e70]: Behind homes, near the bee hives and woodpiles.
+          - generic [ref=e71]:
+            - generic [ref=e72]: "Level Range:"
+            - generic [ref=e73]: 3 - 10
+          - generic [ref=e74]:
+            - generic [ref=e75]: "Population Density:"
+            - generic [ref=e76]:
+              - generic [ref=e77]: Moderate
+              - generic [ref=e78]: Small group -- a pack or family unit
+          - generic [ref=e79]:
+            - generic [ref=e80]: "Total Weight:"
+            - generic [ref=e81]: "180"
+        - generic [ref=e82]:
+          - generic [ref=e83]:
+            - generic [ref=e84]:
+              - heading "Pokemon Entries (5)" [level=3] [ref=e85]
+              - button "+ Add Pokemon" [active] [ref=e86] [cursor=pointer]
+            - generic [ref=e87]:
+              - generic [ref=e88]:
+                - generic [ref=e89]: Pokemon
+                - generic [ref=e90]: Weight
+                - generic [ref=e91]: Chance
+                - generic [ref=e92]: Level Range
+                - generic [ref=e93]: Actions
+              - generic [ref=e94]:
+                - generic [ref=e95]:
+                  - img "Cutiefly" [ref=e96]
+                  - text: Cutiefly
+                - spinbutton [ref=e98]: "60"
+                - generic [ref=e99]: 33.3%
+                - generic [ref=e101]:
+                  - spinbutton [ref=e102]
+                  - generic [ref=e103]: "-"
+                  - spinbutton [ref=e104]
+                - button "Remove" [ref=e106] [cursor=pointer]:
+                  - img "Remove" [ref=e107]
+              - generic [ref=e108]:
+                - generic [ref=e109]:
+                  - img "Sewaddle" [ref=e110]
+                  - text: Sewaddle
+                - spinbutton [ref=e112]: "60"
+                - generic [ref=e113]: 33.3%
+                - generic [ref=e115]:
+                  - spinbutton [ref=e116]
+                  - generic [ref=e117]: "-"
+                  - spinbutton [ref=e118]
+                - button "Remove" [ref=e120] [cursor=pointer]:
+                  - img "Remove" [ref=e121]
+              - generic [ref=e122]:
+                - generic [ref=e123]:
+                  - img "Skorupi" [ref=e124]
+                  - text: Skorupi
+                - spinbutton [ref=e126]: "25"
+                - generic [ref=e127]: 13.9%
+                - generic [ref=e129]:
+                  - spinbutton [ref=e130]
+                  - generic [ref=e131]: "-"
+                  - spinbutton [ref=e132]
+                - button "Remove" [ref=e134] [cursor=pointer]:
+                  - img "Remove" [ref=e135]
+              - generic [ref=e136]:
+                - generic [ref=e137]:
+                  - img "Combee" [ref=e138]
+                  - text: Combee
+                - spinbutton [ref=e140]: "25"
+                - generic [ref=e141]: 13.9%
+                - generic [ref=e143]:
+                  - spinbutton [ref=e144]
+                  - generic [ref=e145]: "-"
+                  - spinbutton [ref=e146]
+                - button "Remove" [ref=e148] [cursor=pointer]:
+                  - img "Remove" [ref=e149]
+              - generic [ref=e150]:
+                - generic [ref=e151]:
+                  - img "Heracross" [ref=e152]
+                  - text: Heracross
+                - spinbutton [ref=e154]: "10"
+                - generic [ref=e155]: 5.6%
+                - generic [ref=e157]:
+                  - spinbutton [ref=e158]
+                  - generic [ref=e159]: "-"
+                  - spinbutton [ref=e160]
+                - button "Remove" [ref=e162] [cursor=pointer]:
+                  - img "Remove" [ref=e163]
+          - generic [ref=e164]:
+            - generic [ref=e165]:
+              - heading "Sub-habitats (0)" [level=3] [ref=e166]
+              - button "+ Add Sub-habitat" [ref=e167] [cursor=pointer]
+            - generic [ref=e168]:
+              - paragraph [ref=e169]: No sub-habitats defined
+              - paragraph [ref=e170]: Sub-habitats let you create variations of this table (e.g., "Deep Forest" as a variant of "Forest")
+        - generic [ref=e186]:
+          - generic [ref=e187]:
+            - heading "Add Pokemon" [level=3] [ref=e188]
+            - button "×" [ref=e189] [cursor=pointer]
+          - generic [ref=e190]:
+            - generic [ref=e191]:
+              - generic [ref=e192]:
+                - generic [ref=e193]: Pokemon Species *
+                - textbox "Search Pokemon..." [ref=e195]
+              - generic [ref=e196]:
+                - generic [ref=e197]: Rarity
+                - combobox [ref=e198] [cursor=pointer]:
+                  - 'option "Common (Weight: 10)" [selected]'
+                  - 'option "Uncommon (Weight: 5)"'
+                  - 'option "Rare (Weight: 3)"'
+                  - 'option "Very Rare (Weight: 1)"'
+                  - 'option "Legendary (Weight: 0.1)"'
+                  - option "Custom Weight"
+              - generic [ref=e199]:
+                - generic [ref=e200]: Level Range Override (optional)
+                - generic [ref=e201]:
+                  - spinbutton [ref=e202]
+                  - generic [ref=e203]: "-"
+                  - spinbutton [ref=e204]
+                - paragraph [ref=e205]: Leave blank to use table's default range
+            - generic [ref=e206]:
+              - button "Cancel" [ref=e207] [cursor=pointer]
+              - button "Add" [disabled] [ref=e208]
+  - generic [ref=e171]:
+    - button "Toggle Nuxt DevTools" [ref=e172] [cursor=pointer]:
+      - img [ref=e173]
+    - generic "Page load time" [ref=e176]:
+      - generic [ref=e177]: "98"
+      - generic [ref=e178]: ms
+    - button "Toggle Component Inspector" [ref=e180] [cursor=pointer]:
+      - img [ref=e181]

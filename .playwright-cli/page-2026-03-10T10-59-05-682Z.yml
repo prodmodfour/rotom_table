@@ -1,0 +1,111 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e7]:
+        - heading "Rotom Table" [level=1] [ref=e8]
+        - generic [ref=e9]: GM View
+      - navigation [ref=e10]:
+        - link "Encounter" [ref=e11] [cursor=pointer]:
+          - /url: /gm
+          - generic [ref=e12]: Encounter
+        - link "Encounters" [ref=e13] [cursor=pointer]:
+          - /url: /gm/encounters
+          - generic [ref=e14]: Encounters
+        - link "Scenes" [ref=e15] [cursor=pointer]:
+          - /url: /gm/scenes
+          - img [ref=e16]
+          - generic [ref=e19]: Scenes
+        - link "Habitats" [ref=e20] [cursor=pointer]:
+          - /url: /gm/habitats
+          - generic [ref=e21]: Habitats
+        - link "Sheets" [ref=e22] [cursor=pointer]:
+          - /url: /gm/sheets
+          - generic [ref=e23]: Sheets
+        - link "Create" [ref=e24] [cursor=pointer]:
+          - /url: /gm/create
+          - generic [ref=e25]: Create
+        - link "Map" [ref=e26] [cursor=pointer]:
+          - /url: /gm/map
+          - generic [ref=e27]: Map
+      - generic [ref=e28]:
+        - button "Connect" [ref=e30] [cursor=pointer]:
+          - img [ref=e31]
+          - generic [ref=e34]: Connect
+        - generic [ref=e35]:
+          - generic [ref=e36]: "Group View:"
+          - generic [ref=e37]:
+            - button "Lobby" [ref=e38] [cursor=pointer]:
+              - img [ref=e39]
+            - button "Scene" [ref=e42] [cursor=pointer]:
+              - img [ref=e43]
+            - button "Encounter" [ref=e46] [cursor=pointer]:
+              - img [ref=e47]
+            - button "Map" [ref=e50] [cursor=pointer]:
+              - img [ref=e51]
+        - button "Advance Day" [ref=e54] [cursor=pointer]:
+          - generic [ref=e55]: Advance Day
+        - link "Group View" [ref=e56] [cursor=pointer]:
+          - /url: /group
+          - generic [ref=e57]: Group View
+    - main [ref=e58]:
+      - generic [ref=e174]:
+        - generic [ref=e175]:
+          - link "← Back to Sheets" [ref=e176] [cursor=pointer]:
+            - /url: /gm/sheets
+          - generic [ref=e177]:
+            - button "Evolve" [ref=e261] [cursor=pointer]:
+              - img [ref=e262]
+              - text: Evolve
+            - button "Edit" [ref=e265] [cursor=pointer]
+        - generic [ref=e183]:
+          - generic [ref=e184]:
+            - img "Vulpix [Alola]" [ref=e186]
+            - generic [ref=e187]:
+              - generic [ref=e188]:
+                - generic [ref=e189]:
+                  - generic [ref=e190]: Species
+                  - textbox [disabled] [ref=e191]: Vulpix [Alola]
+                - generic [ref=e192]:
+                  - generic [ref=e193]: Nickname
+                  - textbox [disabled] [ref=e194]: Sabre
+              - generic [ref=e195]:
+                - generic [ref=e196]:
+                  - generic [ref=e197]: Level
+                  - spinbutton [disabled] [ref=e198]: "10"
+                - generic [ref=e199]:
+                  - generic [ref=e200]: EXP
+                  - spinbutton [disabled] [ref=e201]: "0"
+                - generic [ref=e202]:
+                  - generic [ref=e203]: Gender
+                  - textbox [disabled] [ref=e204]: F
+                - generic [ref=e205]:
+                  - generic [ref=e206]: Shiny
+                  - checkbox [disabled] [ref=e207] [cursor=pointer]
+              - generic [ref=e209]:
+                - generic [ref=e210]: Location
+                - textbox "e.g., Route 1" [disabled] [ref=e211]
+              - generic [ref=e212]:
+                - generic [ref=e213]: Ice
+                - generic [ref=e214]: "--"
+          - generic [ref=e215]:
+            - button "Stats" [ref=e216] [cursor=pointer]
+            - button "Moves" [ref=e217] [cursor=pointer]
+            - button "Abilities" [active] [ref=e218] [cursor=pointer]
+            - button "Capabilities" [ref=e219] [cursor=pointer]
+            - button "Skills" [ref=e220] [cursor=pointer]
+            - button "Healing" [ref=e221] [cursor=pointer]
+            - button "Notes" [ref=e222] [cursor=pointer]
+          - generic [ref=e270]:
+            - generic [ref=e271]:
+              - generic [ref=e273]: Cute Charm
+              - paragraph [ref=e274]: Trigger - A foe of the opposite gender attacks the user with a Melee Attack The foe becomes Infatuated.
+            - generic [ref=e275]:
+              - generic [ref=e277]: Snow Cloak
+              - paragraph [ref=e278]: The user's Evasion is increased by +2 while in Hail. The user and allies adjacent to the user are not damaged by Hail.
+  - generic [ref=e154]:
+    - button "Toggle Nuxt DevTools" [ref=e155] [cursor=pointer]:
+      - img [ref=e156]
+    - generic "Page load time" [ref=e159]:
+      - generic [ref=e161]: "-"
+    - button "Toggle Component Inspector" [ref=e163] [cursor=pointer]:
+      - img [ref=e164]

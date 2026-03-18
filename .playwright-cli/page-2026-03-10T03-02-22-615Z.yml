@@ -1,0 +1,497 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e7]:
+        - heading "Rotom Table" [level=1] [ref=e8]
+        - generic [ref=e9]: GM View
+      - navigation [ref=e10]:
+        - link "Encounter" [ref=e11] [cursor=pointer]:
+          - /url: /gm
+          - generic [ref=e12]: Encounter
+        - link "Encounters" [ref=e13] [cursor=pointer]:
+          - /url: /gm/encounters
+          - generic [ref=e14]: Encounters
+        - link "Scenes" [ref=e15] [cursor=pointer]:
+          - /url: /gm/scenes
+          - img [ref=e16]
+          - generic [ref=e19]: Scenes
+        - link "Habitats" [ref=e20] [cursor=pointer]:
+          - /url: /gm/habitats
+          - generic [ref=e21]: Habitats
+        - link "Sheets" [ref=e22] [cursor=pointer]:
+          - /url: /gm/sheets
+          - generic [ref=e23]: Sheets
+        - link "Create" [ref=e24] [cursor=pointer]:
+          - /url: /gm/create
+          - generic [ref=e25]: Create
+        - link "Map" [ref=e26] [cursor=pointer]:
+          - /url: /gm/map
+          - generic [ref=e27]: Map
+      - generic [ref=e28]:
+        - button "Connect" [ref=e30] [cursor=pointer]:
+          - img [ref=e31]
+          - generic [ref=e34]: Connect
+        - generic [ref=e35]:
+          - generic [ref=e36]: "Group View:"
+          - generic [ref=e37]:
+            - button "Lobby" [ref=e38] [cursor=pointer]:
+              - img [ref=e39]
+            - button "Scene" [ref=e42] [cursor=pointer]:
+              - img [ref=e43]
+            - button "Encounter" [ref=e46] [cursor=pointer]:
+              - img [ref=e47]
+            - button "Map" [ref=e50] [cursor=pointer]:
+              - img [ref=e51]
+        - button "Advance Day" [ref=e54] [cursor=pointer]:
+          - generic [ref=e55]: Advance Day
+        - link "Group View" [ref=e56] [cursor=pointer]:
+          - /url: /group
+          - generic [ref=e57]: Group View
+    - main [ref=e58]:
+      - generic [ref=e59]:
+        - generic [ref=e60]:
+          - heading "Encounter Tables" [level=2] [ref=e61]
+          - generic [ref=e62]:
+            - button "Import" [ref=e63] [cursor=pointer]
+            - button "+ New Table" [ref=e64] [cursor=pointer]
+        - generic [ref=e65]:
+          - textbox "Search tables..." [ref=e67]
+          - combobox [ref=e69] [cursor=pointer]:
+            - option "Sort by Name" [selected]
+            - option "Sort by Created"
+            - option "Sort by Updated"
+          - combobox [ref=e71] [cursor=pointer]:
+            - option "Ascending" [selected]
+            - option "Descending"
+          - button "Reset" [active] [ref=e72] [cursor=pointer]
+        - generic [ref=e74]:
+          - 'link "Bramblewick - Backyards & Apiaries Behind homes, near the bee hives and woodpiles. Levels: 3 - 10 Density: Moderate Entries: 5 Top Pokemon Cutiefly Common Sewaddle Common Skorupi Common Combee Common Heracross Common" [ref=e514] [cursor=pointer]':
+            - /url: /gm/encounter-tables/32b13c2e-912d-4f42-88d2-a05f25c4e08d
+            - heading "Bramblewick - Backyards & Apiaries" [level=3] [ref=e516]
+            - paragraph [ref=e517]: Behind homes, near the bee hives and woodpiles.
+            - generic [ref=e518]:
+              - generic [ref=e519]:
+                - generic [ref=e520]: "Levels:"
+                - generic [ref=e521]: 3 - 10
+              - generic [ref=e522]:
+                - generic [ref=e523]: "Density:"
+                - generic [ref=e524]: Moderate
+              - generic [ref=e525]:
+                - generic [ref=e526]: "Entries:"
+                - generic [ref=e527]: "5"
+            - generic [ref=e528]:
+              - generic [ref=e529]: Top Pokemon
+              - generic [ref=e530]:
+                - generic [ref=e531]:
+                  - generic [ref=e532]: Cutiefly
+                  - generic [ref=e533]: Common
+                - generic [ref=e534]:
+                  - generic [ref=e535]: Sewaddle
+                  - generic [ref=e536]: Common
+                - generic [ref=e537]:
+                  - generic [ref=e538]: Skorupi
+                  - generic [ref=e539]: Common
+                - generic [ref=e540]:
+                  - generic [ref=e541]: Combee
+                  - generic [ref=e542]: Common
+                - generic [ref=e543]:
+                  - generic [ref=e544]: Heracross
+                  - generic [ref=e545]: Common
+          - 'link "Bramblewick - General A small timber-and-thatch village at the forest''s edge. Known for berry preserves and honey. Lanes, gardens, and berry stalls. Levels: 3 - 10 Density: Moderate Entries: 8 Sub-habitats: 1 Top Pokemon Cutiefly Common Smoliv Common Lillipup Common Buneary Common Shroomish Common +3 more Sub-habitats: Night" [ref=e546] [cursor=pointer]':
+            - /url: /gm/encounter-tables/aae2fa5b-1e81-44a3-b621-94fa63910984
+            - heading "Bramblewick - General" [level=3] [ref=e548]
+            - paragraph [ref=e549]: A small timber-and-thatch village at the forest's edge. Known for berry preserves and honey. Lanes, gardens, and berry stalls.
+            - generic [ref=e550]:
+              - generic [ref=e551]:
+                - generic [ref=e552]: "Levels:"
+                - generic [ref=e553]: 3 - 10
+              - generic [ref=e554]:
+                - generic [ref=e555]: "Density:"
+                - generic [ref=e556]: Moderate
+              - generic [ref=e557]:
+                - generic [ref=e558]: "Entries:"
+                - generic [ref=e559]: "8"
+              - generic [ref=e560]:
+                - generic [ref=e561]: "Sub-habitats:"
+                - generic [ref=e562]: "1"
+            - generic [ref=e563]:
+              - generic [ref=e564]: Top Pokemon
+              - generic [ref=e565]:
+                - generic [ref=e566]:
+                  - generic [ref=e567]: Cutiefly
+                  - generic [ref=e568]: Common
+                - generic [ref=e569]:
+                  - generic [ref=e570]: Smoliv
+                  - generic [ref=e571]: Common
+                - generic [ref=e572]:
+                  - generic [ref=e573]: Lillipup
+                  - generic [ref=e574]: Common
+                - generic [ref=e575]:
+                  - generic [ref=e576]: Buneary
+                  - generic [ref=e577]: Common
+                - generic [ref=e578]:
+                  - generic [ref=e579]: Shroomish
+                  - generic [ref=e580]: Common
+                - generic [ref=e581]: +3 more
+            - generic [ref=e582]:
+              - generic [ref=e583]: "Sub-habitats:"
+              - generic [ref=e585]: Night
+          - 'link "Bramblewick Road The road from Bramblewick to the forest. Hedgerows and verge trees. Levels: 3 - 10 Density: Moderate Entries: 6 Top Pokemon Nickit Common Lillipup Common Buneary Common Poochyena Common Zigzagoon Common +1 more" [ref=e586] [cursor=pointer]':
+            - /url: /gm/encounter-tables/5ca3fcae-2099-4765-93fa-21fb2e16a2ba
+            - heading "Bramblewick Road" [level=3] [ref=e588]
+            - paragraph [ref=e589]: The road from Bramblewick to the forest. Hedgerows and verge trees.
+            - generic [ref=e590]:
+              - generic [ref=e591]:
+                - generic [ref=e592]: "Levels:"
+                - generic [ref=e593]: 3 - 10
+              - generic [ref=e594]:
+                - generic [ref=e595]: "Density:"
+                - generic [ref=e596]: Moderate
+              - generic [ref=e597]:
+                - generic [ref=e598]: "Entries:"
+                - generic [ref=e599]: "6"
+            - generic [ref=e600]:
+              - generic [ref=e601]: Top Pokemon
+              - generic [ref=e602]:
+                - generic [ref=e603]:
+                  - generic [ref=e604]: Nickit
+                  - generic [ref=e605]: Common
+                - generic [ref=e606]:
+                  - generic [ref=e607]: Lillipup
+                  - generic [ref=e608]: Common
+                - generic [ref=e609]:
+                  - generic [ref=e610]: Buneary
+                  - generic [ref=e611]: Common
+                - generic [ref=e612]:
+                  - generic [ref=e613]: Poochyena
+                  - generic [ref=e614]: Common
+                - generic [ref=e615]:
+                  - generic [ref=e616]: Zigzagoon
+                  - generic [ref=e617]: Common
+                - generic [ref=e618]: +1 more
+          - 'link "Greywater Aqueduct Old stone channels carrying river water uphill to the castle cisterns and moat. Damp, echoing, and perfect for smell/track themed encounters. Levels: 8 - 18 Density: Moderate Entries: 11 Sub-habitats: 1 Top Pokemon Bibarel Common Alolan Grimer Common Stunfisk Common Bidoof Common Barboach Common +6 more Sub-habitats: Maintenance Tunnels" [ref=e180] [cursor=pointer]':
+            - /url: /gm/encounter-tables/5f61f73a-8629-4706-aa5e-020a9a2c7cf5
+            - heading "Greywater Aqueduct" [level=3] [ref=e182]
+            - paragraph [ref=e183]: Old stone channels carrying river water uphill to the castle cisterns and moat. Damp, echoing, and perfect for smell/track themed encounters.
+            - generic [ref=e184]:
+              - generic [ref=e185]:
+                - generic [ref=e186]: "Levels:"
+                - generic [ref=e187]: 8 - 18
+              - generic [ref=e188]:
+                - generic [ref=e189]: "Density:"
+                - generic [ref=e190]: Moderate
+              - generic [ref=e191]:
+                - generic [ref=e192]: "Entries:"
+                - generic [ref=e193]: "11"
+              - generic [ref=e194]:
+                - generic [ref=e195]: "Sub-habitats:"
+                - generic [ref=e196]: "1"
+            - generic [ref=e197]:
+              - generic [ref=e198]: Top Pokemon
+              - generic [ref=e199]:
+                - generic [ref=e200]:
+                  - generic [ref=e201]: Bibarel
+                  - generic [ref=e202]: Common
+                - generic [ref=e203]:
+                  - generic [ref=e204]: Alolan Grimer
+                  - generic [ref=e205]: Common
+                - generic [ref=e206]:
+                  - generic [ref=e207]: Stunfisk
+                  - generic [ref=e208]: Common
+                - generic [ref=e209]:
+                  - generic [ref=e210]: Bidoof
+                  - generic [ref=e211]: Common
+                - generic [ref=e212]:
+                  - generic [ref=e213]: Barboach
+                  - generic [ref=e214]: Common
+                - generic [ref=e215]: +6 more
+            - generic [ref=e216]:
+              - generic [ref=e217]: "Sub-habitats:"
+              - generic [ref=e219]: Maintenance Tunnels
+          - 'link "Phasmosa''s Castle - General A haunted keep: old metal, old stone, old memories. Courtyards and halls. Levels: 3 - 12 Density: Moderate Entries: 2 Top Pokemon Yamask Common Honedge Common" [ref=e619] [cursor=pointer]':
+            - /url: /gm/encounter-tables/1b306a2d-185b-47fb-bbe1-538acb9e83d5
+            - heading "Phasmosa's Castle - General" [level=3] [ref=e621]
+            - paragraph [ref=e622]: "A haunted keep: old metal, old stone, old memories. Courtyards and halls."
+            - generic [ref=e623]:
+              - generic [ref=e624]:
+                - generic [ref=e625]: "Levels:"
+                - generic [ref=e626]: 3 - 12
+              - generic [ref=e627]:
+                - generic [ref=e628]: "Density:"
+                - generic [ref=e629]: Moderate
+              - generic [ref=e630]:
+                - generic [ref=e631]: "Entries:"
+                - generic [ref=e632]: "2"
+            - generic [ref=e633]:
+              - generic [ref=e634]: Top Pokemon
+              - generic [ref=e635]:
+                - generic [ref=e636]:
+                  - generic [ref=e637]: Yamask
+                  - generic [ref=e638]: Common
+                - generic [ref=e639]:
+                  - generic [ref=e640]: Honedge
+                  - generic [ref=e641]: Common
+          - 'link "Phasmosa''s Castle - Grounds The overgrown outer ring of the castle. Levels: 5 - 12 Density: Moderate Entries: 4 Top Pokemon Yamask Common Skorupi Common Houndour Common Murkrow Common" [ref=e642] [cursor=pointer]':
+            - /url: /gm/encounter-tables/a6d659b2-a1cb-4b9b-9317-bb6bb56da8c9
+            - heading "Phasmosa's Castle - Grounds" [level=3] [ref=e644]
+            - paragraph [ref=e645]: The overgrown outer ring of the castle.
+            - generic [ref=e646]:
+              - generic [ref=e647]:
+                - generic [ref=e648]: "Levels:"
+                - generic [ref=e649]: 5 - 12
+              - generic [ref=e650]:
+                - generic [ref=e651]: "Density:"
+                - generic [ref=e652]: Moderate
+              - generic [ref=e653]:
+                - generic [ref=e654]: "Entries:"
+                - generic [ref=e655]: "4"
+            - generic [ref=e656]:
+              - generic [ref=e657]: Top Pokemon
+              - generic [ref=e658]:
+                - generic [ref=e659]:
+                  - generic [ref=e660]: Yamask
+                  - generic [ref=e661]: Common
+                - generic [ref=e662]:
+                  - generic [ref=e663]: Skorupi
+                  - generic [ref=e664]: Common
+                - generic [ref=e665]:
+                  - generic [ref=e666]: Houndour
+                  - generic [ref=e667]: Common
+                - generic [ref=e668]:
+                  - generic [ref=e669]: Murkrow
+                  - generic [ref=e670]: Common
+          - 'link "Rivermere - Docks & Waterwheels The riverfront, docks, and water wheel areas. Levels: 5 - 15 Density: Moderate Entries: 6 Top Pokemon Tympole Common Magikarp Common Goldeen Common Corphish Common Barboach Common +1 more" [ref=e272] [cursor=pointer]':
+            - /url: /gm/encounter-tables/12dbc548-6a60-43db-9deb-6fda7f462d51
+            - heading "Rivermere - Docks & Waterwheels" [level=3] [ref=e274]
+            - paragraph [ref=e275]: The riverfront, docks, and water wheel areas.
+            - generic [ref=e276]:
+              - generic [ref=e277]:
+                - generic [ref=e278]: "Levels:"
+                - generic [ref=e279]: 5 - 15
+              - generic [ref=e280]:
+                - generic [ref=e281]: "Density:"
+                - generic [ref=e282]: Moderate
+              - generic [ref=e283]:
+                - generic [ref=e284]: "Entries:"
+                - generic [ref=e285]: "6"
+            - generic [ref=e286]:
+              - generic [ref=e287]: Top Pokemon
+              - generic [ref=e288]:
+                - generic [ref=e289]:
+                  - generic [ref=e290]: Tympole
+                  - generic [ref=e291]: Common
+                - generic [ref=e292]:
+                  - generic [ref=e293]: Magikarp
+                  - generic [ref=e294]: Common
+                - generic [ref=e295]:
+                  - generic [ref=e296]: Goldeen
+                  - generic [ref=e297]: Common
+                - generic [ref=e298]:
+                  - generic [ref=e299]: Corphish
+                  - generic [ref=e300]: Common
+                - generic [ref=e301]:
+                  - generic [ref=e302]: Barboach
+                  - generic [ref=e303]: Common
+                - generic [ref=e304]: +1 more
+          - 'link "Rivermere - General A stony riverside town with an old bridge and waterwheels. Streets, bridge approaches, and market. Levels: 5 - 12 Density: Moderate Entries: 6 Sub-habitats: 2 Top Pokemon Tympole Common Nickit Common Hoothoot Common Rattata Common Murkrow Common +1 more Sub-habitats: Day Night" [ref=e305] [cursor=pointer]':
+            - /url: /gm/encounter-tables/0e74e2c4-221c-494f-b833-5008ec162eed
+            - heading "Rivermere - General" [level=3] [ref=e307]
+            - paragraph [ref=e308]: A stony riverside town with an old bridge and waterwheels. Streets, bridge approaches, and market.
+            - generic [ref=e309]:
+              - generic [ref=e310]:
+                - generic [ref=e311]: "Levels:"
+                - generic [ref=e312]: 5 - 12
+              - generic [ref=e313]:
+                - generic [ref=e314]: "Density:"
+                - generic [ref=e315]: Moderate
+              - generic [ref=e316]:
+                - generic [ref=e317]: "Entries:"
+                - generic [ref=e318]: "6"
+              - generic [ref=e319]:
+                - generic [ref=e320]: "Sub-habitats:"
+                - generic [ref=e321]: "2"
+            - generic [ref=e322]:
+              - generic [ref=e323]: Top Pokemon
+              - generic [ref=e324]:
+                - generic [ref=e325]:
+                  - generic [ref=e326]: Tympole
+                  - generic [ref=e327]: Common
+                - generic [ref=e328]:
+                  - generic [ref=e329]: Nickit
+                  - generic [ref=e330]: Common
+                - generic [ref=e331]:
+                  - generic [ref=e332]: Hoothoot
+                  - generic [ref=e333]: Common
+                - generic [ref=e334]:
+                  - generic [ref=e335]: Rattata
+                  - generic [ref=e336]: Common
+                - generic [ref=e337]:
+                  - generic [ref=e338]: Murkrow
+                  - generic [ref=e339]: Common
+                - generic [ref=e340]: +1 more
+            - generic [ref=e341]:
+              - generic [ref=e342]: "Sub-habitats:"
+              - generic [ref=e343]:
+                - generic [ref=e344]: Day
+                - generic [ref=e345]: Night
+          - 'link "Rivermere Causeway The road from Rivermere toward the river and castle approach. Puddles and drainage ditches. Levels: 5 - 12 Density: Moderate Entries: 6 Sub-habitats: 2 Top Pokemon Tympole Common Nickit Common Stunfisk Common Hoothoot Common Corphish Common +1 more Sub-habitats: Castle Shadow Night" [ref=e346] [cursor=pointer]':
+            - /url: /gm/encounter-tables/5fdf2210-423a-4469-b9f9-d85d855f4c28
+            - heading "Rivermere Causeway" [level=3] [ref=e348]
+            - paragraph [ref=e349]: The road from Rivermere toward the river and castle approach. Puddles and drainage ditches.
+            - generic [ref=e350]:
+              - generic [ref=e351]:
+                - generic [ref=e352]: "Levels:"
+                - generic [ref=e353]: 5 - 12
+              - generic [ref=e354]:
+                - generic [ref=e355]: "Density:"
+                - generic [ref=e356]: Moderate
+              - generic [ref=e357]:
+                - generic [ref=e358]: "Entries:"
+                - generic [ref=e359]: "6"
+              - generic [ref=e360]:
+                - generic [ref=e361]: "Sub-habitats:"
+                - generic [ref=e362]: "2"
+            - generic [ref=e363]:
+              - generic [ref=e364]: Top Pokemon
+              - generic [ref=e365]:
+                - generic [ref=e366]:
+                  - generic [ref=e367]: Tympole
+                  - generic [ref=e368]: Common
+                - generic [ref=e369]:
+                  - generic [ref=e370]: Nickit
+                  - generic [ref=e371]: Common
+                - generic [ref=e372]:
+                  - generic [ref=e373]: Stunfisk
+                  - generic [ref=e374]: Common
+                - generic [ref=e375]:
+                  - generic [ref=e376]: Hoothoot
+                  - generic [ref=e377]: Common
+                - generic [ref=e378]:
+                  - generic [ref=e379]: Corphish
+                  - generic [ref=e380]: Common
+                - generic [ref=e381]: +1 more
+            - generic [ref=e382]:
+              - generic [ref=e383]: "Sub-habitats:"
+              - generic [ref=e384]:
+                - generic [ref=e385]: Castle Shadow
+                - generic [ref=e386]: Night
+          - 'link "Thickerby Forest - Forest Edge Near the road, scattered hedges and scrubby trees. Levels: 3 - 10 Density: Moderate Entries: 6 Sub-habitats: 2 Top Pokemon Nickit Common Smoliv Common Buneary Common Lillipup Common Eevee Uncommon +1 more Sub-habitats: Day Dusk/Night" [ref=e671] [cursor=pointer]':
+            - /url: /gm/encounter-tables/1de5ba08-ec0d-474a-85be-4cad0873032d
+            - heading "Thickerby Forest - Forest Edge" [level=3] [ref=e673]
+            - paragraph [ref=e674]: Near the road, scattered hedges and scrubby trees.
+            - generic [ref=e675]:
+              - generic [ref=e676]:
+                - generic [ref=e677]: "Levels:"
+                - generic [ref=e678]: 3 - 10
+              - generic [ref=e679]:
+                - generic [ref=e680]: "Density:"
+                - generic [ref=e681]: Moderate
+              - generic [ref=e682]:
+                - generic [ref=e683]: "Entries:"
+                - generic [ref=e684]: "6"
+              - generic [ref=e685]:
+                - generic [ref=e686]: "Sub-habitats:"
+                - generic [ref=e687]: "2"
+            - generic [ref=e688]:
+              - generic [ref=e689]: Top Pokemon
+              - generic [ref=e690]:
+                - generic [ref=e691]:
+                  - generic [ref=e692]: Nickit
+                  - generic [ref=e693]: Common
+                - generic [ref=e694]:
+                  - generic [ref=e695]: Smoliv
+                  - generic [ref=e696]: Common
+                - generic [ref=e697]:
+                  - generic [ref=e698]: Buneary
+                  - generic [ref=e699]: Common
+                - generic [ref=e700]:
+                  - generic [ref=e701]: Lillipup
+                  - generic [ref=e702]: Common
+                - generic [ref=e703]:
+                  - generic [ref=e704]: Eevee
+                  - generic [ref=e705]: Uncommon
+                - generic [ref=e706]: +1 more
+            - generic [ref=e707]:
+              - generic [ref=e708]: "Sub-habitats:"
+              - generic [ref=e709]:
+                - generic [ref=e710]: Day
+                - generic [ref=e711]: Dusk/Night
+          - 'link "Thickerby Forest - General A dim, berry-thick woodland with lots of undergrowth and insects. Levels: 5 - 15 Density: Moderate Entries: 12 Sub-habitats: 1 Top Pokemon Cutiefly Common Skorupi Common Nickit Common Smoliv Common Sewaddle Common +7 more Sub-habitats: Night" [ref=e712] [cursor=pointer]':
+            - /url: /gm/encounter-tables/a2b0bad5-c18c-4a16-a7e4-5fe273a4566e
+            - heading "Thickerby Forest - General" [level=3] [ref=e714]
+            - paragraph [ref=e715]: A dim, berry-thick woodland with lots of undergrowth and insects.
+            - generic [ref=e716]:
+              - generic [ref=e717]:
+                - generic [ref=e718]: "Levels:"
+                - generic [ref=e719]: 5 - 15
+              - generic [ref=e720]:
+                - generic [ref=e721]: "Density:"
+                - generic [ref=e722]: Moderate
+              - generic [ref=e723]:
+                - generic [ref=e724]: "Entries:"
+                - generic [ref=e725]: "12"
+              - generic [ref=e726]:
+                - generic [ref=e727]: "Sub-habitats:"
+                - generic [ref=e728]: "1"
+            - generic [ref=e729]:
+              - generic [ref=e730]: Top Pokemon
+              - generic [ref=e731]:
+                - generic [ref=e732]:
+                  - generic [ref=e733]: Cutiefly
+                  - generic [ref=e734]: Common
+                - generic [ref=e735]:
+                  - generic [ref=e736]: Skorupi
+                  - generic [ref=e737]: Common
+                - generic [ref=e738]:
+                  - generic [ref=e739]: Nickit
+                  - generic [ref=e740]: Common
+                - generic [ref=e741]:
+                  - generic [ref=e742]: Smoliv
+                  - generic [ref=e743]: Common
+                - generic [ref=e744]:
+                  - generic [ref=e745]: Sewaddle
+                  - generic [ref=e746]: Common
+                - generic [ref=e747]: +7 more
+            - generic [ref=e748]:
+              - generic [ref=e749]: "Sub-habitats:"
+              - generic [ref=e751]: Night
+          - 'link "Thickerby Forest - River Fishing, surfing, and riverbank encounters. Levels: 5 - 15 Density: Moderate Entries: 5 Top Pokemon Magikarp Common Goldeen Common Tympole Common Barboach Common Corphish Common" [ref=e468] [cursor=pointer]':
+            - /url: /gm/encounter-tables/b539d26d-55ab-4c91-9946-06259a5f4f56
+            - heading "Thickerby Forest - River" [level=3] [ref=e470]
+            - paragraph [ref=e471]: Fishing, surfing, and riverbank encounters.
+            - generic [ref=e472]:
+              - generic [ref=e473]:
+                - generic [ref=e474]: "Levels:"
+                - generic [ref=e475]: 5 - 15
+              - generic [ref=e476]:
+                - generic [ref=e477]: "Density:"
+                - generic [ref=e478]: Moderate
+              - generic [ref=e479]:
+                - generic [ref=e480]: "Entries:"
+                - generic [ref=e481]: "5"
+            - generic [ref=e482]:
+              - generic [ref=e483]: Top Pokemon
+              - generic [ref=e484]:
+                - generic [ref=e485]:
+                  - generic [ref=e486]: Magikarp
+                  - generic [ref=e487]: Common
+                - generic [ref=e488]:
+                  - generic [ref=e489]: Goldeen
+                  - generic [ref=e490]: Common
+                - generic [ref=e491]:
+                  - generic [ref=e492]: Tympole
+                  - generic [ref=e493]: Common
+                - generic [ref=e494]:
+                  - generic [ref=e495]: Barboach
+                  - generic [ref=e496]: Common
+                - generic [ref=e497]:
+                  - generic [ref=e498]: Corphish
+                  - generic [ref=e499]: Common
+  - generic [ref=e500]:
+    - button "Toggle Nuxt DevTools" [ref=e501] [cursor=pointer]:
+      - img [ref=e502]
+    - generic "Page load time" [ref=e505]:
+      - generic [ref=e506]: "61"
+      - generic [ref=e507]: ms
+    - button "Toggle Component Inspector" [ref=e509] [cursor=pointer]:
+      - img [ref=e510]

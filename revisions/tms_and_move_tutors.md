@@ -1,0 +1,6 @@
+- TMs and Move Tutors are now potential unlock conditions for moves
+	- Moves will usually have AND/OR logic
+- Tutor Points have been removed.
+- TMs are instantaneous.
+- Move Tutors take X training sessions.
+- Move Tutor: [Move Name] is now a Trait that Trainers or Pokemon can get, usually trainers.

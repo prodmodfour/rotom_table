@@ -1,0 +1,345 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e7]:
+        - heading "Rotom Table" [level=1] [ref=e8]
+        - generic [ref=e9]: GM View
+      - navigation [ref=e10]:
+        - link "Encounter" [ref=e11] [cursor=pointer]:
+          - /url: /gm
+          - generic [ref=e12]: Encounter
+        - link "Encounters" [ref=e13] [cursor=pointer]:
+          - /url: /gm/encounters
+          - generic [ref=e14]: Encounters
+        - link "Scenes" [ref=e15] [cursor=pointer]:
+          - /url: /gm/scenes
+          - img [ref=e16]
+          - generic [ref=e19]: Scenes
+        - link "Habitats" [ref=e20] [cursor=pointer]:
+          - /url: /gm/habitats
+          - generic [ref=e21]: Habitats
+        - link "Sheets" [ref=e22] [cursor=pointer]:
+          - /url: /gm/sheets
+          - generic [ref=e23]: Sheets
+        - link "Create" [ref=e24] [cursor=pointer]:
+          - /url: /gm/create
+          - generic [ref=e25]: Create
+        - link "Map" [ref=e26] [cursor=pointer]:
+          - /url: /gm/map
+          - generic [ref=e27]: Map
+      - generic [ref=e28]:
+        - button "Connect" [ref=e30] [cursor=pointer]:
+          - img [ref=e31]
+          - generic [ref=e34]: Connect
+        - generic [ref=e35]:
+          - generic [ref=e36]: "Group View:"
+          - generic [ref=e37]:
+            - button "Lobby" [ref=e38] [cursor=pointer]:
+              - img [ref=e39]
+            - button "Scene" [ref=e42] [cursor=pointer]:
+              - img [ref=e43]
+            - button "Encounter" [ref=e46] [cursor=pointer]:
+              - img [ref=e47]
+            - button "Map" [ref=e50] [cursor=pointer]:
+              - img [ref=e51]
+        - button "Advance Day" [ref=e54] [cursor=pointer]:
+          - generic [ref=e55]: Advance Day
+        - link "Group View" [ref=e56] [cursor=pointer]:
+          - /url: /group
+          - generic [ref=e57]: Group View
+    - main [ref=e58]:
+      - generic [ref=e60]:
+        - generic [ref=e61]:
+          - generic [ref=e62]:
+            - heading "Move Testing A-D" [level=2] [ref=e63]
+            - generic [ref=e64]:
+              - generic [ref=e65]: Trainer Battle
+              - generic [ref=e66]: Round 2
+              - generic "Pokemon act in initiative order (fastest first)" [ref=e67]: Pokemon Phase
+              - generic [ref=e68]: Served to Group
+          - generic [ref=e69]:
+            - combobox "Set game Weather Condition (PTU p.341) — has mechanical combat effects. Not the same as natural weather." [ref=e71] [cursor=pointer]:
+              - option "No Weather Condition" [selected]
+              - option "Sunny"
+              - option "Rain"
+              - option "Sandstorm"
+              - option "Hail"
+              - option "Snow"
+              - option "Fog"
+              - option "Harsh Sunlight"
+              - option "Heavy Rain"
+              - option "Strong Winds"
+            - button "Unserve" [ref=e72] [cursor=pointer]
+            - generic [ref=e73]:
+              - button "Undo" [disabled] [ref=e74]
+              - button "Redo" [disabled] [ref=e75]
+            - button "Next Turn" [ref=e76] [cursor=pointer]
+            - button "End Encounter" [ref=e77] [cursor=pointer]
+            - button "Save Template" [ref=e78] [cursor=pointer]
+            - button "Keyboard shortcuts (?)" [ref=e79] [cursor=pointer]
+        - generic [ref=e80]:
+          - generic [ref=e81]:
+            - button "List View" [ref=e82] [cursor=pointer]
+            - button "Grid View" [ref=e83] [cursor=pointer]
+          - generic [ref=e84]:
+            - generic [ref=e85]: "Damage Mode:"
+            - button "Set" [ref=e86] [cursor=pointer]
+            - button "Rolled" [ref=e87] [cursor=pointer]
+        - generic [ref=e88]:
+          - generic [ref=e89]:
+            - generic [ref=e90]:
+              - heading "Current Turn Pokemon Phase" [level=3] [ref=e91]:
+                - text: Current Turn
+                - generic [ref=e92]: Pokemon Phase
+              - generic [ref=e93]:
+                - img "Move Tester" [ref=e95]
+                - generic [ref=e96]:
+                  - generic [ref=e97]:
+                    - generic [ref=e98]: Move Tester
+                    - generic [ref=e99]: Lv.50
+                  - generic [ref=e101]: Normal
+                  - generic [ref=e103]:
+                    - generic [ref=e104]: HP
+                    - generic [ref=e108]: 225/225
+                  - generic [ref=e109]: "Init: 80"
+                - generic [ref=e110]:
+                  - generic [ref=e111]:
+                    - spinbutton [ref=e112]: "0"
+                    - button "-HP" [ref=e113] [cursor=pointer]
+                    - 'combobox "HP reduction type: Damage (injuries), HP Loss (no massive damage), Set HP (no massive damage)" [ref=e114] [cursor=pointer]':
+                      - option "DMG" [selected]
+                      - option "Loss"
+                      - option "Set"
+                  - generic [ref=e115]:
+                    - spinbutton [ref=e116]: "0"
+                    - button "+HP" [ref=e117] [cursor=pointer]
+                  - generic [ref=e118]:
+                    - button "+T" [ref=e119] [cursor=pointer]
+                    - button "CS" [ref=e120] [cursor=pointer]
+                    - button "ST" [ref=e121] [cursor=pointer]
+                  - button "Item" [ref=e122] [cursor=pointer]:
+                    - img [ref=e123]
+                    - text: Item
+                  - button "Act" [ref=e126] [cursor=pointer]
+                  - button "Remove" [ref=e127] [cursor=pointer]
+            - generic [ref=e128]:
+              - generic [ref=e129]:
+                - generic [ref=e130]:
+                  - heading "Players" [level=3] [ref=e131]
+                  - button "+ Add" [ref=e132] [cursor=pointer]
+                - generic [ref=e134]:
+                  - img "Move Tester" [ref=e136]
+                  - generic [ref=e137]:
+                    - generic [ref=e138]:
+                      - generic [ref=e139]: Move Tester
+                      - generic [ref=e140]: Lv.50
+                    - generic [ref=e142]: Normal
+                    - generic [ref=e144]:
+                      - generic [ref=e145]: HP
+                      - generic [ref=e149]: 225/225
+                    - generic [ref=e150]: "Init: 80"
+                  - generic [ref=e151]:
+                    - generic [ref=e152]:
+                      - spinbutton [ref=e153]: "0"
+                      - button "-HP" [ref=e154] [cursor=pointer]
+                      - 'combobox "HP reduction type: Damage (injuries), HP Loss (no massive damage), Set HP (no massive damage)" [ref=e155] [cursor=pointer]':
+                        - option "DMG" [selected]
+                        - option "Loss"
+                        - option "Set"
+                    - generic [ref=e156]:
+                      - spinbutton [ref=e157]: "0"
+                      - button "+HP" [ref=e158] [cursor=pointer]
+                    - generic [ref=e159]:
+                      - button "+T" [ref=e160] [cursor=pointer]
+                      - button "CS" [ref=e161] [cursor=pointer]
+                      - button "ST" [ref=e162] [cursor=pointer]
+                    - button "Item" [ref=e163] [cursor=pointer]:
+                      - img [ref=e164]
+                      - text: Item
+                    - button "Act" [ref=e167] [cursor=pointer]
+                    - button "Remove" [ref=e168] [cursor=pointer]
+              - generic [ref=e169]:
+                - generic [ref=e170]:
+                  - heading "Allies" [level=3] [ref=e171]
+                  - button "+ Add" [ref=e172] [cursor=pointer]
+                - paragraph [ref=e174]: No allies
+              - generic [ref=e175]:
+                - generic [ref=e176]:
+                  - heading "Enemies" [level=3] [ref=e177]
+                  - button "+ Add" [ref=e178] [cursor=pointer]
+                - generic [ref=e180]:
+                  - img "Target Dummy" [ref=e182]
+                  - generic [ref=e183]:
+                    - generic [ref=e184]:
+                      - generic [ref=e185]: Target Dummy
+                      - generic [ref=e186]: Lv.50
+                    - generic [ref=e188]: Normal
+                    - generic [ref=e190]:
+                      - generic [ref=e191]: HP
+                      - generic [ref=e195]: 824/825
+                    - generic [ref=e196]: "Init: 55"
+                  - generic [ref=e197]:
+                    - generic [ref=e198]:
+                      - spinbutton [ref=e199]: "0"
+                      - button "-HP" [ref=e200] [cursor=pointer]
+                      - 'combobox "HP reduction type: Damage (injuries), HP Loss (no massive damage), Set HP (no massive damage)" [ref=e201] [cursor=pointer]':
+                        - option "DMG" [selected]
+                        - option "Loss"
+                        - option "Set"
+                    - generic [ref=e202]:
+                      - spinbutton [ref=e203]: "0"
+                      - button "+HP" [ref=e204] [cursor=pointer]
+                    - generic [ref=e205]:
+                      - button "+T" [ref=e206] [cursor=pointer]
+                      - button "CS" [ref=e207] [cursor=pointer]
+                      - button "ST" [ref=e208] [cursor=pointer]
+                    - button "Item" [ref=e209] [cursor=pointer]:
+                      - img [ref=e210]
+                      - text: Item
+                    - button "Act" [ref=e213] [cursor=pointer]
+                    - button "Remove" [ref=e214] [cursor=pointer]
+          - generic [ref=e215]:
+            - generic [ref=e216]:
+              - heading "Combat Log" [level=3] [ref=e217]
+              - generic [ref=e219]:
+                - generic [ref=e220]: R1
+                - generic [ref=e221]: Move Tester
+                - generic [ref=e222]: Absorb
+                - generic [ref=e223]: → Target Dummy
+            - generic [ref=e224]:
+              - generic [ref=e225]:
+                - generic [ref=e226]: Environment
+                - generic [ref=e227]: None
+              - generic [ref=e228]:
+                - generic [ref=e229]: Environment Preset
+                - combobox [ref=e230] [cursor=pointer]:
+                  - option "None" [selected]
+                  - option "Dim Cave (Blindness)"
+                  - option "Dark Cave (Total Blindness)"
+                  - option "Frozen Lake"
+                  - option "Hazard Factory"
+                  - option "Custom..."
+            - generic [ref=e231]:
+              - generic [ref=e232]:
+                - generic [ref=e233]: XP Significance
+                - generic [ref=e234]: x1.0
+              - generic [ref=e235]:
+                - paragraph [ref=e236]: No defeated enemies yet.
+                - paragraph [ref=e237]: XP breakdown will appear after enemies are defeated.
+  - generic [ref=e238]:
+    - button "Toggle Nuxt DevTools" [ref=e239] [cursor=pointer]:
+      - img [ref=e240]
+    - generic "Page load time" [ref=e243]:
+      - generic [ref=e244]: "58"
+      - generic [ref=e245]: ms
+    - button "Toggle Component Inspector" [ref=e247] [cursor=pointer]:
+      - img [ref=e248]
+  - generic [ref=e253]:
+    - generic [ref=e254]:
+      - generic [ref=e255]:
+        - img "Move Tester" [ref=e256]
+        - generic [ref=e257]:
+          - heading "Move Tester" [level=2] [ref=e258]
+          - generic [ref=e260]: Normal
+      - generic [ref=e261]:
+        - generic [ref=e262]:
+          - generic [ref=e263]: "Standard:"
+          - generic [ref=e264]: "1"
+        - generic [ref=e265]:
+          - generic [ref=e266]: "Shift:"
+          - generic [ref=e267]: "1"
+      - button "×" [ref=e268] [cursor=pointer]
+    - generic [ref=e269]:
+      - generic [ref=e270]:
+        - heading "Moves" [level=3] [ref=e271]
+        - generic [ref=e272]:
+          - button "Beak Blast Flying DB 10 Scene x2 AC 2" [ref=e786] [cursor=pointer]:
+            - generic [ref=e787]:
+              - generic [ref=e788]: Beak Blast
+              - generic [ref=e789]: Flying
+            - generic [ref=e790]:
+              - generic [ref=e791]: DB 10
+              - generic [ref=e792]: Scene x2
+              - generic [ref=e793]: AC 2
+          - button "Beat Up Dark EOT" [active] [ref=e794] [cursor=pointer]:
+            - generic [ref=e795]:
+              - generic [ref=e796]: Beat Up
+              - generic [ref=e797]: Dark
+            - generic [ref=e799]: EOT
+          - button "Behemoth Bash Steel DB 10 Scene x2 AC 2" [ref=e800] [cursor=pointer]:
+            - generic [ref=e801]:
+              - generic [ref=e802]: Behemoth Bash
+              - generic [ref=e803]: Steel
+            - generic [ref=e804]:
+              - generic [ref=e805]: DB 10
+              - generic [ref=e806]: Scene x2
+              - generic [ref=e807]: AC 2
+          - button "Behemoth Blade Steel DB 10 Scene x2 AC 2" [ref=e808] [cursor=pointer]:
+            - generic [ref=e809]:
+              - generic [ref=e810]: Behemoth Blade
+              - generic [ref=e811]: Steel
+            - generic [ref=e812]:
+              - generic [ref=e813]: DB 10
+              - generic [ref=e814]: Scene x2
+              - generic [ref=e815]: AC 2
+          - button "Belch Poison DB 12 Scene x2 AC 4" [ref=e816] [cursor=pointer]:
+            - generic [ref=e817]:
+              - generic [ref=e818]: Belch
+              - generic [ref=e819]: Poison
+            - generic [ref=e820]:
+              - generic [ref=e821]: DB 12
+              - generic [ref=e822]: Scene x2
+              - generic [ref=e823]: AC 4
+          - button "Belly Drum Normal Scene" [ref=e824] [cursor=pointer]:
+            - generic [ref=e825]:
+              - generic [ref=e826]: Belly Drum
+              - generic [ref=e827]: Normal
+            - generic [ref=e829]: Scene
+      - generic [ref=e316]:
+        - heading "Standard Actions" [level=3] [ref=e317]
+        - generic [ref=e318]:
+          - button "Shift Move 1 meter" [ref=e319] [cursor=pointer]:
+            - generic [ref=e321]:
+              - generic [ref=e322]: Shift
+              - generic [ref=e323]: Move 1 meter
+          - button "Struggle DB 4 Typeless attack" [ref=e324] [cursor=pointer]:
+            - generic [ref=e326]:
+              - generic [ref=e327]: Struggle
+              - generic [ref=e328]: DB 4 Typeless attack
+          - button "Pass Turn End this combatant's turn" [ref=e329] [cursor=pointer]:
+            - generic [ref=e331]:
+              - generic [ref=e332]: Pass Turn
+              - generic [ref=e333]: End this combatant's turn
+      - button "Combat Maneuvers ▼" [ref=e335] [cursor=pointer]:
+        - heading "Combat Maneuvers" [level=3] [ref=e336]
+        - generic [ref=e337]: ▼
+      - button "Status Conditions ▼" [ref=e339] [cursor=pointer]:
+        - heading "Status Conditions" [level=3] [ref=e340]
+        - generic [ref=e341]: ▼
+    - generic [ref=e868]:
+      - generic [ref=e869]:
+        - heading "Beat Up" [level=2] [ref=e870]
+        - generic [ref=e871]: Dark
+      - generic [ref=e872]:
+        - generic [ref=e873]:
+          - generic [ref=e874]:
+            - generic [ref=e875]: "Class:"
+            - generic [ref=e876]: Physical
+          - generic [ref=e877]:
+            - generic [ref=e878]: "Range:"
+            - generic [ref=e879]: Melee, 1 Target
+        - generic [ref=e880]: The user and up to two allies adjacent to the target may each make a Struggle Attack against the target. These Struggle Attacks hit for Dark-Type Damage instead of their usual Type. Beat Up may trigger Pack Hunt only once, no matter the number of attacks.
+        - generic [ref=e881]:
+          - heading "Select Target(s)" [level=4] [ref=e882]
+          - generic [ref=e883]:
+            - button "Move Tester 225/225" [ref=e884] [cursor=pointer]:
+              - generic [ref=e885]:
+                - generic [ref=e886]: Move Tester
+                - generic [ref=e887]: 225/225
+            - button "Target Dummy 824/825" [ref=e888] [cursor=pointer]:
+              - generic [ref=e889]:
+                - generic [ref=e890]: Target Dummy
+                - generic [ref=e891]: 824/825
+      - generic [ref=e892]:
+        - button "Cancel" [ref=e893] [cursor=pointer]
+        - button "Use Beat Up" [disabled] [ref=e894]

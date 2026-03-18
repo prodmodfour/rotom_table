@@ -1,0 +1,3 @@
+In the [[trainer-level-up-edges-step]], a regular edge slot can be used for a Skill Edge. When the GM clicks "Add Skill Edge" and picks a skill, the [[trainer-level-up-composable]] stores it in the `edgeChoices` array as the string `"Skill Edge: <skillName>"` (e.g., `"Skill Edge: Athletics"`).
+
+The composable parses these entries using the `SKILL_EDGE_PREFIX` constant to extract skill names for rank-up tracking. Both regular Skill Edges and [[trainer-level-up-bonus-skill-edge-picker|bonus Skill Edges]] contribute to `effectiveSkills`, which tracks the running skill rank across all Skill Edge choices. This prevents over-raising a skill when multiple Skill Edge slots target the same skill.

@@ -1,0 +1,129 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e4]:
+    - banner [ref=e89]:
+      - generic [ref=e90]:
+        - generic [ref=e91]: Hassan
+        - status "Connected - LAN (Local)" [ref=e92] [cursor=pointer]:
+          - 'button "Connection: Connected. Tap for details." [ref=e93]'
+      - button "Switch character" [ref=e94] [cursor=pointer]:
+        - img [ref=e95]
+    - main [ref=e98]:
+      - region "Pokemon team" [ref=e220]:
+        - generic [ref=e222]:
+          - button "Chomps, Level 10. Collapse details." [expanded] [ref=e239] [cursor=pointer]:
+            - img "Chomps" [ref=e224]
+            - generic [ref=e225]:
+              - generic [ref=e227]: Chomps
+              - generic [ref=e228]:
+                - generic [ref=e229]: Dragon
+                - generic [ref=e230]: Ground
+                - generic [ref=e231]: Lv. 10
+              - generic [ref=e235]: 47 / 47
+            - img [ref=e236]
+          - generic [ref=e240]:
+            - generic [ref=e241]:
+              - generic [ref=e242]:
+                - generic [ref=e243]: HP
+                - generic [ref=e244]: "47"
+              - generic [ref=e245]:
+                - generic [ref=e246]: ATK
+                - generic [ref=e247]: "15"
+              - generic [ref=e248]:
+                - generic [ref=e249]: DEF
+                - generic [ref=e250]: "8"
+              - generic [ref=e251]:
+                - generic [ref=e252]: SPA
+                - generic [ref=e253]: "2"
+              - generic [ref=e254]:
+                - generic [ref=e255]: SPD
+                - generic [ref=e256]: "6"
+              - generic [ref=e257]:
+                - generic [ref=e258]: SPE
+                - generic [ref=e259]: "11"
+            - generic [ref=e260]:
+              - generic [ref=e261]: Abilities
+              - generic [ref=e262]:
+                - text: Sand Veil
+                - paragraph [ref=e263]: The user gains +1 Evasion. This is increased to +2 Evasion while in a Sandstorm or sandy terrain. While in a Sandstorm, the user and adjacent allies do not lose Hit Points due to the Sandstorm.
+            - generic [ref=e264]:
+              - generic [ref=e265]: Moves
+              - generic [ref=e266]:
+                - generic [ref=e267] [cursor=pointer]:
+                  - generic [ref=e268]:
+                    - generic [ref=e269]: Normal
+                    - generic [ref=e270]: Tackle
+                    - generic [ref=e271]: Physical
+                  - generic [ref=e272]:
+                    - generic [ref=e273]: DB 5
+                    - generic [ref=e274]: AC 2
+                    - generic [ref=e275]: At-Will
+                  - generic [ref=e310]:
+                    - generic [ref=e311]:
+                      - generic [ref=e312]: Range
+                      - generic [ref=e313]: Melee, 1 Target, Dash, Push
+                    - paragraph [ref=e314]: The target is Pushed 2 Meters.
+                - generic [ref=e276] [cursor=pointer]:
+                  - generic [ref=e277]:
+                    - generic [ref=e278]: Ground
+                    - generic [ref=e279]: Sand Attack
+                    - generic [ref=e280]: Status
+                  - generic [ref=e281]:
+                    - generic [ref=e282]: AC 2
+                    - generic [ref=e283]: EOT
+                  - generic [ref=e315]:
+                    - generic [ref=e316]:
+                      - generic [ref=e317]: Range
+                      - generic [ref=e318]: 2, 1 Target
+                    - paragraph [ref=e319]: The target is Blinded until the end of their next turn.
+                - generic [ref=e284] [cursor=pointer]:
+                  - generic [ref=e285]:
+                    - generic [ref=e286]: Dragon
+                    - generic [ref=e287]: Dragon Rage
+                    - generic [ref=e288]: Special
+                  - generic [ref=e289]:
+                    - generic [ref=e290]: AC 2
+                    - generic [ref=e291]: At-Will
+                  - generic [ref=e320]:
+                    - generic [ref=e321]:
+                      - generic [ref=e322]: Range
+                      - generic [ref=e323]: 4, 1 Target
+                    - paragraph [ref=e324]: Dragon Rage causes the target to lose 15 HP. Dragon Rage is Special and interacts with other moves and effects as such.
+            - generic [ref=e292]:
+              - generic [ref=e293]: Capabilities
+              - generic [ref=e294]:
+                - generic [ref=e295]:
+                  - generic [ref=e296]: Overland
+                  - generic [ref=e297]: "4"
+                - generic [ref=e298]:
+                  - generic [ref=e299]: Swim
+                  - generic [ref=e300]: "2"
+                - generic [ref=e301]:
+                  - generic [ref=e302]: Burrow
+                  - generic [ref=e303]: "4"
+                - generic [ref=e304]:
+                  - generic [ref=e305]: Jump
+                  - generic [ref=e306]: 1/1
+                - generic [ref=e307]:
+                  - generic [ref=e308]: Power
+                  - generic [ref=e309]: "3"
+    - navigation "Player navigation" [ref=e199]:
+      - button "Character" [ref=e200] [cursor=pointer]:
+        - img [ref=e201]
+        - generic [ref=e204]: Character
+      - button "Team" [ref=e205] [cursor=pointer]:
+        - img [ref=e206]
+        - generic [ref=e209]: Team
+      - button "Encounter" [ref=e210] [cursor=pointer]:
+        - img [ref=e211]
+        - generic [ref=e214]: Encounter
+      - button "Scene" [ref=e215] [cursor=pointer]:
+        - img [ref=e216]
+        - generic [ref=e219]: Scene
+  - generic [ref=e75]:
+    - button "Toggle Nuxt DevTools" [ref=e76] [cursor=pointer]:
+      - img [ref=e77]
+    - generic "Page load time" [ref=e80]:
+      - generic [ref=e81]: "141"
+      - generic [ref=e82]: ms
+    - button "Toggle Component Inspector" [ref=e84] [cursor=pointer]:
+      - img [ref=e85]

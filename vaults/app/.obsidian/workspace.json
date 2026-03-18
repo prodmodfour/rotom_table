@@ -1,0 +1,218 @@
+{
+  "main": {
+    "id": "5cc700a5fcd2e1cc",
+    "type": "split",
+    "children": [
+      {
+        "id": "cbfd366bf96ab4bf",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c86b76e6bc124adf",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "6432dd9c4358d793",
+    "type": "split",
+    "children": [
+      {
+        "id": "2d224bc3c9ec1cfa",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "87e0d173700fabd7",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "f09d43d947d0b853",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "747b2ee6639d6f01",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "9ff7e69afd833c41",
+    "type": "split",
+    "children": [
+      {
+        "id": "f5dcbd1e7138a681",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "84baf34ec5a40ead",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
+            }
+          },
+          {
+            "id": "1151a7c3dad61db5",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links"
+            }
+          },
+          {
+            "id": "d1c7fba216be34a3",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "9abb1476445e080a",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "e30869429c91c7f9",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "c86b76e6bc124adf",
+  "lastOpenFiles": [
+    "sandstorm-sear-move-in-combat.md",
+    "triple-threat-move-in-combat.md",
+    "sweeping-strike-move-in-combat.md",
+    "slice-move-in-combat.md",
+    "riposte-move-in-combat.md",
+    "maul-move-in-combat.md",
+    "maul-move-in-combat.md.tmp.9590.1773327446171",
+    "gouge-move-in-combat.md",
+    "deadly-strike-move-in-combat.md",
+    "bleed-move-in-combat.md",
+    "wounding-strike-move-in-combat.md",
+    "wear-down-move-in-combat.md",
+    "take-aim-move-in-combat.md",
+    "take-aim-move-in-combat.md.tmp.9590.1773327336310",
+    "salvo-move-in-combat.md",
+    "pierce-move-in-combat.md",
+    "double-swipe-move-in-combat.md",
+    "cheap-shot-move-in-combat.md",
+    "bullseye-move-in-combat.md",
+    "bash-move-in-combat.md",
+    "bash-move-in-combat.md.tmp.9590.1773327221735",
+    "backswing-move-in-combat.md",
+    "magic-burst-move-in-combat.md",
+    "energy-vortex-move-in-combat.md",
+    "cone-of-force-move-in-combat.md",
+    "bane-move-in-combat.md",
+    "arcane-storm-move-in-combat.md",
+    "arcane-storm-move-in-combat.md.tmp.9590.1773327005296",
+    "secret-force-move-in-combat.md",
+    "resonance-beam-move-in-combat.md",
+    "arcane-fury-move-in-combat.md.tmp.9590.1773326801536",
+    "push-maneuver-in-combat.md.tmp.9590.1773326435664",
+    "dual-chop-move-in-combat.md.tmp.9590.1773325039710",
+    "drill-run-move-in-combat.md.tmp.9590.1773324697162",
+    "dragon-rush-move-in-combat.md.tmp.9590.1773324542908",
+    "dragon-dance-move-in-combat.md.tmp.9590.1773324302858"
+  ]
+}

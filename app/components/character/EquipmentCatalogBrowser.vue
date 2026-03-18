@@ -108,7 +108,7 @@
 </template>
 
 <script setup lang="ts">
-import { PhX, PhMagnifyingGlass, PhArrowRight, PhRing, PhCheckCircle } from '@phosphor-icons/vue'
+import { PhX, PhMagnifyingGlass, PhArrowRight, PhCircle, PhCheckCircle } from '@phosphor-icons/vue'
 import { EQUIPMENT_CATALOG, EQUIPMENT_SLOTS, SLOT_LABELS, SLOT_ICONS, STAT_LABELS } from '~/constants/equipment'
 import type { EquipmentSlot, EquippedItem, EquipmentSlots } from '~/types/character'
 
@@ -138,7 +138,7 @@ function slotLabel(slot: EquipmentSlot): string {
 }
 
 function slotIcon(slot: EquipmentSlot) {
-  return SLOT_ICONS[slot] ?? PhRing
+  return SLOT_ICONS[slot] ?? PhCircle
 }
 
 function formatStatName(stat: string): string {

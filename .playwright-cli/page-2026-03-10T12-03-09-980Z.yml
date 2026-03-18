@@ -1,0 +1,192 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e7]:
+        - heading "Rotom Table" [level=1] [ref=e8]
+        - generic [ref=e9]: GM View
+      - navigation [ref=e10]:
+        - link "Encounter" [ref=e11] [cursor=pointer]:
+          - /url: /gm
+          - generic [ref=e12]: Encounter
+        - link "Encounters" [ref=e13] [cursor=pointer]:
+          - /url: /gm/encounters
+          - generic [ref=e14]: Encounters
+        - link "Scenes" [ref=e15] [cursor=pointer]:
+          - /url: /gm/scenes
+          - img [ref=e16]
+          - generic [ref=e19]: Scenes
+        - link "Habitats" [ref=e20] [cursor=pointer]:
+          - /url: /gm/habitats
+          - generic [ref=e21]: Habitats
+        - link "Sheets" [ref=e22] [cursor=pointer]:
+          - /url: /gm/sheets
+          - generic [ref=e23]: Sheets
+        - link "Create" [ref=e24] [cursor=pointer]:
+          - /url: /gm/create
+          - generic [ref=e25]: Create
+        - link "Map" [ref=e26] [cursor=pointer]:
+          - /url: /gm/map
+          - generic [ref=e27]: Map
+      - generic [ref=e28]:
+        - button "Connect" [ref=e30] [cursor=pointer]:
+          - img [ref=e31]
+          - generic [ref=e34]: Connect
+        - generic [ref=e35]:
+          - generic [ref=e36]: "Group View:"
+          - generic [ref=e37]:
+            - button "Lobby" [ref=e38] [cursor=pointer]:
+              - img [ref=e39]
+            - button "Scene" [ref=e42] [cursor=pointer]:
+              - img [ref=e43]
+            - button "Encounter" [ref=e46] [cursor=pointer]:
+              - img [ref=e47]
+            - button "Map" [ref=e50] [cursor=pointer]:
+              - img [ref=e51]
+        - button "Advance Day" [ref=e54] [cursor=pointer]:
+          - generic [ref=e55]: Advance Day
+        - link "Group View" [ref=e56] [cursor=pointer]:
+          - /url: /group
+          - generic [ref=e57]: Group View
+    - main [ref=e58]:
+      - generic [ref=e113]:
+        - generic [ref=e114]:
+          - generic [ref=e115]:
+            - link "Back" [ref=e116] [cursor=pointer]:
+              - /url: /gm/scenes
+              - img [ref=e117]
+              - generic [ref=e120]: Back
+            - textbox "Scene Name" [ref=e121]: "1"
+          - generic [ref=e122]:
+            - button "Start Encounter" [ref=e123] [cursor=pointer]:
+              - img [ref=e124]
+              - generic [ref=e127]: Start Encounter
+            - button "Activate Scene" [ref=e128] [cursor=pointer]:
+              - img [ref=e129]
+              - generic [ref=e132]: Activate Scene
+        - generic [ref=e133]:
+          - generic [ref=e134]:
+            - generic [ref=e135]:
+              - heading "Groups" [level=3] [ref=e136]
+              - generic [ref=e137]:
+                - button [ref=e138] [cursor=pointer]:
+                  - img [ref=e139]
+                - button [ref=e142] [cursor=pointer]:
+                  - img [ref=e143]
+            - generic [ref=e147]: No groups. Click + to create one.
+          - generic [ref=e150]:
+            - generic [ref=e151]:
+              - img "Vulpix [Alola]" [ref=e152]
+              - generic [ref=e153]: Vulpix [Alola]
+            - generic [ref=e154]:
+              - img "Impidimp" [ref=e155]
+              - generic [ref=e156]: Impidimp
+            - generic [ref=e157]:
+              - img "Gible" [ref=e158]
+              - generic [ref=e159]: Gible
+            - generic [ref=e160]:
+              - img "Misdreavus" [ref=e161]
+              - generic [ref=e162]: Misdreavus
+            - generic [ref=e163]:
+              - img "Barboach" [ref=e164]
+              - generic [ref=e165]: Barboach
+            - generic [ref=e166]:
+              - img "Smoliv" [ref=e167]
+              - generic [ref=e168]: Smoliv
+            - generic [ref=e169]:
+              - img "Bibarel" [ref=e170]
+              - generic [ref=e171]: Bibarel
+            - generic [ref=e172]:
+              - img "Alolan Grimer" [ref=e173]
+              - generic [ref=e174]: Alolan Grimer
+          - generic [ref=e175]:
+            - generic [ref=e176]:
+              - heading "Properties" [level=3] [ref=e177]
+              - button [ref=e178] [cursor=pointer]:
+                - img [ref=e179]
+            - generic [ref=e182]:
+              - generic [ref=e183]:
+                - generic [ref=e184]: Location Name
+                - textbox "e.g., Viridian Forest" [ref=e185]
+              - generic [ref=e186]:
+                - generic [ref=e187]: Background Image URL
+                - textbox "https://..." [ref=e188]
+              - generic [ref=e189]:
+                - generic [ref=e190]: Description
+                - textbox "Scene description..." [ref=e191]
+              - generic [ref=e192]:
+                - generic [ref=e193]: Natural Weather
+                - combobox [ref=e194]:
+                  - option "None"
+                  - option "Sunny"
+                  - option "Rain"
+                  - option "Sandstorm"
+                  - option "Hail"
+                  - option "Snow"
+                  - option "Fog"
+                  - option "Harsh Sunlight"
+                  - option "Heavy Rain"
+                  - option "Strong Winds"
+                - generic [ref=e195]: Narrative only. Game Weather Conditions with combat effects are set separately in encounters.
+          - generic [ref=e196]:
+            - generic [ref=e206]:
+              - heading "Add to Scene" [level=3] [ref=e207]
+              - button [ref=e208] [cursor=pointer]:
+                - img [ref=e209]
+            - generic [ref=e212]:
+              - generic [ref=e213]:
+                - button "Characters" [ref=e214] [cursor=pointer]
+                - button "Pokemon" [ref=e215] [cursor=pointer]
+              - generic [ref=e307]:
+                - generic [ref=e308]:
+                  - button "Aurora 1" [ref=e310] [cursor=pointer]:
+                    - generic [ref=e311]: Aurora
+                    - generic [ref=e312]: "1"
+                    - img [ref=e313]
+                  - button "Clara 1" [ref=e317] [cursor=pointer]:
+                    - generic [ref=e318]: Clara
+                    - generic [ref=e319]: "1"
+                    - img [ref=e320]
+                  - button "Hassan 1" [ref=e324] [cursor=pointer]:
+                    - generic [ref=e325]: Hassan
+                    - generic [ref=e326]: "1"
+                    - img [ref=e327]
+                  - button "Marilena 1" [ref=e331] [cursor=pointer]:
+                    - generic [ref=e332]: Marilena
+                    - generic [ref=e333]: "1"
+                    - img [ref=e334]
+                - generic [ref=e337]:
+                  - generic [ref=e338]: Add Wild Pokemon
+                  - generic [ref=e339]:
+                    - textbox "Species..." [ref=e340]
+                    - spinbutton [ref=e341]: "5"
+                    - button [ref=e342] [cursor=pointer]:
+                      - img
+          - generic [ref=e201]:
+            - generic [ref=e345]:
+              - heading "Habitat" [level=3] [ref=e346]
+              - button [ref=e347] [cursor=pointer]:
+                - img [ref=e348]
+            - generic [ref=e351]:
+              - combobox [ref=e353]:
+                - option "Select Habitat..."
+                - option "Bramblewick - Backyards & Apiaries"
+                - option "Bramblewick - General"
+                - option "Bramblewick Road"
+                - option "Greywater Aqueduct"
+                - option "Phasmosa's Castle - General"
+                - option "Phasmosa's Castle - Grounds"
+                - option "Rivermere - Docks & Waterwheels"
+                - option "Rivermere - General"
+                - option "Rivermere Causeway"
+                - option "Thickerby Forest - Forest Edge"
+                - option "Thickerby Forest - General"
+                - option "Thickerby Forest - River"
+              - generic [ref=e354]: Select a habitat to see available Pokemon.
+  - generic [ref=e99]:
+    - button "Toggle Nuxt DevTools" [ref=e100] [cursor=pointer]:
+      - img [ref=e101]
+    - generic "Page load time" [ref=e104]:
+      - generic [ref=e105]: "26"
+      - generic [ref=e106]: ms
+    - button "Toggle Component Inspector" [ref=e108] [cursor=pointer]:
+      - img [ref=e109]

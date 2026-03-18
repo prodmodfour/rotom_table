@@ -1,0 +1,218 @@
+{
+  "main": {
+    "id": "89e3e45c578e24d8",
+    "type": "split",
+    "children": [
+      {
+        "id": "507818115621974e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "3c1f1361e0e9f3db",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "c3d141b94cc33324",
+    "type": "split",
+    "children": [
+      {
+        "id": "f8e59f726dd0060a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c43e2ec8436f7080",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "a79c807ec0e69848",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "92cfd439e27344d0",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "66ad66ddeb0e29f4",
+    "type": "split",
+    "children": [
+      {
+        "id": "861267a2223b5260",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "9626a8d43ae317ff",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
+            }
+          },
+          {
+            "id": "591bc16b8b5baf37",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links"
+            }
+          },
+          {
+            "id": "0ee4a50af2512bc0",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "5a9e3d3dc6a3a62d",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "dee433be87ab55ec",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "c43e2ec8436f7080",
+  "lastOpenFiles": [
+    "capture-api-endpoints.md.tmp.9040.1773523650212",
+    "api-endpoint-layout.md.tmp.9040.1773523650203",
+    "api-endpoint-layout.md.tmp.9040.1773523644533",
+    "single-source-of-truth.md",
+    "entity-update-service.md",
+    "vitest-configuration.md.tmp.9040.1773523580262",
+    "capture-api-endpoints.md.tmp.9040.1773523576304",
+    "movedata-reference-table.md.tmp.9040.1773523574867",
+    "api-endpoint-layout.md.tmp.9040.1773523570926",
+    "nuxt-framework-entanglement.md.tmp.9040.1773523568421",
+    "encounter-component-categories.md.tmp.9040.1773523564576",
+    "liskov-substitution-principle.md.tmp.9040.1773523161970",
+    "interface-segregation-principle.md.tmp.9040.1773523158653",
+    "solid-violation-causal-hierarchy.md",
+    "composition-over-inheritance.md",
+    "tell-dont-ask.md",
+    "separation-of-concerns.md",
+    "law-of-demeter.md",
+    "property-based-rule-verification.md",
+    "domain-driven-persistence-adapter.md",
+    "storeless-query-cache.md",
+    "vault-sourced-data-repository.md",
+    "cqrs-mediator-architecture.md",
+    "combatant-as-lens.md",
+    "universal-event-journal.md",
+    "kill-the-api-directory.md",
+    "headless-domain-components.md",
+    "explicit-vue-architecture.md",
+    "repository-use-case-architecture.md",
+    "ioc-container-architecture.md",
+    "trait-composed-domain-model.md",
+    "saga-orchestrated-turn-lifecycle.md",
+    "view-logic-component-entanglement.md",
+    "nuxt-framework-entanglement.md",
+    "service-responsibility-conflation.md",
+    "singleton-state-coupling.md"
+  ]
+}

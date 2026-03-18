@@ -1,0 +1,3 @@
+For fast encounter setup: pick 2–3 species with clear stat profiles (one attacking stat and HP as highest base stats), distribute stat points evenly across each Pokemon's top 3–4 stats, and add level-up moves and [[trait-definition|traits]]. Emergency fallback: distribute stats evenly across all 6 stats (weaker but functional).
+
+This workflow supports [[encounter-creation-is-gm-driven]] by reducing prep time. It is a candidate for [[automate-routine-bookkeeping]] — the app could generate quick-statted wild Pokemon automatically. A parallel workflow exists for trainers via [[quick-npc-building]].

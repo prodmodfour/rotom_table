@@ -1,0 +1,42 @@
+- generic [ref=e1]:
+  - generic [ref=e4]:
+    - banner [ref=e89]:
+      - generic [ref=e90]:
+        - generic [ref=e91]: Hassan
+        - status "Connected - LAN (Local) - 1ms" [ref=e272] [cursor=pointer]:
+          - 'button "Connection: Connected. Tap for details." [ref=e93]'
+      - button "Switch character" [ref=e94] [cursor=pointer]:
+        - img [ref=e95]
+    - main [ref=e98]:
+      - region "Pokemon team" [ref=e323]:
+        - button "Chomps, Level 10. Expand details." [ref=e326] [cursor=pointer]:
+          - img "Chomps" [ref=e327]
+          - generic [ref=e328]:
+            - generic [ref=e330]: Chomps
+            - generic [ref=e331]:
+              - generic [ref=e332]: Dragon
+              - generic [ref=e333]: Ground
+              - generic [ref=e334]: Lv. 10
+            - generic [ref=e338]: 47 / 47
+          - img [ref=e339]
+    - navigation "Player navigation" [ref=e199]:
+      - button "Character" [ref=e200] [cursor=pointer]:
+        - img [ref=e201]
+        - generic [ref=e204]: Character
+      - button "Team" [active] [ref=e205] [cursor=pointer]:
+        - img [ref=e206]
+        - generic [ref=e209]: Team
+      - button "Encounter" [ref=e210] [cursor=pointer]:
+        - img [ref=e211]
+        - generic [ref=e214]: Encounter
+      - button "Scene" [ref=e215] [cursor=pointer]:
+        - img [ref=e216]
+        - generic [ref=e219]: Scene
+  - generic [ref=e75]:
+    - button "Toggle Nuxt DevTools" [ref=e76] [cursor=pointer]:
+      - img [ref=e77]
+    - generic "Page load time" [ref=e80]:
+      - generic [ref=e81]: "118"
+      - generic [ref=e82]: ms
+    - button "Toggle Component Inspector" [ref=e84] [cursor=pointer]:
+      - img [ref=e85]

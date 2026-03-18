@@ -1,0 +1,1 @@
+Removed in PTR. There are no education rank thresholds for choosing breeding traits. The breeding outcome is not trainer-influenced — see [[breeding-not-trainer-influenced]]. Trait inheritance is random from the [[inheritable-traits-list]].

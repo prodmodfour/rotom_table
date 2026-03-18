@@ -1,0 +1,64 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e7]:
+    - heading "Rotom Table" [level=1] [ref=e8]
+    - paragraph [ref=e9]: Select your character to continue
+    - generic [ref=e10]:
+      - button "Select Ash, Level 30" [ref=e11] [cursor=pointer]:
+        - generic [ref=e13]: A
+        - generic [ref=e14]:
+          - generic [ref=e15]: Ash
+          - generic [ref=e16]: Lv. 30
+      - button "Select Aurora, Level 1" [ref=e17] [cursor=pointer]:
+        - generic [ref=e19]: A
+        - generic [ref=e20]:
+          - generic [ref=e21]: Aurora
+          - generic [ref=e22]: Lv. 1
+        - img "Sabre" [ref=e24]
+      - button "Select Clara, Level 1" [ref=e25] [cursor=pointer]:
+        - generic [ref=e27]: C
+        - generic [ref=e28]:
+          - generic [ref=e29]: Clara
+          - generic [ref=e30]: Lv. 1
+        - img "Clippy" [ref=e32]
+      - button "Select Hassan, Level 1, Ace Trainer / Elite Trainer" [ref=e33] [cursor=pointer]:
+        - generic [ref=e35]: H
+        - generic [ref=e36]:
+          - generic [ref=e37]: Hassan
+          - generic [ref=e38]: Ace Trainer / Elite Trainer
+          - generic [ref=e39]: Lv. 1
+        - img "Chomps" [ref=e41]
+      - button "Select Marilena, Level 1, Hobbyist / Channeler / Sage / Researcher / Witch Hunter" [ref=e42] [cursor=pointer]:
+        - generic [ref=e44]: M
+        - generic [ref=e45]:
+          - generic [ref=e46]: Marilena
+          - generic [ref=e47]: Hobbyist / Channeler / Sage / Researcher / Witch Hunter
+          - generic [ref=e48]: Lv. 1
+        - img "Iris" [ref=e50]
+      - button "Select Test Trainer, Level 10" [ref=e51] [cursor=pointer]:
+        - generic [ref=e53]: T
+        - generic [ref=e54]:
+          - generic [ref=e55]: Test Trainer
+          - generic [ref=e56]: Lv. 10
+      - button "Select Trainer Ash, Level 5" [ref=e57] [cursor=pointer]:
+        - generic [ref=e59]: T
+        - generic [ref=e60]:
+          - generic [ref=e61]: Trainer Ash
+          - generic [ref=e62]: Lv. 5
+      - button "Select Trainer Red, Level 5" [ref=e63] [cursor=pointer]:
+        - generic [ref=e65]: T
+        - generic [ref=e66]:
+          - generic [ref=e67]: Trainer Red
+          - generic [ref=e68]: Lv. 5
+      - button "Select Trainer Red, Level 5" [ref=e69] [cursor=pointer]:
+        - generic [ref=e71]: T
+        - generic [ref=e72]:
+          - generic [ref=e73]: Trainer Red
+          - generic [ref=e74]: Lv. 5
+  - generic [ref=e75]:
+    - button "Toggle Nuxt DevTools" [ref=e76] [cursor=pointer]:
+      - img [ref=e77]
+    - generic "Page load time" [ref=e80]:
+      - generic [ref=e81]: "53"
+      - generic [ref=e82]: ms
+    - button "Toggle Component Inspector" [ref=e84] [cursor=pointer]:
+      - img [ref=e85]

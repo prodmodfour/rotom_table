@@ -1,0 +1,221 @@
+# Pokemon Moves S–Z
+
+- [ ] Sacred Fire
+- [ ] Sacred Sword
+- [ ] Safeguard
+- [ ] Sand Attack
+- [ ] Sand Tomb
+- [ ] Sandstorm
+- [ ] Scald
+- [ ] Scale Shot
+- [ ] Scary Face
+- [ ] Scorching Sands
+- [ ] Scratch
+- [ ] Screech
+- [ ] Searing Shot
+- [ ] Secret Power
+- [ ] Secret Sword
+- [ ] Seed Bomb
+- [ ] Seed Flare
+- [ ] Seismic Toss
+- [ ] Self-Destruct
+- [ ] Shadow Ball
+- [ ] Shadow Bone
+- [ ] Shadow Claw
+- [ ] Shadow Force
+- [ ] Shadow Punch
+- [ ] Shadow Sneak
+- [ ] Sharpen
+- [ ] Sheer Cold
+- [ ] Shell Side Arm
+- [ ] Shell Smash
+- [ ] Shell Trap
+- [ ] Shelter
+- [ ] Shift Gear
+- [ ] Shock Wave
+- [ ] Shore Up
+- [ ] Signal Beam
+- [ ] Silver Wind
+- [ ] Simple Beam
+- [ ] Sing
+- [ ] Sketch
+- [ ] Skill Swap
+- [ ] Skitter Smack
+- [ ] Skull Bash
+- [ ] Sky Attack
+- [ ] Sky Drop
+- [ ] Sky Uppercut
+- [ ] Slack Off
+- [ ] Slam
+- [ ] Slash
+- [ ] Sleep Powder
+- [ ] Sleep Talk
+- [ ] Sludge
+- [ ] Sludge Bomb
+- [ ] Sludge Wave
+- [ ] Smack Down
+- [ ] Smart Strike
+- [ ] Smelling Salts
+- [ ] Smog
+- [ ] Smokescreen
+- [ ] Snap Trap
+- [ ] Snarl
+- [ ] Snatch
+- [ ] Snipe Shot
+- [ ] Snore
+- [ ] Soak
+- [ ] Soft-Boiled
+- [ ] Solar Beam
+- [ ] Solar Blade
+- [ ] Sonic Boom
+- [ ] Spacial Rend
+- [ ] Spark
+- [ ] Sparkling Aria
+- [ ] Spectral Thief
+- [ ] Speed Swap
+- [ ] Spider Web
+- [ ] Spike Cannon
+- [ ] Spikes
+- [ ] Spiky Shield
+- [ ] Spirit Break
+- [ ] Spirit Lance
+- [ ] Spirit Shackle
+- [ ] Spit Up
+- [ ] Spite
+- [ ] Splash
+- [ ] Spore
+- [ ] Spotlight
+- [ ] Springtide Storm
+- [ ] Stealth Rock
+- [ ] Steam Eruption
+- [ ] Steamroller
+- [ ] Steel Beam
+- [ ] Steel Roller
+- [ ] Steel Wing
+- [ ] Sticky Web
+- [ ] Stockpile
+- [ ] Stomp
+- [ ] Stomping Tantrum
+- [ ] Stone Axe
+- [ ] Stone Edge
+- [ ] Stored Power
+- [ ] Storm Throw
+- [ ] Strange Steam
+- [ ] Strength
+- [ ] Strength Sap
+- [ ] String Shot
+- [ ] Struggle
+- [ ] Struggle Bug
+- [ ] Struggle+
+- [ ] Stuff Cheeks
+- [ ] Stun Spore
+- [ ] Submission
+- [ ] Substitute
+- [ ] Sucker Punch
+- [ ] Sunny Day
+- [ ] Sunsteel Strike
+- [ ] Super Fang
+- [ ] Superpower
+- [ ] Supersonic
+- [ ] Surf
+- [ ] Surging Strikes
+- [ ] Swagger
+- [ ] Swallow
+- [ ] Sweet Kiss
+- [ ] Sweet Scent
+- [ ] Swift
+- [ ] Switcheroo
+- [ ] Swords Dance
+- [ ] Synchronoise
+- [ ] Synthesis
+- [ ] Tackle
+- [ ] Tail Glow
+- [ ] Tail Slap
+- [ ] Tail Whip
+- [ ] Tailwind
+- [ ] Take Down
+- [ ] Take Heart
+- [ ] Tar Shot
+- [ ] Taunt
+- [ ] Tearful Look
+- [ ] Teatime
+- [ ] Techno Blast
+- [ ] Teeter Dance
+- [ ] Telekinesis
+- [ ] Teleport
+- [ ] Terrain Pulse
+- [ ] Thief
+- [ ] Thousand Arrows
+- [ ] Thousand Waves
+- [ ] Thrash
+- [ ] Throat Chop
+- [ ] Thunder
+- [ ] Thunder Cage
+- [ ] Thunder Fang
+- [ ] Thunder Punch
+- [ ] Thunder Shock
+- [ ] Thunder Wave
+- [ ] Thunderbolt
+- [ ] Thunderous Kick
+- [ ] Tickle
+- [ ] Titanic Slam
+- [ ] Topsy-Turvy
+- [ ] Torment
+- [ ] Toxic
+- [ ] Toxic Spikes
+- [ ] Toxic Threads
+- [ ] Transform
+- [ ] Tri Attack
+- [ ] Trick
+- [ ] Trick Room
+- [ ] Trick-or-Treat
+- [ ] Triple Arrows
+- [ ] Triple Axel
+- [ ] Triple Kick
+- [ ] Trop Kick
+- [ ] Trump Card
+- [ ] Twineedle
+- [ ] Twister
+- [ ] U-Turn
+- [ ] Uproar
+- [ ] V-Create
+- [ ] Vacuum Wave
+- [ ] Venom Drench
+- [ ] Venoshock
+- [ ] Vicegrip
+- [ ] Victory Dance
+- [ ] Vine Whip
+- [ ] Vital Throw
+- [ ] Volt Switch
+- [ ] Volt Tackle
+- [ ] Wake-Up Slap
+- [ ] Water Gun
+- [ ] Water Pledge
+- [ ] Water Pulse
+- [ ] Water Shuriken
+- [ ] Water Sport
+- [ ] Water Spout
+- [ ] Waterfall
+- [ ] Wave Crash
+- [ ] Weather Ball
+- [ ] Whirlpool
+- [ ] Whirlwind
+- [ ] Wicked Blow
+- [ ] Wide Guard
+- [ ] Wild Charge
+- [ ] Wildbolt Storm
+- [ ] Will-O-Wisp
+- [ ] Wing Attack
+- [ ] Wish
+- [ ] Withdraw
+- [ ] Wonder Room
+- [ ] Wood Hammer
+- [ ] Work Up
+- [ ] Worry Seed
+- [ ] Wrap
+- [ ] Wring Out
+- [ ] X-Scissor
+- [ ] Yawn
+- [ ] Zap Cannon
+- [ ] Zen Headbutt
+- [ ] Zing Zap

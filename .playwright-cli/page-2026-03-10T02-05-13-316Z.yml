@@ -1,0 +1,174 @@
+- generic [ref=e1]:
+  - generic [ref=e4]:
+    - banner [ref=e89]:
+      - generic [ref=e90]:
+        - generic [ref=e91]: Hassan
+        - status "Connected - LAN (Local) - 1ms" [ref=e272] [cursor=pointer]:
+          - 'button "Connection: Connected. Tap for details." [ref=e93]'
+      - button "Switch character" [ref=e94] [cursor=pointer]:
+        - img [ref=e95]
+    - main [ref=e98]:
+      - region "Character sheet" [ref=e99]:
+        - region "Character identity and HP" [ref=e100]:
+          - generic [ref=e101]:
+            - generic [ref=e103]: H
+            - generic [ref=e104]:
+              - heading "Hassan" [level=2] [ref=e105]
+              - generic [ref=e106]: Lv. 1
+              - generic [ref=e107]: Ace Trainer / Elite Trainer
+          - generic [ref=e111]: 45 / 45 HP
+        - region "Character data actions" [ref=e112]:
+          - button "Export character data as JSON" [ref=e113] [cursor=pointer]:
+            - img [ref=e114]
+            - generic [ref=e117]: Export Character
+          - button "Import character data from JSON" [ref=e118] [cursor=pointer]:
+            - img [ref=e119]
+            - generic [ref=e122]: Import Character
+        - generic [ref=e123]:
+          - button "Stats" [expanded] [ref=e124] [cursor=pointer]:
+            - generic [ref=e125]: Stats
+            - img [ref=e126]
+          - generic [ref=e129]:
+            - generic "Max HP = Level (1) x2 + HP Base (11) x3 + 10 = 45" [ref=e130]:
+              - generic [ref=e131]: HP Base
+              - generic [ref=e132]: "11"
+            - generic [ref=e133]:
+              - generic [ref=e134]: ATK
+              - generic [ref=e135]: "5"
+            - generic [ref=e136]:
+              - generic [ref=e137]: DEF
+              - generic [ref=e138]: "7"
+            - generic [ref=e139]:
+              - generic [ref=e140]: SPA
+              - generic [ref=e141]: "5"
+            - generic [ref=e142]:
+              - generic [ref=e143]: SPD
+              - generic [ref=e144]: "7"
+            - generic [ref=e145]:
+              - generic [ref=e146]: SPE
+              - generic [ref=e147]: "11"
+        - generic [ref=e148]:
+          - button "Combat Info" [expanded] [ref=e149] [cursor=pointer]:
+            - generic [ref=e150]: Combat Info
+            - img [ref=e151]
+          - generic [ref=e154]:
+            - generic [ref=e155]:
+              - generic [ref=e156]:
+                - generic [ref=e157]: Phys Evasion
+                - generic [ref=e158]: "1"
+              - generic [ref=e159]:
+                - generic [ref=e160]: Spec Evasion
+                - generic [ref=e161]: "1"
+              - generic [ref=e162]:
+                - generic [ref=e163]: Spd Evasion
+                - generic [ref=e164]: "2"
+            - generic [ref=e165]:
+              - generic [ref=e166]:
+                - generic [ref=e167]: AP
+                - generic [ref=e168]: "5"
+              - generic [ref=e169]:
+                - generic [ref=e170]: Injuries
+                - generic [ref=e171]: "0"
+              - generic [ref=e172]:
+                - generic [ref=e173]: Temp HP
+                - generic [ref=e174]: "0"
+        - generic [ref=e175]:
+          - button "Skills" [expanded] [ref=e176] [cursor=pointer]:
+            - generic [ref=e177]: Skills
+            - img [ref=e178]
+          - generic [ref=e220]:
+            - generic [ref=e221]:
+              - generic [ref=e222]: Acrobatics
+              - generic [ref=e223]: Untrained
+            - generic [ref=e224]:
+              - generic [ref=e225]: Athletics
+              - generic [ref=e226]: Untrained
+            - generic [ref=e227]:
+              - generic [ref=e228]: Charm
+              - generic [ref=e229]: Untrained
+            - generic [ref=e230]:
+              - generic [ref=e231]: Combat
+              - generic [ref=e232]: Untrained
+            - generic [ref=e233]:
+              - generic [ref=e234]: Command
+              - generic [ref=e235]: Novice
+            - generic [ref=e236]:
+              - generic [ref=e237]: Focus
+              - generic [ref=e238]: Untrained
+            - generic [ref=e239]:
+              - generic [ref=e240]: General Ed
+              - generic [ref=e241]: Untrained
+            - generic [ref=e242]:
+              - generic [ref=e243]: Guile
+              - generic [ref=e244]: Untrained
+            - generic [ref=e245]:
+              - generic [ref=e246]: Intimidate
+              - generic [ref=e247]: Pathetic
+            - generic [ref=e248]:
+              - generic [ref=e249]: Intuition
+              - generic [ref=e250]: Adept
+            - generic [ref=e251]:
+              - generic [ref=e252]: Medicine Ed
+              - generic [ref=e253]: Untrained
+            - generic [ref=e254]:
+              - generic [ref=e255]: Occult Ed
+              - generic [ref=e256]: Pathetic
+            - generic [ref=e257]:
+              - generic [ref=e258]: Perception
+              - generic [ref=e259]: Novice
+            - generic [ref=e260]:
+              - generic [ref=e261]: Pokémon Ed
+              - generic [ref=e262]: Untrained
+            - generic [ref=e263]:
+              - generic [ref=e264]: Stealth
+              - generic [ref=e265]: Untrained
+            - generic [ref=e266]:
+              - generic [ref=e267]: Survival
+              - generic [ref=e268]: Novice
+            - generic [ref=e269]:
+              - generic [ref=e270]: Technology Ed
+              - generic [ref=e271]: Pathetic
+        - generic [ref=e181]:
+          - button "Features & Edges" [expanded] [active] [ref=e182] [cursor=pointer]:
+            - generic [ref=e183]: Features & Edges
+            - img [ref=e184]
+          - generic [ref=e273]:
+            - heading "Features" [level=4] [ref=e274]
+            - generic [ref=e275]:
+              - generic [ref=e276]: Let Me Help You With That
+              - generic [ref=e277]: Capture Specialist
+              - generic [ref=e278]: Agility Training
+              - generic [ref=e279]: Inspired Training
+            - heading "Edges" [level=4] [ref=e280]
+            - generic [ref=e281]:
+              - generic [ref=e282]: Instinctive Aptitude
+              - generic [ref=e283]: Traveler
+              - generic [ref=e284]: Basic Skills [Command]
+              - generic [ref=e285]: Basic Skills [Perception]
+        - button "Equipment" [ref=e188] [cursor=pointer]:
+          - generic [ref=e189]: Equipment
+          - img [ref=e190]
+        - button "Inventory (0P)" [ref=e194] [cursor=pointer]:
+          - generic [ref=e195]: Inventory (0P)
+          - img [ref=e196]
+    - navigation "Player navigation" [ref=e199]:
+      - button "Character" [ref=e200] [cursor=pointer]:
+        - img [ref=e201]
+        - generic [ref=e204]: Character
+      - button "Team" [ref=e205] [cursor=pointer]:
+        - img [ref=e206]
+        - generic [ref=e209]: Team
+      - button "Encounter" [ref=e210] [cursor=pointer]:
+        - img [ref=e211]
+        - generic [ref=e214]: Encounter
+      - button "Scene" [ref=e215] [cursor=pointer]:
+        - img [ref=e216]
+        - generic [ref=e219]: Scene
+  - generic [ref=e75]:
+    - button "Toggle Nuxt DevTools" [ref=e76] [cursor=pointer]:
+      - img [ref=e77]
+    - generic "Page load time" [ref=e80]:
+      - generic [ref=e81]: "118"
+      - generic [ref=e82]: ms
+    - button "Toggle Component Inspector" [ref=e84] [cursor=pointer]:
+      - img [ref=e85]

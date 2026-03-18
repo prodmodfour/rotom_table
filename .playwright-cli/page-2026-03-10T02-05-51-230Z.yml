@@ -1,0 +1,114 @@
+- generic [ref=e1]:
+  - generic [ref=e4]:
+    - banner [ref=e89]:
+      - generic [ref=e90]:
+        - generic [ref=e91]: Hassan
+        - status "Connected - LAN (Local) - 1ms" [ref=e272] [cursor=pointer]:
+          - 'button "Connection: Connected. Tap for details." [ref=e93]'
+      - button "Switch character" [ref=e94] [cursor=pointer]:
+        - img [ref=e95]
+    - main [ref=e98]:
+      - region "Pokemon team" [ref=e323]:
+        - generic [ref=e325]:
+          - button "Chomps, Level 10. Collapse details." [expanded] [active] [ref=e342] [cursor=pointer]:
+            - img "Chomps" [ref=e327]
+            - generic [ref=e328]:
+              - generic [ref=e330]: Chomps
+              - generic [ref=e331]:
+                - generic [ref=e332]: Dragon
+                - generic [ref=e333]: Ground
+                - generic [ref=e334]: Lv. 10
+              - generic [ref=e338]: 47 / 47
+            - img [ref=e339]
+          - generic [ref=e343]:
+            - generic [ref=e344]:
+              - generic [ref=e345]:
+                - generic [ref=e346]: HP
+                - generic [ref=e347]: "47"
+              - generic [ref=e348]:
+                - generic [ref=e349]: ATK
+                - generic [ref=e350]: "15"
+              - generic [ref=e351]:
+                - generic [ref=e352]: DEF
+                - generic [ref=e353]: "8"
+              - generic [ref=e354]:
+                - generic [ref=e355]: SPA
+                - generic [ref=e356]: "2"
+              - generic [ref=e357]:
+                - generic [ref=e358]: SPD
+                - generic [ref=e359]: "6"
+              - generic [ref=e360]:
+                - generic [ref=e361]: SPE
+                - generic [ref=e362]: "11"
+            - generic [ref=e363]:
+              - generic [ref=e364]: Abilities
+              - generic [ref=e365]:
+                - text: Sand Veil
+                - paragraph [ref=e366]: The user gains +1 Evasion. This is increased to +2 Evasion while in a Sandstorm or sandy terrain. While in a Sandstorm, the user and adjacent allies do not lose Hit Points due to the Sandstorm.
+            - generic [ref=e367]:
+              - generic [ref=e368]: Moves
+              - generic [ref=e369]:
+                - generic [ref=e370] [cursor=pointer]:
+                  - generic [ref=e371]:
+                    - generic [ref=e372]: Normal
+                    - generic [ref=e373]: Tackle
+                    - generic [ref=e374]: Physical
+                  - generic [ref=e375]:
+                    - generic [ref=e376]: DB 5
+                    - generic [ref=e377]: AC 2
+                    - generic [ref=e378]: At-Will
+                - generic [ref=e379] [cursor=pointer]:
+                  - generic [ref=e380]:
+                    - generic [ref=e381]: Ground
+                    - generic [ref=e382]: Sand Attack
+                    - generic [ref=e383]: Status
+                  - generic [ref=e384]:
+                    - generic [ref=e385]: AC 2
+                    - generic [ref=e386]: EOT
+                - generic [ref=e387] [cursor=pointer]:
+                  - generic [ref=e388]:
+                    - generic [ref=e389]: Dragon
+                    - generic [ref=e390]: Dragon Rage
+                    - generic [ref=e391]: Special
+                  - generic [ref=e392]:
+                    - generic [ref=e393]: AC 2
+                    - generic [ref=e394]: At-Will
+            - generic [ref=e395]:
+              - generic [ref=e396]: Capabilities
+              - generic [ref=e397]:
+                - generic [ref=e398]:
+                  - generic [ref=e399]: Overland
+                  - generic [ref=e400]: "4"
+                - generic [ref=e401]:
+                  - generic [ref=e402]: Swim
+                  - generic [ref=e403]: "2"
+                - generic [ref=e404]:
+                  - generic [ref=e405]: Burrow
+                  - generic [ref=e406]: "4"
+                - generic [ref=e407]:
+                  - generic [ref=e408]: Jump
+                  - generic [ref=e409]: 1/1
+                - generic [ref=e410]:
+                  - generic [ref=e411]: Power
+                  - generic [ref=e412]: "3"
+    - navigation "Player navigation" [ref=e199]:
+      - button "Character" [ref=e200] [cursor=pointer]:
+        - img [ref=e201]
+        - generic [ref=e204]: Character
+      - button "Team" [ref=e205] [cursor=pointer]:
+        - img [ref=e206]
+        - generic [ref=e209]: Team
+      - button "Encounter" [ref=e210] [cursor=pointer]:
+        - img [ref=e211]
+        - generic [ref=e214]: Encounter
+      - button "Scene" [ref=e215] [cursor=pointer]:
+        - img [ref=e216]
+        - generic [ref=e219]: Scene
+  - generic [ref=e75]:
+    - button "Toggle Nuxt DevTools" [ref=e76] [cursor=pointer]:
+      - img [ref=e77]
+    - generic "Page load time" [ref=e80]:
+      - generic [ref=e81]: "118"
+      - generic [ref=e82]: ms
+    - button "Toggle Component Inspector" [ref=e84] [cursor=pointer]:
+      - img [ref=e85]

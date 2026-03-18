@@ -1,0 +1,3 @@
+The `SpeciesData` table is populated by a seed script (`app/prisma/seed.ts`) that reads PTU pokedex markdown files from the [[species-pokedex-sources-organized-by-generation]]. The script parses each species' base stats, types, abilities, evolution triggers, movement capabilities, learnsets, skills, capabilities, size, and weight class using regex, then upserts each entry into the database.
+
+This seeding is the sole source of truth for species reference data — the app has no runtime import or manual species creation UI. All species-consuming features ([[pokemon-generator-service]], [[evolution-service]], [[species-api-serves-list-and-single-lookup]], [[habitat-pokemon-entries-table]]) depend on this seed having been run.

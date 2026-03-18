@@ -1,0 +1,298 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e7]:
+        - heading "Rotom Table" [level=1] [ref=e8]
+        - generic [ref=e9]: GM View
+      - navigation [ref=e10]:
+        - link "Encounter" [ref=e11] [cursor=pointer]:
+          - /url: /gm
+          - generic [ref=e12]: Encounter
+        - link "Encounters" [ref=e13] [cursor=pointer]:
+          - /url: /gm/encounters
+          - generic [ref=e14]: Encounters
+        - link "Scenes" [ref=e15] [cursor=pointer]:
+          - /url: /gm/scenes
+          - img [ref=e16]
+          - generic [ref=e19]: Scenes
+        - link "Habitats" [ref=e20] [cursor=pointer]:
+          - /url: /gm/habitats
+          - generic [ref=e21]: Habitats
+        - link "Sheets" [ref=e22] [cursor=pointer]:
+          - /url: /gm/sheets
+          - generic [ref=e23]: Sheets
+        - link "Create" [ref=e24] [cursor=pointer]:
+          - /url: /gm/create
+          - generic [ref=e25]: Create
+        - link "Map" [ref=e26] [cursor=pointer]:
+          - /url: /gm/map
+          - generic [ref=e27]: Map
+      - generic [ref=e28]:
+        - button "Connect" [ref=e30] [cursor=pointer]:
+          - img [ref=e31]
+          - generic [ref=e34]: Connect
+        - generic [ref=e35]:
+          - generic [ref=e36]: "Group View:"
+          - generic [ref=e37]:
+            - button "Lobby" [ref=e38] [cursor=pointer]:
+              - img [ref=e39]
+            - button "Scene" [ref=e42] [cursor=pointer]:
+              - img [ref=e43]
+            - button "Encounter" [ref=e46] [cursor=pointer]:
+              - img [ref=e47]
+            - button "Map" [ref=e50] [cursor=pointer]:
+              - img [ref=e51]
+        - button "Advance Day" [ref=e54] [cursor=pointer]:
+          - generic [ref=e55]: Advance Day
+        - link "Group View" [ref=e56] [cursor=pointer]:
+          - /url: /group
+          - generic [ref=e57]: Group View
+    - main [ref=e58]:
+      - generic [ref=e395]:
+        - generic [ref=e396]:
+          - generic [ref=e397]:
+            - heading "Vs Spiritomb" [level=2] [ref=e398]
+            - generic [ref=e399]:
+              - generic [ref=e400]: Full Contact
+              - generic [ref=e401]: Round 1
+          - generic [ref=e402]:
+            - combobox "Set game Weather Condition (PTU p.341) — has mechanical combat effects. Not the same as natural weather." [ref=e404] [cursor=pointer]:
+              - option "No Weather Condition" [selected]
+              - option "Sunny"
+              - option "Rain"
+              - option "Sandstorm"
+              - option "Hail"
+              - option "Snow"
+              - option "Fog"
+              - option "Harsh Sunlight"
+              - option "Heavy Rain"
+              - option "Strong Winds"
+            - button "Serve to Group" [ref=e405] [cursor=pointer]
+            - generic [ref=e406]:
+              - button "Undo" [disabled] [ref=e407]
+              - button "Redo" [disabled] [ref=e408]
+            - button "Start Combat" [ref=e409] [cursor=pointer]
+            - button "End Encounter" [ref=e410] [cursor=pointer]
+            - button "Save Template" [ref=e411] [cursor=pointer]
+            - button "Keyboard shortcuts (?)" [active] [ref=e412] [cursor=pointer]
+        - generic [ref=e413]:
+          - generic [ref=e414]:
+            - button "List View" [ref=e415] [cursor=pointer]
+            - button "Grid View" [ref=e416] [cursor=pointer]
+          - generic [ref=e417]:
+            - generic [ref=e418]: "Damage Mode:"
+            - button "Set" [ref=e419] [cursor=pointer]
+            - button "Rolled" [ref=e420] [cursor=pointer]
+        - generic [ref=e421]:
+          - generic [ref=e639]:
+            - generic [ref=e640]:
+              - generic [ref=e641]:
+                - heading "Battle Grid" [level=3] [ref=e642]
+                - generic [ref=e643]: 20×15
+                - generic [ref=e713]: 1 selected
+              - generic [ref=e644]:
+                - button "Settings" [ref=e645] [cursor=pointer]
+                - button "Grid On" [ref=e646] [cursor=pointer]
+            - generic [ref=e647]:
+              - generic [ref=e648]:
+                - button "Distance" [ref=e649] [cursor=pointer]
+                - button "Burst" [ref=e650] [cursor=pointer]
+                - button "Cone" [ref=e651] [cursor=pointer]
+                - button "Line" [ref=e652] [cursor=pointer]
+                - button "Close Blast" [ref=e653] [cursor=pointer]
+              - button "Clear" [ref=e723] [cursor=pointer]
+            - button "Fog Off" [ref=e656] [cursor=pointer]
+            - generic [ref=e658]:
+              - generic:
+                - generic [ref=e660] [cursor=pointer]:
+                  - img "Spiritomb" [ref=e662]
+                  - generic:
+                    - generic: Spiritomb
+                    - generic: Lv.10
+                - generic [ref=e665] [cursor=pointer]:
+                  - img "Yamask" [ref=e667]
+                  - generic:
+                    - generic: Yamask
+                    - generic: Lv.2
+                - generic [ref=e670] [cursor=pointer]:
+                  - img "Yamask" [ref=e672]
+                  - generic:
+                    - generic: Yamask
+                    - generic: Lv.2
+                - generic [ref=e675] [cursor=pointer]:
+                  - img "Honedge" [ref=e677]
+                  - generic:
+                    - generic: Honedge
+                    - generic: Lv.3
+                - generic [ref=e680] [cursor=pointer]:
+                  - img "Golett" [ref=e682]
+                  - generic:
+                    - generic: Golett
+                    - generic: Lv.3
+              - generic [ref=e714]: 15, 1 | distance
+              - generic [ref=e685]:
+                - button "+" [ref=e686] [cursor=pointer]
+                - generic [ref=e687]: 100%
+                - button "-" [ref=e688] [cursor=pointer]
+                - button "⌂" [ref=e689] [cursor=pointer]
+            - generic [ref=e715]:
+              - generic [ref=e716]:
+                - generic [ref=e717]: Spiritomb
+                - button "×" [ref=e718] [cursor=pointer]
+              - generic [ref=e719]:
+                - generic [ref=e720]: "Position: (15, 1)"
+                - generic [ref=e721]: "HP: 35/35"
+          - generic [ref=e619]:
+            - generic [ref=e620]:
+              - heading "Combat Log" [level=3] [ref=e621]
+              - paragraph [ref=e623]: No actions yet
+            - generic [ref=e624]:
+              - generic [ref=e625]:
+                - generic [ref=e626]: Environment
+                - generic [ref=e627]: None
+              - generic [ref=e628]:
+                - generic [ref=e629]: Environment Preset
+                - combobox [ref=e630] [cursor=pointer]:
+                  - option "None" [selected]
+                  - option "Dim Cave (Blindness)"
+                  - option "Dark Cave (Total Blindness)"
+                  - option "Frozen Lake"
+                  - option "Hazard Factory"
+                  - option "Custom..."
+            - generic [ref=e631]:
+              - generic [ref=e632]:
+                - generic [ref=e633]: XP Significance
+                - generic [ref=e634]: x1.0
+              - generic [ref=e635]:
+                - paragraph [ref=e636]: No defeated enemies yet.
+                - paragraph [ref=e637]: XP breakdown will appear after enemies are defeated.
+  - generic [ref=e368]:
+    - button "Toggle Nuxt DevTools" [ref=e369] [cursor=pointer]:
+      - img [ref=e370]
+    - generic "Page load time" [ref=e373]:
+      - generic [ref=e375]: "-"
+    - button "Toggle Component Inspector" [ref=e377] [cursor=pointer]:
+      - img [ref=e378]
+  - generic [ref=e725]:
+    - generic [ref=e726]:
+      - heading "Keyboard Shortcuts" [level=3] [ref=e727]
+      - button "Close" [ref=e728] [cursor=pointer]: ×
+    - generic [ref=e729]:
+      - generic [ref=e730]:
+        - heading "General" [level=4] [ref=e731]
+        - generic [ref=e732]:
+          - generic [ref=e733]:
+            - generic [ref=e734]: Ctrl
+            - text: +
+            - generic [ref=e735]: Z
+            - generic [ref=e736]: Undo last action
+          - generic [ref=e737]:
+            - generic [ref=e738]: Ctrl
+            - text: +
+            - generic [ref=e739]: Shift
+            - text: +
+            - generic [ref=e740]: Z
+            - generic [ref=e741]: Redo action
+          - generic [ref=e742]:
+            - generic [ref=e743]: Ctrl
+            - text: +
+            - generic [ref=e744]: "Y"
+            - generic [ref=e745]: Redo action (alternative)
+          - generic [ref=e746]:
+            - generic [ref=e747]: "?"
+            - generic [ref=e748]: Show this help
+      - generic [ref=e749]:
+        - heading "Virtual Tabletop - Grid" [level=4] [ref=e750]
+        - generic [ref=e751]:
+          - generic [ref=e752]:
+            - generic [ref=e753]: +
+            - text: /
+            - generic [ref=e754]: =
+            - generic [ref=e755]: Zoom in
+          - generic [ref=e756]:
+            - generic [ref=e757]: "-"
+            - generic [ref=e758]: Zoom out
+          - generic [ref=e759]:
+            - generic [ref=e760]: "0"
+            - generic [ref=e761]: Reset view (zoom and pan)
+          - generic [ref=e762]:
+            - generic [ref=e763]: Arrow keys
+            - generic [ref=e764]: Pan the grid
+          - generic [ref=e765]:
+            - generic [ref=e766]: Scroll wheel
+            - generic [ref=e767]: Zoom in/out
+          - generic [ref=e768]:
+            - generic [ref=e769]: Middle-click drag
+            - generic [ref=e770]: Pan the grid
+      - generic [ref=e771]:
+        - heading "Virtual Tabletop - Selection" [level=4] [ref=e772]
+        - generic [ref=e773]:
+          - generic [ref=e774]:
+            - generic [ref=e775]: Shift
+            - text: +
+            - generic [ref=e776]: Click
+            - generic [ref=e777]: Add/remove from selection
+          - generic [ref=e778]:
+            - generic [ref=e779]: Shift
+            - text: +
+            - generic [ref=e780]: Drag
+            - generic [ref=e781]: Marquee select multiple tokens
+          - generic [ref=e782]:
+            - generic [ref=e783]: Escape
+            - generic [ref=e784]: Clear selection / Cancel action
+          - generic [ref=e785]:
+            - generic [ref=e786]: Delete
+            - generic [ref=e787]: Remove selected token (GM only)
+      - generic [ref=e788]:
+        - heading "Virtual Tabletop - Movement & Range" [level=4] [ref=e789]
+        - generic [ref=e790]:
+          - generic [ref=e791]:
+            - generic [ref=e792]: W
+            - generic [ref=e793]: Toggle movement range display
+          - generic [ref=e794]:
+            - generic [ref=e795]: M
+            - generic [ref=e796]: Distance measurement mode
+          - generic [ref=e797]:
+            - generic [ref=e798]: B
+            - generic [ref=e799]: Burst AoE mode
+          - generic [ref=e800]:
+            - generic [ref=e801]: C
+            - generic [ref=e802]: Cone AoE mode
+          - generic [ref=e803]:
+            - generic [ref=e804]: L
+            - generic [ref=e805]: Line AoE mode
+          - generic [ref=e806]:
+            - generic [ref=e807]: R
+            - generic [ref=e808]: Cycle AoE direction
+          - generic [ref=e809]:
+            - generic [ref=e810]: "["
+            - text: /
+            - generic [ref=e811]: "]"
+            - generic [ref=e812]: Decrease/Increase AoE size
+      - generic [ref=e813]:
+        - heading "Virtual Tabletop - GM Tools" [level=4] [ref=e814]
+        - generic [ref=e815]:
+          - generic [ref=e816]:
+            - generic [ref=e817]: T
+            - generic [ref=e818]: Toggle terrain painting mode
+          - generic [ref=e819]:
+            - generic [ref=e820]: F
+            - generic [ref=e821]: Toggle fog of war editing
+          - generic [ref=e822]:
+            - generic [ref=e823]: V
+            - generic [ref=e824]: Fog reveal tool
+          - generic [ref=e825]:
+            - generic [ref=e826]: H
+            - generic [ref=e827]: Fog hide tool
+          - generic [ref=e828]:
+            - generic [ref=e829]: E
+            - generic [ref=e830]: Fog explore tool
+          - generic [ref=e831]:
+            - generic [ref=e832]: "["
+            - text: /
+            - generic [ref=e833]: "]"
+            - generic [ref=e834]: Decrease/Increase brush size
+    - paragraph [ref=e836]:
+      - text: Press
+      - generic [ref=e837]: "?"
+      - text: to toggle this help

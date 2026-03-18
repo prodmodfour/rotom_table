@@ -1,0 +1,95 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e7]:
+        - heading "Rotom Table" [level=1] [ref=e8]
+        - generic [ref=e9]: GM View
+      - navigation [ref=e10]:
+        - link "Encounter" [ref=e11] [cursor=pointer]:
+          - /url: /gm
+          - generic [ref=e12]: Encounter
+        - link "Encounters" [ref=e13] [cursor=pointer]:
+          - /url: /gm/encounters
+          - generic [ref=e14]: Encounters
+        - link "Scenes" [ref=e15] [cursor=pointer]:
+          - /url: /gm/scenes
+          - img [ref=e16]
+          - generic [ref=e19]: Scenes
+        - link "Habitats" [ref=e20] [cursor=pointer]:
+          - /url: /gm/habitats
+          - generic [ref=e21]: Habitats
+        - link "Sheets" [ref=e22] [cursor=pointer]:
+          - /url: /gm/sheets
+          - generic [ref=e23]: Sheets
+        - link "Create" [ref=e24] [cursor=pointer]:
+          - /url: /gm/create
+          - generic [ref=e25]: Create
+        - link "Map" [ref=e26] [cursor=pointer]:
+          - /url: /gm/map
+          - generic [ref=e27]: Map
+      - generic [ref=e28]:
+        - button "Connect" [ref=e30] [cursor=pointer]:
+          - img [ref=e31]
+          - generic [ref=e34]: Connect
+        - generic [ref=e35]:
+          - generic [ref=e36]: "Group View:"
+          - generic [ref=e37]:
+            - button "Lobby" [ref=e38] [cursor=pointer]:
+              - img [ref=e39]
+            - button "Scene" [ref=e42] [cursor=pointer]:
+              - img [ref=e43]
+            - button "Encounter" [ref=e46] [cursor=pointer]:
+              - img [ref=e47]
+            - button "Map" [ref=e50] [cursor=pointer]:
+              - img [ref=e51]
+        - button "Advance Day" [ref=e54] [cursor=pointer]:
+          - generic [ref=e55]: Advance Day
+        - link "Group View" [ref=e56] [cursor=pointer]:
+          - /url: /group
+          - generic [ref=e57]: Group View
+    - main [ref=e58]:
+      - generic [ref=e59]:
+        - generic [ref=e60]:
+          - heading "Region Map" [level=1] [ref=e61]
+          - generic [ref=e62]:
+            - button "Serve to TV" [ref=e63] [cursor=pointer]
+            - button "Clear from TV" [ref=e64] [cursor=pointer]
+        - generic [ref=e67]:
+          - heading "Pokemon Ranger Campaign" [level=2] [ref=e68]
+          - img [ref=e69]:
+            - generic [ref=e72]: ~ ~ ~ R I V E R ~ ~ ~
+            - generic [ref=e73]: Rivermere Causeway
+            - generic [ref=e76]: Bramblewick Road
+            - generic [ref=e79]: Greywater Aqueduct
+            - generic [ref=e81]: THICKERBY FOREST
+            - generic [ref=e82]: (dim, berry-thick woodland)
+            - generic [ref=e83]:
+              - generic [ref=e84]: 🌲
+              - generic [ref=e85]: 🌲
+              - generic [ref=e86]: 🌲
+              - generic [ref=e87]: 🌲
+              - generic [ref=e88]: 🌲
+              - generic [ref=e89]: 🌲
+              - generic [ref=e90]: 🌲
+              - generic [ref=e91]: 🌲
+            - generic [ref=e93]: Castle Grounds
+            - generic [ref=e94]: (overgrown)
+            - generic [ref=e95]:
+              - generic [ref=e97]: RIVERMERE
+              - generic [ref=e98]: (stone bridge + waterwheels)
+            - generic [ref=e101]:
+              - generic [ref=e103]: BRAMBLEWICK
+              - generic [ref=e104]: (berries, honey, timber + thatch)
+            - generic [ref=e107]:
+              - generic [ref=e113]: PHASMOSA'S CASTLE
+              - generic [ref=e114]: (haunted keep on the hill)
+            - generic [ref=e115]: (banks/fishing)
+            - generic [ref=e116]: (puddles/mud patches)
+  - generic [ref=e117]:
+    - button "Toggle Nuxt DevTools" [ref=e118] [cursor=pointer]:
+      - img [ref=e119]
+    - generic "Page load time" [ref=e122]:
+      - generic [ref=e123]: "245"
+      - generic [ref=e124]: ms
+    - button "Toggle Component Inspector" [ref=e126] [cursor=pointer]:
+      - img [ref=e127]

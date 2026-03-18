@@ -1,0 +1,167 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e7]:
+        - heading "Rotom Table" [level=1] [ref=e8]
+        - generic [ref=e9]: GM View
+      - navigation [ref=e10]:
+        - link "Encounter" [ref=e11] [cursor=pointer]:
+          - /url: /gm
+          - generic [ref=e12]: Encounter
+        - link "Encounters" [ref=e13] [cursor=pointer]:
+          - /url: /gm/encounters
+          - generic [ref=e14]: Encounters
+        - link "Scenes" [ref=e15] [cursor=pointer]:
+          - /url: /gm/scenes
+          - img [ref=e16]
+          - generic [ref=e19]: Scenes
+        - link "Habitats" [ref=e20] [cursor=pointer]:
+          - /url: /gm/habitats
+          - generic [ref=e21]: Habitats
+        - link "Sheets" [ref=e22] [cursor=pointer]:
+          - /url: /gm/sheets
+          - generic [ref=e23]: Sheets
+        - link "Create" [ref=e24] [cursor=pointer]:
+          - /url: /gm/create
+          - generic [ref=e25]: Create
+        - link "Map" [ref=e26] [cursor=pointer]:
+          - /url: /gm/map
+          - generic [ref=e27]: Map
+      - generic [ref=e28]:
+        - button "Connect" [ref=e30] [cursor=pointer]:
+          - img [ref=e31]
+          - generic [ref=e34]: Connect
+        - generic [ref=e35]:
+          - generic [ref=e36]: "Group View:"
+          - generic [ref=e37]:
+            - button "Lobby" [ref=e38] [cursor=pointer]:
+              - img [ref=e39]
+            - button "Scene" [ref=e42] [cursor=pointer]:
+              - img [ref=e43]
+            - button "Encounter" [ref=e46] [cursor=pointer]:
+              - img [ref=e47]
+            - button "Map" [ref=e50] [cursor=pointer]:
+              - img [ref=e51]
+        - button "Advance Day" [ref=e54] [cursor=pointer]:
+          - generic [ref=e55]: Advance Day
+        - link "Group View" [ref=e56] [cursor=pointer]:
+          - /url: /group
+          - generic [ref=e57]: Group View
+    - main [ref=e58]:
+      - generic [ref=e59]:
+        - generic [ref=e60]:
+          - link "← Back to Sheets" [ref=e61] [cursor=pointer]:
+            - /url: /gm/sheets
+          - heading "Create Character" [level=2] [ref=e62]
+        - generic [ref=e63]:
+          - button "Human Character" [ref=e64] [cursor=pointer]:
+            - generic [ref=e66]: Human Character
+          - button "Pokemon" [active] [ref=e67] [cursor=pointer]:
+            - generic [ref=e69]: Pokemon
+        - generic [ref=e588]:
+          - generic [ref=e589]:
+            - heading "Basic Info" [level=3] [ref=e590]
+            - generic [ref=e591]:
+              - generic [ref=e592]:
+                - generic [ref=e593]: Species *
+                - textbox "Pikachu" [ref=e594]
+              - generic [ref=e595]:
+                - generic [ref=e596]: Nickname
+                - textbox "Optional" [ref=e597]
+            - generic [ref=e598]:
+              - generic [ref=e599]:
+                - generic [ref=e600]: Level
+                - spinbutton [ref=e601]: "1"
+              - generic [ref=e602]:
+                - generic [ref=e603]: Gender
+                - combobox [ref=e604] [cursor=pointer]:
+                  - option "Male"
+                  - option "Female"
+                  - option "Genderless" [selected]
+              - generic [ref=e605]:
+                - generic [ref=e606]: Shiny
+                - combobox [ref=e607] [cursor=pointer]:
+                  - option "No" [selected]
+                  - option "Yes"
+            - generic [ref=e608]:
+              - generic [ref=e609]: Location
+              - textbox "e.g., Route 1" [ref=e610]
+          - generic [ref=e611]:
+            - heading "Types" [level=3] [ref=e612]
+            - generic [ref=e613]:
+              - generic [ref=e614]:
+                - generic [ref=e615]: Primary Type *
+                - combobox [ref=e616] [cursor=pointer]:
+                  - option "Normal" [selected]
+                  - option "Fire"
+                  - option "Water"
+                  - option "Electric"
+                  - option "Grass"
+                  - option "Ice"
+                  - option "Fighting"
+                  - option "Poison"
+                  - option "Ground"
+                  - option "Flying"
+                  - option "Psychic"
+                  - option "Bug"
+                  - option "Rock"
+                  - option "Ghost"
+                  - option "Dragon"
+                  - option "Dark"
+                  - option "Steel"
+                  - option "Fairy"
+              - generic [ref=e617]:
+                - generic [ref=e618]: Secondary Type
+                - combobox [ref=e619] [cursor=pointer]:
+                  - option "None" [selected]
+                  - option "Normal"
+                  - option "Fire"
+                  - option "Water"
+                  - option "Electric"
+                  - option "Grass"
+                  - option "Ice"
+                  - option "Fighting"
+                  - option "Poison"
+                  - option "Ground"
+                  - option "Flying"
+                  - option "Psychic"
+                  - option "Bug"
+                  - option "Rock"
+                  - option "Ghost"
+                  - option "Dragon"
+                  - option "Dark"
+                  - option "Steel"
+                  - option "Fairy"
+          - generic [ref=e620]:
+            - heading "Base Stats" [level=3] [ref=e621]
+            - generic [ref=e622]:
+              - generic [ref=e623]:
+                - generic [ref=e624]: HP
+                - spinbutton [ref=e625]: "50"
+              - generic [ref=e626]:
+                - generic [ref=e627]: Attack
+                - spinbutton [ref=e628]: "50"
+              - generic [ref=e629]:
+                - generic [ref=e630]: Defense
+                - spinbutton [ref=e631]: "50"
+              - generic [ref=e632]:
+                - generic [ref=e633]: Sp. Attack
+                - spinbutton [ref=e634]: "50"
+              - generic [ref=e635]:
+                - generic [ref=e636]: Sp. Defense
+                - spinbutton [ref=e637]: "50"
+              - generic [ref=e638]:
+                - generic [ref=e639]: Speed
+                - spinbutton [ref=e640]: "50"
+          - generic [ref=e641]:
+            - heading "Notes" [level=3] [ref=e642]
+            - textbox "Additional notes..." [ref=e643]
+          - button "Create Pokemon" [ref=e645] [cursor=pointer]
+  - generic [ref=e128]:
+    - button "Toggle Nuxt DevTools" [ref=e129] [cursor=pointer]:
+      - img [ref=e130]
+    - generic "Page load time" [ref=e133]:
+      - generic [ref=e134]: "843"
+      - generic [ref=e135]: ms
+    - button "Toggle Component Inspector" [ref=e137] [cursor=pointer]:
+      - img [ref=e138]

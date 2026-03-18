@@ -1,0 +1,1196 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e7]:
+        - heading "Rotom Table" [level=1] [ref=e8]
+        - generic [ref=e9]: GM View
+      - navigation [ref=e10]:
+        - link "Encounter" [ref=e11] [cursor=pointer]:
+          - /url: /gm
+          - generic [ref=e12]: Encounter
+        - link "Encounters" [ref=e13] [cursor=pointer]:
+          - /url: /gm/encounters
+          - generic [ref=e14]: Encounters
+        - link "Scenes" [ref=e15] [cursor=pointer]:
+          - /url: /gm/scenes
+          - img [ref=e16]
+          - generic [ref=e19]: Scenes
+        - link "Habitats" [ref=e20] [cursor=pointer]:
+          - /url: /gm/habitats
+          - generic [ref=e21]: Habitats
+        - link "Sheets" [ref=e22] [cursor=pointer]:
+          - /url: /gm/sheets
+          - generic [ref=e23]: Sheets
+        - link "Create" [ref=e24] [cursor=pointer]:
+          - /url: /gm/create
+          - generic [ref=e25]: Create
+        - link "Map" [ref=e26] [cursor=pointer]:
+          - /url: /gm/map
+          - generic [ref=e27]: Map
+      - generic [ref=e28]:
+        - button "Connect" [ref=e30] [cursor=pointer]:
+          - img [ref=e31]
+          - generic [ref=e34]: Connect
+        - generic [ref=e35]:
+          - generic [ref=e36]: "Group View:"
+          - generic [ref=e37]:
+            - button "Lobby" [ref=e38] [cursor=pointer]:
+              - img [ref=e39]
+            - button "Scene" [ref=e42] [cursor=pointer]:
+              - img [ref=e43]
+            - button "Encounter" [ref=e46] [cursor=pointer]:
+              - img [ref=e47]
+            - button "Map" [ref=e50] [cursor=pointer]:
+              - img [ref=e51]
+        - button "Advance Day" [ref=e54] [cursor=pointer]:
+          - generic [ref=e55]: Advance Day
+        - link "Group View" [ref=e56] [cursor=pointer]:
+          - /url: /group
+          - generic [ref=e57]: Group View
+    - main [ref=e58]:
+      - generic [ref=e59]:
+        - generic [ref=e60]:
+          - link "← Back to Sheets" [ref=e61] [cursor=pointer]:
+            - /url: /gm/sheets
+          - heading "Create Character" [level=2] [ref=e62]
+        - generic [ref=e63]:
+          - button "Human Character" [ref=e64] [cursor=pointer]:
+            - generic [ref=e66]: Human Character
+          - button "Pokemon" [ref=e67] [cursor=pointer]:
+            - generic [ref=e69]: Pokemon
+        - generic [ref=e646]:
+          - button "Quick Create Minimal NPC scaffolding" [ref=e647] [cursor=pointer]:
+            - generic [ref=e648]:
+              - generic [ref=e649]: Quick Create
+              - generic [ref=e650]: Minimal NPC scaffolding
+          - button "Full Create PTU-compliant multi-section" [ref=e651] [cursor=pointer]:
+            - generic [ref=e652]:
+              - generic [ref=e653]: Full Create
+              - generic [ref=e654]: PTU-compliant multi-section
+        - generic [ref=e655]:
+          - generic [ref=e656]:
+            - generic [ref=e657]:
+              - img [ref=e659]
+              - generic [ref=e661]: Basic Info
+              - generic [ref=e662]: Name required
+            - generic [ref=e663]:
+              - img [ref=e665]
+              - generic [ref=e667]: Background & Skills
+              - generic [ref=e668]: No background
+            - generic [ref=e669]:
+              - img [ref=e671]
+              - generic [ref=e673]: Edges
+              - generic [ref=e674]: 0/4
+            - generic [ref=e675]:
+              - img [ref=e677]
+              - generic [ref=e679]: Classes & Features
+              - generic [ref=e680]: 0 classes, 0 features
+            - generic [ref=e681]:
+              - img [ref=e683]
+              - generic [ref=e685]: Combat Stats
+              - generic [ref=e686]: 0/10 points
+            - generic [ref=e687]:
+              - img [ref=e689]
+              - generic [ref=e691]: Biography
+              - generic [ref=e692]: Optional
+          - generic [ref=e693]:
+            - heading "Basic Info" [level=3] [ref=e694]
+            - generic [ref=e695]:
+              - generic [ref=e696]:
+                - generic [ref=e697]: Name *
+                - textbox [ref=e698]
+              - generic [ref=e699]:
+                - generic [ref=e700]: Character Type
+                - combobox [ref=e701] [cursor=pointer]:
+                  - option "Player Character"
+                  - option "NPC" [selected]
+            - generic [ref=e702]:
+              - generic [ref=e703]:
+                - generic [ref=e704]: Level
+                - spinbutton [ref=e705]: "1"
+              - generic [ref=e706]:
+                - generic [ref=e707]: Location
+                - textbox "e.g., Mesagoza" [ref=e708]
+            - generic [ref=e709]:
+              - generic [ref=e710]: Trainer Sprite
+              - generic [ref=e711]:
+                - generic [ref=e713] [cursor=pointer]: "?"
+                - button "Choose Sprite" [active] [ref=e714] [cursor=pointer]
+            - generic [ref=e1102]:
+              - generic [ref=e1103]:
+                - heading "Select Trainer Sprite" [level=2] [ref=e1104]
+                - button "Close" [ref=e1105] [cursor=pointer]:
+                  - img "Close" [ref=e1106]
+              - generic [ref=e1107]:
+                - textbox "Search sprites..." [ref=e1109]
+                - generic [ref=e1110]:
+                  - button "All" [ref=e1111] [cursor=pointer]
+                  - button "Protagonists" [ref=e1112] [cursor=pointer]
+                  - button "Gym Leaders" [ref=e1113] [cursor=pointer]
+                  - button "Elite Four & Champions" [ref=e1114] [cursor=pointer]
+                  - button "Villains & Admins" [ref=e1115] [cursor=pointer]
+                  - button "Team Grunts" [ref=e1116] [cursor=pointer]
+                  - button "Generic Male" [ref=e1117] [cursor=pointer]
+                  - button "Generic Female" [ref=e1118] [cursor=pointer]
+                  - button "Specialists" [ref=e1119] [cursor=pointer]
+                  - button "Other" [ref=e1120] [cursor=pointer]
+                - generic [ref=e1121]:
+                  - button "Red Red" [ref=e1122] [cursor=pointer]:
+                    - img "Red" [ref=e1123]
+                    - generic [ref=e1124]: Red
+                  - button "Ethan Ethan" [ref=e1125] [cursor=pointer]:
+                    - img "Ethan" [ref=e1126]
+                    - generic [ref=e1127]: Ethan
+                  - button "Lyra Lyra" [ref=e1128] [cursor=pointer]:
+                    - img "Lyra" [ref=e1129]
+                    - generic [ref=e1130]: Lyra
+                  - button "Brendan Brendan" [ref=e1131] [cursor=pointer]:
+                    - img "Brendan" [ref=e1132]
+                    - generic [ref=e1133]: Brendan
+                  - button "May May" [ref=e1134] [cursor=pointer]:
+                    - img "May" [ref=e1135]
+                    - generic [ref=e1136]: May
+                  - button "Lucas Lucas" [ref=e1137] [cursor=pointer]:
+                    - img "Lucas" [ref=e1138]
+                    - generic [ref=e1139]: Lucas
+                  - button "Dawn Dawn" [ref=e1140] [cursor=pointer]:
+                    - img "Dawn" [ref=e1141]
+                    - generic [ref=e1142]: Dawn
+                  - button "Hilbert Hilbert" [ref=e1143] [cursor=pointer]:
+                    - img "Hilbert" [ref=e1144]
+                    - generic [ref=e1145]: Hilbert
+                  - button "Hilda Hilda" [ref=e1146] [cursor=pointer]:
+                    - img "Hilda" [ref=e1147]
+                    - generic [ref=e1148]: Hilda
+                  - button "Nate Nate" [ref=e1149] [cursor=pointer]:
+                    - img "Nate" [ref=e1150]
+                    - generic [ref=e1151]: Nate
+                  - button "Rosa Rosa" [ref=e1152] [cursor=pointer]:
+                    - img "Rosa" [ref=e1153]
+                    - generic [ref=e1154]: Rosa
+                  - button "Calem Calem" [ref=e1155] [cursor=pointer]:
+                    - img "Calem" [ref=e1156]
+                    - generic [ref=e1157]: Calem
+                  - button "Serena Serena" [ref=e1158] [cursor=pointer]:
+                    - img "Serena" [ref=e1159]
+                    - generic [ref=e1160]: Serena
+                  - button "Elio Elio" [ref=e1161] [cursor=pointer]:
+                    - img "Elio" [ref=e1162]
+                    - generic [ref=e1163]: Elio
+                  - button "Selene Selene" [ref=e1164] [cursor=pointer]:
+                    - img "Selene" [ref=e1165]
+                    - generic [ref=e1166]: Selene
+                  - button "Chase Chase" [ref=e1167] [cursor=pointer]:
+                    - img "Chase" [ref=e1168]
+                    - generic [ref=e1169]: Chase
+                  - button "Elaine Elaine" [ref=e1170] [cursor=pointer]:
+                    - img "Elaine" [ref=e1171]
+                    - generic [ref=e1172]: Elaine
+                  - button "Victor Victor" [ref=e1173] [cursor=pointer]:
+                    - img "Victor" [ref=e1174]
+                    - generic [ref=e1175]: Victor
+                  - button "Gloria Gloria" [ref=e1176] [cursor=pointer]:
+                    - img "Gloria" [ref=e1177]
+                    - generic [ref=e1178]: Gloria
+                  - button "Rei Rei" [ref=e1179] [cursor=pointer]:
+                    - img "Rei" [ref=e1180]
+                    - generic [ref=e1181]: Rei
+                  - button "Akari Akari" [ref=e1182] [cursor=pointer]:
+                    - img "Akari" [ref=e1183]
+                    - generic [ref=e1184]: Akari
+                  - button "Florian Florian" [ref=e1185] [cursor=pointer]:
+                    - img "Florian" [ref=e1186]
+                    - generic [ref=e1187]: Florian
+                  - button "Juliana Juliana" [ref=e1188] [cursor=pointer]:
+                    - img "Juliana" [ref=e1189]
+                    - generic [ref=e1190]: Juliana
+                  - button "Brock Brock" [ref=e1191] [cursor=pointer]:
+                    - img "Brock" [ref=e1192]
+                    - generic [ref=e1193]: Brock
+                  - button "Misty Misty" [ref=e1194] [cursor=pointer]:
+                    - img "Misty" [ref=e1195]
+                    - generic [ref=e1196]: Misty
+                  - button "Lt. Surge Lt. Surge" [ref=e1197] [cursor=pointer]:
+                    - img "Lt. Surge" [ref=e1198]
+                    - generic [ref=e1199]: Lt. Surge
+                  - button "Erika Erika" [ref=e1200] [cursor=pointer]:
+                    - img "Erika" [ref=e1201]
+                    - generic [ref=e1202]: Erika
+                  - button "Koga Koga" [ref=e1203] [cursor=pointer]:
+                    - img "Koga" [ref=e1204]
+                    - generic [ref=e1205]: Koga
+                  - button "Sabrina Sabrina" [ref=e1206] [cursor=pointer]:
+                    - img "Sabrina" [ref=e1207]
+                    - generic [ref=e1208]: Sabrina
+                  - button "Blaine Blaine" [ref=e1209] [cursor=pointer]:
+                    - img "Blaine" [ref=e1210]
+                    - generic [ref=e1211]: Blaine
+                  - button "Giovanni Giovanni" [ref=e1212] [cursor=pointer]:
+                    - img "Giovanni" [ref=e1213]
+                    - generic [ref=e1214]: Giovanni
+                  - button "Falkner Falkner" [ref=e1215] [cursor=pointer]:
+                    - img "Falkner" [ref=e1216]
+                    - generic [ref=e1217]: Falkner
+                  - button "Bugsy Bugsy" [ref=e1218] [cursor=pointer]:
+                    - img "Bugsy" [ref=e1219]
+                    - generic [ref=e1220]: Bugsy
+                  - button "Whitney Whitney" [ref=e1221] [cursor=pointer]:
+                    - img "Whitney" [ref=e1222]
+                    - generic [ref=e1223]: Whitney
+                  - button "Morty Morty" [ref=e1224] [cursor=pointer]:
+                    - img "Morty" [ref=e1225]
+                    - generic [ref=e1226]: Morty
+                  - button "Chuck Chuck" [ref=e1227] [cursor=pointer]:
+                    - img "Chuck" [ref=e1228]
+                    - generic [ref=e1229]: Chuck
+                  - button "Jasmine Jasmine" [ref=e1230] [cursor=pointer]:
+                    - img "Jasmine" [ref=e1231]
+                    - generic [ref=e1232]: Jasmine
+                  - button "Pryce Pryce" [ref=e1233] [cursor=pointer]:
+                    - img "Pryce" [ref=e1234]
+                    - generic [ref=e1235]: Pryce
+                  - button "Clair Clair" [ref=e1236] [cursor=pointer]:
+                    - img "Clair" [ref=e1237]
+                    - generic [ref=e1238]: Clair
+                  - button "Roxanne Roxanne" [ref=e1239] [cursor=pointer]:
+                    - img "Roxanne" [ref=e1240]
+                    - generic [ref=e1241]: Roxanne
+                  - button "Brawly Brawly" [ref=e1242] [cursor=pointer]:
+                    - img "Brawly" [ref=e1243]
+                    - generic [ref=e1244]: Brawly
+                  - button "Wattson Wattson" [ref=e1245] [cursor=pointer]:
+                    - img "Wattson" [ref=e1246]
+                    - generic [ref=e1247]: Wattson
+                  - button "Flannery Flannery" [ref=e1248] [cursor=pointer]:
+                    - img "Flannery" [ref=e1249]
+                    - generic [ref=e1250]: Flannery
+                  - button "Norman Norman" [ref=e1251] [cursor=pointer]:
+                    - img "Norman" [ref=e1252]
+                    - generic [ref=e1253]: Norman
+                  - button "Winona Winona" [ref=e1254] [cursor=pointer]:
+                    - img "Winona" [ref=e1255]
+                    - generic [ref=e1256]: Winona
+                  - button "Liza Liza" [ref=e1257] [cursor=pointer]:
+                    - img "Liza" [ref=e1258]
+                    - generic [ref=e1259]: Liza
+                  - button "Tate Tate" [ref=e1260] [cursor=pointer]:
+                    - img "Tate" [ref=e1261]
+                    - generic [ref=e1262]: Tate
+                  - button "Juan Juan" [ref=e1263] [cursor=pointer]:
+                    - img "Juan" [ref=e1264]
+                    - generic [ref=e1265]: Juan
+                  - button "Roark Roark" [ref=e1266] [cursor=pointer]:
+                    - img "Roark" [ref=e1267]
+                    - generic [ref=e1268]: Roark
+                  - button "Gardenia Gardenia" [ref=e1269] [cursor=pointer]:
+                    - img "Gardenia" [ref=e1270]
+                    - generic [ref=e1271]: Gardenia
+                  - button "Maylene Maylene" [ref=e1272] [cursor=pointer]:
+                    - img "Maylene" [ref=e1273]
+                    - generic [ref=e1274]: Maylene
+                  - button "Crasher Wake Crasher Wake" [ref=e1275] [cursor=pointer]:
+                    - img "Crasher Wake" [ref=e1276]
+                    - generic [ref=e1277]: Crasher Wake
+                  - button "Fantina Fantina" [ref=e1278] [cursor=pointer]:
+                    - img "Fantina" [ref=e1279]
+                    - generic [ref=e1280]: Fantina
+                  - button "Byron Byron" [ref=e1281] [cursor=pointer]:
+                    - img "Byron" [ref=e1282]
+                    - generic [ref=e1283]: Byron
+                  - button "Candice Candice" [ref=e1284] [cursor=pointer]:
+                    - img "Candice" [ref=e1285]
+                    - generic [ref=e1286]: Candice
+                  - button "Volkner Volkner" [ref=e1287] [cursor=pointer]:
+                    - img "Volkner" [ref=e1288]
+                    - generic [ref=e1289]: Volkner
+                  - button "Cilan Cilan" [ref=e1290] [cursor=pointer]:
+                    - img "Cilan" [ref=e1291]
+                    - generic [ref=e1292]: Cilan
+                  - button "Chili Chili" [ref=e1293] [cursor=pointer]:
+                    - img "Chili" [ref=e1294]
+                    - generic [ref=e1295]: Chili
+                  - button "Cress Cress" [ref=e1296] [cursor=pointer]:
+                    - img "Cress" [ref=e1297]
+                    - generic [ref=e1298]: Cress
+                  - button "Lenora Lenora" [ref=e1299] [cursor=pointer]:
+                    - img "Lenora" [ref=e1300]
+                    - generic [ref=e1301]: Lenora
+                  - button "Burgh Burgh" [ref=e1302] [cursor=pointer]:
+                    - img "Burgh" [ref=e1303]
+                    - generic [ref=e1304]: Burgh
+                  - button "Elesa Elesa" [ref=e1305] [cursor=pointer]:
+                    - img "Elesa" [ref=e1306]
+                    - generic [ref=e1307]: Elesa
+                  - button "Clay Clay" [ref=e1308] [cursor=pointer]:
+                    - img "Clay" [ref=e1309]
+                    - generic [ref=e1310]: Clay
+                  - button "Skyla Skyla" [ref=e1311] [cursor=pointer]:
+                    - img "Skyla" [ref=e1312]
+                    - generic [ref=e1313]: Skyla
+                  - button "Brycen Brycen" [ref=e1314] [cursor=pointer]:
+                    - img "Brycen" [ref=e1315]
+                    - generic [ref=e1316]: Brycen
+                  - button "Drayden Drayden" [ref=e1317] [cursor=pointer]:
+                    - img "Drayden" [ref=e1318]
+                    - generic [ref=e1319]: Drayden
+                  - button "Roxie Roxie" [ref=e1320] [cursor=pointer]:
+                    - img "Roxie" [ref=e1321]
+                    - generic [ref=e1322]: Roxie
+                  - button "Marlon Marlon" [ref=e1323] [cursor=pointer]:
+                    - img "Marlon" [ref=e1324]
+                    - generic [ref=e1325]: Marlon
+                  - button "Clemont Clemont" [ref=e1326] [cursor=pointer]:
+                    - img "Clemont" [ref=e1327]
+                    - generic [ref=e1328]: Clemont
+                  - button "Korrina Korrina" [ref=e1329] [cursor=pointer]:
+                    - img "Korrina" [ref=e1330]
+                    - generic [ref=e1331]: Korrina
+                  - button "Ramos Ramos" [ref=e1332] [cursor=pointer]:
+                    - img "Ramos" [ref=e1333]
+                    - generic [ref=e1334]: Ramos
+                  - button "Valerie Valerie" [ref=e1335] [cursor=pointer]:
+                    - img "Valerie" [ref=e1336]
+                    - generic [ref=e1337]: Valerie
+                  - button "Olympia Olympia" [ref=e1338] [cursor=pointer]:
+                    - img "Olympia" [ref=e1339]
+                    - generic [ref=e1340]: Olympia
+                  - button "Wulfric Wulfric" [ref=e1341] [cursor=pointer]:
+                    - img "Wulfric" [ref=e1342]
+                    - generic [ref=e1343]: Wulfric
+                  - button "Lorelei Lorelei" [ref=e1344] [cursor=pointer]:
+                    - img "Lorelei" [ref=e1345]
+                    - generic [ref=e1346]: Lorelei
+                  - button "Bruno Bruno" [ref=e1347] [cursor=pointer]:
+                    - img "Bruno" [ref=e1348]
+                    - generic [ref=e1349]: Bruno
+                  - button "Agatha Agatha" [ref=e1350] [cursor=pointer]:
+                    - img "Agatha" [ref=e1351]
+                    - generic [ref=e1352]: Agatha
+                  - button "Lance Lance" [ref=e1353] [cursor=pointer]:
+                    - img "Lance" [ref=e1354]
+                    - generic [ref=e1355]: Lance
+                  - button "Blue Blue" [ref=e1356] [cursor=pointer]:
+                    - img "Blue" [ref=e1357]
+                    - generic [ref=e1358]: Blue
+                  - button "Will Will" [ref=e1359] [cursor=pointer]:
+                    - img "Will" [ref=e1360]
+                    - generic [ref=e1361]: Will
+                  - button "Karen Karen" [ref=e1362] [cursor=pointer]:
+                    - img "Karen" [ref=e1363]
+                    - generic [ref=e1364]: Karen
+                  - button "Sidney Sidney" [ref=e1365] [cursor=pointer]:
+                    - img "Sidney" [ref=e1366]
+                    - generic [ref=e1367]: Sidney
+                  - button "Phoebe Phoebe" [ref=e1368] [cursor=pointer]:
+                    - img "Phoebe" [ref=e1369]
+                    - generic [ref=e1370]: Phoebe
+                  - button "Glacia Glacia" [ref=e1371] [cursor=pointer]:
+                    - img "Glacia" [ref=e1372]
+                    - generic [ref=e1373]: Glacia
+                  - button "Drake Drake" [ref=e1374] [cursor=pointer]:
+                    - img "Drake" [ref=e1375]
+                    - generic [ref=e1376]: Drake
+                  - button "Steven Steven" [ref=e1377] [cursor=pointer]:
+                    - img "Steven" [ref=e1378]
+                    - generic [ref=e1379]: Steven
+                  - button "Wallace Wallace" [ref=e1380] [cursor=pointer]:
+                    - img "Wallace" [ref=e1381]
+                    - generic [ref=e1382]: Wallace
+                  - button "Aaron Aaron" [ref=e1383] [cursor=pointer]:
+                    - img "Aaron" [ref=e1384]
+                    - generic [ref=e1385]: Aaron
+                  - button "Bertha Bertha" [ref=e1386] [cursor=pointer]:
+                    - img "Bertha" [ref=e1387]
+                    - generic [ref=e1388]: Bertha
+                  - button "Flint Flint" [ref=e1389] [cursor=pointer]:
+                    - img "Flint" [ref=e1390]
+                    - generic [ref=e1391]: Flint
+                  - button "Lucian Lucian" [ref=e1392] [cursor=pointer]:
+                    - img "Lucian" [ref=e1393]
+                    - generic [ref=e1394]: Lucian
+                  - button "Cynthia Cynthia" [ref=e1395] [cursor=pointer]:
+                    - img "Cynthia" [ref=e1396]
+                    - generic [ref=e1397]: Cynthia
+                  - button "Shauntal Shauntal" [ref=e1398] [cursor=pointer]:
+                    - img "Shauntal" [ref=e1399]
+                    - generic [ref=e1400]: Shauntal
+                  - button "Marshal Marshal" [ref=e1401] [cursor=pointer]:
+                    - img "Marshal" [ref=e1402]
+                    - generic [ref=e1403]: Marshal
+                  - button "Grimsley Grimsley" [ref=e1404] [cursor=pointer]:
+                    - img "Grimsley" [ref=e1405]
+                    - generic [ref=e1406]: Grimsley
+                  - button "Caitlin Caitlin" [ref=e1407] [cursor=pointer]:
+                    - img "Caitlin" [ref=e1408]
+                    - generic [ref=e1409]: Caitlin
+                  - button "Alder Alder" [ref=e1410] [cursor=pointer]:
+                    - img "Alder" [ref=e1411]
+                    - generic [ref=e1412]: Alder
+                  - button "Iris Iris" [ref=e1413] [cursor=pointer]:
+                    - img "Iris" [ref=e1414]
+                    - generic [ref=e1415]: Iris
+                  - button "Diantha Diantha" [ref=e1416] [cursor=pointer]:
+                    - img "Diantha" [ref=e1417]
+                    - generic [ref=e1418]: Diantha
+                  - button "Leon Leon" [ref=e1419] [cursor=pointer]:
+                    - img "Leon" [ref=e1420]
+                    - generic [ref=e1421]: Leon
+                  - button "Archer Archer" [ref=e1422] [cursor=pointer]:
+                    - img "Archer" [ref=e1423]
+                    - generic [ref=e1424]: Archer
+                  - button "Ariana Ariana" [ref=e1425] [cursor=pointer]:
+                    - img "Ariana" [ref=e1426]
+                    - generic [ref=e1427]: Ariana
+                  - button "Proton Proton" [ref=e1428] [cursor=pointer]:
+                    - img "Proton" [ref=e1429]
+                    - generic [ref=e1430]: Proton
+                  - button "Petrel Petrel" [ref=e1431] [cursor=pointer]:
+                    - img "Petrel" [ref=e1432]
+                    - generic [ref=e1433]: Petrel
+                  - button "Archie Archie" [ref=e1434] [cursor=pointer]:
+                    - img "Archie" [ref=e1435]
+                    - generic [ref=e1436]: Archie
+                  - button "Maxie Maxie" [ref=e1437] [cursor=pointer]:
+                    - img "Maxie" [ref=e1438]
+                    - generic [ref=e1439]: Maxie
+                  - button "Courtney Courtney" [ref=e1440] [cursor=pointer]:
+                    - img "Courtney" [ref=e1441]
+                    - generic [ref=e1442]: Courtney
+                  - button "Tabitha Tabitha" [ref=e1443] [cursor=pointer]:
+                    - img "Tabitha" [ref=e1444]
+                    - generic [ref=e1445]: Tabitha
+                  - button "Matt Matt" [ref=e1446] [cursor=pointer]:
+                    - img "Matt" [ref=e1447]
+                    - generic [ref=e1448]: Matt
+                  - button "Cyrus Cyrus" [ref=e1449] [cursor=pointer]:
+                    - img "Cyrus" [ref=e1450]
+                    - generic [ref=e1451]: Cyrus
+                  - button "Mars Mars" [ref=e1452] [cursor=pointer]:
+                    - img "Mars" [ref=e1453]
+                    - generic [ref=e1454]: Mars
+                  - button "Jupiter Jupiter" [ref=e1455] [cursor=pointer]:
+                    - img "Jupiter" [ref=e1456]
+                    - generic [ref=e1457]: Jupiter
+                  - button "Saturn Saturn" [ref=e1458] [cursor=pointer]:
+                    - img "Saturn" [ref=e1459]
+                    - generic [ref=e1460]: Saturn
+                  - button "Charon Charon" [ref=e1461] [cursor=pointer]:
+                    - img "Charon" [ref=e1462]
+                    - generic [ref=e1463]: Charon
+                  - button "N N" [ref=e1464] [cursor=pointer]:
+                    - img "N" [ref=e1465]
+                    - generic [ref=e1466]: "N"
+                  - button "Ghetsis Ghetsis" [ref=e1467] [cursor=pointer]:
+                    - img "Ghetsis" [ref=e1468]
+                    - generic [ref=e1469]: Ghetsis
+                  - button "Colress Colress" [ref=e1470] [cursor=pointer]:
+                    - img "Colress" [ref=e1471]
+                    - generic [ref=e1472]: Colress
+                  - button "Zinzolin Zinzolin" [ref=e1473] [cursor=pointer]:
+                    - img "Zinzolin" [ref=e1474]
+                    - generic [ref=e1475]: Zinzolin
+                  - button "Lysandre Lysandre" [ref=e1476] [cursor=pointer]:
+                    - img "Lysandre" [ref=e1477]
+                    - generic [ref=e1478]: Lysandre
+                  - button "Guzma Guzma" [ref=e1479] [cursor=pointer]:
+                    - img "Guzma" [ref=e1480]
+                    - generic [ref=e1481]: Guzma
+                  - button "Plumeria Plumeria" [ref=e1482] [cursor=pointer]:
+                    - img "Plumeria" [ref=e1483]
+                    - generic [ref=e1484]: Plumeria
+                  - button "Lusamine Lusamine" [ref=e1485] [cursor=pointer]:
+                    - img "Lusamine" [ref=e1486]
+                    - generic [ref=e1487]: Lusamine
+                  - button "Faba Faba" [ref=e1488] [cursor=pointer]:
+                    - img "Faba" [ref=e1489]
+                    - generic [ref=e1490]: Faba
+                  - button "Rocket Grunt (M) Rocket Grunt (M)" [ref=e1491] [cursor=pointer]:
+                    - img "Rocket Grunt (M)" [ref=e1492]
+                    - generic [ref=e1493]: Rocket Grunt (M)
+                  - button "Rocket Grunt (F) Rocket Grunt (F)" [ref=e1494] [cursor=pointer]:
+                    - img "Rocket Grunt (F)" [ref=e1495]
+                    - generic [ref=e1496]: Rocket Grunt (F)
+                  - button "Aqua Grunt (M) Aqua Grunt (M)" [ref=e1497] [cursor=pointer]:
+                    - img "Aqua Grunt (M)" [ref=e1498]
+                    - generic [ref=e1499]: Aqua Grunt (M)
+                  - button "Aqua Grunt (F) Aqua Grunt (F)" [ref=e1500] [cursor=pointer]:
+                    - img "Aqua Grunt (F)" [ref=e1501]
+                    - generic [ref=e1502]: Aqua Grunt (F)
+                  - button "Magma Grunt (M) Magma Grunt (M)" [ref=e1503] [cursor=pointer]:
+                    - img "Magma Grunt (M)" [ref=e1504]
+                    - generic [ref=e1505]: Magma Grunt (M)
+                  - button "Magma Grunt (F) Magma Grunt (F)" [ref=e1506] [cursor=pointer]:
+                    - img "Magma Grunt (F)" [ref=e1507]
+                    - generic [ref=e1508]: Magma Grunt (F)
+                  - button "Galactic Grunt (M) Galactic Grunt (M)" [ref=e1509] [cursor=pointer]:
+                    - img "Galactic Grunt (M)" [ref=e1510]
+                    - generic [ref=e1511]: Galactic Grunt (M)
+                  - button "Galactic Grunt (F) Galactic Grunt (F)" [ref=e1512] [cursor=pointer]:
+                    - img "Galactic Grunt (F)" [ref=e1513]
+                    - generic [ref=e1514]: Galactic Grunt (F)
+                  - button "Plasma Grunt (M) Plasma Grunt (M)" [ref=e1515] [cursor=pointer]:
+                    - img "Plasma Grunt (M)" [ref=e1516]
+                    - generic [ref=e1517]: Plasma Grunt (M)
+                  - button "Plasma Grunt (F) Plasma Grunt (F)" [ref=e1518] [cursor=pointer]:
+                    - img "Plasma Grunt (F)" [ref=e1519]
+                    - generic [ref=e1520]: Plasma Grunt (F)
+                  - button "Flare Grunt (M) Flare Grunt (M)" [ref=e1521] [cursor=pointer]:
+                    - img "Flare Grunt (M)" [ref=e1522]
+                    - generic [ref=e1523]: Flare Grunt (M)
+                  - button "Flare Grunt (F) Flare Grunt (F)" [ref=e1524] [cursor=pointer]:
+                    - img "Flare Grunt (F)" [ref=e1525]
+                    - generic [ref=e1526]: Flare Grunt (F)
+                  - button "Skull Grunt (M) Skull Grunt (M)" [ref=e1527] [cursor=pointer]:
+                    - img "Skull Grunt (M)" [ref=e1528]
+                    - generic [ref=e1529]: Skull Grunt (M)
+                  - button "Skull Grunt (F) Skull Grunt (F)" [ref=e1530] [cursor=pointer]:
+                    - img "Skull Grunt (F)" [ref=e1531]
+                    - generic [ref=e1532]: Skull Grunt (F)
+                  - button "Ace Trainer Ace Trainer" [ref=e1533] [cursor=pointer]:
+                    - img "Ace Trainer" [ref=e1534]
+                    - generic [ref=e1535]: Ace Trainer
+                  - button "Backpacker Backpacker" [ref=e1536] [cursor=pointer]:
+                    - img "Backpacker" [ref=e1537]
+                    - generic [ref=e1538]: Backpacker
+                  - button "Biker Biker" [ref=e1539] [cursor=pointer]:
+                    - img "Biker" [ref=e1540]
+                    - generic [ref=e1541]: Biker
+                  - button "Black Belt Black Belt" [ref=e1542] [cursor=pointer]:
+                    - img "Black Belt" [ref=e1543]
+                    - generic [ref=e1544]: Black Belt
+                  - button "Camper Camper" [ref=e1545] [cursor=pointer]:
+                    - img "Camper" [ref=e1546]
+                    - generic [ref=e1547]: Camper
+                  - button "Cyclist Cyclist" [ref=e1548] [cursor=pointer]:
+                    - img "Cyclist" [ref=e1549]
+                    - generic [ref=e1550]: Cyclist
+                  - button "Fisherman Fisherman" [ref=e1551] [cursor=pointer]:
+                    - img "Fisherman" [ref=e1552]
+                    - generic [ref=e1553]: Fisherman
+                  - button "Gentleman Gentleman" [ref=e1554] [cursor=pointer]:
+                    - img "Gentleman" [ref=e1555]
+                    - generic [ref=e1556]: Gentleman
+                  - button "Hiker Hiker" [ref=e1557] [cursor=pointer]:
+                    - img "Hiker" [ref=e1558]
+                    - generic [ref=e1559]: Hiker
+                  - button "Hooligans Hooligans" [ref=e1560] [cursor=pointer]:
+                    - img "Hooligans" [ref=e1561]
+                    - generic [ref=e1562]: Hooligans
+                  - button "Janitor Janitor" [ref=e1563] [cursor=pointer]:
+                    - img "Janitor" [ref=e1564]
+                    - generic [ref=e1565]: Janitor
+                  - button "Pilot Pilot" [ref=e1566] [cursor=pointer]:
+                    - img "Pilot" [ref=e1567]
+                    - generic [ref=e1568]: Pilot
+                  - button "Pokefan (M) Pokefan (M)" [ref=e1569] [cursor=pointer]:
+                    - img "Pokefan (M)" [ref=e1570]
+                    - generic [ref=e1571]: Pokefan (M)
+                  - button "Poke Kid Poke Kid" [ref=e1572] [cursor=pointer]:
+                    - img "Poke Kid" [ref=e1573]
+                    - generic [ref=e1574]: Poke Kid
+                  - button "Preschooler (M) Preschooler (M)" [ref=e1575] [cursor=pointer]:
+                    - img "Preschooler (M)" [ref=e1576]
+                    - generic [ref=e1577]: Preschooler (M)
+                  - button "Psychic (M) Psychic (M)" [ref=e1578] [cursor=pointer]:
+                    - img "Psychic (M)" [ref=e1579]
+                    - generic [ref=e1580]: Psychic (M)
+                  - button "Rich Boy Rich Boy" [ref=e1581] [cursor=pointer]:
+                    - img "Rich Boy" [ref=e1582]
+                    - generic [ref=e1583]: Rich Boy
+                  - button "Roughneck Roughneck" [ref=e1584] [cursor=pointer]:
+                    - img "Roughneck" [ref=e1585]
+                    - generic [ref=e1586]: Roughneck
+                  - button "Sailor Sailor" [ref=e1587] [cursor=pointer]:
+                    - img "Sailor" [ref=e1588]
+                    - generic [ref=e1589]: Sailor
+                  - button "Scientist (M) Scientist (M)" [ref=e1590] [cursor=pointer]:
+                    - img "Scientist (M)" [ref=e1591]
+                    - generic [ref=e1592]: Scientist (M)
+                  - button "School Kid (M) School Kid (M)" [ref=e1593] [cursor=pointer]:
+                    - img "School Kid (M)" [ref=e1594]
+                    - generic [ref=e1595]: School Kid (M)
+                  - button "Swimmer (M) Swimmer (M)" [ref=e1596] [cursor=pointer]:
+                    - img "Swimmer (M)" [ref=e1597]
+                    - generic [ref=e1598]: Swimmer (M)
+                  - button "Veteran (M) Veteran (M)" [ref=e1599] [cursor=pointer]:
+                    - img "Veteran (M)" [ref=e1600]
+                    - generic [ref=e1601]: Veteran (M)
+                  - button "Waiter Waiter" [ref=e1602] [cursor=pointer]:
+                    - img "Waiter" [ref=e1603]
+                    - generic [ref=e1604]: Waiter
+                  - button "Worker Worker" [ref=e1605] [cursor=pointer]:
+                    - img "Worker" [ref=e1606]
+                    - generic [ref=e1607]: Worker
+                  - button "Youngster Youngster" [ref=e1608] [cursor=pointer]:
+                    - img "Youngster" [ref=e1609]
+                    - generic [ref=e1610]: Youngster
+                  - button "Ace Trainer (F) Ace Trainer (F)" [ref=e1611] [cursor=pointer]:
+                    - img "Ace Trainer (F)" [ref=e1612]
+                    - generic [ref=e1613]: Ace Trainer (F)
+                  - button "Backpacker (F) Backpacker (F)" [ref=e1614] [cursor=pointer]:
+                    - img "Backpacker (F)" [ref=e1615]
+                    - generic [ref=e1616]: Backpacker (F)
+                  - button "Battle Girl Battle Girl" [ref=e1617] [cursor=pointer]:
+                    - img "Battle Girl" [ref=e1618]
+                    - generic [ref=e1619]: Battle Girl
+                  - button "Beauty Beauty" [ref=e1620] [cursor=pointer]:
+                    - img "Beauty" [ref=e1621]
+                    - generic [ref=e1622]: Beauty
+                  - button "Cowgirl Cowgirl" [ref=e1623] [cursor=pointer]:
+                    - img "Cowgirl" [ref=e1624]
+                    - generic [ref=e1625]: Cowgirl
+                  - button "Cyclist (F) Cyclist (F)" [ref=e1626] [cursor=pointer]:
+                    - img "Cyclist (F)" [ref=e1627]
+                    - generic [ref=e1628]: Cyclist (F)
+                  - button "Fairy Tale Girl Fairy Tale Girl" [ref=e1629] [cursor=pointer]:
+                    - img "Fairy Tale Girl" [ref=e1630]
+                    - generic [ref=e1631]: Fairy Tale Girl
+                  - button "Lady Lady" [ref=e1632] [cursor=pointer]:
+                    - img "Lady" [ref=e1633]
+                    - generic [ref=e1634]: Lady
+                  - button "Lass Lass" [ref=e1635] [cursor=pointer]:
+                    - img "Lass" [ref=e1636]
+                    - generic [ref=e1637]: Lass
+                  - button "Madame Madame" [ref=e1638] [cursor=pointer]:
+                    - img "Madame" [ref=e1639]
+                    - generic [ref=e1640]: Madame
+                  - button "Maid Maid" [ref=e1641] [cursor=pointer]:
+                    - img "Maid" [ref=e1642]
+                    - generic [ref=e1643]: Maid
+                  - button "Nurse Nurse" [ref=e1644] [cursor=pointer]:
+                    - img "Nurse" [ref=e1645]
+                    - generic [ref=e1646]: Nurse
+                  - button "Parasol Lady Parasol Lady" [ref=e1647] [cursor=pointer]:
+                    - img "Parasol Lady" [ref=e1648]
+                    - generic [ref=e1649]: Parasol Lady
+                  - button "Pokefan (F) Pokefan (F)" [ref=e1650] [cursor=pointer]:
+                    - img "Pokefan (F)" [ref=e1651]
+                    - generic [ref=e1652]: Pokefan (F)
+                  - button "Preschooler (F) Preschooler (F)" [ref=e1653] [cursor=pointer]:
+                    - img "Preschooler (F)" [ref=e1654]
+                    - generic [ref=e1655]: Preschooler (F)
+                  - button "Psychic (F) Psychic (F)" [ref=e1656] [cursor=pointer]:
+                    - img "Psychic (F)" [ref=e1657]
+                    - generic [ref=e1658]: Psychic (F)
+                  - button "School Kid (F) School Kid (F)" [ref=e1659] [cursor=pointer]:
+                    - img "School Kid (F)" [ref=e1660]
+                    - generic [ref=e1661]: School Kid (F)
+                  - button "Scientist (F) Scientist (F)" [ref=e1662] [cursor=pointer]:
+                    - img "Scientist (F)" [ref=e1663]
+                    - generic [ref=e1664]: Scientist (F)
+                  - button "Swimmer (F) Swimmer (F)" [ref=e1665] [cursor=pointer]:
+                    - img "Swimmer (F)" [ref=e1666]
+                    - generic [ref=e1667]: Swimmer (F)
+                  - button "Veteran (F) Veteran (F)" [ref=e1668] [cursor=pointer]:
+                    - img "Veteran (F)" [ref=e1669]
+                    - generic [ref=e1670]: Veteran (F)
+                  - button "Waitress Waitress" [ref=e1671] [cursor=pointer]:
+                    - img "Waitress" [ref=e1672]
+                    - generic [ref=e1673]: Waitress
+                  - button "Aroma Lady Aroma Lady" [ref=e1674] [cursor=pointer]:
+                    - img "Aroma Lady" [ref=e1675]
+                    - generic [ref=e1676]: Aroma Lady
+                  - button "Bird Keeper Bird Keeper" [ref=e1677] [cursor=pointer]:
+                    - img "Bird Keeper" [ref=e1678]
+                    - generic [ref=e1679]: Bird Keeper
+                  - button "Bug Catcher Bug Catcher" [ref=e1680] [cursor=pointer]:
+                    - img "Bug Catcher" [ref=e1681]
+                    - generic [ref=e1682]: Bug Catcher
+                  - button "Bug Maniac Bug Maniac" [ref=e1683] [cursor=pointer]:
+                    - img "Bug Maniac" [ref=e1684]
+                    - generic [ref=e1685]: Bug Maniac
+                  - button "Channeler Channeler" [ref=e1686] [cursor=pointer]:
+                    - img "Channeler" [ref=e1687]
+                    - generic [ref=e1688]: Channeler
+                  - button "Collector Collector" [ref=e1689] [cursor=pointer]:
+                    - img "Collector" [ref=e1690]
+                    - generic [ref=e1691]: Collector
+                  - button "Dragon Tamer Dragon Tamer" [ref=e1692] [cursor=pointer]:
+                    - img "Dragon Tamer" [ref=e1693]
+                    - generic [ref=e1694]: Dragon Tamer
+                  - button "Fire Breather Fire Breather" [ref=e1695] [cursor=pointer]:
+                    - img "Fire Breather" [ref=e1696]
+                    - generic [ref=e1697]: Fire Breather
+                  - button "Hex Maniac Hex Maniac" [ref=e1698] [cursor=pointer]:
+                    - img "Hex Maniac" [ref=e1699]
+                    - generic [ref=e1700]: Hex Maniac
+                  - button "Ninja Boy Ninja Boy" [ref=e1701] [cursor=pointer]:
+                    - img "Ninja Boy" [ref=e1702]
+                    - generic [ref=e1703]: Ninja Boy
+                  - button "Pokemon Breeder Pokemon Breeder" [ref=e1704] [cursor=pointer]:
+                    - img "Pokemon Breeder" [ref=e1705]
+                    - generic [ref=e1706]: Pokemon Breeder
+                  - button "Pokemon Breeder (F) Pokemon Breeder (F)" [ref=e1707] [cursor=pointer]:
+                    - img "Pokemon Breeder (F)" [ref=e1708]
+                    - generic [ref=e1709]: Pokemon Breeder (F)
+                  - button "Pokemon Ranger (M) Pokemon Ranger (M)" [ref=e1710] [cursor=pointer]:
+                    - img "Pokemon Ranger (M)" [ref=e1711]
+                    - generic [ref=e1712]: Pokemon Ranger (M)
+                  - button "Pokemon Ranger (F) Pokemon Ranger (F)" [ref=e1713] [cursor=pointer]:
+                    - img "Pokemon Ranger (F)" [ref=e1714]
+                    - generic [ref=e1715]: Pokemon Ranger (F)
+                  - button "Ruin Maniac Ruin Maniac" [ref=e1716] [cursor=pointer]:
+                    - img "Ruin Maniac" [ref=e1717]
+                    - generic [ref=e1718]: Ruin Maniac
+                  - button "Super Nerd Super Nerd" [ref=e1719] [cursor=pointer]:
+                    - img "Super Nerd" [ref=e1720]
+                    - generic [ref=e1721]: Super Nerd
+                  - button "Triathlete Triathlete" [ref=e1722] [cursor=pointer]:
+                    - img "Triathlete" [ref=e1723]
+                    - generic [ref=e1724]: Triathlete
+                  - button "Artist Artist" [ref=e1725] [cursor=pointer]:
+                    - img "Artist" [ref=e1726]
+                    - generic [ref=e1727]: Artist
+                  - button "Baker Baker" [ref=e1728] [cursor=pointer]:
+                    - img "Baker" [ref=e1729]
+                    - generic [ref=e1730]: Baker
+                  - button "Bellhop Bellhop" [ref=e1731] [cursor=pointer]:
+                    - img "Bellhop" [ref=e1732]
+                    - generic [ref=e1733]: Bellhop
+                  - button "Butler Butler" [ref=e1734] [cursor=pointer]:
+                    - img "Butler" [ref=e1735]
+                    - generic [ref=e1736]: Butler
+                  - button "Chef Chef" [ref=e1737] [cursor=pointer]:
+                    - img "Chef" [ref=e1738]
+                    - generic [ref=e1739]: Chef
+                  - button "Clown Clown" [ref=e1740] [cursor=pointer]:
+                    - img "Clown" [ref=e1741]
+                    - generic [ref=e1742]: Clown
+                  - button "Dancer Dancer" [ref=e1743] [cursor=pointer]:
+                    - img "Dancer" [ref=e1744]
+                    - generic [ref=e1745]: Dancer
+                  - button "Delinquent Delinquent" [ref=e1746] [cursor=pointer]:
+                    - img "Delinquent" [ref=e1747]
+                    - generic [ref=e1748]: Delinquent
+                  - button "Doctor Doctor" [ref=e1749] [cursor=pointer]:
+                    - img "Doctor" [ref=e1750]
+                    - generic [ref=e1751]: Doctor
+                  - button "Engineer Engineer" [ref=e1752] [cursor=pointer]:
+                    - img "Engineer" [ref=e1753]
+                    - generic [ref=e1754]: Engineer
+                  - button "Guitarist Guitarist" [ref=e1755] [cursor=pointer]:
+                    - img "Guitarist" [ref=e1756]
+                    - generic [ref=e1757]: Guitarist
+                  - button "Juggler Juggler" [ref=e1758] [cursor=pointer]:
+                    - img "Juggler" [ref=e1759]
+                    - generic [ref=e1760]: Juggler
+                  - button "Musician Musician" [ref=e1761] [cursor=pointer]:
+                    - img "Musician" [ref=e1762]
+                    - generic [ref=e1763]: Musician
+                  - button "Office Worker Office Worker" [ref=e1764] [cursor=pointer]:
+                    - img "Office Worker" [ref=e1765]
+                    - generic [ref=e1766]: Office Worker
+                  - button "Policeman Policeman" [ref=e1767] [cursor=pointer]:
+                    - img "Policeman" [ref=e1768]
+                    - generic [ref=e1769]: Policeman
+                  - button "Reporter Reporter" [ref=e1770] [cursor=pointer]:
+                    - img "Reporter" [ref=e1771]
+                    - generic [ref=e1772]: Reporter
+                  - button "Tourist Tourist" [ref=e1773] [cursor=pointer]:
+                    - img "Tourist" [ref=e1774]
+                    - generic [ref=e1775]: Tourist
+                  - button "Tumbler Tumbler" [ref=e1776] [cursor=pointer]:
+                    - img "Tumbler" [ref=e1777]
+                    - generic [ref=e1778]: Tumbler
+                  - button "Young Couple Young Couple" [ref=e1779] [cursor=pointer]:
+                    - img "Young Couple" [ref=e1780]
+                    - generic [ref=e1781]: Young Couple
+              - generic [ref=e1782]:
+                - button "Clear Selection" [ref=e1783] [cursor=pointer]
+                - generic [ref=e1784]:
+                  - button "Cancel" [ref=e1785] [cursor=pointer]
+                  - button "Select" [ref=e1786] [cursor=pointer]
+          - generic [ref=e716]:
+            - heading "Background & Skills" [level=3] [ref=e718]
+            - generic [ref=e720]:
+              - generic [ref=e721]: Background
+              - combobox [ref=e722] [cursor=pointer]:
+                - option "-- Select a Background --" [selected]
+                - option "Custom Background"
+                - option "---" [disabled]
+                - option "Fitness Training"
+                - option "Book Worm"
+                - option "Hermit"
+                - option "Old Timer"
+                - option "Quick and Small"
+                - option "Rough"
+                - option "Silver Tongued"
+                - option "Street Rattata"
+                - option "Super Nerd"
+                - option "Wild Child"
+                - option "At Least He's Pretty"
+            - generic [ref=e723]:
+              - heading "Skills" [level=4] [ref=e724]
+              - generic [ref=e725]:
+                - heading "Body" [level=5] [ref=e726]
+                - generic [ref=e727]:
+                  - generic [ref=e728]:
+                    - generic [ref=e729]: Acrobatics
+                    - generic [ref=e730]: Untrained
+                  - generic [ref=e731]:
+                    - generic [ref=e732]: Athletics
+                    - generic [ref=e733]: Untrained
+                  - generic [ref=e734]:
+                    - generic [ref=e735]: Combat
+                    - generic [ref=e736]: Untrained
+                  - generic [ref=e737]:
+                    - generic [ref=e738]: Intimidate
+                    - generic [ref=e739]: Untrained
+                  - generic [ref=e740]:
+                    - generic [ref=e741]: Stealth
+                    - generic [ref=e742]: Untrained
+                  - generic [ref=e743]:
+                    - generic [ref=e744]: Survival
+                    - generic [ref=e745]: Untrained
+              - generic [ref=e746]:
+                - heading "Mind" [level=5] [ref=e747]
+                - generic [ref=e748]:
+                  - generic [ref=e749]:
+                    - generic [ref=e750]: General Ed
+                    - generic [ref=e751]: Untrained
+                  - generic [ref=e752]:
+                    - generic [ref=e753]: Medicine Ed
+                    - generic [ref=e754]: Untrained
+                  - generic [ref=e755]:
+                    - generic [ref=e756]: Occult Ed
+                    - generic [ref=e757]: Untrained
+                  - generic [ref=e758]:
+                    - generic [ref=e759]: Pokemon Ed
+                    - generic [ref=e760]: Untrained
+                  - generic [ref=e761]:
+                    - generic [ref=e762]: Technology Ed
+                    - generic [ref=e763]: Untrained
+                  - generic [ref=e764]:
+                    - generic [ref=e765]: Guile
+                    - generic [ref=e766]: Untrained
+                  - generic [ref=e767]:
+                    - generic [ref=e768]: Perception
+                    - generic [ref=e769]: Untrained
+              - generic [ref=e770]:
+                - heading "Spirit" [level=5] [ref=e771]
+                - generic [ref=e772]:
+                  - generic [ref=e773]:
+                    - generic [ref=e774]: Charm
+                    - generic [ref=e775]: Untrained
+                  - generic [ref=e776]:
+                    - generic [ref=e777]: Command
+                    - generic [ref=e778]: Untrained
+                  - generic [ref=e779]:
+                    - generic [ref=e780]: Focus
+                    - generic [ref=e781]: Untrained
+                  - generic [ref=e782]:
+                    - generic [ref=e783]: Intuition
+                    - generic [ref=e784]: Untrained
+            - generic [ref=e785]:
+              - generic [ref=e786]: Background should set exactly 1 skill to Adept (found 0)
+              - generic [ref=e787]: Background should set exactly 1 skill to Novice (found 0)
+              - generic [ref=e788]: Background should set exactly 3 skills to Pathetic (found 0)
+          - generic [ref=e790]:
+            - generic [ref=e791]:
+              - heading "Edges" [level=3] [ref=e792]
+              - generic [ref=e793]: 0 / 4
+            - generic [ref=e794]:
+              - textbox "Enter edge name..." [ref=e795]
+              - button "Add Edge" [disabled] [ref=e796]
+            - button "Add Skill Edge" [ref=e798] [cursor=pointer]
+            - generic [ref=e800]: Level 1 trainers should have 4 edges (4 starting edges) (have 0)
+          - generic [ref=e802]:
+            - heading "Classes & Features" [level=3] [ref=e804]
+            - generic [ref=e805]:
+              - generic [ref=e806]:
+                - heading "Trainer Classes" [level=4] [ref=e807]
+                - generic [ref=e808]: 0 / 4
+              - generic [ref=e809]:
+                - textbox "Search classes..." [ref=e811]
+                - generic [ref=e812]:
+                  - generic [ref=e813]:
+                    - heading "Introductory" [level=5] [ref=e814]
+                    - generic [ref=e815]:
+                      - button "Ace Trainer Command" [ref=e816] [cursor=pointer]:
+                        - generic [ref=e817]: Ace Trainer
+                        - generic [ref=e818]: Command
+                      - button "Capture Specialist Acrobatics, Athletics, Stealth, Survival, Perception, Guile" [ref=e819] [cursor=pointer]:
+                        - generic [ref=e820]: Capture Specialist
+                        - generic [ref=e821]: Acrobatics, Athletics, Stealth, Survival, Perception, Guile
+                      - button "Commander Command" [ref=e822] [cursor=pointer]:
+                        - generic [ref=e823]: Commander
+                        - generic [ref=e824]: Command
+                      - button "Coordinator Charm, Command, Guile, Intimidate, Intuition" [ref=e825] [cursor=pointer]:
+                        - generic [ref=e826]: Coordinator
+                        - generic [ref=e827]: Charm, Command, Guile, Intimidate, Intuition
+                      - button "Hobbyist General Ed, Perception" [ref=e828] [cursor=pointer]:
+                        - generic [ref=e829]: Hobbyist
+                        - generic [ref=e830]: General Ed, Perception
+                      - button "Mentor Charm, Intuition, Intimidate, Pokemon Ed" [ref=e831] [cursor=pointer]:
+                        - generic [ref=e832]: Mentor
+                        - generic [ref=e833]: Charm, Intuition, Intimidate, Pokemon Ed
+                  - generic [ref=e834]:
+                    - heading "Battling Style" [level=5] [ref=e835]
+                    - generic [ref=e836]:
+                      - button "Cheerleader Charm" [ref=e837] [cursor=pointer]:
+                        - generic [ref=e838]: Cheerleader
+                        - generic [ref=e839]: Charm
+                      - button "Duelist Focus" [ref=e840] [cursor=pointer]:
+                        - generic [ref=e841]: Duelist
+                        - generic [ref=e842]: Focus
+                      - button "Enduring Soul Athletics, Focus" [ref=e843] [cursor=pointer]:
+                        - generic [ref=e844]: Enduring Soul
+                        - generic [ref=e845]: Athletics, Focus
+                      - button "Juggler Acrobatics, Guile" [ref=e846] [cursor=pointer]:
+                        - generic [ref=e847]: Juggler
+                        - generic [ref=e848]: Acrobatics, Guile
+                      - button "Rider Acrobatics, Athletics" [ref=e849] [cursor=pointer]:
+                        - generic [ref=e850]: Rider
+                        - generic [ref=e851]: Acrobatics, Athletics
+                      - button "Taskmaster Intimidate" [ref=e852] [cursor=pointer]:
+                        - generic [ref=e853]: Taskmaster
+                        - generic [ref=e854]: Intimidate
+                      - button "Trickster Guile" [ref=e855] [cursor=pointer]:
+                        - generic [ref=e856]: Trickster
+                        - generic [ref=e857]: Guile
+                  - generic [ref=e858]:
+                    - heading "Specialist Team" [level=5] [ref=e859]
+                    - generic [ref=e860]:
+                      - button "Stat Ace [Branch] Command, Focus" [ref=e861] [cursor=pointer]:
+                        - generic [ref=e862]: Stat Ace
+                        - generic "Can be taken with different specializations" [ref=e863]: "[Branch]"
+                        - generic [ref=e864]: Command, Focus
+                      - button "Style Expert [Branch] Charm, Command, Guile, Intimidate, Intuition" [ref=e865] [cursor=pointer]:
+                        - generic [ref=e866]: Style Expert
+                        - generic "Can be taken with different specializations" [ref=e867]: "[Branch]"
+                        - generic [ref=e868]: Charm, Command, Guile, Intimidate, Intuition
+                      - button "Type Ace [Branch]" [ref=e869] [cursor=pointer]:
+                        - generic [ref=e870]: Type Ace
+                        - generic "Can be taken with different specializations" [ref=e871]: "[Branch]"
+                  - generic [ref=e872]:
+                    - heading "Professional" [level=5] [ref=e873]
+                    - generic [ref=e874]:
+                      - button "Chef Intuition" [ref=e875] [cursor=pointer]:
+                        - generic [ref=e876]: Chef
+                        - generic [ref=e877]: Intuition
+                      - button "Chronicler Perception" [ref=e878] [cursor=pointer]:
+                        - generic [ref=e879]: Chronicler
+                        - generic [ref=e880]: Perception
+                      - button "Fashionista Charm, Command, Guile, Intimidate, Intuition" [ref=e881] [cursor=pointer]:
+                        - generic [ref=e882]: Fashionista
+                        - generic [ref=e883]: Charm, Command, Guile, Intimidate, Intuition
+                      - button "Researcher [Branch] General Ed, Medicine Ed, Occult Ed, Pokemon Ed, Technology Ed, Survival" [ref=e884] [cursor=pointer]:
+                        - generic [ref=e885]: Researcher
+                        - generic "Can be taken with different specializations" [ref=e886]: "[Branch]"
+                        - generic [ref=e887]: General Ed, Medicine Ed, Occult Ed, Pokemon Ed, Technology Ed, Survival
+                      - button "Survivalist Survival" [ref=e888] [cursor=pointer]:
+                        - generic [ref=e889]: Survivalist
+                        - generic [ref=e890]: Survival
+                  - generic [ref=e891]:
+                    - heading "Fighter" [level=5] [ref=e892]
+                    - generic [ref=e893]:
+                      - button "Athlete Athletics" [ref=e894] [cursor=pointer]:
+                        - generic [ref=e895]: Athlete
+                        - generic [ref=e896]: Athletics
+                      - button "Dancer Acrobatics, Athletics, Charm" [ref=e897] [cursor=pointer]:
+                        - generic [ref=e898]: Dancer
+                        - generic [ref=e899]: Acrobatics, Athletics, Charm
+                      - button "Hunter Stealth, Survival" [ref=e900] [cursor=pointer]:
+                        - generic [ref=e901]: Hunter
+                        - generic [ref=e902]: Stealth, Survival
+                      - button "Martial Artist Combat" [ref=e903] [cursor=pointer]:
+                        - generic [ref=e904]: Martial Artist
+                        - generic [ref=e905]: Combat
+                      - button "Musician Charm, Focus" [ref=e906] [cursor=pointer]:
+                        - generic [ref=e907]: Musician
+                        - generic [ref=e908]: Charm, Focus
+                      - button "Provocateur Charm, Guile, Intimidate" [ref=e909] [cursor=pointer]:
+                        - generic [ref=e910]: Provocateur
+                        - generic [ref=e911]: Charm, Guile, Intimidate
+                      - button "Rogue Acrobatics, Athletics, Stealth" [ref=e912] [cursor=pointer]:
+                        - generic [ref=e913]: Rogue
+                        - generic [ref=e914]: Acrobatics, Athletics, Stealth
+                      - button "Roughneck Intimidate" [ref=e915] [cursor=pointer]:
+                        - generic [ref=e916]: Roughneck
+                        - generic [ref=e917]: Intimidate
+                      - button "Tumbler Acrobatics" [ref=e918] [cursor=pointer]:
+                        - generic [ref=e919]: Tumbler
+                        - generic [ref=e920]: Acrobatics
+                  - generic [ref=e921]:
+                    - heading "Supernatural" [level=5] [ref=e922]
+                    - generic [ref=e923]:
+                      - button "Aura Guardian Intuition" [ref=e924] [cursor=pointer]:
+                        - generic [ref=e925]: Aura Guardian
+                        - generic [ref=e926]: Intuition
+                      - button "Channeler Intuition" [ref=e927] [cursor=pointer]:
+                        - generic [ref=e928]: Channeler
+                        - generic [ref=e929]: Intuition
+                      - button "Hex Maniac Occult Ed" [ref=e930] [cursor=pointer]:
+                        - generic [ref=e931]: Hex Maniac
+                        - generic [ref=e932]: Occult Ed
+                      - button "Ninja Combat, Stealth" [ref=e933] [cursor=pointer]:
+                        - generic [ref=e934]: Ninja
+                        - generic [ref=e935]: Combat, Stealth
+                      - button "Oracle Intuition, Perception" [ref=e936] [cursor=pointer]:
+                        - generic [ref=e937]: Oracle
+                        - generic [ref=e938]: Intuition, Perception
+                      - button "Sage Occult Ed" [ref=e939] [cursor=pointer]:
+                        - generic [ref=e940]: Sage
+                        - generic [ref=e941]: Occult Ed
+                      - button "Telekinetic Focus" [ref=e942] [cursor=pointer]:
+                        - generic [ref=e943]: Telekinetic
+                        - generic [ref=e944]: Focus
+                      - button "Telepath Focus, Intuition" [ref=e945] [cursor=pointer]:
+                        - generic [ref=e946]: Telepath
+                        - generic [ref=e947]: Focus, Intuition
+                      - button "Warper Focus, Guile" [ref=e948] [cursor=pointer]:
+                        - generic [ref=e949]: Warper
+                        - generic [ref=e950]: Focus, Guile
+            - generic [ref=e951]:
+              - generic [ref=e952]:
+                - heading "Features" [level=4] [ref=e953]
+                - generic [ref=e954]: 0 / 4 (+1 Training)
+              - generic [ref=e955]:
+                - textbox "Enter feature name..." [ref=e956]
+                - button "Add" [disabled] [ref=e957]
+              - generic [ref=e958]:
+                - generic [ref=e959]: Training Feature (free, no prerequisites)
+                - textbox "Enter training feature name..." [ref=e960]
+            - generic [ref=e962]: Level 1 trainers should have 5 features (4 + 1 Training) (have 0)
+          - generic [ref=e964]:
+            - generic [ref=e965]:
+              - heading "Combat Stats" [level=3] [ref=e966]
+              - generic [ref=e967]:
+                - text: "Points Remaining:"
+                - strong [ref=e968]: "10"
+                - text: / 10
+            - generic [ref=e969]:
+              - generic [ref=e970]:
+                - generic [ref=e971]: HP
+                - generic [ref=e972]:
+                  - generic [ref=e973]: "10"
+                  - generic [ref=e974]: +
+                  - button "-" [disabled] [ref=e975]
+                  - generic [ref=e976]: "0"
+                  - button "+" [ref=e977] [cursor=pointer]
+                  - generic [ref=e978]: =
+                  - generic [ref=e979]: "10"
+              - generic [ref=e980]:
+                - generic [ref=e981]: Attack
+                - generic [ref=e982]:
+                  - generic [ref=e983]: "5"
+                  - generic [ref=e984]: +
+                  - button "-" [disabled] [ref=e985]
+                  - generic [ref=e986]: "0"
+                  - button "+" [ref=e987] [cursor=pointer]
+                  - generic [ref=e988]: =
+                  - generic [ref=e989]: "5"
+              - generic [ref=e990]:
+                - generic [ref=e991]: Defense
+                - generic [ref=e992]:
+                  - generic [ref=e993]: "5"
+                  - generic [ref=e994]: +
+                  - button "-" [disabled] [ref=e995]
+                  - generic [ref=e996]: "0"
+                  - button "+" [ref=e997] [cursor=pointer]
+                  - generic [ref=e998]: =
+                  - generic [ref=e999]: "5"
+              - generic [ref=e1000]:
+                - generic [ref=e1001]: Sp. Attack
+                - generic [ref=e1002]:
+                  - generic [ref=e1003]: "5"
+                  - generic [ref=e1004]: +
+                  - button "-" [disabled] [ref=e1005]
+                  - generic [ref=e1006]: "0"
+                  - button "+" [ref=e1007] [cursor=pointer]
+                  - generic [ref=e1008]: =
+                  - generic [ref=e1009]: "5"
+              - generic [ref=e1010]:
+                - generic [ref=e1011]: Sp. Defense
+                - generic [ref=e1012]:
+                  - generic [ref=e1013]: "5"
+                  - generic [ref=e1014]: +
+                  - button "-" [disabled] [ref=e1015]
+                  - generic [ref=e1016]: "0"
+                  - button "+" [ref=e1017] [cursor=pointer]
+                  - generic [ref=e1018]: =
+                  - generic [ref=e1019]: "5"
+              - generic [ref=e1020]:
+                - generic [ref=e1021]: Speed
+                - generic [ref=e1022]:
+                  - generic [ref=e1023]: "5"
+                  - generic [ref=e1024]: +
+                  - button "-" [disabled] [ref=e1025]
+                  - generic [ref=e1026]: "0"
+                  - button "+" [ref=e1027] [cursor=pointer]
+                  - generic [ref=e1028]: =
+                  - generic [ref=e1029]: "5"
+            - generic [ref=e1030]:
+              - heading "Derived Stats" [level=4] [ref=e1031]
+              - generic [ref=e1032]:
+                - generic [ref=e1033]:
+                  - generic [ref=e1034]: Max HP
+                  - generic [ref=e1035]: "42"
+                - generic [ref=e1036]:
+                  - generic [ref=e1037]: Physical Evasion
+                  - generic [ref=e1038]: "1"
+                - generic [ref=e1039]:
+                  - generic [ref=e1040]: Special Evasion
+                  - generic [ref=e1041]: "1"
+                - generic [ref=e1042]:
+                  - generic [ref=e1043]: Speed Evasion
+                  - generic [ref=e1044]: "1"
+            - generic [ref=e1046]: Level 1 trainers should allocate exactly 10 stat points (currently 0)
+          - generic [ref=e1048]:
+            - button "Biography" [ref=e1049] [cursor=pointer]:
+              - heading "Biography" [level=3] [ref=e1050]
+              - img [ref=e1052]
+            - generic [ref=e1054]:
+              - generic [ref=e1055]:
+                - generic [ref=e1056]:
+                  - generic [ref=e1057]: Age
+                  - spinbutton [ref=e1058]
+                - generic [ref=e1059]:
+                  - generic [ref=e1060]: Gender
+                  - textbox "Any value (PTU allows any)" [ref=e1061]
+              - generic [ref=e1062]:
+                - generic [ref=e1063]:
+                  - generic [ref=e1064]: Height
+                  - generic [ref=e1065]:
+                    - spinbutton [ref=e1066]
+                    - generic [ref=e1067]: cm
+                - generic [ref=e1068]:
+                  - generic [ref=e1069]: Weight
+                  - generic [ref=e1070]:
+                    - spinbutton [ref=e1071]
+                    - generic [ref=e1072]: kg
+              - generic [ref=e1073]:
+                - generic [ref=e1074]: Background Story
+                - textbox "Character background and history..." [ref=e1075]
+              - generic [ref=e1076]:
+                - generic [ref=e1077]: Personality
+                - textbox "Character personality traits..." [ref=e1078]
+              - generic [ref=e1079]:
+                - generic [ref=e1080]: Goals
+                - textbox "Character goals and aspirations..." [ref=e1081]
+              - generic [ref=e1082]:
+                - generic [ref=e1083]: Money (default 5,000 for level 1, PTU p. 17)
+                - generic [ref=e1084]:
+                  - spinbutton [ref=e1085]: "5000"
+                  - generic [ref=e1086]: P
+          - generic [ref=e1087]:
+            - heading "Notes" [level=3] [ref=e1088]
+            - textbox "Additional notes..." [ref=e1089]
+          - generic [ref=e1090]:
+            - heading "Validation Summary" [level=3] [ref=e1091]
+            - generic [ref=e1092]:
+              - generic [ref=e1093]: stats Level 1 trainers should allocate exactly 10 stat points (currently 0)
+              - generic [ref=e1094]: skills Background should set exactly 1 skill to Adept (found 0)
+              - generic [ref=e1095]: skills Background should set exactly 1 skill to Novice (found 0)
+              - generic [ref=e1096]: skills Background should set exactly 3 skills to Pathetic (found 0)
+              - generic [ref=e1097]: edges Level 1 trainers should have 4 edges (4 starting edges) (have 0)
+              - generic [ref=e1098]: features Level 1 trainers should have 5 features (4 + 1 Training) (have 0)
+          - button "Create Human" [ref=e1100] [cursor=pointer]
+  - generic [ref=e128]:
+    - button "Toggle Nuxt DevTools" [ref=e129] [cursor=pointer]:
+      - img [ref=e130]
+    - generic "Page load time" [ref=e133]:
+      - generic [ref=e134]: "843"
+      - generic [ref=e135]: ms
+    - button "Toggle Component Inspector" [ref=e137] [cursor=pointer]:
+      - img [ref=e138]

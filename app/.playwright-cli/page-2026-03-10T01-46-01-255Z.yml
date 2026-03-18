@@ -1,0 +1,512 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e7]:
+        - heading "Rotom Table" [level=1] [ref=e8]
+        - generic [ref=e9]: GM View
+      - navigation [ref=e10]:
+        - link "Encounter" [ref=e11] [cursor=pointer]:
+          - /url: /gm
+          - generic [ref=e12]: Encounter
+        - link "Encounters" [ref=e13] [cursor=pointer]:
+          - /url: /gm/encounters
+          - generic [ref=e14]: Encounters
+        - link "Scenes" [ref=e15] [cursor=pointer]:
+          - /url: /gm/scenes
+          - img [ref=e16]
+          - generic [ref=e19]: Scenes
+        - link "Habitats" [ref=e20] [cursor=pointer]:
+          - /url: /gm/habitats
+          - generic [ref=e21]: Habitats
+        - link "Sheets" [ref=e22] [cursor=pointer]:
+          - /url: /gm/sheets
+          - generic [ref=e23]: Sheets
+        - link "Create" [ref=e24] [cursor=pointer]:
+          - /url: /gm/create
+          - generic [ref=e25]: Create
+        - link "Map" [ref=e26] [cursor=pointer]:
+          - /url: /gm/map
+          - generic [ref=e27]: Map
+      - generic [ref=e28]:
+        - button "Connect" [ref=e30] [cursor=pointer]:
+          - img [ref=e31]
+          - generic [ref=e34]: Connect
+        - generic [ref=e35]:
+          - generic [ref=e36]: "Group View:"
+          - generic [ref=e37]:
+            - button "Lobby" [ref=e38] [cursor=pointer]:
+              - img [ref=e39]
+            - button "Scene" [ref=e42] [cursor=pointer]:
+              - img [ref=e43]
+            - button "Encounter" [ref=e46] [cursor=pointer]:
+              - img [ref=e47]
+            - button "Map" [ref=e50] [cursor=pointer]:
+              - img [ref=e51]
+        - button "Advance Day" [ref=e54] [cursor=pointer]:
+          - generic [ref=e55]: Advance Day
+        - link "Group View" [ref=e56] [cursor=pointer]:
+          - /url: /group
+          - generic [ref=e57]: Group View
+    - main [ref=e58]:
+      - generic [ref=e59]:
+        - generic [ref=e60]:
+          - link "← Back to Sheets" [ref=e61] [cursor=pointer]:
+            - /url: /gm/sheets
+          - heading "Create Character" [level=2] [ref=e62]
+        - generic [ref=e63]:
+          - button "Human Character" [ref=e64] [cursor=pointer]:
+            - generic [ref=e66]: Human Character
+          - button "Pokemon" [ref=e67] [cursor=pointer]:
+            - generic [ref=e69]: Pokemon
+        - generic [ref=e70]:
+          - button "Quick Create Minimal NPC scaffolding" [ref=e71] [cursor=pointer]:
+            - generic [ref=e72]:
+              - generic [ref=e73]: Quick Create
+              - generic [ref=e74]: Minimal NPC scaffolding
+          - button "Full Create PTU-compliant multi-section" [ref=e75] [cursor=pointer]:
+            - generic [ref=e76]:
+              - generic [ref=e77]: Full Create
+              - generic [ref=e78]: PTU-compliant multi-section
+        - generic [ref=e142]:
+          - generic [ref=e143]:
+            - generic [ref=e144]:
+              - img [ref=e146]
+              - generic [ref=e148]: Basic Info
+              - generic [ref=e149]: Name required
+            - generic [ref=e150]:
+              - img [ref=e152]
+              - generic [ref=e154]: Background & Skills
+              - generic [ref=e155]: No background
+            - generic [ref=e156]:
+              - img [ref=e158]
+              - generic [ref=e160]: Edges
+              - generic [ref=e161]: 0/4
+            - generic [ref=e162]:
+              - img [ref=e164]
+              - generic [ref=e166]: Classes & Features
+              - generic [ref=e167]: 0 classes, 0 features
+            - generic [ref=e168]:
+              - img [ref=e170]
+              - generic [ref=e172]: Combat Stats
+              - generic [ref=e173]: 0/10 points
+            - generic [ref=e174]:
+              - img [ref=e176]
+              - generic [ref=e178]: Biography
+              - generic [ref=e179]: Optional
+          - generic [ref=e180]:
+            - heading "Basic Info" [level=3] [ref=e181]
+            - generic [ref=e182]:
+              - generic [ref=e183]:
+                - generic [ref=e184]: Name *
+                - textbox [ref=e185]
+              - generic [ref=e186]:
+                - generic [ref=e187]: Character Type
+                - combobox [ref=e188] [cursor=pointer]:
+                  - option "Player Character"
+                  - option "NPC" [selected]
+            - generic [ref=e189]:
+              - generic [ref=e190]:
+                - generic [ref=e191]: Level
+                - spinbutton [ref=e192]: "1"
+              - generic [ref=e193]:
+                - generic [ref=e194]: Location
+                - textbox "e.g., Mesagoza" [ref=e195]
+            - generic [ref=e196]:
+              - generic [ref=e197]: Trainer Sprite
+              - generic [ref=e198]:
+                - generic [ref=e200] [cursor=pointer]: "?"
+                - button "Choose Sprite" [ref=e201] [cursor=pointer]
+          - generic [ref=e203]:
+            - heading "Background & Skills" [level=3] [ref=e205]
+            - generic [ref=e207]:
+              - generic [ref=e208]: Background
+              - combobox [ref=e209] [cursor=pointer]:
+                - option "-- Select a Background --" [selected]
+                - option "Custom Background"
+                - option "---" [disabled]
+                - option "Fitness Training"
+                - option "Book Worm"
+                - option "Hermit"
+                - option "Old Timer"
+                - option "Quick and Small"
+                - option "Rough"
+                - option "Silver Tongued"
+                - option "Street Rattata"
+                - option "Super Nerd"
+                - option "Wild Child"
+                - option "At Least He's Pretty"
+            - generic [ref=e210]:
+              - heading "Skills" [level=4] [ref=e211]
+              - generic [ref=e212]:
+                - heading "Body" [level=5] [ref=e213]
+                - generic [ref=e214]:
+                  - generic [ref=e215]:
+                    - generic [ref=e216]: Acrobatics
+                    - generic [ref=e217]: Untrained
+                  - generic [ref=e218]:
+                    - generic [ref=e219]: Athletics
+                    - generic [ref=e220]: Untrained
+                  - generic [ref=e221]:
+                    - generic [ref=e222]: Combat
+                    - generic [ref=e223]: Untrained
+                  - generic [ref=e224]:
+                    - generic [ref=e225]: Intimidate
+                    - generic [ref=e226]: Untrained
+                  - generic [ref=e227]:
+                    - generic [ref=e228]: Stealth
+                    - generic [ref=e229]: Untrained
+                  - generic [ref=e230]:
+                    - generic [ref=e231]: Survival
+                    - generic [ref=e232]: Untrained
+              - generic [ref=e233]:
+                - heading "Mind" [level=5] [ref=e234]
+                - generic [ref=e235]:
+                  - generic [ref=e236]:
+                    - generic [ref=e237]: General Ed
+                    - generic [ref=e238]: Untrained
+                  - generic [ref=e239]:
+                    - generic [ref=e240]: Medicine Ed
+                    - generic [ref=e241]: Untrained
+                  - generic [ref=e242]:
+                    - generic [ref=e243]: Occult Ed
+                    - generic [ref=e244]: Untrained
+                  - generic [ref=e245]:
+                    - generic [ref=e246]: Pokemon Ed
+                    - generic [ref=e247]: Untrained
+                  - generic [ref=e248]:
+                    - generic [ref=e249]: Technology Ed
+                    - generic [ref=e250]: Untrained
+                  - generic [ref=e251]:
+                    - generic [ref=e252]: Guile
+                    - generic [ref=e253]: Untrained
+                  - generic [ref=e254]:
+                    - generic [ref=e255]: Perception
+                    - generic [ref=e256]: Untrained
+              - generic [ref=e257]:
+                - heading "Spirit" [level=5] [ref=e258]
+                - generic [ref=e259]:
+                  - generic [ref=e260]:
+                    - generic [ref=e261]: Charm
+                    - generic [ref=e262]: Untrained
+                  - generic [ref=e263]:
+                    - generic [ref=e264]: Command
+                    - generic [ref=e265]: Untrained
+                  - generic [ref=e266]:
+                    - generic [ref=e267]: Focus
+                    - generic [ref=e268]: Untrained
+                  - generic [ref=e269]:
+                    - generic [ref=e270]: Intuition
+                    - generic [ref=e271]: Untrained
+            - generic [ref=e272]:
+              - generic [ref=e273]: Background should set exactly 1 skill to Adept (found 0)
+              - generic [ref=e274]: Background should set exactly 1 skill to Novice (found 0)
+              - generic [ref=e275]: Background should set exactly 3 skills to Pathetic (found 0)
+          - generic [ref=e277]:
+            - generic [ref=e278]:
+              - heading "Edges" [level=3] [ref=e279]
+              - generic [ref=e280]: 0 / 4
+            - generic [ref=e281]:
+              - textbox "Enter edge name..." [ref=e282]
+              - button "Add Edge" [disabled] [ref=e283]
+            - button "Add Skill Edge" [ref=e285] [cursor=pointer]
+            - generic [ref=e287]: Level 1 trainers should have 4 edges (4 starting edges) (have 0)
+          - generic [ref=e289]:
+            - heading "Classes & Features" [level=3] [ref=e291]
+            - generic [ref=e292]:
+              - generic [ref=e293]:
+                - heading "Trainer Classes" [level=4] [ref=e294]
+                - generic [ref=e295]: 0 / 4
+              - generic [ref=e296]:
+                - textbox "Search classes..." [ref=e298]
+                - generic [ref=e299]:
+                  - generic [ref=e300]:
+                    - heading "Introductory" [level=5] [ref=e301]
+                    - generic [ref=e302]:
+                      - button "Ace Trainer Command" [ref=e303] [cursor=pointer]:
+                        - generic [ref=e304]: Ace Trainer
+                        - generic [ref=e305]: Command
+                      - button "Capture Specialist Acrobatics, Athletics, Stealth, Survival, Perception, Guile" [ref=e306] [cursor=pointer]:
+                        - generic [ref=e307]: Capture Specialist
+                        - generic [ref=e308]: Acrobatics, Athletics, Stealth, Survival, Perception, Guile
+                      - button "Commander Command" [ref=e309] [cursor=pointer]:
+                        - generic [ref=e310]: Commander
+                        - generic [ref=e311]: Command
+                      - button "Coordinator Charm, Command, Guile, Intimidate, Intuition" [ref=e312] [cursor=pointer]:
+                        - generic [ref=e313]: Coordinator
+                        - generic [ref=e314]: Charm, Command, Guile, Intimidate, Intuition
+                      - button "Hobbyist General Ed, Perception" [ref=e315] [cursor=pointer]:
+                        - generic [ref=e316]: Hobbyist
+                        - generic [ref=e317]: General Ed, Perception
+                      - button "Mentor Charm, Intuition, Intimidate, Pokemon Ed" [ref=e318] [cursor=pointer]:
+                        - generic [ref=e319]: Mentor
+                        - generic [ref=e320]: Charm, Intuition, Intimidate, Pokemon Ed
+                  - generic [ref=e321]:
+                    - heading "Battling Style" [level=5] [ref=e322]
+                    - generic [ref=e323]:
+                      - button "Cheerleader Charm" [ref=e324] [cursor=pointer]:
+                        - generic [ref=e325]: Cheerleader
+                        - generic [ref=e326]: Charm
+                      - button "Duelist Focus" [ref=e327] [cursor=pointer]:
+                        - generic [ref=e328]: Duelist
+                        - generic [ref=e329]: Focus
+                      - button "Enduring Soul Athletics, Focus" [ref=e330] [cursor=pointer]:
+                        - generic [ref=e331]: Enduring Soul
+                        - generic [ref=e332]: Athletics, Focus
+                      - button "Juggler Acrobatics, Guile" [ref=e333] [cursor=pointer]:
+                        - generic [ref=e334]: Juggler
+                        - generic [ref=e335]: Acrobatics, Guile
+                      - button "Rider Acrobatics, Athletics" [ref=e336] [cursor=pointer]:
+                        - generic [ref=e337]: Rider
+                        - generic [ref=e338]: Acrobatics, Athletics
+                      - button "Taskmaster Intimidate" [ref=e339] [cursor=pointer]:
+                        - generic [ref=e340]: Taskmaster
+                        - generic [ref=e341]: Intimidate
+                      - button "Trickster Guile" [ref=e342] [cursor=pointer]:
+                        - generic [ref=e343]: Trickster
+                        - generic [ref=e344]: Guile
+                  - generic [ref=e345]:
+                    - heading "Specialist Team" [level=5] [ref=e346]
+                    - generic [ref=e347]:
+                      - button "Stat Ace [Branch] Command, Focus" [ref=e348] [cursor=pointer]:
+                        - generic [ref=e349]: Stat Ace
+                        - generic "Can be taken with different specializations" [ref=e350]: "[Branch]"
+                        - generic [ref=e351]: Command, Focus
+                      - button "Style Expert [Branch] Charm, Command, Guile, Intimidate, Intuition" [ref=e352] [cursor=pointer]:
+                        - generic [ref=e353]: Style Expert
+                        - generic "Can be taken with different specializations" [ref=e354]: "[Branch]"
+                        - generic [ref=e355]: Charm, Command, Guile, Intimidate, Intuition
+                      - button "Type Ace [Branch]" [ref=e356] [cursor=pointer]:
+                        - generic [ref=e357]: Type Ace
+                        - generic "Can be taken with different specializations" [ref=e358]: "[Branch]"
+                  - generic [ref=e359]:
+                    - heading "Professional" [level=5] [ref=e360]
+                    - generic [ref=e361]:
+                      - button "Chef Intuition" [ref=e362] [cursor=pointer]:
+                        - generic [ref=e363]: Chef
+                        - generic [ref=e364]: Intuition
+                      - button "Chronicler Perception" [ref=e365] [cursor=pointer]:
+                        - generic [ref=e366]: Chronicler
+                        - generic [ref=e367]: Perception
+                      - button "Fashionista Charm, Command, Guile, Intimidate, Intuition" [ref=e368] [cursor=pointer]:
+                        - generic [ref=e369]: Fashionista
+                        - generic [ref=e370]: Charm, Command, Guile, Intimidate, Intuition
+                      - button "Researcher [Branch] General Ed, Medicine Ed, Occult Ed, Pokemon Ed, Technology Ed, Survival" [ref=e371] [cursor=pointer]:
+                        - generic [ref=e372]: Researcher
+                        - generic "Can be taken with different specializations" [ref=e373]: "[Branch]"
+                        - generic [ref=e374]: General Ed, Medicine Ed, Occult Ed, Pokemon Ed, Technology Ed, Survival
+                      - button "Survivalist Survival" [ref=e375] [cursor=pointer]:
+                        - generic [ref=e376]: Survivalist
+                        - generic [ref=e377]: Survival
+                  - generic [ref=e378]:
+                    - heading "Fighter" [level=5] [ref=e379]
+                    - generic [ref=e380]:
+                      - button "Athlete Athletics" [ref=e381] [cursor=pointer]:
+                        - generic [ref=e382]: Athlete
+                        - generic [ref=e383]: Athletics
+                      - button "Dancer Acrobatics, Athletics, Charm" [ref=e384] [cursor=pointer]:
+                        - generic [ref=e385]: Dancer
+                        - generic [ref=e386]: Acrobatics, Athletics, Charm
+                      - button "Hunter Stealth, Survival" [ref=e387] [cursor=pointer]:
+                        - generic [ref=e388]: Hunter
+                        - generic [ref=e389]: Stealth, Survival
+                      - button "Martial Artist Combat" [ref=e390] [cursor=pointer]:
+                        - generic [ref=e391]: Martial Artist
+                        - generic [ref=e392]: Combat
+                      - button "Musician Charm, Focus" [ref=e393] [cursor=pointer]:
+                        - generic [ref=e394]: Musician
+                        - generic [ref=e395]: Charm, Focus
+                      - button "Provocateur Charm, Guile, Intimidate" [ref=e396] [cursor=pointer]:
+                        - generic [ref=e397]: Provocateur
+                        - generic [ref=e398]: Charm, Guile, Intimidate
+                      - button "Rogue Acrobatics, Athletics, Stealth" [ref=e399] [cursor=pointer]:
+                        - generic [ref=e400]: Rogue
+                        - generic [ref=e401]: Acrobatics, Athletics, Stealth
+                      - button "Roughneck Intimidate" [ref=e402] [cursor=pointer]:
+                        - generic [ref=e403]: Roughneck
+                        - generic [ref=e404]: Intimidate
+                      - button "Tumbler Acrobatics" [ref=e405] [cursor=pointer]:
+                        - generic [ref=e406]: Tumbler
+                        - generic [ref=e407]: Acrobatics
+                  - generic [ref=e408]:
+                    - heading "Supernatural" [level=5] [ref=e409]
+                    - generic [ref=e410]:
+                      - button "Aura Guardian Intuition" [ref=e411] [cursor=pointer]:
+                        - generic [ref=e412]: Aura Guardian
+                        - generic [ref=e413]: Intuition
+                      - button "Channeler Intuition" [ref=e414] [cursor=pointer]:
+                        - generic [ref=e415]: Channeler
+                        - generic [ref=e416]: Intuition
+                      - button "Hex Maniac Occult Ed" [ref=e417] [cursor=pointer]:
+                        - generic [ref=e418]: Hex Maniac
+                        - generic [ref=e419]: Occult Ed
+                      - button "Ninja Combat, Stealth" [ref=e420] [cursor=pointer]:
+                        - generic [ref=e421]: Ninja
+                        - generic [ref=e422]: Combat, Stealth
+                      - button "Oracle Intuition, Perception" [ref=e423] [cursor=pointer]:
+                        - generic [ref=e424]: Oracle
+                        - generic [ref=e425]: Intuition, Perception
+                      - button "Sage Occult Ed" [ref=e426] [cursor=pointer]:
+                        - generic [ref=e427]: Sage
+                        - generic [ref=e428]: Occult Ed
+                      - button "Telekinetic Focus" [ref=e429] [cursor=pointer]:
+                        - generic [ref=e430]: Telekinetic
+                        - generic [ref=e431]: Focus
+                      - button "Telepath Focus, Intuition" [ref=e432] [cursor=pointer]:
+                        - generic [ref=e433]: Telepath
+                        - generic [ref=e434]: Focus, Intuition
+                      - button "Warper Focus, Guile" [ref=e435] [cursor=pointer]:
+                        - generic [ref=e436]: Warper
+                        - generic [ref=e437]: Focus, Guile
+            - generic [ref=e438]:
+              - generic [ref=e439]:
+                - heading "Features" [level=4] [ref=e440]
+                - generic [ref=e441]: 0 / 4 (+1 Training)
+              - generic [ref=e442]:
+                - textbox "Enter feature name..." [ref=e443]
+                - button "Add" [disabled] [ref=e444]
+              - generic [ref=e445]:
+                - generic [ref=e446]: Training Feature (free, no prerequisites)
+                - textbox "Enter training feature name..." [ref=e447]
+            - generic [ref=e449]: Level 1 trainers should have 5 features (4 + 1 Training) (have 0)
+          - generic [ref=e451]:
+            - generic [ref=e452]:
+              - heading "Combat Stats" [level=3] [ref=e453]
+              - generic [ref=e454]:
+                - text: "Points Remaining:"
+                - strong [ref=e455]: "10"
+                - text: / 10
+            - generic [ref=e456]:
+              - generic [ref=e457]:
+                - generic [ref=e458]: HP
+                - generic [ref=e459]:
+                  - generic [ref=e460]: "10"
+                  - generic [ref=e461]: +
+                  - button "-" [disabled] [ref=e462]
+                  - generic [ref=e463]: "0"
+                  - button "+" [ref=e464] [cursor=pointer]
+                  - generic [ref=e465]: =
+                  - generic [ref=e466]: "10"
+              - generic [ref=e467]:
+                - generic [ref=e468]: Attack
+                - generic [ref=e469]:
+                  - generic [ref=e470]: "5"
+                  - generic [ref=e471]: +
+                  - button "-" [disabled] [ref=e472]
+                  - generic [ref=e473]: "0"
+                  - button "+" [ref=e474] [cursor=pointer]
+                  - generic [ref=e475]: =
+                  - generic [ref=e476]: "5"
+              - generic [ref=e477]:
+                - generic [ref=e478]: Defense
+                - generic [ref=e479]:
+                  - generic [ref=e480]: "5"
+                  - generic [ref=e481]: +
+                  - button "-" [disabled] [ref=e482]
+                  - generic [ref=e483]: "0"
+                  - button "+" [ref=e484] [cursor=pointer]
+                  - generic [ref=e485]: =
+                  - generic [ref=e486]: "5"
+              - generic [ref=e487]:
+                - generic [ref=e488]: Sp. Attack
+                - generic [ref=e489]:
+                  - generic [ref=e490]: "5"
+                  - generic [ref=e491]: +
+                  - button "-" [disabled] [ref=e492]
+                  - generic [ref=e493]: "0"
+                  - button "+" [ref=e494] [cursor=pointer]
+                  - generic [ref=e495]: =
+                  - generic [ref=e496]: "5"
+              - generic [ref=e497]:
+                - generic [ref=e498]: Sp. Defense
+                - generic [ref=e499]:
+                  - generic [ref=e500]: "5"
+                  - generic [ref=e501]: +
+                  - button "-" [disabled] [ref=e502]
+                  - generic [ref=e503]: "0"
+                  - button "+" [ref=e504] [cursor=pointer]
+                  - generic [ref=e505]: =
+                  - generic [ref=e506]: "5"
+              - generic [ref=e507]:
+                - generic [ref=e508]: Speed
+                - generic [ref=e509]:
+                  - generic [ref=e510]: "5"
+                  - generic [ref=e511]: +
+                  - button "-" [disabled] [ref=e512]
+                  - generic [ref=e513]: "0"
+                  - button "+" [ref=e514] [cursor=pointer]
+                  - generic [ref=e515]: =
+                  - generic [ref=e516]: "5"
+            - generic [ref=e517]:
+              - heading "Derived Stats" [level=4] [ref=e518]
+              - generic [ref=e519]:
+                - generic [ref=e520]:
+                  - generic [ref=e521]: Max HP
+                  - generic [ref=e522]: "42"
+                - generic [ref=e523]:
+                  - generic [ref=e524]: Physical Evasion
+                  - generic [ref=e525]: "1"
+                - generic [ref=e526]:
+                  - generic [ref=e527]: Special Evasion
+                  - generic [ref=e528]: "1"
+                - generic [ref=e529]:
+                  - generic [ref=e530]: Speed Evasion
+                  - generic [ref=e531]: "1"
+            - generic [ref=e533]: Level 1 trainers should allocate exactly 10 stat points (currently 0)
+          - generic [ref=e535]:
+            - button "Biography" [active] [ref=e536] [cursor=pointer]:
+              - heading "Biography" [level=3] [ref=e537]
+              - img [ref=e539]
+            - generic [ref=e555]:
+              - generic [ref=e556]:
+                - generic [ref=e557]:
+                  - generic [ref=e558]: Age
+                  - spinbutton [ref=e559]
+                - generic [ref=e560]:
+                  - generic [ref=e561]: Gender
+                  - textbox "Any value (PTU allows any)" [ref=e562]
+              - generic [ref=e563]:
+                - generic [ref=e564]:
+                  - generic [ref=e565]: Height
+                  - generic [ref=e566]:
+                    - spinbutton [ref=e567]
+                    - generic [ref=e568]: cm
+                - generic [ref=e569]:
+                  - generic [ref=e570]: Weight
+                  - generic [ref=e571]:
+                    - spinbutton [ref=e572]
+                    - generic [ref=e573]: kg
+              - generic [ref=e574]:
+                - generic [ref=e575]: Background Story
+                - textbox "Character background and history..." [ref=e576]
+              - generic [ref=e577]:
+                - generic [ref=e578]: Personality
+                - textbox "Character personality traits..." [ref=e579]
+              - generic [ref=e580]:
+                - generic [ref=e581]: Goals
+                - textbox "Character goals and aspirations..." [ref=e582]
+              - generic [ref=e583]:
+                - generic [ref=e584]: Money (default 5,000 for level 1, PTU p. 17)
+                - generic [ref=e585]:
+                  - spinbutton [ref=e586]: "5000"
+                  - generic [ref=e587]: P
+          - generic [ref=e541]:
+            - heading "Notes" [level=3] [ref=e542]
+            - textbox "Additional notes..." [ref=e543]
+          - generic [ref=e544]:
+            - heading "Validation Summary" [level=3] [ref=e545]
+            - generic [ref=e546]:
+              - generic [ref=e547]: stats Level 1 trainers should allocate exactly 10 stat points (currently 0)
+              - generic [ref=e548]: skills Background should set exactly 1 skill to Adept (found 0)
+              - generic [ref=e549]: skills Background should set exactly 1 skill to Novice (found 0)
+              - generic [ref=e550]: skills Background should set exactly 3 skills to Pathetic (found 0)
+              - generic [ref=e551]: edges Level 1 trainers should have 4 edges (4 starting edges) (have 0)
+              - generic [ref=e552]: features Level 1 trainers should have 5 features (4 + 1 Training) (have 0)
+          - button "Create Human" [ref=e554] [cursor=pointer]
+  - generic [ref=e128]:
+    - button "Toggle Nuxt DevTools" [ref=e129] [cursor=pointer]:
+      - img [ref=e130]
+    - generic "Page load time" [ref=e133]:
+      - generic [ref=e134]: "843"
+      - generic [ref=e135]: ms
+    - button "Toggle Component Inspector" [ref=e137] [cursor=pointer]:
+      - img [ref=e138]

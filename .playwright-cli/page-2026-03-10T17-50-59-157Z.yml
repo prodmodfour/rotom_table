@@ -1,0 +1,13 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e7]:
+    - img [ref=e8]
+    - heading "Waiting for Encounter" [level=2] [ref=e11]
+    - paragraph [ref=e12]: The GM will serve an encounter when combat begins.
+  - generic [ref=e13]:
+    - button "Toggle Nuxt DevTools" [ref=e14] [cursor=pointer]:
+      - img [ref=e15]
+    - generic "Page load time" [ref=e18]:
+      - generic [ref=e19]: "35"
+      - generic [ref=e20]: ms
+    - button "Toggle Component Inspector" [ref=e22] [cursor=pointer]:
+      - img [ref=e23]

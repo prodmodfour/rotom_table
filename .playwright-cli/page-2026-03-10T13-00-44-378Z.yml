@@ -1,0 +1,1395 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e7]:
+        - heading "Rotom Table" [level=1] [ref=e8]
+        - generic [ref=e9]: GM View
+      - navigation [ref=e10]:
+        - link "Encounter" [ref=e11] [cursor=pointer]:
+          - /url: /gm
+          - generic [ref=e12]: Encounter
+        - link "Encounters" [ref=e13] [cursor=pointer]:
+          - /url: /gm/encounters
+          - generic [ref=e14]: Encounters
+        - link "Scenes" [ref=e15] [cursor=pointer]:
+          - /url: /gm/scenes
+          - img [ref=e16]
+          - generic [ref=e19]: Scenes
+        - link "Habitats" [ref=e20] [cursor=pointer]:
+          - /url: /gm/habitats
+          - generic [ref=e21]: Habitats
+        - link "Sheets" [ref=e22] [cursor=pointer]:
+          - /url: /gm/sheets
+          - generic [ref=e23]: Sheets
+        - link "Create" [ref=e24] [cursor=pointer]:
+          - /url: /gm/create
+          - generic [ref=e25]: Create
+        - link "Map" [ref=e26] [cursor=pointer]:
+          - /url: /gm/map
+          - generic [ref=e27]: Map
+      - generic [ref=e28]:
+        - button "Connect" [ref=e30] [cursor=pointer]:
+          - img [ref=e31]
+          - generic [ref=e34]: Connect
+        - generic [ref=e35]:
+          - generic [ref=e36]: "Group View:"
+          - generic [ref=e37]:
+            - button "Lobby" [ref=e38] [cursor=pointer]:
+              - img [ref=e39]
+            - button "Scene" [ref=e42] [cursor=pointer]:
+              - img [ref=e43]
+            - button "Encounter" [ref=e46] [cursor=pointer]:
+              - img [ref=e47]
+            - button "Map" [ref=e50] [cursor=pointer]:
+              - img [ref=e51]
+        - button "Advance Day" [ref=e54] [cursor=pointer]:
+          - generic [ref=e55]: Advance Day
+        - link "Group View" [ref=e56] [cursor=pointer]:
+          - /url: /group
+          - generic [ref=e57]: Group View
+    - main [ref=e58]:
+      - generic [ref=e59]:
+        - generic [ref=e90]:
+          - generic [ref=e91]:
+            - generic [ref=e92]:
+              - heading "Move Test Battle" [level=2] [ref=e93]
+              - generic [ref=e94]:
+                - generic [ref=e95]: Trainer Battle
+                - generic [ref=e96]: Round 1
+            - generic [ref=e97]:
+              - combobox "Set game Weather Condition (PTU p.341) — has mechanical combat effects. Not the same as natural weather." [ref=e99] [cursor=pointer]:
+                - option "No Weather Condition" [selected]
+                - option "Sunny"
+                - option "Rain"
+                - option "Sandstorm"
+                - option "Hail"
+                - option "Snow"
+                - option "Fog"
+                - option "Harsh Sunlight"
+                - option "Heavy Rain"
+                - option "Strong Winds"
+              - button "Serve to Group" [ref=e100] [cursor=pointer]
+              - generic [ref=e101]:
+                - button "Undo" [disabled] [ref=e102]
+                - button "Redo" [disabled] [ref=e103]
+              - button "Start Combat" [ref=e104] [cursor=pointer]
+              - button "End Encounter" [ref=e105] [cursor=pointer]
+              - button "Save Template" [ref=e106] [cursor=pointer]
+              - button "Keyboard shortcuts (?)" [ref=e107] [cursor=pointer]
+          - generic [ref=e108]:
+            - generic [ref=e109]:
+              - button "List View" [ref=e110] [cursor=pointer]
+              - button "Grid View" [ref=e111] [cursor=pointer]
+            - generic [ref=e112]:
+              - generic [ref=e113]: "Damage Mode:"
+              - button "Set" [ref=e114] [cursor=pointer]
+              - button "Rolled" [ref=e115] [cursor=pointer]
+          - generic [ref=e116]:
+            - generic [ref=e118]:
+              - generic [ref=e119]:
+                - generic [ref=e120]:
+                  - heading "Players" [level=3] [ref=e121]
+                  - button "+ Add" [ref=e122] [cursor=pointer]
+                - generic [ref=e1696]:
+                  - img "Chomps" [ref=e1698]
+                  - generic [ref=e1699]:
+                    - generic [ref=e1700]:
+                      - generic [ref=e1701]: Chomps
+                      - generic [ref=e1702]: Lv.10
+                    - generic [ref=e1703]:
+                      - generic [ref=e1704]: Dragon
+                      - generic [ref=e1705]: Ground
+                    - generic [ref=e1707]:
+                      - generic [ref=e1708]: HP
+                      - generic [ref=e1712]: 47/47
+                    - generic [ref=e1713]: "Init: 11"
+                  - generic [ref=e1714]:
+                    - generic [ref=e1715]:
+                      - spinbutton [ref=e1716]: "0"
+                      - button "-HP" [ref=e1717] [cursor=pointer]
+                      - 'combobox "HP reduction type: Damage (injuries), HP Loss (no massive damage), Set HP (no massive damage)" [ref=e1718] [cursor=pointer]':
+                        - option "DMG" [selected]
+                        - option "Loss"
+                        - option "Set"
+                    - generic [ref=e1719]:
+                      - spinbutton [ref=e1720]: "0"
+                      - button "+HP" [ref=e1721] [cursor=pointer]
+                    - generic [ref=e1722]:
+                      - button "+T" [ref=e1723] [cursor=pointer]
+                      - button "CS" [ref=e1724] [cursor=pointer]
+                      - button "ST" [ref=e1725] [cursor=pointer]
+                    - button "Item" [ref=e1726] [cursor=pointer]:
+                      - img [ref=e1727]
+                      - text: Item
+                    - button "Act" [ref=e1730] [cursor=pointer]
+                    - button "Switch" [disabled] [ref=e1731]
+                    - button "Force Switch" [ref=e1732] [cursor=pointer]
+                    - button "Remove" [ref=e1733] [cursor=pointer]
+              - generic [ref=e125]:
+                - generic [ref=e126]:
+                  - heading "Allies" [level=3] [ref=e127]
+                  - button "+ Add" [ref=e128] [cursor=pointer]
+                - paragraph [ref=e130]: No allies
+              - generic [ref=e131]:
+                - generic [ref=e132]:
+                  - heading "Enemies" [level=3] [ref=e133]
+                  - button "+ Add" [active] [ref=e134] [cursor=pointer]
+                - paragraph [ref=e136]: No enemies
+            - generic [ref=e137]:
+              - generic [ref=e138]:
+                - heading "Combat Log" [level=3] [ref=e139]
+                - paragraph [ref=e141]: No actions yet
+              - generic [ref=e142]:
+                - generic [ref=e143]:
+                  - generic [ref=e144]: Environment
+                  - generic [ref=e145]: None
+                - generic [ref=e146]:
+                  - generic [ref=e147]: Environment Preset
+                  - combobox [ref=e148] [cursor=pointer]:
+                    - option "None" [selected]
+                    - option "Dim Cave (Blindness)"
+                    - option "Dark Cave (Total Blindness)"
+                    - option "Frozen Lake"
+                    - option "Hazard Factory"
+                    - option "Custom..."
+              - generic [ref=e149]:
+                - generic [ref=e150]:
+                  - generic [ref=e151]: XP Significance
+                  - generic [ref=e152]: x1.0
+                - generic [ref=e153]:
+                  - paragraph [ref=e154]: No defeated enemies yet.
+                  - paragraph [ref=e155]: XP breakdown will appear after enemies are defeated.
+        - generic [ref=e1735]:
+          - generic [ref=e1736]:
+            - heading "Add Enemy" [level=2] [ref=e1737]
+            - button "Close" [ref=e1738] [cursor=pointer]:
+              - img "Close" [ref=e1739]
+          - generic [ref=e1740]:
+            - generic [ref=e1741]:
+              - button "Pokemon" [ref=e1742] [cursor=pointer]
+              - button "Humans" [ref=e1743] [cursor=pointer]
+            - textbox "Search..." [ref=e1745]
+            - generic [ref=e1746]:
+              - generic [ref=e1747] [cursor=pointer]:
+                - img "Alolan Grimer" [ref=e1749]
+                - generic [ref=e1750]:
+                  - generic [ref=e1751]: Alolan Grimer 1
+                  - generic [ref=e1752]: Lv.15
+                - generic [ref=e1753]:
+                  - generic [ref=e1754]: Poison
+                  - generic [ref=e1755]: Dark
+              - generic [ref=e1756] [cursor=pointer]:
+                - img "Barboach" [ref=e1758]
+                - generic [ref=e1759]:
+                  - generic [ref=e1760]: Barboach 1
+                  - generic [ref=e1761]: Lv.13
+                - generic [ref=e1762]:
+                  - generic [ref=e1763]: Water
+                  - generic [ref=e1764]: Ground
+              - generic [ref=e1765] [cursor=pointer]:
+                - img "Bibarel" [ref=e1767]
+                - generic [ref=e1768]:
+                  - generic [ref=e1769]: Bibarel 1
+                  - generic [ref=e1770]: Lv.15
+                - generic [ref=e1771]:
+                  - generic [ref=e1772]: Normal
+                  - generic [ref=e1773]: Water
+              - generic [ref=e1774] [cursor=pointer]:
+                - img "Bulbasaur" [ref=e1776]
+                - generic [ref=e1777]:
+                  - generic [ref=e1778]: Bulbasaur 1
+                  - generic [ref=e1779]: Lv.10
+                - generic [ref=e1780]:
+                  - generic [ref=e1781]: Grass
+                  - generic [ref=e1782]: Poison
+              - generic [ref=e1783] [cursor=pointer]:
+                - img "Bulbasaur" [ref=e1785]
+                - generic [ref=e1786]:
+                  - generic [ref=e1787]: Bulbasaur 3
+                  - generic [ref=e1788]: Lv.10
+                - generic [ref=e1789]:
+                  - generic [ref=e1790]: Grass
+                  - generic [ref=e1791]: Poison
+              - generic [ref=e1792] [cursor=pointer]:
+                - img "Bulbasaur" [ref=e1794]
+                - generic [ref=e1795]:
+                  - generic [ref=e1796]: Bulbasaur 5
+                  - generic [ref=e1797]: Lv.10
+                - generic [ref=e1798]:
+                  - generic [ref=e1799]: Grass
+                  - generic [ref=e1800]: Poison
+              - generic [ref=e1801] [cursor=pointer]:
+                - img "Bulbasaur" [ref=e1803]
+                - generic [ref=e1804]:
+                  - generic [ref=e1805]: Bulbasaur 6
+                  - generic [ref=e1806]: Lv.10
+                - generic [ref=e1807]:
+                  - generic [ref=e1808]: Grass
+                  - generic [ref=e1809]: Poison
+              - generic [ref=e1810] [cursor=pointer]:
+                - img "Bulbasaur" [ref=e1812]
+                - generic [ref=e1813]:
+                  - generic [ref=e1814]: Bulbasaur 6
+                  - generic [ref=e1815]: Lv.10
+                - generic [ref=e1816]:
+                  - generic [ref=e1817]: Grass
+                  - generic [ref=e1818]: Poison
+              - generic [ref=e1819] [cursor=pointer]:
+                - img "Bulbasaur" [ref=e1821]
+                - generic [ref=e1822]:
+                  - generic [ref=e1823]: Bulbasaur 8
+                  - generic [ref=e1824]: Lv.10
+                - generic [ref=e1825]:
+                  - generic [ref=e1826]: Grass
+                  - generic [ref=e1827]: Poison
+              - generic [ref=e1828] [cursor=pointer]:
+                - img "Bulbasaur" [ref=e1830]
+                - generic [ref=e1831]:
+                  - generic [ref=e1832]: Bulbasaur 8
+                  - generic [ref=e1833]: Lv.15
+                - generic [ref=e1834]:
+                  - generic [ref=e1835]: Grass
+                  - generic [ref=e1836]: Poison
+              - generic [ref=e1837] [cursor=pointer]:
+                - img "Bulbasaur" [ref=e1839]
+                - generic [ref=e1840]:
+                  - generic [ref=e1841]: Bulbasaur 10
+                  - generic [ref=e1842]: Lv.10
+                - generic [ref=e1843]:
+                  - generic [ref=e1844]: Grass
+                  - generic [ref=e1845]: Poison
+              - generic [ref=e1846] [cursor=pointer]:
+                - img "Carvanha" [ref=e1848]
+                - generic [ref=e1849]:
+                  - generic [ref=e1850]: Carvanha 1
+                  - generic [ref=e1851]: Lv.5
+                - generic [ref=e1852]:
+                  - generic [ref=e1853]: Water
+                  - generic [ref=e1854]: Dark
+              - generic [ref=e1855] [cursor=pointer]:
+                - img "Carvanha" [ref=e1857]
+                - generic [ref=e1858]:
+                  - generic [ref=e1859]: Carvanha 2
+                  - generic [ref=e1860]: Lv.5
+                - generic [ref=e1861]:
+                  - generic [ref=e1862]: Water
+                  - generic [ref=e1863]: Dark
+              - generic [ref=e1864] [cursor=pointer]:
+                - img "Carvanha" [ref=e1866]
+                - generic [ref=e1867]:
+                  - generic [ref=e1868]: Carvanha 3
+                  - generic [ref=e1869]: Lv.5
+                - generic [ref=e1870]:
+                  - generic [ref=e1871]: Water
+                  - generic [ref=e1872]: Dark
+              - generic [ref=e1873] [cursor=pointer]:
+                - img "Carvanha" [ref=e1875]
+                - generic [ref=e1876]:
+                  - generic [ref=e1877]: Carvanha 4
+                  - generic [ref=e1878]: Lv.5
+                - generic [ref=e1879]:
+                  - generic [ref=e1880]: Water
+                  - generic [ref=e1881]: Dark
+              - generic [ref=e1882] [cursor=pointer]:
+                - img "Caterpie" [ref=e1884]
+                - generic [ref=e1885]:
+                  - generic [ref=e1886]: Caterpie 1
+                  - generic [ref=e1887]: Lv.8
+                - generic [ref=e1889]: Bug
+              - generic [ref=e1890] [cursor=pointer]:
+                - img "Caterpie" [ref=e1892]
+                - generic [ref=e1893]:
+                  - generic [ref=e1894]: Caterpie 2
+                  - generic [ref=e1895]: Lv.8
+                - generic [ref=e1897]: Bug
+              - generic [ref=e1898] [cursor=pointer]:
+                - img "Caterpie" [ref=e1900]
+                - generic [ref=e1901]:
+                  - generic [ref=e1902]: Caterpie 3
+                  - generic [ref=e1903]: Lv.8
+                - generic [ref=e1905]: Bug
+              - generic [ref=e1906] [cursor=pointer]:
+                - img "Caterpie" [ref=e1908]
+                - generic [ref=e1909]:
+                  - generic [ref=e1910]: Caterpie 4
+                  - generic [ref=e1911]: Lv.8
+                - generic [ref=e1913]: Bug
+              - generic [ref=e1914] [cursor=pointer]:
+                - img "Charmander" [ref=e1916]
+                - generic [ref=e1917]:
+                  - generic [ref=e1918]: Charmander 1
+                  - generic [ref=e1919]: Lv.10
+                - generic [ref=e1921]: Fire
+              - generic [ref=e1922] [cursor=pointer]:
+                - img "Charmander" [ref=e1924]
+                - generic [ref=e1925]:
+                  - generic [ref=e1926]: Charmander 5
+                  - generic [ref=e1927]: Lv.11
+                - generic [ref=e1929]: Fire
+              - generic [ref=e1930] [cursor=pointer]:
+                - img "Charmander" [ref=e1932]
+                - generic [ref=e1933]:
+                  - generic [ref=e1934]: Charmander 5
+                  - generic [ref=e1935]: Lv.10
+                - generic [ref=e1937]: Fire
+              - generic [ref=e1938] [cursor=pointer]:
+                - img "Charmander" [ref=e1940]
+                - generic [ref=e1941]:
+                  - generic [ref=e1942]: Charmander 6
+                  - generic [ref=e1943]: Lv.10
+                - generic [ref=e1945]: Fire
+              - generic [ref=e1946] [cursor=pointer]:
+                - img "Charmander" [ref=e1948]
+                - generic [ref=e1949]:
+                  - generic [ref=e1950]: Charmander 9
+                  - generic [ref=e1951]: Lv.10
+                - generic [ref=e1953]: Fire
+              - generic [ref=e1954] [cursor=pointer]:
+                - img "Charmander" [ref=e1956]
+                - generic [ref=e1957]:
+                  - generic [ref=e1958]: Charmander 6
+                  - generic [ref=e1959]: Lv.10
+                - generic [ref=e1961]: Fire
+              - generic [ref=e1962] [cursor=pointer]:
+                - img "Charmander" [ref=e1964]
+                - generic [ref=e1965]:
+                  - generic [ref=e1966]: Charmander 7
+                  - generic [ref=e1967]: Lv.11
+                - generic [ref=e1969]: Fire
+              - generic [ref=e1970] [cursor=pointer]:
+                - img "Charmander" [ref=e1972]
+                - generic [ref=e1973]:
+                  - generic [ref=e1974]: Charmander 8
+                  - generic [ref=e1975]: Lv.10
+                - generic [ref=e1977]: Fire
+              - generic [ref=e1978] [cursor=pointer]:
+                - img "Charmander" [ref=e1980]
+                - generic [ref=e1981]:
+                  - generic [ref=e1982]: Charmander 11
+                  - generic [ref=e1983]: Lv.11
+                - generic [ref=e1985]: Fire
+              - generic [ref=e1986] [cursor=pointer]:
+                - img "Charmander" [ref=e1988]
+                - generic [ref=e1989]:
+                  - generic [ref=e1990]: Charmander 13
+                  - generic [ref=e1991]: Lv.10
+                - generic [ref=e1993]: Fire
+              - generic [ref=e1994] [cursor=pointer]:
+                - img "Charmander" [ref=e1996]
+                - generic [ref=e1997]:
+                  - generic [ref=e1998]: Charmander 11
+                  - generic [ref=e1999]: Lv.11
+                - generic [ref=e2001]: Fire
+              - generic [ref=e2002] [cursor=pointer]:
+                - img "Charmander" [ref=e2004]
+                - generic [ref=e2005]:
+                  - generic [ref=e2006]: Charmander 12
+                  - generic [ref=e2007]: Lv.12
+                - generic [ref=e2009]: Fire
+              - generic [ref=e2010] [cursor=pointer]:
+                - img "Charmander" [ref=e2012]
+                - generic [ref=e2013]:
+                  - generic [ref=e2014]: Charmander 14
+                  - generic [ref=e2015]: Lv.13
+                - generic [ref=e2017]: Fire
+              - generic [ref=e2018] [cursor=pointer]:
+                - img "Charmander" [ref=e2020]
+                - generic [ref=e2021]:
+                  - generic [ref=e2022]: Charmander 12
+                  - generic [ref=e2023]: Lv.12
+                - generic [ref=e2025]: Fire
+              - generic [ref=e2026] [cursor=pointer]:
+                - img "Charmander" [ref=e2028]
+                - generic [ref=e2029]:
+                  - generic [ref=e2030]: Charmander 12
+                  - generic [ref=e2031]: Lv.12
+                - generic [ref=e2033]: Fire
+              - generic [ref=e2034] [cursor=pointer]:
+                - img "Charmander" [ref=e2036]
+                - generic [ref=e2037]:
+                  - generic [ref=e2038]: Charmander 16
+                  - generic [ref=e2039]: Lv.12
+                - generic [ref=e2041]: Fire
+              - generic [ref=e2042] [cursor=pointer]:
+                - img "Charmander" [ref=e2044]
+                - generic [ref=e2045]:
+                  - generic [ref=e2046]: Charmander 16
+                  - generic [ref=e2047]: Lv.12
+                - generic [ref=e2049]: Fire
+              - generic [ref=e2050] [cursor=pointer]:
+                - img "Charmander" [ref=e2052]
+                - generic [ref=e2053]:
+                  - generic [ref=e2054]: Charmander 18
+                  - generic [ref=e2055]: Lv.12
+                - generic [ref=e2057]: Fire
+              - generic [ref=e2058] [cursor=pointer]:
+                - img "Charmander" [ref=e2060]
+                - generic [ref=e2061]:
+                  - generic [ref=e2062]: Charmander 19
+                  - generic [ref=e2063]: Lv.12
+                - generic [ref=e2065]: Fire
+              - generic [ref=e2066] [cursor=pointer]:
+                - img "Charmander" [ref=e2068]
+                - generic [ref=e2069]:
+                  - generic [ref=e2070]: Charmander 21
+                  - generic [ref=e2071]: Lv.13
+                - generic [ref=e2073]: Fire
+              - generic [ref=e2074] [cursor=pointer]:
+                - img "Charmander" [ref=e2076]
+                - generic [ref=e2077]:
+                  - generic [ref=e2078]: Charmander 19
+                  - generic [ref=e2079]: Lv.12
+                - generic [ref=e2081]: Fire
+              - generic [ref=e2082] [cursor=pointer]:
+                - img "Charmander" [ref=e2084]
+                - generic [ref=e2085]:
+                  - generic [ref=e2086]: Charmander 22
+                  - generic [ref=e2087]: Lv.13
+                - generic [ref=e2089]: Fire
+              - generic [ref=e2090] [cursor=pointer]:
+                - img "Charmander" [ref=e2092]
+                - generic [ref=e2093]:
+                  - generic [ref=e2094]: Charmander 23
+                  - generic [ref=e2095]: Lv.12
+                - generic [ref=e2097]: Fire
+              - generic [ref=e2098] [cursor=pointer]:
+                - img "Charmander" [ref=e2100]
+                - generic [ref=e2101]:
+                  - generic [ref=e2102]: Charmander 23
+                  - generic [ref=e2103]: Lv.12
+                - generic [ref=e2105]: Fire
+              - generic [ref=e2106] [cursor=pointer]:
+                - img "Charmander" [ref=e2108]
+                - generic [ref=e2109]:
+                  - generic [ref=e2110]: Charmander 27
+                  - generic [ref=e2111]: Lv.10
+                - generic [ref=e2113]: Fire
+              - generic [ref=e2114] [cursor=pointer]:
+                - img "Charmander" [ref=e2116]
+                - generic [ref=e2117]:
+                  - generic [ref=e2118]: Charmander 27
+                  - generic [ref=e2119]: Lv.13
+                - generic [ref=e2121]: Fire
+              - generic [ref=e2122] [cursor=pointer]:
+                - img "Charmander" [ref=e2124]
+                - generic [ref=e2125]:
+                  - generic [ref=e2126]: Charmander 28
+                  - generic [ref=e2127]: Lv.13
+                - generic [ref=e2129]: Fire
+              - generic [ref=e2130] [cursor=pointer]:
+                - img "Charmander" [ref=e2132]
+                - generic [ref=e2133]:
+                  - generic [ref=e2134]: Charmander 29
+                  - generic [ref=e2135]: Lv.10
+                - generic [ref=e2137]: Fire
+              - generic [ref=e2138] [cursor=pointer]:
+                - img "Corphish" [ref=e2140]
+                - generic [ref=e2141]:
+                  - generic [ref=e2142]: Corphish 1
+                  - generic [ref=e2143]: Lv.7
+                - generic [ref=e2145]: Water
+              - generic [ref=e2146] [cursor=pointer]:
+                - img "Cutiefly" [ref=e2148]
+                - generic [ref=e2149]:
+                  - generic [ref=e2150]: Cutiefly 1
+                  - generic [ref=e2151]: Lv.5
+                - generic [ref=e2152]:
+                  - generic [ref=e2153]: Bug
+                  - generic [ref=e2154]: Fairy
+              - generic [ref=e2155] [cursor=pointer]:
+                - img "Eevee" [ref=e2157]
+                - generic [ref=e2158]:
+                  - generic [ref=e2159]: Eevee 1
+                  - generic [ref=e2160]: Lv.8
+                - generic [ref=e2162]: Normal
+              - generic [ref=e2163] [cursor=pointer]:
+                - img "Eevee" [ref=e2165]
+                - generic [ref=e2166]:
+                  - generic [ref=e2167]: Eevee 2
+                  - generic [ref=e2168]: Lv.13
+                - generic [ref=e2170]: Normal
+              - generic [ref=e2171] [cursor=pointer]:
+                - img "Eevee" [ref=e2173]
+                - generic [ref=e2174]:
+                  - generic [ref=e2175]: Eevee 3
+                  - generic [ref=e2176]: Lv.13
+                - generic [ref=e2178]: Normal
+              - generic [ref=e2179] [cursor=pointer]:
+                - img "Eevee" [ref=e2181]
+                - generic [ref=e2182]:
+                  - generic [ref=e2183]: Eevee 4
+                  - generic [ref=e2184]: Lv.13
+                - generic [ref=e2186]: Normal
+              - generic [ref=e2187] [cursor=pointer]:
+                - img "Gible" [ref=e2189]
+                - generic [ref=e2190]:
+                  - generic [ref=e2191]: Chomps
+                  - generic [ref=e2192]: Lv.10
+                - generic [ref=e2193]:
+                  - generic [ref=e2194]: Dragon
+                  - generic [ref=e2195]: Ground
+              - generic [ref=e2196] [cursor=pointer]:
+                - img "Gible" [ref=e2198]
+                - generic [ref=e2199]:
+                  - generic [ref=e2200]: Gible 2
+                  - generic [ref=e2201]: Lv.10
+                - generic [ref=e2202]:
+                  - generic [ref=e2203]: Dragon
+                  - generic [ref=e2204]: Ground
+              - generic [ref=e2205] [cursor=pointer]:
+                - img "Golett" [ref=e2207]
+                - generic [ref=e2208]:
+                  - generic [ref=e2209]: Golett 1
+                  - generic [ref=e2210]: Lv.3
+                - generic [ref=e2211]:
+                  - generic [ref=e2212]: Ground
+                  - generic [ref=e2213]: Ghost
+              - generic [ref=e2214] [cursor=pointer]:
+                - img "Golett" [ref=e2216]
+                - generic [ref=e2217]:
+                  - generic [ref=e2218]: Golett 2
+                  - generic [ref=e2219]: Lv.3
+                - generic [ref=e2220]:
+                  - generic [ref=e2221]: Ground
+                  - generic [ref=e2222]: Ghost
+              - generic [ref=e2223] [cursor=pointer]:
+                - img "Growlithe" [ref=e2225]
+                - generic [ref=e2226]:
+                  - generic [ref=e2227]: Growlithe 1
+                  - generic [ref=e2228]: Lv.15
+                - generic [ref=e2230]: Fire
+              - generic [ref=e2231] [cursor=pointer]:
+                - img "Growlithe" [ref=e2233]
+                - generic [ref=e2234]:
+                  - generic [ref=e2235]: Growlithe 2
+                  - generic [ref=e2236]: Lv.15
+                - generic [ref=e2238]: Fire
+              - generic [ref=e2239] [cursor=pointer]:
+                - img "Growlithe" [ref=e2241]
+                - generic [ref=e2242]:
+                  - generic [ref=e2243]: Growlithe 3
+                  - generic [ref=e2244]: Lv.15
+                - generic [ref=e2246]: Fire
+              - generic [ref=e2247] [cursor=pointer]:
+                - img "Growlithe" [ref=e2249]
+                - generic [ref=e2250]:
+                  - generic [ref=e2251]: Growlithe 4
+                  - generic [ref=e2252]: Lv.15
+                - generic [ref=e2254]: Fire
+              - generic [ref=e2255] [cursor=pointer]:
+                - img "Growlithe" [ref=e2257]
+                - generic [ref=e2258]:
+                  - generic [ref=e2259]: Growlithe 5
+                  - generic [ref=e2260]: Lv.15
+                - generic [ref=e2262]: Fire
+              - generic [ref=e2263] [cursor=pointer]:
+                - img "Growlithe" [ref=e2265]
+                - generic [ref=e2266]:
+                  - generic [ref=e2267]: Growlithe 6
+                  - generic [ref=e2268]: Lv.15
+                - generic [ref=e2270]: Fire
+              - generic [ref=e2271] [cursor=pointer]:
+                - img "Growlithe" [ref=e2273]
+                - generic [ref=e2274]:
+                  - generic [ref=e2275]: Growlithe 8
+                  - generic [ref=e2276]: Lv.15
+                - generic [ref=e2278]: Fire
+              - generic [ref=e2279] [cursor=pointer]:
+                - img "Growlithe" [ref=e2281]
+                - generic [ref=e2282]:
+                  - generic [ref=e2283]: Growlithe 9
+                  - generic [ref=e2284]: Lv.15
+                - generic [ref=e2286]: Fire
+              - generic [ref=e2287] [cursor=pointer]:
+                - img "Honedge" [ref=e2289]
+                - generic [ref=e2290]:
+                  - generic [ref=e2291]: Honedge 1
+                  - generic [ref=e2292]: Lv.3
+                - generic [ref=e2293]:
+                  - generic [ref=e2294]: Steel
+                  - generic [ref=e2295]: Ghost
+              - generic [ref=e2296] [cursor=pointer]:
+                - img "Honedge" [ref=e2298]
+                - generic [ref=e2299]:
+                  - generic [ref=e2300]: Honedge 2
+                  - generic [ref=e2301]: Lv.3
+                - generic [ref=e2302]:
+                  - generic [ref=e2303]: Steel
+                  - generic [ref=e2304]: Ghost
+              - generic [ref=e2305] [cursor=pointer]:
+                - img "Hoothoot" [ref=e2307]
+                - generic [ref=e2308]:
+                  - generic [ref=e2309]: Hoothoot 1
+                  - generic [ref=e2310]: Lv.6
+                - generic [ref=e2311]:
+                  - generic [ref=e2312]: Normal
+                  - generic [ref=e2313]: Flying
+              - generic [ref=e2314] [cursor=pointer]:
+                - img "Houndour" [ref=e2316]
+                - generic [ref=e2317]:
+                  - generic [ref=e2318]: Houndour 1
+                  - generic [ref=e2319]: Lv.9
+                - generic [ref=e2320]:
+                  - generic [ref=e2321]: Dark
+                  - generic [ref=e2322]: Fire
+              - generic [ref=e2323] [cursor=pointer]:
+                - img "Houndour" [ref=e2325]
+                - generic [ref=e2326]:
+                  - generic [ref=e2327]: Houndour 2
+                  - generic [ref=e2328]: Lv.15
+                - generic [ref=e2329]:
+                  - generic [ref=e2330]: Dark
+                  - generic [ref=e2331]: Fire
+              - generic [ref=e2332] [cursor=pointer]:
+                - img "Houndour" [ref=e2334]
+                - generic [ref=e2335]:
+                  - generic [ref=e2336]: Houndour 3
+                  - generic [ref=e2337]: Lv.7
+                - generic [ref=e2338]:
+                  - generic [ref=e2339]: Dark
+                  - generic [ref=e2340]: Fire
+              - generic [ref=e2341] [cursor=pointer]:
+                - img "Impidimp" [ref=e2343]
+                - generic [ref=e2344]:
+                  - generic [ref=e2345]: Clippy
+                  - generic [ref=e2346]: Lv.10
+                - generic [ref=e2347]:
+                  - generic [ref=e2348]: Dark
+                  - generic [ref=e2349]: Fairy
+              - generic [ref=e2350] [cursor=pointer]:
+                - img "Impidimp" [ref=e2352]
+                - generic [ref=e2353]:
+                  - generic [ref=e2354]: Impidimp 2
+                  - generic [ref=e2355]: Lv.10
+                - generic [ref=e2356]:
+                  - generic [ref=e2357]: Dark
+                  - generic [ref=e2358]: Fairy
+              - generic [ref=e2359] [cursor=pointer]:
+                - img "Lillipup" [ref=e2361]
+                - generic [ref=e2362]:
+                  - generic [ref=e2363]: Lillipup 1
+                  - generic [ref=e2364]: Lv.8
+                - generic [ref=e2366]: Normal
+              - generic [ref=e2367] [cursor=pointer]:
+                - img "Lillipup" [ref=e2369]
+                - generic [ref=e2370]:
+                  - generic [ref=e2371]: Lillipup 2
+                  - generic [ref=e2372]: Lv.10
+                - generic [ref=e2374]: Normal
+              - generic [ref=e2375] [cursor=pointer]:
+                - img "Lillipup" [ref=e2377]
+                - generic [ref=e2378]:
+                  - generic [ref=e2379]: Lillipup 3
+                  - generic [ref=e2380]: Lv.7
+                - generic [ref=e2382]: Normal
+              - generic [ref=e2383] [cursor=pointer]:
+                - img "Lillipup" [ref=e2385]
+                - generic [ref=e2386]:
+                  - generic [ref=e2387]: Lillipup 4
+                  - generic [ref=e2388]: Lv.7
+                - generic [ref=e2390]: Normal
+              - generic [ref=e2391] [cursor=pointer]:
+                - img "Lillipup" [ref=e2393]
+                - generic [ref=e2394]:
+                  - generic [ref=e2395]: Lillipup 5
+                  - generic [ref=e2396]: Lv.8
+                - generic [ref=e2398]: Normal
+              - generic [ref=e2399] [cursor=pointer]:
+                - img "Lillipup" [ref=e2401]
+                - generic [ref=e2402]:
+                  - generic [ref=e2403]: Lillipup 6
+                  - generic [ref=e2404]: Lv.8
+                - generic [ref=e2406]: Normal
+              - generic [ref=e2407] [cursor=pointer]:
+                - img "Lillipup" [ref=e2409]
+                - generic [ref=e2410]:
+                  - generic [ref=e2411]: Lillipup 7
+                  - generic [ref=e2412]: Lv.6
+                - generic [ref=e2414]: Normal
+              - generic [ref=e2415] [cursor=pointer]:
+                - img "Lillipup" [ref=e2417]
+                - generic [ref=e2418]:
+                  - generic [ref=e2419]: Lillipup 8
+                  - generic [ref=e2420]: Lv.7
+                - generic [ref=e2422]: Normal
+              - generic [ref=e2423] [cursor=pointer]:
+                - img "Machop" [ref=e2425]
+                - generic [ref=e2426]:
+                  - generic [ref=e2427]: Machop 1
+                  - generic [ref=e2428]: Lv.10
+                - generic [ref=e2430]: Fighting
+              - generic [ref=e2431] [cursor=pointer]:
+                - img "Machop" [ref=e2433]
+                - generic [ref=e2434]:
+                  - generic [ref=e2435]: Machop 2
+                  - generic [ref=e2436]: Lv.10
+                - generic [ref=e2438]: Fighting
+              - generic [ref=e2439] [cursor=pointer]:
+                - img "Machop" [ref=e2441]
+                - generic [ref=e2442]:
+                  - generic [ref=e2443]: Machop 3
+                  - generic [ref=e2444]: Lv.10
+                - generic [ref=e2446]: Fighting
+              - generic [ref=e2447] [cursor=pointer]:
+                - img "Magikarp" [ref=e2449]
+                - generic [ref=e2450]:
+                  - generic [ref=e2451]: Magikarp 1
+                  - generic [ref=e2452]: Lv.10
+                - generic [ref=e2454]: Water
+              - generic [ref=e2455] [cursor=pointer]:
+                - img "Magikarp" [ref=e2457]
+                - generic [ref=e2458]:
+                  - generic [ref=e2459]: Magikarp 2
+                  - generic [ref=e2460]: Lv.9
+                - generic [ref=e2462]: Water
+              - generic [ref=e2463] [cursor=pointer]:
+                - img "Magikarp" [ref=e2465]
+                - generic [ref=e2466]:
+                  - generic [ref=e2467]: Magikarp 3
+                  - generic [ref=e2468]: Lv.11
+                - generic [ref=e2470]: Water
+              - generic [ref=e2471] [cursor=pointer]:
+                - img "Magikarp" [ref=e2473]
+                - generic [ref=e2474]:
+                  - generic [ref=e2475]: Magikarp 4
+                  - generic [ref=e2476]: Lv.13
+                - generic [ref=e2478]: Water
+              - generic [ref=e2479] [cursor=pointer]:
+                - img "Misdreavus" [ref=e2481]
+                - generic [ref=e2482]:
+                  - generic [ref=e2483]: Iris
+                  - generic [ref=e2484]: Lv.10
+                - generic [ref=e2486]: Ghost
+              - generic [ref=e2487] [cursor=pointer]:
+                - img "Misdreavus" [ref=e2489]
+                - generic [ref=e2490]:
+                  - generic [ref=e2491]: Misdreavus 2
+                  - generic [ref=e2492]: Lv.10
+                - generic [ref=e2494]: Ghost
+              - generic [ref=e2495] [cursor=pointer]:
+                - img "Nickit" [ref=e2497]
+                - generic [ref=e2498]:
+                  - generic [ref=e2499]: Nickit 1
+                  - generic [ref=e2500]: Lv.1
+                - generic [ref=e2502]: Dark
+              - generic [ref=e2503] [cursor=pointer]:
+                - img "Nickit" [ref=e2505]
+                - generic [ref=e2506]:
+                  - generic [ref=e2507]: Nickit 2
+                  - generic [ref=e2508]: Lv.1
+                - generic [ref=e2510]: Dark
+              - generic [ref=e2511] [cursor=pointer]:
+                - img "Nickit" [ref=e2513]
+                - generic [ref=e2514]:
+                  - generic [ref=e2515]: Nickit 3
+                  - generic [ref=e2516]: Lv.1
+                - generic [ref=e2518]: Dark
+              - generic [ref=e2519] [cursor=pointer]:
+                - img "Nickit" [ref=e2521]
+                - generic [ref=e2522]:
+                  - generic [ref=e2523]: Nickit 4
+                  - generic [ref=e2524]: Lv.1
+                - generic [ref=e2526]: Dark
+              - generic [ref=e2527] [cursor=pointer]:
+                - img "Nickit" [ref=e2529]
+                - generic [ref=e2530]:
+                  - generic [ref=e2531]: Nickit 5
+                  - generic [ref=e2532]: Lv.1
+                - generic [ref=e2534]: Dark
+              - generic [ref=e2535] [cursor=pointer]:
+                - img "Nickit" [ref=e2537]
+                - generic [ref=e2538]:
+                  - generic [ref=e2539]: Nickit 6
+                  - generic [ref=e2540]: Lv.9
+                - generic [ref=e2542]: Dark
+              - generic [ref=e2543] [cursor=pointer]:
+                - img "Nickit" [ref=e2545]
+                - generic [ref=e2546]:
+                  - generic [ref=e2547]: Nickit 7
+                  - generic [ref=e2548]: Lv.1
+                - generic [ref=e2550]: Dark
+              - generic [ref=e2551] [cursor=pointer]:
+                - img "Nickit" [ref=e2553]
+                - generic [ref=e2554]:
+                  - generic [ref=e2555]: Nickit 8
+                  - generic [ref=e2556]: Lv.1
+                - generic [ref=e2558]: Dark
+              - generic [ref=e2559] [cursor=pointer]:
+                - img "Nickit" [ref=e2561]
+                - generic [ref=e2562]:
+                  - generic [ref=e2563]: Nickit 9
+                  - generic [ref=e2564]: Lv.1
+                - generic [ref=e2566]: Dark
+              - generic [ref=e2567] [cursor=pointer]:
+                - img "Nickit" [ref=e2569]
+                - generic [ref=e2570]:
+                  - generic [ref=e2571]: Nickit 10
+                  - generic [ref=e2572]: Lv.1
+                - generic [ref=e2574]: Dark
+              - generic [ref=e2575] [cursor=pointer]:
+                - img "Nickit" [ref=e2577]
+                - generic [ref=e2578]:
+                  - generic [ref=e2579]: Nickit 11
+                  - generic [ref=e2580]: Lv.1
+                - generic [ref=e2582]: Dark
+              - generic [ref=e2583] [cursor=pointer]:
+                - img "Oddish" [ref=e2585]
+                - generic [ref=e2586]:
+                  - generic [ref=e2587]: Oddish 1
+                  - generic [ref=e2588]: Lv.10
+                - generic [ref=e2589]:
+                  - generic [ref=e2590]: Grass
+                  - generic [ref=e2591]: Poison
+              - generic [ref=e2592] [cursor=pointer]:
+                - img "Oddish" [ref=e2594]
+                - generic [ref=e2595]:
+                  - generic [ref=e2596]: Oddish 2
+                  - generic [ref=e2597]: Lv.10
+                - generic [ref=e2598]:
+                  - generic [ref=e2599]: Grass
+                  - generic [ref=e2600]: Poison
+              - generic [ref=e2601] [cursor=pointer]:
+                - img "Oddish" [ref=e2603]
+                - generic [ref=e2604]:
+                  - generic [ref=e2605]: Oddish 3
+                  - generic [ref=e2606]: Lv.10
+                - generic [ref=e2607]:
+                  - generic [ref=e2608]: Grass
+                  - generic [ref=e2609]: Poison
+              - generic [ref=e2610] [cursor=pointer]:
+                - img "Oddish" [ref=e2612]
+                - generic [ref=e2613]:
+                  - generic [ref=e2614]: Oddish 4
+                  - generic [ref=e2615]: Lv.10
+                - generic [ref=e2616]:
+                  - generic [ref=e2617]: Grass
+                  - generic [ref=e2618]: Poison
+              - generic [ref=e2619] [cursor=pointer]:
+                - img "Oddish" [ref=e2621]
+                - generic [ref=e2622]:
+                  - generic [ref=e2623]: Oddish 5
+                  - generic [ref=e2624]: Lv.10
+                - generic [ref=e2625]:
+                  - generic [ref=e2626]: Grass
+                  - generic [ref=e2627]: Poison
+              - generic [ref=e2628] [cursor=pointer]:
+                - img "Oddish" [ref=e2630]
+                - generic [ref=e2631]:
+                  - generic [ref=e2632]: Oddish 6
+                  - generic [ref=e2633]: Lv.10
+                - generic [ref=e2634]:
+                  - generic [ref=e2635]: Grass
+                  - generic [ref=e2636]: Poison
+              - generic [ref=e2637] [cursor=pointer]:
+                - img "Oddish" [ref=e2639]
+                - generic [ref=e2640]:
+                  - generic [ref=e2641]: Oddish 7
+                  - generic [ref=e2642]: Lv.10
+                - generic [ref=e2643]:
+                  - generic [ref=e2644]: Grass
+                  - generic [ref=e2645]: Poison
+              - generic [ref=e2646] [cursor=pointer]:
+                - img "Oddish" [ref=e2648]
+                - generic [ref=e2649]:
+                  - generic [ref=e2650]: Oddish 11
+                  - generic [ref=e2651]: Lv.45
+                - generic [ref=e2652]:
+                  - generic [ref=e2653]: Grass
+                  - generic [ref=e2654]: Poison
+              - generic [ref=e2655] [cursor=pointer]:
+                - img "Oddish" [ref=e2657]
+                - generic [ref=e2658]:
+                  - generic [ref=e2659]: Oddish 9
+                  - generic [ref=e2660]: Lv.10
+                - generic [ref=e2661]:
+                  - generic [ref=e2662]: Grass
+                  - generic [ref=e2663]: Poison
+              - generic [ref=e2664] [cursor=pointer]:
+                - img "Oddish" [ref=e2666]
+                - generic [ref=e2667]:
+                  - generic [ref=e2668]: Oddish 13
+                  - generic [ref=e2669]: Lv.45
+                - generic [ref=e2670]:
+                  - generic [ref=e2671]: Grass
+                  - generic [ref=e2672]: Poison
+              - generic [ref=e2673] [cursor=pointer]:
+                - img "Oddish" [ref=e2675]
+                - generic [ref=e2676]:
+                  - generic [ref=e2677]: Oddish 14
+                  - generic [ref=e2678]: Lv.8
+                - generic [ref=e2679]:
+                  - generic [ref=e2680]: Grass
+                  - generic [ref=e2681]: Poison
+              - generic [ref=e2682] [cursor=pointer]:
+                - img "Oddish" [ref=e2684]
+                - generic [ref=e2685]:
+                  - generic [ref=e2686]: Oddish 12
+                  - generic [ref=e2687]: Lv.10
+                - generic [ref=e2688]:
+                  - generic [ref=e2689]: Grass
+                  - generic [ref=e2690]: Poison
+              - generic [ref=e2691] [cursor=pointer]:
+                - img "Oddish" [ref=e2693]
+                - generic [ref=e2694]:
+                  - generic [ref=e2695]: Oddish 13
+                  - generic [ref=e2696]: Lv.10
+                - generic [ref=e2697]:
+                  - generic [ref=e2698]: Grass
+                  - generic [ref=e2699]: Poison
+              - generic [ref=e2700] [cursor=pointer]:
+                - img "Oddish" [ref=e2702]
+                - generic [ref=e2703]:
+                  - generic [ref=e2704]: Oddish 13
+                  - generic [ref=e2705]: Lv.10
+                - generic [ref=e2706]:
+                  - generic [ref=e2707]: Grass
+                  - generic [ref=e2708]: Poison
+              - generic [ref=e2709] [cursor=pointer]:
+                - img "Oddish" [ref=e2711]
+                - generic [ref=e2712]:
+                  - generic [ref=e2713]: Oddish 16
+                  - generic [ref=e2714]: Lv.10
+                - generic [ref=e2715]:
+                  - generic [ref=e2716]: Grass
+                  - generic [ref=e2717]: Poison
+              - generic [ref=e2718] [cursor=pointer]:
+                - img "Pidgey" [ref=e2720]
+                - generic [ref=e2721]:
+                  - generic [ref=e2722]: Pidgey 1
+                  - generic [ref=e2723]: Lv.10
+                - generic [ref=e2724]:
+                  - generic [ref=e2725]: Normal
+                  - generic [ref=e2726]: Flying
+              - generic [ref=e2727] [cursor=pointer]:
+                - img "Pidgey" [ref=e2729]
+                - generic [ref=e2730]:
+                  - generic [ref=e2731]: Pidgey 2
+                  - generic [ref=e2732]: Lv.10
+                - generic [ref=e2733]:
+                  - generic [ref=e2734]: Normal
+                  - generic [ref=e2735]: Flying
+              - generic [ref=e2736] [cursor=pointer]:
+                - img "Pidgey" [ref=e2738]
+                - generic [ref=e2739]:
+                  - generic [ref=e2740]: Pidgey 3
+                  - generic [ref=e2741]: Lv.10
+                - generic [ref=e2742]:
+                  - generic [ref=e2743]: Normal
+                  - generic [ref=e2744]: Flying
+              - generic [ref=e2745] [cursor=pointer]:
+                - img "Pidgey" [ref=e2747]
+                - generic [ref=e2748]:
+                  - generic [ref=e2749]: Pidgey 4
+                  - generic [ref=e2750]: Lv.10
+                - generic [ref=e2751]:
+                  - generic [ref=e2752]: Normal
+                  - generic [ref=e2753]: Flying
+              - generic [ref=e2754] [cursor=pointer]:
+                - img "Pikachu" [ref=e2756]
+                - generic [ref=e2757]:
+                  - generic [ref=e2758]: Pikachu 1
+                  - generic [ref=e2759]: Lv.10
+                - generic [ref=e2761]: Electric
+              - generic [ref=e2762] [cursor=pointer]:
+                - img "Pikachu" [ref=e2764]
+                - generic [ref=e2765]:
+                  - generic [ref=e2766]: Pikachu 2
+                  - generic [ref=e2767]: Lv.10
+                - generic [ref=e2769]: Electric
+              - generic [ref=e2770] [cursor=pointer]:
+                - img "Pikachu" [ref=e2772]
+                - generic [ref=e2773]:
+                  - generic [ref=e2774]: Pikachu 4
+                  - generic [ref=e2775]: Lv.10
+                - generic [ref=e2777]: Electric
+              - generic [ref=e2778] [cursor=pointer]:
+                - img "Pikachu" [ref=e2780]
+                - generic [ref=e2781]:
+                  - generic [ref=e2782]: Pikachu 4
+                  - generic [ref=e2783]: Lv.10
+                - generic [ref=e2785]: Electric
+              - generic [ref=e2786] [cursor=pointer]:
+                - img "Pikachu" [ref=e2788]
+                - generic [ref=e2789]:
+                  - generic [ref=e2790]: Pikachu 5
+                  - generic [ref=e2791]: Lv.14
+                - generic [ref=e2793]: Electric
+              - generic [ref=e2794] [cursor=pointer]:
+                - img "Pikachu" [ref=e2796]
+                - generic [ref=e2797]:
+                  - generic [ref=e2798]: Pikachu 6
+                  - generic [ref=e2799]: Lv.14
+                - generic [ref=e2801]: Electric
+              - generic [ref=e2802] [cursor=pointer]:
+                - img "Pikachu" [ref=e2804]
+                - generic [ref=e2805]:
+                  - generic [ref=e2806]: Pikachu 7
+                  - generic [ref=e2807]: Lv.14
+                - generic [ref=e2809]: Electric
+              - generic [ref=e2810] [cursor=pointer]:
+                - img "Pikachu" [ref=e2812]
+                - generic [ref=e2813]:
+                  - generic [ref=e2814]: Pikachu 8
+                  - generic [ref=e2815]: Lv.10
+                - generic [ref=e2817]: Electric
+              - generic [ref=e2818] [cursor=pointer]:
+                - img "Psyduck" [ref=e2820]
+                - generic [ref=e2821]:
+                  - generic [ref=e2822]: Psyduck 1
+                  - generic [ref=e2823]: Lv.11
+                - generic [ref=e2825]: Water
+              - generic [ref=e2826] [cursor=pointer]:
+                - img "Psyduck" [ref=e2828]
+                - generic [ref=e2829]:
+                  - generic [ref=e2830]: Psyduck 2
+                  - generic [ref=e2831]: Lv.11
+                - generic [ref=e2833]: Water
+              - generic [ref=e2834] [cursor=pointer]:
+                - img "Psyduck" [ref=e2836]
+                - generic [ref=e2837]:
+                  - generic [ref=e2838]: Psyduck 3
+                  - generic [ref=e2839]: Lv.11
+                - generic [ref=e2841]: Water
+              - generic [ref=e2842] [cursor=pointer]:
+                - img "Psyduck" [ref=e2844]
+                - generic [ref=e2845]:
+                  - generic [ref=e2846]: Psyduck 4
+                  - generic [ref=e2847]: Lv.11
+                - generic [ref=e2849]: Water
+              - generic [ref=e2850] [cursor=pointer]:
+                - img "Psyduck" [ref=e2852]
+                - generic [ref=e2853]:
+                  - generic [ref=e2854]: Psyduck 5
+                  - generic [ref=e2855]: Lv.11
+                - generic [ref=e2857]: Water
+              - generic [ref=e2858] [cursor=pointer]:
+                - img "Rattata" [ref=e2860]
+                - generic [ref=e2861]:
+                  - generic [ref=e2862]: Rattata 1
+                  - generic [ref=e2863]: Lv.10
+                - generic [ref=e2865]: Normal
+              - generic [ref=e2866] [cursor=pointer]:
+                - img "Rattata" [ref=e2868]
+                - generic [ref=e2869]:
+                  - generic [ref=e2870]: Rattata 1
+                  - generic [ref=e2871]: Lv.10
+                - generic [ref=e2873]: Normal
+              - generic [ref=e2874] [cursor=pointer]:
+                - img "Rattata" [ref=e2876]
+                - generic [ref=e2877]:
+                  - generic [ref=e2878]: Rattata 1
+                  - generic [ref=e2879]: Lv.10
+                - generic [ref=e2881]: Normal
+              - generic [ref=e2882] [cursor=pointer]:
+                - img "Rattata" [ref=e2884]
+                - generic [ref=e2885]:
+                  - generic [ref=e2886]: Rattata 1
+                  - generic [ref=e2887]: Lv.10
+                - generic [ref=e2889]: Normal
+              - generic [ref=e2890] [cursor=pointer]:
+                - img "Rattata" [ref=e2892]
+                - generic [ref=e2893]:
+                  - generic [ref=e2894]: Rattata 5
+                  - generic [ref=e2895]: Lv.10
+                - generic [ref=e2897]: Normal
+              - generic [ref=e2898] [cursor=pointer]:
+                - img "Rattata" [ref=e2900]
+                - generic [ref=e2901]:
+                  - generic [ref=e2902]: Rattata 5
+                  - generic [ref=e2903]: Lv.10
+                - generic [ref=e2905]: Normal
+              - generic [ref=e2906] [cursor=pointer]:
+                - img "Rattata" [ref=e2908]
+                - generic [ref=e2909]:
+                  - generic [ref=e2910]: Rattata 7
+                  - generic [ref=e2911]: Lv.10
+                - generic [ref=e2913]: Normal
+              - generic [ref=e2914] [cursor=pointer]:
+                - img "Rattata" [ref=e2916]
+                - generic [ref=e2917]:
+                  - generic [ref=e2918]: Rattata 8
+                  - generic [ref=e2919]: Lv.10
+                - generic [ref=e2921]: Normal
+              - generic [ref=e2922] [cursor=pointer]:
+                - img "Rattata" [ref=e2924]
+                - generic [ref=e2925]:
+                  - generic [ref=e2926]: Rattata 7
+                  - generic [ref=e2927]: Lv.10
+                - generic [ref=e2929]: Normal
+              - generic [ref=e2930] [cursor=pointer]:
+                - img "Rattata" [ref=e2932]
+                - generic [ref=e2933]:
+                  - generic [ref=e2934]: Rattata 10
+                  - generic [ref=e2935]: Lv.10
+                - generic [ref=e2937]: Normal
+              - generic [ref=e2938] [cursor=pointer]:
+                - img "Rattata" [ref=e2940]
+                - generic [ref=e2941]:
+                  - generic [ref=e2942]: Rattata 11
+                  - generic [ref=e2943]: Lv.10
+                - generic [ref=e2945]: Normal
+              - generic [ref=e2946] [cursor=pointer]:
+                - img "Rattata" [ref=e2948]
+                - generic [ref=e2949]:
+                  - generic [ref=e2950]: Rattata 11
+                  - generic [ref=e2951]: Lv.10
+                - generic [ref=e2953]: Normal
+              - generic [ref=e2954] [cursor=pointer]:
+                - img "Rattata" [ref=e2956]
+                - generic [ref=e2957]:
+                  - generic [ref=e2958]: Rattata 13
+                  - generic [ref=e2959]: Lv.10
+                - generic [ref=e2961]: Normal
+              - generic [ref=e2962] [cursor=pointer]:
+                - img "Rattata" [ref=e2964]
+                - generic [ref=e2965]:
+                  - generic [ref=e2966]: Rattata 14
+                  - generic [ref=e2967]: Lv.10
+                - generic [ref=e2969]: Normal
+              - generic [ref=e2970] [cursor=pointer]:
+                - img "Rattata" [ref=e2972]
+                - generic [ref=e2973]:
+                  - generic [ref=e2974]: Rattata 15
+                  - generic [ref=e2975]: Lv.10
+                - generic [ref=e2977]: Normal
+              - generic [ref=e2978] [cursor=pointer]:
+                - img "Rookidee" [ref=e2980]
+                - generic [ref=e2981]:
+                  - generic [ref=e2982]: Rookidee 1
+                  - generic [ref=e2983]: Lv.10
+                - generic [ref=e2985]: Flying
+              - generic [ref=e2986] [cursor=pointer]:
+                - img "Sewaddle" [ref=e2988]
+                - generic [ref=e2989]:
+                  - generic [ref=e2990]: Sewaddle 1
+                  - generic [ref=e2991]: Lv.7
+                - generic [ref=e2992]:
+                  - generic [ref=e2993]: Bug
+                  - generic [ref=e2994]: Grass
+              - generic [ref=e2995] [cursor=pointer]:
+                - img "Shroomish" [ref=e2997]
+                - generic [ref=e2998]:
+                  - generic [ref=e2999]: Shroomish 1
+                  - generic [ref=e3000]: Lv.5
+                - generic [ref=e3002]: Grass
+              - generic [ref=e3003] [cursor=pointer]:
+                - img "Shroomish" [ref=e3005]
+                - generic [ref=e3006]:
+                  - generic [ref=e3007]: Shroomish 2
+                  - generic [ref=e3008]: Lv.13
+                - generic [ref=e3010]: Grass
+              - generic [ref=e3011] [cursor=pointer]:
+                - img "Skorupi" [ref=e3013]
+                - generic [ref=e3014]:
+                  - generic [ref=e3015]: Skorupi 1
+                  - generic [ref=e3016]: Lv.18
+                - generic [ref=e3017]:
+                  - generic [ref=e3018]: Poison
+                  - generic [ref=e3019]: Bug
+              - generic [ref=e3020] [cursor=pointer]:
+                - img "Skorupi" [ref=e3022]
+                - generic [ref=e3023]:
+                  - generic [ref=e3024]: Skorupi 2
+                  - generic [ref=e3025]: Lv.10
+                - generic [ref=e3026]:
+                  - generic [ref=e3027]: Poison
+                  - generic [ref=e3028]: Bug
+              - generic [ref=e3029] [cursor=pointer]:
+                - img "Skorupi" [ref=e3031]
+                - generic [ref=e3032]:
+                  - generic [ref=e3033]: Skorupi 3
+                  - generic [ref=e3034]: Lv.12
+                - generic [ref=e3035]:
+                  - generic [ref=e3036]: Poison
+                  - generic [ref=e3037]: Bug
+              - generic [ref=e3038] [cursor=pointer]:
+                - img "Skorupi" [ref=e3040]
+                - generic [ref=e3041]:
+                  - generic [ref=e3042]: Skorupi 4
+                  - generic [ref=e3043]: Lv.12
+                - generic [ref=e3044]:
+                  - generic [ref=e3045]: Poison
+                  - generic [ref=e3046]: Bug
+              - generic [ref=e3047] [cursor=pointer]:
+                - img "Smoliv" [ref=e3049]
+                - generic [ref=e3050]:
+                  - generic [ref=e3051]: Smoliv 1
+                  - generic [ref=e3052]: Lv.8
+                - generic [ref=e3053]:
+                  - generic [ref=e3054]: Grass
+                  - generic [ref=e3055]: Normal
+              - generic [ref=e3056] [cursor=pointer]:
+                - img "Smoliv" [ref=e3058]
+                - generic [ref=e3059]:
+                  - generic [ref=e3060]: Smoliv 2
+                  - generic [ref=e3061]: Lv.3
+                - generic [ref=e3062]:
+                  - generic [ref=e3063]: Grass
+                  - generic [ref=e3064]: Normal
+              - generic [ref=e3065] [cursor=pointer]:
+                - img "Spiritomb" [ref=e3067]
+                - generic [ref=e3068]:
+                  - generic [ref=e3069]: Spiritomb 1
+                  - generic [ref=e3070]: Lv.10
+                - generic [ref=e3071]:
+                  - generic [ref=e3072]: Ghost
+                  - generic [ref=e3073]: Dark
+              - generic [ref=e3074] [cursor=pointer]:
+                - img "Spiritomb" [ref=e3076]
+                - generic [ref=e3077]:
+                  - generic [ref=e3078]: Spiritomb 2
+                  - generic [ref=e3079]: Lv.10
+                - generic [ref=e3080]:
+                  - generic [ref=e3081]: Ghost
+                  - generic [ref=e3082]: Dark
+              - generic [ref=e3083] [cursor=pointer]:
+                - img "Squirtle" [ref=e3085]
+                - generic [ref=e3086]:
+                  - generic [ref=e3087]: Squirtle 1
+                  - generic [ref=e3088]: Lv.13
+                - generic [ref=e3090]: Water
+              - generic [ref=e3091] [cursor=pointer]:
+                - img "Squirtle" [ref=e3093]
+                - generic [ref=e3094]:
+                  - generic [ref=e3095]: Squirtle 2
+                  - generic [ref=e3096]: Lv.13
+                - generic [ref=e3098]: Water
+              - generic [ref=e3099] [cursor=pointer]:
+                - img "Squirtle" [ref=e3101]
+                - generic [ref=e3102]:
+                  - generic [ref=e3103]: Squirtle 3
+                  - generic [ref=e3104]: Lv.13
+                - generic [ref=e3106]: Water
+              - generic [ref=e3107] [cursor=pointer]:
+                - img "TestChar" [ref=e3109]
+                - generic [ref=e3110]:
+                  - generic [ref=e3111]: TestChar 1
+                  - generic [ref=e3112]: Lv.10
+                - generic [ref=e3114]: Fire
+              - generic [ref=e3115] [cursor=pointer]:
+                - img "Thievul" [ref=e3117]
+                - generic [ref=e3118]:
+                  - generic [ref=e3119]: Thievul 1
+                  - generic [ref=e3120]: Lv.15
+                - generic [ref=e3122]: Dark
+              - generic [ref=e3123] [cursor=pointer]:
+                - img "Thievul" [ref=e3125]
+                - generic [ref=e3126]:
+                  - generic [ref=e3127]: Thievul 2
+                  - generic [ref=e3128]: Lv.15
+                - generic [ref=e3130]: Dark
+              - generic [ref=e3131] [cursor=pointer]:
+                - img "Tympole" [ref=e3133]
+                - generic [ref=e3134]:
+                  - generic [ref=e3135]: Tympole 1
+                  - generic [ref=e3136]: Lv.13
+                - generic [ref=e3138]: Water
+              - generic [ref=e3139] [cursor=pointer]:
+                - img "Vulpix" [ref=e3141]
+                - generic [ref=e3142]:
+                  - generic [ref=e3143]: Vulpix 1
+                  - generic [ref=e3144]: Lv.8
+                - generic [ref=e3146]: Fire
+              - generic [ref=e3147] [cursor=pointer]:
+                - img "Vulpix [Alola]" [ref=e3149]
+                - generic [ref=e3150]:
+                  - generic [ref=e3151]: Sabre
+                  - generic [ref=e3152]: Lv.10
+                - generic [ref=e3153]:
+                  - generic [ref=e3154]: Ice
+                  - generic [ref=e3155]: "--"
+              - generic [ref=e3156] [cursor=pointer]:
+                - img "Vulpix [Alola]" [ref=e3158]
+                - generic [ref=e3159]:
+                  - generic [ref=e3160]: Vulpix [Alola] 2
+                  - generic [ref=e3161]: Lv.10
+                - generic [ref=e3163]: Normal
+              - generic [ref=e3164] [cursor=pointer]:
+                - img "Yamask" [ref=e3166]
+                - generic [ref=e3167]:
+                  - generic [ref=e3168]: Yamask 1
+                  - generic [ref=e3169]: Lv.2
+                - generic [ref=e3171]: Ghost
+              - generic [ref=e3172] [cursor=pointer]:
+                - img "Yamask" [ref=e3174]
+                - generic [ref=e3175]:
+                  - generic [ref=e3176]: Yamask 2
+                  - generic [ref=e3177]: Lv.2
+                - generic [ref=e3179]: Ghost
+              - generic [ref=e3180] [cursor=pointer]:
+                - img "Yamask" [ref=e3182]
+                - generic [ref=e3183]:
+                  - generic [ref=e3184]: Yamask 3
+                  - generic [ref=e3185]: Lv.11
+                - generic [ref=e3187]: Ghost
+              - generic [ref=e3188] [cursor=pointer]:
+                - img "Yamask" [ref=e3190]
+                - generic [ref=e3191]:
+                  - generic [ref=e3192]: Yamask 4
+                  - generic [ref=e3193]: Lv.11
+                - generic [ref=e3195]: Ghost
+              - generic [ref=e3196] [cursor=pointer]:
+                - img "Yamask" [ref=e3198]
+                - generic [ref=e3199]:
+                  - generic [ref=e3200]: Yamask 5
+                  - generic [ref=e3201]: Lv.8
+                - generic [ref=e3203]: Ghost
+              - generic [ref=e3204] [cursor=pointer]:
+                - img "Yamask" [ref=e3206]
+                - generic [ref=e3207]:
+                  - generic [ref=e3208]: Yamask 6
+                  - generic [ref=e3209]: Lv.14
+                - generic [ref=e3211]: Ghost
+              - generic [ref=e3212] [cursor=pointer]:
+                - img "Yamask" [ref=e3214]
+                - generic [ref=e3215]:
+                  - generic [ref=e3216]: Yamask 7
+                  - generic [ref=e3217]: Lv.8
+                - generic [ref=e3219]: Ghost
+              - generic [ref=e3220] [cursor=pointer]:
+                - img "Yamask" [ref=e3222]
+                - generic [ref=e3223]:
+                  - generic [ref=e3224]: Yamask 8
+                  - generic [ref=e3225]: Lv.10
+                - generic [ref=e3227]: Ghost
+              - generic [ref=e3228] [cursor=pointer]:
+                - img "Yamask" [ref=e3230]
+                - generic [ref=e3231]:
+                  - generic [ref=e3232]: Yamask 9
+                  - generic [ref=e3233]: Lv.17
+                - generic [ref=e3235]: Ghost
+              - generic [ref=e3236] [cursor=pointer]:
+                - img "Yamask" [ref=e3238]
+                - generic [ref=e3239]:
+                  - generic [ref=e3240]: Yamask 10
+                  - generic [ref=e3241]: Lv.8
+                - generic [ref=e3243]: Ghost
+              - generic [ref=e3244] [cursor=pointer]:
+                - img "Yamask" [ref=e3246]
+                - generic [ref=e3247]:
+                  - generic [ref=e3248]: Yamask 11
+                  - generic [ref=e3249]: Lv.2
+                - generic [ref=e3251]: Ghost
+              - generic [ref=e3252] [cursor=pointer]:
+                - img "Yamask" [ref=e3254]
+                - generic [ref=e3255]:
+                  - generic [ref=e3256]: Yamask 12
+                  - generic [ref=e3257]: Lv.2
+                - generic [ref=e3259]: Ghost
+              - generic [ref=e3260] [cursor=pointer]:
+                - img "pikachu" [ref=e3262]
+                - generic [ref=e3263]:
+                  - generic [ref=e3264]: pikachu 1
+                  - generic [ref=e3265]: Lv.5
+                - generic [ref=e3267]: Normal
+          - generic [ref=e3268]:
+            - button "Cancel" [ref=e3269] [cursor=pointer]
+            - button "Add to Battle" [disabled] [ref=e3270]
+  - generic [ref=e76]:
+    - button "Toggle Nuxt DevTools" [ref=e77] [cursor=pointer]:
+      - img [ref=e78]
+    - generic "Page load time" [ref=e81]:
+      - generic [ref=e82]: "105"
+      - generic [ref=e83]: ms
+    - button "Toggle Component Inspector" [ref=e85] [cursor=pointer]:
+      - img [ref=e86]
