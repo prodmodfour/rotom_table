@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Zoroark
 	- Types: Dark
+
+# Evolution
+	- [[Zorua]] >> [[Zoroark]]
+
 # Base Stats
 	- HP: 6
 	- Attack: 11
@@ -8,7 +12,6 @@
 	- Special Attack: 12
 	- Speed: 11
 	- Stamina: 9
-	- Movement Points: 1
 
 # Size Information
 	- Height: 5' 3" / 1.6m
@@ -16,99 +19,44 @@
 	- Size Class: Medium
 	- Weight Class: 4
 
-# Move List
-- Aerial Ace
-- Agility
-- Attract
-- Bounce
-- Calm Mind
-- Covet
-- Cut
-- Dark Pulse
-- Dig
-- Double Team
-- Embargo
-- Facade
-- Feint Attack
-- Flamethrower
-- Fling
-- Focus Blast
-- Foul Play
-- Frustration
-- Fury Swipes
-- Giga Impact
-- Grass Knot
-- Hidden Power
-- Hone Claws
-- Hyper Beam
-- Hyper Voice
-- Imprison
-- Incinerate
-- Knock Off
-- Low Kick
-- Low Sweep
-- Nasty Plot
-- Night Daze
-- Night Slash
-- Payback
-- Protect
-- Psych Up
-- Punishment
-- Pursuit
-- Rain Dance
-- Rest
-- Retaliate
-- Return
-- Roar
-- Rock Smash
-- Round
-- Scary Face
-- Shadow Ball
-- Shadow Claw
-- Sleep Talk
-- Snarl
-- Snatch
-- Snore
-- Spite
-- Substitute
-- Sunny Day
-- Swagger
-- Swords Dance
-- Taunt
-- Thief
-- Torment
-- Toxic
-- Trick
-- U-Turn
-- Uproar
-
 # Traits
 ## Innate
 
 ### Species Specific
-	- Illusion
-	- Weird Power
+
+#### Body
+
+#### Natural Weapons
+	- Natural Weapon [Arms, Hands, Legs, Feet]
+
+#### Senses
+	- Sense [Darkvision, Keen Smell]
+
+#### Defenses
+
+#### Behavior
 	- Pride
 	- Pickpocket
 	- Vicious
-	- Power 4
-	- Jump 2/2
-	- Darkvision
-	- Stealth
-	- Tracker
+	- Pack Hunt
+	- Opportunist 1
 	- Pack Mon
+	- Omnivore
+
+#### Special Abilities
+	- Illusion
+	- Weird Power
 	- Illusionist
 	- Illusory Disguise
-	- Naturewalk (Forest, Grassland)
-	- Landwalker
-		- Land Movement rate 7
-	- Swimmer
-		- Water Movement rate 4
 
-### Inherited
+#### Movement
+	- Power 4
+	- Jump 2/2
+	- Naturewalk (Forest, Grassland)
+	- Landwalker 7
+	- Swimmer 4
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +4
@@ -136,5 +84,10 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Omnivore
 	- Habitat: Forest
+
+# Lore
+
+- [[zorua-line-illusion-as-survival]] — master illusionist, can reshape perceived landscapes to hide territory
+- [[zoroark-pack-protection]] — fiercely loyal, carries Zorua young in its mane, hides den behind phantom terrain
+- [[zoroark-human-speech]] — capable of contextual human speech while disguised, can fool cameras

@@ -1,0 +1,3 @@
+[[Clauncher]] and [[Clawitzer]] have dramatically asymmetric claws — the right claw is massively enlarged while the left remains small and pointed. In Clauncher, this imbalance creates a poor sense of balance and difficulty swimming in a straight line. Clawitzer's right claw grows larger than its entire body.
+
+If a Clauncher or Clawitzer loses its oversized claw, it goes into hiding until the claw regenerates, mirroring the [[crawdaunt-molting-vulnerability|Crawdaunt's pincer-loss vulnerability]]. This shared pattern across crustacean Pokemon suggests that claw regeneration and the associated hiding behavior are consistent biological features of armored aquatic species.

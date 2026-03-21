@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Misdreavus
 	- Types: Ghost
+
+# Evolution
+	- [[Misdreavus]] >> [[Mismagius]]
+
 # Base Stats
 	- HP: 6
 	- Attack: 6
@@ -8,7 +12,6 @@
 	- Special Attack: 9
 	- Speed: 9
 	- Stamina: 8
-	- Movement Points: 1
 
 # Size Information
 	- Height: 2' 4" / 0.7m
@@ -16,127 +19,62 @@
 	- Size Class: Small
 	- Weight Class: 1
 
-# Move List
-- Aerial Ace
-- Astonish
-- Attract
-- Calm Mind
-- Charge Beam
-- Confuse Ray
-- Curse
-- Dark Pulse
-- Defense Curl
-- Destiny Bond
-- Double Team
-- Double-Edge
-- Dream Eater
-- Echoed Voice
-- Embargo
-- Facade
-- Flash
-- Foul Play
-- Frustration
-- Growl
-- Heal Bell
-- Hex
-- Hidden Power
-- Hyper Voice
-- Icy Wind
-- Imprison
-- Magic Coat
-- Magic Room
-- Me First
-- Mean Look
-- Memento
-- Nasty Plot
-- Ominous Wind
-- Pain Split
-- Payback
-- Perish Song
-- Power Gem
-- Protect
-- Psybeam
-- Psych Up
-- Psychic
-- Psywave
-- Rain Dance
-- Rest
-- Return
-- Role Play
-- Round
-- Screech
-- Shadow Ball
-- Shadow Sneak
-- Shock Wave
-- Skill Swap
-- Sleep Talk
-- Snatch
-- Snore
-- Spite
-- Substitute
-- Sucker Punch
-- Sunny Day
-- Swagger
-- Swift
-- Taunt
-- Telekinesis
-- Thief
-- Thunder
-- Thunder Wave
-- Thunderbolt
-- Torment
-- Toxic
-- Trick
-- Trick Room
-- Uproar
-- Will-O-Wisp
-- Wonder Room
-
 # Traits
 ## Innate
 
 ### Species Specific
-	- Levitate
-	- Frighten
-	- Magician
-	- Omen
-	- Fade Away
-	- Darkvision
+
+#### Body
+	- Sound [Vocal]
+
+#### Natural Weapons
+	- Natural Weapon [Tentacles]
+
+#### Senses
+	- Sense [Darkvision]
+
+#### Defenses
 	- Dead Silent
 	- Invisibility
-	- Phasing
-	- Underdog
+
+#### Behavior
+	- Cute
+	- Scary
+	- Psychovore [Fear]
+	- Starter
+	- Nullivore
+
+#### Special Abilities
+	- Telepath
+	- Mind Manipulation 1
+
+#### Movement
+	- Phaser 2
 	- Power 2
 	- Jump 1/1
-	- Landwalker
-		- Land Movement rate 1
-	- Swimmer
-		- Water Movement rate 2
-	- Levitator
-		- Levitate Movement rate 3
-
-### Inherited
+	- Landwalker 1
+	- Swimmer 2
+	- Flier 3
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +1
 	- Athletics : +1
-	- Charm : +0
+	- Charm : +0 + Cute (+5) + Scary (-1) = +4
 	- Combat : +2
 	- Command : +0
 	- Deception : +0
 	- Focus : +2
 	- General Education : +0
 	- Insight : +0
-	- Intimidate : +0
+	- Intimidate : +0 + Scary (+3) = +3
 	- Medicine : +0
 	- Occult Education : +0
 	- Perception : +2
 	- Performance : +0
 	- Pokemon Education : +0
-	- Stealth : +3
+	- Stealth : +3 + Dead Silent (+5) = +8
 	- Survival : +0
 	- Technology Education : +0
 
@@ -146,5 +84,9 @@
 	- Average Hatch Rate: 13 Days
 
 # Miscellaneous
-	- Diet: Nullivore
 	- Habitat: Cave, Forest, Urban
+
+# Lore
+
+- [[misdreavus-fear-feeding-cycle]] — neck gems absorb fear as nourishment, body may retreat into gems when weakened
+- [[misdreavus-hair-as-limbs]] — uses flowing hair as prehensile appendages in place of arms

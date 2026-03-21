@@ -3,7 +3,7 @@ Trainers have seven combat stats: HP, Attack, Defense, Special Attack, Special D
 ## See also
 
 - [[individual-stats-vs-base-stats]]
-- [[current-stat-formula]]
+- [[effective-stat-formula]]
 - [[trainers-are-human-species]]
 - [[pokemon-hp-formula]]
 - [[combat-stage-asymmetric-scaling]]

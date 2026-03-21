@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Palpitoad
 	- Types: Water / Ground
+
+# Evolution
+	- [[Tympole]] >> [[Palpitoad]] >> [[Seismitoad]]
+
 # Base Stats
 	- HP: 8
 	- Attack: 7
@@ -8,7 +12,6 @@
 	- Special Attack: 7
 	- Speed: 7
 	- Stamina: 7
-	- Movement Points: 1
 
 # Size Information
 	- Height: 2' 07" / 0.8m
@@ -16,70 +19,42 @@
 	- Size Class: Small
 	- Weight Class: 2
 
-# Move List
-- Aqua Ring
-- Attract
-- Bounce
-- Bubble Beam
-- Bulldoze
-- Double Team
-- Earth Power
-- Echoed Voice
-- Endeavor
-- Facade
-- Flail
-- Frustration
-- Gastro Acid
-- Hail
-- Hidden Power
-- Hydro Pump
-- Hyper Voice
-- Icy Wind
-- Infestation
-- Mud Shot
-- Muddy Water
-- Protect
-- Rain Dance
-- Rest
-- Return
-- Rock Smash
-- Round
-- Scald
-- Sleep Talk
-- Sludge Bomb
-- Sludge Wave
-- Snore
-- Stealth Rock
-- Substitute
-- Supersonic
-- Surf
-- Swagger
-- Toxic
-- Uproar
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+	- Resonant Body
+	- Sound [Vocal]
+
+#### Natural Weapons
+	- Natural Weapon [Legs, Feet]
+
+#### Senses
+
+#### Defenses
+
+#### Behavior
+	- Herbivore
+
+#### Special Abilities
 	- Water Absorb
 	- Mud Dweller
 	- Swift Swim
 	- Hydration
 	- Refreshing Veil
+	- Water Creation 2
+	- Water Manipulation 1
+
+#### Movement
 	- Power 3
 	- Jump 2/2
-	- Fountain
 	- Naturewalk (Wetlands)
-	- Underdog
-	- Landwalker
-		- Land Movement rate 4
-	- Swimmer
-		- Water Movement rate 4
-
-### Inherited
+	- Landwalker 4
+	- Swimmer 4
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +4
@@ -107,5 +82,8 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Herbivore
 	- Habitat: Freshwater, Marsh
+
+# Lore
+- [[palpitoad-sonic-hunting]]
+- [[tympole-line-vibration-evolution]]

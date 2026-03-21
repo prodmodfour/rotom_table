@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Umbreon
 	- Types: Dark
+
+# Evolution
+	- [[Eevee]] >> [[Umbreon]]
+
 # Base Stats
 	- HP: 10
 	- Attack: 7
@@ -8,7 +12,6 @@
 	- Special Attack: 6
 	- Speed: 7
 	- Stamina: 9
-	- Movement Points: 1
 
 # Size Information
 	- Height: 3' 3" / 1m
@@ -16,99 +19,49 @@
 	- Size Class: Medium
 	- Weight Class: 3
 
-# Move List
-- Assurance
-- Attract
-- Body Slam
-- Confuse Ray
-- Covet
-- Cut
-- Dark Pulse
-- Dig
-- Double Team
-- Double-Edge
-- Dream Eater
-- Echoed Voice
-- Facade
-- Feint Attack
-- Flash
-- Foul Play
-- Frustration
-- Giga Impact
-- Guard Swap
-- Heal Bell
-- Helping Hand
-- Hidden Power
-- Hyper Beam
-- Hyper Voice
-- Iron Tail
-- Last Resort
-- Mean Look
-- Moonlight
-- Mud-Slap
-- Payback
-- Protect
-- Psych Up
-- Psychic
-- Pursuit
-- Quick Attack
-- Rain Dance
-- Rest
-- Retaliate
-- Return
-- Role Play
-- Round
-- Sand Attack
-- Screech
-- Shadow Ball
-- Sleep Talk
-- Snatch
-- Snarl
-- Snore
-- Spite
-- Substitute
-- Sucker Punch
-- Sunny Day
-- Swagger
-- Swift
-- Taunt
-- Torment
-- Toxic
-- Wonder Room
-- Work Up
-
 # Traits
 ## Innate
 
 ### Species Specific
-	- Synchronize
-	- Pressure
-	- Type Aura (Dark)
-	- Inner Focus
+
+#### Body
+	- Sound [Vocal]
+	- Poison Expulsion
+
+#### Natural Weapons
+	- Natural Weapon [Fangs, Claws, Legs, Feet]
+
+#### Senses
+	- Sense [Darkvision, Keen Smell]
+
+#### Defenses
+
+#### Behavior
 	- Ambush
-	- Darkvision
-	- Tracker
-	- Stealth
+	- Opportunist 1
+	- Cute
+	- Omnivore
+
+#### Special Abilities
+	- Synchronize
+	- Inner Focus
+
+#### Movement
 	- Power 3
 	- Jump 1/2
-	- Landwalker
-		- Land Movement rate 6
-	- Swimmer
-		- Water Movement rate 4
-
-### Inherited
+	- Landwalker 6
+	- Swimmer 4
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +3
 	- Athletics : +4
-	- Charm : +0
+	- Charm : +0 + Cute (+5) = +5
 	- Combat : +3
 	- Command : +0
 	- Deception : +0
-	- Focus : +4
+	- Focus : +4 + Inner Focus (+3) = +7
 	- General Education : +0
 	- Insight : +0
 	- Intimidate : +0
@@ -127,5 +80,10 @@
 	- Average Hatch Rate: 20 Days
 
 # Miscellaneous
-	- Diet: Omnivore
 	- Habitat: Cave, Forest, Urban
+
+# Lore
+- [[eevee-line-unstable-genetics]] -- genetic restructuring via prolonged moonlight exposure
+- [[umbreon-toxic-sweat-defense]] -- sprays poisonous sweat from pores when threatened
+- [[umbreon-lunar-bioluminescence]] -- ring markings glow in darkness and intensify under moonlight
+- [[umbreon-nocturnal-ambush-predator]] -- conceals in total darkness, strikes at the throat

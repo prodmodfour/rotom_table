@@ -5,3 +5,4 @@ Sandstorm is one of four [[weather-as-game-keyword]] types. Like [[hail-weather-
 ## See also
 
 - [[weather-exclusivity-constraint]]
+- [[sand-veil]] — trait granting +2 Evasion during Sandstorm

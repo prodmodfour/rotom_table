@@ -1,6 +1,16 @@
+---
+id: Barboach
+aliases: []
+tags: []
+---
+
 # Basic Information
 	- Name: Barboach
 	- Types: Water / Ground
+
+# Evolution
+	- [[Barboach]] >> [[Whiscash]]
+
 # Base Stats
 	- HP: 5
 	- Attack: 5
@@ -8,7 +18,6 @@
 	- Special Attack: 5
 	- Speed: 6
 	- Stamina: 5
-	- Movement Points: 1
 
 # Size Information
 	- Height: 1' 4" / 0.4m
@@ -16,85 +25,38 @@
 	- Size Class: Small
 	- Weight Class: 1
 
-# Move List
-- Amnesia
-- Aqua Tail
-- Attract
-- Blizzard
-- Bounce
-- Bulldoze
-- Dive
-- Double Team
-- Double-Edge
-- Dragon Dance
-- Earth Power
-- Earthquake
-- Facade
-- Fissure
-- Flail
-- Frustration
-- Future Sight
-- Hail
-- Hidden Power
-- Hydro Pump
-- Ice Beam
-- Icy Wind
-- Magnitude
-- Mud Bomb
-- Mud Shot
-- Mud Sport
-- Mud-Slap
-- Muddy Water
-- Protect
-- Rain Dance
-- Rest
-- Return
-- Rock Tomb
-- Round
-- Sandstorm
-- Scald
-- Sleep Talk
-- Snore
-- Spark
-- Substitute
-- Surf
-- Swagger
-- Take Down
-- Thrash
-- Toxic
-- Water Gun
-- Water Pulse
-- Water Sport
-- Waterfall
-- Whirlpool
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+
+#### Natural Weapons
+
+#### Senses
+  - Senses [Tremorsense 6]
+#### Defenses
+
+#### Behavior
 	- Oblivious
-	- Anticipation
-	- Rain Dish
-	- Mud Dweller
+	- Starter
+	- Herbivore
+
+#### Special Abilities
 	- Hydration
-	- Gilled
-	- Fountain
-	- Underdog
+	- Water Creation 1
+	- Water Manipulation 1
+	- Earth Manipulation 1
+
+#### Movement
 	- Power 1
 	- Jump 2/2
 	- Naturewalk (Wetlands)
-	- Landwalker
-		- Land Movement rate 2
-	- Swimmer
-		- Water Movement rate 4
-	- Burrower
-		- Burrow Movement rate 2
-
-### Inherited
-
-## Learned
-
-
+	- Landwalker 2
+	- Swimmer 4
+	- Burrower 2
+  
 # Skills
 	- Acrobatics : +2
 	- Athletics : +2
@@ -121,5 +83,8 @@
 	- Average Hatch Rate: 10 Days
 
 # Miscellaneous
-	- Diet: Herbivore
 	- Habitat: Freshwater, Marsh
+
+# Lore
+- [[barboach-whisker-radar]]
+- [[barboach-line-slime-barrier]]

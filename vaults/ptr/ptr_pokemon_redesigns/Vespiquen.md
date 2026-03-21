@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Vespiquen
 	- Types: Bug / Flying
+
+# Evolution
+	- [[Combee]] >> [[Vespiquen]] (Female only)
+
 # Base Stats
 	- HP: 7
 	- Attack: 8
@@ -8,7 +12,6 @@
 	- Special Attack: 8
 	- Speed: 4
 	- Stamina: 5
-	- Movement Points: 1
 
 # Size Information
 	- Height: 3' 11" / 1.2m
@@ -16,88 +19,42 @@
 	- Size Class: Medium
 	- Weight Class: 3
 
-# Move List
-- Acrobatics
-- Aerial Ace
-- Air Cutter
-- Air Slash
-- Attack Order
-- Attract
-- Bug Bite
-- Captivate
-- Confuse Ray
-- Cut
-- Defend Order
-- Destiny Bond
-- Double Team
-- Endeavor
-- Facade
-- Fell Stinger
-- Flash
-- Fling
-- Frustration
-- Fury Cutter
-- Fury Swipes
-- Giga Impact
-- Heal Order
-- Hidden Power
-- Hone Claws
-- Hyper Beam
-- Infestation
-- Mud-Slap
-- Natural Gift
-- Ominous Wind
-- Power Gem
-- Protect
-- Pursuit
-- Quash
-- Rain Dance
-- Rest
-- Return
-- Roost
-- Round
-- Signal Beam
-- Silver Wind
-- Slash
-- Sleep Talk
-- Sludge Bomb
-- Snore
-- String Shot
-- Struggle Bug
-- Substitute
-- Sunny Day
-- Swagger
-- Swift
-- Tailwind
-- Thief
-- Toxic
-- U-Turn
-- Venoshock
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+	- Sound [Wing Buzz]
+
+#### Natural Weapons
+	- Natural Weapon [Stinger, Wings, Arms, Legs, Feet]
+
+#### Senses
+
+#### Defenses
+	- Shell 2
+
+#### Behavior
 	- Rally
+	- Pack Hunt
+	- Pack Mon
+	- Herbivore
+
+#### Special Abilities
 	- Pressure
-	- Unnerve
 	- Friend Guard
 	- Full Guard
+	- Honey Gather
+
+#### Movement
 	- Power 3
 	- Jump 1/1
-	- Pack Mon
-	- Honey Gather
-	- Landwalker
-		- Land Movement rate 3
-	- Swimmer
-		- Water Movement rate 3
-	- Flier
-		- Sky Movement rate 5
-
-### Inherited
+	- Landwalker 3
+	- Swimmer 3
+	- Flier 5
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +4
@@ -125,5 +82,10 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Herbivore
 	- Habitat: Forest
+
+# Lore
+
+- [[combee-vespiquen-hive-structure]]
+- [[vespiquen-pheromone-colony-control]]
+- [[vespiquen-body-as-living-hive]]

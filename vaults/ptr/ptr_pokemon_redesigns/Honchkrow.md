@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Honchkrow
 	- Types: Dark / Flying
+
+# Evolution
+	- [[Murkrow]] >> [[Honchkrow]]
+
 # Base Stats
 	- HP: 10
 	- Attack: 13
@@ -8,7 +12,6 @@
 	- Special Attack: 11
 	- Speed: 7
 	- Stamina: 4
-	- Movement Points: 1
 
 # Size Information
 	- Height: 2' 11" / 0.9m
@@ -16,97 +19,45 @@
 	- Size Class: Medium
 	- Weight Class: 3
 
-# Move List
-- Aerial Ace
-- Assurance
-- Astonish
-- Attract
-- Calm Mind
-- Dark Pulse
-- Defog
-- Double Team
-- Double-Edge
-- Dream Eater
-- Embargo
-- Facade
-- Feint Attack
-- Fly
-- Foul Play
-- Frustration
-- Giga Impact
-- Haze
-- Heat Wave
-- Hidden Power
-- Hyper Beam
-- Icy Wind
-- Incinerate
-- Mean Look
-- Mud-Slap
-- Nasty Plot
-- Night Shade
-- Night Slash
-- Ominous Wind
-- Payback
-- Protect
-- Psych Up
-- Psychic
-- Pursuit
-- Quash
-- Rain Dance
-- Rest
-- Retaliate
-- Return
-- Roost
-- Round
-- Shadow Ball
-- Sky Attack
-- Sleep Talk
-- Snarl
-- Snatch
-- Snore
-- Spite
-- Steel Wing
-- Sucker Punch
-- Sunny Day
-- Superpower
-- Swagger
-- Swift
-- Tailwind
-- Taunt
-- Telekinesis
-- Thief
-- Thunder Wave
-- Torment
-- Toxic
-- Twister
-- Uproar
-- Wing Attack
-
 # Traits
 ## Innate
 
 ### Species Specific
-	- Insomnia
-	- Super Luck
+
+#### Body
+	- Sound [Vocal]
+
+#### Natural Weapons
+	- Natural Weapon [Beak, Claws, Wings, Legs, Feet]
+
+#### Senses
+	- Sense [Darkvision]
+
+#### Defenses
+
+#### Behavior
 	- Confidence
 	- Rally
+	- Pack Hunt
+	- Opportunist 1
+	- Pack Mon
+	- Omnivore
+
+#### Special Abilities
+	- Insomnia
+	- Super Luck
 	- Moxie
+	- Guster
+	- Wind Manipulation 2
+
+#### Movement
 	- Power 4
 	- Jump 2/2
-	- Darkvision
-	- Guster
-	- Pack Mon
-	- Landwalker
-		- Land Movement rate 4
-	- Swimmer
-		- Water Movement rate 2
-	- Flier
-		- Sky Movement rate 8
-
-### Inherited
+	- Landwalker 4
+	- Swimmer 2
+	- Flier 8
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +3
@@ -134,5 +85,10 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Omnivore
 	- Habitat: Forest, Marsh
+
+# Lore
+
+- [[murkrow-line-murder-hierarchy]] — commands murders of 100+ Murkrow, punishes failure ruthlessly
+- [[honchkrow-vain-nocturnal-boss]] — vain daytime preener, charismatic nighttime authority figure
+- [[murkrow-line-shiny-object-hoarding]] — sleeps atop gem collections gathered by Murkrow subordinates

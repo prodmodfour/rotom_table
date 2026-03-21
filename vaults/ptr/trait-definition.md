@@ -1,6 +1,6 @@
 A Trait is a description that allows a character to do things — passively, actively, or triggered. Traits are the unified progression mechanic in PTR, [[traits-replace-abilities-capabilities-natures|replacing PTU's Abilities, Capabilities, and Natures]].
 
-Traits come in two forms: [[innate-traits]] (determined by species) and [[learned-traits]] (earned through personal story).
+Traits come in three forms: [[innate-traits]] (determined by species), [[learned-traits]] (earned through personal story), and [[emergent-traits]] (assigned by the GM based on roleplay and backstory).
 
 ## See also
 

@@ -1,0 +1,3 @@
+Thievul competes directly with Liepard for territory and with Boltund as a natural enemy. The Liepard rivalry is particularly significant — both are sleek, stealthy Dark-types that operate in overlapping habitats, creating direct [[niche-competition-drives-adaptation|niche competition]]. Nickit similarly has a fierce rivalry with Purrloin, suggesting the cat-versus-fox dynamic persists across both evolutionary stages.
+
+These rivalries make [[Thievul]] encounters more interesting when paired with rival species. A forest territory disputed between Thievul and Liepard, or a Boltund actively hunting a Thievul, provides ready-made [[wild-encounter-motivations|encounter motivations]] that go beyond simple trainer-versus-wild combat.

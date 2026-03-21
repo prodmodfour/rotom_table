@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Toxicroak
 	- Types: Poison / Fighting
+
+# Evolution
+	- [[Croagunk]] >> [[Toxicroak]]
+
 # Base Stats
 	- HP: 8
 	- Attack: 11
@@ -8,7 +12,6 @@
 	- Special Attack: 9
 	- Speed: 9
 	- Stamina: 9
-	- Movement Points: 1
 
 # Size Information
 	- Height: 4' 3" / 1.3m
@@ -16,107 +19,40 @@
 	- Size Class: Medium
 	- Weight Class: 3
 
-# Move List
-- Attract
-- Belch
-- Bounce
-- Brick Break
-- Bulk Up
-- Bulldoze
-- Confide
-- Cut
-- Dark Pulse
-- Dig
-- Double Team
-- Drain Punch
-- Dual Chop
-- Earthquake
-- Embargo
-- Facade
-- Feint Attack
-- Flatter
-- Fling
-- Focus Blast
-- Focus Punch
-- Foul Play
-- Frustration
-- Fury Cutter
-- Giga Impact
-- Gunk Shot
-- Helping Hand
-- Hidden Power
-- Hyper Beam
-- Ice Punch
-- Icy Wind
-- Knock Off
-- Low Kick
-- Low Sweep
-- Magic Coat
-- Mud Bomb
-- Mud-Slap
-- Nasty Plot
-- Payback
-- Poison Jab
-- Poison Sting
-- Power-Up Punch
-- Protect
-- Pursuit
-- Rain Dance
-- Rest
-- Retaliate
-- Return
-- Revenge
-- Rock Climb
-- Rock Slide
-- Rock Smash
-- Rock Tomb
-- Role Play
-- Round
-- Shadow Ball
-- Sleep Talk
-- Sludge Bomb
-- Sludge Wave
-- Snatch
-- Snore
-- Spite
-- Stone Edge
-- Strength
-- Substitute
-- Sucker Punch
-- Sunny Day
-- Super Fang
-- Swagger
-- Swords Dance
-- Taunt
-- Thief
-- Thunder Punch
-- Torment
-- Toxic
-- Vacuum Wave
-- Venoshock
-- Work Up
-- X-Scissor
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+	- Sound [Vocal]
+
+#### Natural Weapons
+	- Natural Weapon [Claws, Arms, Hands, Legs, Feet]
+	- Poison Coated [Claws]
+
+#### Senses
+
+#### Defenses
+
+#### Behavior
+	- Herbivore
+
+#### Special Abilities
 	- Dry Skin
 	- Poison Touch
 	- Anticipation
 	- Dodge
 	- Deadly Poison
+
+#### Movement
 	- Power 8
 	- Jump 3/4
-	- Landwalker
-		- Land Movement rate 6
-	- Swimmer
-		- Water Movement rate 6
-
-### Inherited
+	- Landwalker 6
+	- Swimmer 6
 
 ## Learned
-
+	- Opportunist 1
 
 # Skills
 	- Acrobatics : +3
@@ -144,5 +80,8 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Herbivore
 	- Habitat: Freshwater, Marsh
+
+# Lore
+- [[croagunk-line-poison-sac-system]]
+- [[toxicroak-dual-temperament]]

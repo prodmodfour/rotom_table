@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Ribombee
 	- Types: Bug / Fairy
+
+# Evolution
+	- [[Cutiefly]] >> [[Ribombee]]
+
 # Base Stats
 	- HP: 6
 	- Attack: 6
@@ -8,7 +12,6 @@
 	- Special Attack: 10
 	- Speed: 12
 	- Stamina: 5
-	- Movement Points: 1
 
 # Size Information
 	- Height: 0' 8" / 0.2m
@@ -16,89 +19,40 @@
 	- Size Class: Small
 	- Weight Class: 1
 
-# Move List
-- Acrobatics
-- Aerial Ace
-- After You
-- Ally Switch
-- Aromatherapy
-- Attract
-- Bug Bite
-- Bug Buzz
-- Calm Mind
-- Confide
-- Covet
-- Dazzling Gleam
-- Defog
-- Double Team
-- Draining Kiss
-- Dream Eater
-- Energy Ball
-- Facade
-- Fairy Wind
-- Frustration
-- Helping Hand
-- Hidden Power
-- Infestation
-- Last Resort
-- Light Screen
-- Magic Room
-- Pollen Puff
-- Protect
-- Psych Up
-- Psychic
-- Quiver Dance
-- Reflect
-- Rest
-- Return
-- Roost
-- Round
-- Safeguard
-- Signal Beam
-- Silver Wind
-- Skill Swap
-- Sleep Talk
-- Snore
-- Solar Beam
-- Struggle Bug
-- Stun Spore
-- Substitute
-- Sunny Day
-- Swagger
-- Sweet Scent
-- Tailwind
-- Telekinesis
-- Thief
-- Toxic
-- Trick
-- U-Turn
-- Wonder Room
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+	- Sound [Wing Buzz]
+
+#### Natural Weapons
+
+#### Senses
+	- Sense [Aura Reader]
+
+#### Defenses
 	- Shield Dust
-	- Sweet Veil
-	- Compound Eyes
-	- Tinted Lens
+
+#### Behavior
 	- Cute Charm
-	- Aura Reader
+	- Cute
+	- Herbivore
+
+#### Special Abilities
+	- Sweet Veil
 	- Honey Gather
+
+#### Movement
 	- Power 1
 	- Jump 1/1
 	- Wallclimber
-	- Landwalker
-		- Land Movement rate 5
-	- Swimmer
-		- Water Movement rate 3
-	- Flier
-		- Sky Movement rate 6
-
-### Inherited
+	- Landwalker 5
+	- Swimmer 3
+	- Flier 6
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +4
@@ -126,5 +80,10 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Herbivore
 	- Habitat: Forest, Grassland
+
+# Lore
+
+- [[cutiefly-line-pollinator-ecology]]
+- [[ribombee-pollen-puff-crafting]]
+- [[ribombee-weather-vulnerability]]

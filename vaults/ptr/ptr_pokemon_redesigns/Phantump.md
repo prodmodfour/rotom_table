@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Phantump
 	- Types: Ghost / Grass
+
+# Evolution
+	- [[Phantump]] >> [[Trevenant]]
+
 # Base Stats
 	- HP: 4
 	- Attack: 7
@@ -8,7 +12,6 @@
 	- Special Attack: 5
 	- Speed: 4
 	- Stamina: 5
-	- Movement Points: 1
 
 # Size Information
 	- Height: 1' 04" / 0.4m
@@ -16,99 +19,45 @@
 	- Size Class: Small
 	- Weight Class: 1
 
-# Move List
-- Astonish
-- Attract
-- Bestow
-- Bulldoze
-- Confide
-- Confuse Ray
-- Curse
-- Cut
-- Dark Pulse
-- Destiny Bond
-- Dig
-- Double Team
-- Dream Eater
-- Energy Ball
-- Facade
-- Feint Attack
-- Forest's Curse
-- Foul Play
-- Frustration
-- Giga Drain
-- Grass Knot
-- Grudge
-- Growth
-- Hidden Power
-- Horn Leech
-- Imprison
-- Ingrain
-- Leech Seed
-- Magic Coat
-- Nature Power
-- Pain Split
-- Phantom Force
-- Poison Jab
-- Protect
-- Psychic
-- Reflect
-- Rest
-- Return
-- Rock Slide
-- Rock Smash
-- Role Play
-- Round
-- Safeguard
-- Seed Bomb
-- Shadow Ball
-- Shadow Claw
-- Skill Swap
-- Sleep Talk
-- Snore
-- Solar Beam
-- Spite
-- Strength
-- Substitute
-- Sunny Day
-- Swagger
-- Tackle
-- Thief
-- Toxic
-- Trick
-- Trick Room
-- Venom Drench
-- Will-O-Wisp
-- Wood Hammer
-- Worry Seed
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+
+#### Natural Weapons
+
+#### Senses
+
+#### Defenses
+	- Intangibility
+	- Invisibility
+	- Dead Silent
+
+#### Behavior
+	- Starter
+	- Nullivore
+
+#### Special Abilities
 	- Natural Cure
 	- Frisk
 	- Harvest
 	- Life Force
 	- Leaf Guard
-	- Phasing
-	- Invisibility
-	- Dead Silent
+	- Plant Matter Production [Wood, Leaves]
+	- Plant Manipulation 1
+
+#### Movement
+	- Phaser 1
 	- Power 1
 	- Jump 0/1
-	- Underdog
 	- Naturewalk (Grassland, Forest)
-	- Landwalker
-		- Land Movement rate 2
-	- Swimmer
-		- Water Movement rate 2
-	- Levitator
-		- Levitate Movement rate 5
-
-### Inherited
+	- Landwalker 2
+	- Swimmer 2
+	- Flier 5
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +3
@@ -136,5 +85,9 @@
 	- Average Hatch Rate: 13 Days
 
 # Miscellaneous
-	- Diet: Nullivore
 	- Habitat: Forest
+
+# Lore
+- [[phantump-lost-child-spirit]]
+- [[phantump-medicinal-leaves]]
+- [[phantump-line-kodama-tree-spirits]]

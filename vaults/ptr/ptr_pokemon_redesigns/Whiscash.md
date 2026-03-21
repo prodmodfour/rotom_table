@@ -1,6 +1,16 @@
+---
+id: Whiscash
+aliases: []
+tags: []
+---
+
 # Basic Information
 	- Name: Whiscash
 	- Types: Water / Ground
+
+# Evolution
+	- [[Barboach]] >> [[Whiscash]]
+
 # Base Stats
 	- HP: 11
 	- Attack: 8
@@ -8,7 +18,6 @@
 	- Special Attack: 8
 	- Speed: 6
 	- Stamina: 8
-	- Movement Points: 1
 
 # Size Information
 	- Height: 2' 11" / 0.9m
@@ -16,83 +25,42 @@
 	- Size Class: Medium
 	- Weight Class: 2
 
-# Move List
-- Amnesia
-- Aqua Tail
-- Attract
-- Blizzard
-- Bounce
-- Bulldoze
-- Dive
-- Double Team
-- Double-Edge
-- Earth Power
-- Earthquake
-- Facade
-- Fissure
-- Frustration
-- Future Sight
-- Giga Impact
-- Hail
-- Hidden Power
-- Hyper Beam
-- Ice Beam
-- Icy Wind
-- Magnitude
-- Mud Bomb
-- Mud Sport
-- Mud-Slap
-- Muddy Water
-- Protect
-- Rain Dance
-- Rest
-- Return
-- Rock Slide
-- Rock Smash
-- Rock Tomb
-- Round
-- Sandstorm
-- Scald
-- Sleep Talk
-- Snore
-- Stone Edge
-- Strength
-- Substitute
-- Surf
-- Swagger
-- Tickle
-- Water Gun
-- Water Pulse
-- Water Sport
-- Waterfall
-- Zen Headbutt
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+	
+#### Natural Weapons
+	- Natural Weapon [Tail, Body, Head]
+
+#### Senses
+	- Sense [Tremorsense 10]
+
+#### Defenses
+
+#### Behavior
 	- Oblivious
-	- Anticipation
-	- Rain Dish
-	- Mud Dweller
+  - Carnivore
+  - Gluttony
+  - Territorial 3 1
+
+#### Special Abilities
 	- Hydration
-	- Tremorsense
-	- Gilled
-	- Fountain
+	- Water Creation 1
+	- Water Manipulation 1
+  - Earth Manipulation 4
+
+#### Movement
 	- Power 3
 	- Jump 3/3
 	- Naturewalk (Wetlands)
-	- Landwalker
-		- Land Movement rate 3
-	- Swimmer
-		- Water Movement rate 5
-	- Burrower
-		- Burrow Movement rate 2
-
-### Inherited
+	- Landwalker 3
+	- Swimmer 5
+	- Burrower 2
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +2
@@ -120,5 +88,9 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Herbivore
 	- Habitat: Freshwater, Marsh
+
+# Lore
+- [[barboach-line-slime-barrier]]
+- [[whiscash-territorial-pond-claiming]]
+- [[whiscash-earthquake-and-namazu-myth]]

@@ -1,0 +1,3 @@
+[[Mightyena]] gives obvious signals before attacking. It begins growling deeply, then flattens its body low to the ground before lunging with its sharply pointed fangs. This telegraphing is consistent and reliable enough that experienced trainers and wild Pokemon can read the warning.
+
+This behavioral pattern seems counterproductive for a predator, but it makes sense within the [[poochyena-line-pack-hierarchy|pack hunting context]]. The telegraph serves as a signal to packmates that an attack is imminent, allowing the rest of the pack to coordinate their own strikes. The Intimidate trait reflects the fear this display creates in targets — even when the warning is visible, the combination of a growling Mightyena flattening itself to lunge is deeply threatening.

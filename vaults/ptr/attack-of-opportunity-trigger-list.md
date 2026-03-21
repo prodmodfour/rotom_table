@@ -6,7 +6,7 @@ Attacks of Opportunity are Interrupt Struggle Attacks triggered by specific adja
 - Uses a Standard Action to pick up or retrieve an item
 - Shifts out of a square adjacent to you
 
-Limited to once per round. Cannot be used while Sleeping, Flinched, or Paralyzed. The app should flag when AoO triggers occur and prompt the eligible combatant.
+Limited to once per round. Costs 3 [[energy-for-extra-movement|Energy]] to use. Cannot be used while Sleeping, Flinched, or Paralyzed. The app should flag when AoO triggers occur and prompt the eligible combatant.
 
 ## See also
 
@@ -15,3 +15,6 @@ Limited to once per round. Cannot be used while Sleeping, Flinched, or Paralyzed
 - [[disengage-avoids-opportunity-attacks]] — the safe 1m retreat
 - [[tripped-costs-shift-to-stand]] — standing from Tripped triggers AoO
 - [[push-chains-with-movement]] — push movement into adjacent squares may trigger AoO
+- [[pack-hunt]] — trait that adds "ally Melee hit on adjacent foe" as an AoO trigger
+- [[opportunist]] — trait that increases AoO limit per round
+- [[run-away]] — trait that prevents provoking AoO when moving

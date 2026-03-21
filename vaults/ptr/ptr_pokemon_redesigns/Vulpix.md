@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Vulpix
 	- Types: Fire
+
+# Evolution
+	- [[Vulpix]] >> [[Ninetales]]
+
 # Base Stats
 	- HP: 4
 	- Attack: 4
@@ -8,102 +12,47 @@
 	- Special Attack: 5
 	- Speed: 7
 	- Stamina: 5
-	- Movement Points: 1
 
 # Size Information
 	- Height: 2' 0" / 0.6m
-	- Weight: 21.8 lbs. / 9.9kg
+	- Weight: 21.8 lbs / 9.9kg
 	- Size Class: Small
 	- Weight Class: 1
-
-# Move List
-- Attract
-- Baby-Doll Eyes
-- Body Slam
-- Captivate
-- Confuse Ray
-- Covet
-- Dark Pulse
-- Dig
-- Disable
-- Double Team
-- Double-Edge
-- Ember
-- Energy Ball
-- Extrasensory
-- Facade
-- Feint Attack
-- Fire Blast
-- Fire Spin
-- Flail
-- Flame Burst
-- Flame Charge
-- Flamethrower
-- Flare Blitz
-- Foul Play
-- Frustration
-- Grudge
-- Heat Wave
-- Hex
-- Hidden Power
-- Howl
-- Hypnosis
-- Imprison
-- Incinerate
-- Inferno
-- Iron Tail
-- Magic Coat
-- Ominous Wind
-- Overheat
-- Pain Split
-- Payback
-- Power Swap
-- Protect
-- Psych Up
-- Quick Attack
-- Rest
-- Return
-- Roar
-- Role Play
-- Round
-- Safeguard
-- Secret Power
-- Sleep Talk
-- Snore
-- Spite
-- Substitute
-- Sunny Day
-- Swagger
-- Swift
-- Tail Slap
-- Tail Whip
-- Toxic
-- Will-O-Wisp
-- Zen Headbutt
 
 # Traits
 ## Innate
 
 ### Species Specific
-	- Flash Fire
-	- Fox Fire
-	- Competitive
-	- Cute Charm
-	- Drought
-	- Tracker
-	- Underdog
+
+#### Body
+	- Sound [Vocal]
+
+#### Natural Weapons
+	- Natural Weapon [Fangs, Claws, Legs, Feet]
+
+#### Senses
+	- Sense [Keen Smell]
+
+#### Defenses
+	- [[flash-fire|Flash Fire]]
+
+#### Behavior
+	- Carnivore
+	- Cute
+	- Starter
+
+#### Special Abilities
+	- Fire Creation 1
+	- Fire Manipulation 2
+
+#### Movement
 	- Power 2
 	- Jump 1/2
 	- Naturewalk (Forest, Mountain)
-	- Landwalker
-		- Land Movement rate 4
-	- Swimmer
-		- Water Movement rate 2
-
-### Inherited
+	- Landwalker 4
+	- Swimmer 2
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +2
@@ -131,5 +80,9 @@
 	- Average Hatch Rate: 10 Days
 
 # Miscellaneous
-	- Diet: Herbivore
 	- Habitat: Grassland, Mountain, Urban
+
+# Lore
+- [[vulpix-tail-growth-and-fire]] -- born with one tail that splits; internal flame never goes out
+- [[vulpix-fox-fire-will-o-wisp]] -- creates floating flame wisps mistaken for ghosts
+- [[vulpix-feigning-behavior]] -- feigns injury to escape stronger opponents

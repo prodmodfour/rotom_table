@@ -1,4 +1,4 @@
-Trainers have a list of moves available to them, each with its own [[unlock-conditions]]. This parallels how Pokemon have moves, establishing that both character types are move users.
+Trainers can unlock moves just like Pokemon, each gated by its own [[unlock-conditions]]. Since [[moves-are-universally-available]], both trainers and Pokemon draw from the same universal move pool — there is no separate "trainer move list."
 
 ## See also
 

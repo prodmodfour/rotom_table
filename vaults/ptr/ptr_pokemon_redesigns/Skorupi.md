@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Skorupi
 	- Types: Poison / Bug
+
+# Evolution
+	- [[Skorupi]] >> [[Drapion]]
+
 # Base Stats
 	- HP: 4
 	- Attack: 5
@@ -8,7 +12,6 @@
 	- Special Attack: 3
 	- Speed: 7
 	- Stamina: 8
-	- Movement Points: 1
 
 # Size Information
 	- Height: 2' 7" / 0.8m
@@ -16,96 +19,39 @@
 	- Size Class: Small
 	- Weight Class: 2
 
-# Move List
-- Acupressure
-- Aerial Ace
-- Agility
-- Aqua Tail
-- Attract
-- Bite
-- Brick Break
-- Bug Bite
-- Confuse Ray
-- Cross Poison
-- Crunch
-- Cut
-- Dark Pulse
-- Dig
-- Double Team
-- Facade
-- False Swipe
-- Feint Attack
-- Fell Stinger
-- Flash
-- Fling
-- Frustration
-- Fury Cutter
-- Hidden Power
-- Hone Claws
-- Infestation
-- Iron Tail
-- Knock Off
-- Leer
-- Mud-Slap
-- Night Slash
-- Payback
-- Pin Missile
-- Poison Fang
-- Poison Jab
-- Poison Sting
-- Poison Tail
-- Protect
-- Pursuit
-- Rain Dance
-- Rest
-- Return
-- Rock Smash
-- Rock Tomb
-- Round
-- Sand Attack
-- Scary Face
-- Screech
-- Shadow Ball
-- Slash
-- Sleep Talk
-- Sludge Bomb
-- Snore
-- Strength
-- Struggle Bug
-- Substitute
-- Sunny Day
-- Swagger
-- Swords Dance
-- Taunt
-- Thief
-- Torment
-- Toxic
-- Twineedle
-- Venoshock
-- Whirlwind
-- X-Scissor
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+	- Carnivore
+	- Cold Intolerance
+
+#### Natural Weapons
+	- Natural Weapon [Pincers, Fangs, Head, Stinger]
+	- Poison Coated [Stinger, Pincers]
+
+#### Senses
+	- Sense [Darkvision]
+
+#### Defenses
 	- Battle Armor
+	- Shell 2
+
+#### Behavior
+	- Starter
+	- Carnivore
+
+#### Special Abilities
 	- Sniper
-	- Keen Eye
-	- Strong Jaw
-	- Vicious
+
+#### Movement
 	- Power 2
 	- Jump 1/1
-	- Underdog
 	- Naturewalk (Forest)
-	- Landwalker
-		- Land Movement rate 4
-	- Swimmer
-		- Water Movement rate 2
-
-### Inherited
-
-## Learned
+	- Landwalker 4
+	- Swimmer 2
 
 
 # Skills
@@ -134,5 +80,8 @@
 	- Average Hatch Rate: 10 Days
 
 # Miscellaneous
-	- Diet: Carnivore
 	- Habitat: Forest, Marsh, Rainforest
+
+# Lore
+- [[skorupi-ambush-predator]]
+- [[skorupi-line-cold-vulnerability]]

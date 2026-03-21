@@ -2,6 +2,6 @@ Level threshold is one type of [[evolution-trigger-conditions|evolution trigger 
 
 ## See also
 
+- [[level-threshold-is-uninteresting]] — level threshold is the least preferred trigger type
 - [[evolution-rebuilds-all-stats]]
 - [[evolution-remaps-traits]]
-- [[evolution-immediate-move-learning]]

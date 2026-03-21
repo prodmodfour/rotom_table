@@ -1,6 +1,17 @@
 # Basic Information
 	- Name: Eevee
 	- Types: Normal
+
+# Evolution
+	- [[Eevee]] >> [[Vaporeon]]
+	- [[Eevee]] >> [[Jolteon]]
+	- [[Eevee]] >> [[Flareon]]
+	- [[Eevee]] >> [[Espeon]]
+	- [[Eevee]] >> [[Umbreon]]
+	- [[Eevee]] >> [[Leafeon]]
+	- [[Eevee]] >> [[Glaceon]]
+	- [[Eevee]] >> [[Sylveon]]
+
 # Base Stats
 	- HP: 6
 	- Attack: 6
@@ -8,7 +19,6 @@
 	- Special Attack: 5
 	- Speed: 6
 	- Stamina: 6
-	- Movement Points: 1
 
 # Size Information
 	- Height: 1' 0" / 0.3m
@@ -16,82 +26,38 @@
 	- Size Class: Small
 	- Weight Class: 1
 
-# Move List
-- Attract
-- Baby-Doll Eyes
-- Baton Pass
-- Bite
-- Body Slam
-- Captivate
-- Charm
-- Covet
-- Curse
-- Detect
-- Dig
-- Double Team
-- Double-Edge
-- Echoed Voice
-- Endure
-- Facade
-- Fake Tears
-- Flail
-- Frustration
-- Growl
-- Heal Bell
-- Helping Hand
-- Hidden Power
-- Hyper Voice
-- Iron Tail
-- Last Resort
-- Mud-Slap
-- Natural Gift
-- Protect
-- Quick Attack
-- Rain Dance
-- Rest
-- Retaliate
-- Return
-- Round
-- Sand Attack
-- Shadow Ball
-- Sleep Talk
-- Snore
-- Stored Power
-- Substitute
-- Sunny Day
-- Swagger
-- Swift
-- Synchronoise
-- Tackle
-- Tail Whip
-- Take Down
-- Tickle
-- Toxic
-- Trump Card
-- Wish
-- Work Up
-- Yawn
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+	- Sound [Vocal]
+
+#### Natural Weapons
+	- Natural Weapon [Fangs, Claws, Legs, Feet]
+
+#### Senses
+	- Sense [Keen Smell]
+
+#### Defenses
+
+#### Behavior
 	- Run Away
+	- Starter
+	- Cute
+	- Carnivore
+	- Fast Learner
+
+#### Special Abilities
+
+#### Movement
 	- Sprint
-	- Last Chance
-	- Anticipation
-	- Celebrate
-	- Tracker
-	- Underdog
 	- Power 2
 	- Jump 1/1
-	- Landwalker
-		- Land Movement rate 4
-
-### Inherited
+	- Landwalker 4
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +2
@@ -119,5 +85,9 @@
 	- Average Hatch Rate: 20 Days
 
 # Miscellaneous
-	- Diet: Herbivore
 	- Habitat: Forest, Grassland, Urban
+
+# Lore
+- [[eevee-line-unstable-genetics]] -- irregular genetic structure enabling eight evolutionary paths
+- [[eevee-rarity-and-urban-habitat]] -- extremely rare, mostly found in human settlements
+- [[eevee-physiological-plasticity]] -- body subtly adapts to environment and Trainer even without evolving

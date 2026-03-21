@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Zorua
 	- Types: Dark
+
+# Evolution
+	- [[Zorua]] >> [[Zoroark]]
+
 # Base Stats
 	- HP: 4
 	- Attack: 7
@@ -8,7 +12,6 @@
 	- Special Attack: 8
 	- Speed: 7
 	- Stamina: 6
-	- Movement Points: 1
 
 # Size Information
 	- Height: 2' 4" / 0.7m
@@ -16,100 +19,45 @@
 	- Size Class: Small
 	- Weight Class: 2
 
-# Move List
-- Aerial Ace
-- Agility
-- Attract
-- Bounce
-- Calm Mind
-- Captivate
-- Copycat
-- Counter
-- Covet
-- Cut
-- Dark Pulse
-- Detect
-- Dig
-- Double Team
-- Embargo
-- Extrasensory
-- Facade
-- Fake Tears
-- Feint Attack
-- Fling
-- Foul Play
-- Frustration
-- Fury Swipes
-- Grass Knot
-- Hidden Power
-- Hone Claws
-- Hyper Voice
-- Imprison
-- Incinerate
-- Knock Off
-- Leer
-- Memento
-- Nasty Plot
-- Night Daze
-- Payback
-- Protect
-- Psych Up
-- Punishment
-- Pursuit
-- Rain Dance
-- Rest
-- Retaliate
-- Return
-- Roar
-- Round
-- Scary Face
-- Scratch
-- Shadow Ball
-- Sleep Talk
-- Snarl
-- Snatch
-- Snore
-- Spite
-- Substitute
-- Sucker Punch
-- Sunny Day
-- Swagger
-- Swords Dance
-- Taunt
-- Thief
-- Torment
-- Toxic
-- Trick
-- Uproar
-
 # Traits
 ## Innate
 
 ### Species Specific
-	- Illusion
-	- Weird Power
+
+#### Body
+
+#### Natural Weapons
+	- Natural Weapon [Legs, Feet]
+
+#### Senses
+	- Sense [Darkvision, Keen Smell]
+
+#### Defenses
+
+#### Behavior
 	- Cute Tears
 	- Pickpocket
 	- Courage
-	- Power 1
-	- Jump 1/1
-	- Darkvision
-	- Stealth
-	- Tracker
+	- Pack Hunt
+	- Cute
 	- Pack Mon
+	- Starter
+	- Herbivore
+
+#### Special Abilities
+	- Illusion
+	- Weird Power
 	- Illusionist
 	- Illusory Disguise
-	- Naturewalk (Forest, Grassland)
-	- Underdog
-	- Landwalker
-		- Land Movement rate 5
-	- Swimmer
-		- Water Movement rate 2
 
-### Inherited
+#### Movement
+	- Power 1
+	- Jump 1/1
+	- Naturewalk (Forest, Grassland)
+	- Landwalker 5
+	- Swimmer 2
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +3
@@ -137,5 +85,9 @@
 	- Average Hatch Rate: 10 Days
 
 # Miscellaneous
-	- Diet: Herbivore
 	- Habitat: Forest, Grassland
+
+# Lore
+
+- [[zorua-line-illusion-as-survival]] — timidity drove the evolution of illusion abilities as a defense mechanism
+- [[zorua-child-mimicry]] — disguises as silent human children to forage in settlements

@@ -4,5 +4,8 @@ This replaces the old rank-based progression where [[skill-ranks-removed|skill r
 
 ## See also
 
+- [[skill-modifier-scale]]
 - [[skill-check-1d20-plus-modifier]]
 - [[ptr-skill-list]]
+- [[improved-athletics]] — example of a Learned Trait that increases a skill modifier
+- [[training-roleplay-circumstance-bonus]] — circumstance bonuses from clever roleplay during training

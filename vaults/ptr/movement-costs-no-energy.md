@@ -1,5 +1,3 @@
-Moving using [[movement-points]] costs no [[energy-resource|Energy]]. The MP budget and the Energy pool are separate resources.
+**Superseded by [[movement-traits]].**
 
-## See also
-
-- [[energy-for-extra-movement]] — Energy can optionally buy additional movement
+Previously noted that spending Movement Points cost no Energy. With the removal of the MP system, this distinction is moot — [[movement-traits]] simply grant movement per turn. Energy can still buy [[energy-for-extra-movement|extra movement]] optionally.

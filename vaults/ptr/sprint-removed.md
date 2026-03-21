@@ -1,4 +1,4 @@
-The Sprint action from PTU is removed in PTR. Extra movement now comes from the [[energy-for-extra-movement]] system — spending Energy to gain additional [[movement-points|Movement Points]].
+The Sprint action from PTU is removed in PTR. Extra movement now comes from the [[energy-for-extra-movement]] system — spending Energy to gain additional movement.
 
 ## See also
 

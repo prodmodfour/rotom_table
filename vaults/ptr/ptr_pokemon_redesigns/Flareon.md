@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Flareon
 	- Types: Fire
+
+# Evolution
+	- [[Eevee]] >> [[Flareon]]
+
 # Base Stats
 	- HP: 7
 	- Attack: 13
@@ -8,7 +12,6 @@
 	- Special Attack: 10
 	- Speed: 7
 	- Stamina: 9
-	- Movement Points: 1
 
 # Size Information
 	- Height: 2' 11" / 0.9m
@@ -16,97 +19,53 @@
 	- Size Class: Medium
 	- Weight Class: 3
 
-# Move List
-- Attract
-- Bite
-- Body Slam
-- Covet
-- Dig
-- Double Team
-- Double-Edge
-- Echoed Voice
-- Ember
-- Facade
-- Fire Blast
-- Fire Fang
-- Fire Spin
-- Flame Charge
-- Flamethrower
-- Flare Blitz
-- Frustration
-- Giga Impact
-- Heal Bell
-- Heat Wave
-- Helping Hand
-- Hidden Power
-- Hyper Beam
-- Hyper Voice
-- Incinerate
-- Iron Tail
-- Last Resort
-- Lava Plume
-- Leer
-- Mud-Slap
-- Overheat
-- Protect
-- Quick Attack
-- Rain Dance
-- Rest
-- Retaliate
-- Return
-- Roar
-- Rock Smash
-- Round
-- Sand Attack
-- Scary Face
-- Shadow Ball
-- Sleep Talk
-- Smog
-- Snore
-- Strength
-- Sunny Day
-- Superpower
-- Swagger
-- Swift
-- Toxic
-- Will-O-Wisp
-- Work Up
-
 # Traits
 ## Innate
 
 ### Species Specific
-	- Flash Fire
-	- Flame Body
-	- Type Aura (Fire)
-	- Defiant
-	- Guts
-	- Egg Warmer
-	- Firestarter
-	- Tracker
+
+#### Body
+	- Sound [Vocal]
+
+#### Natural Weapons
+	- Natural Weapon [Fangs, Claws, Legs, Feet]
+
+#### Senses
+	- Sense [Keen Smell]
+
+#### Defenses
+	- [[flame-body|Flame Body]]
+
+#### Behavior
+	- Omnivore
+	- [[fur-fluffing|Fur Fluffing]]
+	- Cute
+	- Omnivore
+
+#### Special Abilities
+	- [[flash-fire|Flash Fire]]
+	- Fire Generation 2
+	- Fire Manipulation 2
+
+#### Movement
 	- Power 3
 	- Jump 1/2
-	- Landwalker
-		- Land Movement rate 7
-	- Swimmer
-		- Water Movement rate 3
-
-### Inherited
+	- Landwalker 7
+	- Swimmer 3
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +3
 	- Athletics : +5
-	- Charm : +0
+	- Charm : +0 + Cute (+5) = +5
 	- Combat : +4
 	- Command : +0
 	- Deception : +0
 	- Focus : +3
 	- General Education : +0
 	- Insight : +0
-	- Intimidate : +0
+	- Intimidate : +0 + Fur Fluffing (+2) = +2
 	- Medicine : +0
 	- Occult Education : +0
 	- Perception : +4
@@ -122,5 +81,9 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Omnivore
 	- Habitat: Cave, Mountain, Urban
+
+# Lore
+- [[eevee-line-unstable-genetics]] -- genetic restructuring via Fire Stone
+- [[flareon-internal-flame-sac]] -- internal chamber maintains 1,300-1,700 degree body temperature
+- [[flareon-fur-thermoregulation]] -- fluffy fur vents excess heat to prevent self-immolation

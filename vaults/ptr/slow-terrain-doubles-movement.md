@@ -6,5 +6,5 @@ Slow Terrain often overlaps with Rough Terrain but they are distinct flags in th
 
 - [[base-terrain-types]]
 - [[path-speed-averaging]]
-- [[slowed-halves-movement]] — distinct condition that halves total movement budget
-- [[phasing-ignores-terrain-and-intangibility]] — Phasing bypasses Slow Terrain
+- [[slowed-halves-movement]] — distinct stacking condition that reduces total movement budget
+- [[phasing-ignores-terrain-and-intangibility]] — [[phaser|Phaser]] bypasses Slow Terrain

@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Leavanny
 	- Types: Bug / Grass
+
+# Evolution
+	- [[Sewaddle]] >> [[Swadloon]] >> [[Leavanny]]
+
 # Base Stats
 	- HP: 8
 	- Attack: 10
@@ -8,7 +12,6 @@
 	- Special Attack: 7
 	- Speed: 9
 	- Stamina: 8
-	- Movement Points: 1
 
 # Size Information
 	- Height: 3' 11" / 1.2m
@@ -16,90 +19,43 @@
 	- Size Class: Medium
 	- Weight Class: 2
 
-# Move List
-- Aerial Ace
-- Attract
-- Bug Bite
-- Bug Buzz
-- Calm Mind
-- Cut
-- Double Team
-- Dream Eater
-- Electroweb
-- Energy Ball
-- Entrainment
-- Facade
-- False Swipe
-- Fell Stinger
-- Flash
-- Frustration
-- Giga Drain
-- Giga Impact
-- Grass Knot
-- Heal Bell
-- Helping Hand
-- Hidden Power
-- Hone Claws
-- Hyper Beam
-- Iron Defense
-- Knock Off
-- Leaf Blade
-- Leaf Storm
-- Light Screen
-- Magic Coat
-- Nature Power
-- Payback
-- Poison Jab
-- Protect
-- Razor Leaf
-- Reflect
-- Rest
-- Retaliate
-- Return
-- Round
-- Safeguard
-- Seed Bomb
-- Shadow Claw
-- Signal Beam
-- Slash
-- Sleep Talk
-- Snore
-- Solar Beam
-- Steel Wing
-- Struggle Bug
-- Substitute
-- Sunny Day
-- Swagger
-- Swords Dance
-- Synthesis
-- Toxic
-- Worry Seed
-- X-Scissor
-
 # Traits
 ## Innate
 
 ### Species Specific
-	- Designer
-	- Full Guard
+
+#### Body
+
+#### Natural Weapons
+	- Natural Weapon [Claws, Blade, Arms, Hands, Legs, Feet]
+
+#### Senses
+
+#### Defenses
 	- Leafy Cloak
+
+#### Behavior
+	- Designer
+	- Herbivore
+
+#### Special Abilities
+	- Full Guard
 	- Swarm
 	- Leaf Rush
+	- Plant Matter Production [Leaves]
+	- Plant Manipulation 1
+	- Threaded
+	- Leaf Crafter
+
+#### Movement
 	- Power 3
 	- Jump 2/2
 	- Naturewalk (Grassland, Forest)
-	- Threaded
 	- Wallclimber
-	- Leaf Crafter
-	- Landwalker
-		- Land Movement rate 7
-	- Swimmer
-		- Water Movement rate 4
-
-### Inherited
+	- Landwalker 7
+	- Swimmer 4
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +4
@@ -127,5 +83,9 @@
 	- Average Hatch Rate: 10 Days
 
 # Miscellaneous
-	- Diet: Herbivore
 	- Habitat: Forest
+
+# Lore
+
+- [[sewaddle-line-silk-and-leaf-tailoring]]
+- [[leavanny-parental-guardian-instinct]]

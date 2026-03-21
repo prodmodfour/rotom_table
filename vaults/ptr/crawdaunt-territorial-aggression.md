@@ -1,0 +1,3 @@
+[[Crawdaunt]] is violently territorial — it physically picks up and tosses other Pokemon out of its pond with its pincers. This aggression is so extreme that ponds inhabited by Crawdaunt become desolate, with all other species driven out. Even Basculin swarms, which clear most aquatic habitats, cannot displace a Crawdaunt.
+
+This territorial behavior is relevant to [[wild-encounter-motivations]] — a Crawdaunt encounter is almost always a territorial confrontation. Unlike the [[alolan-ninetales-territorial-guardian|Alolan Ninetales]] pattern of warning before escalating, Crawdaunt attacks anything that enters its domain immediately.

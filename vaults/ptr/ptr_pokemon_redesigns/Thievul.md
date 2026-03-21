@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Thievul
 	- Types: Dark
+
+# Evolution
+	- [[Nickit]] >> [[Thievul]]
+
 # Base Stats
 	- HP: 7
 	- Attack: 6
@@ -8,7 +12,6 @@
 	- Special Attack: 9
 	- Speed: 9
 	- Stamina: 8
-	- Movement Points: 1
 
 # Size Information
 	- Height: 3' 11" / 1.2m
@@ -16,71 +19,42 @@
 	- Size Class: Medium
 	- Weight Class: 2
 
-# Move List
-- Acrobatics
-- Assurance
-- Attract
-- Beat Up
-- Confide
-- Dark Pulse
-- Double Team
-- Endure
-- Facade
-- Foul Play
-- Frustration
-- Giga Impact
-- Grass Knot
-- Hidden Power
-- Hone Claws
-- Hyper Beam
-- Knock Off
-- Nasty Plot
-- Night Slash
-- Parting Shot
-- Protect
-- Rest
-- Return
-- Round
-- Shadow Ball
-- Shadow Claw
-- Sleep Talk
-- Snarl
-- Snore
-- Substitute
-- Sucker Punch
-- Swagger
-- Swift
-- Tail Slap
-- Taunt
-- Thief
-- Torment
-- Toxic
-- U-Turn
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+	- Sound [Vocal]
+
+#### Natural Weapons
+	- Natural Weapon [Fangs, Claws, Legs, Feet]
+
+#### Senses
+	- Sense [Darkvision, Keen Smell]
+
+#### Defenses
+
+#### Behavior
 	- Run Away
 	- Stakeout
+	- Pickpocket
+	- Kleptomaniac 2
+	- Opportunist 1
+	- Omnivore
+
+#### Special Abilities
 	- Weird Power
 	- Unburden
-	- Pickpocket
+
+#### Movement
 	- Power 5
 	- Jump 2/2
-	- Darkvision
-	- Stealth
-	- Tracker
 	- Naturewalk (Forest, Urban)
-	- Landwalker
-		- Land Movement rate 7
-	- Swimmer
-		- Water Movement rate 4
-
-### Inherited
+	- Landwalker 7
+	- Swimmer 4
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +4
@@ -108,5 +82,10 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Omnivore
 	- Habitat: Forest, Grassland, Urban
+
+# Lore
+
+- [[nickit-line-silent-stalking]] — marks targets with scent for patient long-term stalking
+- [[nickit-line-obligate-thief]] — professional thief niche, every trait serves the stealing lifestyle
+- [[thievul-territorial-rivalries]] — competes with Liepard for territory, natural enemy of Boltund

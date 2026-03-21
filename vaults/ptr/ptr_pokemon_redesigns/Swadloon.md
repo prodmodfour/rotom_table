@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Swadloon
 	- Types: Bug / Grass
+
+# Evolution
+	- [[Sewaddle]] >> [[Swadloon]] >> [[Leavanny]]
+
 # Base Stats
 	- HP: 6
 	- Attack: 6
@@ -8,7 +12,6 @@
 	- Special Attack: 5
 	- Speed: 4
 	- Stamina: 6
-	- Movement Points: 1
 
 # Size Information
 	- Height: 1' 8" / 0.5m
@@ -16,71 +19,42 @@
 	- Size Class: Small
 	- Weight Class: 1
 
-# Move List
-- Attract
-- Bug Bite
-- Calm Mind
-- Cut
-- Double Team
-- Dream Eater
-- Electroweb
-- Energy Ball
-- Facade
-- Flash
-- Frustration
-- Giga Drain
-- Grass Knot
-- Grass Whistle
-- Hidden Power
-- Iron Defense
-- Light Screen
-- Magic Coat
-- Nature Power
-- Payback
-- Protect
-- Razor Leaf
-- Rest
-- Return
-- Round
-- Safeguard
-- Seed Bomb
-- Signal Beam
-- Sleep Talk
-- Snore
-- Solar Beam
-- Struggle Bug
-- Substitute
-- Sunny Day
-- Swagger
-- Synthesis
-- Toxic
-- Worry Seed
-
 # Traits
 ## Innate
 
 ### Species Specific
-	- Designer
-	- Full Guard
+
+#### Body
+
+#### Natural Weapons
+
+#### Senses
+
+#### Defenses
 	- Leafy Cloak
+	- Defense Curl
+
+#### Behavior
+	- Designer
+	- Herbivore
+
+#### Special Abilities
+	- Full Guard
 	- Swarm
 	- Leaf Rush
+	- Plant Matter Production [Leaves]
+	- Threaded
+	- Leaf Crafter
+
+#### Movement
 	- Power 2
 	- Jump 1/1
 	- Naturewalk (Grassland, Forest)
-	- Threaded
 	- Wallclimber
-	- Underdog
-	- Leaf Crafter
-	- Landwalker
-		- Land Movement rate 3
-	- Swimmer
-		- Water Movement rate 2
-
-### Inherited
+	- Landwalker 3
+	- Swimmer 2
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +2
@@ -108,5 +82,10 @@
 	- Average Hatch Rate: 10 Days
 
 # Miscellaneous
-	- Diet: Herbivore
 	- Habitat: Forest
+
+# Lore
+
+- [[sewaddle-line-silk-and-leaf-tailoring]]
+- [[swadloon-forest-floor-decomposer]]
+- [[swadloon-leaf-wrap-thermoregulation]]

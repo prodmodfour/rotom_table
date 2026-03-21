@@ -1,6 +1,10 @@
 # Basic Information
-	- Name: 
-	- Types: 
+	- Name:
+	- Types:
+
+# Evolution
+	- Pre-evolution >> Pokemon >> Evolution
+
 # Base Stats
 	- HP:
 	- Attack:
@@ -8,7 +12,6 @@
 	- Special Attack:
 	- Speed:
 	- Stamina:
-	- Movement Points: 1
 
 # Size Information
 	- Height:
@@ -16,28 +19,37 @@
 	- Size Class:
 	- Weight Class:
 
-# Move List
-
 # Traits
 ## Innate 
 
 ### Species Specific
-	- Trait Name
-		- Detail 1
-		- Detail 2
-		- ... (Keep going as needed)
 
-	- Landwalker
-		- Land Movement rate 4
+#### Body
+
+#### Natural Weapons
+	- Hub traits with multiple subtypes go on one line: Family [Subtype1, Subtype2, ...]
+	- e.g. Natural Weapon [Fangs, Claws, Feet]
+	- See [[trait-families]] for the list of families
+
+#### Senses
+
+#### Defenses
+
+#### Behavior
+
+#### Special Abilities
+
+#### Movement
 
 
-### Inherited
-
-## Learned 
+## Learned
 
 
 # Skills
-	- Skill : Modifier
+	- Skill : Base + Trait Name (+X) = Total
+	- If no traits modify a skill, just list the base value
+	- Conditional bonuses note the condition inline, e.g.:
+		- Perception : +4 + Apex Predator (+3) = +7
 
 # Breeding Information
 	- Gender Ratio:
@@ -45,5 +57,5 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet:
+	-
 	- Habitat:

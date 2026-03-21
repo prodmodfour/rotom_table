@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Alolan Vulpix
 	- Types: Ice
+
+# Evolution
+	- [[Alolan Vulpix]] >> [[Alolan Ninetales]]
+
 # Base Stats
 	- HP: 4
 	- Attack: 4
@@ -8,7 +12,6 @@
 	- Special Attack: 5
 	- Speed: 7
 	- Stamina: 5
-	- Movement Points: 1
 
 # Size Information
 	- Height: 2' 0" / 0.6m
@@ -16,91 +19,40 @@
 	- Size Class: Small
 	- Weight Class: 1
 
-# Move List
-- Agility
-- Aqua Tail
-- Aurora Beam
-- Baby-Doll Eyes
-- Blizzard
-- Captivate
-- Charm
-- Confide
-- Confuse Ray
-- Covet
-- Dark Pulse
-- Disable
-- Double Team
-- Encore
-- Extrasensory
-- Facade
-- Feint Attack
-- Flail
-- Foul Play
-- Freeze-Dry
-- Frost Breath
-- Frustration
-- Grudge
-- Hail
-- Heal Bell
-- Hex
-- Hidden Power
-- Howl
-- Hypnosis
-- Ice Beam
-- Ice Shard
-- Icy Wind
-- Imprison
-- Iron Tail
-- Mist
-- Moonblast
-- Pain Split
-- Payback
-- Powder Snow
-- Power Swap
-- Protect
-- Psych Up
-- Rest
-- Return
-- Roar
-- Role Play
-- Round
-- Safeguard
-- Secret Power
-- Sheer Cold
-- Sleep Talk
-- Snore
-- Spite
-- Substitute
-- Swagger
-- Tail Slap
-- Tail Whip
-- Toxic
-- Zen Headbutt
-
 # Traits
 ## Innate
 
 ### Species Specific
-	- Cute Charm
+
+#### Body
+	- Sound [Vocal]
+
+#### Natural Weapons
+	- Natural Weapon [Fangs, Claws, Legs, Feet]
+
+#### Senses
+	- Sense [Keen Smell]
+
+#### Defenses
 	- Snow Cloak
-	- Glisten
-	- Winter's Kiss
-	- Snow Warning
-	- Freezer
-	- Tracker
+
+#### Behavior
+	- Carnivore
+	- Cute
+	- Starter
+
+#### Special Abilities
+	- Ice Creation 1
+	- Ice Manipulation 2
+
+#### Movement
 	- Power 2
 	- Jump 1/2
-	- Underdog
 	- Naturewalk (Mountain, Tundra)
-	- Landwalker
-		- Land Movement rate 4
-	- Swimmer
-		- Water Movement rate 2
-
-### Inherited
+	- Landwalker 4
+	- Swimmer 2
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +2
@@ -128,5 +80,9 @@
 	- Average Hatch Rate: 10 Days
 
 # Miscellaneous
-	- Diet: Herbivore
 	- Habitat: Mountain, Tundra
+
+# Lore
+- [[alolan-vulpix-line-mountain-adaptation]] -- migrated to snowy peaks to escape lowland competition
+- [[vulpix-line-ice-crystal-fur]] -- produces ice crystals from fur for cooling and defense
+- [[alolan-vulpix-skulk-social-structure]] -- lives in skulks led by Alolan Ninetales; Weavile is a natural predator

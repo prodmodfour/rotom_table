@@ -1,6 +1,16 @@
+---
+id: Bibarel
+aliases: []
+tags: []
+---
+
 # Basic Information
 	- Name: Bibarel
 	- Types: Normal / Water
+
+# Evolution
+	- [[Bidoof]] >> [[Bibarel]]
+
 # Base Stats
 	- HP: 8
 	- Attack: 9
@@ -8,7 +18,6 @@
 	- Special Attack: 6
 	- Speed: 7
 	- Stamina: 7
-	- Movement Points: 1
 
 # Size Information
 	- Height: 3' 3" / 1m
@@ -16,95 +25,37 @@
 	- Size Class: Medium
 	- Weight Class: 3
 
-# Move List
-- Amnesia
-- Aqua Tail
-- Attract
-- Blizzard
-- Bulldoze
-- Charge Beam
-- Covet
-- Curse
-- Cut
-- Defense Curl
-- Dig
-- Dive
-- Double Team
-- Echoed Voice
-- Facade
-- Fling
-- Fountain
-- Frustration
-- Fury Cutter
-- Giga Impact
-- Grass Knot
-- Growl
-- Headbutt
-- Hidden Power
-- Hyper Beam
-- Hyper Fang
-- Ice Beam
-- Icy Wind
-- Iron Tail
-- Last Resort
-- Mud-Slap
-- Pluck
-- Protect
-- Rain Dance
-- Rest
-- Retaliate
-- Return
-- Rock Smash
-- Rollout
-- Rototiller
-- Round
-- Scald
-- Shadow Ball
-- Sleep Talk
-- Snore
-- Strength
-- Substitute
-- Sunny Day
-- Super Fang
-- Superpower
-- Surf
-- Swagger
-- Swift
-- Take Down
-- Taunt
-- Thief
-- Thunder
-- Thunder Wave
-- Thunderbolt
-- Toxic
-- Water Gun
-- Waterfall
-- Work Up
-- Yawn
-
 # Traits
 ## Innate
 
 ### Species Specific
-	- Simple
-	- Unaware
-	- Deep Sleep
+
+#### Body
+
+#### Natural Weapons
+	- Natural Weapon [Fangs, Tail, Body, Claws, Head]
+
+#### Senses
+
+#### Defenses
+	- Defense Curl
+
+#### Behavior
 	- Oblivious
-	- Moody
-	- Fountain
+	- Herbivore
+
+#### Special Abilities
+	- Water Creation 1
+	- Water Manipulation 1
+
+#### Movement
 	- Power 3
 	- Jump 2/3
-	- Underdog
 	- Naturewalk (Grassland, Wetlands)
-	- Landwalker
-		- Land Movement rate 7
-	- Swimmer
-		- Water Movement rate 5
-
-### Inherited
+	- Landwalker 7
+	- Swimmer 5
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +2
@@ -124,7 +75,7 @@
 	- Pokemon Education : +0
 	- Stealth : +3
 	- Survival : +0
-	- Technology Education : +0
+	- Technology Education : +4
 
 # Breeding Information
 	- Gender Ratio: 50% M / 50% F
@@ -132,5 +83,10 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Herbivore
 	- Habitat: Forest, Grassland, Marsh
+
+# Lore
+- [[rodent-ever-growing-incisors]]
+- [[bidoof-unflappable-temperament]]
+- [[bibarel-dam-building]]
+- [[bidoof-line-communal-nesting]]

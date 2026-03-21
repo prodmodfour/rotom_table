@@ -1,6 +1,10 @@
-# Basic Information
+t# Basic Information
 	- Name: Rookidee
 	- Types: Flying
+
+# Evolution
+	- [[Rookidee]] >> [[Corvisquire]] >> [[Corviknight]]
+
 # Base Stats
 	- HP: 4
 	- Attack: 5
@@ -8,7 +12,6 @@
 	- Special Attack: 3
 	- Speed: 6
 	- Stamina: 4
-	- Movement Points: 1
 
 # Size Information
 	- Height: 0' 8" / 0.2m
@@ -16,71 +19,41 @@
 	- Size Class: Small
 	- Weight Class: 1
 
-# Move List
-- Attract
-- Brave Bird
-- Confide
-- Defog
-- Double Team
-- Drill Peck
-- Endure
-- Facade
-- Fly
-- Frustration
-- Fury Attack
-- Hidden Power
-- Hone Claws
-- Leer
-- Payback
-- Peck
-- Pluck
-- Power Trip
-- Protect
-- Rest
-- Return
-- Rock Smash
-- Roost
-- Round
-- Sand Attack
-- Scary Face
-- Sky Attack
-- Sleep Talk
-- Snore
-- Spite
-- Substitute
-- Swagger
-- Swift
-- Tailwind
-- Taunt
-- Thief
-- Toxic
-- U-Turn
-- Work Up
-
 # Traits
 ## Innate
 
 ### Species Specific
-	- Keen Eye
-	- Moxie
-	- Unnerve
-	- Guts
-	- Big Pecks
+
+#### Body
+	- Sound [Vocal]
+
+#### Natural Weapons
+	- Natural Weapon [Beak, Claws]
+
+
+
+#### Senses
+
+#### Defenses
+
+#### Behavior
+	- Pack Hunt
+	- Starter
+	- Omnivore
+	- Challenger 5
+	- Mettle [0/3]
+	
+#### Special Abilities
+	- Wind Manipulation 1
+
+#### Movement
 	- Power 1
 	- Jump 2/2
-	- Guster
-	- Underdog
-	- Landwalker
-		- Land Movement rate 2
-	- Swimmer
-		- Water Movement rate 2
-	- Flier
-		- Sky Movement rate 4
-
-### Inherited
+	- Landwalker 2
+	- Swimmer 2
+	- Flier 4
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +3
@@ -108,5 +81,7 @@
 	- Average Hatch Rate: 7 Days
 
 # Miscellaneous
-	- Diet: Omnivore
 	- Habitat: Forest, Grassland
+
+# Lore
+- [[rookidee-fearless-growth-through-defeat]]

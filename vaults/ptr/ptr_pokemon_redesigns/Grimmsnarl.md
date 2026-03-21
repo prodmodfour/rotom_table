@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Grimmsnarl
 	- Types: Dark / Fairy
+
+# Evolution
+	- [[Impidimp]] >> [[Morgrem]] >> [[Grimmsnarl]]
+
 # Base Stats
 	- HP: 10
 	- Attack: 12
@@ -8,7 +12,6 @@
 	- Special Attack: 10
 	- Speed: 6
 	- Stamina: 9
-	- Movement Points: 1
 
 # Size Information
 	- Height: 4' 11" / 1.5m
@@ -16,89 +19,42 @@
 	- Size Class: Medium
 	- Weight Class: 4
 
-# Move List
-- Assurance
-- Attract
-- Bite
-- Body Press
-- Body Slam
-- Brick Break
-- Bulk Up
-- Confide
-- Dark Pulse
-- Dazzling Gleam
-- Double Team
-- Drain Punch
-- Endure
-- Facade
-- Fake Tears
-- False Surrender
-- Fire Punch
-- Flatter
-- Focus Blast
-- Foul Play
-- Frustration
-- Giga Impact
-- Hammer Arm
-- Hidden Power
-- Hyper Beam
-- Ice Punch
-- Leech Life
-- Light Screen
-- Mega Kick
-- Mega Punch
-- Metronome
-- Nasty Plot
-- Play Rough
-- Power-Up Punch
-- Protect
-- Reflect
-- Rest
-- Return
-- Round
-- Shadow Claw
-- Sleep Talk
-- Snore
-- Spirit Break
-- Stomping Tantrum
-- Substitute
-- Sucker Punch
-- Superpower
-- Swagger
-- Taunt
-- Thief
-- Throat Chop
-- Thunder Punch
-- Thunder Wave
-- Torment
-- Toxic
-- Trick
-- Uproar
-- Wonder Room
-
 # Traits
 ## Innate
 
 ### Species Specific
-	- Frisk
-	- Defiant
-	- Pickpocket
-	- Bully
-	- Prankster
-	- Power 8
-	- Jump 3/3
-	- Darkvision
-	- Stealth
-	- Naturewalk (Forest)
-	- Landwalker
-		- Land Movement rate 8
-	- Swimmer
-		- Water Movement rate 5
 
-### Inherited
+#### Body
+	- Power 8
+
+#### Natural Weapons
+	- Natural Weapon [Fangs, Claws, Arms, Hands, Legs, Feet]
+
+#### Senses
+	- Sense [Darkvision]
+
+#### Defenses
+
+#### Behavior
+	- Pickpocket
+	- Psychovore [Annoyance]
+	- Photovore
+	- Opportunist 1
+	- Nullivore
+
+#### Special Abilities
+	- Frisk
+	- Prankster
+
+#### Movement
+	- Jump 3/3
+	- Naturewalk (Forest)
+	- Landwalker 8
+	- Swimmer 5
+
+	
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +3
@@ -126,5 +82,9 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Nullivore
 	- Habitat: Forest, Urban
+
+# Lore
+- [[impidimp-line-emotion-feeding]] -- psychovore feeding on annoyance and frustration
+- [[grimmsnarl-hair-muscle-fibers]] -- hair functioning as muscle tissue for immense strength
+- [[impidimp-line-goblin-folklore]] -- ogre/troll/oni mythological parallels

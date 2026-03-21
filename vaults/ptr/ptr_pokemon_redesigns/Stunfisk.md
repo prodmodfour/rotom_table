@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Stunfisk
 	- Types: Ground / Electric
+
+# Evolution
+	- No evolutionary line
+
 # Base Stats
 	- HP: 11
 	- Attack: 7
@@ -8,7 +12,6 @@
 	- Special Attack: 8
 	- Speed: 3
 	- Stamina: 4
-	- Movement Points: 1
 
 # Size Information
 	- Height: 2' 4" / 0.7m
@@ -16,98 +19,41 @@
 	- Size Class: Small
 	- Weight Class: 1
 
-# Move List
-- Aqua Tail
-- Astonish
-- Attract
-- Bide
-- Bounce
-- Bulldoze
-- Camouflage
-- Curse
-- Dig
-- Discharge
-- Double Team
-- Earth Power
-- Earthquake
-- Eerie Impulse
-- Electroweb
-- Endeavor
-- Endure
-- Facade
-- Fissure
-- Flail
-- Flash
-- Foul Play
-- Frustration
-- Hidden Power
-- Infestation
-- Magnet Rise
-- Me First
-- Mud Bomb
-- Mud Shot
-- Mud Sport
-- Mud-Slap
-- Muddy Water
-- Pain Split
-- Payback
-- Protect
-- Rain Dance
-- Reflect Type
-- Rest
-- Return
-- Revenge
-- Rock Slide
-- Rock Tomb
-- Round
-- Sandstorm
-- Scald
-- Shock Wave
-- Sleep Talk
-- Sludge Bomb
-- Sludge Wave
-- Snore
-- Spark
-- Spite
-- Stealth Rock
-- Stone Edge
-- Substitute
-- Surf
-- Swagger
-- Tackle
-- Thunder
-- Thunder Shock
-- Thunder Wave
-- Thunderbolt
-- Toxic
-- Uproar
-- Water Gun
-- Yawn
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+
+#### Natural Weapons
+
+#### Senses
+	- Sense [Tremorsense]
+
+#### Defenses
+
+#### Behavior
+	- Oblivious
+	- Herbivore
+
+#### Special Abilities
 	- Static
 	- Mud Dweller
-	- Oblivious
 	- Own Tempo
 	- Volt Absorb
+	- Electricity Generation 1
+	- Electricity Manipulation 1
+	- Magnetism 1
+
+#### Movement
 	- Power 3
 	- Jump 1/1
-	- Tremorsense
-	- Zapper
-	- Landwalker
-		- Land Movement rate 4
-	- Burrower
-		- Burrow Movement rate 3
-	- Swimmer
-		- Water Movement rate 3
-
-### Inherited
+	- Landwalker 4
+	- Burrower 3
+	- Swimmer 3
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +2
@@ -135,5 +81,8 @@
 	- Average Hatch Rate: 10 Days
 
 # Miscellaneous
-	- Diet: Herbivore
 	- Habitat: Freshwater, Marsh
+
+# Lore
+- [[stunfisk-mud-ambush-electrocution]]
+- [[stunfisk-bacterial-electric-organs]]

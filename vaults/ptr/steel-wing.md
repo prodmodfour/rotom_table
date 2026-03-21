@@ -1,4 +1,4 @@
-Steel Wing is a Steel-type [[type-effectiveness-excludes-status-moves|Physical]] move with a Damage Base of 7, At-Will frequency, AC 3, and a range of Melee, Pass, Spirit Surge.
+Steel Wing is a Steel-type [[type-effectiveness-excludes-status-moves|Physical]] move with a Damage Base of 7, At-Will frequency, AC 3, and a range of Melee, Pass, [[spirit-surge|Spirit Surge]].
 
 Steel Wing raises the user's Defense by +1 CS on 15+.
 

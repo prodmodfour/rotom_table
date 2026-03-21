@@ -1,29 +1,62 @@
-# Gible
+# Gible Line Traits
 
-# Gabite
+Trait progression across the [[Gible]] >> [[Gabite]] >> [[Garchomp]] evolutionary line.
 
-# Garchomp
+## Gible
+- [[tooth-regeneration]]
+- [[sand-veil]]
+- [[rough-skin]]
+- [[clumsy]]
+- [[natural-weapons|Natural Weapon]] ([[fangs|Fangs]])
+- [[natural-weapons|Natural Weapon]] ([[claws|Claws]])
+- [[natural-weapons|Natural Weapon]] ([[head|Head]])
+- [[bipedal]]
+- [[darkvision]]
+- [[ambush]]
+- [[likes-shiny]]
+- [[cold-intolerance]]
 
-# Trait Definitions:
-	- Scary
-		- Passive
-		- + 3 Intimidate
-		- - 1 Charm
-	- Tooth Regeneration
-		- Passive
-		- If a tooth is lost or damaged, a new tooth grows back in roughly three days.
-	- Sand Veil
-		- Passive
-		- + 2 Evasion while in Sandstorm.
-	- Rough Skin
-		- Triggered
-		- Involuntary
-		- 0 Energy Cost
-		- If hit by a contact move, the attacker loses 1 Tick of Health.
-	- Bite Capability
-		- +2 Damage to Melee Struggle Attacks
-		- Required for Biting Moves.
-	- Bipedal
-	
-	
-		
+## Gabite
+- [[tooth-regeneration]]
+- [[sand-veil]]
+- [[rough-skin]]
+- [[natural-weapons|Natural Weapon]] ([[fangs|Fangs]])
+- [[natural-weapons|Natural Weapon]] ([[claws|Claws]])
+- [[natural-weapons|Natural Weapon]] ([[blade|Blade]])
+- [[natural-weapons|Natural Weapon]] ([[head|Head]])
+- [[bipedal]]
+- [[darkvision]]
+- [[ambush]]
+- [[likes-shiny]]
+- [[cold-intolerance]]
+- [[echolocation]]
+- [[violent-instincts]] 2
+- [[medicinal-scales]]
+- [[scary]]
+- [[rock-manipulation]] 1
+- [[opportunist]] 1 (Learned)
+
+Gabite loses [[clumsy]].
+
+## Garchomp
+- [[tooth-regeneration]]
+- [[sand-veil]]
+- [[rough-skin]]
+- [[natural-weapons|Natural Weapon]] ([[fangs|Fangs]])
+- [[natural-weapons|Natural Weapon]] ([[claws|Claws]])
+- [[natural-weapons|Natural Weapon]] ([[blade|Blade]])
+- [[natural-weapons|Natural Weapon]] ([[head|Head]])
+- [[natural-weapons|Natural Weapon]] ([[tail|Tail]])
+- [[bipedal]]
+- [[darkvision]]
+- [[ambush]]
+- [[likes-shiny]]
+- [[cold-intolerance]]
+- [[echolocation]]
+- [[violent-instincts]] 2
+- [[medicinal-scales]]
+- [[apex-predator]]
+- [[very-scary]]
+- [[supersonic-wind-blade]]
+- [[rock-manipulation]] 2
+- [[opportunist]] 2 (Learned)

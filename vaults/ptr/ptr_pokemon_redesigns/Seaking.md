@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Seaking
 	- Types: Water
+
+# Evolution
+	- [[Goldeen]] >> [[Seaking]]
+
 # Base Stats
 	- HP: 8
 	- Attack: 9
@@ -8,7 +12,6 @@
 	- Special Attack: 7
 	- Speed: 7
 	- Stamina: 8
-	- Movement Points: 1
 
 # Size Information
 	- Height: 4' 3" / 1.3m
@@ -16,76 +19,41 @@
 	- Size Class: Medium
 	- Weight Class: 3
 
-# Move List
-- Agility
-- Aqua Ring
-- Aqua Tail
-- Attract
-- Blizzard
-- Bounce
-- Dive
-- Double Team
-- Double-Edge
-- Drill Run
-- Facade
-- Flail
-- Frustration
-- Fury Attack
-- Fury Cutter
-- Giga Impact
-- Hail
-- Hidden Power
-- Horn Attack
-- Horn Drill
-- Hyper Beam
-- Ice Beam
-- Icy Wind
-- Knock Off
-- Megahorn
-- Mud-Slap
-- Poison Jab
-- Protect
-- Rain Dance
-- Rest
-- Return
-- Round
-- Scald
-- Signal Beam
-- Sleep Talk
-- Snore
-- Soak
-- Substitute
-- Supersonic
-- Surf
-- Swagger
-- Swift
-- Toxic
-- Water Pulse
-- Waterfall
-
 # Traits
 ## Innate
 
 ### Species Specific
-	- Lightning Rod
+
+#### Body
+	- Gilled
+
+#### Natural Weapons
+	- Natural Weapon [Head, Horn, Tail]
+
+#### Senses
+
+#### Defenses
 	- Water Veil
+
+#### Behavior
+	- Herbivore
+
+#### Special Abilities
+	- Lightning Rod
 	- Dry Skin
 	- Swift Swim
 	- Refreshing Veil
-	- Gilled
-	- Fountain
+	- Water Creation 2
+	- Water Manipulation 2
+
+#### Movement
 	- Power 3
 	- Jump 3/3
 	- Naturewalk (Ocean)
-	- Landwalker
-		- Land Movement rate 1
-	- Swimmer
-		- Water Movement rate 6
-
-### Inherited
+	- Landwalker 1
+	- Swimmer 6
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +3
@@ -113,5 +81,9 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Herbivore
 	- Habitat: Freshwater
+
+# Lore
+- [[goldeen-line-horn-as-weapon-and-status]]
+- [[goldeen-line-upstream-swimmers]]
+- [[seaking-nest-guarding]]

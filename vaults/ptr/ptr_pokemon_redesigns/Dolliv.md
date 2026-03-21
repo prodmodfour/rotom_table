@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Dolliv
 	- Types: Grass / Normal
+
+# Evolution
+	- [[Smoliv]] >> [[Dolliv]] >> [[Arboliva]]
+
 # Base Stats
 	- HP: 5
 	- Attack: 5
@@ -8,7 +12,6 @@
 	- Special Attack: 8
 	- Speed: 3
 	- Stamina: 6
-	- Movement Points: 1
 
 # Size Information
 	- Height: 2' 00" / 0.6m
@@ -16,58 +19,36 @@
 	- Size Class: Small
 	- Weight Class: 2
 
-# Move List
-- Absorb
-- Bullet Seed
-- Charm
-- Earth Power
-- Endure
-- Energy Ball
-- Facade
-- Flail
-- Giga Drain
-- Grass Knot
-- Grassy Terrain
-- Growth
-- Helping Hand
-- Leaf Storm
-- Leech Seed
-- Magical Leaf
-- Mega Drain
-- Memento
-- Protect
-- Razor Leaf
-- Rest
-- Seed Bomb
-- Sleep Talk
-- Solar Beam
-- Solar Blade
-- Strength Sap
-- Substitute
-- Sunny Day
-- Sweet Scent
-- Swift
-- Synthesis
-- Tackle
-- Tera Blast
-- Terrain Pulse
-- Trailblaze
-- Weather Ball
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+
+#### Natural Weapons
+	- Natural Weapon [Legs, Feet]
+
+#### Senses
+
+#### Defenses
+
+#### Behavior
+	- Photovore
+	- Geovore
+	- Wanderer
+
+#### Special Abilities
 	- Early Bird
-	- Harvest
+	- Plant Matter Production [Seeds, Leaves]
+	- Plant Manipulation 1
+	- Gas Production [Pleasant Scent]
 
+#### Movement
 	- Landwalker
-		- Land Movement rate
-
-### Inherited
+	- Land
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +0
@@ -76,17 +57,17 @@
 	- Combat : +0
 	- Command : +0
 	- Deception : +0
-	- Focus : +0
+	- Focus : +3
 	- General Education : +0
 	- Insight : +0
 	- Intimidate : +0
 	- Medicine : +0
 	- Occult Education : +0
-	- Perception : +0
+	- Perception : +3
 	- Performance : +0
 	- Pokemon Education : +0
-	- Stealth : +0
-	- Survival : +0
+	- Stealth : +2
+	- Survival : +3
 	- Technology Education : +0
 
 # Breeding Information
@@ -95,5 +76,9 @@
 	- Average Hatch Rate: 20 Days
 
 # Miscellaneous
-	- Diet:
+	-
 	- Habitat:
+
+# Lore
+- [[smoliv-line-oil-production]] -- photosynthetic oil production across the evolutionary line
+- [[dolliv-fruit-maturation-journey]] -- departing settlements when fruit ripens to wander

@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Combee
 	- Types: Bug / Flying
+
+# Evolution
+	- [[Combee]] >> [[Vespiquen]] (Female only)
+
 # Base Stats
 	- HP: 3
 	- Attack: 3
@@ -8,7 +12,6 @@
 	- Special Attack: 3
 	- Speed: 7
 	- Stamina: 7
-	- Movement Points: 1
 
 # Size Information
 	- Height: 1' 0" / 0.3m
@@ -16,45 +19,41 @@
 	- Size Class: Small
 	- Weight Class: 1
 
-# Move List
-- Air Cutter
-- Bug Bite
-- Bug Buzz
-- Endeavor
-- Gust
-- Mud-Slap
-- Natural Gift
-- Ominous Wind
-- Snore
-- String Shot
-- Sweet Scent
-- Swift
-- Tailwind
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+	- Sound [Wing Buzz]
+
+#### Natural Weapons
+	- Natural Weapon [Stinger]
+
+#### Senses
+
+#### Defenses
+
+#### Behavior
 	- Pickup
-	- Hustle
 	- Pack Hunt
-	- Teamwork
+	- Cute
+	- Starter
+	- Herbivore
+
+#### Special Abilities
+	- Hustle
 	- Dodge
+	- Honey Gather
+
+#### Movement
 	- Power 1
 	- Jump 1/1
-	- Underdog
-	- Honey Gather
-	- Landwalker
-		- Land Movement rate 1
-	- Swimmer
-		- Water Movement rate 1
-	- Flier
-		- Sky Movement rate 4
-
-### Inherited
+	- Landwalker 1
+	- Swimmer 1
+	- Flier 4
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +3
@@ -82,5 +81,9 @@
 	- Average Hatch Rate: 7 Days
 
 # Miscellaneous
-	- Diet: Herbivore
 	- Habitat: Forest
+
+# Lore
+
+- [[combee-trio-consciousness]]
+- [[combee-vespiquen-hive-structure]]

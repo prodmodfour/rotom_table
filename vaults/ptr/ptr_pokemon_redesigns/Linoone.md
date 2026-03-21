@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Linoone
 	- Types: Normal
+
+# Evolution
+	- [[Zigzagoon]] >> [[Linoone]]
+
 # Base Stats
 	- HP: 8
 	- Attack: 7
@@ -8,7 +12,6 @@
 	- Special Attack: 5
 	- Speed: 10
 	- Stamina: 7
-	- Movement Points: 1
 
 # Size Information
 	- Height: 1' 8" / 0.5m
@@ -16,101 +19,40 @@
 	- Size Class: Small
 	- Weight Class: 3
 
-# Move List
-- Attract
-- Baby-Doll Eyes
-- Belly Drum
-- Bestow
-- Blizzard
-- Body Slam
-- Charge Beam
-- Covet
-- Cut
-- Defense Curl
-- Dig
-- Double Edge
-- Double Team
-- Double-Edge
-- Echoed Voice
-- Facade
-- Fling
-- Frustration
-- Fury Cutter
-- Fury Swipes
-- Giga Impact
-- Grass Knot
-- Gunk Shot
-- Headbutt
-- Helping Hand
-- Hidden Power
-- Hone Claws
-- Hyper Beam
-- Ice Beam
-- Icy Wind
-- Iron Tail
-- Last Resort
-- Mud Sport
-- Mud-Slap
-- Odor Sleuth
-- Play Rough
-- Protect
-- Rain Dance
-- Rest
-- Retaliate
-- Return
-- Rock Smash
-- Rollout
-- Rototiller
-- Round
-- Sand Attack
-- Seed Bomb
-- Shadow Ball
-- Shadow Claw
-- Shock Wave
-- Slash
-- Sleep Talk
-- Snore
-- Strength
-- Substitute
-- Sunny Day
-- Super Fang
-- Surf
-- Swagger
-- Swift
-- Switcheroo
-- Tail Whip
-- Thief
-- Thunder
-- Thunder Wave
-- Thunderbolt
-- Toxic
-- Trick
-- Water Pulse
-- Work Up
-
 # Traits
 ## Innate
 
 ### Species Specific
-	- Line Charge
+
+#### Body
+
+#### Natural Weapons
+	- Natural Weapon [Fangs, Claws, Legs, Feet]
+
+#### Senses
+	- Sense [Keen Smell]
+
+#### Defenses
+
+#### Behavior
 	- Gluttony
+	- Pack Hunt
+	- Omnivore
+
+#### Special Abilities
+	- Line Charge
 	- Quick Feet
-	- Sprint
 	- Tough Claws
-	- Tracker
-	- Underdog
+
+#### Movement
+	- Sprint
 	- Power 3
 	- Jump 2/3
 	- Naturewalk (Forest, Grassland)
-	- Landwalker
-		- Land Movement rate 7
-	- Swimmer
-		- Water Movement rate 4
-
-### Inherited
+	- Landwalker 7
+	- Swimmer 4
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +4
@@ -138,5 +80,8 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Omnivore
 	- Habitat: Forest, Grassland
+
+# Lore
+- [[linoone-linear-predator]]
+- [[zigzagoon-line-foraging-instinct]]

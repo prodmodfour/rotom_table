@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Murkrow
 	- Types: Dark / Flying
+
+# Evolution
+	- [[Murkrow]] >> [[Honchkrow]]
+
 # Base Stats
 	- HP: 6
 	- Attack: 9
@@ -8,7 +12,6 @@
 	- Special Attack: 9
 	- Speed: 9
 	- Stamina: 7
-	- Movement Points: 1
 
 # Size Information
 	- Height: 1' 8" / 0.5m
@@ -16,104 +19,45 @@
 	- Size Class: Small
 	- Weight Class: 1
 
-# Move List
-- Aerial Ace
-- Air Cutter
-- Assurance
-- Astonish
-- Attract
-- Calm Mind
-- Confuse Ray
-- Dark Pulse
-- Double Team
-- Double-Edge
-- Dream Eater
-- Drill Peck
-- Embargo
-- Facade
-- Feather Dance
-- Feint Attack
-- Flatter
-- Fly
-- Foul Play
-- Frustration
-- Haze
-- Heat Wave
-- Hidden Power
-- Icy Wind
-- Mean Look
-- Mirror Move
-- Mud-Slap
-- Night Shade
-- Ominous Wind
-- Payback
-- Peck
-- Perish Song
-- Pluck
-- Protect
-- Psych Up
-- Psychic
-- Psycho Shift
-- Pursuit
-- Quash
-- Rain Dance
-- Rest
-- Retaliate
-- Return
-- Roost
-- Round
-- Screech
-- Shadow Ball
-- Sky Attack
-- Sleep Talk
-- Snatch
-- Snarl
-- Snore
-- Spite
-- Steel Wing
-- Substitute
-- Sucker Punch
-- Sunny Day
-- Swagger
-- Swift
-- Tailwind
-- Taunt
-- Telekinesis
-- Thief
-- Thunder Wave
-- Torment
-- Toxic
-- Twister
-- Uproar
-- Whirlwind
-- Wing Attack
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+	- Sound [Vocal]
+
+#### Natural Weapons
+	- Natural Weapon [Beak, Claws, Legs, Feet]
+
+#### Senses
+	- Sense [Darkvision]
+
+#### Defenses
+
+#### Behavior
+	- Kleptomaniac 1
+	- Pack Hunt
+	- Starter
+	- Omnivore
+
+#### Special Abilities
 	- Insomnia
 	- Super Luck
 	- Omen
 	- Weird Power
 	- Prankster
-	- Darkvision
-	- Stealth
-	- Underdog
 	- Fortune
+
+#### Movement
 	- Power 1
 	- Jump 2/2
-	- Landwalker
-		- Land Movement rate 3
-	- Swimmer
-		- Water Movement rate 1
-	- Flier
-		- Sky Movement rate 6
-
-### Inherited
+	- Landwalker 3
+	- Swimmer 1
+	- Flier 6
 
 ## Learned
-
+	- Opportunist 1
 
 # Skills
 	- Acrobatics : +3
@@ -141,5 +85,10 @@
 	- Average Hatch Rate: 10 Days
 
 # Miscellaneous
-	- Diet: Omnivore
 	- Habitat: Forest, Marsh, Urban
+
+# Lore
+
+- [[murkrow-line-shiny-object-hoarding]] — compulsive attraction to glittering objects, competitive hoarding with Meowth
+- [[murkrow-superstition-and-ill-omen]] — feared as a bad omen, lures pursuers onto dark trails
+- [[murkrow-line-murder-hierarchy]] — serves in organized flocks of 100+ under a Honchkrow boss

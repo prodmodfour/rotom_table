@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Impidimp
 	- Types: Dark / Fairy
+
+# Evolution
+	- [[Impidimp]] >> [[Morgrem]] >> [[Grimmsnarl]]
+
 # Base Stats
 	- HP: 5
 	- Attack: 5
@@ -8,7 +12,6 @@
 	- Special Attack: 6
 	- Speed: 5
 	- Stamina: 5
-	- Movement Points: 1
 
 # Size Information
 	- Height: 1' 4" / 0.4m
@@ -16,71 +19,39 @@
 	- Size Class: Small
 	- Weight Class: 1
 
-# Move List
-- Assurance
-- Attract
-- Bite
-- Confide
-- Dark Pulse
-- Dazzling Gleam
-- Double Team
-- Drain Punch
-- Endure
-- Facade
-- Fake Out
-- Fake Tears
-- Flatter
-- Foul Play
-- Frustration
-- Hidden Power
-- Leech Life
-- Low Kick
-- Mega Kick
-- Mega Punch
-- Metronome
-- Nasty Plot
-- Play Rough
-- Protect
-- Rest
-- Return
-- Round
-- Sleep Talk
-- Snore
-- Substitute
-- Sucker Punch
-- Swagger
-- Taunt
-- Thief
-- Thunder Wave
-- Torment
-- Toxic
-- Trick
-- Uproar
-
 # Traits
 ## Innate
 
 ### Species Specific
-	- Frisk
-	- Decoy
-	- Pickpocket
-	- Weird Power
-	- Prankster
-	- Power 1
-	- Jump 1/1
-	- Darkvision
-	- Stealth
-	- Underdog
-	- Naturewalk (Forest)
-	- Landwalker
-		- Land Movement rate 5
-	- Swimmer
-		- Water Movement rate 3
 
-### Inherited
+#### Body
+	- Power 1
+
+#### Natural Weapons
+	- Natural Weapon [Fangs, Claws, Arms, Hands, Legs, Feet]
+
+#### Senses
+	- Sense [Darkvision]
+
+#### Defenses
+
+#### Behavior
+	- Starter
+	- Pickpocket
+	- Kleptomaniac 1
+	- Psychovore [Annoyance]
+
+#### Special Abilities
+	- Frisk
+	- Prankster
+
+#### Movement
+	- Jump 1/1
+	- Naturewalk (Forest)
+	- Landwalker 5
+	- Swimmer 3
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +2
@@ -108,5 +79,9 @@
 	- Average Hatch Rate: 10 Days
 
 # Miscellaneous
-	- Diet: Nullivore
 	- Habitat: Forest, Urban
+
+# Lore
+- [[impidimp-line-emotion-feeding]] -- psychovore feeding on annoyance and frustration
+- [[impidimp-mischief-as-hunting]] -- compulsive theft and pestering as a feeding strategy
+- [[impidimp-line-goblin-folklore]] -- imp/gremlin mythological parallels

@@ -2,7 +2,7 @@ Critical hits add the damage dice roll a second time to the total, but do NOT ad
 
 This is a common misconception — players expect "double damage" but crits only double the rolled dice component. The app's damage calculator must separate the dice roll from stat bonuses and only double the former.
 
-Some features (like Sniper) further modify crit bonus damage, adding +5 that also gets multiplied.
+Some traits (like [[sniper]]) further modify crit bonus damage, adding +5 that also gets multiplied.
 
 ## See also
 

@@ -1,0 +1,3 @@
+The [[Bidoof]]-[[Bibarel]] line is communal by nature. Bidoof nests in groups near bodies of water, and this social structure scales up dramatically when the colony evolves — [[Bibarel]] coordinates group dam-building projects that require sustained cooperation. The dams themselves serve as shared dwellings, not individual nests.
+
+This communal structure differentiates the line from solitary rodent species like [[Raticate]]. Where Raticate forages alone across wide territories, Bidoof colonies pool effort into infrastructure that benefits the entire group. The social coordination also explains why Bibarel gains Water Creation and Water Manipulation traits — the colony's relationship with water is deliberate and engineered, not merely habitual.

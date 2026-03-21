@@ -1,0 +1,3 @@
+[[Croagunk]] rarely fights fairly, relying on deception and ambush to compensate for its small size. It inflates its cheek poison sacs to produce an eerie, unnerving sound that startles opponents. While the target is distracted by the display, Croagunk strikes with poison-coated fingers. This fighting style is explicitly framed as a survival strategy rather than cruelty — Croagunk fights dirty strictly to ensure survival.
+
+This tactical approach to combat carries through to [[Toxicroak]], which retains the throat sac's intimidation function but gains enough physical power to also fight directly.

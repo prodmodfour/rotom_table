@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Alolan Muk
 	- Types: Poison / Dark
+
+# Evolution
+	- [[Alolan Grimer]] >> [[Alolan Muk]]
+
 # Base Stats
 	- HP: 11
 	- Attack: 11
@@ -8,7 +12,6 @@
 	- Special Attack: 7
 	- Speed: 5
 	- Stamina: 9
-	- Movement Points: 1
 
 # Size Information
 	- Height: 3' 3" / 1m
@@ -16,104 +19,44 @@
 	- Size Class: Medium
 	- Weight Class: 4
 
-# Move List
-- Acid Armor
-- Acid Spray
-- Attract
-- Belch
-- Bite
-- Block
-- Brick Break
-- Confide
-- Crunch
-- Dark Pulse
-- Disable
-- Double Team
-- Embargo
-- Explosion
-- Facade
-- Fire Blast
-- Fire Punch
-- Flamethrower
-- Fling
-- Focus Blast
-- Focus Punch
-- Frustration
-- Gastro Acid
-- Giga Drain
-- Giga Impact
-- Gunk Shot
-- Harden
-- Hidden Power
-- Hyper Beam
-- Ice Punch
-- Infestation
-- Knock Off
-- Memento
-- Minimize
-- Pain Split
-- Payback
-- Poison Fang
-- Poison Gas
-- Poison Jab
-- Pound
-- Power-Up Punch
-- Protect
-- Quash
-- Rain Dance
-- Recycle
-- Rest
-- Return
-- Rock Polish
-- Rock Slide
-- Rock Tomb
-- Round
-- Screech
-- Shadow Ball
-- Shock Wave
-- Sleep Talk
-- Sludge Bomb
-- Sludge Wave
-- Snarl
-- Snore
-- Spite
-- Stone Edge
-- Substitute
-- Sunny Day
-- Swagger
-- Taunt
-- Thief
-- Thunder Punch
-- Torment
-- Toxic
-- Venom Drench
-- Venoshock
-
 # Traits
 ## Innate
 
 ### Species Specific
-	- Gluttony
-	- Weird Power
-	- Poison Touch
-	- Defy Death
-	- Power of Alchemy
+
+#### Body
 	- Amorphous
-	- Darkvision
+
+#### Natural Weapons
+	- Natural Weapon [Hands, Body, Fangs, Claws]
+	- Poison Coated [Hands, Body, Fangs, Claws]
+
+
+#### Senses
+	- Sense [Darkvision]
+
+#### Defenses
 	- Dead Silent
-	- Sticky Hold
+
+#### Behavior
+	- Gluttony
+	- Toxivore
+	- Hangry
+	- Apex Predator
+
+#### Special Abilities
+	- Poison Expulsion
+	- Alchemy
+
+#### Movement
 	- Power 6
 	- Jump 1/1
 	- Wallclimber
-	- Landwalker
-		- Land Movement rate 5
-	- Swimmer
-		- Water Movement rate 4
-
-### Inherited
+	- Landwalker 5
+	- Swimmer 4
 
 ## Learned
-
+	- Opportunist 2
 
 # Skills
 	- Acrobatics : +1
@@ -141,5 +84,9 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Omnivore, Terravore
 	- Habitat: Urban
+
+# Lore
+- [[alolan-grimer-line-chemical-diet]]
+- [[alolan-grimer-line-toxin-crystallization]]
+- [[alolan-muk-docile-but-destructive]]

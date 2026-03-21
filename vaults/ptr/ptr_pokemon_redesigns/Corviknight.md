@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Corviknight
 	- Types: Flying / Steel
+
+# Evolution
+	- [[Rookidee]] >> [[Corvisquire]] >> [[Corviknight]]
+
 # Base Stats
 	- HP: 10
 	- Attack: 9
@@ -8,7 +12,6 @@
 	- Special Attack: 5
 	- Speed: 7
 	- Stamina: 9
-	- Movement Points: 1
 
 # Size Information
 	- Height: 7' 3" / 2.2m
@@ -16,78 +19,41 @@
 	- Size Class: Large
 	- Weight Class: 4
 
-# Move List
-- Attract
-- Body Press
-- Brave Bird
-- Bulk Up
-- Confide
-- Defog
-- Double Team
-- Drill Peck
-- Endure
-- Facade
-- Flash Cannon
-- Fly
-- Frustration
-- Fury Attack
-- Hidden Power
-- Hone Claws
-- Hyper Beam
-- Iron Defense
-- Iron Head
-- Light Screen
-- Metal Sound
-- Payback
-- Pluck
-- Power Trip
-- Protect
-- Reflect
-- Rest
-- Return
-- Roost
-- Round
-- Scary Face
-- Sky Attack
-- Sleep Talk
-- Snore
-- Spite
-- Steel Beam
-- Steel Wing
-- Substitute
-- Swagger
-- Swift
-- Tailwind
-- Taunt
-- Thief
-- Toxic
-- U-Turn
-- Work Up
-
 # Traits
 ## Innate
 
 ### Species Specific
-	- Pressure
-	- Moxie
-	- Unnerve
-	- Guts
+
+#### Body
+	- Sound [Vocal]
+
+#### Natural Weapons
+	- Natural Weapon [Beak, Claws, Head, Wings]
+
+#### Senses
+
+#### Defenses
 	- Mirror Armor
+	- Shell 3
+
+#### Behavior
+	- Apex Predator
+	- Omnivore
+	- Fast Learner
+
+#### Special Abilities
+	- Mettle [0 / 3]
+	- Wind Manipulation 3
+
+#### Movement
 	- Power 7
 	- Jump 4/4
-	- Guster
 	- Mountable 2
-	- Landwalker
-		- Land Movement rate 3
-	- Swimmer
-		- Water Movement rate 2
-	- Flier
-		- Sky Movement rate 8
-
-### Inherited
+	- Landwalker 3
+	- Swimmer 2
+	- Flier 8
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +4
@@ -99,10 +65,10 @@
 	- Focus : +4
 	- General Education : +0
 	- Insight : +0
-	- Intimidate : +0
+	- Intimidate : +0 + Apex Predator (+2) = +2
 	- Medicine : +0
 	- Occult Education : +0
-	- Perception : +5
+	- Perception : +5 + Apex Predator (+3) = +8
 	- Performance : +0
 	- Pokemon Education : +0
 	- Stealth : +4
@@ -115,5 +81,10 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Omnivore
 	- Habitat: Forest, Grassland
+
+# Lore
+- [[corviknight-steel-plumage-armor]]
+- [[corviknight-flying-taxi-service]]
+- [[corviknight-skarmory-territorial-rivalry]]
+- [[corvisquire-tool-use-intelligence]]

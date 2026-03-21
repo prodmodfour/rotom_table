@@ -1,0 +1,20 @@
+# Absorb
+
+## Properties
+	- Type: Grass
+	- Damage Class: Special
+	- Damage Base: 2
+	- AC: 2
+	- Range: 4, 1 Target
+	- Energy Cost: 1
+
+## Effect
+After the target takes damage, the user gains Hit Points equal to half of the damage they dealt to the target.
+
+## Unlock Conditions
+- Photovore OR Geovore
+- Individual Special Attack 5
+
+## Notes
+Draining move.
+[[absorb-description|Description]]

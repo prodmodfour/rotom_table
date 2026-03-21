@@ -10,7 +10,7 @@ If no vault was specified, ask the user which vault's tickets to review (ptr or 
 ## Context
 
 Read and follow these context injections before starting:
-- `.claude/context_injections/maturation_tickets.md` — ticket format and lifecycle
+- `.claude/context_injections/vaults/maturation_tickets.md` — ticket format and lifecycle
 
 ## Process
 

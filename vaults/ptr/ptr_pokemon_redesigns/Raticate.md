@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Raticate
 	- Types: Normal
+
+# Evolution
+	- [[Rattata]] >> [[Raticate]]
+
 # Base Stats
 	- HP: 6
 	- Attack: 8
@@ -8,7 +12,6 @@
 	- Special Attack: 5
 	- Speed: 10
 	- Stamina: 7
-	- Movement Points: 1
 
 # Size Information
 	- Height: 2' 4" / 0.7m
@@ -16,96 +19,42 @@
 	- Size Class: Small
 	- Weight Class: 2
 
-# Move List
-- Assurance
-- Attract
-- Bite
-- Blizzard
-- Body Slam
-- Charge Beam
-- Counter
-- Covet
-- Crunch
-- Cut
-- Defense Curl
-- Dig
-- Double Team
-- Double-Edge
-- Endeavor
-- Facade
-- Focus Energy
-- Frustration
-- Giga Impact
-- Grass Knot
-- Hidden Power
-- Hyper Beam
-- Hyper Fang
-- Ice Beam
-- Icy Wind
-- Iron Tail
-- Last Resort
-- Mud-Slap
-- Pluck
-- Protect
-- Pursuit
-- Quick Attack
-- Rain Dance
-- Rest
-- Retaliate
-- Return
-- Roar
-- Rock Smash
-- Round
-- Scary Face
-- Shadow Ball
-- Shock Wave
-- Sleep Talk
-- Snore
-- Strength
-- Substitute
-- Sucker Punch
-- Sunny Day
-- Super Fang
-- Superpower
-- Swagger
-- Swift
-- Swords Dance
-- Taunt
-- Thief
-- Thunder
-- Thunder Wave
-- Thunderbolt
-- Toxic
-- U-Turn
-- Uproar
-- Wild Charge
-- Work Up
-- Zen Headbutt
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+
+#### Natural Weapons
+	- Natural Weapon [Fangs, Claws, Arms, Hands, Legs, Feet]
+
+#### Senses
+	- Sense [Keen Smell]
+
+#### Defenses
+
+#### Behavior
 	- Run Away
+	- Pick Up
+	- Pack Hunt
+	- Gluttony
+	- Omnivore
+
+#### Special Abilities
 	- Guts
 	- Hustle
-	- Pick Up
 	- Nimble Strikes
-	- Tracker
-	- Stealth
-	- Underdog
+
+#### Movement
 	- Power 3
 	- Jump 2/2
 	- Naturewalk (Grassland, Urban)
-	- Landwalker
-		- Land Movement rate 7
-	- Swimmer
-		- Water Movement rate 6
-
-### Inherited
+	- Landwalker 7
+	- Swimmer 6
 
 ## Learned
-
+	- Opportunist 1
 
 # Skills
 	- Acrobatics : +3
@@ -133,5 +82,10 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Omnivore
 	- Habitat: Cave, Forest, Grassland, Mountain
+
+# Lore
+- [[rodent-ever-growing-incisors]]
+- [[rattata-line-rapid-reproduction]]
+- [[rattata-line-urban-adaptability]]
+- [[raticate-whisker-balance]]

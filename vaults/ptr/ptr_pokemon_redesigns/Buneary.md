@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Buneary
 	- Types: Normal
+
+# Evolution
+	- [[Buneary]] >> [[Lopunny]]
+
 # Base Stats
 	- HP: 6
 	- Attack: 7
@@ -8,7 +12,6 @@
 	- Special Attack: 4
 	- Speed: 9
 	- Stamina: 6
-	- Movement Points: 1
 
 # Size Information
 	- Height: 1' 4" / 0.4m
@@ -16,111 +19,40 @@
 	- Size Class: Small
 	- Weight Class: 1
 
-# Move List
-- After You
-- Agility
-- Attract
-- Baby-Doll Eyes
-- Baton Pass
-- Bounce
-- Charge Beam
-- Charm
-- Circle Throw
-- Confide
-- Copycat
-- Cosmic Power
-- Covet
-- Cut
-- Defense Curl
-- Dig
-- Dizzy Punch
-- Double Hit
-- Double Team
-- Drain Punch
-- Echoed Voice
-- Encore
-- Endeavor
-- Endure
-- Entrainment
-- Facade
-- Fake Out
-- Fake Tears
-- Fire Punch
-- Flail
-- Fling
-- Focus Punch
-- Foresight
-- Frustration
-- Grass Knot
-- Heal Bell
-- Healing Wish
-- Helping Hand
-- Hidden Power
-- Hyper Voice
-- Ice Beam
-- Ice Punch
-- Iron Tail
-- Jump Kick
-- Last Resort
-- Low Kick
-- Magic Coat
-- Mud Sport
-- Mud-Slap
-- Power-Up Punch
-- Pound
-- Protect
-- Quick Attack
-- Rain Dance
-- Rest
-- Retaliate
-- Return
-- Rock Smash
-- Role Play
-- Round
-- Shadow Ball
-- Shock Wave
-- Sky Uppercut
-- Sleep Talk
-- Snore
-- Solar Beam
-- Splash
-- Substitute
-- Sunny Day
-- Swagger
-- Sweet Kiss
-- Swift
-- Switcheroo
-- Teeter Dance
-- Thunder Punch
-- Thunder Wave
-- Thunderbolt
-- Toxic
-- Uproar
-- Water Pulse
-- Work Up
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+
+#### Natural Weapons
+	- Natural Weapon [Arms, Hands, Legs, Feet]
+
+#### Senses
+
+#### Defenses
+
+#### Behavior
 	- Cute Charm
+	- Cute
+	- Starter
+	- Herbivore
+
+#### Special Abilities
 	- Klutz
 	- Limber
 	- Vigor
 	- Nimble Strikes
+
+#### Movement
 	- Power 1
 	- Jump 3/2
-	- Underdog
 	- Naturewalk (Grassland)
-	- Landwalker
-		- Land Movement rate 5
-	- Swimmer
-		- Water Movement rate 3
-
-### Inherited
+	- Landwalker 5
+	- Swimmer 3
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +3
@@ -148,5 +80,8 @@
 	- Average Hatch Rate: 10 Days
 
 # Miscellaneous
-	- Diet: Herbivore
 	- Habitat: Forest, Grassland, Urban
+
+# Lore
+- [[buneary-ear-coil-mechanism]] -- rolled ears as spring-loaded weapons and jump boosters
+- [[buneary-ear-position-health-indicator]] -- ear positioning signals health and mood

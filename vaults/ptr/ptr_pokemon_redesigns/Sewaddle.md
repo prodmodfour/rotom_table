@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Sewaddle
 	- Types: Bug / Grass
+
+# Evolution
+	- [[Sewaddle]] >> [[Swadloon]] >> [[Leavanny]]
+
 # Base Stats
 	- HP: 5
 	- Attack: 5
@@ -8,7 +12,6 @@
 	- Special Attack: 4
 	- Speed: 4
 	- Stamina: 5
-	- Movement Points: 1
 
 # Size Information
 	- Height: 1' 0" / 0.3m
@@ -16,84 +19,43 @@
 	- Size Class: Small
 	- Weight Class: 1
 
-# Move List
-- Agility
-- Air Slash
-- Attract
-- Baton Pass
-- Bug Bite
-- Bug Buzz
-- Calm Mind
-- Camouflage
-- Cut
-- Double Team
-- Dream Eater
-- Electroweb
-- Endure
-- Energy Ball
-- Facade
-- Flail
-- Flash
-- Frustration
-- Giga Drain
-- Grass Knot
-- Hidden Power
-- Iron Defense
-- Light Screen
-- Magic Coat
-- Me First
-- Mind Reader
-- Nature Power
-- Payback
-- Protect
-- Razor Leaf
-- Razor Wind
-- Rest
-- Return
-- Round
-- Safeguard
-- Screech
-- Seed Bomb
-- Signal Beam
-- Silver Wind
-- Sleep Talk
-- Snore
-- Solar Beam
-- String Shot
-- Struggle Bug
-- Substitute
-- Sunny Day
-- Swagger
-- Synthesis
-- Tackle
-- Toxic
-- Worry Seed
-
 # Traits
 ## Innate
 
 ### Species Specific
-	- Designer
-	- Full Guard
+
+#### Body
+
+#### Natural Weapons
+
+#### Senses
+
+#### Defenses
 	- Leafy Cloak
+
+#### Behavior
+	- Designer
+	- Starter
+	- Cute
+	- Herbivore
+
+#### Special Abilities
+	- Full Guard
 	- Swarm
 	- Leaf Rush
+	- Plant Matter Production [Leaves]
+	- Threaded
+	- Leaf Crafter
+
+#### Movement
 	- Power 1
 	- Jump 1/1
 	- Naturewalk (Grassland, Forest)
 	- Wallclimber
-	- Threaded
-	- Underdog
-	- Leaf Crafter
-	- Landwalker
-		- Land Movement rate 5
-	- Swimmer
-		- Water Movement rate 2
-
-### Inherited
+	- Landwalker 5
+	- Swimmer 2
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +1
@@ -121,5 +83,9 @@
 	- Average Hatch Rate: 10 Days
 
 # Miscellaneous
-	- Diet: Herbivore
 	- Habitat: Forest
+
+# Lore
+
+- [[sewaddle-line-silk-and-leaf-tailoring]]
+- [[sewaddle-leaf-hood-as-survival-tool]]

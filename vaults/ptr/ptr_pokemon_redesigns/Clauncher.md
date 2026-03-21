@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Clauncher
 	- Types: Water
+
+# Evolution
+	- [[Clauncher]] >> [[Clawitzer]]
+
 # Base Stats
 	- HP: 5
 	- Attack: 5
@@ -8,7 +12,6 @@
 	- Special Attack: 6
 	- Speed: 4
 	- Stamina: 5
-	- Movement Points: 1
 
 # Size Information
 	- Height: 1' 08" / 0.5m
@@ -16,80 +19,44 @@
 	- Size Class: Small
 	- Weight Class: 1
 
-# Move List
-- Aqua Jet
-- Aqua Tail
-- Attract
-- Bounce
-- Bubble
-- Bubble Beam
-- Confide
-- Crabhammer
-- Cut
-- Double Team
-- Dragon Pulse
-- Endure
-- Entrainment
-- Facade
-- Flail
-- Flash Cannon
-- Frustration
-- Helping Hand
-- Hidden Power
-- Ice Beam
-- Icy Wind
-- Iron Tail
-- Muddy Water
-- Protect
-- Rain Dance
-- Rest
-- Return
-- Rock Slide
-- Round
-- Scald
-- Sleep Talk
-- Sludge Bomb
-- Sludge Wave
-- Smack Down
-- Snore
-- Splash
-- Substitute
-- Surf
-- Swagger
-- Swords Dance
-- Toxic
-- U-Turn
-- Venoshock
-- Vice Grip
-- Water Gun
-- Water Pulse
-- Water Sport
-- Waterfall
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+	- Gilled
+	- Carnivore
+
+#### Natural Weapons
+	- Natural Weapon [Pincers, Legs]
+
+#### Senses
+
+#### Defenses
 	- Shell Armor
+	- Shell 1
+
+#### Behavior
+	- Starter
+	- Carnivore
+
+#### Special Abilities
 	- Sniper
 	- Sheer Force
 	- Swift Swim
 	- Mega Launcher
-	- Gilled
-	- Fountain
+	- Water Creation 1
+	- Water Manipulation 1
+
+#### Movement
 	- Power 2
 	- Jump 1/1
-	- Underdog
 	- Naturewalk (Ocean)
-	- Landwalker
-		- Land Movement rate 3
-	- Swimmer
-		- Water Movement rate 4
-
-### Inherited
+	- Landwalker 3
+	- Swimmer 4
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +2
@@ -117,5 +84,8 @@
 	- Average Hatch Rate: 10 Days
 
 # Miscellaneous
-	- Diet: Carnivore
 	- Habitat: Ocean
+
+# Lore
+- [[clauncher-line-hydraulic-claw]]
+- [[clauncher-line-asymmetric-anatomy]]

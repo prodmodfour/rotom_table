@@ -32,21 +32,27 @@ There are three processes that drive vault evolution:
 - PTR > Documentation > App
 
 # Rules References
-- When committing or working with git: .claude/context_injections/git.md
-- When adding icons, sprites, or visual assets to UI: .claude/context_injections/icons_and_sprites.md
-- When creating or editing CLAUDE.md files or context injections: .claude/context_injections/making_and_expanding_context_injections_or_claude_md.md
-- When implementing or verifying PTU game rules: .claude/context_injections/ptu_books.md
-- When implementing game mechanic calculations: .claude/context_injections/ptu_formulas.md
-- When looking up Pokemon species data: .claude/context_injections/ptu_pokedex_lookup.md
-- When interacting with the app in the browser via playwright-cli: .claude/context_injections/browser_audit_routes.md
-- When editing vaults or Obsidian markdown files: .claude/context_injections/zettelkasten.md
-- When exploring the vaults: .claude/context_injections/explore_vault.md
-- When considering the PTR game system (rules, mechanics, formulas): .claude/context_injections/ptr.md
-- When considering how the system will be implemented as rotom_table: .claude/context_injections/documentation.md
-- When digesting user notes into the PTR vault: .claude/context_injections/digesting_ptr.md
-- When digesting user notes into the documentation vault: .claude/context_injections/digesting_documentation.md
-- When considering what the app actually does: .claude/context_injections/app_vault.md
-- When observing the app into the app vault: .claude/context_injections/observing_app.md
-- When maturing a vault: .claude/context_injections/maturation.md
+
+## Vaults
+- When considering the PTR game system (rules, mechanics, formulas): .claude/context_injections/vaults/ptr.md
+- When considering how the system will be implemented as rotom_table: .claude/context_injections/vaults/documentation.md
+- When considering what the app actually does: .claude/context_injections/vaults/app_vault.md
+- When editing vaults or Obsidian markdown files: .claude/context_injections/vaults/zettelkasten.md
+- When exploring the vaults: .claude/context_injections/vaults/explore_vault.md
+- When digesting user notes into the PTR vault: .claude/context_injections/vaults/digesting_ptr.md
+- When digesting user notes into the documentation vault: .claude/context_injections/vaults/digesting_documentation.md
+- When observing the app into the app vault: .claude/context_injections/vaults/observing_app.md
+- When maturing a vault: .claude/context_injections/vaults/maturation.md
 - When answering questions, consult one of the three vaults in vaults/
+
+## Game Data
+- When implementing or verifying PTU game rules: .claude/context_injections/game/ptu_books.md
+- When implementing game mechanic calculations: .claude/context_injections/game/ptu_formulas.md
+- When looking up Pokemon species data: .claude/context_injections/game/ptu_pokedex_lookup.md
+
+## Workflow
+- When committing or working with git: .claude/context_injections/workflow/git.md
+- When adding icons, sprites, or visual assets to UI: .claude/context_injections/workflow/icons_and_sprites.md
+- When interacting with the app in the browser via playwright-cli: .claude/context_injections/workflow/browser_audit_routes.md
+- When creating or editing CLAUDE.md files or context injections: .claude/context_injections/workflow/making_and_expanding_context_injections_or_claude_md.md
 

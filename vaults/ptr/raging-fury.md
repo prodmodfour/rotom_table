@@ -1,4 +1,4 @@
-Raging Fury is a Fire-type [[type-effectiveness-excludes-status-moves|Special]] move with a Damage Base of 9, [[scene-frequency-definition|Scene x2]] frequency, AC 2, and a range of Burst 1, Spirit Surge.
+Raging Fury is a Fire-type [[type-effectiveness-excludes-status-moves|Special]] move with a Damage Base of 9, [[scene-frequency-definition|Scene x2]] frequency, AC 2, and a range of Burst 1, [[spirit-surge|Spirit Surge]].
 
 The user becomes Enraged. Legal targets become Enraged on a 16+.
 

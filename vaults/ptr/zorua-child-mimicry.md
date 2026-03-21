@@ -1,0 +1,3 @@
+Zorua sometimes takes the form of a silent human child to search for food in settlements. It has been known to replace normally talkative children — slipping into their place while the real child is elsewhere. The disguise holds as long as no one notices the impostor's unusual silence or touches features the illusion fails to fully mask.
+
+This behavior makes [[Zorua]] one of the few Pokemon that integrates into human society through deception rather than domestication. For tabletop encounters, a "lost child" in the woods or a suddenly quiet kid in a village could be a Zorua foraging — a discovery that reframes the situation from rescue mission to wildlife encounter.

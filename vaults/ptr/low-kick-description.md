@@ -1,0 +1,4 @@
+A powerful low kick that makes the target fall over. The heavier the target, the greater the move's power.
+
+## See also
+- [[low-kick]]

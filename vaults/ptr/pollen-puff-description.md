@@ -1,0 +1,4 @@
+The user attacks the enemy with a pollen puff that explodes. If the target is an ally, it gives the ally a pollen puff that restores its HP instead.
+
+## See also
+- [[pollen-puff]]

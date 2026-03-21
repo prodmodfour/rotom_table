@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Hoothoot
 	- Types: Normal / Flying
+
+# Evolution
+	- [[Hoothoot]] >> [[Noctowl]]
+
 # Base Stats
 	- HP: 6
 	- Attack: 3
@@ -8,7 +12,6 @@
 	- Special Attack: 4
 	- Speed: 5
 	- Stamina: 5
-	- Movement Points: 1
 
 # Size Information
 	- Height: 2' 4" / 0.7m
@@ -16,97 +19,41 @@
 	- Size Class: Small
 	- Weight Class: 2
 
-# Move List
-- Aerial Ace
-- Agility
-- Air Cutter
-- Air Slash
-- Attract
-- Confusion
-- Defog
-- Double Team
-- Double-Edge
-- Dream Eater
-- Echoed Voice
-- Extrasensory
-- Facade
-- Feather Dance
-- Feint Attack
-- Fly
-- Foresight
-- Frustration
-- Growl
-- Heat Wave
-- Hidden Power
-- Hyper Voice
-- Hypnosis
-- Magic Coat
-- Mirror Move
-- Mud-Slap
-- Night Shade
-- Ominous Wind
-- Peck
-- Pluck
-- Protect
-- Psych Up
-- Psychic
-- Psycho Shift
-- Rain Dance
-- Recycle
-- Reflect
-- Rest
-- Return
-- Role Play
-- Roost
-- Round
-- Shadow Ball
-- Silver Wind
-- Sky Attack
-- Sleep Talk
-- Snore
-- Steel Wing
-- Substitute
-- Sunny Day
-- Supersonic
-- Swagger
-- Swift
-- Synchronoise
-- Tackle
-- Tailwind
-- Take Down
-- Thief
-- Toxic
-- Twister
-- Uproar
-- Whirlwind
-- Wing Attack
-- Work Up
-- Zen Headbutt
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+	- Sound [Vocal]
+
+#### Natural Weapons
+	- Natural Weapon [Beak, Claws, Legs, Feet]
+
+#### Senses
+	- Perception
+	- Sense [Darkvision]
+
+#### Defenses
+
+#### Behavior
+	- Starter
+	- Cute
+	- Herbivore
+
+#### Special Abilities
 	- Insomnia
-	- Keen Eye
 	- Tinted Lens
 	- Hypnotic
-	- Perception
-	- Darkvision
-	- Underdog
+
+#### Movement
 	- Power 1
 	- Jump 3/3
-	- Landwalker
-		- Land Movement rate 3
-	- Swimmer
-		- Water Movement rate 1
-	- Flier
-		- Sky Movement rate 4
-
-### Inherited
+	- Landwalker 3
+	- Swimmer 1
+	- Flier 4
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +2
@@ -134,5 +81,8 @@
 	- Average Hatch Rate: 7 Days
 
 # Miscellaneous
-	- Diet: Herbivore
 	- Habitat: Forest
+
+# Lore
+- [[hoothoot-internal-clock-organ]]
+- [[hoothoot-cultural-timekeeping]]

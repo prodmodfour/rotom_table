@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Shroomish
 	- Types: Grass
+
+# Evolution
+	- [[Shroomish]] >> [[Breloom]]
+
 # Base Stats
 	- HP: 6
 	- Attack: 4
@@ -8,7 +12,6 @@
 	- Special Attack: 4
 	- Speed: 4
 	- Stamina: 5
-	- Movement Points: 1
 
 # Size Information
 	- Height: 1' 4" / 0.4m
@@ -16,79 +19,39 @@
 	- Size Class: Small
 	- Weight Class: 1
 
-# Move List
-- Absorb
-- Attract
-- Body Slam
-- Bullet Seed
-- Charm
-- Double Team
-- Double-Edge
-- Drain Punch
-- Energy Ball
-- Facade
-- Fake Tears
-- False Swipe
-- Flash
-- Focus Punch
-- Frustration
-- Giga Drain
-- Grass Knot
-- Growth
-- Headbutt
-- Helping Hand
-- Hidden Power
-- Leech Seed
-- Mega Drain
-- Natural Gift
-- Poison Powder
-- Protect
-- Rest
-- Return
-- Round
-- Safeguard
-- Seed Bomb
-- Sleep Talk
-- Sludge Bomb
-- Snatch
-- Snore
-- Solar Beam
-- Spore
-- Stun Spore
-- Substitute
-- Sunny Day
-- Swagger
-- Swords Dance
-- Synthesis
-- Tackle
-- Toxic
-- Venoshock
-- Wake-Up Slap
-- Worry Seed
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+	- Gas Production [Spore Release]
+
+#### Natural Weapons
+	- Natural Weapon [Head]
+
+
+#### Senses
+
+#### Defenses
+
+#### Behavior
+	- Starter
+	- Geovore
+
+#### Special Abilities
 	- Effect Spore
-	- Quick Feet
-	- Tangled Feet
-	- Natural Cure
-	- Poison Heal
-	- Mushroom Harvest
-	- Underdog
+	- Clumsy
+	- Poison Expulsion
+
+#### Movement
 	- Power 2
 	- Jump 0/1
 	- Naturewalk (Grassland, Forest)
-	- Landwalker
-		- Land Movement rate 3
-	- Swimmer
-		- Water Movement rate 1
-
-### Inherited
+	- Landwalker 3
+	- Swimmer 1
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +2
@@ -116,5 +79,10 @@
 	- Average Hatch Rate: 7 Days
 
 # Miscellaneous
-	- Diet: Phototroph
 	- Habitat: Marsh, Rainforest
+
+# Lore
+- [[shroomish-spore-defense-mechanism]]
+- [[shroomish-decomposer-ecology]]
+- [[shroomish-line-fungal-growth-arc]]
+- [[shroomish-evolution-spore-strike-is-trivial]]

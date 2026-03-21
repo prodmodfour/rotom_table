@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Yamask
 	- Types: Ghost
+
+# Evolution
+	- [[Yamask]] >> [[Cofagrigus]]
+
 # Base Stats
 	- HP: 4
 	- Attack: 3
@@ -8,7 +12,6 @@
 	- Special Attack: 6
 	- Speed: 3
 	- Stamina: 5
-	- Movement Points: 1
 
 # Size Information
 	- Height: 1' 8" / 0.5m
@@ -16,97 +19,42 @@
 	- Size Class: Small
 	- Weight Class: 1
 
-# Move List
-- After You
-- Ally Switch
-- Astonish
-- Attract
-- Block
-- Calm Mind
-- Curse
-- Dark Pulse
-- Destiny Bond
-- Disable
-- Double Team
-- Dream Eater
-- Embargo
-- Endure
-- Energy Ball
-- Facade
-- Fake Tears
-- Flash
-- Frustration
-- Grudge
-- Guard Split
-- Haze
-- Heal Block
-- Hex
-- Hidden Power
-- Imprison
-- Infestation
-- Iron Defense
-- Knock Off
-- Magic Coat
-- Mean Look
-- Memento
-- Nasty Plot
-- Night Shade
-- Nightmare
-- Ominous Wind
-- Pain Split
-- Payback
-- Power Split
-- Protect
-- Psych Up
-- Psychic
-- Rain Dance
-- Rest
-- Return
-- Role Play
-- Round
-- Safeguard
-- Shadow Ball
-- Skill Swap
-- Sleep Talk
-- Snatch
-- Snore
-- Spite
-- Substitute
-- Swagger
-- Telekinesis
-- Thief
-- Toxic
-- Toxic Spikes
-- Trick
-- Trick Room
-- Will-O-Wisp
-- Wonder Room
-
 # Traits
 ## Innate
 
 ### Species Specific
-	- Mummy
+
+#### Body
+
+#### Natural Weapons
+
+#### Senses
+
+#### Defenses
 	- Sand Veil
+	- Intangibility
+	- Invisibility
+
+#### Behavior
+	- Starter
+	- Terravore
+
+#### Special Abilities
+	- Mummy
 	- Shackle
 	- Stall
 	- Cursed Body
+	- Telepath
+
+#### Movement
 	- Power 2
 	- Jump 2/2
-	- Phasing
-	- Invisibility
-	- Underdog
-	- Landwalker
-		- Land Movement rate 5
-	- Swimmer
-		- Water Movement rate 2
-	- Levitator
-		- Levitate Movement rate 5
-
-### Inherited
+	- Phaser 2
+	- Landwalker 5
+	- Swimmer 2
+	- Flier 5
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +3
@@ -134,5 +82,8 @@
 	- Average Hatch Rate: 10 Days
 
 # Miscellaneous
-	- Diet: Terravore
 	- Habitat: Desert
+
+# Lore
+- [[yamask-former-human-spirit]]
+- [[yamask-line-egyptian-funerary-ecology]]

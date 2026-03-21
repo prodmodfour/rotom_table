@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Drapion
 	- Types: Poison / Dark
+
+# Evolution
+	- [[Skorupi]] >> [[Drapion]]
+
 # Base Stats
 	- HP: 7
 	- Attack: 9
@@ -8,7 +12,6 @@
 	- Special Attack: 6
 	- Speed: 10
 	- Stamina: 9
-	- Movement Points: 1
 
 # Size Information
 	- Height: 4' 3" / 1.3m
@@ -16,98 +19,41 @@
 	- Size Class: Medium
 	- Weight Class: 4
 
-# Move List
-- Acupressure
-- Aerial Ace
-- Aqua Tail
-- Attract
-- Bite
-- Brick Break
-- Bug Bite
-- Bulldoze
-- Crunch
-- Cross Poison
-- Cut
-- Dark Pulse
-- Dig
-- Double Team
-- Earthquake
-- Facade
-- False Swipe
-- Fell Stinger
-- Fire Fang
-- Flash
-- Fling
-- Frustration
-- Fury Cutter
-- Giga Impact
-- Hidden Power
-- Hone Claws
-- Hyper Beam
-- Ice Fang
-- Infestation
-- Iron Tail
-- Knock Off
-- Mud-Slap
-- Night Slash
-- Payback
-- Pin Missile
-- Poison Fang
-- Poison Jab
-- Protect
-- Pursuit
-- Rain Dance
-- Rest
-- Retaliate
-- Return
-- Roar
-- Rock Climb
-- Rock Slide
-- Rock Smash
-- Rock Tomb
-- Round
-- Scary Face
-- Shadow Ball
-- Sleep Talk
-- Sludge Bomb
-- Snarl
-- Snore
-- Strength
-- Struggle Bug
-- Substitute
-- Sunny Day
-- Swagger
-- Swords Dance
-- Taunt
-- Thief
-- Thunder Fang
-- Torment
-- Toxic
-- Toxic Spikes
-- Venoshock
-- X-Scissor
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+	- Carnivore
+
+#### Natural Weapons
+	- Natural Weapon [Pincers, Fangs, Head, Stinger]
+	- Poison Coated [Stinger, Pincers]
+
+
+#### Senses
+	- Sense [Darkvision]
+
+#### Defenses
 	- Battle Armor
+	- Shell 3
+
+#### Behavior
+	- Violent Instinct 3
+	- Apex Predator
+	- Opportunist 2
+	- Carnivore
+
+#### Special Abilities
 	- Sniper
-	- Keen Eye
-	- Strong Jaw
-	- Vicious
+
+#### Movement
 	- Power 7
 	- Jump 1/1
-	- Darkvision
 	- Naturewalk (Forest)
-	- Landwalker
-		- Land Movement rate 6
-	- Swimmer
-		- Water Movement rate 3
-
-### Inherited
-
-## Learned
+	- Landwalker 6
+	- Swimmer 3
 
 
 # Skills
@@ -120,10 +66,10 @@
 	- Focus : +3
 	- General Education : +0
 	- Insight : +0
-	- Intimidate : +0
+	- Intimidate : +0 + Apex Predator (+2) = +2
 	- Medicine : +0
 	- Occult Education : +0
-	- Perception : +2
+	- Perception : +2 + Apex Predator (+3) = +5
 	- Performance : +0
 	- Pokemon Education : +0
 	- Stealth : +2
@@ -136,5 +82,8 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Carnivore
 	- Habitat: Forest, Marsh, Rainforest
+
+# Lore
+- [[drapion-armor-and-strength]]
+- [[skorupi-line-cold-vulnerability]]

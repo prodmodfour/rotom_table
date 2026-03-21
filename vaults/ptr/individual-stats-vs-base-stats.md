@@ -2,8 +2,9 @@ Individual stats are the stats that a specific instance of a character has. They
 
 The seven individual stats are: HP, Attack, Defense, Special Attack, Special Defense, Speed, and [[stamina-stat|Stamina]].
 
-Individual stats feed into [[current-stat-formula|current stat calculations]] and [[trainer-hp-formula|Health formulas]].
+Individual stats feed into [[effective-stat-formula|effective stat calculations]] and [[trainer-hp-formula|Health formulas]].
 
 ## See also
 
+- [[stat-terminology]]
 - [[base-stats-unmodifiable-by-traits]]

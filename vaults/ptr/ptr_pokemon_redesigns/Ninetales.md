@@ -1,108 +1,60 @@
 # Basic Information
 	- Name: Ninetales
 	- Types: Fire
+
+# Evolution
+	- [[Vulpix]] >> [[Ninetales]]
+
 # Base Stats
 	- HP: 7
-	- Attack: 8
+	- Attack: 7
 	- Defense: 8
 	- Special Attack: 8
-	- Speed: 10
+	- Speed: 11
 	- Stamina: 9
-	- Movement Points: 1
 
 # Size Information
 	- Height: 3' 7" / 1.1m
-	- Weight: 43.9 lbs. / 19.9kg
+	- Weight: 43.9 lbs / 19.9kg
 	- Size Class: Medium
 	- Weight Class: 2
-
-# Move List
-- Attract
-- Baby-Doll Eyes
-- Body Slam
-- Calm Mind
-- Captivate
-- Confuse Ray
-- Covet
-- Dark Pulse
-- Dig
-- Double Team
-- Double-Edge
-- Dream Eater
-- Ember
-- Energy Ball
-- Extrasensory
-- Facade
-- Feint Attack
-- Fire Blast
-- Fire Spin
-- Flame Burst
-- Flame Charge
-- Flamethrower
-- Foul Play
-- Frustration
-- Giga Impact
-- Grudge
-- Heat Wave
-- Hex
-- Hidden Power
-- Hyper Beam
-- Imprison
-- Incinerate
-- Inferno
-- Iron Tail
-- Magic Coat
-- Nasty Plot
-- Ominous Wind
-- Overheat
-- Pain Split
-- Payback
-- Protect
-- Psych Up
-- Psyshock
-- Quick Attack
-- Rest
-- Return
-- Roar
-- Role Play
-- Round
-- Safeguard
-- Sleep Talk
-- Snore
-- Solar Beam
-- Spite
-- Substitute
-- Sunny Day
-- Swagger
-- Swift
-- Tail Whip
-- Toxic
-- Will-O-Wisp
-- Zen Headbutt
 
 # Traits
 ## Innate
 
 ### Species Specific
-	- Flash Fire
-	- Fox Fire
-	- Competitive
-	- Cursed Body
-	- Drought
-	- Firestarter
-	- Tracker
+
+#### Body
+	- Sound [Vocal]
+
+#### Natural Weapons
+	- Natural Weapon [Fangs, Claws, Legs, Feet, Tail]
+
+#### Senses
+	- Sense [Keen Smell]
+
+#### Defenses
+	- [[flash-fire|Flash Fire]]
+
+#### Behavior
+	- Apex Predator
+	- Carnivore
+
+#### Special Abilities
+	- Sorcery 3 4 3
+	- Telepath
+	- Fire Creation 3
+	- Fire Manipulation 3
+	- Mental Manipulation 1
+
+#### Movement
 	- Power 4
 	- Jump 1/2
 	- Naturewalk (Forest, Mountain)
-	- Landwalker
-		- Land Movement rate 6
-	- Swimmer
-		- Water Movement rate 3
-
-### Inherited
+	- Landwalker 6
+	- Swimmer 3
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +3
@@ -114,10 +66,10 @@
 	- Focus : +5
 	- General Education : +0
 	- Insight : +0
-	- Intimidate : +0
+	- Intimidate : +0 + Apex Predator (+2) = +2
 	- Medicine : +0
 	- Occult Education : +0
-	- Perception : +4
+	- Perception : +4 + Apex Predator (+3) = +7
 	- Performance : +0
 	- Pokemon Education : +0
 	- Stealth : +4
@@ -130,5 +82,9 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Omnivore
 	- Habitat: Grassland, Mountain
+
+# Lore
+- [[ninetales-nine-tails-mystical-energy]] -- each tail holds distinct mystical power; source of its longevity
+- [[ninetales-thousand-year-curse]] -- vengeful nature; thousand-year curse on those who mistreat it
+- [[ninetales-kitsune-intelligence]] -- understands human speech; hypnotic flames; supernatural awareness

@@ -1,0 +1,3 @@
+Honchkrow is active only after dark, spending its daylight hours grooming obsessively in its nest. This vanity is distinctive — it dedicates more time to feather maintenance than almost any other species. Its formal appearance, with plumage resembling a fedora and white chest crest like a cravat, reinforces its mob-boss persona.
+
+Despite commanding [[murkrow-line-murder-hierarchy|large murders of Murkrow]], Honchkrow itself is solitary and sedentary during the day. It rarely fights directly, preferring to let its subordinates handle threats. This behavioral split — charismatic nighttime authority figure versus lazy daytime preener — makes [[Honchkrow]] an unusual pack leader that rules through intimidation and loyalty rather than constant vigilance.

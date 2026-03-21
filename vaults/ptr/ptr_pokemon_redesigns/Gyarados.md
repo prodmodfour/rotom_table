@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Gyarados
 	- Types: Water / Flying
+
+# Evolution
+	- [[Magikarp]] >> [[Gyarados]]
+
 # Base Stats
 	- HP: 10
 	- Attack: 13
@@ -8,7 +12,6 @@
 	- Special Attack: 6
 	- Speed: 8
 	- Stamina: 9
-	- Movement Points: 1
 
 # Size Information
 	- Height: 21' 4" / 6.5m
@@ -16,97 +19,47 @@
 	- Size Class: Huge
 	- Weight Class: 6
 
-# Move List
-- Aqua Tail
-- Attract
-- Avalanche
-- Bite
-- Blizzard
-- Body Slam
-- Bounce
-- Brine
-- Bulldoze
-- Crunch
-- Dark Pulse
-- Dive
-- Double Team
-- Double-Edge
-- Dragon Dance
-- Dragon Pulse
-- Dragon Rage
-- Dragon Tail
-- Earthquake
-- Facade
-- Fire Blast
-- Flamethrower
-- Frustration
-- Giga Impact
-- Hail
-- Hidden Power
-- Hydro Pump
-- Hyper Beam
-- Ice Beam
-- Ice Fang
-- Icy Wind
-- Incinerate
-- Iron Head
-- Iron Tail
-- Leer
-- Outrage
-- Payback
-- Protect
-- Rain Dance
-- Rest
-- Return
-- Roar
-- Rock Smash
-- Round
-- Sandstorm
-- Scald
-- Sleep Talk
-- Snore
-- Spite
-- Stone Edge
-- Strength
-- Substitute
-- Surf
-- Swagger
-- Taunt
-- Thrash
-- Thunder
-- Thunder Wave
-- Thunderbolt
-- Torment
-- Twister
-- Uproar
-- Water Pulse
-- Waterfall
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+	- Gilled
+	- Reach
+	- Carnivore
+	- Sound [Vocal]
+
+#### Natural Weapons
+	- Natural Weapon [Body, Fangs, Head, Tail]
+
+#### Senses
+
+#### Defenses
+
+#### Behavior
 	- Intimidate
 	- Frighten
+	- Apex Predator
+	- Carnivore
+
+#### Special Abilities
 	- Steadfast
 	- Swift Swim
 	- Moxie
-	- Gilled
-	- Fountain
-	- Reach
+	- Water Creation 3
+	- Water Manipulation 2
+
+#### Movement
 	- Mountable 4
 	- Power 13
 	- Jump 4/4
 	- Naturewalk (Ocean)
-	- Landwalker
-		- Land Movement rate 5
-	- Swimmer
-		- Water Movement rate 6
-
-### Inherited
+	- Landwalker 5
+	- Swimmer 6
 
 ## Learned
-
+	- Opportunist 1
 
 # Skills
 	- Acrobatics : +3
@@ -118,10 +71,10 @@
 	- Focus : +4
 	- General Education : +0
 	- Insight : +0
-	- Intimidate : +0
+	- Intimidate : +0 + Apex Predator (+2) = +2
 	- Medicine : +0
 	- Occult Education : +0
-	- Perception : +3
+	- Perception : +3 + Apex Predator (+3) = +6
 	- Performance : +0
 	- Pokemon Education : +0
 	- Stealth : +2
@@ -134,5 +87,9 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Carnivore
 	- Habitat: Freshwater, Ocean
+
+# Lore
+- [[magikarp-dragon-gate-myth]]
+- [[gyarados-destructive-rampage]]
+- [[gyarados-physical-supremacy]]

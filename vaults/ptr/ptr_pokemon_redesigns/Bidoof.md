@@ -1,6 +1,16 @@
+---
+id: Bidoof
+aliases: []
+tags: []
+---
+
 # Basic Information
 	- Name: Bidoof
 	- Types: Normal
+
+# Evolution
+	- [[Bidoof]] >> [[Bibarel]]
+
 # Base Stats
 	- HP: 6
 	- Attack: 5
@@ -8,7 +18,6 @@
 	- Special Attack: 4
 	- Speed: 3
 	- Stamina: 4
-	- Movement Points: 1
 
 # Size Information
 	- Height: 1' 8" / 0.5m
@@ -16,93 +25,38 @@
 	- Size Class: Small
 	- Weight Class: 2
 
-# Move List
-- Amnesia
-- Aqua Tail
-- Attract
-- Blizzard
-- Charge Beam
-- Covet
-- Curse
-- Cut
-- Defense Curl
-- Dig
-- Double Team
-- Double-Edge
-- Echoed Voice
-- Endure
-- Facade
-- Frustration
-- Fury Cutter
-- Fury Swipes
-- Grass Knot
-- Growl
-- Headbutt
-- Hidden Power
-- Hyper Fang
-- Ice Beam
-- Icy Wind
-- Iron Tail
-- Last Resort
-- Mud-Slap
-- Odor Sleuth
-- Pluck
-- Protect
-- Quick Attack
-- Rain Dance
-- Rest
-- Retaliate
-- Return
-- Rock Climb
-- Rock Smash
-- Rollout
-- Round
-- Shadow Ball
-- Shock Wave
-- Skull Bash
-- Sleep Talk
-- Snore
-- Stealth Rock
-- Substitute
-- Sunny Day
-- Super Fang
-- Superpower
-- Swagger
-- Swift
-- Tackle
-- Take Down
-- Taunt
-- Thief
-- Thunder
-- Thunder Wave
-- Thunderbolt
-- Toxic
-- Water Sport
-- Work Up
-- Yawn
-
 # Traits
 ## Innate
 
 ### Species Specific
-	- Simple
-	- Unaware
-	- Deep Sleep
+
+#### Body
+
+#### Natural Weapons
+	- Natural Weapon [Fangs, Head]
+
+#### Senses
+
+#### Defenses
+	- Defense Curl
+
+#### Behavior
 	- Oblivious
-	- Moody
+	- Cute
+	- Starter
+	- Herbivore
+
+#### Special Abilities
+
+
+#### Movement
 	- Power 1
 	- Jump 2/2
-	- Underdog
 	- Naturewalk (Grassland, Wetlands)
-	- Landwalker
-		- Land Movement rate 5
-	- Swimmer
-		- Water Movement rate 4
-
-### Inherited
+	- Landwalker 5
+	- Swimmer 4
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +2
@@ -130,5 +84,9 @@
 	- Average Hatch Rate: 7 Days
 
 # Miscellaneous
-	- Diet: Herbivore
 	- Habitat: Forest, Grassland, Marsh
+
+# Lore
+- [[rodent-ever-growing-incisors]]
+- [[bidoof-unflappable-temperament]]
+- [[bidoof-line-communal-nesting]]

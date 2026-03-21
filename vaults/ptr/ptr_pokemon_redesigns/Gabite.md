@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Gabite
 	- Types: Dragon / Ground
+
+# Evolution
+	- [[Gible]] >> [[Gabite]] >> [[Garchomp]]
+
 # Base Stats
 	- HP: 7
 	- Attack: 9
@@ -8,7 +12,6 @@
 	- Special Attack: 5
 	- Speed: 8
 	- Stamina: 7
-	- Movement Points: 1
 
 # Size Information
 	- Height: 4' 7" / 1.4m
@@ -16,97 +19,60 @@
 	- Size Class: Medium
 	- Weight Class: 4
 
-# Move List
-- Aerial Ace
-- Attract
-- Bulldoze
-- Cut
-- Dig
-- Double Team
-- Draco Meteor
-- Dragon Claw
-- Dragon Pulse
-- Dragon Rage
-- Dragon Rush
-- Dual Chop
-- Earth Power
-- Earthquake
-- Facade
-- Fire Blast
-- Flamethrower
-- Frustration
-- Fury Cutter
-- Hidden Power
-- Hone Claws
-- Incinerate
-- Iron Head
-- Iron Tail
-- Mud-Slap
-- Outrage
-- Protect
-- Rain Dance
-- Rest
-- Return
-- Roar
-- Rock Climb
-- Rock Slide
-- Rock Smash
-- Rock Tomb
-- Round
-- Sand Attack
-- Sand Tomb
-- Sandstorm
-- Shadow Claw
-- Slash
-- Sleep Talk
-- Snore
-- Stealth Rock
-- Stone Edge
-- Strength
-- Substitute
-- Sunny Day
-- Swagger
-- Swift
-- Take Down
-- Toxic
-- Twister
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+	- Bipedal
+	- Carnivore
+	- Scary
+
+#### Natural Weapons
+	- Natural Weapon [Fangs, Claws, Blade, Head, Arms, Legs, Feet]
+
+#### Senses
+	- Sense [Darkvision, Echolocation]
+
+#### Defenses
 	- Sand Veil
-	- Frighten
 	- Rough Skin
-	- Vital Spirit
-	- Intimidate
+
+#### Behavior
+	- Ambush
+	- Likes Shiny
+	- Cold Intolerance
+	- Violent Instincts 2
+	- Carnivore
+
+#### Special Abilities
+	- Tooth Regeneration
+	- Medicinal Scales
+	- Rock Manipulation 1
+
+#### Movement
 	- Power 4
 	- Jump 2/2
-	- Underdog
 	- Naturewalk (Desert)
-	- Landwalker
-		- Land Movement rate 6
-	- Swimmer
-		- Water Movement rate 3
-	- Burrower
-		- Burrow Movement rate 4
-
-### Inherited
+	- Landwalker 6
+	- Swimmer 3
+	- Burrower 4
 
 ## Learned
-
+	- Opportunist 1
 
 # Skills
 	- Acrobatics : +3
 	- Athletics : +3
-	- Charm : +0
+	- Charm : +0 + Scary (-1) = -1
 	- Combat : +3
 	- Command : +0
 	- Deception : +0
 	- Focus : +3
 	- General Education : +0
 	- Insight : +0
-	- Intimidate : +0
+	- Intimidate : +0 + Scary (+3) = +3
 	- Medicine : +0
 	- Occult Education : +0
 	- Perception : +3
@@ -122,5 +88,10 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Carnivore
 	- Habitat: Cave, Desert
+
+# Lore
+- [[gible-line-cave-dwelling-geothermal]]
+- [[gible-line-jet-engine-anatomy]]
+- [[gabite-medicinal-scales]]
+- [[gabite-gem-hoarding]]

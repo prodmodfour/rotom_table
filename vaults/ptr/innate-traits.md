@@ -5,4 +5,5 @@ A Pokemon's innate traits can also include traits gained through breeding — se
 ## See also
 
 - [[learned-traits]]
+- [[emergent-traits]]
 - [[only-innate-traits-inherit]]

@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Trevenant
 	- Types: Ghost / Grass
+
+# Evolution
+	- [[Phantump]] >> [[Trevenant]]
+
 # Base Stats
 	- HP: 9
 	- Attack: 11
@@ -8,7 +12,6 @@
 	- Special Attack: 7
 	- Speed: 6
 	- Stamina: 8
-	- Movement Points: 1
 
 # Size Information
 	- Height: 4' 11" / 1.5m
@@ -16,95 +19,43 @@
 	- Size Class: Large
 	- Weight Class: 4
 
-# Move List
-- Astonish
-- Attract
-- Block
-- Bulldoze
-- Confide
-- Confuse Ray
-- Curse
-- Cut
-- Dark Pulse
-- Destiny Bond
-- Dig
-- Double Team
-- Drain Punch
-- Dream Eater
-- Energy Ball
-- Facade
-- Feint Attack
-- Forest's Curse
-- Foul Play
-- Frustration
-- Giga Drain
-- Giga Impact
-- Grass Knot
-- Growth
-- Hidden Power
-- Horn Leech
-- Hyper Beam
-- Ingrain
-- Leech Seed
-- Magic Coat
-- Nature Power
-- Pain Split
-- Phantom Force
-- Poison Jab
-- Protect
-- Psychic
-- Reflect
-- Rest
-- Return
-- Rock Slide
-- Rock Smash
-- Role Play
-- Round
-- Safeguard
-- Seed Bomb
-- Shadow Ball
-- Shadow Claw
-- Skill Swap
-- Sleep Talk
-- Snore
-- Solar Beam
-- Spite
-- Strength
-- Substitute
-- Sunny Day
-- Swagger
-- Tackle
-- Thief
-- Toxic
-- Trick
-- Trick Room
-- Will-O-Wisp
-- Wood Hammer
-- Worry Seed
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+
+#### Natural Weapons
+	- Natural Weapon [Claws, Head, Arms, Hands, Legs, Feet]
+
+#### Senses
+
+#### Defenses
+	- Intangibility
+	- Invisibility
+
+#### Behavior
+	- Nullivore
+
+#### Special Abilities
 	- Natural Cure
 	- Frisk
 	- Harvest
 	- Forest Lord
 	- Leaf Guard
-	- Phasing
-	- Invisibility
+	- Plant Matter Production [Wood, Leaves, Roots]
+	- Plant Manipulation 3
+
+#### Movement
+	- Phaser 2
 	- Power 6
 	- Jump 1/2
 	- Naturewalk (Grassland, Forest)
-	- Landwalker
-		- Land Movement rate 6
-	- Swimmer
-		- Water Movement rate 3
-
-### Inherited
+	- Landwalker 6
+	- Swimmer 3
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +2
@@ -132,5 +83,8 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Nullivore
 	- Habitat: Forest
+
+# Lore
+- [[trevenant-forest-guardian-root-network]]
+- [[phantump-line-kodama-tree-spirits]]

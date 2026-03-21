@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Zigzagoon
 	- Types: Normal
+
+# Evolution
+	- [[Zigzagoon]] >> [[Linoone]]
+
 # Base Stats
 	- HP: 4
 	- Attack: 3
@@ -8,7 +12,6 @@
 	- Special Attack: 3
 	- Speed: 6
 	- Stamina: 6
-	- Movement Points: 1
 
 # Size Information
 	- Height: 1' 4" / 0.4m
@@ -16,102 +19,42 @@
 	- Size Class: Small
 	- Weight Class: 2
 
-# Move List
-- Attract
-- Baby-Doll Eyes
-- Belly Drum
-- Bestow
-- Blizzard
-- Body Slam
-- Charge Beam
-- Charm
-- Covet
-- Cut
-- Defense Curl
-- Dig
-- Double Team
-- Double-Edge
-- Echoed Voice
-- Facade
-- Flail
-- Flamethrower
-- Fling
-- Frustration
-- Fury Cutter
-- Grass Knot
-- Growl
-- Gunk Shot
-- Headbutt
-- Helping Hand
-- Hidden Power
-- Hone Claws
-- Hyper Voice
-- Ice Beam
-- Icy Wind
-- Iron Tail
-- Last Resort
-- Mud Sport
-- Mud-Slap
-- Odor Sleuth
-- Pin Missile
-- Protect
-- Pursuit
-- Rain Dance
-- Rest
-- Retaliate
-- Return
-- Rock Climb
-- Rock Smash
-- Rollout
-- Round
-- Sand Attack
-- Seed Bomb
-- Shadow Ball
-- Shock Wave
-- Simple Beam
-- Sleep Talk
-- Snore
-- Substitute
-- Sunny Day
-- Super Fang
-- Surf
-- Swagger
-- Swift
-- Tackle
-- Tail Whip
-- Take Down
-- Thief
-- Thunder
-- Thunder Wave
-- Thunderbolt
-- Tickle
-- Toxic
-- Trick
-- Water Pulse
-- Work Up
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+
+#### Natural Weapons
+	- Natural Weapon [Fangs, Claws, Legs, Feet]
+
+#### Senses
+	- Sense [Keen Smell]
+
+#### Defenses
+
+#### Behavior
 	- Pickup
 	- Gluttony
+	- Pack Hunt
+	- Starter
+	- Cute
+	- Herbivore
+
+#### Special Abilities
 	- Quick Feet
-	- Sprint
 	- Tough Claws
-	- Underdog
+
+#### Movement
+	- Sprint
 	- Power 1
 	- Jump 2/3
 	- Naturewalk (Forest, Grassland)
-	- Landwalker
-		- Land Movement rate 5
-	- Swimmer
-		- Water Movement rate 3
-
-### Inherited
+	- Landwalker 5
+	- Swimmer 3
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +3
@@ -139,5 +82,8 @@
 	- Average Hatch Rate: 7 Days
 
 # Miscellaneous
-	- Diet: Herbivore
 	- Habitat: Forest, Grassland
+
+# Lore
+- [[zigzagoon-zigzag-movement-pattern]]
+- [[zigzagoon-line-foraging-instinct]]

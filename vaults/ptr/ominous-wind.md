@@ -1,4 +1,4 @@
-Ominous Wind is a Ghost-type [[type-effectiveness-excludes-status-moves|Special]] move with a Damage Base of 6, [[scene-frequency-eot-restriction|EOT]] frequency, AC 2, and a range of 6, 1 Target, Spirit Surge.
+Ominous Wind is a Ghost-type [[type-effectiveness-excludes-status-moves|Special]] move with a Damage Base of 6, [[scene-frequency-eot-restriction|EOT]] frequency, AC 2, and a range of 6, 1 Target, [[spirit-surge|Spirit Surge]].
 
 The user has each of its stats raised by +1 CS on a 19+.
 

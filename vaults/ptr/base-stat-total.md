@@ -3,3 +3,4 @@ Base Stat Total (BST) is the sum of all [[pokemon-base-stats-from-species|base s
 ## See also
 
 - [[base-stats-unmodifiable-by-traits]]
+- [[evolution-difficulty-scales-with-bst-jump]] — BST jump between forms calibrates evolution condition difficulty

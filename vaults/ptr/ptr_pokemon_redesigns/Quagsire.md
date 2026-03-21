@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Quagsire
 	- Types: Water / Ground
+
+# Evolution
+	- [[Wooper]] >> [[Quagsire]]
+
 # Base Stats
 	- HP: 10
 	- Attack: 9
@@ -8,7 +12,6 @@
 	- Special Attack: 7
 	- Speed: 4
 	- Stamina: 4
-	- Movement Points: 1
 
 # Size Information
 	- Height: 4' 7" / 1.4m
@@ -16,105 +19,41 @@
 	- Size Class: Medium
 	- Weight Class: 4
 
-# Move List
-- After You
-- Amnesia
-- Ancient Power
-- Aqua Tail
-- Attract
-- Blizzard
-- Body Slam
-- Brick Break
-- Bulldoze
-- Confide
-- Counter
-- Defense Curl
-- Dig
-- Dive
-- Double Team
-- Double-Edge
-- Dynamic Punch
-- Earth Power
-- Earthquake
-- Facade
-- Flash
-- Fling
-- Focus Blast
-- Focus Punch
-- Frustration
-- Giga Impact
-- Hail
-- Haze
-- Hidden Power
-- Hyper Beam
-- Ice Beam
-- Ice Punch
-- Icy Wind
-- Infestation
-- Iron Tail
-- Mega Kick
-- Mega Punch
-- Mist
-- Mud Bomb
-- Mud Shot
-- Mud Sport
-- Mud-Slap
-- Muddy Water
-- Power-Up Punch
-- Protect
-- Rain Dance
-- Rest
-- Return
-- Rock Slide
-- Rock Smash
-- Rock Tomb
-- Rollout
-- Round
-- Safeguard
-- Sandstorm
-- Scald
-- Seismic Toss
-- Slam
-- Sleep Talk
-- Sludge Bomb
-- Sludge Wave
-- Snore
-- Stone Edge
-- Strength
-- Substitute
-- Surf
-- Swagger
-- Tail Whip
-- Thief
-- Toxic
-- Water Gun
-- Water Pulse
-- Waterfall
-- Yawn
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+	- Gilled
+
+#### Natural Weapons
+	- Natural Weapon [Tail, Arms, Hands, Legs, Feet]
+
+#### Senses
+
+#### Defenses
+
+#### Behavior
+	- Herbivore
+
+#### Special Abilities
 	- Poison Point
 	- Water Absorb
 	- Damp
 	- Rain Dish
 	- Unaware
-	- Fountain
-	- Gilled
+	- Water Creation 2
+	- Water Manipulation 2
+
+#### Movement
 	- Power 3
 	- Jump 3/3
 	- Naturewalk (Wetlands)
-	- Landwalker
-		- Land Movement rate 6
-	- Swimmer
-		- Water Movement rate 5
-
-### Inherited
+	- Landwalker 6
+	- Swimmer 5
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +2
@@ -142,5 +81,8 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Herbivore
 	- Habitat: Freshwater
+
+# Lore
+- [[quagsire-passive-ambush-feeding]]
+- [[wooper-line-cold-water-amphibians]]

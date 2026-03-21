@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Corvisquire
 	- Types: Flying
+
+# Evolution
+	- [[Rookidee]] >> [[Corvisquire]] >> [[Corviknight]]
+
 # Base Stats
 	- HP: 7
 	- Attack: 7
@@ -8,7 +12,6 @@
 	- Special Attack: 4
 	- Speed: 8
 	- Stamina: 6
-	- Movement Points: 1
 
 # Size Information
 	- Height: 2' 7" / 0.8m
@@ -16,67 +19,39 @@
 	- Size Class: Small
 	- Weight Class: 2
 
-# Move List
-- Attract
-- Brave Bird
-- Confide
-- Defog
-- Double Team
-- Drill Peck
-- Endure
-- Facade
-- Fly
-- Frustration
-- Fury Attack
-- Hidden Power
-- Hone Claws
-- Payback
-- Pluck
-- Power Trip
-- Protect
-- Rest
-- Return
-- Roost
-- Round
-- Scary Face
-- Sky Attack
-- Sleep Talk
-- Snore
-- Spite
-- Substitute
-- Swagger
-- Swift
-- Tailwind
-- Taunt
-- Thief
-- Toxic
-- U-Turn
-- Work Up
-
 # Traits
 ## Innate
 
 ### Species Specific
-	- Keen Eye
-	- Moxie
-	- Unnerve
-	- Guts
-	- Big Pecks
+
+#### Body
+	- Sound [Vocal]
+
+#### Natural Weapons
+	- Natural Weapon [Beak, Claws, Wings]
+
+!
+#### Senses
+
+#### Defenses
+
+#### Behavior
+	- Pack Hunt
+	- Omnivore
+	- Fast Leaner
+
+#### Special Abilities
+	- Mettle [0 / 3]
+	- Wind Manipulation 2
+
+#### Movement
 	- Power 3
 	- Jump 3/3
-	- Guster
-	- Underdog
-	- Landwalker
-		- Land Movement rate 3
-	- Swimmer
-		- Water Movement rate 2
-	- Flier
-		- Sky Movement rate 6
-
-### Inherited
+	- Landwalker 3
+	- Swimmer 2
+	- Flier 6
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +4
@@ -104,5 +79,8 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Omnivore
 	- Habitat: Forest, Grassland
+
+# Lore
+- [[corvisquire-tool-use-intelligence]]
+- [[rookidee-fearless-growth-through-defeat]]

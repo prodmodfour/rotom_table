@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Glaceon
 	- Types: Ice
+
+# Evolution
+	- [[Eevee]] >> [[Glaceon]]
+
 # Base Stats
 	- HP: 7
 	- Attack: 6
@@ -8,7 +12,6 @@
 	- Special Attack: 13
 	- Speed: 7
 	- Stamina: 9
-	- Movement Points: 1
 
 # Size Information
 	- Height: 2' 7" / 0.8m
@@ -16,85 +19,47 @@
 	- Size Class: Medium
 	- Weight Class: 3
 
-# Move List
-- Aqua Tail
-- Attract
-- Avalanche
-- Barrier
-- Bite
-- Blizzard
-- Covet
-- Dig
-- Double Team
-- Echoed Voice
-- Facade
-- Frost Breath
-- Frustration
-- Giga Impact
-- Hail
-- Heal Bell
-- Helping Hand
-- Hidden Power
-- Hyper Beam
-- Hyper Voice
-- Ice Beam
-- Ice Fang
-- Ice Shard
-- Icy Wind
-- Iron Tail
-- Last Resort
-- Mirror Coat
-- Mud-Slap
-- Protect
-- Quick Attack
-- Rain Dance
-- Rest
-- Retaliate
-- Return
-- Roar
-- Rock Smash
-- Round
-- Sand Attack
-- Shadow Ball
-- Signal Beam
-- Sleep Talk
-- Snore
-- Strength
-- Substitute
-- Sunny Day
-- Swagger
-- Swift
-- Toxic
-- Work Up
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+	- Sound [Vocal]
+
+#### Natural Weapons
+	- Natural Weapon [Fangs, Claws, Legs, Feet]
+
+#### Senses
+	- Sense [Keen Smell]
+
+#### Defenses
 	- Snow Cloak
-	- Winter's Kiss
-	- Type Aura (Ice)
+	
+
+#### Behavior
+	- Omnivore
+	- Cute
+
+#### Special Abilities
 	- Ice Body
-	- Frostbite
-	- Freezer
+	- Diamond Dust
+	- Ice Creation 2
+	- Ice Manipulation 2
+
+#### Movement
 	- Power 3
 	- Jump 1/2
-	- Tracker
 	- Naturewalk (Tundra)
-	- Landwalker
-		- Land Movement rate 6
-	- Swimmer
-		- Water Movement rate 4
-
-### Inherited
+	- Landwalker 6
+	- Swimmer 4
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +3
 	- Athletics : +5
-	- Charm : +0
+	- Charm : +0 + Cute (+5) + Diamond Dust (+3) = +8
 	- Combat : +3
 	- Command : +0
 	- Deception : +0
@@ -105,7 +70,7 @@
 	- Medicine : +0
 	- Occult Education : +0
 	- Perception : +3
-	- Performance : +0
+	- Performance : +0 + Diamond Dust (+3) = +3
 	- Pokemon Education : +0
 	- Stealth : +3
 	- Survival : +0
@@ -117,5 +82,9 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Omnivore
 	- Habitat: Taiga, Tundra
+
+# Lore
+- [[eevee-line-unstable-genetics]] -- genetic restructuring via Ice Stone or icy location
+- [[glaceon-cryogenic-fur-needles]] -- lowers body temperature to -75F, freezing fur into projectile icicles
+- [[glaceon-diamond-dust-production]] -- freezes atmospheric moisture into glittering diamond dust with a cry

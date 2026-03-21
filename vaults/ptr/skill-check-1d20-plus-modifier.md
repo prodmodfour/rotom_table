@@ -4,5 +4,6 @@ This replaces the old [[skill-check-xd6-vs-dc|Xd6 vs DC]] system.
 
 ## See also
 
+- [[skill-modifier-scale]]
 - [[skill-modifiers-from-traits-or-circumstance]]
 - [[ptr-skill-list]]

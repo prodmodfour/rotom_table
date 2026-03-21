@@ -1,0 +1,2 @@
+- If an unlock condition mentions a Stat, it is referring to the individual stat of the pokemon, formatted as "Individual [Stat] X" (e.g. "Individual Attack 25")
+- If an unlock condition says it needs "One X", that means "At least one"

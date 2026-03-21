@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Goldeen
 	- Types: Water
+
+# Evolution
+	- [[Goldeen]] >> [[Seaking]]
+
 # Base Stats
 	- HP: 5
 	- Attack: 7
@@ -8,7 +12,6 @@
 	- Special Attack: 4
 	- Speed: 6
 	- Stamina: 7
-	- Movement Points: 1
 
 # Size Information
 	- Height: 2' 0" / 0.6m
@@ -16,85 +19,42 @@
 	- Size Class: Small
 	- Weight Class: 2
 
-# Move List
-- Agility
-- Aqua Ring
-- Aqua Tail
-- Attract
-- Blizzard
-- Body Slam
-- Bounce
-- Dive
-- Double Team
-- Double-Edge
-- Drill Run
-- Facade
-- Flail
-- Frustration
-- Fury Attack
-- Fury Cutter
-- Hail
-- Haze
-- Hidden Power
-- Horn Attack
-- Horn Drill
-- Hydro Pump
-- Ice Beam
-- Icy Wind
-- Knock Off
-- Megahorn
-- Mud Shot
-- Mud Sport
-- Mud-Slap
-- Peck
-- Poison Jab
-- Protect
-- Psybeam
-- Rain Dance
-- Rest
-- Return
-- Round
-- Scald
-- Signal Beam
-- Skull Bash
-- Sleep Talk
-- Snore
-- Soak
-- Substitute
-- Supersonic
-- Surf
-- Swagger
-- Swift
-- Tail Whip
-- Toxic
-- Water Pulse
-- Water Sport
-- Waterfall
-
 # Traits
 ## Innate
 
 ### Species Specific
-	- Lightning Rod
+
+#### Body
+	- Gilled
+
+#### Natural Weapons
+	- Natural Weapon [Head, Horn, Tail]
+
+#### Senses
+
+#### Defenses
 	- Water Veil
+
+#### Behavior
+	- Starter
+	- Herbivore
+
+#### Special Abilities
+	- Lightning Rod
 	- Dry Skin
 	- Swift Swim
 	- Refreshing Veil
-	- Gilled
-	- Fountain
-	- Underdog
+	- Water Creation 1
+	- Water Manipulation 1
+
+#### Movement
 	- Power 1
 	- Jump 3/2
 	- Naturewalk (Ocean)
-	- Landwalker
-		- Land Movement rate 1
-	- Swimmer
-		- Water Movement rate 5
-
-### Inherited
+	- Landwalker 1
+	- Swimmer 5
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +3
@@ -122,5 +82,8 @@
 	- Average Hatch Rate: 10 Days
 
 # Miscellaneous
-	- Diet: Herbivore
 	- Habitat: Freshwater
+
+# Lore
+- [[goldeen-line-horn-as-weapon-and-status]]
+- [[goldeen-line-upstream-swimmers]]

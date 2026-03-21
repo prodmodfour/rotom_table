@@ -1,4 +1,0 @@
-- The PTR vault is here: vaults/ptr
-- This vault records the Pokemon Tabletop Revised game system — a fork of PTU 1.05.
-- It contains rules, mechanics, formulas, move definitions, and game design principles.
-- This vault follows Zettelkasten: .claude/context_injections/zettelkasten.md

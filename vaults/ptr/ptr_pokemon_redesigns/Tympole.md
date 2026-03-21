@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Tympole
 	- Types: Water
+
+# Evolution
+	- [[Tympole]] >> [[Palpitoad]] >> [[Seismitoad]]
+
 # Base Stats
 	- HP: 5
 	- Attack: 5
@@ -8,7 +12,6 @@
 	- Special Attack: 5
 	- Speed: 6
 	- Stamina: 5
-	- Movement Points: 1
 
 # Size Information
 	- Height: 1' 8" / 0.5m
@@ -16,74 +19,42 @@
 	- Size Class: Small
 	- Weight Class: 1
 
-# Move List
-- After You
-- Aqua Ring
-- Attract
-- Bounce
-- Bubble
-- Bubble Beam
-- Double Team
-- Earth Power
-- Echoed Voice
-- Endeavor
-- Facade
-- Flail
-- Frustration
-- Growl
-- Hail
-- Hidden Power
-- Hydro Pump
-- Hyper Voice
-- Icy Wind
-- Infestation
-- Mist
-- Mud Bomb
-- Mud Shot
-- Mud Sport
-- Muddy Water
-- Protect
-- Rain Dance
-- Refresh
-- Rest
-- Return
-- Round
-- Scald
-- Sleep Talk
-- Sludge Bomb
-- Sludge Wave
-- Snore
-- Substitute
-- Supersonic
-- Surf
-- Swagger
-- Toxic
-- Uproar
-- Water Pulse
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+	- Resonant Body
+
+#### Natural Weapons
+
+#### Senses
+
+#### Defenses
+
+#### Behavior
+	- Starter
+	- Cute
+	- Herbivore
+
+#### Special Abilities
 	- Water Absorb
 	- Mud Dweller
 	- Swift Swim
 	- Hydration
 	- Refreshing Veil
+	- Water Creation 1
+	- Water Manipulation 1
+
+#### Movement
 	- Power 1
 	- Jump 1/1
-	- Fountain
 	- Naturewalk (Wetlands)
-	- Underdog
-	- Landwalker
-		- Land Movement rate 3
-	- Swimmer
-		- Water Movement rate 3
-
-### Inherited
+	- Landwalker 3
+	- Swimmer 3
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +3
@@ -111,5 +82,8 @@
 	- Average Hatch Rate: 10 Days
 
 # Miscellaneous
-	- Diet: Herbivore
 	- Habitat: Freshwater, Marsh
+
+# Lore
+- [[tympole-ultrasonic-swarm-communication]]
+- [[tympole-line-vibration-evolution]]

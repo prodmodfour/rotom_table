@@ -1,0 +1,1 @@
+- We should have aim to be exhaustive in making traits that are needed to describe pokemon. There shouldn't be a notable trait that a pokemon has that we don't have a Trait for.

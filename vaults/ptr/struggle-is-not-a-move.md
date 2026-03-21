@@ -8,3 +8,5 @@ This distinction matters because many [[trait-definition|traits]], features, and
 
 - [[action-economy-per-turn]]
 - [[living-weapon-gates-moves]]
+- [[bite-capability]] — trait that explicitly enhances Melee Struggle Attacks
+- [[wind-manipulation]] — trait that changes Struggle to Flying-type and adds range

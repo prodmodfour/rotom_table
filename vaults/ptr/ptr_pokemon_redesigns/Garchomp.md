@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Garchomp
 	- Types: Dragon / Ground
+
+# Evolution
+	- [[Gible]] >> [[Gabite]] >> [[Garchomp]]
+
 # Base Stats
 	- HP: 11
 	- Attack: 13
@@ -8,7 +12,6 @@
 	- Special Attack: 8
 	- Speed: 10
 	- Stamina: 10
-	- Movement Points: 1
 
 # Size Information
 	- Height: 6' 3" / 1.9m
@@ -16,114 +19,67 @@
 	- Size Class: Large
 	- Weight Class: 4
 
-# Move List
-- Aerial Ace
-- Aqua Tail
-- Attract
-- Brick Break
-- Bulldoze
-- Crunch
-- Cut
-- Dig
-- Double Team
-- Draco Meteor
-- Dragon Claw
-- Dragon Pulse
-- Dragon Rage
-- Dragon Rush
-- Dragon Tail
-- Dual Chop
-- Earth Power
-- Earthquake
-- Facade
-- False Swipe
-- Fire Blast
-- Fire Fang
-- Flamethrower
-- Fling
-- Frustration
-- Fury Cutter
-- Giga Impact
-- Hidden Power
-- Hone Claws
-- Hyper Beam
-- Incinerate
-- Iron Head
-- Iron Tail
-- Mud-Slap
-- Outrage
-- Poison Jab
-- Protect
-- Rain Dance
-- Rest
-- Return
-- Roar
-- Rock Climb
-- Rock Slide
-- Rock Smash
-- Rock Tomb
-- Round
-- Sand Attack
-- Sand Tomb
-- Sandstorm
-- Shadow Claw
-- Slash
-- Sleep Talk
-- Snore
-- Stealth Rock
-- Stone Edge
-- Strength
-- Substitute
-- Sunny Day
-- Surf
-- Swagger
-- Swift
-- Swords Dance
-- Take Down
-- Toxic
-- Twister
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+	- Bipedal
+	- Carnivore
+	- Very Scary
+
+#### Natural Weapons
+	- Natural Weapon [Fangs, Claws, Blade, Head, Tail, Arms, Legs, Feet]
+
+#### Senses
+	- Sense [Darkvision, Echolocation]
+
+#### Defenses
 	- Sand Veil
-	- Frighten
 	- Rough Skin
-	- Vital Spirit
-	- Intimidate
+
+#### Behavior
+	- Ambush
+	- Likes Shiny
+	- Cold Intolerance
+	- Violent Instincts 3
+	- Apex Predator
+	- Carnivore
+
+#### Special Abilities
+	- Tooth Regeneration
+	- Medicinal Scales
+	- Supersonic Wind Blade
+	- Rock Manipulation 2
+
+#### Movement
 	- Power 6
 	- Jump 3/3
 	- Mountable 1
 	- Naturewalk (Desert)
-	- Landwalker
-		- Land Movement rate 10
-	- Swimmer
-		- Water Movement rate 5
-	- Flier
-		- Sky Movement rate 8
-	- Burrower
-		- Burrow Movement rate 8
-
-### Inherited
+	- Landwalker 10
+	- Swimmer 5
+	- Flier 8
+	- Burrower 8
 
 ## Learned
-
+	- Opportunist 2
 
 # Skills
 	- Acrobatics : +5
 	- Athletics : +5
-	- Charm : +0
+	- Charm : +0 + Very Scary (-1) = -1
 	- Combat : +5
 	- Command : +0
 	- Deception : +0
 	- Focus : +4
 	- General Education : +0
 	- Insight : +0
-	- Intimidate : +0
+	- Intimidate : +0 + Very Scary (+6) + Apex Predator (+2) = +8
 	- Medicine : +0
 	- Occult Education : +0
-	- Perception : +4
+	- Perception : +4 + Apex Predator (+3) = +7
 	- Performance : +0
 	- Pokemon Education : +0
 	- Stealth : +3
@@ -136,5 +92,11 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Carnivore
 	- Habitat: Cave, Desert, Mountain
+
+# Lore
+- [[gible-line-cave-dwelling-geothermal]]
+- [[gible-line-jet-engine-anatomy]]
+- [[gabite-medicinal-scales]]
+- [[garchomp-jet-flight-predator]]
+- [[garchomp-salamence-aerial-rivalry]]

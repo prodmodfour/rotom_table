@@ -1,0 +1,3 @@
+The [[Corphish]] line was originally imported as pets and subsequently escaped into the wild, establishing feral populations across multiple regions. Corphish thrives in environments too polluted for other aquatic species — it can survive in stagnant ditches and the dirtiest rivers, sharing this tolerance only with Feebas.
+
+This extreme environmental flexibility makes the Corphish line a textbook invasive species. Where other Pokemon abandon degraded waterways, Corphish fills the vacuum. This parallels the [[rattata-line-rapid-reproduction|Rattata line's colonization patterns]], though Corphish succeeds through habitat tolerance rather than reproductive speed. In a [[sensible-ecosystems|sensible ecosystem]], Corphish populations signal polluted or disturbed waterways.

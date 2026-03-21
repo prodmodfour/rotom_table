@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Rattata
 	- Types: Normal
+
+# Evolution
+	- [[Rattata]] >> [[Raticate]]
+
 # Base Stats
 	- HP: 3
 	- Attack: 6
@@ -8,7 +12,6 @@
 	- Special Attack: 3
 	- Speed: 7
 	- Stamina: 6
-	- Movement Points: 1
 
 # Size Information
 	- Height: 1' 0" / 0.3m
@@ -16,98 +19,42 @@
 	- Size Class: Small
 	- Weight Class: 1
 
-# Move List
-- Assurance
-- Attract
-- Bite
-- Blizzard
-- Body Slam
-- Charge Beam
-- Counter
-- Covet
-- Crunch
-- Cut
-- Defense Curl
-- Dig
-- Double Team
-- Double-Edge
-- Endeavor
-- Facade
-- Final Gambit
-- Flame Wheel
-- Focus Energy
-- Frustration
-- Fury Swipes
-- Grass Knot
-- Hidden Power
-- Hyper Fang
-- Ice Beam
-- Icy Wind
-- Iron Tail
-- Last Resort
-- Me First
-- Mud-Slap
-- Pluck
-- Protect
-- Pursuit
-- Quick Attack
-- Rain Dance
-- Rest
-- Retaliate
-- Return
-- Revenge
-- Reversal
-- Rock Smash
-- Round
-- Screech
-- Shadow Ball
-- Shock Wave
-- Sleep Talk
-- Snore
-- Substitute
-- Sucker Punch
-- Sunny Day
-- Super Fang
-- Superpower
-- Swagger
-- Swift
-- Tackle
-- Tail Whip
-- Taunt
-- Thief
-- Thunder
-- Thunder Wave
-- Thunderbolt
-- Toxic
-- U-Turn
-- Uproar
-- Wild Charge
-- Work Up
-- Zen Headbutt
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+
+#### Natural Weapons
+	- Natural Weapon [Fangs, Claws, Legs, Feet]
+
+#### Senses
+	- Sense [Keen Smell]
+
+#### Defenses
+
+#### Behavior
 	- Run Away
+	- Pick Up
+	- Pack Hunt
+	- Gluttony
+	- Starter
+	- Omnivore
+
+#### Special Abilities
 	- Guts
 	- Hustle
-	- Pick Up
 	- Nimble Strikes
-	- Stealth
-	- Underdog
+
+#### Movement
 	- Power 1
 	- Jump 2/2
 	- Naturewalk (Grassland, Urban)
-	- Landwalker
-		- Land Movement rate 6
-	- Swimmer
-		- Water Movement rate 4
-
-### Inherited
+	- Landwalker 6
+	- Swimmer 4
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +3
@@ -135,5 +82,9 @@
 	- Average Hatch Rate: 7 Days
 
 # Miscellaneous
-	- Diet: Omnivore
 	- Habitat: Cave, Forest, Grassland, Mountain, Urban
+
+# Lore
+- [[rodent-ever-growing-incisors]]
+- [[rattata-line-rapid-reproduction]]
+- [[rattata-line-urban-adaptability]]

@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Morgrem
 	- Types: Dark / Fairy
+
+# Evolution
+	- [[Impidimp]] >> [[Morgrem]] >> [[Grimmsnarl]]
+
 # Base Stats
 	- HP: 7
 	- Attack: 6
@@ -8,7 +12,6 @@
 	- Special Attack: 8
 	- Speed: 7
 	- Stamina: 7
-	- Movement Points: 1
 
 # Size Information
 	- Height: 2' 7" / 0.8m
@@ -16,74 +19,40 @@
 	- Size Class: Small
 	- Weight Class: 2
 
-# Move List
-- Assurance
-- Attract
-- Bite
-- Confide
-- Dark Pulse
-- Dazzling Gleam
-- Double Team
-- Drain Punch
-- Endure
-- Facade
-- Fake Tears
-- False Surrender
-- Flatter
-- Foul Play
-- Frustration
-- Hidden Power
-- Leech Life
-- Light Screen
-- Low Kick
-- Mega Kick
-- Mega Punch
-- Metronome
-- Nasty Plot
-- Play Rough
-- Protect
-- Reflect
-- Rest
-- Return
-- Round
-- Shadow Claw
-- Sleep Talk
-- Snore
-- Substitute
-- Sucker Punch
-- Swagger
-- Taunt
-- Thief
-- Throat Chop
-- Thunder Wave
-- Torment
-- Toxic
-- Trick
-- Uproar
-
 # Traits
 ## Innate
 
 ### Species Specific
-	- Frisk
-	- Decoy
-	- Pickpocket
-	- Weird Power
-	- Prankster
+
+#### Body
 	- Power 3
+
+#### Natural Weapons
+	- Natural Weapon [Fangs, Claws, Arms, Hands, Legs, Feet]
+
+#### Senses
+	- Sense [Darkvision]
+
+#### Defenses
+
+#### Behavior
+	- Pickpocket
+	- Kleptomaniac 1
+	- Psychovore [Annoyance]
+	- Nullivore
+
+#### Special Abilities
+	- Frisk
+	- Prankster
+	- Light Manipulation 1
+	- Opportunist 1
+
+#### Movement
 	- Jump 2/2
-	- Darkvision
-	- Stealth
-	- Underdog
 	- Naturewalk (Forest)
-	- Landwalker
-		- Land Movement rate 6
-	- Swimmer
-		- Water Movement rate 4
+	- Landwalker 6
+	- Swimmer 4
 
-### Inherited
-
-## Learned
 
 
 # Skills
@@ -112,5 +81,9 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Nullivore
 	- Habitat: Forest, Urban
+
+# Lore
+- [[impidimp-line-emotion-feeding]] -- psychovore feeding on annoyance and frustration
+- [[morgrem-deceptive-predation]] -- false submission posture and hair-polearm ambush
+- [[impidimp-line-goblin-folklore]] -- redcap mythological parallels

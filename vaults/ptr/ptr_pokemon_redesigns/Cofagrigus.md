@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Cofagrigus
 	- Types: Ghost
+
+# Evolution
+	- [[Yamask]] >> [[Cofagrigus]]
+
 # Base Stats
 	- HP: 6
 	- Attack: 5
@@ -8,7 +12,6 @@
 	- Special Attack: 10
 	- Speed: 3
 	- Stamina: 5
-	- Movement Points: 1
 
 # Size Information
 	- Height: 5' 7" / 1.7m
@@ -16,92 +19,44 @@
 	- Size Class: Medium
 	- Weight Class: 4
 
-# Move List
-- After You
-- Attract
-- Block
-- Calm Mind
-- Curse
-- Dark Pulse
-- Destiny Bond
-- Disable
-- Double Team
-- Dream Eater
-- Embargo
-- Energy Ball
-- Facade
-- Flash
-- Frustration
-- Giga Impact
-- Grass Knot
-- Grudge
-- Guard Split
-- Haze
-- Hex
-- Hidden Power
-- Hyper Beam
-- Infestation
-- Iron Defense
-- Knock Off
-- Magic Coat
-- Mean Look
-- Night Shade
-- Ominous Wind
-- Pain Split
-- Payback
-- Power Split
-- Protect
-- Psych Up
-- Psychic
-- Rain Dance
-- Rest
-- Return
-- Role Play
-- Round
-- Safeguard
-- Scary Face
-- Shadow Ball
-- Skill Swap
-- Sleep Talk
-- Snatch
-- Snore
-- Spite
-- Substitute
-- Swagger
-- Telekinesis
-- Thief
-- Toxic
-- Trick
-- Trick Room
-- Will-O-Wisp
-- Wonder Room
-
 # Traits
 ## Innate
 
 ### Species Specific
-	- Mummy
+
+#### Body
+
+#### Natural Weapons
+
+#### Senses
+	- Sense [Darkvision]
+
+#### Defenses
 	- Sand Veil
+	- Shell 4
+	- Dead Silent
+	- Intangibility
+	- Invisibility
+
+#### Behavior
+	- Terravore
+
+#### Special Abilities
+	- Mummy
 	- Shackle
 	- Stall
 	- Cursed Body
+	- Telepath
+
+#### Movement
 	- Power 7
 	- Jump 1/1
-	- Darkvision
-	- Dead Silent
-	- Phasing
-	- Invisibility
-	- Landwalker
-		- Land Movement rate 3
-	- Swimmer
-		- Water Movement rate 2
-	- Levitator
-		- Levitate Movement rate 5
-
-### Inherited
+	- Phaser 2
+	- Landwalker 3
+	- Swimmer 2
+	- Flier 5
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +2
@@ -129,5 +84,9 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Terravore
 	- Habitat: Desert
+
+# Lore
+- [[yamask-line-egyptian-funerary-ecology]]
+- [[cofagrigus-tomb-trap-mummification]]
+- [[cofagrigus-forgotten-identity]]

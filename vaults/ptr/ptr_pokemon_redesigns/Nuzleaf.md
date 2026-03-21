@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Nuzleaf
 	- Types: Grass / Dark
+
+# Evolution
+	- [[Seedot]] >> [[Nuzleaf]] >> [[Shiftry]]
+
 # Base Stats
 	- HP: 7
 	- Attack: 7
@@ -8,7 +12,6 @@
 	- Special Attack: 6
 	- Speed: 6
 	- Stamina: 6
-	- Movement Points: 1
 
 # Size Information
 	- Height: 3' 3" / 1m
@@ -16,99 +19,45 @@
 	- Size Class: Medium
 	- Weight Class: 3
 
-# Move List
-- Attract
-- Body Slam
-- Brick Break
-- Bullet Seed
-- Confide
-- Cut
-- Dark Pulse
-- Defense Curl
-- Dig
-- Double Team
-- Double-Edge
-- Embargo
-- Energy Ball
-- Explosion
-- Extrasensory
-- Facade
-- Fake Out
-- False Swipe
-- Feint Attack
-- Flash
-- Fling
-- Foul Play
-- Frustration
-- Fury Cutter
-- Giga Drain
-- Grass Knot
-- Growth
-- Harden
-- Hidden Power
-- Hyper Beam
-- Leaf Blade
-- Low Kick
-- Low Sweep
-- Mega Kick
-- Mud-Slap
-- Nature Power
-- Payback
-- Power-Up Punch
-- Protect
-- Psych Up
-- Razor Leaf
-- Razor Wind
-- Rest
-- Retaliate
-- Return
-- Rock Slide
-- Rock Smash
-- Rock Tomb
-- Rollout
-- Round
-- Seed Bomb
-- Shadow Ball
-- Sleep Talk
-- Snarl
-- Snore
-- Solar Beam
-- Spite
-- Strength
-- Substitute
-- Sunny Day
-- Swagger
-- Swift
-- Swords Dance
-- Synthesis
-- Thief
-- Torment
-- Toxic
-- Worry Seed
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+	- Geovore
+	- Sound [Singer]
+
+#### Natural Weapons
+	- Natural Weapon [Arms, Hands, Legs, Feet]
+
+#### Senses
+	- Sense [Darkvision]
+
+#### Defenses
+
+#### Behavior
+	- Pickpocket
+	- Intimidate
+	- Photovore
+	- Opportunist 1
+	- Herbivore
+
+#### Special Abilities
 	- Chlorophyll
 	- Early Bird
-	- Pickpocket
 	- Omen
-	- Intimidate
-	- Darkvision
-	- Underdog
+	- Plant Matter Production [Seeds, Leaves]
+	- Plant Manipulation 1
+
+#### Movement
 	- Power 4
 	- Jump 1/2
 	- Naturewalk (Grassland, Forest)
-	- Landwalker
-		- Land Movement rate 5
-	- Swimmer
-		- Water Movement rate 3
-
-### Inherited
+	- Landwalker 5
+	- Swimmer 3
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +3
@@ -136,5 +85,7 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Herbivore
 	- Habitat: Forest, Rainforest
+
+# Lore
+- [[nuzleaf-leaf-flute]] -- eerie leaf-instrument for territorial defense

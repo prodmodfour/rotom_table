@@ -1,3 +1,3 @@
-A character can spend 2 [[energy-resource|Energy]] to gain 1 [[movement-points|Movement Point]]. This rate is modifiable by [[trait-definition|traits]].
+A character can spend 5 [[energy-resource|Energy]] to gain additional movement in one mode equal to that mode's [[movement-traits|movement trait]] value, once per turn. This rate is modifiable by [[trait-definition|traits]].
 
-This is available when you don't have enough MP for the movement you want — it supplements, not replaces, the normal MP budget (see [[movement-costs-no-energy]]).
+This supplements the normal movement budget — available when a combatant needs to cover more ground than their trait grants.

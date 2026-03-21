@@ -1,4 +1,4 @@
-Core Enforcer is a Dragon-type [[type-effectiveness-excludes-status-moves|Special]] move with a Damage Base of 10, [[scene-frequency-definition|Daily x2]] frequency, AC 2, and a range of 6, Ranged Blast 3, Spirit Surge.
+Core Enforcer is a Dragon-type [[type-effectiveness-excludes-status-moves|Special]] move with a Damage Base of 10, [[scene-frequency-definition|Daily x2]] frequency, AC 2, and a range of 6, Ranged Blast 3, [[spirit-surge|Spirit Surge]].
 
 Each Target has its Ability disabled until the end of the encounter. If a target has more than one Ability, you choose one of them to disable.
 

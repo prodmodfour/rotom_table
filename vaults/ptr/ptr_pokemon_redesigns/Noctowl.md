@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Noctowl
 	- Types: Normal / Flying
+
+# Evolution
+	- [[Hoothoot]] >> [[Noctowl]]
+
 # Base Stats
 	- HP: 10
 	- Attack: 5
@@ -8,7 +12,6 @@
 	- Special Attack: 8
 	- Speed: 7
 	- Stamina: 8
-	- Movement Points: 1
 
 # Size Information
 	- Height: 5' 3" / 1.6m
@@ -16,88 +19,42 @@
 	- Size Class: Medium
 	- Weight Class: 3
 
-# Move List
-- Aerial Ace
-- Air Cutter
-- Air Slash
-- Attract
-- Confusion
-- Defog
-- Double Team
-- Double-Edge
-- Dream Eater
-- Echoed Voice
-- Extrasensory
-- Facade
-- Fly
-- Frustration
-- Giga Impact
-- Heat Wave
-- Hidden Power
-- Hyper Beam
-- Hyper Voice
-- Hypnosis
-- Magic Coat
-- Mud-Slap
-- Ominous Wind
-- Peck
-- Pluck
-- Protect
-- Psych Up
-- Psychic
-- Psycho Shift
-- Rain Dance
-- Recycle
-- Reflect
-- Rest
-- Return
-- Role Play
-- Roost
-- Round
-- Shadow Ball
-- Silver Wind
-- Sky Attack
-- Sleep Talk
-- Snore
-- Steel Wing
-- Substitute
-- Sunny Day
-- Swagger
-- Swift
-- Synchronoise
-- Tailwind
-- Take Down
-- Thief
-- Toxic
-- Twister
-- Uproar
-- Work Up
-- Zen Headbutt
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+	- Carnivore
+	- Sound [Vocal]
+
+#### Natural Weapons
+	- Natural Weapon [Beak, Claws, Wings, Legs, Feet]
+
+#### Senses
+	- Perception
+	- Sense [Darkvision]
+
+#### Defenses
+
+#### Behavior
+	- Apex Predator
+	- Carnivore
+
+#### Special Abilities
 	- Insomnia
-	- Keen Eye
 	- Tinted Lens
 	- Hypnotic
-	- Perception
-	- Darkvision
-	- Underdog
+	- Mind Manipulation 1
+
+#### Movement
 	- Power 3
 	- Jump 3/3
-	- Landwalker
-		- Land Movement rate 5
-	- Swimmer
-		- Water Movement rate 2
-	- Flier
-		- Sky Movement rate 7
-
-### Inherited
+	- Landwalker 5
+	- Swimmer 2
+	- Flier 7
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +2
@@ -109,10 +66,10 @@
 	- Focus : +3
 	- General Education : +0
 	- Insight : +0
-	- Intimidate : +0
+	- Intimidate : +0 + Apex Predator (+2) = +2
 	- Medicine : +0
 	- Occult Education : +0
-	- Perception : +4
+	- Perception : +4 + Apex Predator (+3) = +7
 	- Performance : +0
 	- Pokemon Education : +0
 	- Stealth : +3
@@ -125,5 +82,9 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Carnivore
 	- Habitat: Forest
+
+# Lore
+- [[noctowl-nocturnal-hunter-senses]]
+- [[noctowl-flying-taxi-service]]
+- [[hoothoot-internal-clock-organ]]

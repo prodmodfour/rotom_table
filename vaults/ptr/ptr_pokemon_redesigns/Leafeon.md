@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Leafeon
 	- Types: Grass
+
+# Evolution
+	- [[Eevee]] >> [[Leafeon]]
+
 # Base Stats
 	- HP: 7
 	- Attack: 11
@@ -8,7 +12,6 @@
 	- Special Attack: 6
 	- Speed: 10
 	- Stamina: 9
-	- Movement Points: 1
 
 # Size Information
 	- Height: 3' 3" / 1m
@@ -16,90 +19,47 @@
 	- Size Class: Medium
 	- Weight Class: 3
 
-# Move List
-- Aerial Ace
-- Attract
-- Bullet Seed
-- Covet
-- Dig
-- Double Team
-- Echoed Voice
-- Energy Ball
-- Facade
-- Flash
-- Frustration
-- Fury Cutter
-- Giga Drain
-- Giga Impact
-- Grass Knot
-- Grass Whistle
-- Heal Bell
-- Helping Hand
-- Hidden Power
-- Hyper Beam
-- Hyper Voice
-- Iron Tail
-- Knock Off
-- Last Resort
-- Leaf Blade
-- Magical Leaf
-- Mud-Slap
-- Nature Power
-- Protect
-- Quick Attack
-- Rain Dance
-- Razor Leaf
-- Rest
-- Retaliate
-- Return
-- Roar
-- Rock Smash
-- Round
-- Sand Attack
-- Seed Bomb
-- Shadow Ball
-- Sleep Talk
-- Snore
-- Solar Beam
-- Strength
-- Substitute
-- Sunny Day
-- Swagger
-- Swift
-- Swords Dance
-- Synthesis
-- Toxic
-- Work Up
-- Worry Seed
-- X-Scissor
-
 # Traits
 ## Innate
 
 ### Species Specific
-	- Leaf Guard
+
+#### Body
+	- Sound [Vocal]
+
+#### Natural Weapons
+	- Natural Weapon [Fangs, Claws, Blade, Tail, Legs, Feet]
+
+#### Senses
+	- Sense [Keen Smell]
+
+#### Defenses
 	- Grass Pelt
-	- Type Aura (Grass)
-	- Chlorophyll
-	- Life Force
+
+#### Behavior
+	- Photovore
+	- Geovore
+	- Herbivore
+	- Cute
+
+#### Special Abilities
+	- Leaf Guard
+	- Plant Matter Production [Leaves]
+	- Plant Manipulation 2
+
+#### Movement
 	- Power 3
 	- Jump 1/2
-	- Tracker
 	- Naturewalk (Grassland, Forest)
-	- Landwalker
-		- Land Movement rate 7
-	- Swimmer
-		- Water Movement rate 4
-
-### Inherited
+	- Landwalker 7
+	- Swimmer 4
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +3
 	- Athletics : +4
-	- Charm : +0
+	- Charm : +0 + Cute (+5) = +5
 	- Combat : +3
 	- Command : +0
 	- Deception : +0
@@ -122,5 +82,10 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Herbivore, Phototroph
+
 	- Habitat: Forest, Grassland, Rainforest
+
+# Lore
+- [[eevee-line-unstable-genetics]] -- genetic restructuring via Leaf Stone or moss-covered location
+- [[leafeon-photosynthetic-fur]] -- fur cells are plant-like, enabling photosynthesis instead of eating
+- [[leafeon-pacifist-swordsman]] -- peaceful temperament but leaf-tail blade can fell trees in one strike

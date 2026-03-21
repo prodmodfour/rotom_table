@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Alolan Ninetales
 	- Types: Ice / Fairy
+
+# Evolution
+	- [[Alolan Vulpix]] >> [[Alolan Ninetales]]
+
 # Base Stats
 	- HP: 7
 	- Attack: 7
@@ -8,7 +12,6 @@
 	- Special Attack: 8
 	- Speed: 11
 	- Stamina: 9
-	- Movement Points: 1
 
 # Size Information
 	- Height: 3' 7" / 1.1m
@@ -16,87 +19,43 @@
 	- Size Class: Medium
 	- Weight Class: 2
 
-# Move List
-- Aqua Tail
-- Aurora Beam
-- Baby-Doll Eyes
-- Blizzard
-- Calm Mind
-- Captivate
-- Confide
-- Confuse Ray
-- Covet
-- Dark Pulse
-- Dazzling Gleam
-- Double Team
-- Dream Eater
-- Extrasensory
-- Facade
-- Feint Attack
-- Foul Play
-- Frost Breath
-- Frustration
-- Giga Impact
-- Grudge
-- Hail
-- Heal Bell
-- Hex
-- Hidden Power
-- Hyper Beam
-- Ice Beam
-- Ice Shard
-- Icy Wind
-- Imprison
-- Iron Tail
-- Laser Focus
-- Mist
-- Nasty Plot
-- Pain Split
-- Payback
-- Protect
-- Psych Up
-- Psyshock
-- Rain Dance
-- Rest
-- Return
-- Roar
-- Role Play
-- Round
-- Safeguard
-- Sheer Cold
-- Sleep Talk
-- Snore
-- Spite
-- Substitute
-- Swagger
-- Tail Whip
-- Toxic
-- Wonder Room
-- Zen Headbutt
-
 # Traits
 ## Innate
 
 ### Species Specific
-	- Cute Charm
+
+#### Body
+	- Sound [Vocal]
+
+#### Natural Weapons
+	- Natural Weapon [Fangs, Claws, Legs, Feet, Tail]
+
+#### Senses
+	- Sense [Keen Smell]
+
+#### Defenses
 	- Snow Cloak
-	- Glisten
-	- Winter's Kiss
-	- Snow Warning
-	- Freezer
-	- Tracker
+
+#### Behavior
+	- Apex Predator
+	- Carnivore
+
+#### Special Abilities
+	- Sorcery 3 4 3
+	- Telepath
+	- Ice Creation 3
+	- Ice Manipulation 3
+	- Mental Manipulation 1
+
+
+#### Movement
 	- Power 4
 	- Jump 1/2
 	- Naturewalk (Mountain, Tundra)
-	- Landwalker
-		- Land Movement rate 6
-	- Swimmer
-		- Water Movement rate 3
-
-### Inherited
+	- Landwalker 6
+	- Swimmer 3
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +3
@@ -108,10 +67,10 @@
 	- Focus : +5
 	- General Education : +0
 	- Insight : +0
-	- Intimidate : +0
+	- Intimidate : +0 + Apex Predator (+2) = +2
 	- Medicine : +0
 	- Occult Education : +0
-	- Perception : +4
+	- Perception : +4 + Apex Predator (+3) = +7
 	- Performance : +0
 	- Pokemon Education : +0
 	- Stealth : +4
@@ -124,5 +83,12 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Herbivore
 	- Habitat: Mountain, Tundra
+
+# Lore
+- [[alolan-ninetales-mountain-deity]] -- revered as sacred mountain deity in Alolan culture
+- [[alolan-ninetales-territorial-guardian]] -- guides lost travelers away; freezes trespassers
+- [[alolan-vulpix-line-mountain-adaptation]] -- regional adaptation from Fire to Ice type
+- [[vulpix-line-ice-crystal-fur]] -- produces ice crystals from fur
+- [[alolan-ninetales-ice-crystal-weapons]] -- ice crystals as shields and projectiles that shatter rock
+- [[alolan-vulpix-skulk-social-structure]] -- protects the skulk of Alolan Vulpix under its care

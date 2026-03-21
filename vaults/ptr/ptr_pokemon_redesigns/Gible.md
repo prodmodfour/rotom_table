@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Gible
 	- Types: Dragon / Ground
+
+# Evolution
+	- [[Gible]] >> [[Gabite]] >> [[Garchomp]]
+
 # Base Stats
 	- HP: 6
 	- Attack: 7
@@ -8,7 +12,6 @@
 	- Special Attack: 4
 	- Speed: 4
 	- Stamina: 5
-	- Movement Points: 1
 
 # Size Information
 	- Height: 2' 4" / 0.7m
@@ -16,97 +19,51 @@
 	- Size Class: Small
 	- Weight Class: 2
 
-# Move List
-- Aerial Ace
-- Attract
-- Body Slam
-- Bulldoze
-- Cut
-- Dig
-- Double Team
-- Double-Edge
-- Draco Meteor
-- Dragon Breath
-- Dragon Claw
-- Dragon Pulse
-- Dragon Rage
-- Dragon Rush
-- Earth Power
-- Earthquake
-- Facade
-- Fire Blast
-- Flamethrower
-- Frustration
-- Fury Cutter
-- Hidden Power
-- Hone Claws
-- Incinerate
-- Iron Head
-- Iron Tail
-- Metal Claw
-- Mud Shot
-- Mud-Slap
-- Outrage
-- Protect
-- Rain Dance
-- Rest
-- Return
-- Roar
-- Rock Climb
-- Rock Slide
-- Rock Smash
-- Rock Tomb
-- Round
-- Sand Attack
-- Sand Tomb
-- Sandstorm
-- Scary Face
-- Shadow Claw
-- Slash
-- Sleep Talk
-- Snore
-- Stealth Rock
-- Stone Edge
-- Strength
-- Substitute
-- Sunny Day
-- Swagger
-- Swift
-- Tackle
-- Take Down
-- Thrash
-- Toxic
-- Twister
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+	- Bipedal
+	- Carnivore
+	- Cute
+
+#### Natural Weapons
+	- Natural Weapon [Fangs, Claws, Head, Arms, Legs, Feet]
+
+#### Senses
+	- Sense [Darkvision]
+
+#### Defenses
 	- Sand Veil
-	- Frighten
 	- Rough Skin
-	- Vital Spirit
-	- Intimidate
+
+#### Behavior
+	- Clumsy
+	- Ambush
+	- Likes Shiny
+	- Cold Intolerance
+	- Carnivore
+
+#### Special Abilities
+	- Tooth Regeneration
+
+#### Movement
 	- Power 3
 	- Jump 1/1
-	- Underdog
+	- Starter
 	- Naturewalk (Desert)
-	- Landwalker
-		- Land Movement rate 4
-	- Swimmer
-		- Water Movement rate 2
-	- Burrower
-		- Burrow Movement rate 4
-
-### Inherited
+	- Landwalker 4
+	- Swimmer 2
+	- Burrower 4
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +2
 	- Athletics : +2
-	- Charm : +0
+	- Charm : +0 + Cute (+5) = +5
 	- Combat : +2
 	- Command : +0
 	- Deception : +0
@@ -129,5 +86,9 @@
 	- Average Hatch Rate: 25 Days
 
 # Miscellaneous
-	- Diet: Carnivore
 	- Habitat: Cave, Desert
+
+# Lore
+- [[gible-line-cave-dwelling-geothermal]]
+- [[gible-line-jet-engine-anatomy]]
+- [[gible-tooth-regeneration-biting]]

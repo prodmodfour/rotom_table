@@ -1,0 +1,3 @@
+Sableye actively hunts Carbink as prey — a living gemstone Pokemon that represents an ideal food source for a gem-eater. However, [[Sableye]] faces direct competition from Gabite, which also preys on Carbink and typically reaches them first due to superior speed and burrowing ability. This three-way dynamic (Sableye hunts Carbink, Gabite outcompetes Sableye for the same prey) shapes the cave ecosystem.
+
+The competition explains why Sableye has developed such strong stealth capabilities — it must ambush Carbink before faster competitors arrive. This predator-prey relationship is a concrete example of [[niche-competition-drives-adaptation]] in cave habitats.

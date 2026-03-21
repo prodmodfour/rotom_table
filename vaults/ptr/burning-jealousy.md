@@ -1,4 +1,4 @@
-Burning Jealousy is a Fire-type [[type-effectiveness-excludes-status-moves|Special]] move with a Damage Base of 7, [[scene-frequency-eot-restriction|EOT]] frequency, AC 2, and a range of Burst 1, Spirit Surge.
+Burning Jealousy is a Fire-type [[type-effectiveness-excludes-status-moves|Special]] move with a Damage Base of 7, [[scene-frequency-eot-restriction|EOT]] frequency, AC 2, and a range of Burst 1, [[spirit-surge|Spirit Surge]].
 
 After Burning Jealousy has resolved, the user may choose to Burn foes within 5m that have had any CS raised since the beginning of that foe’s last turn. This Effect may trigger only once per Scene.
 

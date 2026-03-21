@@ -1,4 +1,4 @@
-Thunder Cage is an Electric-type [[type-effectiveness-excludes-status-moves|Special]] move with a Damage Base of 8, [[scene-frequency-definition|Daily x2]] frequency, AC 4, and a range of 8, Ranged Blast 2, Spirit Surge.
+Thunder Cage is an Electric-type [[type-effectiveness-excludes-status-moves|Special]] move with a Damage Base of 8, [[scene-frequency-definition|Daily x2]] frequency, AC 4, and a range of 8, Ranged Blast 2, [[spirit-surge|Spirit Surge]].
 
 The targets are trapped in a Vortex. The DC to escape the Vortex is increased by 3.
 

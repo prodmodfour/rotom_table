@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Sableye
 	- Types: Dark / Ghost
+
+# Evolution
+	- No evolutionary line
+
 # Base Stats
 	- HP: 5
 	- Attack: 8
@@ -8,7 +12,6 @@
 	- Special Attack: 7
 	- Speed: 5
 	- Stamina: 7
-	- Movement Points: 1
 
 # Size Information
 	- Height: 1' 8" / 0.5m
@@ -16,135 +19,44 @@
 	- Size Class: Small
 	- Weight Class: 1
 
-# Move List
-- Aerial Ace
-- Astonish
-- Attract
-- Body Slam
-- Brick Break
-- Calm Mind
-- Captivate
-- Confuse Ray
-- Counter
-- Cut
-- Dark Pulse
-- Dazzling Gleam
-- Detect
-- Dig
-- Double Team
-- Double-Edge
-- Dream Eater
-- Dynamic Punch
-- Embargo
-- Facade
-- Fake Out
-- Feint
-- Feint Attack
-- Fire Punch
-- Flash
-- Flatter
-- Fling
-- Focus Punch
-- Foresight
-- Foul Play
-- Frustration
-- Fury Cutter
-- Fury Swipes
-- Gravity
-- Hidden Power
-- Hone Claws
-- Ice Punch
-- Icy Wind
-- Imprison
-- Incinerate
-- Knock Off
-- Leer
-- Low Kick
-- Low Sweep
-- Magic Coat
-- Mean Look
-- Mega Kick
-- Mega Punch
-- Metal Burst
-- Metronome
-- Moonlight
-- Mud-Slap
-- Nasty Plot
-- Night Shade
-- Ominous Wind
-- Pain Split
-- Payback
-- Poison Jab
-- Power Gem
-- Power-Up Punch
-- Protect
-- Psych Up
-- Psychic
-- Punishment
-- Quash
-- Rain Dance
-- Recover
-- Rest
-- Retaliate
-- Return
-- Rock Smash
-- Rock Tomb
-- Role Play
-- Round
-- Scratch
-- Seismic Toss
-- Shadow Ball
-- Shadow Claw
-- Shadow Sneak
-- Shock Wave
-- Signal Beam
-- Sleep Talk
-- Snarl
-- Snatch
-- Snore
-- Spite
-- Substitute
-- Sucker Punch
-- Sunny Day
-- Swagger
-- Taunt
-- Telekinesis
-- Thief
-- Thunder Punch
-- Torment
-- Toxic
-- Trick
-- Water Pulse
-- Will-O-Wisp
-- Wonder Room
-- Zen Headbutt
-
 # Traits
 ## Innate
 
 ### Species Specific
-	- Keen Eye
-	- Stall
-	- Frighten
-	- Frisk
-	- Prankster
+
+#### Body
 	- Amorphous
-	- Darkvision
+
+#### Natural Weapons
+	- Natural Weapon [Fangs, Claws, Arms, Hands, Legs, Feet]
+
+#### Senses
+	- Sense [Darkvision]
+
+#### Defenses
 	- Dead Silent
 	- Invisibility
-	- Stealth
-	- Underdog
+
+#### Behavior
+	- Frighten
+	- Kleptomaniac 1
+	- Gluttony
+	- Starter
+	- Opportunist 1
+	- Terravore
+
+#### Special Abilities
+	- Stall
+	- Frisk
+	- Prankster
+
+#### Movement
 	- Power 1
 	- Jump 2/2
-	- Landwalker
-		- Land Movement rate 5
-	- Swimmer
-		- Water Movement rate 3
-
-### Inherited
+	- Landwalker 5
+	- Swimmer 3
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +3
@@ -172,5 +84,10 @@
 	- Average Hatch Rate: 13 Days
 
 # Miscellaneous
-	- Diet: Terravore
 	- Habitat: Cave, Mountain
+
+# Lore
+
+- [[sableye-gemstone-diet]] — eats raw gems, consumed minerals crystallize on body surface creating unique patterns
+- [[sableye-carbink-predation]] — hunts Carbink as living gemstone prey, competes with Gabite
+- [[sableye-spirit-stealer-folklore]] — glowing gem eyes feared as spirit-stealing, based on Hopkinsville Goblin legend

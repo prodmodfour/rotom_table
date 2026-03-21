@@ -1,0 +1,3 @@
+The [[Clauncher]] line's oversized right claw functions as a hydraulic launcher rather than a conventional pincer. By compressing internal gas and expelling water at extreme pressure, Clauncher fires water projectiles that can shatter rock at close range and shoot down flying prey. [[Clawitzer]] amplifies this mechanism dramatically — its right claw, larger than its entire body, launches cannonballs of seawater powerful enough to pierce tanker hulls.
+
+The claw also serves as propulsion: Clawitzer expels water from a rear nozzle to reach speeds of 60 knots. Feelers on the claw detect prey locations before firing. This dual role as weapon and engine makes the oversized claw the line's defining adaptation rather than a liability.

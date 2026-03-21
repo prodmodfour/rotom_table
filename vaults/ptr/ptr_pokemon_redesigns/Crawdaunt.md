@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Crawdaunt
 	- Types: Water / Dark
+
+# Evolution
+	- [[Corphish]] >> [[Crawdaunt]]
+
 # Base Stats
 	- HP: 6
 	- Attack: 12
@@ -8,7 +12,6 @@
 	- Special Attack: 9
 	- Speed: 6
 	- Stamina: 8
-	- Movement Points: 1
 
 # Size Information
 	- Height: 3' 7" / 1.1m
@@ -16,103 +19,45 @@
 	- Size Class: Medium
 	- Weight Class: 3
 
-# Move List
-- Aerial Ace
-- Ancient Power
-- Attract
-- Avalanche
-- Blizzard
-- Body Slam
-- Brick Break
-- Bubble Beam
-- Counter
-- Crabhammer
-- Crunch
-- Cut
-- Dark Pulse
-- Dig
-- Dive
-- Double Hit
-- Double Team
-- Double-Edge
-- Endeavor
-- Facade
-- False Swipe
-- Fling
-- Frustration
-- Fury Cutter
-- Giga Impact
-- Guillotine
-- Hail
-- Harden
-- Hidden Power
-- Hone Claws
-- Hyper Beam
-- Ice Beam
-- Icy Wind
-- Iron Defense
-- Knock Off
-- Leer
-- Mud-Slap
-- Nature Power
-- Night Slash
-- Payback
-- Protect
-- Rain Dance
-- Razor Shell
-- Rest
-- Retaliate
-- Return
-- Rock Slide
-- Rock Smash
-- Rock Tomb
-- Round
-- Scald
-- Sleep Talk
-- Sludge Bomb
-- Sludge Wave
-- Snarl
-- Snore
-- Spite
-- Strength
-- Substitute
-- Superpower
-- Surf
-- Swagger
-- Swift
-- Swords Dance
-- Taunt
-- Toxic
-- Vice Grip
-- Water Pulse
-- Waterfall
-- Whirlpool
-- X-Scissor
-
 # Traits
 ## Innate
 
 ### Species Specific
-	- Hyper Cutter
+
+#### Body
+	- Gilled
+	- Carnivore
+
+#### Natural Weapons
+	- Natural Weapon [Head, Pincers, Legs]
+
+#### Senses
+	- Sense [Darkvision]
+
+#### Defenses
 	- Shell Armor
+	- Shell 3
+
+#### Behavior
+	- Bully
+	- Gluttony
+	- Apex Predator
+	- Opportunist 2
+	- Carnivore
+
+#### Special Abilities
+	- Hyper Cutter
 	- Parry
 	- Adaptability
-	- Bully
-	- Darkvision
-	- Gilled
+
+#### Movement
 	- Power 5
 	- Jump 1/1
-	- Landwalker
-		- Land Movement rate 6
-	- Swimmer
-		- Water Movement rate 5
-	- Burrower
-		- Burrow Movement rate 1
-
-### Inherited
+	- Landwalker 6
+	- Swimmer 5
+	- Burrower 1
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +2
@@ -124,10 +69,10 @@
 	- Focus : +3
 	- General Education : +0
 	- Insight : +0
-	- Intimidate : +0
+	- Intimidate : +0 + Apex Predator (+2) = +2
 	- Medicine : +0
 	- Occult Education : +0
-	- Perception : +2
+	- Perception : +2 + Apex Predator (+3) = +5
 	- Performance : +0
 	- Pokemon Education : +0
 	- Stealth : +2
@@ -140,5 +85,9 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Carnivore
 	- Habitat: Marsh, Ocean
+
+# Lore
+- [[corphish-line-invasive-adaptability]]
+- [[crawdaunt-territorial-aggression]]
+- [[crawdaunt-molting-vulnerability]]

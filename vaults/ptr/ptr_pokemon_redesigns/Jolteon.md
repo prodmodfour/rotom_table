@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Jolteon
 	- Types: Electric
+
+# Evolution
+	- [[Eevee]] >> [[Jolteon]]
+
 # Base Stats
 	- HP: 7
 	- Attack: 7
@@ -8,7 +12,6 @@
 	- Special Attack: 11
 	- Speed: 13
 	- Stamina: 9
-	- Movement Points: 1
 
 # Size Information
 	- Height: 2' 7" / 0.8m
@@ -16,90 +19,45 @@
 	- Size Class: Medium
 	- Weight Class: 2
 
-# Move List
-- Agility
-- Attract
-- Body Slam
-- Charge Beam
-- Covet
-- Dig
-- Discharge
-- Double Kick
-- Double Team
-- Double-Edge
-- Echoed Voice
-- Facade
-- Flash
-- Frustration
-- Giga Impact
-- Heal Bell
-- Helping Hand
-- Hidden Power
-- Hyper Beam
-- Hyper Voice
-- Iron Tail
-- Last Resort
-- Light Screen
-- Magnet Rise
-- Mud-Slap
-- Pin Missile
-- Protect
-- Quick Attack
-- Rain Dance
-- Rest
-- Retaliate
-- Return
-- Roar
-- Rock Smash
-- Round
-- Sand Attack
-- Shadow Ball
-- Shock Wave
-- Signal Beam
-- Sleep Talk
-- Snore
-- Strength
-- Substitute
-- Sunny Day
-- Swagger
-- Swift
-- Thunder
-- Thunder Fang
-- Thunder Shock
-- Thunder Wave
-- Thunderbolt
-- Toxic
-- Volt Switch
-- Wild Charge
-- Work Up
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+	- Sound [Vocal]
+
+#### Natural Weapons
+	- Natural Weapon [Fangs, Claws, Spines, Legs, Feet]
+
+#### Senses
+	- Sense [Keen Smell]
+
+#### Defenses
+
+#### Behavior
+	- Cute
+	- Omnivore
+	- Volatile 2
+
+#### Special Abilities
 	- Volt Absorb
+	- Electricity Generation 2
+	- Electricity Manipulation 2
+
+#### Movement
 	- Sprint
-	- Type Aura (Electric)
-	- Quick Feet
-	- Vanguard
-	- Tracker
-	- Zapper
 	- Power 3
 	- Jump 2/3
-	- Landwalker
-		- Land Movement rate 10
-	- Swimmer
-		- Water Movement rate 5
-
-### Inherited
+	- Landwalker 10
+	- Swimmer 5
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +5
 	- Athletics : +4
-	- Charm : +0
+	- Charm : +0 + Cute (+5) = +5
 	- Combat : +3
 	- Command : +0
 	- Deception : +0
@@ -122,5 +80,10 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Omnivore
 	- Habitat: Forest, Urban
+
+# Lore
+- [[eevee-line-unstable-genetics]] -- genetic restructuring via Thunder Stone
+- [[jolteon-lung-electricity-organ]] -- specialized lung organ generates electrical energy
+- [[jolteon-electrified-quill-fur]] -- needle fur amplifies charge and can be fired as projectiles
+- [[jolteon-volatile-temperament]] -- emotionally reactive, charges power with every mood shift

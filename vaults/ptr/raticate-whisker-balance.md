@@ -1,0 +1,3 @@
+[[Raticate]] relies on its whiskers for balance and spatial awareness. If the whiskers are cut or damaged, it slows dramatically and loses coordination. Each side carries three whiskers that function as proprioceptive sensors, feeding constant positional data while running, climbing, and swimming.
+
+This creates a meaningful vulnerability — a Raticate that loses its whiskers becomes a different combatant entirely. The whiskers also explain why Raticate becomes aggressive when anything touches its face; it will bite indiscriminately to protect these critical sensory organs, regardless of the handler's relationship with it.

@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Clawitzer
 	- Types: Water
+
+# Evolution
+	- [[Clauncher]] >> [[Clawitzer]]
+
 # Base Stats
 	- HP: 7
 	- Attack: 7
@@ -8,7 +12,6 @@
 	- Special Attack: 12
 	- Speed: 6
 	- Stamina: 8
-	- Movement Points: 1
 
 # Size Information
 	- Height: 4' 03" / 1.3m
@@ -16,84 +19,43 @@
 	- Size Class: Medium
 	- Weight Class: 3
 
-# Move List
-- Aqua Jet
-- Aqua Tail
-- Attract
-- Aura Sphere
-- Bounce
-- Bubble
-- Bubble Beam
-- Confide
-- Crabhammer
-- Cut
-- Dark Pulse
-- Double Team
-- Dragon Pulse
-- Facade
-- Flail
-- Flash Cannon
-- Focus Blast
-- Frustration
-- Giga Impact
-- Heal Pulse
-- Helping Hand
-- Hidden Power
-- Hyper Beam
-- Ice Beam
-- Icy Wind
-- Iron Tail
-- Muddy Water
-- Protect
-- Rain Dance
-- Rest
-- Return
-- Rock Slide
-- Round
-- Scald
-- Shadow Ball
-- Sleep Talk
-- Sludge Bomb
-- Sludge Wave
-- Smack Down
-- Snore
-- Splash
-- Substitute
-- Surf
-- Swagger
-- Swords Dance
-- Toxic
-- U-Turn
-- Venoshock
-- Vice Grip
-- Water Gun
-- Water Pulse
-- Water Sport
-- Waterfall
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+	- Gilled
+	- Carnivore
+
+#### Natural Weapons
+	- Natural Weapon [Pincers, Legs]
+
+#### Senses
+
+#### Defenses
 	- Shell Armor
+	- Shell 3
+
+#### Behavior
+	- Carnivore
+
+#### Special Abilities
 	- Sniper
 	- Sheer Force
 	- Swift Swim
 	- Mega Launcher
-	- Gilled
-	- Fountain
+	- Water Creation 2
+	- Water Manipulation 3
+
+#### Movement
 	- Power 4
 	- Jump 1/1
 	- Naturewalk (Ocean)
-	- Landwalker
-		- Land Movement rate 3
-	- Swimmer
-		- Water Movement rate 6
-
-### Inherited
+	- Landwalker 3
+	- Swimmer 6
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +3
@@ -121,5 +83,9 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Carnivore
 	- Habitat: Ocean
+
+# Lore
+- [[clauncher-line-hydraulic-claw]]
+- [[clauncher-line-asymmetric-anatomy]]
+- [[clawitzer-territorial-competition]]

@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Crustle
 	- Types: Bug / Rock
+
+# Evolution
+	- [[Dwebble]] >> [[Crustle]]
+
 # Base Stats
 	- HP: 7
 	- Attack: 10
@@ -8,7 +12,6 @@
 	- Special Attack: 7
 	- Speed: 5
 	- Stamina: 8
-	- Movement Points: 1
 
 # Size Information
 	- Height: 4' 7" / 1.4m
@@ -16,90 +19,41 @@
 	- Size Class: Medium
 	- Weight Class: 6
 
-# Move List
-- Aerial Ace
-- Attract
-- Block
-- Brick Break
-- Bug Bite
-- Bulldoze
-- Bulk Up
-- Dig
-- Double Team
-- Dragon Claw
-- Dragon Tail
-- Facade
-- Feint Attack
-- Flail
-- Fling
-- Focus Blast
-- Frustration
-- Grass Knot
-- Hidden Power
-- Incinerate
-- Iron Defense
-- Knock Off
-- Low Sweep
-- Nature Power
-- Payback
-- Poison Jab
-- Protect
-- Rain Dance
-- Rest
-- Retaliate
-- Return
-- Roar
-- Rock Blast
-- Rock Polish
-- Rock Slide
-- Rock Smash
-- Rock Tomb
-- Rock Wrecker
-- Round
-- Sand Attack
-- Shell Smash
-- Slash
-- Sleep Talk
-- Sludge Bomb
-- Smack Down
-- Snarl
-- Snore
-- Stealth Rock
-- Stone Edge
-- Strength
-- Sunny Day
-- Substitute
-- Swagger
-- Taunt
-- Torment
-- Toxic
-- Withdraw
-- X-Scissor
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+
+#### Natural Weapons
+	- Natural Weapon [Pincers, Legs]
+
+#### Senses
+
+#### Defenses
 	- Sturdy
 	- Shell Armor
-	- Hyper Cutter
 	- Weak Armor
+	- Shell 4
+
+#### Behavior
 	- Rattled
+	- Herbivore, Terravore
+
+#### Special Abilities
+	- Hyper Cutter
+	- Groundshaper
+
+#### Movement
 	- Power 5
 	- Jump 1/1
 	- Naturewalk (Desert, Mountain)
-	- Groundshaper
-	- Landwalker
-		- Land Movement rate 5
-	- Swimmer
-		- Water Movement rate 1
-	- Burrower
-		- Burrow Movement rate 5
-
-### Inherited
+	- Landwalker 5
+	- Swimmer 1
+	- Burrower 5
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +1
@@ -127,5 +81,9 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Herbivore, Terravore
 	- Habitat: Cave, Desert, Grassland, Mountain
+
+# Lore
+
+- [[dwebble-line-rock-shell-dependency]]
+- [[crustle-territorial-shell-contests]]

@@ -1,0 +1,3 @@
+Sableye is feared in human communities because its gem eyes glow with a sinister light in cave darkness, and folklore holds that this glow means it is stealing the observer's spirit. The real-world design is based on the Hopkinsville Goblin — a cryptid reported in 1955 Kentucky, described as a small humanoid with glowing eyes and clawed hands emerging from darkness.
+
+This supernatural reputation makes [[Sableye]] encounters psychologically threatening even when the creature itself is small and relatively weak. For [[encounter-creation-is-gm-driven|encounter design]], a Sableye sighting in a dark cave carries inherent horror-genre weight — the glowing eyes appear first, and superstitious NPCs may panic before any combat begins.

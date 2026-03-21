@@ -1,0 +1,3 @@
+[[Skorupi]] hunts by burying itself in sand and waiting motionless for prey to pass within striking distance. When a target approaches, it grips the prey with its tail claws and injects venom, then hangs on tenaciously until the [[poison-includes-venom|poison]] takes full effect. This patient ambush strategy is supported by an extraordinary metabolic adaptation: Skorupi can survive an entire year without food, allowing it to wait indefinitely for prey in arid environments where meals are scarce.
+
+Skorupi's anatomy is unusual even among scorpion Pokemon — its claws and tail are functionally swapped, giving it two stingers where claws would normally be and a gripping claw at the tail tip.

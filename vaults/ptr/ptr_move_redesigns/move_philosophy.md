@@ -1,0 +1,2 @@
+- The harder to unlock (and therefore the lower distribution) a move, the higher it's creative budget for power
+- Unlock Conditions are implicitly AND if listed in succession. 

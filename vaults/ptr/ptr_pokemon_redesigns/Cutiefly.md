@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Cutiefly
 	- Types: Bug / Fairy
+
+# Evolution
+	- [[Cutiefly]] >> [[Ribombee]]
+
 # Base Stats
 	- HP: 4
 	- Attack: 5
@@ -8,7 +12,6 @@
 	- Special Attack: 6
 	- Speed: 8
 	- Stamina: 5
-	- Movement Points: 1
 
 # Size Information
 	- Height: 0' 4" / 0.1m
@@ -16,95 +19,42 @@
 	- Size Class: Small
 	- Weight Class: 1
 
-# Move List
-- Absorb
-- Acrobatics
-- Aerial Ace
-- After You
-- Ally Switch
-- Aromatherapy
-- Attract
-- Baton Pass
-- Bestow
-- Bug Bite
-- Bug Buzz
-- Calm Mind
-- Confide
-- Covet
-- Dazzling Gleam
-- Defog
-- Double Team
-- Draining Kiss
-- Dream Eater
-- Energy Ball
-- Facade
-- Fairy Wind
-- Frustration
-- Helping Hand
-- Hidden Power
-- Infestation
-- Last Resort
-- Light Screen
-- Magic Room
-- Moonblast
-- Powder
-- Protect
-- Psych Up
-- Psychic
-- Quiver Dance
-- Reflect
-- Rest
-- Return
-- Roost
-- Round
-- Safeguard
-- Signal Beam
-- Silver Wind
-- Skill Swap
-- Sleep Talk
-- Snore
-- Speed Swap
-- Sticky Web
-- Struggle Bug
-- Stun Spore
-- Substitute
-- Sunny Day
-- Sweet Scent
-- Swagger
-- Tailwind
-- Telekinesis
-- Thief
-- Toxic
-- Trick
-- U-Turn
-- Wonder Room
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+	- Sound [Wing Buzz]
+	- Gas Production [Spore Release]
+
+#### Natural Weapons
+
+#### Senses
+	- Sense [Aura Reader]
+
+#### Defenses
 	- Shield Dust
-	- Sweet Veil
-	- Compound Eyes
-	- Tinted Lens
+
+#### Behavior
 	- Cute Charm
-	- Aura Reader
+	- Cute
+	- Starter
+	- Herbivore
+
+#### Special Abilities
+	- Sweet Veil
 	- Honey Gather
+
+#### Movement
 	- Power 1
 	- Jump 1/1
-	- Underdog
 	- Wallclimber
-	- Landwalker
-		- Land Movement rate 3
-	- Swimmer
-		- Water Movement rate 3
-	- Flier
-		- Sky Movement rate 4
-
-### Inherited
+	- Landwalker 3
+	- Swimmer 3
+	- Flier 4
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +3
@@ -132,5 +82,9 @@
 	- Average Hatch Rate: 7 Days
 
 # Miscellaneous
-	- Diet: Herbivore
 	- Habitat: Forest, Grassland
+
+# Lore
+
+- [[cutiefly-aura-sensing]]
+- [[cutiefly-line-pollinator-ecology]]

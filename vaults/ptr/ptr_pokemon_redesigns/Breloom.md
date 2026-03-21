@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Breloom
 	- Types: Grass / Fighting
+
+# Evolution
+	- [[Shroomish]] >> [[Breloom]]
+
 # Base Stats
 	- HP: 6
 	- Attack: 13
@@ -8,7 +12,6 @@
 	- Special Attack: 6
 	- Speed: 7
 	- Stamina: 8
-	- Movement Points: 1
 
 # Size Information
 	- Height: 3' 11" / 1.2m
@@ -16,101 +19,37 @@
 	- Size Class: Medium
 	- Weight Class: 3
 
-# Move List
-- Attract
-- Body Slam
-- Brick Break
-- Bulk Up
-- Bullet Seed
-- Confide
-- Counter
-- Cut
-- Double Team
-- Double-Edge
-- Drain Punch
-- Dynamic Punch
-- Energy Ball
-- Facade
-- False Swipe
-- Feint
-- Fling
-- Flash
-- Focus Blast
-- Focus Punch
-- Force Palm
-- Frustration
-- Fury Cutter
-- Giga Drain
-- Giga Impact
-- Grass Knot
-- Headbutt
-- Helping Hand
-- Hidden Power
-- Hyper Beam
-- Iron Tail
-- Leech Seed
-- Low Sweep
-- Mach Punch
-- Mega Drain
-- Mega Kick
-- Mega Punch
-- Mind Reader
-- Mud-Slap
-- Power-Up Punch
-- Protect
-- Retaliate
-- Return
-- Rock Slide
-- Rock Smash
-- Rock Tomb
-- Round
-- Safeguard
-- Seed Bomb
-- Seismic Toss
-- Sky Uppercut
-- Sleep Talk
-- Sludge Bomb
-- Snatch
-- Snore
-- Solar Beam
-- Stone Edge
-- Strength
-- Stun Spore
-- Substitute
-- Sunny Day
-- Superpower
-- Swagger
-- Swords Dance
-- Synthesis
-- Thunder Punch
-- Toxic
-- Vacuum Wave
-- Venoshock
-- Work Up
-- Worry Seed
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+	- Geovore
+
+#### Natural Weapons
+	- Natural Weapon [Claws, Tail, Arms, Hands, Legs, Feet, Head]
+	
+#### Senses
+
+#### Defenses
+
+#### Behavior
+
+#### Special Abilities
 	- Effect Spore
-	- Quick Feet
 	- Technician
-	- Natural Cure
-	- Poison Heal
-	- Mushroom Harvest
+	- Plant Matter Production [Seeds]
+	- Gas Production [Spore Release]
+
+#### Movement
 	- Power 6
 	- Jump 1/1
 	- Naturewalk (Grassland, Forest)
-	- Landwalker
-		- Land Movement rate 6
-	- Swimmer
-		- Water Movement rate 3
-
-### Inherited
+	- Landwalker 6
+	- Swimmer 3
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +3
@@ -138,5 +77,8 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Herbivore, Phototroph
 	- Habitat: Forest, Marsh, Rainforest
+
+# Lore
+- [[breloom-spore-then-strike-combat]]
+- [[shroomish-line-fungal-growth-arc]]

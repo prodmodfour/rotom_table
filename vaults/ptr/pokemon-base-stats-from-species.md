@@ -2,6 +2,7 @@ Each Pokemon species defines seven base stats in the Pokedex: HP, Attack, Defens
 
 ## See also
 
+- [[stat-terminology]]
 - [[individual-stats-vs-base-stats]]
 - [[pokemon-hp-formula]]
 - [[evasion-from-defensive-stats]]

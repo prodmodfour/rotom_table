@@ -1,0 +1,4 @@
+[[Shiftry]] draws heavily from the tengu of Japanese folklore -- supernatural forest spirits known for their long noses, fan-shaped leaves, and wooden sandals (geta). Shiftry's feet resemble tengu-geta, its leaf-hands mirror the tengu's hauchiwa fan used to create powerful winds, and its Pokedex lore describes it as "feared from long ago as the guardian of forests." Like tengu, Shiftry inhabits ancient, deep forests where humans do not venture and is said to arrive on chilly, wintry winds -- its appearance heralding the onset of winter. One origin myth even claims Shiftry was once a wicked bird Pokemon whose wings and beak were replaced as divine punishment, echoing the tengu's own origin as a fallen celestial being.
+
+## See also
+- [[nuzleaf-leaf-flute]] -- the acoustic territorial defense that precedes Shiftry's wind mastery

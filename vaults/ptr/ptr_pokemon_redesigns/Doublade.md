@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Doublade
 	- Types: Steel / Ghost
+
+# Evolution
+	- [[Honedge]] >> [[Doublade]] >> [[Aegislash]]
+
 # Base Stats
 	- HP: 6
 	- Attack: 11
@@ -8,7 +12,6 @@
 	- Special Attack: 5
 	- Speed: 4
 	- Stamina: 8
-	- Movement Points: 1
 
 # Size Information
 	- Height: 2' 07" / 0.8m
@@ -16,77 +19,40 @@
 	- Size Class: Small
 	- Weight Class: 1
 
-# Move List
-- Aerial Ace
-- After You
-- Attract
-- Autotomize
-- Brick Break
-- Confide
-- Cut
-- Double Team
-- Facade
-- False Swipe
-- Flash Cannon
-- Frustration
-- Fury Cutter
-- Gyro Ball
-- Hidden Power
-- Iron Defense
-- Iron Head
-- Magnet Rise
-- Metal Sound
-- Night Slash
-- Power Trick
-- Protect
-- Pursuit
-- Rain Dance
-- Reflect
-- Rest
-- Retaliate
-- Return
-- Rock Slide
-- Rock Smash
-- Sacred Sword
-- Shadow Claw
-- Shadow Sneak
-- Shock Wave
-- Slash
-- Sleep Talk
-- Snore
-- Spite
-- Substitute
-- Swagger
-- Swords Dance
-- Tackle
-- Toxic
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+	- Living Weapon
+
+#### Natural Weapons
+	- Natural Weapon [Blade]
+
+#### Senses
+
+#### Defenses
+	- Shell 3
+	- Dead Silent
+
+#### Behavior
+	- Nullivore
+
+#### Special Abilities
 	- No Guard
-	- Hyper Cutter
-	- Stall
 	- Weaponize
 	- Soulstealer
-	- Phasing
-	- Invisibility
-	- Dead Silent
-	- Living Weapon
+	- Telepath
+
+#### Movement
 	- Power 2
 	- Jump 0/1
-	- Landwalker
-		- Land Movement rate 1
-	- Swimmer
-		- Water Movement rate 2
-	- Levitator
-		- Levitate Movement rate 6
-
-### Inherited
+	- Landwalker 1
+	- Swimmer 2
+	- Flier 6
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +3
@@ -114,5 +80,8 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Nullivore
 	- Habitat: Grassland, Urban
+
+# Lore
+- [[honedge-line-spirit-inhabited-weapon]]
+- [[doublade-telepathic-coordinated-combat]]

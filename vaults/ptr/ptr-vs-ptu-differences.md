@@ -48,7 +48,7 @@ Index of mechanical differences between PTR and its PTU 1.05 base.
 - [[energy-regain-rate]] — 1 Energy regenerated per turn start
 - [[zero-energy-causes-fatigue]] — hitting 0 Energy causes 1 Fatigue level
 - [[energy-overdraft]] — spending more than you have causes 3 Fatigue levels
-- [[fatigue-levels]] — stacking debuff (−2 attack, evasion, MP per level)
+- [[fatigue-levels]] — stacking debuff (−2 attack, evasion, movement per level)
 - [[fatigue-causes-unconsciousness]] — unconscious at 5 Fatigue
 - [[take-a-breather-recovers-fatigue]] — extended to also recover Fatigue
 - [[rest-cures-fatigue]] — 1 hour of rest fully cures all Fatigue
@@ -58,23 +58,19 @@ Index of mechanical differences between PTR and its PTU 1.05 base.
 ## Movement
 
 - [[shift-renamed-to-movement-action]] — Shift Action renamed to Movement Action
-- [[movement-splitting]] — movement can be split between other actions (1 MP = atomic unit)
-- [[movement-path-freedom]] — each MP expenditure has free pathing between start and end
-- [[movement-capability-types]] — PTU capabilities replaced by six movement rates
-- [[movement-rates]] — Land, Sky, Water, Phase, Burrow, Teleporter
-- [[movement-points]] — budget system; base of 1, modified by traits
-- [[typical-movement-profile]] — most Pokemon have Land (rate 4) and Water (rate 2)
-- [[energy-for-extra-movement]] — spend 2 Energy for 1 Movement Point
-- [[movement-costs-no-energy]] — using MP is free; MP and Energy are separate pools
-- [[sprint-removed]] — Sprint action removed; extra movement via energy→MP
+- [[movement-traits]] — traits grant X movement in a mode per turn (replaces MP + rates)
+- [[movement-splitting]] — movement can be split between other actions (1 square = atomic unit)
+- [[movement-path-freedom]] — each movement segment has free pathing between start and end
+- [[movement-capability-types]] — PTU capabilities replaced by six movement traits
+- [[typical-movement-profile]] — most Pokemon have Land 4 and Water 2
+- [[energy-for-extra-movement]] — spend 5 Energy for extra movement in one mode, once per turn
+- [[sprint-removed]] — Sprint action removed; extra movement via energy
 
 ## Moves
 
+- [[moves-are-universally-available]] — no species-specific move lists; any character can unlock any move
 - [[no-moves-known-limit]] — no cap on moves known (replaces PTU's 6-slot limit)
-- [[trainer-move-list]] — trainers have their own move list with unlock conditions
-- [[tms-as-unlock-conditions]] — TMs are instantaneous unlock conditions for moves
-- [[move-tutors-as-unlock-conditions]] — Move Tutors are unlock conditions requiring training sessions
-- [[move-tutor-trait]] — "Move Tutor: [Move Name]" is a Trait, usually for trainers
+- [[trainer-move-list]] — trainers unlock moves from the same universal pool as Pokemon
 - [[move-unlock-and-or-logic]] — move unlock conditions compose with AND/OR logic
 
 ## Health
@@ -98,10 +94,13 @@ Old PTU notes kept for reference, now marked as superseded:
 - [[three-skill-categories]] — old Body/Mind/Spirit groupings
 - [[skill-rank-dice-progression]] — old rank-to-dice mapping
 - [[skill-check-xd6-vs-dc]] — old Xd6 vs DC mechanic
-- [[tutor-points-removed]] — old Tutor Points system removed
+- [[tutor-points-removed]] — old Tutor Points, TMs, and Move Tutors all removed
 - [[max-trainer-level-fifty]] — old trainer level cap
 - [[level-up-grants-one-stat-point]] — old +1 per level
 - [[stat-points-equal-level-plus-ten]] — old Level + 10 formula
+- [[natural-move-list]] — old species-specific move lists (Level-Up/Egg/Tutor)
+- [[level-up-move-check]] — old check-Pokedex-on-level-up mechanic
+- [[evolution-immediate-move-learning]] — old evolution-grants-moves mechanic
 - [[ap-refresh-per-scene]] — old AP scene refresh
 - [[ap-spend-for-roll-bonus]] — old AP +1 to rolls
 - [[extended-rest-drained-ap-only]] — old Drained AP rest mechanic

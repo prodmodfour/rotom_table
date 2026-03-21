@@ -1,0 +1,3 @@
+[[Toxicroak]] displays a split behavioral profile — it can be either cruel and aggressive or surprisingly laid-back, lounging on rocks and in marshes. This variability makes Toxicroak encounters unpredictable for [[wild-encounter-motivations|encounter design]]. A Toxicroak found basking near water might be docile, while one guarding its territory could be immediately lethal.
+
+Toxicroak even practices combat in its sleep, reflexively performing Poison Jab while dreaming. It uses its throat poison sac as a pillow, and approaching a sleeping Toxicroak triggers an instant defensive attack.

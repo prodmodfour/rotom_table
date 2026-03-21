@@ -1,0 +1,20 @@
+# Signal Beam
+
+## Properties
+	- Type: Bug
+	- Damage Class: Special
+	- Damage Base: 8
+	- AC: 2
+	- Range: 6, 1 Target
+	- Energy Cost: 3
+
+## Effect
+Signal Beam Confuses the target on 19+.
+
+## Unlock Conditions
+- Light Creation 2
+- Bug Type
+- Individual Special Attack 15
+
+## Notes
+[[signal-beam-description|Description]]

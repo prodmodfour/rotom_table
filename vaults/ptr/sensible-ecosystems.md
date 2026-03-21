@@ -9,3 +9,5 @@ This principle drives several downstream constraints: [[energy-pyramid-rarity]] 
 - [[pokemon-intelligence-scales-with-niche]]
 - [[encounter-creation-is-gm-driven]] — ecology determines species selection in encounter building
 - [[wild-pokemon-social-hierarchy]] — social structures follow ecological roles
+- [[bibarel-dam-building]] — ecosystem engineering as habitat modification
+- [[rattata-line-rapid-reproduction]] — invasive species dynamics

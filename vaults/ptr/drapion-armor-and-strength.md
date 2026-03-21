@@ -1,0 +1,3 @@
+[[Drapion]] possesses hard, armor-like skin tough enough to deflect most strikes, and its head rotates a full 180 degrees to eliminate blind spots. Its claws can crush a car, and the tips secrete [[poison-includes-venom|poison]] — but Drapion takes pride in overpowering foes through raw physical strength, often foregoing venom entirely. This preference for brute force over toxins is unusual for a Poison-type and explains why the line gains the Dark type upon evolution from [[Skorupi]].
+
+Known as the "Sand Demon" in its desert habitats, Drapion attacks anything that enters its territory and tends to rampage indiscriminately. Despite this, it consistently avoids confrontations with Hippowdon, suggesting a clear predator hierarchy even among apex desert species.

@@ -1,0 +1,3 @@
+[[Zigzagoon]] moves exclusively in zigzag patterns, never in straight lines. This erratic locomotion is driven by insatiable curiosity — it wanders back and forth with its nose pressed to the ground, investigating every scent and stimulus it encounters. The behavior is so ingrained that it leaves distinctive zigzag footprints wherever it walks.
+
+This movement pattern doubles as a survival strategy. When confronted by threats, Zigzagoon plays dead to deceive opponents. The combination of unpredictable movement and deceptive defense makes it difficult for predators to pin down despite its small size. The zigzag instinct is what [[Linoone]] ultimately overcomes through evolution — trading erratic curiosity for focused, linear speed.

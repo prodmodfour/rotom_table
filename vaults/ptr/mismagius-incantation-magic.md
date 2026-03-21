@@ -1,0 +1,3 @@
+Mismagius produces its supernatural effects through vocalized incantations — its cries literally sound like spoken spells. The range of effects is broad: it can induce headaches, hallucinations, love, happiness, or misery depending on the chant. At its most powerful, it can trap victims in dreamscapes that persist until the Mismagius itself is knocked unconscious.
+
+This incantation-based magic is the biological basis for [[Mismagius]]'s [[sorcery|Sorcery]] trait. The key constraint is that all its magic requires vocalization — silencing a Mismagius cuts off its entire supernatural toolkit. Some communities intentionally invite Mismagius into their homes to ward off misfortune through protective chanting, though provoking one during such a visit risks disaster.

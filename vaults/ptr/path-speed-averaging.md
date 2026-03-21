@@ -1,10 +1,11 @@
-When a movement path crosses terrain boundaries, the app detects which terrain types are traversed, identifies applicable movement [[trait-definition|traits]], and averages them to determine maximum movement distance.
+When a movement path crosses terrain boundaries, the app detects which terrain types are traversed, identifies applicable [[movement-traits]], and averages them to determine maximum movement distance.
 
-A Pokemon with Overland 7 and Swim 5 crossing from land to water gets a maximum of 6 meters of movement. This is [[automate-routine-bookkeeping]] applied to a core PTU mechanic (p.231) rather than using simplified approximations.
+A Pokemon with Land 7 and Water 5 crossing from land to water gets a maximum of 6 squares of movement. This is [[automate-routine-bookkeeping]] applied to a core PTU mechanic (p.231) rather than using simplified approximations.
 
-PTU movement cannot be split around actions (p.227-228) — each turn has one continuous movement path, so averaging is calculated once per movement action.
+With [[movement-splitting]], a combatant may cross terrain boundaries in any movement segment. The app recalculates averaging per segment.
 
 ## See also
 
 - [[multi-tag-terrain-system]]
 - [[water-is-basic-terrain]]
+- [[movement-splitting]]

@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Espeon
 	- Types: Psychic
+
+# Evolution
+	- [[Eevee]] >> [[Espeon]]
+
 # Base Stats
 	- HP: 7
 	- Attack: 7
@@ -8,7 +12,6 @@
 	- Special Attack: 13
 	- Speed: 11
 	- Stamina: 7
-	- Movement Points: 1
 
 # Size Information
 	- Height: 2' 11" / 0.9m
@@ -16,98 +19,47 @@
 	- Size Class: Medium
 	- Weight Class: 3
 
-# Move List
-- Attract
-- Body Slam
-- Calm Mind
-- Confide
-- Confusion
-- Covet
-- Cut
-- Dazzling Gleam
-- Dig
-- Double Team
-- Double-Edge
-- Dream Eater
-- Echoed Voice
-- Facade
-- Flash
-- Frustration
-- Future Sight
-- Giga Impact
-- Grass Knot
-- Heal Bell
-- Helping Hand
-- Hidden Power
-- Hyper Beam
-- Hyper Voice
-- Iron Tail
-- Last Resort
-- Light Screen
-- Magic Coat
-- Magic Room
-- Morning Sun
-- Mud-Slap
-- Power Swap
-- Protect
-- Psych Up
-- Psychic
-- Psybeam
-- Psyshock
-- Quick Attack
-- Rain Dance
-- Reflect
-- Rest
-- Retaliate
-- Return
-- Role Play
-- Round
-- Sand Attack
-- Shadow Ball
-- Signal Beam
-- Skill Swap
-- Sleep Talk
-- Snore
-- Substitute
-- Sunny Day
-- Swagger
-- Swift
-- Telekinesis
-- Toxic
-- Trick
-- Trick Room
-- Work Up
-- Zen Headbutt
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+	- Sound [Vocal]
+
+#### Natural Weapons
+	- Natural Weapon [Fangs, Claws, Legs, Feet]
+
+#### Senses
+	- Sense [Keen Smell]
+
+#### Defenses
+
+#### Behavior
+	- Omnivore
+	- Cute
+
+#### Special Abilities
 	- Synchronize
-	- Trace
-	- Type Aura (Psychic)
-	- Perception
 	- Magic Bounce
 	- Telepath
-	- Telekinetic
-	- Tracker
-	- Premonition
+	- Mind Manipulation 2
+	- Telekinetic 4
+	- Solar Gem
+	- Premonition Fur
+
+#### Movement
 	- Power 3
 	- Jump 1/2
-	- Landwalker
-		- Land Movement rate 6
-	- Swimmer
-		- Water Movement rate 4
-
-### Inherited
+	- Landwalker 6
+	- Swimmer 4
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +3
 	- Athletics : +4
-	- Charm : +0
+	- Charm : +0 + Cute (+5) = +5
 	- Combat : +3
 	- Command : +0
 	- Deception : +0
@@ -130,5 +82,9 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Omnivore
 	- Habitat: Forest, Grassland, Urban
+
+# Lore
+- [[eevee-line-unstable-genetics]] -- genetic restructuring via sustained daytime bonding
+- [[espeon-solar-psychic-power]] -- forehead gem stores solar energy as psychic power
+- [[espeon-precognitive-loyalty]] -- precognition developed specifically to protect its Trainer

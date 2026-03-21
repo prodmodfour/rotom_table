@@ -1,0 +1,4 @@
+The [[Smoliv]] >> [[Dolliv]] >> [[Arboliva]] line produces oil from nutrients gathered through photosynthesis, with the oil's properties and uses evolving across each stage. Smoliv stores oil in its head-fruit as an emergency energy reserve, allowing it to survive a full week without food or water. Dolliv's oil becomes aromatic and palatable -- pleasant enough to share with others, which historically drew it toward human settlements. Arboliva's oil reaches its most refined form: nutrient-rich, fragrant, and potent enough to heal weakened Pokemon when shared, or to shatter boulders when launched defensively. This progression from survival ration to communal resource to weaponized healing oil mirrors the line's growth from a vulnerable seedling into a powerful, nurturing tree.
+
+## See also
+- [[smoliv-bitter-oil-defense]] -- Smoliv's earliest and crudest use of oil as a weapon

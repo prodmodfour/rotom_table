@@ -1,6 +1,8 @@
-The Phasing [[trait-definition|trait]] lets a Pokemon shift through [[slow-terrain-doubles-movement|Slow Terrain]] without speed penalty. As a Standard Action, they can also turn completely Intangible — while Intangible, they cannot be targeted by Moves or attacks, cannot perform Standard Actions, and lose a Tick of HP at the end of each round.
+The old Phasing trait has been split into two separate [[trait-definition|traits]]:
 
-Intangibility is a powerful defensive option with a real cost (HP drain and inability to act offensively). The app must track intangible state to suppress targeting and apply the per-round HP loss.
+- [[phaser|Phaser X]] — a [[movement-traits|movement trait]] that grants Phase X movement, allowing the user to pass through solid objects and [[slow-terrain-doubles-movement|Slow Terrain]] without penalty.
+- [[intangibility|Intangibility]] — a Standard Action to become completely untargetable, at the cost of being unable to act and losing HP each round.
 
 ## See also
 - [[ghost-type-ignores-movement-restrictions]]
+- [[movement-capability-types]]

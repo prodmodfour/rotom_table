@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Seismitoad
 	- Types: Water / Ground
+
+# Evolution
+	- [[Tympole]] >> [[Palpitoad]] >> [[Seismitoad]]
+
 # Base Stats
 	- HP: 11
 	- Attack: 10
@@ -8,7 +12,6 @@
 	- Special Attack: 9
 	- Speed: 7
 	- Stamina: 9
-	- Movement Points: 1
 
 # Size Information
 	- Height: 4' 11" / 1.5m
@@ -16,91 +19,43 @@
 	- Size Class: Medium
 	- Weight Class: 4
 
-# Move List
-- Acid
-- Aqua Ring
-- Attract
-- Bounce
-- Brick Break
-- Bubble Beam
-- Bulldoze
-- Confide
-- Dig
-- Double Team
-- Drain Punch
-- Earth Power
-- Earthquake
-- Echoed Voice
-- Endeavor
-- Facade
-- Flail
-- Fling
-- Focus Blast
-- Frustration
-- Gastro Acid
-- Giga Impact
-- Grass Knot
-- Hail
-- Hidden Power
-- Hydro Pump
-- Hyper Beam
-- Hyper Voice
-- Ice Punch
-- Icy Wind
-- Infestation
-- Knock Off
-- Low Kick
-- Mud Shot
-- Muddy Water
-- Payback
-- Poison Jab
-- Power-Up Punch
-- Protect
-- Rain Dance
-- Rest
-- Return
-- Rock Slide
-- Rock Smash
-- Rock Tomb
-- Round
-- Scald
-- Sleep Talk
-- Sludge Bomb
-- Sludge Wave
-- Snore
-- Stealth Rock
-- Strength
-- Substitute
-- Supersonic
-- Surf
-- Swagger
-- Toxic
-- Uproar
-- Venoshock
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+	- Resonant Body
+	- Sound [Vocal]
+
+#### Natural Weapons
+	- Natural Weapon [Arms, Hands, Legs, Feet]
+
+#### Senses
+
+#### Defenses
+
+#### Behavior
+	- Herbivore
+
+#### Special Abilities
 	- Water Absorb
 	- Mud Dweller
 	- Swift Swim
 	- Poison Touch
 	- Refreshing Veil
+	- Water Creation 3
+	- Water Manipulation 2
+	- Groundshaper
+
+#### Movement
 	- Power 6
 	- Jump 2/3
-	- Fountain
 	- Naturewalk (Wetlands)
-	- Groundshaper
-	- Landwalker
-		- Land Movement rate 6
-	- Swimmer
-		- Water Movement rate 5
-
-### Inherited
+	- Landwalker 6
+	- Swimmer 5
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +4
@@ -128,5 +83,8 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Herbivore
 	- Habitat: Freshwater, Marsh
+
+# Lore
+- [[seismitoad-vibrating-fists]]
+- [[tympole-line-vibration-evolution]]

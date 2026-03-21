@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Lillipup
 	- Types: Normal
+
+# Evolution
+	- [[Lillipup]] >> [[Herdier]] >> [[Stoutland]]
+
 # Base Stats
 	- HP: 5
 	- Attack: 6
@@ -8,7 +12,6 @@
 	- Special Attack: 3
 	- Speed: 6
 	- Stamina: 5
-	- Movement Points: 1
 
 # Size Information
 	- Height: 1' 4" / 0.4m
@@ -16,87 +19,43 @@
 	- Size Class: Small
 	- Weight Class: 1
 
-# Move List
-- Aerial Ace
-- After You
-- Attract
-- Baby-Doll Eyes
-- Bite
-- Charm
-- Confide
-- Covet
-- Crunch
-- Dig
-- Double Team
-- Endure
-- Facade
-- Fire Fang
-- Frustration
-- Giga Impact
-- Helping Hand
-- Hidden Power
-- Howl
-- Hyper Voice
-- Ice Fang
-- Last Resort
-- Leer
-- Lick
-- Mud-Slap
-- Odor Sleuth
-- Play Rough
-- Protect
-- Pursuit
-- Rain Dance
-- Rest
-- Retaliate
-- Return
-- Reversal
-- Roar
-- Rock Smash
-- Rock Tomb
-- Round
-- Sand Attack
-- Shadow Ball
-- Sleep Talk
-- Snarl
-- Snore
-- Substitute
-- Sunny Day
-- Swagger
-- Tackle
-- Take Down
-- Thunder Fang
-- Thunder Wave
-- Thunderbolt
-- Toxic
-- Uproar
-- Wild Charge
-- Work Up
-- Yawn
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+	- Sound [Vocal]
+
+#### Natural Weapons
+	- Natural Weapon [Fangs, Claws, Legs, Feet]
+
+#### Senses
+	- Sense [Keen Smell]
+
+#### Defenses
+
+#### Behavior
 	- Pickup
+	- Run Away
+	- Pack Hunt
+	- Cute
+	- Starter
+	- Omnivore
+
+#### Special Abilities
 	- Vital Spirit
 	- Sand Rush
-	- Run Away
 	- Scrappy
+
+#### Movement
 	- Power 2
 	- Jump 1/2
-	- Tracker
 	- Naturewalk (Grassland, Urban)
-	- Underdog
-	- Landwalker
-		- Land Movement rate 5
-	- Swimmer
-		- Water Movement rate 3
-
-### Inherited
+	- Landwalker 5
+	- Swimmer 3
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +2
@@ -124,5 +83,8 @@
 	- Average Hatch Rate: 10 Days
 
 # Miscellaneous
-	- Diet: Omnivore
 	- Habitat: Grassland, Urban
+
+# Lore
+- [[lillipup-line-sensory-fur]]
+- [[lillipup-line-ancient-human-partnership]]

@@ -10,4 +10,5 @@ Skill check difficulty classes in PTR:
 
 ## See also
 
+- [[skill-modifier-scale]]
 - [[skill-check-1d20-plus-modifier]]

@@ -10,10 +10,10 @@ If no vault was specified, ask the user which vault to mature (ptr or documentat
 ## Context
 
 Read and follow these context injections before starting:
-- `.claude/context_injections/maturation.md` — what maturation means
-- `.claude/context_injections/maturation_tickets.md` — ticket format and lifecycle
-- `.claude/context_injections/explore_vault.md` — how to use the obsidian CLI
-- `.claude/context_injections/zettelkasten.md` — vault note conventions
+- `.claude/context_injections/vaults/maturation.md` — what maturation means
+- `.claude/context_injections/vaults/maturation_tickets.md` — ticket format and lifecycle
+- `.claude/context_injections/vaults/explore_vault.md` — how to use the obsidian CLI
+- `.claude/context_injections/vaults/zettelkasten.md` — vault note conventions
 
 ## Process
 

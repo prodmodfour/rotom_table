@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Herdier
 	- Types: Normal
+
+# Evolution
+	- [[Lillipup]] >> [[Herdier]] >> [[Stoutland]]
+
 # Base Stats
 	- HP: 7
 	- Attack: 8
@@ -8,7 +12,6 @@
 	- Special Attack: 4
 	- Speed: 6
 	- Stamina: 7
-	- Movement Points: 1
 
 # Size Information
 	- Height: 2' 11" / 0.9m
@@ -16,75 +19,41 @@
 	- Size Class: Medium
 	- Weight Class: 2
 
-# Move List
-- Aerial Ace
-- Attract
-- Bite
-- Confide
-- Covet
-- Crunch
-- Dig
-- Double Team
-- Facade
-- Frustration
-- Giga Impact
-- Helping Hand
-- Hidden Power
-- Hyper Voice
-- Last Resort
-- Odor Sleuth
-- Payback
-- Play Rough
-- Protect
-- Rain Dance
-- Rest
-- Retaliate
-- Return
-- Reversal
-- Roar
-- Rock Smash
-- Rock Tomb
-- Round
-- Shadow Ball
-- Sleep Talk
-- Snarl
-- Snore
-- Strength
-- Substitute
-- Sunny Day
-- Surf
-- Swagger
-- Take Down
-- Thunder Wave
-- Thunderbolt
-- Toxic
-- Uproar
-- Wild Charge
-- Work Up
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+	- Sound [Vocal]
+
+#### Natural Weapons
+	- Natural Weapon [Fangs, Claws, Legs, Feet]
+
+#### Senses
+	- Sense [Keen Smell]
+
+#### Defenses
+
+#### Behavior
 	- Intimidate
+	- Run Away
+	- Pack Hunt
+	- Omnivore
+
+#### Special Abilities
 	- Vital Spirit
 	- Sand Rush
-	- Run Away
 	- Scrappy
+
+#### Movement
 	- Power 4
 	- Jump 1/2
-	- Tracker
 	- Naturewalk (Grassland, Urban)
-	- Underdog
-	- Landwalker
-		- Land Movement rate 7
-	- Swimmer
-		- Water Movement rate 4
-
-### Inherited
+	- Landwalker 7
+	- Swimmer 4
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +2
@@ -112,5 +81,8 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Omnivore
 	- Habitat: Grassland, Urban
+
+# Lore
+- [[lillipup-line-sensory-fur]]
+- [[lillipup-line-ancient-human-partnership]]

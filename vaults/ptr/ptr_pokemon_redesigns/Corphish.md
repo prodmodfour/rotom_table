@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Corphish
 	- Types: Water
+
+# Evolution
+	- [[Corphish]] >> [[Crawdaunt]]
+
 # Base Stats
 	- HP: 4
 	- Attack: 8
@@ -8,7 +12,6 @@
 	- Special Attack: 5
 	- Speed: 4
 	- Stamina: 7
-	- Movement Points: 1
 
 # Size Information
 	- Height: 2' 0" / 0.6m
@@ -16,101 +19,44 @@
 	- Size Class: Small
 	- Weight Class: 2
 
-# Move List
-- Aerial Ace
-- Ancient Power
-- Aqua Jet
-- Attract
-- Blizzard
-- Body Slam
-- Brick Break
-- Bubble
-- Bubble Beam
-- Chip Away
-- Counter
-- Crabhammer
-- Crunch
-- Cut
-- Dig
-- Double Hit
-- Double Team
-- Double-Edge
-- Dragon Dance
-- Endeavor
-- Facade
-- False Swipe
-- Fling
-- Frustration
-- Fury Cutter
-- Guillotine
-- Hail
-- Harden
-- Hidden Power
-- Hone Claws
-- Ice Beam
-- Icy Wind
-- Iron Defense
-- Knock Off
-- Leer
-- Metal Claw
-- Mud Sport
-- Mud-Slap
-- Night Slash
-- Payback
-- Protect
-- Rain Dance
-- Razor Shell
-- Rest
-- Return
-- Rock Slide
-- Rock Smash
-- Rock Tomb
-- Round
-- Scald
-- Sleep Talk
-- Sludge Bomb
-- Snore
-- Spite
-- Strength
-- Substitute
-- Superpower
-- Surf
-- Swagger
-- Switcheroo
-- Swords Dance
-- Taunt
-- Toxic
-- Trump Card
-- Vice Grip
-- Water Pulse
-- Waterfall
-- Whirlpool
-- X-Scissor
-
 # Traits
 ## Innate
 
 ### Species Specific
-	- Hyper Cutter
+
+#### Body
+	- Gilled
+	- Carnivore
+
+#### Natural Weapons
+	- Natural Weapon [Head, Pincers, Legs]
+
+#### Senses
+
+#### Defenses
 	- Shell Armor
+	- Shell 2
+
+#### Behavior
+	- Bully
+	- Gluttony
+	- Starter
+	- Carnivore
+
+#### Special Abilities
+	- Hyper Cutter
 	- Parry
 	- Torrent
-	- Bully
-	- Gilled
-	- Underdog
+
+#### Movement
 	- Power 2
 	- Jump 1/1
-	- Landwalker
-		- Land Movement rate 4
-	- Swimmer
-		- Water Movement rate 3
-	- Burrower
-		- Burrow Movement rate 1
-
-### Inherited
+	- Landwalker 4
+	- Swimmer 3
+	- Burrower 1
 
 ## Learned
-
+	- Opportunist 1
 
 # Skills
 	- Acrobatics : +2
@@ -138,5 +84,8 @@
 	- Average Hatch Rate: 7 Days
 
 # Miscellaneous
-	- Diet: Carnivore
 	- Habitat: Marsh, Ocean
+
+# Lore
+- [[corphish-line-invasive-adaptability]]
+- [[corphish-indiscriminate-diet]]

@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Magikarp
 	- Types: Water
+
+# Evolution
+	- [[Magikarp]] >> [[Gyarados]]
+
 # Base Stats
 	- HP: 2
 	- Attack: 1
@@ -8,7 +12,6 @@
 	- Special Attack: 2
 	- Speed: 8
 	- Stamina: 6
-	- Movement Points: 1
 
 # Size Information
 	- Height: 2' 11" / 0.9m
@@ -16,35 +19,38 @@
 	- Size Class: Small
 	- Weight Class: 1
 
-# Move List
-- Bounce
-- Flail
-- Splash
-- Tackle
-
 # Traits
 ## Innate
 
 ### Species Specific
-	- Bulletproof
-	- Simple
-	- Decoy
-	- Swift Swim
-	- Rattled
+
+#### Body
 	- Gilled
-	- Underdog
+
+#### Natural Weapons
+
+#### Senses
+
+#### Defenses
+	- Bulletproof
+
+#### Behavior
+	- Rattled
+	- Starter
+	- Herbivore
+
+#### Special Abilities
+	- Simple
+	- Swift Swim
+
+#### Movement
 	- Power 1
 	- Jump 3/3
 	- Naturewalk (Ocean)
-	- Landwalker
-		- Land Movement rate 1
-	- Swimmer
-		- Water Movement rate 5
-
-### Inherited
+	- Landwalker 1
+	- Swimmer 5
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +2
@@ -72,5 +78,9 @@
 	- Average Hatch Rate: 2 Days
 
 # Miscellaneous
-	- Diet: Herbivore
 	- Habitat: Freshwater, Ocean
+
+# Lore
+- [[magikarp-weakness-and-resilience-paradox]]
+- [[magikarp-dragon-gate-myth]]
+- [[magikarp-universal-prey]]

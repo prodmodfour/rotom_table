@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Shiftry
 	- Types: Grass / Dark
+
+# Evolution
+	- [[Seedot]] >> [[Nuzleaf]] >> [[Shiftry]]
+
 # Base Stats
 	- HP: 9
 	- Attack: 10
@@ -8,7 +12,6 @@
 	- Special Attack: 9
 	- Speed: 8
 	- Stamina: 8
-	- Movement Points: 1
 
 # Size Information
 	- Height: 4' 3" / 1.3m
@@ -16,115 +19,45 @@
 	- Size Class: Medium
 	- Weight Class: 4
 
-# Move List
-- Aerial Ace
-- Air Cutter
-- Attract
-- Body Slam
-- Bounce
-- Brick Break
-- Bullet Seed
-- Confide
-- Cut
-- Dark Pulse
-- Defense Curl
-- Dig
-- Double Team
-- Double-Edge
-- Embargo
-- Energy Ball
-- Explosion
-- Extrasensory
-- Facade
-- Fake Out
-- False Swipe
-- Feint Attack
-- Flash
-- Fling
-- Focus Blast
-- Foul Play
-- Frustration
-- Fury Cutter
-- Giga Drain
-- Giga Impact
-- Grass Knot
-- Growth
-- Harden
-- Hidden Power
-- Hurricane
-- Hyper Beam
-- Icy Wind
-- Knock Off
-- Leaf Blade
-- Leaf Storm
-- Leaf Tornado
-- Low Kick
-- Low Sweep
-- Mega Kick
-- Mud-Slap
-- Nasty Plot
-- Nature Power
-- Ominous Wind
-- Payback
-- Pound
-- Power-Up Punch
-- Protect
-- Psych Up
-- Razor Leaf
-- Rest
-- Retaliate
-- Return
-- Rock Slide
-- Rock Smash
-- Rock Tomb
-- Rollout
-- Round
-- Seed Bomb
-- Shadow Ball
-- Sleep Talk
-- Snarl
-- Snore
-- Solar Beam
-- Spite
-- Strength
-- Substitute
-- Sucker Punch
-- Sunny Day
-- Swagger
-- Swift
-- Swords Dance
-- Synthesis
-- Tailwind
-- Thief
-- Torment
-- Toxic
-- Twister
-- Whirlwind
-- Worry Seed
-- X-Scissor
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+	- Geovore
+
+#### Natural Weapons
+	- Natural Weapon [Arms, Hands, Legs, Feet]
+
+#### Senses
+	- Sense [Darkvision]
+
+#### Defenses
+
+#### Behavior
+	- Pickpocket
+	- Photovore
+	- Opportunist 1
+	- Herbivore
+
+#### Special Abilities
 	- Chlorophyll
 	- Early Bird
-	- Pickpocket
 	- Omen
 	- Blow Away
-	- Darkvision
+	- Wind Manipulation 3
+	- Plant Matter Production [Leaves]
+	- Plant Manipulation 2
+
+#### Movement
 	- Power 5
 	- Jump 1/2
 	- Naturewalk (Grassland, Forest)
-	- Landwalker
-		- Land Movement rate 7
-	- Swimmer
-		- Water Movement rate 3
-
-### Inherited
+	- Landwalker 7
+	- Swimmer 3
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +2
@@ -152,5 +85,8 @@
 	- Average Hatch Rate:
 
 # Miscellaneous
-	- Diet: Herbivore
 	- Habitat: Forest, Rainforest
+
+# Lore
+- [[shiftry-tengu-mythology]] -- tengu folklore parallels and forest guardian role
+- [[shiftry-leaf-fan-wind-generation]] -- hand-leaves generating gale-force winds

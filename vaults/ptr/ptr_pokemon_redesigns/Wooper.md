@@ -1,6 +1,10 @@
 # Basic Information
 	- Name: Wooper
 	- Types: Water / Ground
+
+# Evolution
+	- [[Wooper]] >> [[Quagsire]]
+
 # Base Stats
 	- HP: 6
 	- Attack: 5
@@ -8,7 +12,6 @@
 	- Special Attack: 3
 	- Speed: 2
 	- Stamina: 4
-	- Movement Points: 1
 
 # Size Information
 	- Height: 1' 4" / 0.4m
@@ -16,101 +19,43 @@
 	- Size Class: Small
 	- Weight Class: 1
 
-# Move List
-- Acid Spray
-- After You
-- Amnesia
-- Ancient Power
-- Aqua Tail
-- Attract
-- Blizzard
-- Body Slam
-- Bulldoze
-- Confide
-- Counter
-- Curse
-- Defense Curl
-- Dig
-- Dive
-- Double Kick
-- Double Team
-- Double-Edge
-- Dynamic Punch
-- Earth Power
-- Earthquake
-- Eerie Impulse
-- Encore
-- Facade
-- Flash
-- Frustration
-- Guard Swap
-- Hail
-- Haze
-- Hidden Power
-- Ice Beam
-- Ice Punch
-- Icy Wind
-- Infestation
-- Iron Tail
-- Mist
-- Mud Bomb
-- Mud Shot
-- Mud Sport
-- Mud-Slap
-- Muddy Water
-- Power-Up Punch
-- Protect
-- Rain Dance
-- Recover
-- Rest
-- Return
-- Rock Smash
-- Rollout
-- Round
-- Safeguard
-- Sandstorm
-- Scald
-- Slam
-- Sleep Talk
-- Sludge Bomb
-- Sludge Wave
-- Snore
-- Spit Up
-- Stockpile
-- Substitute
-- Surf
-- Swagger
-- Swallow
-- Tail Whip
-- Toxic
-- Water Gun
-- Water Pulse
-- Waterfall
-
 # Traits
 ## Innate
 
 ### Species Specific
+
+#### Body
+	- Gilled
+
+#### Natural Weapons
+	- Natural Weapon [Legs, Feet]
+
+#### Senses
+
+#### Defenses
+
+#### Behavior
+	- Starter
+	- Cute
+	- Herbivore
+
+#### Special Abilities
 	- Poison Point
 	- Water Absorb
 	- Damp
 	- Rain Dish
 	- Unaware
-	- Fountain
-	- Gilled
-	- Underdog
+	- Water Creation 1
+	- Water Manipulation 1
+
+#### Movement
 	- Power 1
 	- Jump 3/3
 	- Naturewalk (Wetlands)
-	- Landwalker
-		- Land Movement rate 5
-	- Swimmer
-		- Water Movement rate 4
-
-### Inherited
+	- Landwalker 5
+	- Swimmer 4
 
 ## Learned
-
 
 # Skills
 	- Acrobatics : +1
@@ -138,5 +83,9 @@
 	- Average Hatch Rate: 10 Days
 
 # Miscellaneous
-	- Diet: Herbivore
 	- Habitat: Freshwater, Marsh
+
+# Lore
+- [[wooper-poison-slime-coating]]
+- [[wooper-mud-burial-rest]]
+- [[wooper-line-cold-water-amphibians]]
