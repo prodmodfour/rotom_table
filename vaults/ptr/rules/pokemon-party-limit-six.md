@@ -2,5 +2,5 @@ Trainers carry a maximum of six Pokemon at a time while traveling. This is a cor
 
 ## See also
 
-- [[pokemon-max-level-hundred]]
+- [[pokemon-level-range-1-to-20]]
 - [[pokemon-creation-ordered-steps]]

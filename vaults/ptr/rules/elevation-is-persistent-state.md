@@ -1,6 +1,6 @@
 # Elevation Is Persistent State
 
-Vertical positioning — token elevation and terrain height — is real game state that must persist across turns, sessions, and views. PTU has vertical movement (flying via Sky [[trait-definition|trait]]) that persists across turns. If elevation is ephemeral, the game state becomes inconsistent.
+Vertical positioning — token elevation and terrain height — is real game state that must persist across turns, sessions, and views. PTR has vertical movement (flying via Sky [[trait-definition|trait]]) that persists across turns. If elevation is ephemeral, the game state becomes inconsistent.
 
 A flying Pokemon at elevation 3 at the end of round 2 is still at elevation 3 at the start of round 3. If the page reloads between rounds, elevation must survive. If the group view shows the battle, it must show the same elevations the GM sees.
 

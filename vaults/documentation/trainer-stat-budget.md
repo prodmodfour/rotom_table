@@ -1,29 +1,13 @@
 # Trainer Stat Budget
 
-Constants and budget functions in `constants/trainerStats.ts` governing character creation and level-up stat allocation.
+Trainers [[starting-stat-allocation|start with 10 in each stat]]. There is no point-buy or distribution step at character creation. Trainers [[only-pokemon-have-levels|have no levels]] and no level-based stat progression.
 
-## Base Values
+The seven trainer stats are per [[six-trainer-combat-stats]]: HP, Attack, Defense, Special Attack, Special Defense, Speed, and [[stamina-stat|Stamina]].
 
-| Constant | Value | Meaning |
-|---|---|---|
-| `BASE_HP` | 10 | Starting HP base before stat contribution |
-| `BASE_OTHER` | 5 | Starting base for non-HP stats |
-| `TOTAL_STAT_POINTS` | 10 | Stat points available at level 1 |
-| `MAX_POINTS_PER_STAT` | 5 | Per-stat cap at level 1 |
-
-PTU Trainer HP formula: `Level × 2 + HP Stat × 3 + 10`.
-
-## Budget Functions
-
-- **getStatPointsForLevel(level)** — total stat point budget at a given level
-- **getMaxSkillRankForLevel(level)** — skill rank cap by level (used by [[character-creation-validation]] and [[trainer-level-up-wizard]])
-- **isSkillRankAboveCap(rank, level)** — checks if a rank exceeds the level-based cap
-- **getExpectedEdgesForLevel(level)** — returns `{base, bonusSkillEdges, total}` edge budget
-- **getExpectedFeaturesForLevel(level)** — feature budget by level
+Trainer HP formula: `(HP stat × 3) + 10` per [[trainer-hp-formula]].
 
 ## See also
 
 - [[character-creation-composable]]
 - [[character-creation-validation]]
-- [[trainer-level-up-wizard]]
 - [[trainer-derived-stats]]

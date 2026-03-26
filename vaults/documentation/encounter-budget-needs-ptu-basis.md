@@ -1,11 +1,12 @@
-The encounter budget formula must trace to actual PTU text or be clearly labeled as app-specific. An earlier version of the formula cited "Core p.473" — a page that does not exist in PTU 1.05. This was removed per [[no-false-citations]].
+# Encounter Budget Needs Verified Basis
 
-The current implementation uses PTU Chapter 11's Encounter Creation Guide as its basis: level budget = avgPartyLevel * 2 * playerCount. XP per player uses PTU Core p.460: effectiveLevels * significanceMultiplier / playerCount. Both citations have been verified against the source text.
+The encounter budget formula must trace to verified PTU/PTR rules or be clearly labeled as app-specific per [[no-false-citations]].
 
-Any future changes to the budget formula must either cite the specific PTU text they derive from or be explicitly documented as a Rotom Table extension with no RAW claim.
+The current formula derives from PTU Chapter 11, adapted for PTR: baseline XP per player = average Pokemon level × 2. Total level budget = baseline × number of trainers. PTU's "average Trainer level × 4" shortcut no longer applies since [[only-pokemon-have-levels|trainers have no levels in PTR]].
+
+XP per player uses: total enemy Pokemon levels × [[significance-cap-x5|significance multiplier]] ÷ number of players. See [[encounter-xp-formula]] and [[encounter-budget-needs-ptu-basis|PTR vault]] for the verified formulas.
 
 ## See also
 
-- [[no-false-citations]] — the principle that caught the bogus citation
-- [[raw-fidelity-as-default]] — verified PTU citations maintain RAW fidelity
+- [[no-false-citations]] — the principle that caught a bogus citation
 - [[significance-and-budget]] — the implementation that uses this formula

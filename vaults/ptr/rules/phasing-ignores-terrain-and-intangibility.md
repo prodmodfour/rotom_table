@@ -5,4 +5,4 @@ The old Phasing trait has been split into two separate [[trait-definition|traits
 
 ## See also
 - [[ghost-type-ignores-movement-restrictions]]
-- [[movement-capability-types]]
+- [[movement-trait-types]]

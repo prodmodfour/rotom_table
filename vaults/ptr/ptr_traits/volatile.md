@@ -27,4 +27,5 @@ Volatile represents an involuntary coupling between emotion and power. The Pokem
 - [[violent-instincts]]
 - [[kleptomaniac]]
 - [[wanderer]]
-- [[jolteon-volatile-temperament]] -- Jolteon's emotion-electricity coupling
+- [[jolteon-volatile-temperament]]
+- [[instinct-traits]] — this is an instinct trait -- Jolteon's emotion-electricity coupling

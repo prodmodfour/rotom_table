@@ -4,20 +4,16 @@
 
 ## Tabbed Interface
 
-**Human tabs:** Stats, Classes, Skills, Equipment, Pokemon, Notes.
+**Human tabs:** Stats, Traits, Skills, Equipment, Pokemon, Notes.
 
-- **HumanStatsTab** — HP, base stats, evasions, injuries, AP pool, [[trainer-derived-stats|derived stats]] display
-- **HumanClassesTab** — trainer classes view/edit
-- **HumanSkillsTab** — skill ranks by category from [[trainer-skill-definitions]]
+- **HumanStatsTab** — HP, base stats, evasions, injuries, [[trainer-derived-stats|derived stats]] display
+- **HumanTraitsTab** — trait view/edit
+- **HumanSkillsTab** — skills per [[ptr-skill-list]]
 - **HumanEquipmentTab** — slot management via [[equipment-system]]
 - **HumanPokemonTab** — linked Pokemon with link/unlink actions
 - **NotesTab** — freeform notes
 
-**Pokemon tabs:** Stats, Moves, Abilities, Capabilities, Skills, Notes.
-
-## Level-Up Integration
-
-A level watcher intercepts level increases and opens [[trainer-level-up-wizard|LevelUpModal]]. An `isApplyingLevelUp` guard prevents double-trigger when the wizard writes results back to `editData`.
+**Pokemon tabs:** Stats, Moves, Traits, Skills, Notes.
 
 ## Access
 
@@ -26,6 +22,5 @@ Opened from [[character-card]] clicks in the [[library-store|library]] and from 
 ## See also
 
 - [[equipment-system]]
-- [[trainer-level-up-wizard]]
 - [[trainer-derived-stats]]
 - [[pokemon-sheet-page]] — dedicated full-page Pokemon sheet alternative

@@ -8,11 +8,11 @@ Create a centralized registry that maps each `StatusCondition` to all of its pro
 
 ```
 const STATUS_REGISTRY: Record<StatusCondition, StatusDefinition> = {
-  Burned: {
+  Burning: {
     blocksAoO: false,
     blocksIntercept: false,
     tickDamage: { formula: 'level * 1.5', type: 'fire' },
-    csEffects: [{ stat: 'attack', modifier: -2 }],
+    csEffects: [{ stat: 'defense', modifier: -2 }],
     immuneTypes: ['Fire'],
     volatile: false,
     displayColor: '#f97316',
@@ -38,7 +38,7 @@ Consumers would query the registry instead of maintaining their own lookup table
 ## Trade-offs
 
 - TypeScript's exhaustiveness checking on discriminated unions is compile-time and free. A registry adds runtime indirection. If the registry entry is missing, the error is runtime, not compile-time.
-- Some condition properties are context-dependent: weather interactions (e.g., Hydration cures Burn in rain) don't fit neatly into a static property bag. The registry entry would need to support callbacks or be supplemented by separate logic.
+- Some condition properties are context-dependent: weather interactions (e.g., Hydration cures Burning in rain) don't fit neatly into a static property bag. The registry entry would need to support callbacks or be supplemented by separate logic.
 - The registry becomes a new coordination point — a central file that many modules depend on. This is better than the current scatter, but it's still a coupling hub.
 - Risk of the registry growing into a god object if too many concerns are packed into `StatusDefinition`.
 

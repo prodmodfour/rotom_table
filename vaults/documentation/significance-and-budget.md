@@ -4,7 +4,7 @@ Encounter significance tier and difficulty budget calculation.
 
 ## Budget Utility
 
-`utils/encounterBudget.ts` — pure PTU level budget calculator: budget formula, difficulty assessment, XP calculation, `SIGNIFICANCE_PRESETS`.
+`utils/encounterBudget.ts` — pure PTR level budget calculator: budget formula, difficulty assessment, XP calculation, `SIGNIFICANCE_PRESETS`.
 
 ## Composable
 
@@ -24,11 +24,11 @@ Set at encounter creation via `StartEncounterModal` / `GenerateEncounterModal`. 
 
 ## Budget Formula
 
-Level budget = `avgPartyLevel * 2 * playerCount` (PTU Chapter 11 Encounter Creation Guide). The `analyzeEncounterBudget` function computes effective enemy levels (trainers count double), the budget ratio, and a difficulty label.
+Level budget = `avgPartyLevel * 2 * playerCount` (PTR Chapter 11 Encounter Creation Guide). The `analyzeEncounterBudget` function computes effective enemy levels (trainers count double), the budget ratio, and a difficulty label.
 
 ## XP Formula
 
-XP per player = `effectiveLevels * significanceMultiplier / playerCount` (PTU Core p.460). Effective levels sum defeated enemies with trainers counting double.
+XP per player = `effectiveLevels * significanceMultiplier / playerCount` (PTR Core p.460). Effective levels sum defeated enemies with trainers counting double.
 
 ## Significance Presets
 

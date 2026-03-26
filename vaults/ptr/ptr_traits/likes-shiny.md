@@ -20,3 +20,4 @@ Is drawn to shiny objects, gems, and crystals. It will attempt to collect and gu
 - [[kleptomaniac]]
 - [[murkrow-line-shiny-object-hoarding]] — the definitive example of shiny-object obsession
 - [[sableye-gemstone-diet]] — Sableye's attraction to gems is dietary, not aesthetic
+- [[vulnerability-traits-can-drop-on-evolution]] — smart evolved forms can outgrow this trait's manipulability

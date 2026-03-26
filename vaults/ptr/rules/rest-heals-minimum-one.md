@@ -1,4 +1,4 @@
-Rest healing has a minimum of 1 HP per rest period. This is a Rotom Table [[minimum-floors-prevent-absurd-results]] decision — `Math.floor(15/16) = 0` would mean rest does literally nothing for low-HP Pokemon like Shedinja. PTU is silent on this edge case.
+Rest healing has a minimum of 1 HP per rest period. This is a Rotom Table [[minimum-floors-prevent-absurd-results]] decision — `Math.floor(15/16) = 0` would mean rest does literally nothing for low-HP Pokemon like Shedinja. the rules are silent on this edge case.
 
 Resting should always provide some healing benefit.
 

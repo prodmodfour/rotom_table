@@ -1,1 +1,3 @@
 [[Corphish]] will eat anything — it has no dietary preferences or aversions whatsoever. Once it grips prey with its pincers, it refuses to release until the meal is secured. This indiscriminate feeding behavior is a key factor in the line's [[corphish-line-invasive-adaptability|invasive success]], since it eliminates food scarcity as a limiting factor on population growth.
+
+This omnivorous flexibility is [[crawdaunt-predatory-diet-shift|lost upon evolution]] — Crawdaunt's territorial dominance shifts it to pure predation.

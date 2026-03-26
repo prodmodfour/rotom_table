@@ -1,1 +1,6 @@
 [[Buneary]] keeps one ear permanently rolled up like a coiled spring, ready to be rapidly unrolled as an attack. The force of an uncoiling ear is strong enough to crush boulders and injure adult humans, making the ears Buneary's primary weapon despite its small size. It also uses this spring mechanism for locomotion -- slamming its ears toward the ground to launch itself into high jumps, which explains its Jump 3/2 trait. The contrast between Buneary's cute appearance and the destructive power hidden in its coiled ears is central to the line's identity as deceptively dangerous Normal-types.
+
+## See also
+
+- [[buneary-ears-as-functional-arms]] -- ears function mechanically as arms
+- [[buneary-evolution-conditions-design]] -- the shift from ear-strikes to kicks triggers evolution

@@ -1,6 +1,6 @@
 # Move Observation Index
 
-Index of all observed Pokemon moves in this vault. Each note documents how a move's mechanical properties flow through the app's systems: the [[movedata-reference-table]], [[damage-flow-pipeline]], [[evasion-and-accuracy-system]], [[move-frequency-system]], and [[combat-stage-system]].
+Index of all observed Pokemon moves in this vault. Each note documents how a move's mechanical properties flow through the app's systems: the [[movedata-reference-table]], [[damage-flow-pipeline]], [[evasion-and-accuracy-system]], [[move-energy-system]], and [[combat-stage-system]].
 
 Moves are sourced from the [[moves-csv-source-file]] and grouped here by type.
 
@@ -48,7 +48,6 @@ Moves are sourced from the [[moves-csv-source-file]] and grouped here by type.
 - [[double-team]]
 - [[echoed-voice]]
 - [[egg-bomb]]
-- [[encore]]
 - [[endeavor]]
 - [[endure]]
 - [[energy-blast]]
@@ -878,7 +877,7 @@ Moves are sourced from the [[moves-csv-source-file]] and grouped here by type.
 
 - [[movedata-reference-table]] — canonical data table for all move properties
 - [[moves-csv-source-file]] — raw CSV import source
-- [[move-frequency-system]] — frequency enforcement across all move types
+- [[move-energy-system]] — energy cost system for move usage
 - [[damage-flow-pipeline]] — how damage moves resolve
 - [[nine-step-damage-formula]] — the core damage calculation
 - [[evasion-and-accuracy-system]] — accuracy checks for moves with AC values

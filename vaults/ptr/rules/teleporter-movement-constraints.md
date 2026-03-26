@@ -4,4 +4,4 @@ These constraints prevent Teleporter from being a universal bypass for all spati
 
 ## See also
 - [[movement-traits]]
-- [[movement-capability-types]]
+- [[movement-trait-types]]

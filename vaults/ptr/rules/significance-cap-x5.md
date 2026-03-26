@@ -1,4 +1,4 @@
-Significance presets cap at x5 per PTU RAW. PTU Core p.460 says "The Significance Multiplier should range from x1 to about x5." Presets for x6 (climactic) and x8 (legendary) are removed.
+Significance presets cap at x5 per the rules. The rules say "The Significance Multiplier should range from x1 to about x5." Presets for x6 (climactic) and x8 (legendary) are removed.
 
 GMs who want higher values can manually enter them. The app's [[presets-stay-within-raw]] — presets carry implicit authority and should not suggest values outside the rules.
 

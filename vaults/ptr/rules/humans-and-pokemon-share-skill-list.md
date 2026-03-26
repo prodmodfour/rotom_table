@@ -2,4 +2,4 @@ Humans and Pokemon use the same [[ptr-skill-list|skill list]] in PTR. There is n
 
 ## See also
 
-- [[pokemon-species-skills]] — the old PTU system with six fixed species skills
+- [[ptr-skill-list]]

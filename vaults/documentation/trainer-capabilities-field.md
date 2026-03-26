@@ -1,12 +1,6 @@
-# Trainer Capabilities Field
+# Trainer Traits Field
 
-`HumanCharacter.capabilities` — a `string[]` field (Prisma `String @default("[]")`). Stores trainer-specific capabilities such as Naturewalk from the Survivalist class (PTU p.149).
-
-## Format
-
-```json
-["Naturewalk (Forest)", "Naturewalk (Mountain)"]
-```
+`HumanCharacter.traits` — stores trainer-specific [[trait-definition|traits]] such as [[naturewalk|Naturewalk]].
 
 ## Data Flow
 
@@ -14,7 +8,7 @@ Wired through serializers, the [[combatant-type-hierarchy|combatant service]], a
 
 ## VTT Usage
 
-Parsed by `combatantCapabilities.ts`:
+Parsed by combatant trait utilities:
 
 - `getCombatantNaturewalks` — Extract Naturewalk types.
 - `naturewalkBypassesTerrain` — Check terrain movement bypass.
@@ -22,7 +16,7 @@ Parsed by `combatantCapabilities.ts`:
 
 ## UI
 
-Editable in `gm/characters/[id].vue` Classes tab. Displayed in HumanClassesTab.vue and CharacterModal.vue.
+Editable in `gm/characters/[id].vue`. Displayed in character sheet components.
 
 ## See also
 

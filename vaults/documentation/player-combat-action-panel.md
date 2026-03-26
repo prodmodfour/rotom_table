@@ -1,6 +1,6 @@
 # Player Combat Action Panel
 
-`PlayerCombatActions.vue` appears when it is the player's turn. Provides the full PTU combat interface on the player's device.
+`PlayerCombatActions.vue` appears when it is the player's turn. Provides the full PTR combat interface on the player's device.
 
 ## Turn State Banner
 
@@ -8,11 +8,11 @@ Shows action pips for STD (Standard), SHF (Shift), and SWF (Swift) actions. Each
 
 ## League Battle
 
-In [[battle-modes|league battles]], a phase indicator shows the current phase (trainer declaration, trainer resolution, or pokemon). The `canBeCommanded` check prevents issuing moves to a Pokemon that was just switched in this turn (PTU p.227).
+In [[battle-modes|league battles]], a phase indicator shows the current phase (trainer declaration, trainer resolution, or pokemon). The `canBeCommanded` check prevents issuing moves to a Pokemon that was just switched in this turn per [[league-switch-restricts-same-round]].
 
 ## Move Buttons
 
-Move buttons display type badge, DB, AC, and frequency. Tapping a move opens the target selection overlay. Long-press (500ms touch) or right-click opens the move detail overlay showing range and full effect text.
+Move buttons display type badge, DB, AC, and energy cost. Tapping a move opens the target selection overlay. Long-press (500ms touch) or right-click opens the move detail overlay showing range and full effect text.
 
 ## Target Selection Overlay
 
@@ -30,7 +30,7 @@ Direct actions that execute immediately without GM approval:
 Actions requiring GM approval via [[player-websocket-composable|WebSocket]]:
 - **Use Item** — expandable panel listing [[player-combat-composable|trainerInventory]] items.
 - **Switch Pokemon** — expandable panel listing [[player-combat-composable|switchablePokemon]].
-- **Maneuver** — expandable panel for PTU maneuvers (Push, Sprint, Trip, Grapple, Intercept, Take a Breather).
+- **Maneuver** — expandable panel for [[combat-maneuver-catalog|combat maneuvers]].
 
 Toast notifications display GM acknowledgment results.
 
@@ -39,4 +39,4 @@ Toast notifications display GM acknowledgment results.
 - [[player-combat-composable]] — the composable backing this panel
 - [[player-capture-healing-interface]] — capture/healing requests use the same pattern
 - [[combat-maneuver-catalog]]
-- [[move-frequency-system]]
+- [[move-energy-system]]

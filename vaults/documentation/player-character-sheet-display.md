@@ -6,9 +6,9 @@
 
 Six sections, each togglable via header button with `aria-expanded` and `aria-controls`:
 - **Stats** (default open) — 6-stat grid with stage modifiers.
-- **Combat** (default open) — evasions, AP, injuries, temp HP, status conditions.
-- **Skills** (default closed) — alphabetically sorted with rank-based coloring.
-- **Features & Edges** (default closed) — tag lists.
+- **Combat** (default open) — evasions, injuries, temp HP, status conditions.
+- **Skills** (default closed) — alphabetically sorted.
+- **Traits** (default closed) — trait lists.
 - **Equipment** (default closed) — 6 equipment slots.
 - **Inventory** (default closed) — items with quantities and money.
 
@@ -18,7 +18,7 @@ HP percentage (0–100) maps to color classes: healthy (>50%), warning (25–50%
 
 ## Evasion Computation
 
-Physical, special, and speed evasion values are calculated using `calculateEvasion()` from damage-calculation utils. Incorporates [[equipment-bonus-aggregation|equipment bonuses]] from `computeEquipmentBonuses()` — evasion bonus plus stat bonuses from Focus items. Uses calculated stats per PTU rules (not base stats).
+Physical, special, and speed evasion values are calculated using `calculateEvasion()` from damage-calculation utils. Incorporates [[equipment-bonus-aggregation|equipment bonuses]] from `computeEquipmentBonuses()` — evasion bonus from equipment. Uses calculated stats per [[evasion-from-defensive-stats]] (not base stats).
 
 ## See also
 

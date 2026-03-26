@@ -21,5 +21,5 @@ This is distinct from [[daily-counter-auto-reset]], which only resets rest count
 ## See also
 
 - [[rest-healing-system]]
-- [[move-frequency-system]]
+- [[move-energy-system]]
 - [[healing-data-fields]]

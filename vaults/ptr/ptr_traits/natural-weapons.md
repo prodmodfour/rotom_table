@@ -31,6 +31,10 @@ Nearly every Pokemon has at least one Natural Weapon. They are notable when they
 
 When listing a Natural Weapon on a Pokemon, the correct format is `Natural Weapon [Subtype]` where the subtype is one of the entries listed above. Do not omit the brackets (e.g. `Natural Weapon Fangs` is incorrect).
 
+## Design
+
+- [[natural-weapons-are-appendages]] — Natural Weapons are for physical body structures, not for hunting capability
+
 ## Modifiers
 
 Natural Weapons can have modifiers that add effects when the weapon is used in battle.

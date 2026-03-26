@@ -1,6 +1,6 @@
 # Grid Distance Calculation
 
-PTU diagonal distance formula in `utils/gridDistance.ts`. Uses alternating 1m/2m diagonal movement cost (decree-002). Applied for range checks, movement budgets, and distance measurement throughout the VTT.
+Diagonal distance formula in `utils/gridDistance.ts`. Uses alternating 1m/2m diagonal movement cost (decree-002). Applied for range checks, movement budgets, and distance measurement throughout the VTT.
 
 ## See also
 

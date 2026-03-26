@@ -5,7 +5,7 @@ The [[prisma-schema-overview|Scene]] model stores narrative scenes as standalone
 ## Scalar Fields
 
 - `name` (required), `description`, `locationName`, `locationImage` (URL)
-- `weather` — one of 9 PTU weather types: None, Sunny, Rainy, Sandstorm, Hail, Snow, Fog, Windy, Overcast
+- `weather` — one of 9 weather types: None, Sunny, Rainy, Sandstorm, Hail, Snow, Fog, Windy, Overcast
 - `habitatId` — optional link to an encounter table for wild Pokemon generation
 - `isActive` — boolean flag for [[scene-activation-lifecycle|scene serving state]]
 - `createdAt`, `updatedAt` timestamps

@@ -4,7 +4,7 @@ Many Poke Ball types have situational conditions that unlock stronger modifiers.
 - **Love Ball:** −30 if active pokemon is same evolutionary line and opposite gender
 - **Net Ball:** −20 if target is Water or Bug type
 - **Dusk Ball:** −20 in dark or low-light conditions
-- **Nest Ball:** −20 if target is under level 10
+- **Nest Ball:** −20 if target is under level 2
 - **Repeat Ball:** −20 if trainer already owns the species
 - **Dive Ball:** −20 if found underwater or underground
 - **Fast Ball:** −20 if target has Movement above 7

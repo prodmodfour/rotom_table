@@ -1,6 +1,6 @@
 # Encounter Component Categories
 
-40 components managing PTU combat, organized into 12 categories:
+40 components managing PTR combat, organized into 12 categories:
 
 | Category | Count | Components |
 |---|---|---|

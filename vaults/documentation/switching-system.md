@@ -8,7 +8,7 @@ Pokemon switch, recall, and release during encounters.
 
 ## Service
 
-`server/services/switching.service.ts` — `validateSwitch` (10-step validation chain), `validateFaintedSwitch`, `validateForcedSwitch`, `checkRecallRange` (8m PTU diagonal), `insertIntoTurnOrder` (full contact + league), `removeCombatantFromEncounter`, `markActionUsed`, `buildSwitchAction`, `canSwitchedPokemonBeCommanded`, `hasInitiativeAlreadyPassed` (Section K), `findAdjacentPosition`, `checkRecallReleasePair` (Section N), `applyRecallSideEffects`.
+`server/services/switching.service.ts` — `validateSwitch` (10-step validation chain), `validateFaintedSwitch`, `validateForcedSwitch`, `checkRecallRange` (8m per [[poke-ball-recall-range]]), `insertIntoTurnOrder` (full contact + league), `removeCombatantFromEncounter`, `markActionUsed`, `buildSwitchAction`, `canSwitchedPokemonBeCommanded`, `hasInitiativeAlreadyPassed` (Section K), `findAdjacentPosition`, `checkRecallReleasePair` (Section N), `applyRecallSideEffects`.
 
 ## Components
 
@@ -41,3 +41,4 @@ Actions: `switchPokemon`, `recallPokemon`, `releasePokemon`.
 - [[initiative-and-turn-order]] — new combatant inserted by initiative
 - [[turn-lifecycle]]
 - [[encounter-core-api]]
+- [[deployment-state-model]] — tracks active/reserve/fainted roster for switching decisions

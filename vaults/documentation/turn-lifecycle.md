@@ -14,7 +14,7 @@ Combat encounters follow 5 phases:
 - [[damage-flow-pipeline]]
 - [[initiative-and-turn-order]] — how combatant ordering is determined
 - [[take-a-breather-mechanics]] — Full Action available during the action phase
-- [[sprint-action]] — Standard Action for +50% movement
+- [[energy-for-extra-movement]] — spend 5 Energy for additional movement
 - [[combat-maneuver-catalog]] — maneuvers available during the action phase
 - [[status-condition-categories]] — condition categories affected by turn-end automation
 - [[encounter-component-categories]]

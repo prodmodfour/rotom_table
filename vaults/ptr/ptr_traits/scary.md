@@ -20,3 +20,4 @@
 
 - [[very-scary]]
 - [[skill-modifiers-from-traits-or-circumstance]]
+- [[scary-is-visual-impression]] — Scary is about visual impression, not predatory behavior

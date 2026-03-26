@@ -10,7 +10,7 @@ This follows the [[single-responsibility-principle]] at the component level — 
 
 ## See also
 
-- [[nine-step-damage-formula]] — the PTU calculation the pipeline implements
+- [[nine-step-damage-formula]] — the PTR calculation the pipeline implements
 - [[encounter-component-categories]] — where these components sit in the encounter UI
 - [[turn-lifecycle]] — the broader turn flow that the damage pipeline is part of
 - [[saga-orchestrated-turn-lifecycle]] — a destructive proposal where the damage pipeline becomes a saga phase

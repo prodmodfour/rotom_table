@@ -1,0 +1,3 @@
+Where [[Corphish]] is an [[corphish-indiscriminate-diet|indiscriminate omnivore]] that eats anything it can grab, [[Crawdaunt]] narrows to active predation. Once it claims a territory and drives out all competition through [[crawdaunt-territorial-aggression|sheer aggression]], scavenging is no longer viable — there's nothing left to scavenge. Crawdaunt sustains itself by hunting whatever enters its domain.
+
+This dietary shift from Omnivore to Carnivore reflects the behavioral transformation across the evolutionary line: the scrappy opportunist that thrived by eating anything becomes a territorial apex predator that feeds exclusively through predation.

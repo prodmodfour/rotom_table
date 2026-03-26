@@ -8,10 +8,10 @@ For status moves (no damage base), `MoveTargetModal` skips the damage section en
 
 ## See also
 
-- [[nine-step-damage-formula]] — the PTU 9-step calculation that `useMoveCalculation` implements
+- [[nine-step-damage-formula]] — the PTR 9-step calculation that `useMoveCalculation` implements
 - [[evasion-and-accuracy-system]] — the accuracy check that precedes damage
 - [[combat-stage-system]] — stage multipliers feeding into attack/defense
-- [[damage-base-chart]] — DB lookup used at step 1
+- [[damage-base-to-dice-table]] — DB lookup used at step 1
 - [[turn-lifecycle]]
 - [[encounter-component-categories]]
 - [[encounter-composable-delegation]]

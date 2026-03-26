@@ -9,7 +9,7 @@ The Player View lives at `/player`. Part of the [[triple-view-system]].
 - **PlayerCharacterSheet.vue** — Read-only stats, skills, features, equipment, inventory. See [[player-character-sheet-display]].
 - **PlayerPokemonTeam.vue** + **PlayerPokemonCard.vue** + **PlayerMoveList.vue** — Team display. See [[player-pokemon-team-display]].
 - **PlayerEncounterView.vue** + **PlayerCombatantInfo.vue** — Encounter state with combatant cards grouped by side. See [[player-encounter-display]].
-- **PlayerCombatActions.vue** — Full PTU combat action panel. See [[player-combat-action-panel]].
+- **PlayerCombatActions.vue** — Full PTR combat action panel. See [[player-combat-action-panel]].
 - **PlayerSceneView.vue** — Read-only scene display. See [[player-scene-view]].
 - **PlayerGridView.vue** + **PlayerMoveRequest.vue** — Tactical grid from player perspective. See [[player-grid-interaction]].
 - **PlayerGroupControl.vue** — Group View tab change requests. See [[player-group-view-control]].
@@ -46,5 +46,5 @@ The Player View lives at `/player`. Part of the [[triple-view-system]].
 - [[player-page-orchestration]] — root page orchestrating the player experience
 - [[combatant-card-visibility-rules]] — how PlayerCombatantCard differs from GM/Group variants
 - [[combat-maneuver-catalog]] — maneuvers requestable via WebSocket
-- [[move-frequency-system]] — move availability validation in usePlayerCombat
+- [[move-energy-system]] — move availability validation in usePlayerCombat
 - [[player-websocket-events]]

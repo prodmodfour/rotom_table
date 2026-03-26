@@ -27,3 +27,4 @@ The correct format is `Hangry [X]` where X is a number. Do not omit the brackets
 - [[territorial]]
 - [[kleptomaniac]]
 - [[disposition-charm-check-dcs]]
+- [[instinct-traits]] — this is an instinct trait

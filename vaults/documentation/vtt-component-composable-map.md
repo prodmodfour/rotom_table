@@ -22,7 +22,7 @@ How the 15 [[vtt-rendering-pipeline|VTT components]] wire to [[composable-domain
 
 DOM vs canvas tokens: 2D `GridCanvas` renders `VTTToken` as DOM elements over the canvas; `IsometricCanvas` draws tokens directly on canvas. Different click/hit-test paths.
 
-Fog brush uses brush-size (circle of cells); measurement burst uses PTU distance. Different radius calculations despite similar UI.
+Fog brush uses brush-size (circle of cells); measurement burst uses [[grid-distance-calculation|diagonal distance]]. Different radius calculations despite similar UI.
 
 ## See also
 

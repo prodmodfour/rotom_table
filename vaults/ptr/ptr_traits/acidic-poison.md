@@ -1,4 +1,4 @@
-# Trait Name
+# Acidic Poison
 
 ## Properties
 	- Category: Innate

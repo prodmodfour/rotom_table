@@ -8,7 +8,7 @@ Standalone REST endpoints for species data, reference lookups, daily resets, and
 
 **Daily reset:** POST `/api/game/new-day` — global daily reset.
 
-**Damage calculation:** POST `/api/encounters/:id/calculate-damage` — full PTU 9-step damage formula (STAB, type effectiveness, stages, crit) with detailed breakdown and dynamic evasion computation. Read-only; does not modify state. See [[damage-flow-pipeline]].
+**Damage calculation:** POST `/api/encounters/:id/calculate-damage` — full PTR 9-step damage formula (STAB, type effectiveness, stages, crit) with detailed breakdown and dynamic evasion computation. Read-only; does not modify state. See [[damage-flow-pipeline]].
 
 ## See also
 

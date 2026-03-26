@@ -19,6 +19,7 @@ Corviknight's polished steel plumage acts as a reflective ward — hostile debuf
 ## See also
 
 - [[magic-bounce]] — reflects status moves entirely, rather than just stat-lowering effects
+- [[hyper-cutter]] — ignores Attack Combat Stage decreases entirely, rather than reflecting them
 - [[battle-armor]] — another defensive armor trait, preventing critical hits
 - [[shell]] — flat damage reduction from a hard outer covering
 - [[corviknight-steel-plumage-armor]] — the physical basis for this reflective property

@@ -10,7 +10,7 @@ The `Combatant` interface has 35 fields mixing 8+ distinct concerns:
 | Combat tracking | injuries, stageSources, conditionInstances, badlyPoisonedRound, evasions |
 | VTT spatial | position, tokenSize |
 | Out-of-turn | outOfTurnUsage, disengaged, holdAction, skipNextRound |
-| Mount state | mountState, featureUsage |
+| Mount state | mountState |
 | Living weapon | wieldingWeaponId, wieldedByTrainerId, wasInBladeFormeOnEngage, wieldMovementUsed |
 | Misc | forecastOriginalTypes, visionState, entity |
 

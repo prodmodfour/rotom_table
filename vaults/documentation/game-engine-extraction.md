@@ -80,7 +80,7 @@ function dealDamage(combatant, damage) {
 - Should the engine be stateless (pure functions operating on data) or stateful (maintaining an encounter state machine internally)?
 - How does this interact with [[event-sourced-encounter-state]]? If the engine is event-sourced, it manages state transitions; if stateless, the app handles state.
 - What's the migration strategy — extract one domain at a time (damage first, then capture, etc.) or extract everything at once?
-- Should the engine include its own test suite with PTU rulebook assertions, making it the single source of truth for rule correctness?
+- Should the engine include its own test suite with PTR rulebook assertions, making it the single source of truth for rule correctness?
 
 ## See also
 

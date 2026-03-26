@@ -2,7 +2,7 @@
 
 Shared weather effect logic in `utils/weatherRules.ts`, used by both server and client for immunity checks, combat stage bonuses, evasion bonuses, and ability-triggered effects.
 
-**Type:** `PtuWeather` — union of recognized PTU 1.05 weather conditions.
+**Type:** `PtuWeather` — union of recognized PTR 1.05 weather conditions.
 
 **Functions:** isDamagingWeather, isPtuWeather, isImmuneToHail, isImmuneToSandstorm, isImmuneToWeatherDamage, getCombatantTypes, getCombatantAbilities, getWeatherCSBonuses, getWeatherEvasionBonuses, getWeatherBallEffect, getForecastType, getSandForceDamageBonus.
 

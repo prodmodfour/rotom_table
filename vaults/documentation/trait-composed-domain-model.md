@@ -40,7 +40,7 @@ interface HasStatusConditions {
 interface HasPosition {
   position: GridPosition | null
   speed: number
-  movementCapabilities: MovementCapability[]
+  movementTraits: MovementTrait[]
 }
 
 // === OWNED BY: mounting system ===
@@ -196,3 +196,5 @@ ECS is more powerful (dynamic component addition/removal, runtime queries). Trai
 - [[data-driven-rule-engine]] — compatible: rule definitions could reference traits by name
 - [[plugin-mechanic-architecture]] — compatible: each plugin defines and owns its traits
 - [[combatant-as-lens]] — the radical alternative: don't decompose the Combatant, eliminate it entirely
+- [[game-state-interface]] — the formal interface design that applies this ISP decomposition to the lens
+- [[combat-lens-sub-interfaces]] — the concrete sub-interfaces derived from this approach

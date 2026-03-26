@@ -1,0 +1,84 @@
+---
+id: completed
+aliases: []
+tags: []
+---
+
+- Honedge
+- Doublade
+- Aegislash
+- Alolan Grimer
+- Alolan Muk
+- Alolan Vulpix
+- Alolan Ninetales
+- Smoliv
+- Dolliv
+- Arboliva
+- Barboach
+- Whiscash
+- Bidoof
+- Bibarel
+- Shroomish
+- Breloom
+- Buneary
+- Lopunny
+- Clauncher
+- Clawitzer
+- Yamask
+- Cofagrigus
+- Combee
+- Vespiquen
+- Corphish
+- Crawdaunt
+- Rookidee
+- Corvisquire
+- Corviknight
+- Croagunk
+- Toxicroak
+- Dwebble
+- Crustle
+- Cutiefly
+- Rhibombee
+- Skorupi
+- Drapion
+- Eevee
+- Flareon
+- Jolteon
+- Vaporeon
+- Espeon
+- Umbreom
+- Glaceon
+- Leafeon
+- Sylveon
+- Gible
+- Gabite
+- Garchomp
+- Goldeen
+- Seaking
+- Impidimp
+- Morgrem
+- Grimmsnarl
+- Magikarp
+- Gyarados
+- Heracross
+- Lillipup
+- Herdier
+- Stoutland
+- Murkrow
+- Honchkrow
+- Hoothoot
+- Noctowl
+- Houndour
+- Houndoom
+- Sewaddle
+- Swadloon
+- Leavanny
+- Zigzagoon
+- Linoone
+- Poochyena
+- Mightyena
+- Misdreavus
+- Mismagius
+- Nickit
+- Thievul
+

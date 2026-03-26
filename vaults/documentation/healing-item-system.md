@@ -1,6 +1,6 @@
 # Healing Item System
 
-PTU 1.05 healing item catalog and in-combat usage.
+PTR 1.05 healing item catalog and in-combat usage.
 
 ## Constants
 

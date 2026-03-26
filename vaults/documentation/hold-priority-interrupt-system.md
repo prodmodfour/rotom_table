@@ -4,7 +4,7 @@ Out-of-turn actions: holding turns, priority declarations, and interrupts.
 
 ## Hold
 
-`POST .../hold-action` — PTU p.227. Validates: not acted, not held this round. Adds to `holdQueue`, advances turn.
+`POST .../hold-action` — PTR p.227. Validates: not acted, not held this round. Adds to `holdQueue`, advances turn.
 
 `POST .../release-hold` — inserts combatant at current turn position with full action economy, removes from `holdQueue`, splices into `turnOrder`.
 

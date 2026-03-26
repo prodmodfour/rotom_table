@@ -9,5 +9,5 @@ Pokemon need Loyalty 4+ to intercept for their Trainer or any ally. This ties th
 ## See also
 
 - [[melee-range-is-adjacency]]
-- [[movement-capability-types]]
+- [[movement-trait-types]]
 - [[intercept-loyalty-gated]]

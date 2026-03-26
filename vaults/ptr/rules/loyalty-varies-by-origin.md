@@ -1,4 +1,4 @@
-Default loyalty depends on the Pokemon's origin per PTU RAW. Wild captures start at Loyalty 2 (Wary) by default — but [[disposition-determines-starting-loyalty]] refines this based on the Pokemon's disposition at the moment of capture. Hatched, gifted, and starter Pokemon start at Loyalty 3 ([[loyalty-rank-names|Fond]]), bonding naturally.
+Default loyalty depends on the Pokemon's origin per the rules. Wild captures start at Loyalty 2 (Wary) by default — but [[disposition-determines-starting-loyalty]] refines this based on the Pokemon's disposition at the moment of capture. Hatched, gifted, and starter Pokemon start at Loyalty 3 ([[loyalty-rank-names|Fond]]), bonding naturally.
 
 Mapping (origin defaults): `wild` = 2, `hatched` / `gifted` / `starter` / `custom` = 3.
 

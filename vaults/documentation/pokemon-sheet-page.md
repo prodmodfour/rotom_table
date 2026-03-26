@@ -7,16 +7,16 @@ Loads a single Pokemon by route param ID. Supports an `edit=true` query param fo
 ## Composed Elements
 
 - **PokemonEditForm** — header with sprite (via [[pokemon-sprite-resolution-chain|usePokemonSprite]]), species, nickname, level, experience, gender, shiny flag, location, type badges. Fields become editable inputs in edit mode.
-- **PokemonLevelUpPanel** — shown in edit mode when target level exceeds current level. Fetches [[pokemon-api-endpoints|POST /api/pokemon/:id/level-up-check]] and displays stat points, tutor points, new moves, ability milestones, and evolution reminder.
+- **PokemonLevelUpPanel** — shown in edit mode when target level exceeds current level. Fetches [[pokemon-api-endpoints|POST /api/pokemon/:id/level-up-check]] and displays stat points, new traits, and evolution reminder.
 
 ## Tabs
 
-Stats, Moves, Abilities, Capabilities, Skills, Healing, Notes. Mapped to tab components:
+Stats, Moves, Traits, Skills, Healing, Notes. Mapped to tab components:
 
-- **PokemonStatsTab** — base/current stats grid, status conditions, injuries, stage modifiers, [[pokemon-nature-system|nature]] indicators
+- **PokemonStatsTab** — base/current stats grid, status conditions, injuries, stage modifiers
 - **PokemonMovesTab** — move cards with inline [[pokemon-sheet-dice-rolls|attack/damage rolling]]
-- **PokemonCapabilitiesTab** — movement capabilities, jump, power, weight, size, other capabilities as tags
-- **PokemonSkillsTab** — skill grid with dice rolling, [[pokemon-tutor-points|tutor points]], training exp, egg groups
+- **PokemonTraitsTab** — innate/learned/emergent traits, [[movement-trait-types|movement traits]], jump, power, weight, size
+- **PokemonSkillsTab** — skill grid with dice rolling, training exp, egg groups
 
 ## Save Flow
 

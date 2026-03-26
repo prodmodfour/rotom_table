@@ -134,3 +134,11 @@ The PTR vault defines the rules. The rule definitions are a 1:1 translation of t
 - [[switching-validation-pipeline]] — formalized as a rule evaluation chain
 - [[vault-sourced-data-repository]] — compatible: vault-compiled data feeds the rule engine
 - [[property-based-rule-verification]] — compatible: property tests verify rule engine outputs for all inputs
+- [[game-state-interface]] — the shared abstraction the rule engine evaluates against
+- [[state-delta-model]] — rule evaluation produces deltas; the engine applies them
+- [[resolution-context-inputs]] — external inputs injected into rule evaluation
+- [[effect-node-contract]] — the formal contract that realizes this note's vision
+- [[effect-atom-catalog]] — the ~15 atom types that replace hardcoded game logic
+- [[effect-composition-model]] — composable conditions and sequences replace switch chains
+- [[effect-trigger-system]] — event-driven triggers replace scattered listener code
+- [[effect-definition-format]] — TypeScript constants replace scattered rule implementations

@@ -18,7 +18,7 @@ Capture [[capture-accuracy-gate|accuracy gate]] + [[poke-ball-system|capture pan
 
 ## WeatherEffectIndicator.vue
 
-P2 weather effect badge — shows damage/immune/heal/cure/boost status per combatant based on [[weather-rules-utility|weather abilities]]. Uses `WEATHER_ABILITY_EFFECTS`, `WEATHER_EVASION_ABILITIES`, `WEATHER_STATUS_CURE_ABILITIES`.
+P2 weather effect badge — shows damage/immune/heal/cure/boost status per combatant based on [[weather-rules-utility|weather traits]]. Uses `WEATHER_TRAIT_EFFECTS`, `WEATHER_EVASION_TRAITS`, `WEATHER_STATUS_CURE_TRAITS`.
 
 ## See also
 

@@ -1,4 +1,4 @@
-The injury HP cap (PTU p.250) is universal and cannot be bypassed by any healing source. "Full health" in PTU means maximum possible HP given current injury state, not "bypass injury mechanics."
+The injury HP cap is universal and cannot be bypassed by any healing source. "Full health" means maximum possible HP given current injury state, not "bypass injury mechanics."
 
 Pokemon Centers heal injuries first (up to the daily limit), then heal HP to the effective max of remaining injuries. Items, [[trait-definition|traits]], and any future healing mechanics all respect this cap.
 

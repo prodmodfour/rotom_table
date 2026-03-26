@@ -4,7 +4,7 @@
 
 ## Fields
 
-Base stats, types, abilities ([[json-as-text-columns|JSON]]), learnset (JSON with level+move entries), evolution stage/max, evolution triggers (JSON), movement capabilities, size, weight class, power, jump, skills, egg groups, and numeric basic ability count.
+Base stats, types, traits ([[json-as-text-columns|JSON]]), evolution stage/max, evolution triggers (JSON), [[movement-trait-types|movement traits]], size, weight class, power, jump, skills, egg groups.
 
 ## Usage
 

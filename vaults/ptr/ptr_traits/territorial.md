@@ -35,6 +35,7 @@ Y defines the minimum territory size:
 - [[kleptomaniac]]
 - [[wanderer]]
 - [[disposition-charm-check-dcs]]
+- [[instinct-traits]] — this is an instinct trait
 - [[crawdaunt-territorial-aggression]] — Crawdaunt's extreme pond-clearing behavior
 - [[crustle-territorial-shell-contests]] — Crustle's territory-as-status system
 - [[alolan-ninetales-territorial-guardian]] — Alolan Ninetales' warning-before-escalation pattern

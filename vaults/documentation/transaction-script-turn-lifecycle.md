@@ -20,7 +20,7 @@ The `next-turn.post.ts` handler executes these concerns in order:
 12. Move log entry creation
 13. WebSocket broadcasting of final state
 
-Each of these is a distinct game system with its own rules, edge cases, and PTU rulebook references. They are woven together in a single function, sharing mutable encounter state, with implicit ordering dependencies.
+Each of these is a distinct game system with its own rules, edge cases, and PTR rulebook references. They are woven together in a single function, sharing mutable encounter state, with implicit ordering dependencies.
 
 ## Why this is a problem
 

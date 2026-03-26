@@ -1,4 +1,4 @@
-Recalling a Pokemon clears its volatile conditions per PTU rules. If the Pokemon is sent back out into the same source (weather, terrain), the condition re-applies automatically.
+Recalling a Pokemon clears its volatile conditions per PTR rules. If the Pokemon is sent back out into the same source (weather, terrain), the condition re-applies automatically.
 
 This is the [[clear-then-reapply-pattern]] in action. The recall clearing rule and the source application rule are [[separate-mechanics-stay-separate|separate mechanics]] that execute independently:
 
@@ -14,3 +14,4 @@ This design also handles edge cases cleanly: if the weather changes while the Po
 - [[condition-source-tracking]] — tags re-applied conditions with their source
 - [[separate-mechanics-stay-separate]] — the design principle keeping these steps independent
 - [[switching-system]] — recall and send-out are part of the switching flow
+- [[deployment-state-model]] — recall moves Pokemon from active to reserve; send-out reverses it

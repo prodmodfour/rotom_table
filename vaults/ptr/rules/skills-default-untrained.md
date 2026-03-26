@@ -1,8 +1,7 @@
-PTR removes skill ranks — see [[skill-ranks-removed]].
-
-In PTU, all skills began at Untrained rank unless modified by a trainer's background. This established the baseline before [[background-shapes-starting-skills]] raised one skill to Adept, one to Novice, and lowered three to Pathetic.
+Trainers start with +0 in every skill. There is no background system or starting skill allocation — all skill modifiers are gained through [[skill-modifiers-from-traits-or-circumstance|Traits or Circumstance Bonuses]].
 
 ## See also
 
-- [[skill-rank-dice-progression]]
-- [[pathetic-permanent-at-creation]]
+- [[skill-modifier-scale]]
+- [[skill-check-1d20-plus-modifier]]
+- [[ptr-skill-list]]

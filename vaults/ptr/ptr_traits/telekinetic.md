@@ -31,3 +31,4 @@ This trait does not grant any combat benefit on its own. It represents ambient s
 - [[mind-manipulation]] — manipulates minds through psychic force, not physical objects
 - [[phaser]]
 - [[intangibility]]
+- [[mind-manipulation-telekinetic-represent-psychic-typing]] — why this is a Psychic type identity trait

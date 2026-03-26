@@ -15,3 +15,5 @@ The user has pincers or crushing appendages that can grip and crush in battle.
 ## See also
 
 - [[natural-weapons]]
+- [[hyper-cutter]] — protects the striking force of cutting appendages from debuffs
+- [[molting-vulnerability]] — periodic suppression of Pincers during exoskeleton shedding

@@ -1,6 +1,6 @@
 Status conditions provide capture rate bonuses in a defined hierarchy. Sleep and Freeze give the highest bonus, followed by Paralysis, Burn, and Poison at a lower tier. The bonuses do not stack — only the highest applicable bonus from the target's active conditions applies to the [[capture-rate-formula]].
 
-The hierarchy (from PTU capture rules):
+The hierarchy (from PTR capture rules):
 - **Sleep, Freeze**: highest bonus
 - **Paralysis, Burn, Poison**: moderate bonus
 - **Other conditions**: no capture bonus

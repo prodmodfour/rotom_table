@@ -15,7 +15,7 @@
 |---|---|
 | Level Ball | −20 if target level < half the active Pokemon's level |
 | Heavy Ball | −5 per Weight Class above 1 (WC 1 = 0, WC 6 = −25) |
-| Fast Ball | −20 if target's highest movement capability exceeds 7 |
+| Fast Ball | −20 if target's highest [[movement-trait-types|movement trait]] exceeds 7 |
 
 ## Context-dependent (auto-populated)
 

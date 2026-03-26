@@ -1,6 +1,6 @@
 # Flanking Detection Utility
 
-PTU p.232 flanking geometry in `utils/flankingGeometry.ts`. Pure functions with no Vue dependencies.
+PTR p.232 flanking geometry in `utils/flankingGeometry.ts`. Pure functions with no Vue dependencies.
 
 **Constants:** NEIGHBOR_OFFSETS, FLANKING_FOES_REQUIRED (size-to-count map), FLANKING_EVASION_PENALTY.
 

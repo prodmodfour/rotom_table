@@ -6,10 +6,10 @@ The `Combatant` interface has grown to 30+ fields because every game subsystem a
 
 The Combatant is passed to every game system. But no game system needs more than a few of its fields:
 
-- **Damage calculation** needs `hp`, `maxHp`, `tempHp`, `entity.stats`, `entity.abilities`, `statusConditions`, `combatStages`
-- **Movement** needs `position`, `speed`, `entity.movement`, `mountedOn`, `riddenBy`
+- **Damage calculation** needs `hp`, `maxHp`, `tempHp`, `entity.stats`, `entity.traits`, `statusConditions`, `combatStages`
+- **Movement** needs `position`, `speed`, `entity.movementTraits`, `mountedOn`, `riddenBy`
 - **Fog of war** needs `position`, `visionRange`, `darkvision`, `side`
-- **Weather** needs `entity.abilities`, `entity.types`, `statusConditions`
+- **Weather** needs `entity.traits`, `entity.types`, `statusConditions`
 - **Turn order** needs `initiative`, `speed`, `id`, `name`
 
 Each system receives the full Combatant (30+ fields) and ignores most of it. This is a textbook [[interface-segregation-principle]] violation — consumers depend on interfaces they don't use.

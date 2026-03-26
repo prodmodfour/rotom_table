@@ -27,4 +27,5 @@ Wanderer represents a deep migratory instinct — the Pokemon is not unhappy or 
 - [[violent-instincts]]
 - [[territorial]]
 - [[kleptomaniac]]
-- [[dolliv-fruit-maturation-journey]] — Dolliv's wandering phase that precedes evolution into Arboliva
+- [[dolliv-fruit-maturation-journey]]
+- [[instinct-traits]] — this is an instinct trait — Dolliv's wandering phase that precedes evolution into Arboliva

@@ -12,13 +12,13 @@ Each card has a collapsed summary and expandable details.
 
 **Summary:** sprite, nickname/species, type badges, level, HP bar.
 
-**Expanded details:** status conditions, held item, 6-stat grid with stage modifiers, abilities (name + effect text), moves (via `PlayerMoveList`), and capabilities (overland, swim, sky, burrow, levitate, jump, power).
+**Expanded details:** status conditions, held item, 6-stat grid with stage modifiers, traits (name + effect text), moves (via `PlayerMoveList`), and [[movement-trait-types|movement traits]] (Landwalker, Flier, Swimmer, Phaser, Burrower, Teleporter).
 
 Active Pokemon is highlighted with a teal badge. Fainted Pokemon are dimmed.
 
 ## PlayerMoveList
 
-Displays moves with type badge, name, damage class, DB, AC, and frequency. Each move is clickable to expand and show range and effect text. Used for reference only — combat move execution happens through the [[player-combat-action-panel]].
+Displays moves with type badge, name, damage class, DB, AC, and energy cost. Each move is clickable to expand and show range and effect text. Used for reference only — combat move execution happens through the [[player-combat-action-panel]].
 
 ## See also
 

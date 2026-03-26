@@ -4,7 +4,7 @@ REST endpoints under `/api/scenes` for [[scene-data-model|scene]] management. Al
 
 **CRUD:** GET/POST `/api/scenes` (list, create). GET/PUT/DELETE `/api/scenes/:id` (read, update, delete). GET `/api/scenes/active` returns the active scene enriched with `isPlayerCharacter` and `ownerId` flags.
 
-**Serve:** POST `.../activate`, `.../deactivate` — triggers [[scene-activation-lifecycle|full activation lifecycle]] including [[scene-end-ap-restoration|AP restoration]].
+**Serve:** POST `.../activate`, `.../deactivate` — triggers [[scene-activation-lifecycle|full activation lifecycle]].
 
 **Entity management:** POST/DELETE `.../characters/:charId`, `.../pokemon/:pokemonId`. Validates uniqueness on add. Manipulates JSON arrays in the Scene record.
 

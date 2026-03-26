@@ -14,7 +14,7 @@ Split the `Combatant` interface into focused sub-interfaces, each representing a
 | `CombatantCombatStats` | injuries, stageSources, conditionInstances, evasions, badlyPoisonedRound | Status panels, damage calculation |
 | `CombatantInitiative` | initiative, initiativeBonus, initiativeRollOff | Initiative display, turn order |
 | `CombatantOutOfTurn` | outOfTurnUsage, disengaged, holdAction, skipNextRound | Out-of-turn action panels |
-| `CombatantMountState` | mountState, featureUsage | Mount-related components |
+| `CombatantMountState` | mountState | Mount-related components |
 | `CombatantWeaponState` | wieldingWeaponId, wieldedByTrainerId, wasInBladeFormeOnEngage, wieldMovementUsed | Living weapon components |
 
 `Combatant` would become the intersection of all sub-interfaces, preserving backward compatibility. Consumers could opt into narrower types where appropriate.

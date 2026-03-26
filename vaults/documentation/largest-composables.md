@@ -4,8 +4,8 @@ Composables over 20KB in [[composable-domain-grouping]]:
 
 | File | Size | Notes |
 |---|---|---|
-| `useMoveCalculation.ts` | 28KB | PTU move resolution: accuracy, damage, STAB, crits, effectiveness |
-| `useGridMovement.ts` | 26KB | PTU movement rules, diagonal costs, terrain, [[multi-cell-token-footprint]] |
+| `useMoveCalculation.ts` | 28KB | PTR move resolution: accuracy, damage, STAB, crits, effectiveness |
+| `useGridMovement.ts` | 26KB | PTR movement rules, diagonal costs, terrain, [[multi-cell-token-footprint]] |
 | `useGridRendering.ts` | 26KB | 2D canvas draw: grid, fog, terrain, measurement overlays |
 | `usePathfinding.ts` | 25KB | A* with terrain costs, elevation, multi-cell footprints |
 | `useIsometricRendering.ts` | 22KB | Full isometric draw loop with sprite caching |

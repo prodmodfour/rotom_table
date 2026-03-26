@@ -13,7 +13,7 @@
 
 1. Player selects their own token (other tokens are non-selectable).
 2. Player taps a destination cell.
-3. `PlayerMoveRequest` bottom sheet shows coordinates and PTU diagonal distance.
+3. `PlayerMoveRequest` bottom sheet shows coordinates and [[grid-distance-calculation|diagonal distance]].
 4. On confirm, `confirmMove()` sends a `player_move_request` WebSocket event to the GM with `requestId`, `playerId`, `combatantId`, from/to positions, and distance.
 5. Pending move state tracks the request with a 30-second timeout.
 6. GM responds via `player_move_response` with approved/rejected/modified status.

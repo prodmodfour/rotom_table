@@ -4,7 +4,7 @@ The [[pinia-store-classification|measurement store]] provides distance/burst/con
 
 Components wire move range types to the appropriate mode. The store itself has no auto-select — the caller (VTT interaction composable) sets the mode.
 
-Fog brush uses brush-size (circle of cells) while measurement burst uses PTU distance. Despite similar UI, the radius calculations differ.
+Fog brush uses brush-size (circle of cells) while measurement burst uses PTR distance. Despite similar UI, the radius calculations differ.
 
 ## See also
 

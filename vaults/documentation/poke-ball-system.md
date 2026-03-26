@@ -1,6 +1,6 @@
 # Poke Ball System
 
-25 PTU ball types with capture modifiers. See [[capture-rate-formula]] for the base rate calculation that ball modifiers adjust.
+25 PTR ball types with capture modifiers. See [[capture-rate-formula]] for the base rate calculation that ball modifiers adjust.
 
 ## Constants
 

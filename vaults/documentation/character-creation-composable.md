@@ -4,20 +4,13 @@
 
 ## Responsibilities
 
-- Reactive form state for all PTU character fields
-- Stat point tracking: total/remaining computed from [[trainer-stat-budget]], maxHp preview via PTU Trainer HP formula
-- Background application: 11 presets from [[sample-backgrounds]] plus custom mode
-- Trainer class management: add/remove with max 4 cap from [[trainer-class-catalog]]
-- Feature management: class features and training features
-- Edge management: add/remove, Skill Edges with rank bump and revert
-- Skill rank editing with level-based cap from [[trainer-skill-definitions]]
+- Reactive form state for PTR character fields
+- Stat display: all stats [[starting-stat-allocation|default to 10]], maxHp preview via [[trainer-hp-formula|PTR Trainer HP formula]]
+- Skill editing with [[ptr-skill-list|PTR skill system]] (numeric modifiers, no ranks)
+- Trait management
 - Section completion tracking for progress indicators
 - Soft validation warnings (non-blocking) via [[character-creation-validation]]
 - `buildCreatePayload()` assembles the API body for [[character-api-endpoints|POST /api/characters]]
-
-## Key Exports
-
-`form`, `computedStats`, `maxHp`, `evasions`, `statPointsUsed`, `statPointsRemaining`, `allWarnings`, `sectionCompletion`, `buildCreatePayload()`, `incrementStat`, `decrementStat`, `applyBackground`, `clearBackground`, `enableCustomBackground`, `setSkillRank`, `addClass`, `removeClass`, `addFeature`, `removeFeature`, `setTrainingFeature`, `addEdge`, `removeEdge`, `addSkillEdge`.
 
 ## See also
 

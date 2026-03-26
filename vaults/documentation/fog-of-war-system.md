@@ -10,7 +10,7 @@ GM sees all three states with distinct visual indicators and can edit any cell's
 
 State is persisted via dedicated fog GET/PUT endpoints on the encounter (see [[vtt-grid-persistence-apis]]). The [[debounced-persistence|debounced save pattern]] prevents excessive API calls during brush painting.
 
-The fog brush uses a circle of cells based on brush size, which differs from the [[measurement-aoe-modes|measurement burst]] that uses PTU diagonal distance.
+The fog brush uses a circle of cells based on brush size, which differs from the [[measurement-aoe-modes|measurement burst]] that uses PTR diagonal distance.
 
 ## See also
 

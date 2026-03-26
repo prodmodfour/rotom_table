@@ -1,6 +1,6 @@
 # Pokemon HP Formula
 
-Pokemon max HP = `level + (HP_stat × 3) + 10` (PTU Core).
+Pokemon max HP = `(Level × 5) + (HP_stat × 3) + 10` (PTR).
 
 The `maxHp` field on the Pokemon model stores this calculated value. It is recalculated on level-up: the level component increases by 1 per level gained. The HP stat component only changes when stat points are manually allocated via [[pokemon-stat-allocation]].
 

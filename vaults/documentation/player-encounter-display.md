@@ -11,7 +11,7 @@ When it is the player's turn, the [[player-combat-action-panel]] appears. When t
 ## PlayerCombatantInfo
 
 Displays a combatant with visibility rules based on ownership:
-- **Own:** exact HP, stats, moves, abilities, injuries. Teal border.
+- **Own:** exact HP, stats, moves, traits, injuries. Teal border.
 - **Allied:** exact HP, injuries only.
 - **Enemy:** percentage HP only — no exact values, no stats, no injuries.
 

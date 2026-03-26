@@ -27,3 +27,4 @@ Primarily a Dark-type trait. Reflects an instinct for exploiting openings — th
 
 - [[attack-of-opportunity-trigger-list]]
 - [[ambush]] — concealment-based first-strike advantage
+- [[opportunist-represents-dark-typing]] — why this is the Dark type's identity trait

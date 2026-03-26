@@ -1,4 +1,8 @@
-Combat stages modify a combatant's effective stats during an encounter. Each of the seven combat stats (Attack, Defense, Sp.Attack, Sp.Defense, Speed, Accuracy, Evasion) has an independent stage value clamped to the range **-6 to +6**.
+Combat stages modify a combatant's effective stats during an encounter. Five combat stats — Attack, Defense, Sp.Attack, Sp.Defense, and Speed — each have an independent stage value clamped to **-6 to +6**, resolved via the multiplier table below.
+
+Accuracy combat stages also use the -6 to +6 range but work differently: instead of a multiplier, each stage adds or subtracts directly from accuracy rolls (per [[accuracy-cs-is-direct-modifier]]).
+
+Evasion is not a combat stage — it is derived from defensive stats (Def/5, SpDef/5, Spd/5), capped at +6 (per [[evasion-from-defensive-stats]]).
 
 ## Stage Multiplier Table
 
@@ -22,10 +26,6 @@ Each stage maps to a multiplier applied to the base stat value:
 
 The constant `STAGE_MULTIPLIERS` in `constants/combat.ts` stores this table. The utility `applyStageModifier` clamps the stage, looks up the multiplier, and floors the result.
 
-## Focus Bonus Variant
-
-`applyStageModifierWithBonus` applies the stage multiplier first, then adds a flat bonus. This is used for Focus-equipped trainers who gain +5 to the relevant stat after stage modification (PTU p.295).
-
 ## Modification
 
 Stages are modified via the `modifyStage` API endpoint, which accepts either a delta (+2, -1) or an absolute value. The `updateStageModifiers` service function enforces the -6/+6 clamp.
@@ -35,5 +35,5 @@ Stages are modified via the `modifyStage` API endpoint, which accepts either a d
 ## See also
 
 - [[nine-step-damage-formula]] — stages feed into attack and defense steps
-- [[evasion-and-accuracy-system]] — stages affect evasion and accuracy calculations
+- [[evasion-and-accuracy-system]] — accuracy checks and evasion derivation
 - [[equipment-bonus-aggregation]] — Heavy Armor applies a default Speed CS of -1

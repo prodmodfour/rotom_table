@@ -4,7 +4,7 @@ A potential [[extract-interface]] to address the [[entity-union-unsafe-downcasts
 
 ## The idea
 
-Create a `CombatEntity` interface containing the ~14 fields that are genuinely type-compatible between `Pokemon` and `HumanCharacter`: `id`, `level`, `currentHp`, `maxHp`, `temporaryHp`, `statusConditions`, `stageModifiers`, `injuries`, `nature`, `types`, `heldItem`, `weight`, `size`, `gender`. Both `Pokemon` and `HumanCharacter` would extend `CombatEntity`. `Combatant.entity` would be typed as `CombatEntity`, with narrowing to the full type available via the existing `combatant.type` discriminant.
+Create a `CombatEntity` interface containing the ~16 fields that are genuinely type-compatible between `Pokemon` and `HumanCharacter`: `id`, `level`, `currentHp`, `maxHp`, `temporaryHp`, `stamina`, `currentEnergy`, `maxEnergy`, `statusConditions`, `stageModifiers`, `injuries`, `traits`, `types`, `heldItem`, `weight`, `size`, `gender`. Both `Pokemon` and `HumanCharacter` would extend `CombatEntity`. `Combatant.entity` would be typed as `CombatEntity`, with narrowing to the full type available via the existing `combatant.type` discriminant. Stamina is a shared stat per [[stamina-stat]], and Energy is the combat resource derived from it per [[energy-resource]].
 
 Combat-stat-only code paths (HP checks, status condition queries, stage modifier reads) would become fully type-safe without any `as` casts.
 
@@ -21,9 +21,9 @@ Combat-stat-only code paths (HP checks, status condition queries, stage modifier
 ## Trade-offs
 
 - Adds a third type to understand and maintain alongside `Pokemon` and `HumanCharacter`
-- The 14-field boundary must be chosen carefully — too few fields and casts remain everywhere; too many and [[entity-shared-field-incompatibility|incompatible fields]] sneak in
+- The 16-field boundary must be chosen carefully — too few fields and casts remain everywhere; too many and [[entity-shared-field-incompatibility|incompatible fields]] sneak in
 - Migration of 144 cast sites is mechanical but high-volume — risk of introducing regressions
-- The `capabilities` and `skills` fields are explicitly excluded due to [[entity-shared-field-incompatibility|structural incompatibility]] — consumers needing these must still narrow
+- The `skills` field is explicitly excluded due to [[entity-shared-field-incompatibility|structural incompatibility]] — consumers needing it must still narrow
 
 ## Open questions
 
@@ -35,3 +35,5 @@ Combat-stat-only code paths (HP checks, status condition queries, stage modifier
 
 - [[combatant-type-hierarchy]] — the architectural context for this hierarchy
 - [[combatant-type-segregation]] — the complementary proposal for the Combatant interface itself
+- [[game-state-interface]] — the formal design that supersedes this proposal with a full sub-interface decomposition
+- [[combat-lens-sub-interfaces]] — the 15 sub-interfaces that replace the single CombatEntity base

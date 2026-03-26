@@ -19,3 +19,7 @@ The correct format is `Shell [X]` where X is a number. Do not omit the brackets 
 ## Notes
 
 X ranges from 1 to 5. A higher value represents a thicker, tougher, or more encompassing shell.
+
+## See also
+
+- [[molting-vulnerability]] — periodic suppression of Shell during exoskeleton shedding

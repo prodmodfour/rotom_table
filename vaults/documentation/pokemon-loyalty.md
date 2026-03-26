@@ -1,6 +1,6 @@
 # Pokemon Loyalty
 
-`Pokemon.loyalty` is an `Int @default(3)` field in the [[prisma-schema-overview|Prisma schema]], implementing PTU Chapter 10 loyalty ranks.
+`Pokemon.loyalty` is an `Int @default(3)` field in the [[prisma-schema-overview|Prisma schema]], implementing PTR loyalty ranks.
 
 ## Ranks
 

@@ -1,0 +1,5 @@
+The [[Croagunk]] line has highly permeable skin that absorbs moisture directly from the environment. This is essential to their biology — the poison sacs described in [[croagunk-line-poison-sac-system]] require constant hydration to produce and store toxin. In damp marshland and freshwater habitats, their skin passively absorbs water, keeping the sacs primed. Rain is especially beneficial, visibly revitalizing them.
+
+The same permeability that makes them thrive in wet conditions makes them vulnerable to heat and dryness. Prolonged sun exposure dehydrates the skin faster than they can compensate, weakening them and reducing toxin production. This is why the line is almost exclusively found in shaded marshes and near bodies of water — they physically cannot sustain themselves in arid or sun-exposed environments.
+
+This biology also grants an unusual defensive property: Water-Type attacks are simply absorbed through the skin rather than causing harm, effectively making the line immune to water-based damage.

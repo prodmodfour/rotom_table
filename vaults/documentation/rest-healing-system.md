@@ -1,6 +1,6 @@
 The out-of-combat rest and healing system provides five recovery mechanisms available exclusively through the GM view: [[thirty-minute-rest]], [[extended-rest]], [[pokemon-center-healing]], [[natural-injury-healing]], and [[new-day-reset]].
 
-All rest operations share common constraints tracked by [[healing-data-fields]]: rest minutes used today (capped at 480), injuries healed today (capped at 3), and timestamps for [[daily-counter-auto-reset]]. Trainers additionally manage [[trainer-action-points]].
+All rest operations share common constraints tracked by [[healing-data-fields]]: rest minutes used today (capped at 480), injuries healed today (capped at 3), and timestamps for [[daily-counter-auto-reset]].
 
 Healing is always capped at the [[effective-max-hp-formula]] ceiling — injuries permanently lower the maximum HP that healing can restore to until the injuries themselves are healed.
 

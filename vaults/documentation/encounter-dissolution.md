@@ -155,7 +155,7 @@ async function dealDamage(sessionId: string, targetId: string, amount: number) {
 
 ## Open questions
 
-- What are the right container boundaries? The 8 containers above are a starting point, but should there be more (separate status-conditions container? separate abilities container?) or fewer (combine roster + turns into a "combat" container)?
+- What are the right container boundaries? The 8 containers above are a starting point, but should there be more (separate status-conditions container? separate traits container?) or fewer (combine roster + turns into a "combat" container)?
 - How do cross-container transactions work? Is there a session-level transaction coordinator, or do containers use eventual consistency with compensating actions?
 - Should containers be loaded eagerly (all at session start) or lazily (on first access)? Lazy loading reduces startup cost but adds latency on first action.
 - How does this interact with [[in-memory-encounter-state]]? Each container could be independently loaded into memory — only the combat roster needs to be in-memory during active play; weather can stay in the database.

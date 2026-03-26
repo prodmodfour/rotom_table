@@ -29,6 +29,7 @@ The correct format is `Kleptomaniac [X]` where X is a number. Do not omit the br
 - [[pickpocket]]
 - [[likes-shiny]]
 - [[disposition-charm-check-dcs]]
+- [[instinct-traits]] — this is an instinct trait
 - [[murkrow-line-shiny-object-hoarding]] — Murkrow's compulsive gem/jewelry theft
 - [[nickit-line-obligate-thief]] — Nickit/Thievul's survival-driven food theft
 - [[sableye-gemstone-diet]] — Sableye steals gems because it eats them

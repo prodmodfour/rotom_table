@@ -7,3 +7,4 @@ Naturewalk is a [[innate-traits|species trait]] from the Pokedex, making habitat
 - [[slow-terrain-doubles-movement]]
 - [[rough-terrain-intervening-only]]
 - [[multi-tag-terrain-system]]
+- [[naturewalk-ocean-is-aquatic-catch-all]] — Ocean covers all water terrain, not just saltwater

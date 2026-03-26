@@ -14,3 +14,8 @@
 
 ## Notes
 
+
+## See also
+
+- [[poison-coated-natural-weapon]] — venomous appendages, distinct from projected toxin
+- [[poison-expulsion-represents-poison-typing]] — why this is the Poison type's identity trait

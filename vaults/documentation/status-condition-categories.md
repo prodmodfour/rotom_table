@@ -1,22 +1,30 @@
-PTU status conditions are grouped into three categories, defined in the `STATUS_CONDITIONS` constant in `constants/combat.ts`.
+PTR status conditions are grouped into categories, defined in the `STATUS_CONDITIONS` constant in `constants/combat.ts`.
 
 ## Persistent (5)
 
-Long-lasting conditions that survive turn boundaries and typically require specific actions to remove: Burned, Frozen, Paralyzed, Poisoned, Badly Poisoned.
+Long-lasting conditions that survive turn boundaries and typically require specific actions to remove: Burning, Frozen, Paralyzed, Poisoned, Badly Poisoned.
 
 Persistent conditions are cleared on faint (see [[faint-and-revival-effects]]) but not by [[take-a-breather-mechanics]].
 
-## Volatile (9)
+## Volatile (7)
 
-Temporary combat conditions that can be removed by Take a Breather or recall: Confused, Cursed, Disabled, Enraged, Flinched, Infatuated, Sleep, Slowed, Suppressed.
+Temporary combat conditions that can be removed by Take a Breather or recall: Confused, Cursed, Disabled, Enraged, Flinched, Infatuated, Sleep.
 
 Volatile conditions are cleared on faint, on recall (see [[switching-system]]), and by [[take-a-breather-mechanics]] (except Cursed).
 
-## Other (6)
+## Slow/Stuck
 
-Conditions that don't fit the persistent/volatile model: Fainted, Stuck, Tripped, Vulnerable, Trapped, Blindness.
+Slow and Stuck occupy their own category, separate from Persistent, Volatile, and Other (per [[stuck-slow-separate-from-volatile]]). Take a Breather does NOT cure them.
 
-Other conditions are NOT cleared on faint. Slowed and Stuck are cured by [[take-a-breather-mechanics]] despite being in the Other category.
+## Fatigued
+
+Fatigued is its own standalone category (per [[fatigued-is-its-own-condition-category]]). It has stacking levels with distinct mechanics that don't fit any other category (see [[fatigue-levels]]).
+
+## Other (5)
+
+Conditions that don't fit the above categories: Fainted, Tripped, Vulnerable, Trapped, Blindness.
+
+Other conditions are NOT cleared on faint.
 
 ## Implementation
 
@@ -26,7 +34,9 @@ The `updateStatusConditions` service function validates incoming conditions agai
 
 - [[faint-and-revival-effects]] — which categories clear on faint
 - [[take-a-breather-mechanics]] — which conditions are cured
-- [[status-tick-automation]] — automatic tick damage for Burned, Poisoned, Badly Poisoned, Cursed
+- [[status-tick-automation]] — automatic tick damage for Burning, Poisoned, Badly Poisoned, Cursed
 - [[type-status-immunity-utility]] — type-based immunity to specific conditions
 - [[extended-rest]] — clears persistent conditions
 - [[pokemon-center-healing]] — clears all conditions
+- [[combat-lens-sub-interfaces]] — `HasStatus` hosts condition instances with source tracking
+- [[active-effect-model]] — effect-specific tracking that doesn't fit the status/volatile system

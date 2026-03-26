@@ -21,6 +21,6 @@ If a combatant is healed from 0 HP, the Fainted status is automatically removed 
 - [[hp-injury-system]] — injuries that reduce effective max HP
 - [[temp-hp-mechanics]] — temp HP no-stacking rule
 - [[faint-and-revival-effects]] — auto-removal of Fainted on heal
-- [[healing-item-system]] — PTU healing items that invoke this system
+- [[healing-item-system]] — healing items that invoke this system
 - [[rest-healing-system]] — out-of-combat rest and recovery mechanics
 - [[effective-max-hp-formula]] — the injury-based ceiling calculation

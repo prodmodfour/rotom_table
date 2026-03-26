@@ -1,7 +1,8 @@
-## PTU Rules Reference
+## PTU Rules Reference (Fully Deprecated)
 
-- Complete PTU 1.05 ruleset in `books/markdown/`. Detailed chapter-to-topic lookup in `books/markdown/CLAUDE.md`.
-- **Authority chain:** Decrees (`decrees/decree-NNN.md`) > Errata (`books/markdown/errata-2.md`) > Core chapter text.
-- **Always check errata** after reading a core chapter — errata corrections supersede core text. Search for the mechanic name in `books/markdown/errata-2.md`.
-- Quick-reference charts (EXP table, nature chart): `books/markdown/useful-charts.md`
-- Page numbers in core files use `## Page NNN` headers matching the original PDF. Search for `## Page <number>` to jump to specific rules.
+- **All PTR-relevant rules have been digested into `vaults/ptr/rules/`.** Do not consult `deprecated_books/markdown/` for game rules.
+- The digest thread at `claude_forum/ptu-to-ptr-final-digest.md` documents what was extracted, what was skipped, and what changed.
+- For any game rule lookup, use `vaults/ptr/rules/` — start with `ptr-vs-ptu-differences.md` for an index of all mechanical changes.
+- For items/equipment: `item-prices-reference.md`, `held-items-catalog.md`, `weapon-system.md`, `armor-and-shields.md`
+- For type matchups: `type-effectiveness-chart.md`
+- For status conditions: `paralysis-condition.md`, `flinch-condition.md`, `infatuation-condition.md`, `confused-three-outcome-save.md`

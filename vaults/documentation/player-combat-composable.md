@@ -8,14 +8,7 @@
 
 ## Move Availability
 
-`isMoveExhausted()` checks whether a move has reached its [[move-frequency-system|frequency limit]]:
-- At-Will — never exhausted.
-- EOT — can't use if used last turn.
-- Scene / Scene x2 / Scene x3 — per-scene usage tracking.
-- Daily / Daily x2 / Daily x3 — per-day usage tracking.
-- Static — always exhausted (passive only).
-
-Returns `{ exhausted: boolean, reason: string }`.
+`canAffordMove()` checks whether the combatant has enough [[energy-resource|Energy]] to pay the move's [[move-energy-system|energy cost]]. Returns `{ affordable: boolean, reason: string }`.
 
 ## Direct Actions
 

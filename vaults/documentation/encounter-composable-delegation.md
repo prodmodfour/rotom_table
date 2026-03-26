@@ -9,7 +9,7 @@ How [[encounter-component-categories|encounter components]] delegate to [[compos
 | `useDamageCalculation` | Damage base chart, rolled/set damage modes | DamageSection |
 | `useEncounterActions` | GM action handlers (damage, heal, stages, status, moves, grid); uses useGmToast | pages/gm/index.vue |
 | `useEncounterHistory` | Undo/redo with 50-snapshot ring buffer | pages/gm/index.vue |
-| `useEncounterBudget` | Difficulty budget analysis (PTU p.460) | BudgetIndicator |
+| `useEncounterBudget` | Difficulty budget analysis per [[encounter-budget-needs-ptu-basis]] | BudgetIndicator |
 | `useSwitching` | Switch, recall, release workflows (Standard/Shift action cost) | SwitchPokemonModal |
 | `useHealingItems` | Item filtering by category and target state | UseItemModal |
 | `useCapture` | Capture rate calc, accuracy check (AC 6), ball modifiers | CapturePanel |
@@ -27,6 +27,6 @@ Shared composables also used: `useTypeChart` (MoveButton), `usePokemonSprite`/`u
 - [[nine-step-damage-formula]] — the calculation `useMoveCalculation` implements
 - [[evasion-and-accuracy-system]] — accuracy/evasion math in `useMoveCalculation` and `useCombat`
 - [[combat-stage-system]] — stage multipliers used by `useCombat`
-- [[move-frequency-system]] — frequency validation in move execution
+- [[move-energy-system]] — energy cost validation in move execution
 - [[encounter-store-decomposition]]
 - [[damage-flow-pipeline]]

@@ -1,8 +1,8 @@
-Trainer HP = `(level * 2) + (baseHp * 3) + 10`.
+# Trainer HP Formula
 
-The doubled level coefficient (compared to [[pokemon-hp-formula]]'s single level coefficient) gives trainers more HP scaling per level. This makes trainers progressively tougher relative to their Pokemon as they level up.
+Trainer HP = `(HP stat × 3) + 10` per [[trainer-hp-formula|PTR]]. Trainers [[only-pokemon-have-levels|have no levels]], so there is no level component (unlike [[pokemon-hp-formula]]).
 
-The app computes this automatically as part of [[automate-routine-bookkeeping]], recalculating whenever the trainer levels up or base HP changes. The trainer never manually enters their HP total.
+The app computes this automatically per [[automate-routine-bookkeeping]], recalculating whenever base HP changes.
 
 ## See also
 - [[automate-routine-bookkeeping]]

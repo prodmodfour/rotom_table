@@ -1,6 +1,6 @@
 # Capture Accuracy Gate
 
-Poke Ball throws are AC 6 Status Attack Rolls using the full accuracy system (PTU p.214, decree-042).
+Poke Ball throws are AC 6 Status Attack Rolls using the full accuracy system per [[full-accuracy-for-pokeball-throws]].
 
 ## Calculation
 

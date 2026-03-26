@@ -1,8 +1,9 @@
-PTU provides a rapid NPC building workflow: decide Level by reference to PC levels, choose major Classes and Features, choose major Skills and Edges, and optionally distribute Combat Stats (starting from 10 HP and 5 in other stats, adding 10 points on top).
+NPC trainers are built using the same base as PCs: [[starting-stat-allocation|10 in each stat]], then assign [[trait-definition|Traits]] and [[skill-modifiers-from-traits-or-circumstance|skill modifiers]] appropriate to their concept. [[only-pokemon-have-levels|Trainers have no levels]] — their capability comes from traits and their Pokemon team.
 
-This parallels [[quick-stat-workflow]] for wild Pokemon — both are streamlined workflows that support [[encounter-creation-is-gm-driven]] by reducing prep time for encounters involving NPCs.
+For quick NPC prep: pick 2-3 relevant traits, set a handful of skill modifiers, and optionally adjust combat stats from the baseline. Most NPCs don't need full builds.
 
 ## See also
 
-- [[automate-routine-bookkeeping]]
+- [[quick-stat-workflow]] — rapid Pokemon statting for encounters
+- [[encounter-creation-is-gm-driven]]
 - [[starting-stat-allocation]]

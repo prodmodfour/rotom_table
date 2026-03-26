@@ -5,7 +5,6 @@ Initiative determines combatant ordering within an encounter. Calculated when a 
 Initiative = base Speed stat + initiative bonus. Two equipment effects modify this:
 
 - **Heavy Armor** — applies a default Speed combat stage of -1, reducing the effective Speed used for initiative.
-- **Focus items** — add +5 to Speed after stage modification (PTU p.295).
 
 The `buildCombatantFromEntity` service function computes initiative during combatant construction using [[equipment-bonus-aggregation]] to derive equipment effects.
 
@@ -29,6 +28,6 @@ Combatants added after the encounter starts are inserted into the turn order at 
 ## See also
 
 - [[combat-stage-system]] — Speed CS affects initiative
-- [[equipment-bonus-aggregation]] — Heavy Armor and Focus modify Speed
+- [[equipment-bonus-aggregation]] — Heavy Armor modifies Speed
 - [[turn-lifecycle]] — the turn flow that uses this ordering
 - [[battle-modes]] — League mode uses separate trainer/pokemon orderings

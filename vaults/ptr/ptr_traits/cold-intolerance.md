@@ -18,3 +18,5 @@ Suppressed for three rounds if the user uses or is hit by a Fire type move.
 
 ## Notes
 
+The inverse of [[cold-tolerance]], which grants immunity to cold weather and Hail.
+

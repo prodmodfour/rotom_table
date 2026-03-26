@@ -6,7 +6,7 @@ Automatic tick damage for status conditions at turn boundaries.
 
 **Pure functions:** calculateTickDamage, calculateBadlyPoisonedDamage, getTickDamageEntries.
 
-**Conditions handled:** Burned, Poisoned, Badly Poisoned, Cursed.
+**Conditions handled:** Burning, Poisoned, Badly Poisoned, Cursed.
 
 **Constant:** `TICK_DAMAGE_CONDITIONS` in `constants/statusConditions.ts`.
 

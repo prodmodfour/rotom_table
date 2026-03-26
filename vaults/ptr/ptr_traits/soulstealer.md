@@ -1,3 +1,9 @@
+---
+id: soulstealer
+aliases: []
+tags: []
+---
+
 # Soulstealer
 
 ## Properties
@@ -7,7 +13,7 @@
 
 ## Effect
 
-When the user's attack causes a foe to Faint, the user removes one Injury and recovers 25% of their maximum Hit Points.
+When the user's attack kills a creature, the user removes one Injury and recovers 25% of their maximum Hit Points.
 
 ## Unlock Conditions
 

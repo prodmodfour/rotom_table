@@ -7,8 +7,8 @@
 | `combatant.service.ts` | 797 | Damage calc, healing, status conditions, stage mods, combatant construction, HP-loss pathway |
 | `switching.service.ts` | 927 | Switch validation, recall range, initiative insertion, action tracking, terrain/weather re-apply on send-out |
 | `out-of-turn.service.ts` | 752 | AoO, Hold Action, Priority Actions, Interrupt framework |
-| `intercept.service.ts` | 689 | Intercept Melee/Ranged (PTU p.242) — eligibility, detection, resolution |
-| `evolution.service.ts` | 715 | Species evolution: stat recalc, Base Relations validation, full execution |
+| `intercept.service.ts` | 689 | Intercept Melee/Ranged (PTR p.242) — eligibility, detection, resolution |
+| `evolution.service.ts` | 715 | Species evolution: stat recalc, full execution |
 | `mounting.service.ts` | 561 | Trainer-Pokemon mount/dismount logic, movement sharing, faint auto-dismount |
 | `living-weapon.service.ts` | 555 | Living Weapon engage/disengage, wield state, faint penalty, equipment overlay |
 | `pokemon-generator.service.ts` | 540 | Canonical Pokemon creation pipeline. See [[pokemon-generator-entry-point]] |

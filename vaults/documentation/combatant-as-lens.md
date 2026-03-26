@@ -8,7 +8,9 @@ Every existing proposal that addresses the Combatant accepts a hidden premise: t
 
 What if there is no Combatant?
 
-A Pokemon is always a Pokemon. A Trainer is always a Trainer. When they enter combat, they don't become something else. Instead, the combat system creates a **lens** — a temporary, session-scoped projection that attaches combat state (current HP delta, stage modifiers, status conditions, position, turn order) to the entity without modifying it. The lens is not a copy. It is a view. The entity is the source of truth for its intrinsic properties (stats, moves, abilities, species, level). The lens is the source of truth for its transient combat state.
+A Pokemon is always a Pokemon. A Trainer is always a Trainer. When they enter combat, they don't become something else. Instead, the combat system creates a **lens** — a temporary, session-scoped projection that attaches combat state (current HP delta, stage modifiers, status conditions, position, turn order) to the entity without modifying it. The lens is not a copy. It is a view. The entity is the source of truth for its intrinsic properties (stats, moves, traits, species, level). The lens is the source of truth for its transient combat state.
+
+> **Note:** This note established the lens concept. The formal design has since been decomposed into 15 ISP sub-interfaces — see [[combat-lens-sub-interfaces]] for the authoritative interface definitions, [[state-delta-model]] for how effects write, and [[game-state-interface]] for the full architecture. The prose concepts below remain valid; the code examples are illustrative of the *motivation*, not the current design.
 
 ```typescript
 // === ENTITIES ARE ALWAYS ENTITIES ===
@@ -18,11 +20,9 @@ interface Pokemon {
   id: string
   species: string
   level: number
-  nature: string
-  stats: StatBlock       // HP, ATK, DEF, SPATK, SPDEF, SPD
+  stats: StatBlock       // HP, ATK, DEF, SPATK, SPDEF, SPD, STAMINA
   moves: Move[]
-  abilities: Ability[]
-  capabilities: Capability[]
+  traits: Trait[]
   experience: number
   loyalty: number
   heldItem: string | null
@@ -31,12 +31,9 @@ interface Pokemon {
 interface Trainer {
   id: string
   name: string
-  level: number
   stats: StatBlock
   skills: Record<string, number>
-  features: Feature[]
-  edges: Edge[]
-  trainerClasses: TrainerClass[]
+  traits: Trait[]
   equipment: Equipment[]
   inventory: InventoryItem[]
 }
@@ -44,107 +41,29 @@ interface Trainer {
 // === COMBAT STATE IS A SEPARATE, LINKED RECORD ===
 // Created when an entity enters combat. Destroyed when combat ends.
 // Never embedded in the entity. Never transforms the entity's type.
-
-interface CombatLens {
-  entityId: string
-  entityType: 'pokemon' | 'trainer'
-  sessionId: string
-
-  // === DELTA STATE (relative to entity's intrinsic values) ===
-  hpDelta: number          // negative = damage taken, positive = temp HP
-  injuries: number
-  stageModifiers: StageModifiers
-  statusConditions: ConditionInstance[]
-  volatileConditions: VolatileCondition[]
-
-  // === COMBAT-ONLY STATE (no intrinsic equivalent) ===
-  side: 'allies' | 'enemies' | 'neutral'
-  initiative: number
-  position: GridPosition | null
-  turnState: TurnState
-  outOfTurnUsage: OutOfTurnUsage
-  holdAction: HoldAction | null
-
-  // === RELATIONSHIP STATE ===
-  mountedOn: string | null
-  riddenBy: string | null
-  engagedWith: string | null  // living weapon
-  wieldedBy: string | null
-}
+// In the formal design, this flat struct is decomposed into 15 sub-interfaces
+// (see combat-lens-sub-interfaces.md). entityType lives on the entity, not here.
 
 // === PROJECTION: WHAT THE UI SEES ===
 // A "combatant view" is computed, never stored.
-
-interface CombatantView {
-  // Entity fields (read-through from the entity)
-  id: string
-  name: string
-  species?: string
-  level: number
-  moves: Move[]
-  abilities: Ability[]
-
-  // Derived combat fields (computed from entity + lens)
-  hp: number              // entity.stats.hp + lens.hpDelta
-  maxHp: number           // entity.stats.hp (intrinsic)
-  effectiveStats: StatBlock  // entity.stats modified by lens.stageModifiers + lens.statusConditions
-
-  // Combat-only fields (pass-through from lens)
-  side: 'allies' | 'enemies' | 'neutral'
-  position: GridPosition | null
-  statusConditions: ConditionInstance[]
-  // ...
-}
+// In the formal design, effects return StateDelta objects instead of
+// new lens copies (see state-delta-model.md).
 
 function projectCombatant(entity: Pokemon | Trainer, lens: CombatLens): CombatantView {
-  return {
-    id: entity.id,
-    name: 'species' in entity ? entity.species : entity.name,
-    level: entity.level,
-    moves: 'moves' in entity ? entity.moves : [],
-    abilities: 'abilities' in entity ? entity.abilities : [],
-
-    hp: entity.stats.hp + lens.hpDelta,
-    maxHp: entity.stats.hp,
-    effectiveStats: applyStageModifiers(entity.stats, lens.stageModifiers),
-
-    side: lens.side,
-    position: lens.position,
-    statusConditions: lens.statusConditions,
-    // ...
-  }
+  // Entity fields read through from the entity
+  // Derived fields computed from entity + lens (evasion, initiative, effective stats)
+  // Lens fields passed through for combat-only state
 }
 
-// === COMBAT SYSTEMS RECEIVE WHAT THEY NEED ===
-
-// Damage system receives the entity (for base stats) and the lens (for current deltas)
-function applyDamage(entity: Pokemon, lens: CombatLens, damage: number): CombatLens {
-  return { ...lens, hpDelta: lens.hpDelta - damage }
-  // The Pokemon itself is NEVER modified. Only the lens changes.
-}
-
-// Switching replaces the lens, not the entity
-function switchPokemon(
-  outgoing: { entity: Pokemon; lens: CombatLens },
-  incoming: Pokemon,
-  sessionId: string
-): CombatLens {
-  // Create a new lens for the incoming Pokemon
-  return createCombatLens(incoming.id, 'pokemon', sessionId, {
-    side: outgoing.lens.side,
-    position: outgoing.lens.position,
-    initiative: outgoing.lens.initiative,
-  })
-  // The outgoing Pokemon is unchanged. Its lens is archived (for re-entry tracking).
-  // The incoming Pokemon is unchanged. It gains a lens.
-}
+// Effects describe what should change — they don't mutate the lens directly.
+// The engine is the single writer.
 ```
 
 ## Why this is destructive
 
 - **The `Combatant` type is deleted.** Not shattered into traits, not decomposed into components — deleted. There is no type called Combatant in the codebase.
 - **The `buildCombatant()` function is deleted.** The current code transforms a Pokemon/HumanCharacter database record into a Combatant by copying and reshaping fields. This transformation does not exist. The entity is the entity; the lens is a separate record.
-- **The entity snapshot pattern is eliminated.** Currently, adding a Pokemon to combat creates a snapshot of its stats, moves, and abilities embedded in the Combatant. If the Pokemon levels up mid-combat (via XP), the Combatant snapshot is stale. With lenses, the Pokemon IS the Pokemon — its current stats are always live.
+- **The entity snapshot pattern is eliminated.** Currently, adding a Pokemon to combat creates a snapshot of its stats, moves, and traits embedded in the Combatant. If the Pokemon levels up mid-combat (via XP), the Combatant snapshot is stale. With lenses, the Pokemon IS the Pokemon — its current stats are always live.
 - **All 23 services that accept `Combatant` are rewritten.** They accept `(entity, lens)` pairs or just the lens. The damage service modifies the lens's `hpDelta`, never the entity's stats.
 - **The combatants JSON column is replaced.** Instead of storing an array of full combatant objects in a single JSON TEXT column, the database stores a `CombatLens` table with one row per combat participant. Entity data stays in the `Pokemon` and `HumanCharacter` tables.
 - **The encounter builder is eliminated.** Currently, `buildEncounterResponse` assembles combatant objects by merging entity data with combat state. With lenses, the `projectCombatant` function computes the view on demand — no assembly step.
@@ -159,7 +78,7 @@ function switchPokemon(
 
 ## Principles improved
 
-- [[single-responsibility-principle]] — entities are responsible for intrinsic state (stats, moves, abilities). Lenses are responsible for transient combat state (HP delta, status conditions, position). Neither knows about the other's internals.
+- [[single-responsibility-principle]] — entities are responsible for intrinsic state (stats, moves, traits). Lenses are responsible for transient combat state (HP delta, status conditions, position). Neither knows about the other's internals.
 - [[interface-segregation-principle]] — combat systems receive only what they need. The damage system receives `(entity.stats, lens)`. The movement system receives `(entity.speed, lens.position)`. No system receives a 30-field god object.
 - [[open-closed-principle]] — adding a new combat concern (e.g., aura effects) means adding a field to `CombatLens`. The Pokemon and Trainer types don't change. The lens is open for extension; entities are closed for modification.
 - [[dependency-inversion-principle]] — combat systems depend on the `CombatLens` abstraction, not on the concrete entity type. A damage function works identically for Pokemon and Trainers because it operates on the lens.
@@ -204,3 +123,7 @@ function switchPokemon(
 - [[universal-event-journal]] — compatible: combat events target lenses
 - [[proxy-pattern]] — the combatant view is a proxy over entity + lens
 - [[bridge-pattern]] — entity and combat state vary independently, bridged by the lens
+- [[game-state-interface]] — the formal interface design that builds on this lens architecture
+- [[combat-lens-sub-interfaces]] — ISP decomposition of the lens into narrow sub-interfaces
+- [[state-delta-model]] — how effects write to the lens via deltas
+- [[entity-write-exception]] — the documented exception to entity read-only during combat

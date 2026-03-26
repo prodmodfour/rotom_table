@@ -22,15 +22,6 @@
 | POST | `/api/characters/:id/heal-injury` | [[natural-injury-healing]] or [[ap-drain-injury-healing]] |
 | POST | `/api/characters/:id/new-day` | [[new-day-reset]] (cascades to Pokemon) |
 
-## XP
-
-| Method | Path | Purpose |
-|---|---|---|
-| POST | `/api/characters/:id/xp` | Award or deduct trainer XP (auto-level at 10 XP, bank clamped, level cap 50) |
-| GET | `/api/characters/:id/xp-history` | Returns current bank, level, xpToNextLevel, ownedSpecies |
-
-See [[trainer-xp-system]] for the underlying logic.
-
 ## Equipment
 
 | Method | Path | Purpose |

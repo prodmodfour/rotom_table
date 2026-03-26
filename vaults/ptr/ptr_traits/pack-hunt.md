@@ -25,3 +25,5 @@ A pack-fighting instinct — the user reflexively strikes when an ally lands a b
 - [[mightyena-attack-telegraphing]] — attack signals as pack communication
 - [[murkrow-line-murder-hierarchy]] — Honchkrow's mob-boss flock structure
 - [[zoroark-pack-protection]] — Zoroark's loyalty-based pack defense
+- [[corvisquire-flock-hierarchy]] — Corvisquire's lieutenant role in the Rookidee line flock
+- [[lillipup-line-ancient-human-partnership]] — one of the earliest cooperative pack-hunting partnerships with humans

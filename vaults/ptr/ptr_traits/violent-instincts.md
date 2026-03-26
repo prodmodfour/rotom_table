@@ -27,3 +27,4 @@ The correct format is `Violent Instincts [X]` where X is a number. Do not omit t
 - [[kleptomaniac]]
 - [[wanderer]]
 - [[disposition-charm-check-dcs]]
+- [[instinct-traits]] — this is an instinct trait

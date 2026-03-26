@@ -22,5 +22,4 @@ Mettle represents sheer tenacity — the kind of resolve that comes from being k
 
 ## See also
 
-- [[guts]] — another trait that converts adversity into power
 - [[inner-focus]] — mental resilience against flinching

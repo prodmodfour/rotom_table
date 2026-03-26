@@ -1,4 +1,4 @@
-Certain types grant immunity to specific status conditions: Fire-type cannot be Burned, Electric-type cannot be Paralyzed, Poison-type cannot be Poisoned, Ice-type cannot be Frozen, and so on. These are hard rules in PTU — no amount of accuracy or effect stacking bypasses type immunity under normal circumstances.
+Certain types grant immunity to specific status conditions: Fire-type cannot be Burned, Electric-type cannot be Paralyzed, Poison-type cannot be Poisoned, Ice-type cannot be Frozen, and so on. These are hard rules in PTR — no amount of accuracy or effect stacking bypasses type immunity under normal circumstances.
 
 The server enforces these immunities via [[server-enforcement-with-gm-override]]. When a condition infliction request arrives, the server checks the target's types against the [[type-status-immunity-utility]] lookup. If the type grants immunity, the infliction is rejected. The GM can override this for special scenarios — such as an ability that suppresses type-based immunities, or a custom move that explicitly bypasses them.
 

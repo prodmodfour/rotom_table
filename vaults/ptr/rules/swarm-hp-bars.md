@@ -1,1 +1,0 @@
-A swarm is treated as one entity with a single stat block. It has HP bars equal to its [[swarm-multiplier-scale]]. It cannot suffer Injuries. As each HP bar is depleted, the swarm multiplier decreases by one, weakening its [[swarm-action-economy]].

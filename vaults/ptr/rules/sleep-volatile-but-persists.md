@@ -1,4 +1,4 @@
-Sleep is categorized as volatile (per PTU p.247 structural placement) but does NOT clear on recall or encounter end. This matches mainline Pokemon video game behavior where Sleep persists through switching and battle end.
+Sleep is categorized as volatile (structural placement) but does NOT clear on recall or encounter end. This matches mainline Pokemon video game behavior where Sleep persists through switching and battle end.
 
 Sleep is cured only by its normal wake-up mechanics (save checks, taking damage, items, Pokemon Center). The p.246 mention alongside Frozen is a behavioral note, not a reclassification.
 

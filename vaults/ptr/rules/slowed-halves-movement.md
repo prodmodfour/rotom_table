@@ -10,3 +10,4 @@ Slowed is distinct from [[slow-terrain-doubles-movement]] — Slow Terrain doubl
 - [[slow-terrain-doubles-movement]]
 - [[other-conditions-source-dependent-faint]]
 - [[cold-intolerance]] — trait that inflicts Slowed in cold weather
+- [[vortex-keyword]] — Vortex inflicts Slowed alongside Trapped

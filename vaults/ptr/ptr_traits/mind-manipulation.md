@@ -44,3 +44,5 @@ Mind Manipulation represents ambient psychokinetic awareness — an innate conne
 - [[electricity-manipulation]] — similar ambient manipulation through electrokinetic force
 - [[light-manipulation]] — similar ambient manipulation through photokinetic force
 - [[struggle-is-not-a-move]]
+- [[mind-manipulation-telekinetic-represent-psychic-typing]] — why this is a Psychic type identity trait
+- [[traits-dont-always-progress-on-evolution]] — why potency doesn't always increase across an evolution line

@@ -1,6 +1,6 @@
 # Sample Backgrounds
 
-Constants in `constants/trainerBackgrounds.ts` — 11 PTU sample backgrounds from Core p. 14.
+Constants in `constants/trainerBackgrounds.ts` — 11 PTR sample backgrounds from Core p. 14.
 
 ## Structure
 

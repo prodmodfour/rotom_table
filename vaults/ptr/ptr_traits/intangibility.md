@@ -12,3 +12,4 @@ As a Standard Action, the user turns completely Intangible. While Intangible, th
 
 - [[phaser]] — movement trait for passing through solid objects
 - [[invisibility]] — visual concealment; distinct from untargetability
+- [[phaser-intangibility-represent-ghost-typing]] — why Intangibility is a Ghost type identity trait

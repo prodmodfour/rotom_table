@@ -1,13 +1,13 @@
-# Combatant Movement Capabilities
+# Combatant Movement Traits
 
-Shared utility (`utils/combatantCapabilities.ts`) for querying Pokemon movement capabilities:
+Shared utility for querying Pokemon [[movement-trait-types|movement traits]]:
 
-- `combatantCanFly(combatant)` — Returns true if Sky speed > 0.
-- `getSkySpeed(combatant)` — Returns Sky speed value.
-- `combatantCanSwim(combatant)` — Returns true if Swim speed > 0.
-- `combatantCanBurrow(combatant)` — Returns true if Burrow speed > 0.
+- `combatantCanFly(combatant)` — Returns true if Flier speed > 0.
+- `getFlySpeed(combatant)` — Returns Flier speed value.
+- `combatantCanSwim(combatant)` — Returns true if Swimmer speed > 0.
+- `combatantCanBurrow(combatant)` — Returns true if Burrower speed > 0.
 
-Human combatants (trainers) default to 0 for all movement capabilities.
+Human combatants (trainers) default to 0 for all movement traits.
 
 Used by [[elevation-system]] for flying defaults and by [[pathfinding-algorithm]] to bypass elevation costs for flying Pokemon.
 

@@ -17,6 +17,7 @@
 
 ## See also
 
+- [[cold-tolerance]] — Hail immunity + Ice-type resistance, but no evasion bonus
 - [[sand-veil]] — equivalent trait for Sandstorm
 - [[hail-weather-effects]]
 - [[evasion-from-defensive-stats]]

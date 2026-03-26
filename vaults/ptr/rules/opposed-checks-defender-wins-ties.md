@@ -1,7 +1,6 @@
-In opposed skill checks, both parties roll their relevant [[skill-check-xd6-vs-dc]] and compare results. The higher roll wins. On a tie, the defender wins.
-
-This "defender wins ties" rule is a universal PTU convention that must be consistently applied by the app.
+In opposed skill checks, both parties roll [[skill-check-1d20-plus-modifier]] and compare results. The higher roll wins. On a tie, the defender wins. The defender is whoever maintains the status quo.
 
 ## See also
 
-- [[raw-fidelity-as-default]]
+- [[skill-check-1d20-plus-modifier]]
+- [[cooperative-skill-checks]]

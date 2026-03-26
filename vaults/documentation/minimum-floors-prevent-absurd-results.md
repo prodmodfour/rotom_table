@@ -1,4 +1,4 @@
-Where PTU formulas can produce degenerate results — zero damage, negative stats, division by zero — Rotom Table adds minimum floors. This is a deliberate divergence from RAW, not an accident.
+Where PTR formulas can produce degenerate results — zero damage, negative stats, division by zero — Rotom Table adds minimum floors. This is a deliberate divergence from RAW, not an accident.
 
 The [[nine-step-damage-formula]] can produce zero or negative values at extreme stat combinations. A minimum damage floor of 1 preserves the formula's structure while ensuring that any attack that hits always does something. Similarly, derived stats are floored to prevent nonsensical negatives.
 

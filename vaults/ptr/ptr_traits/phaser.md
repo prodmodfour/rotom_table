@@ -15,4 +15,5 @@ The correct format is `Phaser [X]` where X is a number. Do not omit the brackets
 ## See also
 
 - [[intangibility]] — separate trait for becoming untargetable
-- [[movement-capability-types]]
+- [[movement-trait-types]]
+- [[phaser-intangibility-represent-ghost-typing]] — why Phaser is a Ghost type identity trait

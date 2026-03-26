@@ -1,6 +1,6 @@
 # Type-Status Immunity Utility
 
-Type-based status immunities in `utils/typeStatusImmunity.ts`, shared between server and client. Per decree-012, PTU p.239.
+Type-based status immunities in `utils/typeStatusImmunity.ts`, shared between server and client. Per decree-012, PTR p.239.
 
 **Exports:**
 

@@ -32,5 +32,5 @@ Pokemon and HumanCharacter are [[prisma-derived-vs-hand-written-types|Prisma-der
 - [[initiative-and-turn-order]] — initiative field on combatants
 - [[type-file-classification]]
 - [[entity-union-unsafe-downcasts]] — the LSP cost of the current Pokemon/HumanCharacter union
-- [[entity-shared-field-incompatibility]] — capabilities and skills field name clash
+- [[entity-shared-field-incompatibility]] — skills field structural incompatibility
 - [[combatant-interface-breadth]] — the ISP cost of the 35-field Combatant type

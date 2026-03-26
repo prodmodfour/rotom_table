@@ -15,3 +15,5 @@ Source-dependent clearing rules for condition instances in `constants/conditionS
 ## See also
 
 - [[turn-lifecycle]]
+- [[combat-lens-sub-interfaces]] — `StatusInstance` and `VolatileInstance` carry source metadata
+- [[game-state-interface]] — source tracking is a required part of the formal state design

@@ -10,6 +10,7 @@ Most Pokemon can see, hear, and smell, but a Sense trait means the Pokemon has a
 - [[echolocation]] — sense creatures and objects through darkness, obscuring terrain, or blindness via sound
 - [[tremorsense]] — detect creatures and movement through ground vibrations within X meters
 - [[aura-reader]] — sense the aura and emotional state of living things
+- [[pressure-sense]] — detect air pressure changes, movement, and environmental shifts through specialized sensory structures
 - [[keen-smell]] — heightened olfactory sense for tracking and detection
 
 ## See also

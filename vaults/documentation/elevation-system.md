@@ -2,11 +2,11 @@
 
 Manages vertical positioning for the isometric grid via `useElevation`.
 
-**Token elevation:** Per-token reactive map. Raise/lower actions. Flying Pokemon (Sky capability > 0, queried via [[combatant-movement-capabilities]]) default to elevated position. Bounds validated from 0 to `maxElevation`.
+**Token elevation:** Per-token reactive map. Raise/lower actions. Flying Pokemon ([[flier|Flier]] trait > 0, queried via [[combatant-movement-capabilities|movement trait queries]]) default to elevated position. Bounds validated from 0 to `maxElevation`.
 
 **Terrain elevation:** Ground height per cell, painted via the terrain elevation brush in `ElevationToolbar`. Changes ground level for the isometric diamond rendering and affects [[pathfinding-algorithm|movement cost]] (1 MP per elevation level change).
 
-Flying Pokemon ignore elevation movement costs within their Sky speed budget.
+Flying Pokemon ignore elevation movement costs within their Flier speed budget.
 
 Elevation affects [[isometric-projection-math|worldToScreen]] by shifting the vertical pixel position and [[depth-sorting-layers|depth key]] for correct layering.
 

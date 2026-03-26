@@ -1,4 +1,4 @@
-PTU's damage calculation follows a strict nine-step order:
+PTR's damage calculation follows a strict nine-step order:
 
 1. Find initial Damage Base from the move
 2. Apply Five/Double-Strike modifications

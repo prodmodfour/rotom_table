@@ -29,6 +29,6 @@ REST endpoints under `/api/encounters/`:
 
 - [[encounter-serving-mechanics]] — serve/unserve endpoints and GroupViewState
 - [[take-a-breather-mechanics]] — breather endpoint mechanics
-- [[move-frequency-system]] — frequency validation on move execution
+- [[move-energy-system]] — energy cost validation on move execution
 - [[api-endpoint-layout]]
 - [[turn-lifecycle]]

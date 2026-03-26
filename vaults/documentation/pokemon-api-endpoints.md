@@ -35,23 +35,19 @@ POST `/api/pokemon/:id/add-experience` — manual or training XP grant with leve
 
 ## Stats
 
-POST `/api/pokemon/:id/allocate-stats` — allocate stat points with [[pokemon-stat-allocation|Base Relations validation]]. Supports incremental or batch mode. Applies PTU HP formula (decree-035).
-
-## Abilities
-
-POST `/api/pokemon/:id/assign-ability` — assign an ability at Level 20/40 milestone. Validates level, ability count, pool membership, and fetches effect text from AbilityData. See [[pokemon-ability-assignment]].
+POST `/api/pokemon/:id/allocate-stats` — allocate stat points freely. Supports incremental or batch mode. Applies PTR HP formula.
 
 ## Moves
 
-POST `/api/pokemon/:id/learn-move` — validates MoveData, rejects duplicates, enforces 6-move max. Supports add or replace-by-index. See [[pokemon-move-learning]].
+POST `/api/pokemon/:id/learn-move` — validates MoveData, rejects duplicates. See [[pokemon-move-learning]].
 
 ## Evolution
 
 | Method | Path | Action |
 |---|---|---|
-| POST | `/api/pokemon/:id/evolution-check` | Eligibility check (level/item/triggers). P1: ability remap preview, evolution move list with MoveData enrichment, resolution options. P2: preventedByItem (Everstone/Eviolite), requiredGender, requiredMove |
-| POST | `/api/pokemon/:id/evolve` | Perform evolution — updates species, stats, HP recalc, encounter-active guard. P1: accepts abilities/moves arrays, updates capabilities and skills. P2: consumeItem stone from trainer inventory, consumeHeldItem, evolution history note, undoSnapshot, atomic transaction, +1 trainer XP for new species |
-| POST | `/api/pokemon/:id/evolution-undo` | Revert using pre-evolution snapshot — restores species, stats, types, abilities, moves, capabilities, skills, heldItem, notes. Restores consumed stone, active encounter guard. [[websocket-real-time-sync|WebSocket]] broadcast with `undone: true` |
+| POST | `/api/pokemon/:id/evolution-check` | Eligibility check ([[evolution-trigger-conditions|trigger conditions]]). Trait remap preview, move condition recheck, resolution options. preventedByItem (Everstone/Eviolite), requiredGender, requiredMove |
+| POST | `/api/pokemon/:id/evolve` | Perform evolution — [[evolution-rebuilds-all-stats|full stat rebuild]], HP recalc, encounter-active guard. Accepts traits/moves arrays, updates skills. consumeItem stone from trainer inventory, evolution history note, undoSnapshot, atomic transaction, +1 trainer XP for new species |
+| POST | `/api/pokemon/:id/evolution-undo` | Revert using pre-evolution snapshot — restores species, stats, types, traits, moves, skills, heldItem, notes. Restores consumed stone, active encounter guard. [[websocket-real-time-sync|WebSocket]] broadcast with `undone: true` |
 
 See [[pokemon-evolution-system]].
 
@@ -65,5 +61,4 @@ POST `/api/pokemon/bulk-action` — bulk archive or delete with encounter safety
 - [[pokemon-evolution-system]]
 - [[pokemon-stat-allocation]]
 - [[pokemon-hp-formula]] — HP recalculated by add-experience and allocate-stats
-- [[pokemon-tutor-points]] — tutor points updated by add-experience
 - [[pokemon-nickname-resolution]] — nickname resolved by create and update endpoints

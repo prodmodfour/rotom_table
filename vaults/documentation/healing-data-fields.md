@@ -11,15 +11,9 @@ The Prisma schema tracks healing state on both `HumanCharacter` and `Pokemon` mo
 - `injuriesHealedToday` — injuries healed today (max 3)
 - `lastRestReset` — timestamp for [[daily-counter-auto-reset]]
 
-## Trainer-only fields (HumanCharacter)
-
-- `drainedAp` — AP spent on [[ap-drain-injury-healing]]
-- `boundAp` — AP temporarily locked
-- `currentAp` — current available [[trainer-action-points]]
-
 ## Pokemon-only fields
 
-- `moves` — JSON with `usedToday`, `usedThisScene`, `lastUsedAt` per move, tracked by [[move-frequency-system]]
+- `currentEnergy` / `maxEnergy` — [[energy-resource]] pool derived from [[stamina-stat]]
 
 ## See also
 

@@ -27,6 +27,7 @@ Index of mechanical differences between PTR and its PTU 1.05 base.
 - [[trainers-are-human-species]] — trainers defined as "Human species," typeless, no levels
 - [[five-stat-points-per-level]] — replaces PTU's +1 per level
 - [[base-stat-relations-removed]] — stat allocation no longer constrained by base stat ordering
+- [[natures-removed]] — natures no longer exist; stat modification is handled by Traits
 - [[total-xp-unchanged]] — same total XP despite compressed level range
 
 ## Death
@@ -61,7 +62,7 @@ Index of mechanical differences between PTR and its PTU 1.05 base.
 - [[movement-traits]] — traits grant X movement in a mode per turn (replaces MP + rates)
 - [[movement-splitting]] — movement can be split between other actions (1 square = atomic unit)
 - [[movement-path-freedom]] — each movement segment has free pathing between start and end
-- [[movement-capability-types]] — PTU capabilities replaced by six movement traits
+- [[movement-trait-types]] — PTU capabilities replaced by six movement traits
 - [[typical-movement-profile]] — most Pokemon have Land 4 and Water 2
 - [[energy-for-extra-movement]] — spend 5 Energy for extra movement in one mode, once per turn
 - [[sprint-removed]] — Sprint action removed; extra movement via energy
@@ -83,26 +84,7 @@ Index of mechanical differences between PTR and its PTU 1.05 base.
 - [[items-unchanged-from-ptu]] — item system retained as-is from PTU 1.05
 - [[item-proficiency-traits]] — traits can grant proficiency with specific items
 
-## Superseded PTU mechanics
+## Removed PTU Abilities
 
-Old PTU notes kept for reference, now marked as superseded:
+- [[ptr-removed-simple-unaware-anticipation]] — Simple, Unaware, and Anticipation removed entirely
 
-- [[natures-raise-one-lower-one]] — old Nature stat adjustments
-- [[nature-adjusted-base-relations]] — old Base Stat Relations with Nature
-- [[scene-frequency-definition]] — old Scene frequency tier
-- [[six-move-slot-limit]] — old 6-move cap
-- [[three-skill-categories]] — old Body/Mind/Spirit groupings
-- [[skill-rank-dice-progression]] — old rank-to-dice mapping
-- [[skill-check-xd6-vs-dc]] — old Xd6 vs DC mechanic
-- [[tutor-points-removed]] — old Tutor Points, TMs, and Move Tutors all removed
-- [[max-trainer-level-fifty]] — old trainer level cap
-- [[level-up-grants-one-stat-point]] — old +1 per level
-- [[stat-points-equal-level-plus-ten]] — old Level + 10 formula
-- [[natural-move-list]] — old species-specific move lists (Level-Up/Egg/Tutor)
-- [[level-up-move-check]] — old check-Pokedex-on-level-up mechanic
-- [[evolution-immediate-move-learning]] — old evolution-grants-moves mechanic
-- [[ap-refresh-per-scene]] — old AP scene refresh
-- [[ap-spend-for-roll-bonus]] — old AP +1 to rolls
-- [[extended-rest-drained-ap-only]] — old Drained AP rest mechanic
-- [[bound-ap-persists-until-unbound]] — old Bound AP persistence
-- [[trainer-ap-drain-heals-injury]] — old AP-to-injury healing

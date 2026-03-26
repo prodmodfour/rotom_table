@@ -18,7 +18,7 @@ Intercept Melee, Intercept Ranged, and Disengage maneuvers.
 
 - `POST .../intercept-melee` — skill check vs DC 3x distance; success: push ally 1m + shift to their space + take hit; failure: shift floor(check/3) meters. Consumes Full Action + Interrupt.
 - `POST .../intercept-ranged` — shift floor(check/2) toward target square on line of attack; success if reached target square. Consumes Full Action + Interrupt.
-- `POST .../disengage` — PTU p.241. Consumes Shift Action, sets `disengaged` flag, movement clamped to 1m, does not provoke [[attack-of-opportunity-system|AoO]]. Flag cleared at turn-end and round-start.
+- `POST .../disengage` — PTR p.241. Consumes Shift Action, sets `disengaged` flag, movement clamped to 1m, does not provoke [[attack-of-opportunity-system|AoO]]. Flag cleared at turn-end and round-start.
 
 ## Store
 

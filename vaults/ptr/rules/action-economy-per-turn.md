@@ -8,5 +8,4 @@ Using a Move, Struggle Attack, using items, throwing Poke Balls, drawing weapons
 - [[two-turns-per-player-per-round]]
 - [[priority-and-interrupt-actions]]
 - [[action-economy-constrains-encounter-size]]
-- [[swarm-action-economy]]
 - [[mounting-and-mounted-combat]] — mounting splits movement and actions across two turns

@@ -1,6 +1,0 @@
-Ice Shard is an Ice-type [[type-effectiveness-excludes-status-moves|Physical]] move with a Damage Base of 4, At-Will frequency, AC 2, and a range of 4, 1 Target, Priority.
-
-## See also
-
-- [[stab-adds-to-damage-base]] — Ice-type users add +2 DB
-- [[priority-and-interrupt-actions]]

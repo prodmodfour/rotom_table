@@ -4,7 +4,7 @@ Evolution check, perform, and undo workflow spanning utilities, service, modal, 
 
 ## Utilities
 
-`utils/evolutionCheck.ts` — pure eligibility logic: level/item/trigger validation, `getEvolutionLevels`, `getEvolutionMoves` with decree-036 stone-vs-level-based comparison, `buildSelectedMoveList`, `validateBaseRelations` re-export.
+`utils/evolutionCheck.ts` — pure eligibility logic: level/item/trigger validation, `getEvolutionLevels`, `getEvolutionMoves` with decree-036 stone-vs-level-based comparison, `buildSelectedMoveList`.
 
 ## Types
 
@@ -12,18 +12,18 @@ Evolution check, perform, and undo workflow spanning utilities, service, modal, 
 
 ## Service
 
-`server/services/evolution.service.ts` — `PokemonSnapshot` (includes notes + consumedStone for full undo), `consumeStoneFromInventory`, `restoreStoneToInventory`, `performEvolution` (atomic transaction updating species, types, stats, HP, spriteUrl, abilities, moves, capabilities, skills, notes; stone consumption).
+`server/services/evolution.service.ts` — `PokemonSnapshot` (includes notes + consumedStone for full undo), `consumeStoneFromInventory`, `restoreStoneToInventory`, `performEvolution` (atomic transaction updating species, types, stats, HP, spriteUrl, traits, skills, notes; stone consumption). Inherited innate traits persist through evolution. Moves are rechecked against unlock conditions (evolution can change type/stats, invalidating or newly satisfying conditions).
 
 ## Modal
 
 `EvolutionConfirmModal.vue` — 4-step wizard:
 
-1. Stat redistribution (`EvolutionStatStep.vue` — stat point allocation with base stat comparison)
-2. Ability resolution (`EvolutionAbilityStep.vue` — auto-remap display, preserved abilities, GM resolution dropdown with effects)
-3. Move learning (`EvolutionMoveStep.vue` — current/available moves, add/replace/remove workflow)
+1. Stat redistribution (`EvolutionStatStep.vue` — full stat rebuild: new base stats, redistribute all stat points from scratch)
+2. Trait resolution (`EvolutionTraitStep.vue` — species innate traits update to new form, inherited innate traits persist, learned/emergent traits persist)
+3. Move condition recheck (`EvolutionMoveStep.vue` — verify all known moves still meet unlock conditions after species/type/stat changes)
 4. Summary
 
-Validates [[pokemon-stat-allocation|Base Relations]], shows HP preview, supports GM override.
+Shows HP preview, supports GM override.
 
 ## Undo
 
@@ -37,4 +37,5 @@ Validates [[pokemon-stat-allocation|Base Relations]], shows HP preview, supports
 
 - [[pokemon-api-endpoints]]
 - [[pokemon-stat-allocation]]
-- [[pokemon-ability-assignment]]
+- [[evolution-rebuilds-all-stats]] — stats completely rebuilt on evolution
+- [[evolution-trigger-conditions]] — species-specific unlock conditions

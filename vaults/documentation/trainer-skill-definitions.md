@@ -1,22 +1,8 @@
 # Trainer Skill Definitions
 
-Constants in `constants/trainerSkills.ts` defining the 17 PTU trainer skills.
+PTR uses a flat list of 18 skills shared by trainers and Pokemon per [[ptr-skill-list]]. No categories (PTU's Body/Mind/Spirit removed per [[skill-categories-removed]]). No rank progression (PTU's Pathetic-Master removed per [[skill-ranks-removed]]).
 
-## Skill Categories
-
-| Category | Count | Skills |
-|---|---|---|
-| Body | 6 | Acrobatics, Athletics, Combat, Intimidate, Stealth, Survival |
-| Mind | 7 | General Education, Medicine Education, Occult Education, Pokemon Education, Technology Education, Guile, Perception |
-| Spirit | 4 | Charm, Command, Focus, Intuition |
-
-## Rank System
-
-`SKILL_RANKS` array defines six ranks with numeric values and dice: Pathetic (1), Untrained (2), Novice (3), Adept (4), Expert (5), Master (6). `SKILL_RANK_LEVEL_REQS` maps ranks to minimum trainer levels.
-
-## Helpers
-
-- **getDefaultSkills()** — returns all 17 skills set to Untrained, used by [[character-creation-composable]] and [[sample-backgrounds]]
+Skill checks use [[skill-check-1d20-plus-modifier|1d20 + Modifier]] against [[skill-check-dc-table|DC thresholds]]. Modifiers come from [[skill-modifiers-from-traits-or-circumstance|traits or circumstance]].
 
 ## See also
 

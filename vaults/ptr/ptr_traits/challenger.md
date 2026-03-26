@@ -29,3 +29,4 @@ Challenger represents a deep competitive drive — the Pokemon is compelled to t
 - [[kleptomaniac]]
 - [[wanderer]]
 - [[disposition-charm-check-dcs]]
+- [[instinct-traits]] — this is an instinct trait

@@ -1,6 +1,6 @@
 # Game Logic Boundary Absence
 
-Game rules have no isolation boundary. PTU formulas, validations, and state transitions are scattered across three layers with no package or module boundary separating "game logic" from "app infrastructure":
+Game rules have no isolation boundary. PTR formulas, validations, and state transitions are scattered across three layers with no package or module boundary separating "game logic" from "app infrastructure":
 
 - **38 utils** (`app/utils/`) contain damage formulas, capture rates, type effectiveness, flanking geometry, weather rules, equipment bonuses — pure functions, but mixed into the app's utility namespace.
 - **23 services** (`app/server/services/`) embed game rules alongside persistence logic. [[combatant-service-mixed-domains|combatant.service.ts]] mixes HP math with Prisma calls. [[switching-validation-pipeline|switching.service.ts]] validates game rules while managing database transactions.

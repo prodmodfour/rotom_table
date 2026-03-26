@@ -62,7 +62,7 @@ Every transition has explicit guards. A `DECLARE_MOVE` in `RESOLUTION` phase is 
 
 ## Trade-offs
 
-- **Encounter complexity.** PTU encounters are not simple linear state machines. Out-of-turn actions, held actions, interrupts, and priority moves create deeply nested states. The machine may need hierarchical states (states within states), adding significant complexity.
+- **Encounter complexity.** PTR encounters are not simple linear state machines. Out-of-turn actions, held actions, interrupts, and priority moves create deeply nested states. The machine may need hierarchical states (states within states), adding significant complexity.
 - **Phase granularity.** Too few phases (`SETUP`, `ACTIVE`, `ENDED`) don't improve on the current approach. Too many (20+) make the machine hard to reason about. Finding the right granularity is a design challenge.
 - **Persistence.** Storing the phase discriminant is simple, but storing hierarchical state (encounter is in `RESOLUTION` → `OUT_OF_TURN` → `INTERCEPT`) requires careful serialization.
 - **Migration.** Existing encounters have no phase field. A migration must infer the current phase from existing data — exactly the kind of implicit-to-explicit conversion that surfaces edge cases.

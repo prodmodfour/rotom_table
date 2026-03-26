@@ -4,5 +4,6 @@ Hail is one of four [[weather-as-game-keyword]] types. It interacts with Frozen 
 
 ## See also
 
+- [[cold-tolerance]] — trait granting Hail immunity, cold weather resistance, and Ice-type damage reduction
 - [[sandstorm-weather-effects]]
 - [[weather-exclusivity-constraint]]

@@ -1,6 +1,6 @@
 # Pathfinding Algorithm
 
-A* pathfinding with PTU movement rules in `usePathfinding`.
+A* pathfinding with PTR movement rules in `usePathfinding`.
 
 **`getMovementRangeCells`** — Flood-fill algorithm finds all reachable cells within a speed budget. Accounts for:
 
@@ -10,7 +10,7 @@ A* pathfinding with PTU movement rules in `usePathfinding`.
 - [[multi-cell-token-footprint]] — iterates full NxN footprint at each step
 - Blocked cells (terrain type or occupied by other tokens)
 
-Flying Pokemon (Sky > 0 via [[combatant-movement-capabilities]]) ignore elevation costs within their Sky speed.
+Flying Pokemon ([[flier|Flier]] > 0 via [[combatant-movement-capabilities|movement trait queries]]) ignore elevation costs within their Flier speed.
 
 **Inputs:** Origin position, speed budget, blocked cells set, terrain cost getter, elevation cost getter, terrain elevation getter.
 
@@ -20,5 +20,5 @@ A* terrain costs come from the Pinia terrain store — the store must be populat
 
 ## See also
 
-- [[ptu-movement-rules-in-vtt]] — the PTU rules this algorithm enforces
+- [[ptu-movement-rules-in-vtt]] — the PTR rules this algorithm enforces
 - [[movement-modifiers-utility]] — Stuck/Slowed/Sprint applied to speed budget before pathfinding

@@ -36,6 +36,7 @@ Light Manipulation represents ambient photokinetic control — an innate connect
 
 ## See also
 
+- [[light-manipulation-represents-fairy-typing]] — Light Manipulation as expression of fairy nature
 - [[water-manipulation]] — similar ambient manipulation through hydrokinetic force
 - [[rock-manipulation]] — similar ambient manipulation through geokinetic force
 - [[earth-manipulation]] — similar ambient manipulation through terrakinetic force

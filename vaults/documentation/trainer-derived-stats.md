@@ -1,16 +1,15 @@
 # Trainer Derived Stats
 
-Pure PTU capability calculator in `utils/trainerDerivedStats.ts`.
+Utility for computing trainer-derived values from stats and [[trait-definition|traits]].
 
 ## Functions
 
-- `computeTrainerDerivedStats` — Computes Power, High Jump, Long Jump, Overland, Swimming, Throwing Range, Weight Class from skill ranks + weight.
-- `skillRankToNumber` — Maps `SkillRank` enum to numeric 1--6.
+- `computeTrainerDerivedStats` — Computes Power, High Jump, Long Jump, [[movement-trait-types|movement trait]] values, Throwing Range, Weight Class from skills + weight.
 
 ## Consumers
 
-- **CapabilitiesDisplay.vue** and **HumanStatsTab.vue** — Character sheet display.
-- **combatantCapabilities.ts** — VTT movement values (Overland, Swimming).
+- Character sheet display components.
+- Combatant trait utilities — VTT movement values.
 
 ## See also
 
