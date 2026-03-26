@@ -1,4 +1,0 @@
-- Only Pokemon have levels
-- Levels go from 1 - 20
-- Each level up grants 5 Stat Points
-- Total XP required to go from level 1 to max level has not changed. 
