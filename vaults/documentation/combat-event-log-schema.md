@@ -32,6 +32,10 @@ CombatEvent {
 - **isDamagingMove** — whether the source move was damaging. Retaliate specifically checks "fainted by a Damaging Move," not just "fainted."
 - **amount** — numeric value (damage dealt, HP healed) for magnitude queries.
 
+## CombatEvent vs TriggerEvent
+
+`CombatEvent` is the lean historical record stored in the log. The [[effect-handler-contract|TriggerContext]] provides a richer `TriggerEvent` type that extends `CombatEvent` with transient metadata (move type, contact flag, damage class, move range) that trigger handlers need during resolution but that doesn't persist in the log. This keeps the log slim for storage and querying while giving handlers the context they need.
+
 ## Encounter context interface
 
 ```
@@ -48,5 +52,5 @@ The event log lives on encounter state, not per-combatant. Events are appended b
 - [[resolution-context-inputs]] — the log is part of the context effects receive
 - [[data-driven-rule-engine]] — the engine appends events and provides query access
 - [[turn-lifecycle]] — events are generated during turn resolution
-- [[effect-node-contract]] — effect nodes produce CombatEvents in their EffectResult
-- [[effect-trigger-system]] — triggers subscribe to combat event types
+- [[effect-handler-contract]] — handlers produce CombatEvents in their EffectResult
+- [[effect-trigger-event-bus]] — trigger handlers subscribe to combat event types

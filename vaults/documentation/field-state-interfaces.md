@@ -47,14 +47,13 @@ HasBlessings {
 }
 
 BlessingInstance {
-  type: 'safeguard' | 'light-screen' | ...
+  blessingType: string
   teamSide: Side
   activationsRemaining: number
-  activationEffect: EffectDefinitionRef
 }
 ```
 
-Blessings are team-wide with limited activations. Safeguard (3 activations) blocks status affliction when voluntarily activated. Light Screen (2 activations) resists Special damage one step. The `activationEffect` references the effect definition that fires on activation — replacing the former `effectDescription: string` to maintain [[single-source-of-truth]] with the effect engine. See [[active-effect-model]] for the rationale. Defog destroys all blessings.
+Blessings are team-wide with limited activations. Safeguard (3 activations) blocks status affliction when voluntarily activated. Light Screen (2 activations) resists Special damage via [[before-handler-response-modes|damage modification]]. The `blessingType` keys to a trigger handler function registered with the [[effect-trigger-event-bus]] when the blessing is created via [[effect-utility-catalog|addBlessing()]]. See [[active-effect-model]] for the rationale behind handler registration. Defog destroys all blessings.
 
 **PTR blessings have no time duration.** Unlike standard Pokemon games where screens last a set number of turns, PTR blessings expire only when their activations are consumed or when cleared by Defog. This is confirmed across all blessing moves in the PTR vault — Light Screen, Reflect, Safeguard, Mist, and Lucky Chant all specify "may be activated X times, and then disappears" with no round limit. The `BlessingInstance` intentionally omits a `roundsRemaining` field.
 
@@ -128,4 +127,4 @@ All instance structs (HazardInstance, BlessingInstance, CoatInstance, VortexInst
 - [[status-condition-categories]] — related: Trapped and Slowed applied by Vortex
 - [[condition-source-tracking]] — Vortex-applied Trapped/Slowed tracked back to the vortex source
 - [[encounter-delta-model]] — how effects write mutations to field state types
-- [[effect-atom-catalog]] — ModifyFieldState and ClearFieldState atoms operate on these
+- [[effect-utility-catalog]] — `modifyFieldState`, `addBlessing`, `addHazard`, `addCoat` utilities operate on these

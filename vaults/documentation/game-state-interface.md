@@ -12,7 +12,7 @@ GameState decomposes into three layers, each with distinct ownership and lifecyc
 
 ## How effects consume GameState
 
-Effects do not receive the full GameState. Per [[interface-segregation-principle]], each effect atom declares which [[combat-lens-sub-interfaces]] it requires. A damage atom receives `HasStats & HasCombatStages & HasHealth`. A displacement atom receives `HasPosition & HasMovement`. No atom receives state it does not use.
+Effects do not receive the full GameState. Per [[interface-segregation-principle]], each [[effect-utility-catalog|utility function]] is typed to receive only the [[combat-lens-sub-interfaces]] it needs. A damage utility reads `HasStats & HasCombatStages & HasHealth`. A displacement utility reads `HasPosition & HasMovement`. TypeScript parameter types enforce narrow access.
 
 Effects produce [[state-delta-model|StateDelta]] objects containing only lens-writable fields. The engine applies deltas to the lens. Entity fields are excluded from the delta type, making accidental entity mutation a compile-time error. The small number of effects that must write entity state (e.g., Thief stealing a held item) are [[entity-write-exception|tagged explicitly]].
 
@@ -41,7 +41,7 @@ Effect functions are pure. Random values (dice rolls), player choices (blessing 
 
 - [[dependency-inversion-principle]] — entity model and effect engine both depend on this abstraction
 - [[interface-segregation-principle]] — narrow sub-interfaces for narrow consumers; see [[combat-lens-sub-interfaces]]
-- [[open-closed-principle]] — new effect atoms extend the transformation vocabulary without modifying the state shape
+- [[open-closed-principle]] — new effect handlers extend the transformation vocabulary without modifying the state shape
 - [[single-responsibility-principle]] — entity state, lens state, and encounter state each have one owner and one reason to change
 - [[liskov-substitution-principle]] — any entity implementing the required sub-interfaces can participate in combat
 
@@ -56,9 +56,8 @@ Effect functions are pure. Random values (dice rolls), player choices (blessing 
 - [[deployment-state-model]] — per-trainer team roster tracking
 - [[combat-event-log-schema]] — structured historical queries
 - [[resolution-context-inputs]] — external inputs injected into pure functions
-- [[effect-node-contract]] — the shared interface for all effect atoms and compositions
-- [[effect-atom-catalog]] — the ~15 atomic effect types that read and write game state
-- [[effect-composition-model]] — how atoms compose into move and trait effect trees
-- [[effect-trigger-system]] — how traits react to combat events
-- [[effect-definition-format]] — how moves and traits are expressed as TypeScript constants
+- [[effect-handler-contract]] — the shared interface for all effect handlers
+- [[effect-utility-catalog]] — the utility functions that handlers call to produce state changes
+- [[effect-trigger-event-bus]] — how traits react to combat events
+- [[effect-handler-format]] — how moves and traits are implemented as TypeScript functions
 - [[encounter-delta-model]] — how effects write to encounter-level state

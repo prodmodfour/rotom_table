@@ -16,7 +16,7 @@ EncounterDelta {
 }
 ```
 
-Every field is optional. An effect that doesn't touch encounter state returns `null` for `encounterDelta` in its [[effect-node-contract|EffectResult]].
+Every field is optional. An effect that doesn't touch encounter state returns `null` for `encounterDelta` in its [[effect-handler-contract|EffectResult]].
 
 ## Mutation types
 
@@ -112,7 +112,7 @@ The engine is the only code that writes encounter state. Effects produce deltas,
 
 [[state-delta-model|StateDelta]] is per-combatant — keyed by entity ID, applied to one lens. `EncounterDelta` is per-encounter — applied to shared state that all combatants interact with. Mixing them would violate [[single-responsibility-principle]] — a single delta type would serve two masters (combatant state and encounter state) with different application rules and lifecycles.
 
-The [[effect-node-contract|EffectResult]] contains both: `combatantDeltas: Map<EntityId, StateDelta>` for per-combatant changes and `encounterDelta: EncounterDelta | null` for encounter changes. A move like Toxic Spikes produces both — it costs the user energy (StateDelta on user) and places a hazard (EncounterDelta).
+The [[effect-handler-contract|EffectResult]] contains both: `combatantDeltas: Map<EntityId, StateDelta>` for per-combatant changes and `encounterDelta: EncounterDelta | null` for encounter changes. A move like Toxic Spikes produces both — it costs the user energy (StateDelta on user) and places a hazard (EncounterDelta).
 
 ## SE principles applied
 
@@ -125,7 +125,7 @@ The [[effect-node-contract|EffectResult]] contains both: `combatantDeltas: Map<E
 
 - [[game-state-interface]] — the parent design
 - [[state-delta-model]] — the per-combatant companion
-- [[effect-node-contract]] — effect nodes produce `EncounterDelta` in their result
+- [[effect-handler-contract]] — handlers produce `EncounterDelta` in their result
 - [[field-state-interfaces]] — the field state types these mutations operate on
 - [[deployment-state-model]] — deployment mutations manage per-trainer roster state
 - [[data-driven-rule-engine]] — the engine applies both delta types as part of rule evaluation

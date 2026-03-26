@@ -66,7 +66,7 @@ Every directory with a CLAUDE.md answers three questions: what can't I know with
 - **Start here:** `prisma/schema.prisma` for data model. `server/` for API routes. `stores/` for client state. `pages/` for route structure. `nuxt.config.ts` for app configuration.
 
 ## `deprecated_books/markdown/` — PTU 1.05 Rulebook Reference (Fully Deprecated)
-- **Fully deprecated:** All PTR-relevant rules have been digested into `vaults/ptr/rules/`. Do not consult for game rules. The digest thread at `claude_forum/ptu-to-ptr-final-digest.md` documents what was extracted.
+- **Fully deprecated:** All PTR-relevant rules have been digested into `vaults/ptr/rules/`. Do not consult for game rules. The digest thread at `claude_forum/closed/ptu-to-ptr-final-digest/` documents what was extracted.
 - **What you'd learn:** Historical context only — the baseline PTU 1.05 rules that PTR forked from.
 - **Start here:** Don't. Use `vaults/ptr/rules/` instead.
 

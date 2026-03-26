@@ -71,5 +71,5 @@ By injecting all external values, the effect function becomes `(gameState, resol
 - [[nine-step-damage-formula]] — consumes damage rolls and accuracy roll
 - [[data-driven-rule-engine]] — the engine collects inputs and injects them
 - [[combat-event-log-schema]] — historical events are also part of the context effects receive
-- [[effect-node-contract]] — resolution context is part of the EffectContext that nodes receive
-- [[effect-composition-model]] — ChoicePoint collects player decisions; Repeat reads multi-hit count
+- [[effect-handler-contract]] — resolution context is part of the EffectContext that handlers receive
+- [[effect-handler-format]] — handlers read multi-hit count and player decisions from resolution context

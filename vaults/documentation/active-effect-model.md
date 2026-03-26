@@ -20,13 +20,19 @@ ActiveEffect {
   sourceEntityId: string
   state: Record<string, unknown>
   expiresAt?: { round: number } | { onEvent: EventType }
+  triggers?: TriggerRegistration[]
+  clearedBy?: ClearCondition[]
 }
+
+ClearCondition = 'switch-out' | 'take-a-breather' | 'end-of-action' | 'caster-faint'
 ```
 
-- **effectId** — references the effect definition (a TypeScript constant) that created this instance. The engine looks up the definition to know how the effect behaves.
+- **effectId** — identifies this effect type. The engine uses it for filtering (`hasActiveEffect(lens, 'heal-block')`), stacking policy enforcement, and handler deduplication.
 - **sourceEntityId** — who applied it. Used for source-dependent clearing, attribution, and caster-switch destruction.
-- **state** — effect-specific mutable data. Each effect definition documents what keys it stores. The engine reads/writes these keys through the effect definition's accessor functions.
-- **expiresAt** — when the effect ends. Round-based (`{ round: 5 }` = expires at end of round 5) or event-based (`{ onEvent: 'user-turn-end' }` = expires when the source entity's turn ends).
+- **state** — effect-specific mutable data. Each effect's handler documents what keys it stores. Handlers read/write these keys through the `state` record.
+- **expiresAt** — when the effect ends. Round-based (`{ round: 5 }` = expires at end of round 5), event-based (`{ onEvent: 'user-turn-end' }` = expires when the source entity's turn ends), or string shorthand (`'end-of-action'` for Protect/Wide Guard).
+- **triggers** — optional [[effect-trigger-event-bus|TriggerRegistration]] array. When the ActiveEffect is added to the lens, the engine registers these handlers with the event bus. When the effect expires or is removed, the engine unregisters them. This is the link between an ActiveEffect instance and its reactive behavior — Wide Guard's `damage-received/before` interception handler, Protect's interception handler, and Heal Block's `healing-attempted/before` suppression handler are all registered through this field.
+- **clearedBy** — optional conditions that immediately remove this effect, independent of `expiresAt`. Heal Block is cleared by `switch-out` or `take-a-breather`. Protect and Wide Guard are cleared by `end-of-action`. The engine evaluates clear conditions at the appropriate lifecycle points.
 
 ## Examples
 
@@ -37,9 +43,9 @@ ActiveEffect {
 
 **Heal Block** — persistent suppression preventing all healing:
 ```
-{ effectId: 'heal-block', sourceEntityId: 'entity-123', state: {}, expiresAt: undefined }
+{ effectId: 'heal-block', sourceEntityId: 'entity-123', state: {}, expiresAt: undefined, triggers: [healBlockTrigger], clearedBy: ['switch-out', 'take-a-breather'] }
 ```
-No expiry — cleared by switch out or Take a Breather. The engine checks for `heal-block` in `activeEffects` before permitting any HP recovery.
+No time expiry — cleared by switch out or Take a Breather via `clearedBy`. The `triggers` field registers a `healing-attempted/before` handler with the [[effect-trigger-event-bus]] that calls `intercept()` to suppress healing.
 
 **Destiny Bond** — mutual faint binding:
 ```
@@ -63,7 +69,7 @@ This is a genuine design tension, not an oversight. Named fields don't scale (th
 
 ## Relationship to BlessingInstance
 
-`BlessingInstance` originally contained `effectDescription: string` — a prose description of what the blessing does mechanically. This is replaced by `activationEffect: EffectDefinitionRef`, a reference to the effect composition that fires when the blessing activates. The actual description is derived from the effect definition for display. This eliminates the [[primitive-obsession-smell]] and [[single-source-of-truth]] violation of having mechanical behavior described in both a string field and the effect engine.
+`BlessingInstance` originally contained `effectDescription: string` — a prose description of what the blessing does mechanically. Under the function model, blessing activation is handled by trigger handler functions passed to [[effect-utility-catalog|addBlessing()]] at creation time. The handler is registered with the [[effect-trigger-event-bus]] when the blessing is created. The `BlessingInstance` struct holds `blessingType: string` (keyed to the registered handler), not a reference to an effect definition. This eliminates the [[primitive-obsession-smell]] and [[single-source-of-truth]] violation of having mechanical behavior described in both a string field and the effect engine.
 
 ## See also
 
@@ -73,6 +79,6 @@ This is a genuine design tension, not an oversight. Named fields don't scale (th
 - [[status-condition-categories]] — the structured condition system that handles Burned, Paralyzed, etc.
 - [[condition-source-tracking]] — source tracking on conditions; parallel concept on ActiveEffect
 - [[data-driven-rule-engine]] — effect definitions are data; the engine evaluates them
-- [[effect-atom-catalog]] — ApplyActiveEffect atom manages the ActiveEffect collection
-- [[effect-trigger-system]] — active effects can carry trigger definitions for event-driven activation
-- [[effect-definition-format]] — ActiveEffect references are embedded in move/trait definitions
+- [[effect-utility-catalog]] — `applyActiveEffect` utility manages the ActiveEffect collection
+- [[effect-trigger-event-bus]] — active effects can register trigger handlers for event-driven activation
+- [[effect-handler-format]] — ActiveEffect references are part of move/trait handler implementations

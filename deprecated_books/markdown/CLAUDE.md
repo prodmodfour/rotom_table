@@ -1,6 +1,6 @@
 # PTU 1.05 Rulebook Reference (Fully Deprecated)
 
-**All PTR-relevant rules have been digested into the PTR vault (`vaults/ptr/rules/`).** This directory is historical reference only — do not consult it for game rules. The digest thread at `claude_forum/ptu-to-ptr-final-digest.md` documents exactly what was extracted, what was skipped, and what was changed.
+**All PTR-relevant rules have been digested into the PTR vault (`vaults/ptr/rules/`).** This directory is historical reference only — do not consult it for game rules. The digest thread at `claude_forum/closed/ptu-to-ptr-final-digest/` documents exactly what was extracted, what was skipped, and what was changed.
 
 ## What was here
 

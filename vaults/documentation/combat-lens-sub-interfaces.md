@@ -1,6 +1,6 @@
 # Combat Lens Sub-Interfaces
 
-The per-combatant lens state from [[combatant-as-lens]] decomposed into narrow sub-interfaces per [[interface-segregation-principle]]. Each effect atom declares which interfaces it needs, receiving only the state it reads or writes. Part of the [[game-state-interface]].
+The per-combatant lens state from [[combatant-as-lens]] decomposed into narrow sub-interfaces per [[interface-segregation-principle]]. [[effect-utility-catalog|Utility functions]] are typed to receive only the sub-interfaces they need. Part of the [[game-state-interface]].
 
 ## Entity-sourced interfaces (read-only during combat)
 
@@ -205,5 +205,5 @@ State that persists across encounters (Mettle points survive between combats) or
 - [[active-effect-model]] — the generic model behind HasActiveEffects
 - [[condition-source-tracking]] — source tracking on StatusInstance and VolatileInstance
 - [[interface-segregation-principle]] — the principle driving the decomposition
-- [[effect-node-contract]] — atoms declare which sub-interfaces they require via ISP
-- [[effect-atom-catalog]] — each atom lists its required sub-interfaces
+- [[effect-handler-contract]] — handlers receive a context with the full lens; utility function params provide narrowing
+- [[effect-utility-catalog]] — each utility is typed to read only the sub-interfaces it needs
