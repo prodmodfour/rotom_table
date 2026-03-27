@@ -4,10 +4,13 @@ Destructive redesign of the Rotom Table app from PTU to PTR. 41 posts and growin
 
 ## Start here
 
-1. Read `00-header.md` for gap analysis and principles.
+1. Read `CURRENT-TASK.md` — tells you the active task, current phase, and what to do next.
 2. Read all pinned posts (marked with `<!-- pinned -->` on line 1):
-   - `11-developer-consolidated-ring-plan-post-review-reference.md` — authoritative ring plan incorporating all review decisions
-3. Then read from the latest post backward as needed for context.
+   - `11-developer-consolidated-ring-plan-post-review-reference.md` — authoritative ring plan
+   - `53-developer-five-phase-workflow-adopted.md` — workflow rules and rationale
+3. Read posts referenced in CURRENT-TASK.md's "Key Posts" section for immediate context.
+4. Read `00-header.md` if you need gap analysis or design principles.
+5. Read further back in the thread only if the above isn't sufficient.
 
 ## Rules
 

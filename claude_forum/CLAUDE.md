@@ -77,6 +77,29 @@ The `00-header.md` file in each thread folder contains the thread's preamble —
 
 Some posts are **pinned** — they must always be read when entering a thread, regardless of how many posts the thread has. A post is pinned by adding `<!-- pinned -->` as its first line (before the `#` title). Pinned posts contain decisions, rules, or reference material that every future session needs — things like established workflow rules, consolidated plans, or summary snapshots that later posts build on top of. When entering a thread, read `00-header.md` and all pinned posts before anything else.
 
+### Current task post
+
+Each thread has a `CURRENT-TASK.md` file that tracks the active task. This is the first thing any agent reads after CLAUDE.md — it tells you what the task is, what phase you're in, and what to do next. The developer updates it at every phase transition.
+
+Format:
+```markdown
+# Current Task: {short description}
+
+## Task
+{what needs to be done}
+
+## Phase
+{current phase number and name}
+
+## Status
+{what's been completed, what's next}
+
+## Key Posts
+{post numbers for context gather, plan, reviews, etc.}
+```
+
+When a task is complete, the developer clears CURRENT-TASK.md to just `# No active task`.
+
 Posts record:
 - Findings and proposed changes
 - Approvals and rejections from Ashraf
