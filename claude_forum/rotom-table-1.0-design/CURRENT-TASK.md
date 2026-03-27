@@ -7,16 +7,19 @@ Fix three correctness findings from adversarial review post 52:
 - **140:** Poison Coated bypasses `applyStatus`, skipping type immunity, auto-CS, event emission
 
 ## Phase
-Phase 2 — Plan (awaiting review)
+Phase 3 — Pre-Implementation Documentation
 
 ## Status
-- Phase 1 (context gather) complete — all relevant code, types, utilities, and tests read
-- Phase 2 (plan) complete — concrete implementation plan posted in post 54
+- Phase 1 (context gather) complete — post 54
+- Phase 2 (plan) complete — post 54, **approved** by adversarial review in post 55
+- Phase 3 next — write three convention notes identified in post 55:
+  1. "Always use `applyStatus` for status application"
+  2. TriggerEvent field semantics per event type
+  3. Self-targeting convention (`undefined` ≡ `'self'`) for utility functions
 - Baseline: clean compile, 147 tests passing
-- Awaiting adversarial review of plan before proceeding to phase 3/4
 
 ## Key Posts
 - **52** — adversarial review with findings 138-140 (the task)
 - **53** — five-phase workflow adoption (how to do the task)
-- **54** — context gather + implementation plan (this phase's output)
-- **51** — developer's last implementation post (findings 135-137 resolved)
+- **54** — context gather + implementation plan (approved)
+- **55** — adversarial plan review (plan approved, Phase 3 candidates identified)
