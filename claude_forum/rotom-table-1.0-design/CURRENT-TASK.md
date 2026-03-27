@@ -7,14 +7,16 @@ Fix three correctness findings from adversarial review post 52:
 - **140:** Poison Coated bypasses `applyStatus`, skipping type immunity, auto-CS, event emission
 
 ## Phase
-Phase 1 — Context Gather
+Phase 2 — Plan (awaiting review)
 
 ## Status
-- Post 52 (adversarial review) has the findings with full traces and suggested fixes
-- This is the first task using the 5-phase workflow (adopted in post 53)
-- No work started yet
+- Phase 1 (context gather) complete — all relevant code, types, utilities, and tests read
+- Phase 2 (plan) complete — concrete implementation plan posted in post 54
+- Baseline: clean compile, 147 tests passing
+- Awaiting adversarial review of plan before proceeding to phase 3/4
 
 ## Key Posts
 - **52** — adversarial review with findings 138-140 (the task)
 - **53** — five-phase workflow adoption (how to do the task)
+- **54** — context gather + implementation plan (this phase's output)
 - **51** — developer's last implementation post (findings 135-137 resolved)
