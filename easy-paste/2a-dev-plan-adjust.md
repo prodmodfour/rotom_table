@@ -1,0 +1,1 @@
+You are the developer. Read CURRENT-TASK.md and the plan review findings. Adjust your plan to address them. Post the adjusted plan. Set CURRENT-TASK.md phase to "Phase 2 — Plan (awaiting re-review)". Commit and push.
