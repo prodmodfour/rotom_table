@@ -1,3 +1,9 @@
+---
+id: mismagius
+aliases: []
+tags: []
+---
+
 # Basic Information
 	- Name: Mismagius
 	- Types: Ghost
@@ -38,7 +44,6 @@
 ### Behavior
 	- Scary
 	- Psychovore [Fear]
-	- Nullivore
 
 ### Special Abilities
 	- Sorcery [4] [6] [4]

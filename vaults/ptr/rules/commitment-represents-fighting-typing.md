@@ -9,7 +9,6 @@ The type chart supports this:
 - **Fighting > Normal**: trained technique overwhelms mundane physicality
 - **Fighting > Steel/Rock/Ice**: a perfected strike finds the weak point in any defense
 - **Psychic > Fighting**: mental domination exploits the predictability of a committed fighter
-- **Flying > Fighting**: commitment means nothing if you can't reach the target
 - **Fairy > Fighting**: no amount of martial dedication overcomes the supernatural
 
 ## See also

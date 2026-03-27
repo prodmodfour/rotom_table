@@ -59,7 +59,7 @@ Hazards stack in layers (Toxic Spikes: 1 layer = Poisoned, 2 = Badly Poisoned). 
 ```
 BlessingMutation =
   | { op: 'add', instance: BlessingInstance }
-  | { op: 'consume', blessingId: string }
+  | { op: 'consume', blessingType: string }
   | { op: 'remove-all' }
 ```
 

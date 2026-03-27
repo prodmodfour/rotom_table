@@ -1,6 +1,6 @@
 # Basic Information
 	- Name: Corviknight
-	- Types: Flying / Steel
+	- Types: Steel
 
 # Evolution
 	- [[Rookidee]] >> [[Corvisquire]] >> [[Corviknight]]

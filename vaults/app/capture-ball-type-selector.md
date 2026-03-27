@@ -1,1 +1,0 @@
-Below the **Ball Type** label in the [[capture-section-on-wild-pokemon-cards]], a button displays the currently selected ball name and its base modifier (e.g., "Basic Ball +0" or "Great Ball -10"). Clicking this button opens the [[capture-ball-selector-dropdown]]. The button also shows a chevron icon indicating it is expandable.

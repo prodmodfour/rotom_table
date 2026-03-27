@@ -10,7 +10,7 @@ As a Status move, Gravity skips the [[damage-flow-pipeline]]. No accuracy roll i
 
 ## Effect
 
-For 5 rounds, the area is considered Warped. While Warped: Moves involving the user being airborne cannot be used; Pokemon cannot use the Flier trait to end their turn above 1 meter altitude; Flying-Types and Flier-trait Pokemon lose Ground-Type immunity; all Accuracy Rolls receive a +2 Bonus.
+For 5 rounds, the area is considered Warped. While Warped: Moves involving the user being airborne cannot be used; Pokemon cannot use the Flier trait to end their turn above 1 meter altitude; Flier-trait Pokemon lose Ground-Type immunity; all Accuracy Rolls receive a +2 Bonus.
 
 ## Trait Interactions
 

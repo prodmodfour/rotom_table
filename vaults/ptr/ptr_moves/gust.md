@@ -1,7 +1,7 @@
 # Gust
 
 ## Properties
-	- Type: Flying
+	- Type: Normal
 	- Damage Class: Special
 	- Damage Base: 4
 	- AC: 2
@@ -16,5 +16,5 @@ If the target is airborne as a result of Fly or Sky Drop, Gust can hit them, ign
 - Individual Special Attack 10
 
 ## Notes
-Basic Flying special attack with anti-air bonus. Grants Guster.
+Basic special attack with anti-air bonus. Grants Guster.
 [[gust-description|Description]]

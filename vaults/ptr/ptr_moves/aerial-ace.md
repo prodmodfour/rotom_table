@@ -1,7 +1,7 @@
 # Aerial Ace
 
 ## Properties
-	- Type: Flying
+	- Type: Normal
 	- Damage Class: Physical
 	- Damage Base: 10
 	- AC: —

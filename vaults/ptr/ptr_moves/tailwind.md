@@ -1,7 +1,7 @@
 # Tailwind
 
 ## Properties
-	- Type: Flying
+	- Type: Normal
 	- Damage Class: Status
 	- Damage Base: —
 	- AC: —

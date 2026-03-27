@@ -1,3 +1,0 @@
-Dragon Rage's damage base column in the [[moves-csv-source-file]] contains the string `15 Damage` rather than a plain number. The [[move-seed-parses-csv-into-database]] runs `parseInt('15 Damage', 10)` which returns `15`, so Dragon Rage is stored in the [[movedata-reference-table]] with `damageBase: 15`.
-
-Dragon Rage's effect text says it causes the target to lose 15 HP as flat damage, not as a DB 15 roll. The stored damage base value of 15 matches a different semantic (DB 15 maps to 5d12+10 / 42.5 average damage, not 15 flat HP). Any UI that displays a damage formula based on this DB value would show an incorrect dice expression.

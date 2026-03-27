@@ -1,7 +1,7 @@
 # Sky Attack
 
 ## Properties
-	- Type: Flying
+	- Type: Normal
 	- Damage Class: Physical
 	- Damage Base: 14
 	- AC: 4

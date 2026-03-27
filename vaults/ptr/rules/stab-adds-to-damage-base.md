@@ -4,4 +4,4 @@ Because STAB modifies the Damage Base, it interacts with the DB-to-dice lookup t
 
 ## See also
 
-- [[eighteen-pokemon-types]] — the type list that determines STAB eligibility
+- [[seventeen-pokemon-types]] — the type list that determines STAB eligibility

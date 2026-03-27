@@ -10,11 +10,13 @@ These sub-interfaces expose intrinsic entity properties. Effects read them but c
 
 ```
 id: string
+entityId: string
+entityType: 'pokemon' | 'trainer'
 name: string
 side: 'allies' | 'enemies' | 'neutral'
 ```
 
-Present on every combatant. Used by all effects for targeting and attribution. The `entityType` discriminator lives on the entity, not here — the lens is entity-type-agnostic per [[open-closed-principle]].
+Present on every combatant. Used by all effects for targeting and attribution. `id` is the combat-scoped lens identifier — unique per combat entry, issued fresh each time an entity enters combat (including after switch-in). Used for delta keying, targeting within the current encounter, and distinguishing multiple combat entries of the same entity. `entityId` links the lens back to its persistent entity record (the Pokemon or Trainer's database PK). `entityType` discriminates between Pokemon and Trainer for formulas that differ by entity type (e.g. HP formula). While the lens is entity-type-agnostic in its sub-interface composition per [[open-closed-principle]], certain derived computations (max HP, STAB eligibility) must know the entity type.
 
 ### HasTypes
 
@@ -24,7 +26,7 @@ types: Type[]
 
 Read by STAB calculation, type effectiveness, absorb traits (Volt Absorb, Water Absorb, Flash Fire), type immunity checks, Toxic Spikes Poison-type removal.
 
-**Trainers do not implement this interface.** Trainers are typeless in PTR — they skip type effectiveness entirely, receive no STAB, and all attacks against them deal neutral damage. This is the only sub-interface that differs between Pokemon and Trainers.
+**Trainers do not implement this interface.** Trainers are typeless in PTR — they skip type effectiveness entirely, receive no STAB, and all attacks against them deal neutral damage. This is the only sub-interface that differs between Pokemon and Trainers. The composite `CombatantLens` type includes `HasTypes` as `Partial<HasTypes>` — the `types` field is optional, absent for trainers.
 
 ### HasStats
 
@@ -62,11 +64,11 @@ Read by Thief (does target have an item? is user's slot empty?). Written only vi
 ### HasMovement
 
 ```
-movementTypes: MovementType[]
+movementTypes: MovementProfile[]   // { type: MovementType, speed: number }
 weightClass: number
 ```
 
-Read by Circle Throw (push distance = 6 - WC), Roar (forced shift uses highest movement trait), terrain interaction, Phaser (grants Phase movement type).
+Each `MovementProfile` pairs a movement type with its per-turn speed grant, matching how [[movement-traits]] define "X meters in mode Y per turn." Read by Circle Throw (push distance = 6 - WC), Roar (forced shift uses highest movement trait), terrain interaction, Phaser (grants Phase movement type), energy-for-extra-movement (doubles one profile's speed).
 
 ## Lens-sourced interfaces (read-write during combat)
 
@@ -92,7 +94,7 @@ tempHp: number
 injuries: number
 ```
 
-`hpDelta` is relative to entity's max HP (negative = damage taken). Max HP is derived from entity stats — different formula for Pokemon (`HP + (Level x 3) + 10`) vs Trainers (`HP x 3 + 10`), selected by entity type, not by the lens.
+`hpDelta` is relative to entity's max HP (negative = damage taken). Max HP is derived from entity stats — different formula for Pokemon (`(Level x 5) + (HP x 3) + 10`) vs Trainers (`(HP x 3) + 10`), selected by entity type, not by the lens.
 
 Written by damage application, Recover, Aqua Ring tick, Water Absorb heal, Rough Skin retaliation, Stealth Rock tick, Ice Body heal. Read by faint check, healing effects, Heal Block suppression.
 

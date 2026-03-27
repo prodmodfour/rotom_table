@@ -9,7 +9,7 @@
 
 The user can generate and control wind currents through innate aerokinetic ability. X is the trait's potency.
 
-**Struggle Modification (Passive):** The user's [[struggle-is-not-a-move|Struggle Attacks]] are Flying-type instead of Normal-type. They may be made at a range of X+3 squares instead of Melee, using projected blasts of wind.
+**Ranged Struggle (Passive):** The user's [[struggle-is-not-a-move|Struggle Attacks]] may be made at a range of X+3 squares instead of Melee, using projected blasts of wind.
 
 **Wind Control (Active, Swift Action, 1 Energy):** The user manipulates wind to produce one of the following effects within 2X+4 squares:
 - Push one unattended object of [[weight-classes-one-through-six|Weight Class]] X or lighter up to X+2 squares in a direction of the user's choice.

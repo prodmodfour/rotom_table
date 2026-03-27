@@ -4,7 +4,7 @@ The server enforces these immunities via [[server-enforcement-with-gm-override]]
 
 Type immunity checks happen *before* [[condition-source-tracking]] records anything. If the infliction is blocked by immunity, no condition instance is created and no source is tracked. This keeps the condition tracking system clean — it only contains conditions that actually took effect.
 
-Dual-typed Pokemon need only one qualifying type to gain immunity. A Fire/Flying Pokemon is immune to Burn through its Fire type regardless of the Flying type.
+Dual-typed Pokemon need only one qualifying type to gain immunity. A Fire/Steel Pokemon is immune to Burn through its Fire type regardless of the Steel type.
 
 ## See also
 - [[condition-source-tracking]] — immunity check happens before source tracking

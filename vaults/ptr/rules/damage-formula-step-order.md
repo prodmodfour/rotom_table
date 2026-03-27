@@ -15,5 +15,5 @@ Step order matters: STAB is pre-roll (step 3), stats are post-roll (step 6), typ
 ## See also
 
 - [[always-round-down]]
-- [[eighteen-pokemon-types]] — the type list used at step 8
+- [[seventeen-pokemon-types]] — the type list used at step 8
 - [[trainers-are-typeless]] — step 8 is skipped entirely for trainer targets

@@ -1,6 +1,12 @@
+---
+id: rookidee
+aliases: []
+tags: []
+---
+
 t# Basic Information
 	- Name: Rookidee
-	- Types: Flying
+	- Types: Normal
 
 # Evolution
 	- [[Rookidee]] >> [[Corvisquire]] >> [[Corviknight]]

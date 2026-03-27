@@ -1,7 +1,7 @@
 # Wing Attack
 
 ## Properties
-	- Type: Flying
+	- Type: Normal
 	- Damage Class: Physical
 	- Damage Base: 6
 	- AC: 2
@@ -15,5 +15,5 @@ No additional effect.
 - Natural Weapon [Wings]
 
 ## Notes
-Basic physical Flying-type attack.
+Basic physical attack.
 [[wing-attack-description|Description]]

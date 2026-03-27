@@ -1,7 +1,7 @@
 # Brave Bird
 
 ## Properties
-	- Type: Flying
+	- Type: Normal
 	- Damage Class: Physical
 	- Damage Base: 12
 	- AC: 2

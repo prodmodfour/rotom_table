@@ -1,4 +1,4 @@
-Air Slash is stored in [[movedata-reference-table]] with `damageClass: "Special"`, `type: "Flying"`, `damageBase: 8`, `energyCost: 3`, `ac: 3`, `range: "6, 1 Target"`.
+Air Slash is stored in [[movedata-reference-table]] with `damageClass: "Special"`, `type: "Normal"`, `damageBase: 8`, `energyCost: 3`, `ac: 3`, `range: "6, 1 Target"`.
 
 ## Energy
 
@@ -6,7 +6,7 @@ Energy cost 3 is deducted from the user's Energy pool per [[move-energy-system]]
 
 ## Resolution
 
-Air Slash flows through the standard [[damage-flow-pipeline]] with DB 8 as the base. The [[nine-step-damage-formula]] applies STAB for Flying-type users and type effectiveness. An accuracy roll against AC 3 is required via the [[evasion-and-accuracy-system]].
+Air Slash flows through the standard [[damage-flow-pipeline]] with DB 8 as the base. The [[nine-step-damage-formula]] applies STAB for Normal-type users and type effectiveness. An accuracy roll against AC 3 is required via the [[evasion-and-accuracy-system]].
 
 ## Secondary Effect
 

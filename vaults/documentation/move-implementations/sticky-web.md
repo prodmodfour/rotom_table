@@ -10,7 +10,7 @@ As a Status move, Sticky Web skips the [[damage-flow-pipeline]]. No accuracy rol
 
 ## Effect
 
-Set 8 square meters of Sticky Web hazards within your range; all 8 meters must be adjacent with at least one other space of Sticky Web. Sticky Web causes terrain to become Slow Terrain, and a foe that runs into the hazard has its Speed lowered by one stage and becomes Slowed until the end of their next turn. Flying-type Pokemon and Pokemon and Trainers with the Flier trait are not affected by Sticky Web. Bug-type Pokemon may move over Sticky Web harmlessly, destroying the Hazards as they do so.
+Set 8 square meters of Sticky Web hazards within your range; all 8 meters must be adjacent with at least one other space of Sticky Web. Sticky Web causes terrain to become Slow Terrain, and a foe that runs into the hazard has its Speed lowered by one stage and becomes Slowed until the end of their next turn. Pokemon and Trainers with the Flier trait are not affected by Sticky Web. Bug-type Pokemon may move over Sticky Web harmlessly, destroying the Hazards as they do so.
 
 ## Trait Interactions
 

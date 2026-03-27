@@ -10,7 +10,6 @@ These traits all follow the same pattern: passive Struggle type modification + a
 
 | Type | Identity Trait | Struggle Type |
 | ---- | -------------- | ------------- |
-| Flying | [[wind-manipulation]] | Flying |
 | Water | [[water-manipulation]] | Water |
 | Fire | [[fire-manipulation]] | Fire |
 | Ground | [[earth-manipulation]] | Ground |
@@ -48,7 +47,6 @@ These types have identity traits that don't follow the Manipulation pattern.
 
 ## See also
 
-- [[wind-manipulation-represents-flying-typing]]
 - [[light-manipulation-represents-fairy-typing]]
 - [[opportunist-represents-dark-typing]]
 - [[phaser-intangibility-represent-ghost-typing]]

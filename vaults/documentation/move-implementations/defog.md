@@ -1,4 +1,4 @@
-Defog is stored in [[movedata-reference-table]] with `damageClass: "Status"`, `type: "Flying"`, `damageBase: null`, `energyCost: 3`, `ac: null`, `range: "Field, Weather"`.
+Defog is stored in [[movedata-reference-table]] with `damageClass: "Status"`, `type: "Normal"`, `damageBase: null`, `energyCost: 3`, `ac: null`, `range: "Field, Weather"`.
 
 ## Energy
 

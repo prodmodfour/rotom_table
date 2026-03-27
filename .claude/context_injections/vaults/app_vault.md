@@ -1,7 +1,0 @@
-- The App vault is here: vaults/app
-- This vault records what the app actually does right now, from two perspectives:
-  - **Usage observations**: what you see and experience through the browser — behaviors, UI elements, interactions, outcomes.
-  - **Codebase observations**: what you find by reading the source — architecture, data flow, file structure, patterns.
-- Each note describes what is, not what should be or why it was designed that way.
-- The power of this vault comes from linking across both perspectives — a UI behavior links to the architectural choice that produces it, a data flow links to the interactions it enables.
-- This vault follows Zettelkasten: .claude/context_injections/vaults/zettelkasten.md

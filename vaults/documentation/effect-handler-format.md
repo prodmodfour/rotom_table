@@ -77,12 +77,17 @@ PassiveEffectSpec = {
   moveTypeOverride?: { moveId: string, type: PokemonType }
   statMultiplier?: { stat: StatKey, multiplier: number }
   immunityGrant?: { type: PokemonType }
-  weatherImmunity?: boolean
+  weatherDamageImmunity?: WeatherType    // weather type that can't damage this entity
   contactDamageImmunity?: boolean
+  movementTypeGrant?: MovementType      // grants a movement type (e.g. Phaser grants 'phase')
+  critBonusDamage?: number              // flat bonus added to crit damage (e.g. Sniper +5)
+  dbBoostThreshold?: number             // DB must be at or below this to qualify for boost
+  dbBoostAmount?: number                // flat DB added when threshold met
+  dbBoostKeywords?: string[]            // only moves with these keywords qualify for DB boost
 }
 ```
 
-**Evaluation.** The engine reads `passiveEffects` at specific computation points: the damage pipeline reads type overrides and stat multipliers; the type effectiveness step reads immunity grants; the weather tick step reads weather immunity.
+**Evaluation.** The engine reads `passiveEffects` at specific computation points: the damage pipeline reads type overrides, stat multipliers, DB boosts, and crit bonus damage; the type effectiveness step reads immunity grants; the weather tick step reads weather damage immunity; the movement system reads movement type grants.
 
 **Conflict resolution.** Multiplicative for multipliers, last-writer-wins for overrides.
 

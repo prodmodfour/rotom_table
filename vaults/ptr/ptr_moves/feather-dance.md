@@ -1,7 +1,7 @@
 # Feather Dance
 
 ## Properties
-	- Type: Flying
+	- Type: Normal
 	- Damage Class: Status
 	- Damage Base: —
 	- AC: 2

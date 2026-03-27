@@ -5,16 +5,15 @@
  * effect implementations. Handlers are typed functions, not data structures.
  */
 
-import type { DamageClass, EntityId, PokemonType } from './base'
-import type { CombatEvent, TriggerEvent } from './combat-event'
+import type { DamageClass, EntityId, MovementType, PokemonType, StatKey } from './base'
+import type { CombatEvent, CombatEventType, TriggerEvent } from './combat-event'
 import type { EncounterDelta, EntityWriteDelta, StateDelta } from './delta'
-import type { FieldState } from './field-state'
+import type { FieldState, WeatherType } from './field-state'
 import type {
   ActiveEffect,
   ClearCondition,
   CombatantLens,
   EffectSource,
-  TriggerRegistration,
 } from './lens'
 
 // ─── Context types ───
@@ -81,6 +80,13 @@ export interface EffectResult {
 export type MoveHandler = (ctx: EffectContext) => EffectResult
 export type TraitTriggerHandler = (ctx: TriggerContext) => EffectResult
 
+export interface TriggerRegistration {
+  eventType: CombatEventType
+  timing: 'before' | 'after'
+  scope: 'self' | 'ally' | 'enemy' | 'any'
+  handler: TraitTriggerHandler
+}
+
 // ─── Definition types ───
 
 export interface MoveDefinition {
@@ -105,11 +111,11 @@ export type MoveRange =
 export interface PassiveEffectSpec {
   struggleAttackTypeOverride?: PokemonType
   moveTypeOverride?: { moveId: string; type: PokemonType }
-  statMultiplier?: { stat: string; multiplier: number }
+  statMultiplier?: { stat: StatKey; multiplier: number }
   immunityGrant?: { type: PokemonType }
-  weatherDamageImmunity?: string
+  weatherDamageImmunity?: WeatherType
   contactDamageImmunity?: boolean
-  movementTypeGrant?: string
+  movementTypeGrant?: MovementType
   critBonusDamage?: number
   dbBoostThreshold?: number
   dbBoostAmount?: number

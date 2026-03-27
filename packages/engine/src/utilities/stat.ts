@@ -19,20 +19,24 @@ export function effectiveStat(lens: CombatantLens, stat: CombatStatKey): number 
   return applyStageMultiplier(baseStat, stage)
 }
 
-/** Compute max HP for a combatant based on entity type */
-export function maxHp(lens: CombatantLens): number {
+/**
+ * Compute max HP for a combatant based on entity type.
+ * Per combat-lens-sub-interfaces.md — level is entity-sourced, not lens state.
+ * The caller provides level from the entity; trainers have no level.
+ */
+export function maxHp(lens: CombatantLens, level?: number): number {
   if (lens.entityType === 'pokemon') {
-    // Pokemon need a level — stored on the entity, not the lens.
-    // For now, we accept level as a property on the lens via the entity passthrough.
-    const level = (lens as CombatantLens & { level?: number }).level ?? 1
+    if (level === undefined) {
+      throw new Error('maxHp requires level for Pokemon — level is entity-sourced, not lens state')
+    }
     return computePokemonMaxHp(level, lens.stats.hp)
   }
   return computeTrainerMaxHp(lens.stats.hp)
 }
 
 /** Current HP = maxHp + hpDelta (hpDelta is negative for damage) */
-export function currentHp(lens: CombatantLens): number {
-  return maxHp(lens) + lens.hpDelta
+export function currentHp(lens: CombatantLens, level?: number): number {
+  return maxHp(lens, level) + lens.hpDelta
 }
 
 /** Max energy derived from stamina stat */
@@ -41,6 +45,6 @@ export function maxEnergy(lens: CombatantLens): number {
 }
 
 /** Tick value (1/10 of real max HP, rounded down) */
-export function tickValue(lens: CombatantLens): number {
-  return computeTickValue(maxHp(lens))
+export function tickValue(lens: CombatantLens, level?: number): number {
+  return computeTickValue(maxHp(lens, level))
 }

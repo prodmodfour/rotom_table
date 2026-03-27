@@ -5,5 +5,5 @@ The exception is type immunity to specific status conditions ([[type-grants-stat
 ## See also
 
 - [[separate-mechanics-stay-separate]]
-- [[eighteen-pokemon-types]] — the 18 types that define effectiveness relationships
+- [[seventeen-pokemon-types]] — the 17 types that define effectiveness relationships
 - [[trainers-are-typeless]] — trainers skip type effectiveness entirely

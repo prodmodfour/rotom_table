@@ -1,4 +1,4 @@
-Enables Flying types or Pokemon with the Levitate Ability to be hit by Ground-type moves for five turns. Moves that involve flying can't be used.
+Enables Pokemon with the Flier trait to be hit by Ground-type moves for five turns. Moves that involve being airborne can't be used.
 
 ## See also
 - [[gravity]]

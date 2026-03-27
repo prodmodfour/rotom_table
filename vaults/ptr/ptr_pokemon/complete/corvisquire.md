@@ -1,6 +1,6 @@
 # Basic Information
 	- Name: Corvisquire
-	- Types: Flying
+	- Types: Normal
 
 # Evolution
 	- [[Rookidee]] >> [[Corvisquire]] >> [[Corviknight]]

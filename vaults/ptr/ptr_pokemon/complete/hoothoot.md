@@ -6,7 +6,7 @@ tags: []
 
 # Basic Information
 	- Name: Hoothoot
-	- Types: Normal / Flying
+	- Types: Normal
 
 # Evolution
 	- [[Hoothoot]] >> [[Noctowl]]

@@ -1,1 +1,0 @@
-After a [[capture-attempt-accuracy-roll]] resolves (whether the capture succeeds, fails, or errors), a **"New Attempt"** button appears in the [[capture-section-on-wild-pokemon-cards]]. Clicking it resets the capture panel back to its initial state with the [[capture-throw-button]], allowing the GM to configure and attempt another capture.

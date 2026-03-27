@@ -18,5 +18,5 @@ The target is knocked down to ground level and loses all Sky Speed for 3 turns. 
 - Focus 3
 
 ## Notes
-Anti-flying utility move.
+Anti-air utility move.
 [[smack-down-description|Description]]

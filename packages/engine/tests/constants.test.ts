@@ -9,6 +9,7 @@ import {
   getTypeEffectiveness,
   STAGE_MULTIPLIERS,
   DB_TO_DICE,
+  TYPE_EFFECTIVENESS,
 } from '../src/constants'
 
 describe('STAGE_MULTIPLIERS', () => {
@@ -110,6 +111,33 @@ describe('applyStageMultiplier', () => {
 
   it('clamps out-of-range stages', () => {
     expect(applyStageMultiplier(50, 10)).toBe(applyStageMultiplier(50, 6))
+  })
+})
+
+describe('TYPE_EFFECTIVENESS chart structure', () => {
+  it('has exactly 17 attacking types (no Flying)', () => {
+    expect(Object.keys(TYPE_EFFECTIVENESS)).toHaveLength(17)
+    expect(TYPE_EFFECTIVENESS).not.toHaveProperty('flying')
+  })
+
+  it('no type has flying as a defending matchup', () => {
+    for (const [, defenses] of Object.entries(TYPE_EFFECTIVENESS)) {
+      expect(defenses).not.toHaveProperty('flying')
+    }
+  })
+
+  it('electric has only water as SE (lost Flying target)', () => {
+    const electricSE = Object.entries(TYPE_EFFECTIVENESS.electric)
+      .filter(([, v]) => v === 2)
+      .map(([k]) => k)
+    expect(electricSE).toEqual(['water'])
+  })
+
+  it('ground has no immunity entries (lost Flying immunity target)', () => {
+    const groundImmunities = Object.entries(TYPE_EFFECTIVENESS.ground)
+      .filter(([, v]) => v === 0)
+      .map(([k]) => k)
+    expect(groundImmunities).toEqual([])
   })
 })
 

@@ -7,6 +7,7 @@
  */
 
 import type {
+  CombatStatKey,
   CombatStages,
   EntityId,
   GridPosition,
@@ -23,8 +24,11 @@ import type {
 
 export interface HasIdentity {
   id: EntityId
+  entityId: EntityId
+  entityType: 'pokemon' | 'trainer'
   name: string
   side: Side
+  level: number | null  // Pokemon have levels 1-20; trainers are null (per only-pokemon-have-levels)
 }
 
 /** Trainers do NOT implement this — they are typeless per PTR rules */
@@ -70,14 +74,18 @@ export interface HasEnergy {
   energyCurrent: number
 }
 
+export type StatusType = 'paralyzed' | 'burned' | 'frozen' | 'poisoned' | 'badly-poisoned' | 'stuck' | 'trapped'
+
+export type VolatileType = 'confused' | 'flinched' | 'infatuated' | 'cursed' | 'slowed' | 'vulnerable' | 'enraged' | 'taunted' | 'disabled' | 'tripped'
+
 export interface StatusInstance {
-  condition: string
+  condition: StatusType
   source: EffectSource
-  appliedCombatStages: Partial<Record<string, number>>
+  appliedCombatStages: Partial<Record<CombatStatKey, number>>
 }
 
 export interface VolatileInstance {
-  condition: string
+  condition: VolatileType
   source: EffectSource
 }
 
@@ -131,12 +139,10 @@ export interface EffectSource {
 
 export type ClearCondition = 'switch-out' | 'take-a-breather' | 'end-of-action' | 'caster-faint'
 
-export interface TriggerRegistration {
-  eventType: string
-  timing: 'before' | 'after'
-  scope: 'self' | 'ally' | 'enemy' | 'any'
-  handler: TraitTriggerHandlerFn
-}
+// TriggerRegistration lives in effect-contract.ts where the real handler type is defined.
+// Type-only import avoids runtime circular dependency.
+import type { TriggerRegistration } from './effect-contract'
+export type { TriggerRegistration }
 
 export interface ActiveEffect {
   effectId: string
@@ -149,9 +155,11 @@ export interface ActiveEffect {
 
 // ─── Composite lens type ───
 
-/** The full combat lens — all sub-interfaces combined */
+/** The full combat lens — all sub-interfaces combined.
+ * HasTypes is partial because trainers are typeless per PTR rules. */
 export type CombatantLens =
   & HasIdentity
+  & Partial<HasTypes>
   & HasStats
   & HasMoves
   & HasTraits
@@ -166,9 +174,3 @@ export type CombatantLens =
   & HasActions
   & HasActiveEffects
   & HasPersistentResources
-  & { entityId: EntityId; entityType: 'pokemon' | 'trainer'; types?: PokemonType[] }
-
-// Handler type — forward-declared as generic function to avoid circular import
-// with effect-contract.ts. The barrel re-exports the full type from effect-contract.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type TraitTriggerHandlerFn = (ctx: any) => any

@@ -1,1 +1,0 @@
-The top of the [[capture-section-on-wild-pokemon-cards]] shows a **Trainer** label with a dropdown. The dropdown lists all player and ally trainer combatants currently in the encounter. The GM selects which trainer is attempting the capture. If only one trainer is present, that trainer is pre-selected.

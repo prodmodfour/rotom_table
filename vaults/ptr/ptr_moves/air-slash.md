@@ -1,7 +1,7 @@
 # Air Slash
 
 ## Properties
-	- Type: Flying
+	- Type: Normal
 	- Damage Class: Special
 	- Damage Base: 8
 	- AC: 3
@@ -16,5 +16,5 @@ Air Slash Flinches the target on 15+.
 - Individual Special Attack 30
 
 ## Notes
-Solid ranged special Flying attack with flinch chance.
+Solid ranged special attack with flinch chance.
 [[air-slash-description|Description]]

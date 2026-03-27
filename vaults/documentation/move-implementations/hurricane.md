@@ -1,4 +1,4 @@
-Hurricane is stored in [[movedata-reference-table]] with `damageClass: "Special"`, `type: "Flying"`, `damageBase: 11`, `energyCost: 5`, `ac: 7`, `range: "Burst 1, Smite"`.
+Hurricane is stored in [[movedata-reference-table]] with `damageClass: "Special"`, `type: "Normal"`, `damageBase: 11`, `energyCost: 5`, `ac: 7`, `range: "Burst 1, Smite"`.
 
 ## Energy
 
@@ -6,7 +6,7 @@ Energy cost 5 is deducted from the user's Energy pool per [[move-energy-system]]
 
 ## Resolution
 
-Hurricane flows through the standard [[damage-flow-pipeline]] with DB 11 as the base. The [[nine-step-damage-formula]] applies STAB for Flying-type users and type effectiveness. An accuracy roll against AC 7 is required via the [[evasion-and-accuracy-system]]. In Sunny Weather, AC becomes 11. In Rainy Weather, Hurricane cannot miss. If the target is airborne from Fly or Sky Drop, Hurricane cannot miss.
+Hurricane flows through the standard [[damage-flow-pipeline]] with DB 11 as the base. The [[nine-step-damage-formula]] applies STAB for Normal-type users and type effectiveness. An accuracy roll against AC 7 is required via the [[evasion-and-accuracy-system]]. In Sunny Weather, AC becomes 11. In Rainy Weather, Hurricane cannot miss. If the target is airborne from Fly or Sky Drop, Hurricane cannot miss.
 
 ## Secondary Effect
 

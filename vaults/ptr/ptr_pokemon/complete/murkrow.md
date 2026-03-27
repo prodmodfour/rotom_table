@@ -6,7 +6,7 @@ tags: []
 
 # Basic Information
 	- Name: Murkrow
-	- Types: Dark / Flying
+	- Types: Dark
 
 # Evolution
 	- [[Murkrow]] >> [[Honchkrow]]

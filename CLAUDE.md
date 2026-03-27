@@ -12,13 +12,12 @@
 - Our ultimate goal is to make the PTR vault, Documentation vault, and app converge.
 - The PTR vault tells us what the tabletop game system is — rules, mechanics, formulas for Pokemon Tabletop Revised (a fork of PTU 1.05).
 - The Documentation vault tells us how the system will be implemented as the rotom_table app.
-- The App vault tells us what the app actually does right now.
-- When the three are aligned — system rules fully described in documentation, documentation fully realized in app, app fully observed in the App vault — the project is complete.
+- When the two are aligned — system rules fully described in documentation, documentation fully realized in app — the project is complete.
 - This does not mean that the file structure or contents of the vaults are similar.
     - It means that the complex connections of ideas in each vault essentially mean the same thing in different contexts.
 - This is similar to how an object has a shadow that represents it.
     - By shining a light onto our system rules, we generate a shadow (the documentation) onto a surface that lets us see it (the app).
-- We will do this slowly, by making adjustments to one of the three, one at a time.
+- We will do this slowly, by making adjustments to one of the two, one at a time.
 - Bit by bit, we will finish the project.
 
 ## How Vaults Grow and Change
@@ -30,12 +29,12 @@ There are three processes that drive vault evolution:
 ### Digestion
 - How new material enters a vault.
 - Raw thoughts, notes, or observations are broken down and absorbed into structured vault content.
-- Each vault has its own digestion process (e.g. digesting user notes into PTR, observing the app into the app vault).
+- Each vault has its own digestion process (e.g. digesting user notes into PTR, digesting design decisions into documentation).
 
 
 ### Alignment
 - How vaults converge with each other.
-- Checking that PTR rules are faithfully described in documentation, that documentation is faithfully realized in the app, and that the app vault faithfully reflects what the app actually does.
+- Checking that PTR rules are faithfully described in documentation, and that documentation is faithfully realized in the app.
 - Maturation can break alignment (e.g. a sharper system rule reveals gaps in documentation). This tension is healthy and drives the project forward.
 
 ### Priority
@@ -54,11 +53,6 @@ Every directory with a CLAUDE.md answers three questions: what can't I know with
 - **Can't know without exploring:** How game mechanics translate into code architecture. Design decisions and trade-offs. The three-view authority model. Service/store/API layer design. Also contains ~219 SE reference notes (patterns, smells, refactoring) and ~811 move implementation specs (stale, being updated to PTR).
 - **What you'd learn:** The bridge between PTR rules and working software. 2 subfolders (moves, software-engineering) + ~369 app-specific design notes at root, prefixed by domain (encounter-, player-, pokemon-, trainer-, etc.).
 - **Start here:** Read `vaults/documentation/CLAUDE.md` for domain prefix guide and 14 starting nodes. Key hubs: `encounter-lifecycle-state-machine.md`, `turn-lifecycle.md`, `triple-view-system.md`, `service-inventory.md`.
-
-## `vaults/app/` — App Observations (~688 notes)
-- **Can't know without exploring:** What the app actually does vs what documentation says it should do. Specific UI behaviors, component layouts, interaction flows as they exist today. Which features are missing or broken.
-- **What you'd learn:** Ground truth of the running application. 1 subfolder (moves-in-combat, ~220 observations) + ~468 domain-prefixed observations at root (encounter-, player-view-, gm-, trainer-, group-view-, etc.).
-- **Start here:** Read `vaults/app/CLAUDE.md` for domain prefix guide and starting nodes. Key hubs: `encounter-store-is-largest-hub-store.md`, `encounter-combat-flow.md`, `battle-grid.md`.
 
 ## `app/` — The Application (Nuxt 3 / Vue / TypeScript)
 - **Can't know without exploring:** The actual implementation — components, composables, stores, server routes, Prisma schema, tests. This is the living codebase.
@@ -94,13 +88,11 @@ Every directory with a CLAUDE.md answers three questions: what can't I know with
 ## Vault context injections (loaded on demand)
 - When considering the PTR game system (rules, mechanics, formulas): .claude/context_injections/vaults/ptr.md
 - When considering how the system will be implemented as rotom_table: .claude/context_injections/vaults/documentation.md
-- When considering what the app actually does: .claude/context_injections/vaults/app_vault.md
 - When editing vaults or Obsidian markdown files: .claude/context_injections/vaults/zettelkasten.md
 - When digesting user notes into the PTR vault: .claude/context_injections/vaults/digesting_ptr.md
 - When digesting user notes into the documentation vault: .claude/context_injections/vaults/digesting_documentation.md
-- When observing the app into the app vault: .claude/context_injections/vaults/observing_app.md
 - When maturing a vault: .claude/context_injections/vaults/maturation.md
-- When answering questions, consult one of the three vaults in vaults/
+- When answering questions, consult one of the two vaults in vaults/
 
 ## Game Data
 - When implementing or verifying PTU game rules: .claude/context_injections/game/ptu_books.md

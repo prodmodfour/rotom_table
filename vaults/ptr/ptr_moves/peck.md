@@ -1,7 +1,7 @@
 # Peck
 
 ## Properties
-	- Type: Flying
+	- Type: Normal
 	- Damage Class: Physical
 	- Damage Base: 4
 	- AC: 2
@@ -15,5 +15,5 @@ No additional effect.
 - Natural Weapon [Beak]
 
 ## Notes
-Basic Flying-type physical attack.
+Basic physical attack.
 [[peck-description|Description]]

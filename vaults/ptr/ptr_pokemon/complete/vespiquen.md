@@ -6,7 +6,7 @@ tags: []
 
 # Basic Information
 	- Name: Vespiquen
-	- Types: Bug / Flying
+	- Types: Bug
 
 # Evolution
 	- [[Combee]] >> [[Vespiquen]] (Female only)

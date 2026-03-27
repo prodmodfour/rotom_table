@@ -1,7 +1,7 @@
 # Hurricane
 
 ## Properties
-	- Type: Flying
+	- Type: Normal
 	- Damage Class: Special
 	- Damage Base: 11
 	- AC: 7

@@ -1,7 +1,7 @@
 # Drill Peck
 
 ## Properties
-	- Type: Flying
+	- Type: Normal
 	- Damage Class: Physical
 	- Damage Base: 8
 	- AC: 2
@@ -18,5 +18,5 @@ No additional effect beyond damage.
 - Combat 4
 
 ## Notes
-Reliable physical Flying attack with Dash keyword for closing distance.
+Reliable physical attack with Dash keyword for closing distance.
 [[drill-peck-description|Description]]

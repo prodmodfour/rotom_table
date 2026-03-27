@@ -1,1 +1,0 @@
-The [[capture-section-on-wild-pokemon-cards]] only appears on wild Pokemon combatant cards when at least one trainer (human character) has been added to the encounter as a player or ally. Without any trainers, the wild Pokemon cards show their usual combatant controls (HP, combat stages, status, items, actions) but no capture UI.

@@ -1,4 +1,4 @@
-Roost is stored in [[movedata-reference-table]] with `damageClass: "Status"`, `type: "Flying"`, `damageBase: null`, `energyCost: 3`, `ac: null`, `range: "Self"`.
+Roost is stored in [[movedata-reference-table]] with `damageClass: "Status"`, `type: "Normal"`, `damageBase: null`, `energyCost: 3`, `ac: null`, `range: "Self"`.
 
 ## Energy
 
@@ -10,7 +10,7 @@ As a Status move, Roost skips the [[damage-flow-pipeline]]. No accuracy roll is 
 
 ## Effect
 
-The user regains Hit Points equal to half of its full Hit Points. If the user is a Flying Type, it loses the Flying Type until the start of their next turn.
+The user regains Hit Points equal to half of its full Hit Points.
 
 ## Trait Interactions
 

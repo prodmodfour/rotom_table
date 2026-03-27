@@ -1,4 +1,4 @@
-Feather Dance is stored in [[movedata-reference-table]] with `damageClass: "Status"`, `type: "Flying"`, `damageBase: null`, `energyCost: 1`, `ac: 2`, `range: "Burst 1, Friendly"`.
+Feather Dance is stored in [[movedata-reference-table]] with `damageClass: "Status"`, `type: "Normal"`, `damageBase: null`, `energyCost: 1`, `ac: 2`, `range: "Burst 1, Friendly"`.
 
 ## Energy
 

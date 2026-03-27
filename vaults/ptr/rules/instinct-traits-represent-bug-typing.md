@@ -4,7 +4,7 @@ Where Fire types manipulate fire and Dark types exploit openings, Bug types are 
 
 This makes Bug unique among types. Its identity is expressed not through what a Bug type *can do* (an ability or power) but through *how it behaves* (instinct over thought). In this way Bug parallels Dragon (identity through exclusive moves) and Normal (identity through absence), rather than the Manipulation family or Opportunist.
 
-The type chart supports this: Bug beats Psychic (instinct cannot be psychically dominated) and Dark (instinct cannot be deceived). Bug loses to Flying (predation), Fire (burning), and Rock (crushing) — physical threats that instinct alone cannot overcome.
+The type chart supports this: Bug beats Psychic (instinct cannot be psychically dominated) and Dark (instinct cannot be deceived). Bug loses to Fire (burning) and Rock (crushing) — physical threats that instinct alone cannot overcome.
 
 ## See also
 

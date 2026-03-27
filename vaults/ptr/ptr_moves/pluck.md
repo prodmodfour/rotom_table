@@ -1,7 +1,7 @@
 # Pluck
 
 ## Properties
-	- Type: Flying
+	- Type: Normal
 	- Damage Class: Physical
 	- Damage Base: 6
 	- AC: 2

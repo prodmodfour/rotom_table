@@ -5,24 +5,23 @@
  * game state. Effects produce deltas; the engine applies them.
  */
 
-import type { CombatStages, EntityId, GridPosition, Side } from './base'
-import type { ActionBudget, ActiveEffect, OutOfTurnUsage } from './lens'
+import type { CombatStatKey, CombatStages, EntityId, GridPosition, Side } from './base'
+import type { ActionBudget, ActiveEffect, EffectSource, OutOfTurnUsage, StatusType, VolatileType } from './lens'
 import type { TerrainType, WeatherType } from './field-state'
 
 // ─── Per-combatant delta ───
 
 export interface StatusMutation {
   op: 'add' | 'remove'
-  category: 'persistent' | 'volatile'
-  condition: string
-  source?: { type: string; id: string; entityId: EntityId }
-  appliedCombatStages?: Partial<Record<string, number>>
+  condition: StatusType
+  source?: EffectSource
+  appliedCombatStages?: Partial<Record<CombatStatKey, number>>
 }
 
 export interface VolatileMutation {
   op: 'add' | 'remove'
-  condition: string
-  source?: { type: string; id: string; entityId: EntityId }
+  condition: VolatileType
+  source?: EffectSource
 }
 
 export interface ActiveEffectMutation {

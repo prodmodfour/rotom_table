@@ -9,7 +9,7 @@
 	- Energy Cost: 3
 
 ## Effect
-For 5 rounds, the area is considered Warped. While Warped, Moves that involve the user being airborne may not be used. Pokemon cannot use the [[movement-traits|Flier]] [[trait-definition|trait]] to end their turn at an altitude higher than 1 meter. Flying-Types and Pokemon with the Flier trait are no longer immune to Ground-Type Moves. All Accuracy Rolls receive a +2 Bonus.
+For 5 rounds, the area is considered Warped. While Warped, Moves that involve the user being airborne may not be used. Pokemon cannot use the [[movement-traits|Flier]] [[trait-definition|trait]] to end their turn at an altitude higher than 1 meter. Pokemon with the Flier trait are no longer immune to Ground-Type Moves. All Accuracy Rolls receive a +2 Bonus.
 
 ## Unlock Conditions
 - Telekinetic 4

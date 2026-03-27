@@ -1,3 +1,0 @@
-At the top of every step in the [[trainer-level-up-modal]], a row of cards summarizes what the new level grants. Each card shows a label and a value in green (e.g., "STAT POINTS +1", "EDGES +2").
-
-The cards shown depend on what the level grants. Possible cards: Stat Points, Edges, Features, and Milestones. At level 2, only Stat Points and Edges appear. Features appear at odd levels 3+. Milestones appear when levels 5, 10, 20, 30, or 40 are crossed. The Edges card combines regular edges and bonus Skill Edges into a single total. Stat Points include any [[trainer-level-up-milestone-budget-effects|retroactive points from milestone choices]].

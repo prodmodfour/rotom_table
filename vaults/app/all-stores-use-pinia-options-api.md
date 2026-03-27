@@ -1,8 +1,0 @@
-Every Pinia store in the app uses the Options API pattern (`defineStore('name', { state, getters, actions })`) rather than the Composition/Setup pattern. This applies to all 16 stores: [[encounter-store-merges-websocket-updates-surgically|encounter]], [[encounter-table-store-centralizes-state-and-api-calls|encounterTables]], [[encounter-library-store-manages-client-state|encounterLibrary]], [[group-view-store-manages-wild-spawn-and-map|groupView]], [[group-view-tab-state|groupViewTabs]], [[pokemon-library-store|library]], [[settings-store-persists-to-local-storage|settings]], [[player-identity-store-is-populated-externally|playerIdentity]], [[fog-of-war-tracks-three-cell-states|fogOfWar]], [[terrain-cells-combine-base-type-and-movement-flags|terrain]], [[measurement-calculates-ptu-aoe-shapes|measurement]], [[isometric-camera-rotates-cardinal-directions|isometricCamera]], [[marquee-selection-overlay|selection]], and three [[stateless-service-stores-wrap-api-calls|stateless service stores]].
-
-The Options API has a consistent shape across the codebase: `state()` returns a plain object, getters are computed-style functions, and actions are methods that mutate state and call APIs.
-
-## See also
-
-- [[some-getters-self-reference-via-use-store-call]] — a workaround pattern that arises from the Options API choice
-- [[stores-use-dollar-fetch-for-api-calls]] — another pattern consistent across all stores

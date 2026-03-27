@@ -1,10 +1,10 @@
-/** Pokemon types — standard 18-type system (Gen VI+, including Fairy) */
+/** Pokemon types — PTR uses 17 types (Flying removed) */
 export type PokemonType =
   | 'normal' | 'fire' | 'water' | 'electric' | 'grass' | 'ice'
-  | 'fighting' | 'poison' | 'ground' | 'flying' | 'psychic' | 'bug'
+  | 'fighting' | 'poison' | 'ground' | 'psychic' | 'bug'
   | 'rock' | 'ghost' | 'dragon' | 'dark' | 'steel' | 'fairy'
 
-export type DamageClass = 'physical' | 'special'
+export type DamageClass = 'physical' | 'special' | 'status'
 
 export type Side = 'allies' | 'enemies' | 'neutral'
 
@@ -24,7 +24,7 @@ export interface GridPosition {
   y: number
 }
 
-export type MovementType = 'land' | 'fly' | 'swim' | 'phase' | 'burrow' | 'teleport'
+export type MovementType = 'land' | 'flight' | 'swim' | 'phase' | 'burrow' | 'teleport'
 
 export interface MoveRef {
   id: string

@@ -1,7 +1,7 @@
 # Air Cutter
 
 ## Properties
-	- Type: Flying
+	- Type: Normal
 	- Damage Class: Special
 	- Damage Base: 6
 	- AC: 2
