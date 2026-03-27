@@ -8,4 +8,3 @@ Skill checks use [[skill-check-1d20-plus-modifier|1d20 + Modifier]] against [[sk
 
 - [[trainer-derived-stats]]
 - [[trainer-stat-budget]]
-- [[character-creation-composable]]

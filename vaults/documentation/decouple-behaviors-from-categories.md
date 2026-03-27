@@ -7,4 +7,3 @@ This is an application of [[specific-text-over-general-category]]: when a condit
 ## See also
 
 - [[condition-source-tracking]]
-- [[suppressed-frequency-downgrade]] — Suppressed is a volatile condition with unique frequency-modifying behavior

@@ -2,38 +2,19 @@
 
 PTR 1.05 healing item catalog and in-combat usage.
 
-## Constants
+## Item Categories
 
-`constants/healingItems.ts` — 15 items: Potion, Super Potion, Hyper Potion, status cures including Awakening (decree-041), Full Heal, Full Restore, Revive, and repulsive variants. Exports `HealingItemDef` interface, `HealingItemCategory` type, `getRestorativeItems`, `getCureItems`, `resolveConditionsToCure`, `ITEM_CATEGORY_LABELS`.
+15 items across categories: Potions (Potion, Super Potion, Hyper Potion), status cures (Antidote, Paralyze Heal, Burn Heal, Ice Heal, Awakening, Full Heal), Full Restore, Revive, and repulsive variants (Energy Powder, Energy Root, Heal Powder, Revival Herb).
 
-## Service
+## In-Combat Usage
 
-`server/services/healing-item.service.ts`:
+Using a healing item costs a Standard Action. The system validates: fainted targets only accept Revive, full-HP targets cannot be healed, and effective max HP (injury-reduced) caps restoration.
 
-- `validateItemApplication` — fainted/revive/full-HP checks using effective max HP (decree-017)
-- `applyHealingItem` — HP restoration, status cure, revive with internal validation
-- `getEntityDisplayName`
-- `checkItemRange` — P2 adjacency validation with [[multi-cell-token-footprint|multi-tile token]] support
-- `findTrainerForPokemon` — P2 inventory owner resolution for Pokemon users
+## Repulsive Items
 
-## Composable
-
-`composables/useHealingItems.ts` — `getApplicableItems` (filters by category + target state + effective max HP), `useItem` (store action wrapper), `getItemsByCategory`.
-
-## Component
-
-`UseItemModal.vue` — target selector with effective max HP display, filtered item list grouped by category, apply/refuse/cancel flow, result display with repulsive badge.
-
-## Store integration
-
-Encounter store action `useItem`. [[websocket-real-time-sync|WebSocket]] event `item_used` (server to all clients).
-
-## API
-
-POST `/api/encounters/:id/use-item`.
+Repulsive variants are cheaper alternatives that carry a loyalty penalty.
 
 ## See also
 
 - [[healing-mechanics]] — how HP restoration, temp HP, and revival work
 - [[faint-and-revival-effects]] — Revive removes Fainted status
-- [[encounter-component-categories]]

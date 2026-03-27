@@ -5,7 +5,7 @@ Combat encounters follow 5 phases:
 1. **Declaration** (`currentPhase === 'trainer_declaration'`, [[battle-modes|League]] only) — `DeclarationPanel` collects declarations, store calls `POST /declare`.
 2. **Priority Window** (`betweenTurns === true`) — `PriorityActionPanel` after `nextTurn()`. GM declares priority or continues.
 3. **Action Phase** (`currentPhase === 'pokemon'` or `'trainer_resolution'`) — `GMActionModal` hub: Standard/Shift/Swift actions, moves, maneuvers.
-4. **Out-of-Turn Interrupts** — `AoOPrompt` / `InterceptPrompt` triggered by [[service-inventory|out-of-turn.service and intercept.service]].
+4. **Out-of-Turn Interrupts** — `AoOPrompt` / `InterceptPrompt` triggered by out-of-turn and intercept services.
 5. **Turn End** — `encounterStore.nextTurn()` calls `POST /next-turn`. Server runs weather-automation (Hail/Sandstorm tick) then status-automation (Burn/Poison tick), advances `currentTurnIndex`.
 
 ## See also
@@ -17,6 +17,4 @@ Combat encounters follow 5 phases:
 - [[energy-for-extra-movement]] — spend 5 Energy for additional movement
 - [[combat-maneuver-catalog]] — maneuvers available during the action phase
 - [[status-condition-categories]] — condition categories affected by turn-end automation
-- [[encounter-component-categories]]
 - [[declaration-system]] — the declaration phase endpoint, components, and WebSocket events
-- [[turn-advancement-service-extraction]] — a potential service that would implement this lifecycle

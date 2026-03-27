@@ -10,10 +10,7 @@ When a Pokemon levels up and was at full HP before the level increase, `currentH
 
 ## Recalculation Points
 
-- [[pokemon-api-endpoints|POST /api/pokemon/:id/add-experience]] — on level-up from manual XP grant
 - [[xp-distribution-flow|POST /api/encounters/:id/xp-distribute]] — on level-up from combat XP
-- [[pokemon-api-endpoints|POST /api/pokemon/:id/allocate-stats]] — when HP stat is increased
-- [[pokemon-api-endpoints|POST /api/pokemon]] — at manual creation time
 
 ## See also
 

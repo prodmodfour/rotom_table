@@ -9,7 +9,7 @@ The Prisma schema tracks healing state on both `HumanCharacter` and `Pokemon` mo
 - `lastInjuryTime` — timestamp for [[natural-injury-healing]] 24-hour timer
 - `restMinutesToday` — minutes rested today (max 480), for [[thirty-minute-rest]]
 - `injuriesHealedToday` — injuries healed today (max 3)
-- `lastRestReset` — timestamp for [[daily-counter-auto-reset]]
+- `lastRestReset` — timestamp for daily counter auto reset
 
 ## Pokemon-only fields
 
@@ -17,5 +17,4 @@ The Prisma schema tracks healing state on both `HumanCharacter` and `Pokemon` mo
 
 ## See also
 
-- [[prisma-schema-overview]]
 - [[rest-healing-system]]

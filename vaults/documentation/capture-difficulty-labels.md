@@ -1,6 +1,6 @@
 # Capture Difficulty Labels
 
-`getCaptureDescription()` in `utils/captureRate.ts` maps numeric [[capture-rate-formula|capture rates]] to human-readable labels.
+Numeric [[capture-rate-formula|capture rates]] map to human-readable labels for display.
 
 | Threshold | Label |
 |---|---|
@@ -11,4 +11,8 @@
 | ≥ 1 | Very Difficult |
 | < 1 | Nearly Impossible |
 
-Used by the [[capture-rate-display-component]] to color-code the difficulty (green through red, grayed out for fainted/impossible).
+The UI color-codes these (green through red, grayed out for fainted/impossible).
+
+## See also
+
+- [[capture-rate-formula]]

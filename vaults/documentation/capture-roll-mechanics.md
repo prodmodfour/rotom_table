@@ -1,6 +1,6 @@
 # Capture Roll Mechanics
 
-Pure function in `utils/captureRate.ts` — `attemptCapture()` — simulating a PTR 1d100 capture roll per [[capture-workflow]].
+PTR 1d100 capture roll per [[capture-workflow]].
 
 ## Roll formula
 

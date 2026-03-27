@@ -1,10 +1,10 @@
 # Combatant as Lens
 
-A destructive restructuring to eliminate the Combatant as a concrete type — replacing it with a runtime projection (lens) over entities that participate in combat — addressing [[combatant-interface-bloat|combatant bloat]] not by decomposing the interface but by questioning why the type exists at all.
+A destructive restructuring to eliminate the Combatant as a concrete type — replacing it with a runtime projection (lens) over entities that participate in combat — addressing combatant bloat not by decomposing the interface but by questioning why the type exists at all.
 
 ## The idea
 
-Every existing proposal that addresses the Combatant accepts a hidden premise: that combat participation requires transforming an entity into a different type. [[trait-composed-domain-model]] shatters the Combatant into traits — but traits are still composed into a `FullCombatant`. [[entity-component-system-architecture]] replaces the Combatant with an ECS entity — but the entity still exists as a runtime construct separate from the Pokemon or Trainer it represents.
+Every existing proposal that addresses the Combatant accepts a hidden premise: that combat participation requires transforming an entity into a different type. trait composed domain model shatters the Combatant into traits — but traits are still composed into a `FullCombatant`. entity component system architecture replaces the Combatant with an ECS entity — but the entity still exists as a runtime construct separate from the Pokemon or Trainer it represents.
 
 What if there is no Combatant?
 
@@ -72,8 +72,6 @@ function projectCombatant(entity: Pokemon | Trainer, lens: CombatLens): Combatan
 
 ## How this differs from existing proposals
 
-- [[trait-composed-domain-model]] shatters the Combatant into narrow interfaces. But the traits compose into `FullCombatant`, which IS the Combatant by another name. This proposal says the Combatant concept itself is wrong — entities don't change type in combat.
-- [[entity-component-system-architecture]] replaces the Combatant with an ECS entity. But ECS entities are still runtime constructs that exist independently of the Pokemon/Trainer they represent. This proposal says the entity IS the Pokemon/Trainer, always — combat state is a separate linked record, not a component attached to a different entity.
 - [[encounter-dissolution]] dissolves the Encounter into containers. This dissolves the Combatant into entity + lens. The two are compatible: lenses could live in the CombatRoster container.
 
 ## Principles improved
@@ -83,7 +81,7 @@ function projectCombatant(entity: Pokemon | Trainer, lens: CombatLens): Combatan
 - [[open-closed-principle]] — adding a new combat concern (e.g., aura effects) means adding a field to `CombatLens`. The Pokemon and Trainer types don't change. The lens is open for extension; entities are closed for modification.
 - [[dependency-inversion-principle]] — combat systems depend on the `CombatLens` abstraction, not on the concrete entity type. A damage function works identically for Pokemon and Trainers because it operates on the lens.
 - [[liskov-substitution-principle]] — any entity that can produce a stat block can participate in combat via a lens. The lens doesn't care whether the entity is a Pokemon, Trainer, or a future entity type (NPC, wild Pokemon, environmental hazard).
-- Eliminates [[combatant-interface-bloat]] — there is no Combatant interface to bloat.
+- Eliminates combatant interface bloat — there is no Combatant interface to bloat.
 - Eliminates the entity snapshot staleness problem — entities are always read live, never copied into a snapshot.
 
 ## Patterns and techniques
@@ -109,18 +107,14 @@ function projectCombatant(entity: Pokemon | Trainer, lens: CombatLens): Combatan
 - Should the lens store absolute values (current HP = 45) or deltas (HP delta = -15 from max of 60)? Deltas are cleaner conceptually but require the entity to be loaded for every display. Absolute values are redundant with the entity but self-contained.
 - How does the lens handle Pokemon switching? When a Pokemon switches out, is its lens archived (preserving status conditions, stage modifiers) or destroyed? When it switches back in, is a new lens created or the archived one restored?
 - Should the `projectCombatant` function be server-side (sending `CombatantView` over the wire) or client-side (sending entity + lens separately and projecting in the component)?
-- How does this interact with [[event-sourced-encounter-state]] / [[universal-event-journal]]? If combat state is event-sourced, events modify the lens, not the entity. The lens becomes a projection over combat events.
+- How does this interact with [[event-sourced-encounter-state]] / universal event journal? If combat state is event-sourced, events modify the lens, not the entity. The lens becomes a projection over combat events.
 - How does this interact with [[encounter-dissolution]]? The CombatRoster container could hold lenses instead of full combatant objects, with entity data fetched on demand.
 - What about entities that exist ONLY in combat (wild Pokemon with no persistent record)? Do they get a temporary entity record, or does the lens support an embedded entity for ephemeral participants?
 
 ## See also
 
-- [[combatant-interface-bloat]] — the problem this addresses (by eliminating the interface, not shrinking it)
-- [[trait-composed-domain-model]] — an alternative: decompose the Combatant, don't eliminate it
-- [[entity-component-system-architecture]] — an alternative: ECS entities replace Combatants
 - [[encounter-dissolution]] — compatible: lenses can live inside the CombatRoster container
 - [[event-sourced-encounter-state]] — compatible: events modify lenses, not entities
-- [[universal-event-journal]] — compatible: combat events target lenses
 - [[proxy-pattern]] — the combatant view is a proxy over entity + lens
 - [[bridge-pattern]] — entity and combat state vary independently, bridged by the lens
 - [[game-state-interface]] — the formal interface design that builds on this lens architecture

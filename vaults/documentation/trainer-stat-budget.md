@@ -8,6 +8,4 @@ Trainer HP formula: `(HP stat × 3) + 10` per [[trainer-hp-formula]].
 
 ## See also
 
-- [[character-creation-composable]]
-- [[character-creation-validation]]
 - [[trainer-derived-stats]]

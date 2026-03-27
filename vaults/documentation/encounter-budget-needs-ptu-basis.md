@@ -9,4 +9,3 @@ XP per player uses: total enemy Pokemon levels × [[significance-cap-x5|signific
 ## See also
 
 - [[no-false-citations]] — the principle that caught a bogus citation
-- [[significance-and-budget]] — the implementation that uses this formula

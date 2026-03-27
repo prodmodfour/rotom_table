@@ -1,6 +1,6 @@
 # Status Condition Registry
 
-A potential [[strategy-pattern]] / registry to address the [[status-condition-ripple-effect|shotgun surgery when adding a status condition]].
+A potential [[strategy-pattern]] / registry to address the shotgun surgery when adding a status condition.
 
 ## The idea
 
@@ -52,5 +52,4 @@ Consumers would query the registry instead of maintaining their own lookup table
 ## See also
 
 - [[status-condition-categories]] — the existing categorization of conditions
-- [[trigger-validation-switch-chains]] — a similar OCP concern that could also benefit from a registry approach
 - [[status-cs-auto-apply-with-tracking]] — the CS auto-effect system that would consume this registry

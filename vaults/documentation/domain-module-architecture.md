@@ -1,6 +1,6 @@
 # Domain Module Architecture
 
-A destructive restructuring to replace the app's [[horizontal-layer-coupling|horizontal layer directories]] with self-contained vertical domain modules.
+A destructive restructuring to replace the app's horizontal layer directories with self-contained vertical domain modules.
 
 ## The idea
 
@@ -71,7 +71,7 @@ Each module's `index.ts` defines its public API. Cross-module imports go through
 ## Trade-offs
 
 - **Boundary ambiguity.** Some code doesn't have a clear home. Does `useEncounterActions` belong in `encounter/` or `combat/`? Does `useMoveCalculation` belong in `combat/` or a `moves/` module? Boundary decisions are hard and contentious.
-- **Cross-cutting concerns multiply.** The [[encounter-store-god-object-risk|encounter store]] currently coordinates combat, switching, grid, weather, and more. After modularization, this coordination must live somewhere — either a thin orchestration module or event-based coordination.
+- **Cross-cutting concerns multiply.** The encounter store currently coordinates combat, switching, grid, weather, and more. After modularization, this coordination must live somewhere — either a thin orchestration module or event-based coordination.
 - **Nuxt friction.** Nuxt's auto-import and file-based routing assume conventional directory structures. Custom module layouts require explicit registration, which fights the framework.
 - **Discovery difficulty.** New developers must learn the module structure before finding anything. The current flat structure, while sprawling, is at least greppable.
 - **Shared types explosion.** If `combat/` needs `CombatantWithGrid` and `grid/` needs `GridCombatant`, the types either live in `shared/` (defeating the purpose) or create circular dependencies.
@@ -87,9 +87,3 @@ Each module's `index.ts` defines its public API. Cross-module imports go through
 
 ## See also
 
-- [[horizontal-layer-coupling]] — the problem this addresses
-- [[composable-domain-grouping]] — the current informal domain classification, which becomes formal module boundaries
-- [[encounter-store-god-object-risk]] — the cross-cutting coordinator that resists modularization
-- [[service-inventory]] — services would be distributed across modules
-- [[api-endpoint-layout]] — routes would be reorganized by module
-- [[explicit-vue-architecture]] — compatible: without file-based routing, domain modules can organize freely

@@ -18,12 +18,10 @@ Post-combat XP calculation and distribution to Pokemon and trainers.
 
 ## Store
 
-`encounterXp` (see [[pinia-store-classification]]).
+`encounterXp` (see pinia store classification).
 
 ## See also
 
-- [[significance-and-budget]] — budget/XP formulas and significance presets
 - [[faint-and-revival-effects]] — defeated enemies recorded for XP on faint
-- [[trainer-xp-system]]
 - [[pokemon-experience-chart]] — underlying XP thresholds and level-up detection
 - [[pokemon-hp-formula]] — HP recalculated on level-up during distribution

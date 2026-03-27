@@ -24,11 +24,9 @@ Each stage maps to a multiplier applied to the base stat value:
 | +5 | 1.67 |
 | +6 | 2.0 |
 
-The constant `STAGE_MULTIPLIERS` in `constants/combat.ts` stores this table. The utility `applyStageModifier` clamps the stage, looks up the multiplier, and floors the result.
-
 ## Modification
 
-Stages are modified via the `modifyStage` API endpoint, which accepts either a delta (+2, -1) or an absolute value. The `updateStageModifiers` service function enforces the -6/+6 clamp.
+Stages are modified either as a delta (+2, -1) or an absolute value. The system enforces the -6/+6 clamp.
 
 [[take-a-breather-mechanics]] resets all combat stages (respecting Heavy Armor's default Speed CS of -1).
 

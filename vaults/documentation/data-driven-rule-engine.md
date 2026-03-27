@@ -1,6 +1,6 @@
 # Data-Driven Rule Engine
 
-A destructive restructuring to replace all hardcoded game logic with a declarative rule engine where game rules are data, not code — addressing the [[hardcoded-game-rule-proliferation|proliferation of hardcoded game rules]] and the [[status-condition-ripple-effect|shotgun surgery caused by scattered rule definitions]].
+A destructive restructuring to replace all hardcoded game logic with a declarative rule engine where game rules are data, not code — addressing the proliferation of hardcoded game rules and the shotgun surgery caused by scattered rule definitions.
 
 ## The idea
 
@@ -81,7 +81,7 @@ The PTR vault defines the rules. The rule definitions are a 1:1 translation of t
 - **`combatant.service.ts` (791 lines) is gutted.** Damage calculation, status application, stage modification — all become rule evaluations, not hardcoded functions.
 - **`next-turn.post.ts` (846 lines) is simplified radically.** End-of-turn processing becomes: evaluate all `end-of-turn` rules for all combatants. No more hardcoded tick damage, weather processing, status expiration sequences.
 - **`statusConditions.ts`, `pokeBalls.ts`, `trainerClasses.ts`, `equipment.ts`** — all constant files are replaced by comprehensive rule definitions that bundle data AND behavior in a single location.
-- **The 100+ consuming sites for status conditions ([[status-condition-ripple-effect]]) collapse to zero.** A new condition means one new rule definition. Nothing else changes.
+- **The 100+ consuming sites for status conditions (status condition ripple effect) collapse to zero.** A new condition means one new rule definition. Nothing else changes.
 
 ## Principles improved
 
@@ -90,7 +90,7 @@ The PTR vault defines the rules. The rule definitions are a 1:1 translation of t
 - [[dependency-inversion-principle]] — the app depends on the rule engine abstraction, not on concrete game mechanics. The rule definitions depend on the rule schema abstraction, not on the app.
 - Eliminates [[shotgun-surgery-smell]] — a rule change is one file, one definition, one location.
 - Eliminates [[divergent-change-smell]] — no file changes for multiple unrelated game mechanics.
-- Eliminates [[hardcoded-game-rule-proliferation]] — rules are data, not code.
+- Eliminates hardcoded game rule proliferation — rules are data, not code.
 - Aligns PTR and Documentation vaults — rule definitions map 1:1 to PTR vault rules, making convergence verification mechanical.
 
 ## Patterns and techniques
@@ -124,16 +124,10 @@ The PTR vault defines the rules. The rule definitions are a 1:1 translation of t
 
 ## See also
 
-- [[hardcoded-game-rule-proliferation]] — the problem this addresses
-- [[status-condition-ripple-effect]] — eliminated entirely
-- [[game-logic-boundary-absence]] — the boundary becomes clear: rule definitions are the boundary
 - [[game-engine-extraction]] — compatible: the engine evaluates rules; this proposal defines how rules are expressed
 - [[status-condition-registry]] — the incremental approach that this supersedes
-- [[trigger-validation-strategy-registry]] — the incremental approach that this supersedes
 - [[damage-pipeline-as-chain-of-responsibility]] — formalized as a rule evaluation chain
 - [[switching-validation-pipeline]] — formalized as a rule evaluation chain
-- [[vault-sourced-data-repository]] — compatible: vault-compiled data feeds the rule engine
-- [[property-based-rule-verification]] — compatible: property tests verify rule engine outputs for all inputs
 - [[game-state-interface]] — the shared abstraction the rule engine evaluates against
 - [[state-delta-model]] — rule evaluation produces deltas; the engine applies them
 - [[resolution-context-inputs]] — external inputs injected into rule evaluation

@@ -1,4 +1,4 @@
-The `computeEquipmentBonuses` pure function in `utils/equipment.ts` aggregates all combat bonuses from a human character's equipped items across [[equipment-slots|equipment slots]].
+Equipment bonuses are aggregated across all [[equipment-slots|equipped items]] for combat calculations.
 
 ## Aggregated Bonuses
 
@@ -11,11 +11,8 @@ The `computeEquipmentBonuses` pure function in `utils/equipment.ts` aggregates a
 
 The equipment catalog is defined per the PTR [[items-unchanged-from-ptu|item system]]. See [[armor-and-shields]] and [[equipment-slots]] for the PTR equipment reference.
 
-The `HumanEquipmentTab` component manages equipment slots, and the `EquipmentCatalogBrowser` provides a searchable catalog modal for equipping items.
-
 ## See also
 
-- [[equipment-system]] — the broader equipment management system
 - [[nine-step-damage-formula]] — DR applies at step 7
 - [[evasion-and-accuracy-system]] — evasion bonus feeds into evasion calculation
 - [[initiative-and-turn-order]] — Heavy Armor Speed CS affects initiative

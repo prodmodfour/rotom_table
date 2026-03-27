@@ -13,6 +13,4 @@ For status moves (no damage base), `MoveTargetModal` skips the damage section en
 - [[combat-stage-system]] — stage multipliers feeding into attack/defense
 - [[damage-base-to-dice-table]] — DB lookup used at step 1
 - [[turn-lifecycle]]
-- [[encounter-component-categories]]
-- [[encounter-composable-delegation]]
 - [[damage-pipeline-as-chain-of-responsibility]] — how this pipeline implements the chain of responsibility pattern

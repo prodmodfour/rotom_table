@@ -2,7 +2,7 @@ The HP and injury system tracks combatant health using HP markers at 50% interva
 
 ## HP Markers
 
-Markers exist at **50%**, **0%**, **-50%**, and **-100%** of max HP. Each time damage causes HP to cross a marker, the combatant gains one injury. The `countMarkersCrossed` service function generates markers from real max HP and counts how many the HP value passed through between its previous and new values.
+Markers exist at **50%**, **0%**, **-50%**, and **-100%** of max HP. Each time damage causes HP to cross a marker, the combatant gains one injury.
 
 HP is tracked unclamped during marker detection — a combatant at 60 HP taking 150 damage passes through all markers between 60 and -90 — but is clamped for storage afterward.
 
@@ -12,15 +12,11 @@ If a single hit deals **50% or more of max HP** in damage, the combatant gains o
 
 ## Injuries
 
-Injuries permanently reduce effective max HP per the [[effective-max-hp-formula]]. Each injury lowers the ceiling that [[healing-mechanics]] can restore HP to. Injuries can only be healed explicitly via [[natural-injury-healing]], [[ap-drain-injury-healing]], or [[pokemon-center-healing]].
+Injuries permanently reduce effective max HP per the [[effective-max-hp-formula]]. Each injury lowers the ceiling that [[healing-mechanics]] can restore HP to. Injuries can only be healed explicitly via [[natural-injury-healing]], ap drain injury healing, or [[pokemon-center-healing]].
 
 ## Faint
 
 When HP reaches 0, the combatant faints. See [[faint-and-revival-effects]] for what happens at that threshold.
-
-## Implementation
-
-The `calculateDamage` function in `combatant.service.ts` handles the full flow: [[temp-hp-mechanics]] absorbs damage first, then the remainder applies to real HP with marker crossing and massive damage checks.
 
 ## See also
 

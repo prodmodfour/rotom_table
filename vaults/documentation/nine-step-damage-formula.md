@@ -1,4 +1,4 @@
-The PTR damage calculation follows a strict 9-step pipeline implemented in `utils/damageCalculation.ts`.
+The PTR damage calculation follows a strict 9-step pipeline.
 
 ## Steps
 
@@ -12,11 +12,10 @@ The PTR damage calculation follows a strict 9-step pipeline implemented in `util
 8. **Type Effectiveness** — multiply by the type effectiveness multiplier (double, neutral, resist, immune). A second minimum floor of 1 applies here — only full immunity (x0) produces 0. [[trainers-are-typeless|Trainer targets skip this step entirely]].
 9. **Apply to HP** — subtract from the target's HP and check for [[hp-injury-system|injuries]].
 
-The function returns a detailed breakdown object with every intermediate value, enabling the UI to show a step-by-step damage report.
+The damage pipeline returns a detailed breakdown object with every intermediate value, enabling the UI to show a step-by-step damage report.
 
 ## See also
 
-- [[damage-flow-pipeline]] — the UI component chain that invokes this formula
 - [[evasion-and-accuracy-system]] — accuracy check that precedes damage
 - [[combat-stage-asymmetric-scaling]] — stage multipliers used in steps 6 and 7
 - [[non-immune-attacks-deal-damage]] — minimum floors at steps 7 and 8

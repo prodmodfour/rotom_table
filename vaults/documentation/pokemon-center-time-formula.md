@@ -7,5 +7,3 @@ Examples:
 - 0 injuries: 1 hour
 - 2 injuries: 2 hours (1h + 2x30min)
 - 5 injuries: 5 hours (5x1h)
-
-Implemented as `calculatePokemonCenterTime` in `utils/restHealing.ts`. Returns a breakdown object with base time, per-injury time, total, and a human-readable description.

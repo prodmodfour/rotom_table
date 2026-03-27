@@ -4,7 +4,7 @@
 
 ## Data Flow
 
-Wired through serializers, the [[combatant-type-hierarchy|combatant service]], and character APIs (POST `/api/characters`, PUT `/api/characters/:id`). See [[character-api-endpoints]].
+Wired through serializers, the combatant service, and character APIs (POST `/api/characters`, PUT `/api/characters/:id`). See character api endpoints.
 
 ## VTT Usage
 
@@ -21,4 +21,3 @@ Editable in `gm/characters/[id].vue`. Displayed in character sheet components.
 ## See also
 
 - [[trainer-derived-stats]]
-- [[character-api-endpoints]]

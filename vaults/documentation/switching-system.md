@@ -2,37 +2,21 @@
 
 Pokemon switch, recall, and release during encounters.
 
-## Composable
+## Switch (Full)
 
-`composables/useSwitching.ts` — `getBenchPokemon`, `canSwitch`, `canFaintedSwitch`, `canForcedSwitch` (pre-validation), `executeSwitch`, `executeRecall`, `executeRelease`.
+Standard Action. Recall the active Pokemon (8m [[poke-ball-recall-range|range check]]) and release a bench Pokemon. The new combatant is inserted into the turn order at the appropriate initiative position. Volatile [[status-condition-categories|conditions]] are cleared on recall.
 
-## Service
+## Recall (Standalone)
 
-`server/services/switching.service.ts` — `validateSwitch` (10-step validation chain), `validateFaintedSwitch`, `validateForcedSwitch`, `checkRecallRange` (8m per [[poke-ball-recall-range]]), `insertIntoTurnOrder` (full contact + league), `removeCombatantFromEncounter`, `markActionUsed`, `buildSwitchAction`, `canSwitchedPokemonBeCommanded`, `hasInitiativeAlreadyPassed` (Section K), `findAdjacentPosition`, `checkRecallReleasePair` (Section N), `applyRecallSideEffects`.
+1st recall per round costs a Shift Action; 2nd costs a Standard Action. Removes from field, clears volatile conditions.
 
-## Components
+## Release (Standalone)
 
-`SwitchPokemonModal.vue` — shows recalled Pokemon, loads bench from trainer roster, select replacement with sprite/level/HP display.
+1st release per round costs a Shift Action; 2nd costs a Standard Action. Auto-places adjacent to trainer. If the released Pokemon's initiative has not yet passed in this round, it may act immediately.
 
-`CombatantGmActions.vue` — Switch/Fainted Switch/Force Switch buttons.
+## Validation
 
-## API
-
-- `POST .../switch` — full switch: recall + release as Standard Action with 8m range check, initiative insertion, action economy enforcement.
-- `POST .../recall` — standalone: 1 = Shift Action, 2 = Standard Action. Removes from field, clears volatile conditions, tracks `recall_only` SwitchAction.
-- `POST .../release` — standalone: 1 = Shift Action, 2 = Standard Action. Auto-places adjacent to trainer, immediate-act logic (Section K), detects recall+release pair (Section N).
-
-## Store
-
-Actions: `switchPokemon`, `recallPokemon`, `releasePokemon`.
-
-## Model Field
-
-`switchActions` on Encounter (JSON, cleared per round) — tracks `full_switch`, `fainted_switch`, `forced_switch`, `recall_only`, `release_only`.
-
-## WebSocket
-
-`pokemon_switched`, `pokemon_recalled`, `pokemon_released`.
+A 10-step validation chain ensures: the bench Pokemon exists, the trainer owns it, it's not already active, it's not fainted (unless fainted-switch), range is within 8m, and action economy allows it.
 
 ## See also
 
@@ -40,5 +24,4 @@ Actions: `switchPokemon`, `recallPokemon`, `releasePokemon`.
 - [[faint-and-revival-effects]] — fainted switch triggers special validation
 - [[initiative-and-turn-order]] — new combatant inserted by initiative
 - [[turn-lifecycle]]
-- [[encounter-core-api]]
 - [[deployment-state-model]] — tracks active/reserve/fainted roster for switching decisions

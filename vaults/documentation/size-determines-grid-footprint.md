@@ -7,9 +7,8 @@ A Pokemon's size category determines the total number of grid squares it occupie
 
 [[custom-token-shapes]] can redistribute this area into non-square shapes while preserving the total square count. The size category sets the area budget, not a fixed shape.
 
-The [[size-category-footprint-map]] maps each category to its default rectangular footprint, and [[multi-cell-token-footprint]] handles the rendering of tokens that span multiple cells.
+The size category footprint map maps each category to its default rectangular footprint, and [[multi-cell-token-footprint]] handles the rendering of tokens that span multiple cells.
 
 ## See also
 - [[custom-token-shapes]]
-- [[size-category-footprint-map]]
 - [[multi-cell-token-footprint]]

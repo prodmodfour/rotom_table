@@ -20,6 +20,3 @@ Player-facing card with visibility awareness:
 
 - [[triple-view-system]] — the three-audience architecture
 - [[encounter-serving-mechanics]] — how the encounter reaches group/player views
-- [[player-view-architecture]] — the player view that uses PlayerCombatantCard
-- [[player-encounter-display]] — PlayerCombatantInfo component implementing these rules
-- [[player-grid-interaction]] — info asymmetry levels (full/allied/enemy) on the grid

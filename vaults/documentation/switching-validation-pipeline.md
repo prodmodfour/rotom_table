@@ -1,6 +1,6 @@
 # Switching Validation Pipeline
 
-A potential [[template-method-pattern]] / pipeline to address the [[switching-validation-duplication|three near-identical validators in switching.service.ts]].
+A potential [[template-method-pattern]] / pipeline to address the three near-identical validators in switching.
 
 ## The idea
 

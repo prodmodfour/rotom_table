@@ -1,6 +1,6 @@
 # Encounter Lifecycle State Machine
 
-A destructive restructuring to replace the [[implicit-encounter-lifecycle|encounter's implicit lifecycle]] with an explicit finite state machine that makes illegal state transitions unrepresentable.
+A destructive restructuring to replace the encounter's implicit lifecycle with an explicit finite state machine that makes illegal state transitions unrepresentable.
 
 ## The idea
 
@@ -38,7 +38,7 @@ Every transition has explicit guards. A `DECLARE_MOVE` in `RESOLUTION` phase is 
 
 - The Encounter data model gains a `phase` discriminant that replaces all implicit lifecycle inference
 - All 44 encounter routes must validate transitions against the state machine instead of ad-hoc field checks
-- The [[encounter-store-god-object-risk|encounter store]] is restructured around phases — each phase has its own set of valid actions
+- The encounter store is restructured around phases — each phase has its own set of valid actions
 - Services like `out-of-turn.service.ts` and `switching.service.ts` are constrained to specific phases
 - The 846-line `next-turn.post.ts` route is decomposed — each transition becomes a separate handler
 - The WebSocket protocol changes to broadcast state transitions, not raw state
@@ -78,10 +78,6 @@ Every transition has explicit guards. A `DECLARE_MOVE` in `RESOLUTION` phase is 
 
 ## See also
 
-- [[implicit-encounter-lifecycle]] — the problem this addresses
 - [[state-pattern]] — the design pattern
 - [[switch-statements-smell]] — the smell this eliminates
-- [[out-of-turn-service-split]] — the out-of-turn system becomes phase-specific handlers
-- [[turn-advancement-service-extraction]] — the next-turn route is decomposed into transitions
-- [[player-action-discriminated-union]] — a complementary use of discriminated unions for actions
 - [[event-sourced-encounter-state]] — a compatible destructive proposal where events are state transitions

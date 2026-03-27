@@ -49,15 +49,15 @@ Every directory with a CLAUDE.md answers three questions: what can't I know with
 - **What you'd learn:** The complete game system that everything else implements. 6 subfolders: rules (~400, self-contained), moves (~382), move descriptions (~378), traits (~198), pokemon species (~129), ecology (~225). Key difference from PTU: there are no per-species move lists — any Pokemon can learn any move if it meets the move's unlock conditions.
 - **Start here:** Read `vaults/ptr/CLAUDE.md` for subfolder routing and a complete query-type routing table. For rules, start with `rules/ptr-vs-ptu-differences.md`. For a species, check `ptr_pokemon/` for stats, `pokemon_ecology/` for lore. For a move, check `ptr_moves/`.
 
-## `vaults/documentation/` — App Design (~1,399 notes)
-- **Can't know without exploring:** How game mechanics translate into code architecture. Design decisions and trade-offs. The three-view authority model. Service/store/API layer design. Also contains ~219 SE reference notes (patterns, smells, refactoring) and ~811 move implementation specs (stale, being updated to PTR).
-- **What you'd learn:** The bridge between PTR rules and working software. 2 subfolders (moves, software-engineering) + ~369 app-specific design notes at root, prefixed by domain (encounter-, player-, pokemon-, trainer-, etc.).
-- **Start here:** Read `vaults/documentation/CLAUDE.md` for domain prefix guide and 14 starting nodes. Key hubs: `encounter-lifecycle-state-machine.md`, `turn-lifecycle.md`, `triple-view-system.md`, `service-inventory.md`.
+## `vaults/documentation/` — App Design (~750 notes)
+- **Can't know without exploring:** How game mechanics translate into code architecture. Design decisions and trade-offs. The three-view authority model. The effect engine and entity model design. Also contains ~219 SE reference notes (patterns, smells, refactoring) and ~371 move implementation specs.
+- **What you'd learn:** The bridge between PTR rules and working software. 2 subfolders (moves, software-engineering) + ~160 app-specific design notes at root, covering engine design, game mechanics, views, and conventions.
+- **Start here:** Read `vaults/documentation/CLAUDE.md` for domain prefix guide and starting nodes. Key hubs: `game-state-interface.md`, `combatant-as-lens.md`, `combat-lens-sub-interfaces.md`, `triple-view-system.md`.
 
-## `app/` — The Application (Nuxt 3 / Vue / TypeScript)
-- **Can't know without exploring:** The actual implementation — components, composables, stores, server routes, Prisma schema, tests. This is the living codebase.
-- **What you'd learn:** How the system actually runs. Key subdirectories: `components/`, `composables/`, `stores/`, `server/`, `prisma/`, `pages/`, `constants/`, `types/`, `tests/`.
-- **Start here:** `prisma/schema.prisma` for data model. `server/` for API routes. `stores/` for client state. `pages/` for route structure. `nuxt.config.ts` for app configuration.
+## `packages/engine/` — The Game Engine (@rotom/engine)
+- **Can't know without exploring:** The effect engine implementation, entity model types, combat lens sub-interfaces, state delta types, and game constants. This is the foundation for all game logic.
+- **What you'd learn:** How PTR rules are encoded as TypeScript types and pure functions. Types for combat lens, state deltas, effect handlers, field state. Constants for stage multipliers, damage base table, type chart, HP/energy formulas.
+- **Start here:** `src/types/` for the type system. `src/constants.ts` for game constants. `tests/` for verified behavior.
 
 ## `deprecated_books/markdown/` — PTU 1.05 Rulebook Reference (Fully Deprecated)
 - **Fully deprecated:** All PTR-relevant rules have been digested into `vaults/ptr/rules/`. Do not consult for game rules. The digest thread at `claude_forum/closed/ptu-to-ptr-final-digest/` documents what was extracted.

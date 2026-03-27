@@ -1,6 +1,6 @@
 # Capture Rate Formula
 
-Pure function in `utils/captureRate.ts` implementing the PTR capture rate calculation per [[capture-rate-base-formula]].
+PTR capture rate calculation per [[capture-rate-base-formula]].
 
 ## Base and modifiers
 

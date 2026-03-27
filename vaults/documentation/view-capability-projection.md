@@ -1,6 +1,6 @@
 # View Capability Projection
 
-A destructive restructuring to replace the three parallel component trees (GM, Group, Player) with a single capability-projected component tree — addressing [[view-component-duplication|component duplication across views]] and the architectural fragility of the [[triple-view-system]].
+A destructive restructuring to replace the three parallel component trees (GM, Group, Player) with a single capability-projected component tree — addressing component duplication across views and the architectural fragility of the [[triple-view-system]].
 
 ## The idea
 
@@ -87,7 +87,7 @@ components/group/
 - **Every GM encounter component gains capability awareness.** Components that assumed full access must now check capabilities. No component directly checks "am I on the GM page?" — it asks "do I have this capability?"
 - **The Player page's composable layer (8 composables) is largely deleted.** Player-specific data fetching and filtering moves to server-side capability projection.
 - **The combatant card visibility rules become data.** The hand-documented three-tier visibility table becomes a computable function: `capabilities.canSeeExactHp(id)`.
-- **WebSocket sync diverges by role.** Currently all clients receive the same broadcast. With capability projection, the server filters outbound data per-client using the same capability definitions — feeding directly into [[server-authoritative-reactive-streams]] if adopted.
+- **WebSocket sync diverges by role.** Currently all clients receive the same broadcast. With capability projection, the server filters outbound data per-client using the same capability definitions — feeding directly into server authoritative reactive streams if adopted.
 
 ## Principles improved
 
@@ -96,8 +96,8 @@ components/group/
 - [[open-closed-principle]] — adding a new view (e.g., a "spectator" view for stream overlays) means defining a new `ViewCapabilities` object, not building a new component tree. Adding a new capability means adding one field, not duplicating one component.
 - [[liskov-substitution-principle]] — any `ViewCapabilities` object can be injected into any component. The GM capability context is substitutable with the Player context — the component tree works identically, just with different permissions.
 - [[dependency-inversion-principle]] — components depend on the `ViewCapabilities` abstraction, not on concrete page contexts.
-- Eliminates [[view-component-duplication]] — there is one component per concept, not three.
-- Reduces [[horizontal-layer-coupling]] — the `components/player/` and `components/group/` directories collapse into `components/layout/`.
+- Eliminates view component duplication — there is one component per concept, not three.
+- Reduces horizontal layer coupling — the `components/player/` and `components/group/` directories collapse into `components/layout/`.
 
 ## Patterns and techniques
 
@@ -121,17 +121,12 @@ components/group/
 
 - Should capabilities be computed client-side from a role token, or should the server send a concrete capability manifest on connection?
 - How deep does capability injection go? Does every leaf component inject capabilities, or do parent components pre-filter data and pass only what's needed?
-- How does this interact with [[server-authoritative-reactive-streams]]? If the server already filters data by role, do we still need client-side capability checks, or is the client guaranteed to only receive appropriate data?
+- How does this interact with server authoritative reactive streams? If the server already filters data by role, do we still need client-side capability checks, or is the client guaranteed to only receive appropriate data?
 - Should the GM be able to "view as player" by swapping their capability context? This would be trivial with injection but complex with current architecture.
 - Do layout components (GmLayout, GroupLayout, PlayerLayout) become the only view-specific files, or do some capabilities require view-specific rendering that can't be expressed as conditionals?
 - What about components that are genuinely GM-only (encounter creation wizard, character builder)? Do they gain capability awareness unnecessarily, or are some components explicitly excluded?
 
 ## See also
 
-- [[view-component-duplication]] — the problem this addresses
 - [[triple-view-system]] — the architecture this replaces
 - [[combatant-card-visibility-rules]] — the visibility rules that become computable
-- [[player-view-architecture]] — the Player tree that is dissolved
-- [[server-authoritative-reactive-streams]] — compatible: server can project data using the same capability definitions
-- [[encounter-store-surface-reduction]] — partially superseded: components no longer need the full store surface because capabilities filter what's relevant
-- [[headless-domain-components]] — the alternative approach: separate templates per view sharing headless logic, rather than one conditional tree

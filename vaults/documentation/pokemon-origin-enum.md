@@ -1,6 +1,6 @@
 # Pokemon Origin Enum
 
-`Pokemon.origin` is stored as a plain `String` in the [[prisma-schema-overview|Prisma schema]], not a Prisma enum. Five values:
+`Pokemon.origin` is stored as a plain `String` in the Prisma schema, not a Prisma enum. Five values:
 
 | Value | Meaning |
 |---|---|
@@ -10,4 +10,4 @@
 | `import` | Imported via CSV upload |
 | `captured` | Captured during encounter (auto-linked to trainer) |
 
-The [[pokemon-generator-entry-point]] is the canonical way to create Pokemon records with an appropriate origin.
+The pokemon generator entry point is the canonical way to create Pokemon records with an appropriate origin.

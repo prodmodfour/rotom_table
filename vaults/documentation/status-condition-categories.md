@@ -1,4 +1,4 @@
-PTR status conditions are grouped into categories, defined in the `STATUS_CONDITIONS` constant in `constants/combat.ts`.
+PTR status conditions are grouped into categories.
 
 ## Persistent (5)
 
@@ -26,16 +26,14 @@ Conditions that don't fit the above categories: Fainted, Tripped, Vulnerable, Tr
 
 Other conditions are NOT cleared on faint.
 
-## Implementation
-
-The `updateStatusConditions` service function validates incoming conditions against these categories and prevents duplicates. A CSS class mapper function provides styling per category. The [[condition-source-rules]] system tracks where each condition came from for source-dependent clearing.
+The condition source rules system tracks where each condition came from for source-dependent clearing.
 
 ## See also
 
 - [[faint-and-revival-effects]] — which categories clear on faint
 - [[take-a-breather-mechanics]] — which conditions are cured
 - [[status-tick-automation]] — automatic tick damage for Burning, Poisoned, Badly Poisoned, Cursed
-- [[type-status-immunity-utility]] — type-based immunity to specific conditions
+- [[type-grants-status-immunity]] — type-based immunity to specific conditions
 - [[extended-rest]] — clears persistent conditions
 - [[pokemon-center-healing]] — clears all conditions
 - [[combat-lens-sub-interfaces]] — `HasStatus` hosts condition instances with source tracking

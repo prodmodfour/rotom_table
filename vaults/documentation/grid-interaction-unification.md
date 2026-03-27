@@ -1,6 +1,6 @@
 # Grid Interaction Unification
 
-A potential refactoring to address the [[grid-isometric-interaction-duplication|~85% code duplication between grid and isometric interaction composables]].
+A potential refactoring to address the ~85% code duplication between grid and isometric interaction composables.
 
 ## The idea
 
@@ -50,6 +50,3 @@ The unified `useGridInteraction(coordinateSystem, options)` handles everything e
 
 ## See also
 
-- [[vtt-grid-composables]] — architectural context for the VTT composables
-- [[grid-isometric-interaction-duplication]] — the duplication this addresses
-- [[geometry-utility-extraction]] — a lighter-weight extraction that could be a precursor

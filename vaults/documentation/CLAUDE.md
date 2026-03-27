@@ -1,19 +1,19 @@
 # Documentation Vault
 
-~1,399 atomic notes describing how the PTR system will be implemented as the rotom_table app. Notes link to each other with `[[wikilinks]]`. Obsidian resolves links by filename regardless of folder.
+~750 atomic notes describing how the PTR system will be implemented as the rotom_table app. Notes link to each other with `[[wikilinks]]`. Obsidian resolves links by filename regardless of folder.
 
 ## What you can't know without exploring here
 
 - How game mechanics translate into code architecture (damage pipelines, capture formulas, turn lifecycles)
-- Specific design decisions and trade-offs (why CQRS, why combatant-as-lens, why denormalized encounters)
+- Specific design decisions and trade-offs (combatant-as-lens, effect engine architecture, state delta model)
 - The three-view authority model (GM writes, players request, group view spectates)
-- What the app's service layer, store layer, and API layer look like as designed
+- The effect engine and entity model design (`@rotom/engine`)
 
 The PTR vault tells you *what* the rules are. This vault tells you *how* they become software.
 
 ## Subfolders
 
-- `move-implementations/` — ~371 move implementation specs (one per PTR game move). Updated to PTR. Has its own CLAUDE.md.
+- `move-implementations/` — ~371 move implementation specs (one per PTR game move). Has its own CLAUDE.md.
 - `software-engineering/` — ~219 general SE reference notes (UML, design patterns, refactoring techniques, code smells, SOLID). Has its own CLAUDE.md.
 
 ## Routing
@@ -22,40 +22,47 @@ The PTR vault tells you *what* the rules are. This vault tells you *how* they be
 - Looking up a **SE concept** (pattern, smell, refactoring technique, UML)? Check `software-engineering/`.
 - Looking up **how a game system is designed for the app**? Search this directory by domain prefix.
 
-## Domain prefixes (this directory, ~369 files)
+## Domain prefixes (this directory, ~160 files)
 
 Notes in this directory are rotom_table-specific design decisions. They cluster by prefix:
 
-- `encounter-*` (~21) — encounter lifecycle, state machine, schema, store design, templates, tables
-- `player-*` (~20) — player view architecture, websocket events, action panels, reconnection
-- `pokemon-*` (~19) — species data model, HP formula, evolution, stat allocation, move learning
-- `combatant-*` (~11) — type hierarchy, interface design, card components, service decomposition
-- `trainer-*` (~11) — stat budget, XP system, level-up wizard, skill definitions, classes
-- `scene-*` (~10) — activation lifecycle, data model, encounter conversion, websocket events
-- `capture-*` (~7) — rate formula, roll mechanics, context toggles, API endpoints
-- `character-*` (~7) — creation page, validation, API, import/export
-- `status-*` (~6) — condition categories, registry, source tracking, tick automation
-- `service-*` (~6) — inventory, dependency map, delegation rules, pattern classification
-- `vtt-*` / `grid-*` / `isometric-*` (~12) — VTT rendering, grid distance, projection math, camera system
-- `websocket-*` (~5) — event union, real-time sync, store sync
-- `healing-*` / `rest-*` (~7) — HP injury system, healing mechanics, rest healing, Pokemon Center
-- `store-*` / `composable-*` (~10) — Pinia classification, domain mapping, dependency patterns
+- `encounter-*` (~10) — encounter lifecycle state machine, dissolution, serving, schema normalization, event sourcing, budget, grid state
+- `player-*` (~3) — player identity, autonomy boundaries, grid tools
+- `pokemon-*` (~9) — HP formula, evolution, stat allocation, move learning, experience, loyalty, origin, center healing
+- `combatant-*` (~2) — combatant-as-lens, card visibility rules
+- `trainer-*` (~6) — stat budget, skill definitions, derived stats, HP formula, capabilities field
+- `scene-*` (~4) — activation lifecycle, encounter conversion, group system
+- `capture-*` (~5) — rate formula, roll mechanics, accuracy gate, context toggles, difficulty labels
+- `status-*` (~4) — condition categories, registry, tick automation, capture bonus hierarchy
+- `combat-*` (~4) — stage system, maneuver catalog, event log schema, lens sub-interfaces
+- `vtt-*` / `grid-*` / `isometric-*` (~10) — VTT rendering, grid mode, interaction, projection, camera, measurement
+- `websocket-*` (~1) — real-time sync
+- `healing-*` / `rest-*` (~7) — healing mechanics, healing items, rest system, extended rest, thirty-minute rest, injury healing
+- Engine design (~22) — effect engine, entity model, game state interface, state delta model, field state interfaces, and related notes
 
 ## Starting nodes
 
 These high-connectivity notes branch into the major subsystems:
 
+- `game-state-interface.md` — the three-layer state model (entity, combat lens, encounter)
+- `combatant-as-lens.md` — the combatant is a combat-time view over a Pokemon/trainer, not a copy
+- `combat-lens-sub-interfaces.md` — ISP decomposition of the lens into narrow sub-interfaces
+- `state-delta-model.md` — how effects write to game state
+- `effect-handler-contract.md` — the shared interface for all effect handlers
 - `triple-view-system.md` — the three views (GM, player, group) and how they share state
 - `encounter-lifecycle-state-machine.md` — encounter states from creation through dissolution
 - `turn-lifecycle.md` — what happens each combat turn (declarations, resolution, advancement)
 - `nine-step-damage-formula.md` — the full damage calculation pipeline
 - `capture-rate-formula.md` — capture math from PTR rules translated to app logic
 - `hp-injury-system.md` — HP ticks, injury thresholds, faint/revival
-- `service-inventory.md` — map of all backend services
-- `service-dependency-map.md` — how services relate to each other
-- `prisma-schema-overview.md` — the database schema
-- `domain-module-architecture.md` — how the codebase is organized by domain
-- `combatant-as-lens.md` — the combatant is a combat-time view over a Pokemon/trainer, not a copy
 - `gm-delegates-authority-into-system.md` — the GM is the single writer; players request
-- `move-frequency-system.md` — how move usage limits work in the app
 - `information-asymmetry-by-role.md` — why different views show different information
+- `domain-module-architecture.md` — how the codebase could be organized by domain
+
+## Conventions
+
+These notes define rules for vault maintenance, established during the triage:
+
+- `documentation-note-content-boundary.md` — what content belongs in a documentation note vs. not
+- `wikilink-cleanup-on-deletion.md` — how to handle broken links when notes are deleted
+- `thin-note-threshold.md` — when a note is too thin to justify its own file

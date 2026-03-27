@@ -1,6 +1,6 @@
 # WebSocket Real-Time Sync
 
-The WebSocket endpoint (`/ws`) handles GM-to-Group synchronization with role-based broadcasting across the [[triple-view-system]].
+The WebSocket system handles role-based broadcasting across the [[triple-view-system]].
 
 ## Client-to-Server Events
 
@@ -16,13 +16,13 @@ The WebSocket endpoint (`/ws`) handles GM-to-Group synchronization with role-bas
 
 **VTT:** `movement_preview`
 
-**Scene:** 13 events — see [[scene-websocket-events]] for the full set (entity changes, activation broadcasts, player sync)
+**Scene:** entity changes, activation broadcasts, player sync
 
 **Player:** `player_action` (group to GM only)
 
 **Entity:** `character_update` (broadcast to all)
 
-The full event set is defined by the [[websocket-event-union]] (53-member discriminated union in `types/api.ts`). Stores receive updates via [[websocket-store-sync]].
+The full event set uses a discriminated union on the `type` field, enabling type-safe handling via the [[observer-pattern]].
 
 ## See also
 
@@ -30,6 +30,3 @@ The full event set is defined by the [[websocket-event-union]] (53-member discri
 - [[encounter-serving-mechanics]] — serve/unserve events manage group/player display
 - [[combatant-card-visibility-rules]] — how event data is filtered per audience
 - [[triple-view-system]]
-- [[player-websocket-composable]] — player-side WebSocket event handling
-- [[pending-request-routing]] — server-side request-to-player routing
-- [[websocket-sync-as-observer-pattern]] — how this system implements the observer pattern

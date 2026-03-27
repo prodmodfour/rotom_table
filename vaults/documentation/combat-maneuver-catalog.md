@@ -1,4 +1,6 @@
-The app implements PTR combat maneuvers as the `COMBAT_MANEUVERS` constant in `constants/combat.ts`. Each maneuver has an id, name, action type, AC value, icon, description, and a `requiresTarget` flag.
+# Combat Maneuver Catalog
+
+PTR combat maneuvers. Each maneuver has an id, name, action type, AC value, and description.
 
 ## Standard Action Maneuvers
 
@@ -24,7 +26,7 @@ Resolve through opposed social skill checks (Deception, Charm, Intimidate).
 
 ### Full Action Interrupts
 
-These are not Standard Action maneuvers — they cost a Full Action and trigger as interrupts on ally attacks.
+These cost a Full Action and trigger as interrupts on ally attacks.
 
 10. **Intercept (Melee)** — push ally 1m away, take the hit. Requires Acrobatics/Athletics check. See [[intercept-as-bodyguard-positioning]].
 11. **Intercept (Ranged)** — shift into the attack path, take the hit. Requires Acrobatics/Athletics check. See [[intercept-as-bodyguard-positioning]].
@@ -37,9 +39,6 @@ Pokemon need [[intercept-loyalty-gated|Loyalty 4+]] to intercept.
 
 Extra movement is no longer a maneuver — PTR uses the [[energy-for-extra-movement]] system (spend 5 Energy for additional movement).
 
-The `ManeuverGrid` component renders these as a grid of clickable cards with icons and descriptions. In [[player-view-architecture]], players can request maneuvers via WebSocket to the GM.
-
 ## See also
 
 - [[turn-lifecycle]] — maneuvers consume actions within the action phase
-- [[encounter-core-api]] — maneuver execution goes through combat action endpoints

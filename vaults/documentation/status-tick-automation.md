@@ -1,18 +1,8 @@
 # Status Tick Automation
 
-Automatic tick damage for status conditions at turn boundaries.
+Automatic tick damage for status conditions at turn boundaries. Fires before turn advance.
 
-**Service:** `server/services/status-automation.service.ts`.
-
-**Pure functions:** calculateTickDamage, calculateBadlyPoisonedDamage, getTickDamageEntries.
-
-**Conditions handled:** Burning, Poisoned, Badly Poisoned, Cursed.
-
-**Constant:** `TICK_DAMAGE_CONDITIONS` in `constants/statusConditions.ts`.
-
-**Integration:** Fires in `next-turn.post.ts` before turn advance. The `badlyPoisonedRound` field on the Combatant model tracks escalation for Badly Poisoned.
-
-**WebSocket event:** `status_tick` (server to all clients).
+**Conditions handled:** Burning, Poisoned, Badly Poisoned, Cursed. Each deals [[tick-value-one-tenth-max-hp|tick damage]] at the end of the affected combatant's turn. Badly Poisoned escalates each round (1 tick, 2 ticks, 3 ticks...).
 
 Part of [[turn-lifecycle]].
 

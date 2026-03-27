@@ -1,6 +1,6 @@
 # Capture Context Toggles
 
-`CaptureContextToggles.vue` in `components/capture/` provides three GM checkboxes for [[conditional-ball-modifier-rules|ball condition flags]] that cannot be auto-detected:
+`CaptureContextToggles.vue` in `components/capture/` provides three GM checkboxes for ball condition flags that cannot be auto-detected:
 
 | Toggle | Ball affected |
 |---|---|
@@ -12,5 +12,4 @@ Changes are immediately reflected in the [[poke-ball-system|ball modifier]] prev
 
 ## See also
 
-- [[conditional-ball-modifier-rules]]
 - [[poke-ball-system]]

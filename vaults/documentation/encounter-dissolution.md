@@ -1,6 +1,6 @@
 # Encounter Dissolution
 
-A destructive restructuring to dissolve the monolithic Encounter model into a composition of independent, focused state containers — addressing the [[encounter-store-god-object-risk|encounter god object]] not by trimming its surface but by eliminating the single-entity concept entirely.
+A destructive restructuring to dissolve the monolithic Encounter model into a composition of independent, focused state containers — addressing the encounter god object not by trimming its surface but by eliminating the single-entity concept entirely.
 
 ## The idea
 
@@ -120,7 +120,7 @@ async function dealDamage(sessionId: string, targetId: string, amount: number) {
 - **The encounter store (1,814 lines) is split into container stores.** `useRosterStore`, `useTurnStore`, `useSpatialStore`, `useWeatherStore`, etc. Each is small, focused, and independently testable. The god object is not trimmed — it's dissolved.
 - **All 44 encounter API routes are reorganized.** Routes are grouped by container: `/sessions/:id/roster/...`, `/sessions/:id/turns/...`, `/sessions/:id/spatial/...`. The `encounters/:id` namespace is gone.
 - **Services decompose naturally.** Each container has at most one service. `combatant.service.ts` (797 lines) splits into roster service, status service, and equipment service. `out-of-turn.service.ts` (752 lines) splits into turn service and intercept service.
-- **The JSON parse/serialize hot path is eliminated.** Instead of parsing all 15 JSON columns on every action, only the affected container is loaded. Dealing damage never touches fog of war or weather. The [[persistence-hot-path-overhead]] is structurally eliminated.
+- **The JSON parse/serialize hot path is eliminated.** Instead of parsing all 15 JSON columns on every action, only the affected container is loaded. Dealing damage never touches fog of war or weather. The persistence hot path overhead is structurally eliminated.
 - **The WebSocket broadcast granularity changes.** Instead of broadcasting the entire encounter state (500KB+), each container broadcasts its own diffs. A weather change sends 50 bytes, not the entire encounter.
 
 ## Principles improved
@@ -129,8 +129,8 @@ async function dealDamage(sessionId: string, targetId: string, amount: number) {
 - [[interface-segregation-principle]] — consumers depend only on the containers they need. A weather effect handler doesn't receive (or parse) the combat roster, fog of war, or spatial state.
 - [[open-closed-principle]] — adding a new concern (e.g., "trap state" for battlefield traps) means adding a new container. No existing containers change. No schema migrations touch existing tables.
 - [[dependency-inversion-principle]] — services depend on container interfaces, not on the monolithic encounter shape.
-- Eliminates [[encounter-store-god-object-risk]] — the god object is replaced by focused containers.
-- Eliminates [[persistence-hot-path-overhead]] — only affected containers are loaded and saved.
+- Eliminates encounter store god object risk — the god object is replaced by focused containers.
+- Eliminates persistence hot path overhead — only affected containers are loaded and saved.
 - Eliminates [[denormalized-encounter-combatants]] — combatant data lives in the roster container's normalized table, not in a JSON blob.
 - Supersedes [[encounter-schema-normalization]] — normalization happens at the container level, not at the encounter level.
 
@@ -158,23 +158,16 @@ async function dealDamage(sessionId: string, targetId: string, amount: number) {
 - What are the right container boundaries? The 8 containers above are a starting point, but should there be more (separate status-conditions container? separate traits container?) or fewer (combine roster + turns into a "combat" container)?
 - How do cross-container transactions work? Is there a session-level transaction coordinator, or do containers use eventual consistency with compensating actions?
 - Should containers be loaded eagerly (all at session start) or lazily (on first access)? Lazy loading reduces startup cost but adds latency on first action.
-- How does this interact with [[in-memory-encounter-state]]? Each container could be independently loaded into memory — only the combat roster needs to be in-memory during active play; weather can stay in the database.
+- How does this interact with in memory encounter state? Each container could be independently loaded into memory — only the combat roster needs to be in-memory during active play; weather can stay in the database.
 - How does this interact with [[event-sourced-encounter-state]]? Each container could maintain its own event log, or there could be one session-level event log that references containers.
-- How does this interact with [[plugin-mechanic-architecture]]? Each plugin could own one or more containers, making the container system the plugin's data layer.
+- How does this interact with plugin mechanic architecture? Each plugin could own one or more containers, making the container system the plugin's data layer.
 - How does the client render a unified encounter view from multiple container subscriptions? Is there a client-side session compositor, or do components individually subscribe to the containers they need?
 - Should the session concept extend beyond encounters — e.g., a "campaign session" that includes character state, inventory, and scene context alongside combat containers?
 
 ## See also
 
-- [[encounter-store-god-object-risk]] — the problem this addresses (by dissolution, not reduction)
 - [[encounter-schema-normalization]] — superseded: normalization happens per-container
-- [[persistence-hot-path-overhead]] — eliminated: only affected containers are touched
 - [[denormalized-encounter-combatants]] — eliminated: combatants live in a normalized roster table
-- [[in-memory-encounter-state]] — compatible: individual containers can be memory-resident
 - [[event-sourced-encounter-state]] — compatible: events can target specific containers
 - [[encounter-lifecycle-state-machine]] — the turn tracker container embeds the state machine
-- [[plugin-mechanic-architecture]] — compatible: plugins own containers
-- [[encounter-store-surface-reduction]] — superseded: the store is dissolved, not reduced
-- [[combatant-service-decomposition]] — superseded: decomposition follows container boundaries
 - [[combatant-as-lens]] — compatible: lenses can live inside the CombatRoster container
-- [[universal-event-journal]] — compatible: containers can be projections over the event stream

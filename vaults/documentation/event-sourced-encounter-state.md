@@ -4,7 +4,7 @@ A destructive restructuring to replace mutable encounter CRUD with an append-onl
 
 ## The idea
 
-Currently, encounter state is a mutable blob. Each API route reads the current state, mutates it, and writes it back. The ~44 encounter routes each perform their own read-mutate-write cycle against [[denormalized-encounter-combatants|JSON columns]]. The [[encounter-store-god-object-risk|encounter store]] mirrors this on the client, receiving full state snapshots via WebSocket.
+Currently, encounter state is a mutable blob. Each API route reads the current state, mutates it, and writes it back. The ~44 encounter routes each perform their own read-mutate-write cycle against [[denormalized-encounter-combatants|JSON columns]]. The encounter store mirrors this on the client, receiving full state snapshots via WebSocket.
 
 Model every encounter action as an immutable event. The encounter's current state is computed by replaying the event log from the beginning.
 
@@ -31,8 +31,8 @@ Every route becomes: validate the action, emit an event, broadcast the event via
 - **All 44 encounter routes** are rewritten — each emits events instead of mutating state
 - **The database schema** changes from a single mutable Encounter row (with ~15 JSON columns) to an append-only `EncounterEvent` table
 - **The encounter store** is rewritten as an event log reducer
-- **[[websocket-sync-as-observer-pattern|WebSocket sync]]** changes from full-state broadcasts to event streaming — clients apply events locally
-- **The [[undo-redo-as-memento-pattern|undo/redo system]]** is replaced — undo is "remove the last event and recompute"
+- **WebSocket sync** changes from full-state broadcasts to event streaming — clients apply events locally
+- **The undo/redo system** is replaced — undo is "remove the last event and recompute"
 - **The combat log** becomes a natural projection of the event stream — no separate `moveLog` JSON column needed
 
 ## Principles improved
@@ -40,7 +40,7 @@ Every route becomes: validate the action, emit an event, broadcast the event via
 - [[single-responsibility-principle]] — each event handler has one job; validation is separate from state mutation
 - [[open-closed-principle]] — new actions mean new event types, not modifications to existing mutation code
 - [[command-pattern]] — events are commands that have been executed and recorded
-- Eliminates the [[encounter-store-god-object-risk]] — the store becomes a simple reducer function
+- Eliminates the encounter store god object risk — the store becomes a simple reducer function
 - Eliminates the WebSocket sync problem — clients and server share the same event reducer
 
 ## Patterns and techniques
@@ -68,11 +68,7 @@ Every route becomes: validate the action, emit an event, broadcast the event via
 
 ## See also
 
-- [[undo-redo-as-memento-pattern]] — replaced by event replay
-- [[encounter-store-god-object-risk]] — eliminated by the reducer pattern
-- [[websocket-sync-as-observer-pattern]] — simplified to event streaming
 - [[command-pattern]] — the theoretical foundation
 - [[denormalized-encounter-combatants]] — the mutable pattern being replaced
 - [[encounter-schema-normalization]] — an alternative (but compatible) destructive approach to the data model
 - [[encounter-lifecycle-state-machine]] — events become state transitions in the machine
-- [[universal-event-journal]] — the radical extension: event-source everything, not just encounters

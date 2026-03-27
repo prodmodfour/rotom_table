@@ -7,5 +7,4 @@ This is an application of [[presets-stay-within-raw]]: the app's suggestions mat
 ## See also
 
 - [[presets-stay-within-raw]] — the general principle this implements
-- [[significance-and-budget]] — where the presets and multiplier are used
 - [[raw-fidelity-as-default]] — presets within RAW ranges maintain fidelity to PTR's stated bounds

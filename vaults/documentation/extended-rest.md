@@ -1,4 +1,4 @@
-An extended rest applies eight consecutive [[thirty-minute-rest]] periods (4 hours of in-game time). Implemented in `server/api/characters/[id]/extended-rest.post.ts` and `server/api/pokemon/[id]/extended-rest.post.ts`.
+An extended rest applies eight consecutive [[thirty-minute-rest]] periods (4 hours of in-game time).
 
 Beyond HP restoration, extended rest:
 

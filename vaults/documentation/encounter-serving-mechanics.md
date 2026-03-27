@@ -20,5 +20,3 @@ The encounter store exposes `serve`, `unserve`, and `loadServedEncounter` action
 
 - [[triple-view-system]] — the GM/Group/Player view architecture that serving controls
 - [[websocket-real-time-sync]] — serve/unserve events broadcast via WebSocket
-- [[encounter-store-decomposition]] — store actions that manage serving state
-- [[player-reconnection-sync]] — how the player detects and recovers served encounters

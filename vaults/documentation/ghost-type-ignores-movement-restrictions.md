@@ -7,4 +7,3 @@ This is one instance of the broader [[type-grants-status-immunity]] pattern, whe
 ## See also
 - [[server-enforcement-with-gm-override]]
 - [[type-grants-status-immunity]]
-- [[combatant-movement-capabilities]] — movement trait queries

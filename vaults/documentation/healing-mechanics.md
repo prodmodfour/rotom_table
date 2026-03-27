@@ -1,4 +1,4 @@
-The heal endpoint (`POST /api/encounters/:id/heal`) restores HP, temp HP, and injuries on a combatant. Implemented in the `applyHealingToEntity` service function.
+Healing restores HP, temp HP, and injuries on a combatant.
 
 ## HP Restoration
 

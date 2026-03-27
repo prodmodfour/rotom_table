@@ -10,7 +10,7 @@ The state inventory initially proposed `HasBuffTracking` with named fields for e
 - [[divergent-change-smell]] — every new effect with persistent state requires modifying the interface
 - [[temporary-field-smell]] — most fields are empty for most entities (`flashFireBonus` is meaningless unless Flash Fire is active)
 
-Per [[trait-composed-domain-model]], the state model must be composable and open-ended.
+Per trait composed domain model, the state model must be composable and open-ended.
 
 ## The ActiveEffect struct
 

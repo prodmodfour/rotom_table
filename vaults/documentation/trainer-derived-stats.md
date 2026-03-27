@@ -14,6 +14,5 @@ Utility for computing trainer-derived values from stats and [[trait-definition|t
 ## See also
 
 - [[trainer-capabilities-field]]
-- [[movement-modifiers-utility]]
 - [[trainer-skill-definitions]]
 - [[trainer-stat-budget]]

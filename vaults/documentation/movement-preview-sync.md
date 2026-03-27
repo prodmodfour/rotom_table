@@ -6,8 +6,7 @@ The `movement_preview` WebSocket event broadcasts token movement previews from G
 
 **Flow:** GM drags a token on the grid -> client emits `movement_preview` via WebSocket -> server broadcasts to group clients -> Group View renders the token at the preview position.
 
-This provides responsive feedback in the group display while the GM is still dragging, before the final position is committed via the [[vtt-grid-persistence-apis|position API]].
+This provides responsive feedback in the group display while the GM is still dragging, before the final position is committed via the position API.
 
 ## See also
 
-- [[player-grid-interaction]] — player move requests use a different WebSocket event flow

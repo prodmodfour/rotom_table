@@ -201,7 +201,6 @@ State that persists across encounters (Mettle points survive between combats) or
 
 - [[game-state-interface]] — the parent design this belongs to
 - [[combatant-as-lens]] — the lens/entity architecture these interfaces decompose
-- [[trait-composed-domain-model]] — the ISP decomposition approach
 - [[state-delta-model]] — how effects write to lens-sourced interfaces
 - [[entity-write-exception]] — the one exception to entity read-only
 - [[active-effect-model]] — the generic model behind HasActiveEffects

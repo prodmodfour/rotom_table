@@ -1,6 +1,6 @@
 # Game Engine Extraction
 
-A destructive restructuring to extract all game rule logic from the app into a standalone, framework-agnostic game engine package — addressing the [[game-logic-boundary-absence|absence of a game logic boundary]].
+A destructive restructuring to extract all game rule logic from the app into a standalone, framework-agnostic game engine package — addressing the absence of a game logic boundary.
 
 ## The idea
 
@@ -45,7 +45,7 @@ function dealDamage(combatant, damage) {
 ## Why this is destructive
 
 - All 38 utils are dissolved — their logic moves to the engine
-- All 23 services in the [[service-inventory]] are gutted — they become thin orchestrators calling engine functions and persisting results
+- All 23 services in the service inventory are gutted — they become thin orchestrators calling engine functions and persisting results
 - Composables that duplicate service logic are simplified — they call the same engine functions the server uses
 - The type system is rewritten — the engine defines canonical domain types, and the app's types become aliases or persistence-specific extensions
 - The project structure changes from a single Nuxt app to a monorepo with `packages/engine/` and `apps/rotom-table/`
@@ -84,12 +84,4 @@ function dealDamage(combatant, damage) {
 
 ## See also
 
-- [[game-logic-boundary-absence]] — the problem this addresses
-- [[service-inventory]] — the services that would be gutted
-- [[composable-domain-grouping]] — the composables that would be simplified
 - [[damage-pipeline-as-chain-of-responsibility]] — a pipeline formalized within the engine
-- [[service-pattern-classification]] — pure services would move entirely into the engine
-- [[routes-bypass-service-layer]] — becomes less relevant after extraction, since routes call services which call the engine
-- [[vault-sourced-data-repository]] — compatible: the engine can consume vault-compiled game data
-- [[property-based-rule-verification]] — compatible: engine functions are pure and trivially property-testable
-- [[cqrs-mediator-architecture]] — compatible: command handlers delegate to engine functions

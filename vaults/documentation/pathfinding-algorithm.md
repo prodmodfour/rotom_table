@@ -6,19 +6,17 @@ A* pathfinding with PTR movement rules in `usePathfinding`.
 
 - [[terrain-type-system|Terrain costs]] (6 types with multipliers)
 - [[elevation-system|Elevation change costs]] (1 MP per level difference)
-- Alternating diagonal cost (1m/2m pattern per [[grid-distance-calculation]])
+- Alternating diagonal cost (1m/2m pattern per grid distance calculation)
 - [[multi-cell-token-footprint]] — iterates full NxN footprint at each step
 - Blocked cells (terrain type or occupied by other tokens)
 
-Flying Pokemon ([[flier|Flier]] > 0 via [[combatant-movement-capabilities|movement trait queries]]) ignore elevation costs within their Flier speed.
+Flying Pokemon (Flier > 0 via movement trait queries) ignore elevation costs within their Flier speed.
 
 **Inputs:** Origin position, speed budget, blocked cells set, terrain cost getter, elevation cost getter, terrain elevation getter.
 
 **Outputs:** Set of reachable cell positions, path to any specific target.
 
-A* terrain costs come from the Pinia terrain store — the store must be populated before pathfinding runs (see [[composable-dependency-chains]]).
+A* terrain costs come from the Pinia terrain store — the store must be populated before pathfinding runs (see composable dependency chains).
 
 ## See also
 
-- [[ptu-movement-rules-in-vtt]] — the PTR rules this algorithm enforces
-- [[movement-modifiers-utility]] — Stuck/Slowed/Sprint applied to speed budget before pathfinding

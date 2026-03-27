@@ -8,8 +8,6 @@ Examples:
 
 All healing — [[thirty-minute-rest]], [[extended-rest]], [[pokemon-center-healing]], and [[healing-mechanics]] — caps restored HP at this ceiling. The [[hp-injury-system]] creates the injuries that feed into this formula.
 
-Implemented as `getEffectiveMaxHp` in `utils/restHealing.ts`.
-
 ## See also
 
 - [[hp-injury-system]]

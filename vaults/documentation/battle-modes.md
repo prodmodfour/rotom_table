@@ -11,5 +11,3 @@ Battle mode is selected during [[scene-to-encounter-conversion]] via the `StartE
 
 - [[initiative-and-turn-order]] — how combatant ordering differs between modes
 - [[turn-lifecycle]] — the phase structure these modes determine
-- [[player-combat-composable]] — isLeagueBattle/isTrainerPhase/isPokemonPhase detection
-- [[player-combat-action-panel]] — league phase indicator and canBeCommanded check

@@ -24,10 +24,10 @@ Every route, service, composable, and store that reads or writes encounter state
 The JSON blob is the load-bearing assumption of the entire encounter system. Every service function receives a parsed `combatants` array, mutates it in-place, and the route handler serializes the whole thing back. Normalization doesn't refactor this pattern — it obliterates it.
 
 - All 44 encounter routes must be rewritten
-- All services in the [[service-inventory]] that touch encounter state must change their signatures
+- All services in the service inventory that touch encounter state must change their signatures
 - The encounter store must change how it receives and processes data
-- The [[websocket-sync-as-observer-pattern|WebSocket sync]] protocol changes — no more full encounter state broadcasts
-- The [[entity-update-service|entity-update service]] sync-back pattern changes fundamentally, since combatant state now lives in relational tables rather than JSON snapshots
+- The WebSocket sync protocol changes — no more full encounter state broadcasts
+- The entity-update service sync-back pattern changes fundamentally, since combatant state now lives in relational tables rather than JSON snapshots
 
 ## Principles improved
 
@@ -40,7 +40,7 @@ The JSON blob is the load-bearing assumption of the entire encounter system. Eve
 
 - Repository pattern — each new table gets a focused data access layer, replacing the monolithic `prisma.encounter.update({ combatants: JSON.stringify(...) })`
 - [[extract-class]] at the data model level — the mega-Encounter becomes a cluster of focused entities
-- The [[service-layer-pattern]] becomes enforceable — services receive typed entities from Prisma includes, not hand-parsed JSON
+- The service layer pattern becomes enforceable — services receive typed entities from Prisma includes, not hand-parsed JSON
 
 ## Trade-offs
 
@@ -55,15 +55,11 @@ The JSON blob is the load-bearing assumption of the entire encounter system. Eve
 - Should this be done in one pass or incrementally (e.g., normalize combatants first, then turn order, then declarations)?
 - Does the app's scale (single GM, 1–20 combatants, no concurrent writes) actually suffer from the JSON pattern, or is this solving a theoretical problem?
 - Would a migration to a database with native JSON support (PostgreSQL with JSONB) be a less destructive alternative that preserves the current pattern while gaining queryability?
-- How does this interact with [[combatant-type-segregation]] and [[combat-entity-base-interface]] — does normalization make those proposals easier or redundant?
-- What happens to the [[undo-redo-as-memento-pattern|undo/redo system]], which currently snapshots the entire JSON state? Relational state requires a different snapshot strategy.
+- How does this interact with combatant type segregation and combat entity base interface — does normalization make those proposals easier or redundant?
+- What happens to the undo/redo system, which currently snapshots the entire JSON state? Relational state requires a different snapshot strategy.
 
 ## See also
 
 - [[denormalized-encounter-combatants]] — the current pattern being destroyed
-- [[json-as-text-columns]] — the SQLite constraint that drove the current design
-- [[prisma-schema-overview]] — the schema that would be restructured
-- [[combatant-type-segregation]] — may be subsumed by relational typing
-- [[encounter-store-surface-reduction]] — normalized data naturally segments the store surface
 - [[event-sourced-encounter-state]] — an even more radical alternative to both JSON blobs and normalized tables
 - [[encounter-dissolution]] — an even more radical alternative that dissolves the Encounter model into independent state containers
