@@ -10,3 +10,4 @@ The tracking also handles Take a Breather correctly. When a Pokemon uses Take a 
 - [[combat-stage-system]] — where CS changes are tracked and applied
 - [[take-a-breather-mechanics]] — interaction with CS reset
 - [[combat-lens-sub-interfaces]] — `StatusInstance.appliedCombatStages` tracks which CS changes to reverse
+- [[status-application-must-use-applyStatus]] — the convention ensuring all status application goes through `applyStatus`, which bundles auto-CS

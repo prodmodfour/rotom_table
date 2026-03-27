@@ -195,3 +195,4 @@ Adding a new trait with a new trigger requires only a new handler registration �
 - [[field-state-interfaces]] — field state instances (blessings, hazards) register handlers
 - [[resolution-context-inputs]] — trigger handler invocation receives its own resolution context
 - [[data-driven-rule-engine]] — triggers are the "event-driven rules" from the data-driven vision
+- [[trigger-event-field-semantics]] — what each TriggerEvent field means per event type

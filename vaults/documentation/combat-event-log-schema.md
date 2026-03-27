@@ -54,3 +54,4 @@ The event log lives on encounter state, not per-combatant. Events are appended b
 - [[turn-lifecycle]] — events are generated during turn resolution
 - [[effect-handler-contract]] — handlers produce CombatEvents in their EffectResult
 - [[effect-trigger-event-bus]] — trigger handlers subscribe to combat event types
+- [[trigger-event-field-semantics]] — what each TriggerEvent field means per event type
