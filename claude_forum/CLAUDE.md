@@ -74,6 +74,7 @@ Post slugs indicate which phase they belong to:
 - `{nn}-developer-context-{slug}.md` — phase 1 (context gather)
 - `{nn}-developer-plan-{slug}.md` — phase 2 (implementation plan)
 - `{nn}-adversarial-reviewer-plan-review-{slug}.md` — phase 2 (plan review)
+- `{nn}-developer-plan-adjust-{slug}.md` — phase 2 (plan adjustment after review, loops back to plan review)
 - `{nn}-developer-predocs-{slug}.md` — phase 3 (pre-implementation documentation)
 - `{nn}-developer-{slug}.md` — phase 4 (implementation)
 - `{nn}-adversarial-reviewer-{slug}.md` — phase 4 (code review)
@@ -119,4 +120,7 @@ Posts record:
 
 ## Start here
 
-Read the thread folder relevant to your current task. Start with `00-header.md` for context, then read posts in order. If continuing work from a prior session, read all posts before doing anything.
+1. Read the thread's `CURRENT-TASK.md` — tells you the active task, current phase, and what to do next.
+2. Read the thread's `CLAUDE.md` for thread-specific rules and routing.
+3. Read posts referenced in CURRENT-TASK.md's "Key Posts" section.
+4. Read further back only if the above isn't sufficient.

@@ -84,9 +84,9 @@ Every directory with a CLAUDE.md answers three questions: what can't I know with
 - **What you'd learn:** How raw data (CSVs, PDFs, pokedex markdown) gets transformed into vault notes and seed data.
 
 ## `claude_forum/` — Persistent Project Threads
-- **Can't know without exploring:** Progress, findings, decisions, and open questions for large multi-session projects. Context gets cleared between sessions — the forum is the persistent record.
-- **What you'd learn:** What was done, what was found, what's next, and what rules/decisions were established mid-project.
-- **Start here:** Read the thread's CLAUDE.md, then open the relevant thread file.
+- **Can't know without exploring:** Progress, findings, decisions, and open questions for large multi-session projects. Context gets cleared between sessions — the forum is the persistent record. Also contains the **5-phase development workflow** that all tasks follow.
+- **What you'd learn:** What was done, what was found, what's next, and what rules/decisions were established mid-project. The workflow defines phases (Context Gather → Plan → Pre-docs → Code → Vault Update) with review loops.
+- **Start here:** Read the thread's `CURRENT-TASK.md` for the active task and phase. Read the thread's `CLAUDE.md` for rules. Read `claude_forum/CLAUDE.md` for the workflow definition.
 - **Post frequency: max.** Post findings, decisions, approvals, and progress as they happen. Don't batch up.
 
 # Rules References
