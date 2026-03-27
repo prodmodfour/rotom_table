@@ -466,3 +466,5 @@ These replace the `ConditionPredicate` discriminated union from the composition 
 - [[effect-trigger-event-bus]] — `addBlessing`, `addHazard`, `addCoat` register trigger handlers with the event bus
 - [[before-handler-response-modes]] — `scaleDamage`, `flatDamageReduction`, `accuracyBonus` produce pending modifications
 - [[r0a-sample-effect-handlers]] — the 45 validation handlers exercising all utility types
+- [[status-application-must-use-applyStatus]] — convention: all status application must go through `applyStatus`
+- [[utility-self-targeting-convention]] — convention: `undefined` and `'self'` are equivalent in target params

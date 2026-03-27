@@ -69,11 +69,13 @@ What the handler returns. Applied by the engine after invocation.
 EffectResult {
   combatantDeltas: Map<EntityId, StateDelta>
   encounterDelta: EncounterDelta | null
+  entityWriteDeltas: Map<EntityId, EntityWriteDelta>
   events: CombatEvent[]
   triggers: TriggeredEffect[]
   success: boolean
+  intercepted: boolean
   embeddedActions: EmbeddedActionSpec[]
-  pendingModifications?: PendingModification[]
+  pendingModifications: PendingModification[]
 }
 ```
 
@@ -81,15 +83,19 @@ EffectResult {
 
 **encounterDelta** — encounter-level changes: field state mutations (set weather, place hazard, apply blessing), described by [[encounter-delta-model]]. Null if the handler doesn't touch encounter state.
 
+**entityWriteDeltas** — per-entity permanent state changes keyed by entity ID, for [[entity-write-exception|tagged entity-write effects]] (e.g. Thief stealing a held item). Uses the narrow `EntityWriteDelta` type from [[state-delta-model]]. Empty map when no entity writes occur.
+
 **events** — structured [[combat-event-log-schema|CombatEvent]] entries to append to the log. Every damage application, status infliction, and move use generates an event.
 
 **triggers** — reactive effects to evaluate next. The engine processes triggers after applying the current result, using the updated state as the new context. See [[effect-trigger-event-bus]].
 
 **success** — flow-control signal. Default `true`. Utility functions like `rollAccuracy` return results with `success: false` on miss. Handlers use this for conditional logic: `if (!acc.hit) return acc.result`.
 
+**intercepted** — signals that a before-handler blocked the pending event entirely. Used by the `intercept()` utility. When `true`, the engine skips applying the blocked event's deltas. See [[before-handler-response-modes]].
+
 **embeddedActions** — declarative action insertions for the turn system. The engine reads this field and inserts the actions into the current turn's resolution sequence.
 
-**pendingModifications** — optional, only meaningful for before-handler results. Declarative instructions that transform the pending event's delta before the engine applies it. See [[before-handler-response-modes]] for the three response modes (interception, modification, pass-through) and the `PendingModification` discriminated union.
+**pendingModifications** — only meaningful for before-handler results. Declarative instructions that transform the pending event's delta before the engine applies it. See [[before-handler-response-modes]] for the three response modes (interception, modification, pass-through) and the `PendingModification` discriminated union.
 
 ## The engine's role
 
@@ -148,3 +154,5 @@ The `merge(...results)` utility combines multiple `EffectResult` values:
 - [[effect-handler-format]] — how handlers are structured as TypeScript functions
 - [[data-driven-rule-engine]] — the conceptual ancestor; handlers realize its vision with functions instead of data trees
 - [[active-effect-model]] — persistent effects whose handlers reference this contract
+- [[trigger-event-field-semantics]] — what each TriggerEvent field means per event type
+- [[status-application-must-use-applyStatus]] — convention: handlers must use `applyStatus`, not raw mutations
