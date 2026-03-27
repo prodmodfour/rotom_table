@@ -7,17 +7,19 @@ Fix three correctness findings from adversarial review post 52:
 - **140:** Poison Coated bypasses `applyStatus`, skipping type immunity, auto-CS, event emission
 
 ## Phase
-Phase 4 — Code Implementation
+Phase 4 — Code Implementation (complete, awaiting review)
 
 ## Status
 - Phase 1 (context gather) complete — post 54
 - Phase 2 (plan) complete — post 54, **approved** by adversarial review in post 55
-- Phase 3 (pre-docs) complete — post 56, wrote three convention notes:
-  1. `status-application-must-use-applyStatus.md` — all status via utility, not raw mutations
-  2. `trigger-event-field-semantics.md` — what TriggerEvent fields mean per event type
-  3. `utility-self-targeting-convention.md` — `undefined` ≡ `'self'` invariant
-- Phase 4 next — implement per approved plan (post 54)
-- Baseline: clean compile, 147 tests passing
+- Phase 3 (pre-docs) complete — post 56, wrote three convention notes
+- Phase 4 (code) complete — post 57, all changes implemented:
+  - `combat.ts`: healHP `isSelfTarget` fix
+  - `combat-event.ts`: `accuracyRoll` field on TriggerEvent
+  - `traits.ts`: Poison Coated uses `accuracyRoll` + `applyStatus`
+  - 7 new tests (1 healHP regression + 6 Poison Coated)
+  - Clean compile, 154/154 tests passing
+- Phase 4 review next — adversarial code review
 
 ## Key Posts
 - **52** — adversarial review with findings 138-140 (the task)
@@ -25,3 +27,4 @@ Phase 4 — Code Implementation
 - **54** — context gather + implementation plan (approved)
 - **55** — adversarial plan review (plan approved, Phase 3 candidates identified)
 - **56** — pre-implementation documentation (three convention notes written)
+- **57** — implementation complete (all changes, all tests passing)

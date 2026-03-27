@@ -43,4 +43,5 @@ export interface TriggerEvent extends CombatEvent {
   damageClass?: DamageClass
   moveRange?: 'melee' | 'ranged'
   sourceEntityId: EntityId
+  accuracyRoll?: number  // the roll that produced this hit — per trigger-event-field-semantics.md
 }
