@@ -319,3 +319,29 @@ These diagnosed old-code problems or proposed redesigns. Some may have lasting v
 2. **Alternative architecture notes:** Keep all ~20 as "considered alternatives" reference, or prune to only those relevant to the ring plan?
 3. **Phase 4 batch size:** Work through all ~150 Category B notes in one session, or break into smaller batches with check-ins?
 4. **Move-implementations scope:** The ~371 move implementation specs were described as "stale, being updated to PTR" in the CLAUDE.md. Should they be included in this triage or handled separately?
+
+## Ashraf's decisions
+
+1. **Delete** all old-code problem diagnoses. The problems no longer exist.
+2. **Prune all** alternative architecture notes. Delete them.
+3. **All at once.** Process all ~150 Category B notes in a single session.
+4. **Move-implementations are up to date.** The CLAUDE.md description is stale — fix it. No triage needed for move-implementations.
+
+### Impact on plan
+
+Category D collapses. Old-code diagnoses (~39 notes) and alternative architectures (~20 notes) move to delete. The only D survivors are:
+- **Adopted proposals** (combatant-as-lens, game-state-interface, game-engine-extraction, data-driven-rule-engine) — already Category A.
+- **Ring-plan-relevant unadopted proposals** (encounter-lifecycle-state-machine, domain-module-architecture, encounter-dissolution, view-capability-projection, event-sourced-encounter-state, universal-event-journal, encounter-schema-normalization) — move to Category B (clean).
+
+### Revised counts
+
+| Category | Count | Action |
+|---|---|---|
+| A — Keep as-is | ~48 | None |
+| B — Clean (remove old refs) | ~157 | Edit each note |
+| C — Delete | ~129 | Delete |
+| **Not in scope** | ~43 | move-implementations/ (current), software-engineering/ |
+
+### Additional Phase 5 action
+
+Fix `vaults/documentation/CLAUDE.md` — the move-implementations description says "stale, being updated to PTR" but they are current.
