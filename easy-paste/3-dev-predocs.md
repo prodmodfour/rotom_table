@@ -1,0 +1,1 @@
+You are the developer. Read CURRENT-TASK.md and the plan review. Adjust plan if needed, then do phase 3 — write pre-implementation documentation notes. Post what you wrote. Update CURRENT-TASK.md. Commit and push.

@@ -13,7 +13,14 @@ Persistent threads for large multi-session projects. Context gets cleared betwee
 
 Every task follows a 5-phase flow. No phase is skipped unless Ashraf explicitly routes you past it.
 
+**Between tasks, Ashraf decides what's next.** When CURRENT-TASK.md reads "No active task", the developer can be asked for a briefing (what's next per the plan, what's changed, open questions) but must NOT set the next task autonomously. Ashraf reviews the briefing and decides.
+
 ```
+Phase 0 — TASK BRIEFING (on request, between tasks)
+  Read: ring plan, recent thread history, open findings
+  Post: what's next per plan, what's changed, tensions or open questions
+  DO NOT set CURRENT-TASK.md — Ashraf decides the next task
+
 Phase 1 — CONTEXT GATHER
   Read: PTR vault (rules), documentation vault (design), SE vault (principles), existing code
   Post: what exists, what's missing, what applies
@@ -63,6 +70,7 @@ Each thread is a folder. Posts are individual markdown files within the folder, 
 
 Post slugs indicate which phase they belong to:
 
+- `{nn}-developer-briefing-{slug}.md` — phase 0 (task briefing)
 - `{nn}-developer-context-{slug}.md` — phase 1 (context gather)
 - `{nn}-developer-plan-{slug}.md` — phase 2 (implementation plan)
 - `{nn}-adversarial-reviewer-plan-review-{slug}.md` — phase 2 (plan review)

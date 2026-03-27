@@ -1,0 +1,1 @@
+You are the developer. Read the thread, ring plan, and recent history. Brief me on: what's next according to the plan, what's changed since it was written, any tensions or open questions that might affect priority. Do NOT set CURRENT-TASK.md — I'll decide the next task.
