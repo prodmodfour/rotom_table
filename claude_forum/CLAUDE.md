@@ -9,12 +9,67 @@ Persistent threads for large multi-session projects. Context gets cleared betwee
 - What findings were discovered and whether they were approved or rejected
 - What's next in a multi-step workflow
 
+## Development Workflow
+
+Every task follows a 5-phase flow. No phase is skipped unless Ashraf explicitly routes you past it.
+
+```
+Phase 1 — CONTEXT GATHER
+  Read: PTR vault (rules), documentation vault (design), SE vault (principles), existing code
+  Post: what exists, what's missing, what applies
+
+Phase 2 — PLAN (loop until approved)
+  Developer posts concrete implementation plan
+  Adversarial reviewer reviews plan against vault knowledge
+  Developer adjusts plan per findings
+  Repeat until plan is approved
+
+Phase 3 — PRE-IMPLEMENTATION DOCUMENTATION
+  Write documentation vault notes for any conventions or utility rules
+  that should exist before code is written (e.g. "always use applyStatus")
+
+Phase 4 — CODE (loop until approved)
+  Developer implements per approved plan
+  Adversarial reviewer reviews code against plan + vaults
+  Developer fixes per findings
+  Repeat until code is approved
+
+Phase 5 — VAULT UPDATE
+  Developer updates documentation vault:
+  - New design notes for what was built
+  - Routing improvements (CLAUDE.md additions, wikilinks)
+  - Corrections to notes the implementation proved wrong
+  - Deletions of stale notes
+```
+
+### Vault interaction per phase
+
+| Vault | Phase 1 | Phase 2 | Phase 3 | Phase 4 | Phase 5 |
+|---|---|---|---|---|---|
+| **PTR** | Read | Read | — | Read | — |
+| **Documentation** | Read | Read | **Write** | Read | **Write** |
+| **SE** | Read | Read | — | Read | — |
+
+PTR and SE vaults are read-only during development. Documentation vault is written at two points: pre-implementation conventions (phase 3) and post-implementation design/routing (phase 5).
+
 ## Format
 
 Each thread is a folder. Posts are individual markdown files within the folder, named `{nn}-{poster}-{slug}.md` where:
 - `{nn}` is the post number within the thread (sequential, 01-based)
 - `{poster}` is `developer` or `adversarial-reviewer`
 - `{slug}` is a short kebab-case description
+
+### Post type conventions
+
+Post slugs indicate which phase they belong to:
+
+- `{nn}-developer-context-{slug}.md` — phase 1 (context gather)
+- `{nn}-developer-plan-{slug}.md` — phase 2 (implementation plan)
+- `{nn}-adversarial-reviewer-plan-review-{slug}.md` — phase 2 (plan review)
+- `{nn}-developer-predocs-{slug}.md` — phase 3 (pre-implementation documentation)
+- `{nn}-developer-{slug}.md` — phase 4 (implementation)
+- `{nn}-adversarial-reviewer-{slug}.md` — phase 4 (code review)
+- `{nn}-developer-vault-update-{slug}.md` — phase 5 (vault update)
 
 The `00-header.md` file in each thread folder contains the thread's preamble — context, gap analysis, principles, scope, etc.
 
@@ -30,18 +85,6 @@ Posts record:
 
 **Post frequency: max.** Post as things happen — after each finding, decision, approval, or milestone. Don't batch up. Future sessions depend on these posts to reconstruct context.
 
-## Rotom Table 1.0 Design Principles
-
-These are the governing principles from the active redesign thread (`rotom-table-1.0-design/`). They apply to all design and implementation work.
-
-1. **PTR vault is the source of truth** for what the game system IS.
-2. **Documentation vault is the design authority** for how the system becomes software.
-3. **SE vault provides the constraints** — patterns and principles are requirements, not suggestions.
-4. **Design before code.** Every feature gets a documentation note before it gets an implementation.
-5. **Destructive by default.** Existing code that doesn't match the new design is deleted. No compatibility shims. Fresh data start (PTU data discarded, schema migration history preserved).
-6. **Cross-reference SE principles.** Every design must cite specific SE patterns/principles from `vaults/documentation/software-engineering/` and explain why they apply.
-7. **Designs live in the documentation vault.** Decided designs become vault notes. The thread records decisions; the vault holds authoritative designs.
-8. **SE notes contain pure knowledge.** Pattern definitions, principle explanations, smell descriptions, technique instructions. Application-specific links belong in design notes that reference the SE concepts, not the other way around.
 
 ## Start here
 
