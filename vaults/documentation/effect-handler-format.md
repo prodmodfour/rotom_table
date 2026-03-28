@@ -236,6 +236,4 @@ export const bulletSeed: MoveHandler = (ctx) => {
 - [[effect-utility-catalog]] — the utilities used in handlers
 - [[effect-trigger-event-bus]] — trait handlers declare trigger registrations
 - [[active-effect-model]] — some handlers produce ActiveEffects with embedded trigger handlers
-- [[data-driven-rule-engine]] — the vision this format realizes with functions instead of data trees
-- [[game-engine-extraction]] — handlers live in `@rotom/engine`, the standalone game logic package
 - [[r0a-sample-effect-handlers]] — the 45 validation handlers that prove this format works

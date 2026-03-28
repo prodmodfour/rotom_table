@@ -41,4 +41,3 @@ See [[combat-event-log-schema]] for the full event structure. The log is append-
 - [[deployment-state-model]] — per-trainer roster tracking
 - [[combat-event-log-schema]] — detailed event struct
 - [[turn-lifecycle]] — how rounds and turns advance
-- [[encounter-lifecycle-state-machine]] — the broader encounter phases

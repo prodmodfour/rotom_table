@@ -128,4 +128,3 @@ The [[effect-handler-contract|EffectResult]] contains both: `combatantDeltas: Ma
 - [[effect-handler-contract]] — handlers produce `EncounterDelta` in their result
 - [[field-state-interfaces]] — the field state types these mutations operate on
 - [[deployment-state-model]] — deployment mutations manage per-trainer roster state
-- [[data-driven-rule-engine]] — the engine applies both delta types as part of rule evaluation

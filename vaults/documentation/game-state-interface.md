@@ -48,7 +48,6 @@ Effect functions are pure. Random values (dice rolls), player choices (blessing 
 ## See also
 
 - [[combatant-as-lens]] — the architectural foundation: entities are permanent, lenses are transient
-- [[data-driven-rule-engine]] — the engine that evaluates effect definitions against this state
 - [[state-delta-model]] — how effects write to game state
 - [[active-effect-model]] — generic tracking for open-ended buffs and debuffs
 - [[deployment-state-model]] — per-trainer team roster tracking

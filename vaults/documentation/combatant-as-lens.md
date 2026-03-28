@@ -70,10 +70,6 @@ function projectCombatant(entity: Pokemon | Trainer, lens: CombatLens): Combatan
 - **Vue components receive `CombatantView` (computed) instead of `Combatant` (stored).** The view is always fresh because it's always computed from the current entity and current lens.
 - **End-of-combat cleanup is trivial.** Delete all `CombatLens` rows for the session. The entities are unchanged. Currently, end-of-combat requires extracting entity changes from the Combatant snapshot and reverse-mapping them back to the database — a lossy, bug-prone process.
 
-## How this differs from existing proposals
-
-- [[encounter-dissolution]] dissolves the Encounter into containers. This dissolves the Combatant into entity + lens. The two are compatible: lenses could live in the CombatRoster container.
-
 ## Principles improved
 
 - [[single-responsibility-principle]] — entities are responsible for intrinsic state (stats, moves, traits). Lenses are responsible for transient combat state (HP delta, status conditions, position). Neither knows about the other's internals.
@@ -107,14 +103,10 @@ function projectCombatant(entity: Pokemon | Trainer, lens: CombatLens): Combatan
 - Should the lens store absolute values (current HP = 45) or deltas (HP delta = -15 from max of 60)? Deltas are cleaner conceptually but require the entity to be loaded for every display. Absolute values are redundant with the entity but self-contained.
 - How does the lens handle Pokemon switching? When a Pokemon switches out, is its lens archived (preserving status conditions, stage modifiers) or destroyed? When it switches back in, is a new lens created or the archived one restored?
 - Should the `projectCombatant` function be server-side (sending `CombatantView` over the wire) or client-side (sending entity + lens separately and projecting in the component)?
-- How does this interact with [[event-sourced-encounter-state]] / universal event journal? If combat state is event-sourced, events modify the lens, not the entity. The lens becomes a projection over combat events.
-- How does this interact with [[encounter-dissolution]]? The CombatRoster container could hold lenses instead of full combatant objects, with entity data fetched on demand.
 - What about entities that exist ONLY in combat (wild Pokemon with no persistent record)? Do they get a temporary entity record, or does the lens support an embedded entity for ephemeral participants?
 
 ## See also
 
-- [[encounter-dissolution]] — compatible: lenses can live inside the CombatRoster container
-- [[event-sourced-encounter-state]] — compatible: events modify lenses, not entities
 - [[proxy-pattern]] — the combatant view is a proxy over entity + lens
 - [[bridge-pattern]] — entity and combat state vary independently, bridged by the lens
 - [[game-state-interface]] — the formal interface design that builds on this lens architecture

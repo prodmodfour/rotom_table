@@ -12,4 +12,3 @@ Each view connects to the server via [[websocket-real-time-sync]] for live state
 
 - [[encounter-serving-mechanics]] — controls which encounter is displayed on group/player views
 - [[combatant-card-visibility-rules]] — how information differs per view
-- [[view-capability-projection]] — a destructive proposal to unify all views with capability-based rendering

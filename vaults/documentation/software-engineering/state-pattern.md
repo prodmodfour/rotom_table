@@ -30,4 +30,3 @@ Uses an abstract class for the base state with a `protected` back-reference to t
 - [[bridge-pattern]] — shares a composition-based delegation structure
 - [[replace-type-code-with-state-strategy]] — the refactoring technique that introduces this pattern
 - [[switch-statements-smell]] — the code smell this pattern eliminates
-- [[encounter-lifecycle-state-machine]] — a destructive proposal applying this pattern to the encounter lifecycle

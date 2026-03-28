@@ -85,7 +85,6 @@ Three alternatives were considered:
 - [[combat-lens-sub-interfaces]] — the interfaces that delta fields correspond to
 - [[entity-write-exception]] — the tagged exception for entity mutation
 - [[active-effect-model]] — active effect mutations within the delta
-- [[data-driven-rule-engine]] — the engine that evaluates effects and applies deltas
 - [[effect-handler-contract]] — handlers produce StateDelta in their EffectResult
 - [[encounter-delta-model]] — the companion delta type for encounter-level changes
 - [[effect-utility-catalog]] — the utilities that produce StateDelta values

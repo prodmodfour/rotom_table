@@ -78,7 +78,6 @@ This is a genuine design tension, not an oversight. Named fields don't scale (th
 - [[state-delta-model]] — active effect mutations are part of `StateDelta`
 - [[status-condition-categories]] — the structured condition system that handles Burned, Paralyzed, etc.
 - [[condition-source-tracking]] — source tracking on conditions; parallel concept on ActiveEffect
-- [[data-driven-rule-engine]] — effect definitions are data; the engine evaluates them
 - [[effect-utility-catalog]] — `applyActiveEffect` utility manages the ActiveEffect collection
 - [[effect-trigger-event-bus]] — active effects can register trigger handlers for event-driven activation
 - [[effect-handler-format]] — ActiveEffect references are part of move/trait handler implementations

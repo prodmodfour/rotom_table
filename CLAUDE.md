@@ -49,9 +49,9 @@ Every directory with a CLAUDE.md answers three questions: what can't I know with
 - **What you'd learn:** The complete game system that everything else implements. 6 subfolders: rules (~400, self-contained), moves (~382), move descriptions (~378), traits (~198), pokemon species (~129), ecology (~225). Key difference from PTU: there are no per-species move lists — any Pokemon can learn any move if it meets the move's unlock conditions.
 - **Start here:** Read `vaults/ptr/CLAUDE.md` for subfolder routing and a complete query-type routing table. For rules, start with `rules/ptr-vs-ptu-differences.md`. For a species, check `ptr_pokemon/` for stats, `pokemon_ecology/` for lore. For a move, check `ptr_moves/`.
 
-## `vaults/documentation/` — App Design (~750 notes)
-- **Can't know without exploring:** How game mechanics translate into code architecture. Design decisions and trade-offs. The three-view authority model. The effect engine and entity model design. Also contains ~219 SE reference notes (patterns, smells, refactoring) and ~371 move implementation specs.
-- **What you'd learn:** The bridge between PTR rules and working software. 2 subfolders (moves, software-engineering) + ~160 app-specific design notes at root, covering engine design, game mechanics, views, and conventions.
+## `vaults/documentation/` — App Design (~740 notes)
+- **Can't know without exploring:** How game mechanics translate into code architecture. Design decisions and trade-offs. The three-view authority model. The effect engine and entity model design. Also contains ~219 SE reference notes (patterns, smells, refactoring) and ~369 move implementation specs.
+- **What you'd learn:** The bridge between PTR rules and working software. 2 subfolders (moves, software-engineering) + ~152 app-specific design notes at root, covering engine design, game mechanics, views, and conventions.
 - **Start here:** Read `vaults/documentation/CLAUDE.md` for domain prefix guide and starting nodes. Key hubs: `game-state-interface.md`, `combatant-as-lens.md`, `combat-lens-sub-interfaces.md`, `triple-view-system.md`.
 
 ## `packages/engine/` — The Game Engine (@rotom/engine)

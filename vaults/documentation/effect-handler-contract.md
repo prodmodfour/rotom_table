@@ -152,7 +152,6 @@ The `merge(...results)` utility combines multiple `EffectResult` values:
 - [[effect-trigger-event-bus]] — how trait trigger handlers are discovered and dispatched
 - [[before-handler-response-modes]] — the three response modes for before-handler results
 - [[effect-handler-format]] — how handlers are structured as TypeScript functions
-- [[data-driven-rule-engine]] — the conceptual ancestor; handlers realize its vision with functions instead of data trees
 - [[active-effect-model]] — persistent effects whose handlers reference this contract
 - [[trigger-event-field-semantics]] — what each TriggerEvent field means per event type
 - [[status-application-must-use-applyStatus]] — convention: handlers must use `applyStatus`, not raw mutations

@@ -11,5 +11,4 @@ The client-side combatant type hierarchy wraps raw Pokemon/HumanCharacter entiti
 
 ## See also
 
-- [[encounter-schema-normalization]] — a destructive proposal to normalize this pattern into relational tables
-- [[event-sourced-encounter-state]] — a destructive proposal to replace mutable state with event sourcing
+- [[combatant-as-lens]] — the adopted architecture that supersedes denormalized snapshots

@@ -50,7 +50,6 @@ The event log lives on encounter state, not per-combatant. Events are appended b
 
 - [[game-state-interface]] — the parent design
 - [[resolution-context-inputs]] — the log is part of the context effects receive
-- [[data-driven-rule-engine]] — the engine appends events and provides query access
 - [[turn-lifecycle]] — events are generated during turn resolution
 - [[effect-handler-contract]] — handlers produce CombatEvents in their EffectResult
 - [[effect-trigger-event-bus]] — trigger handlers subscribe to combat event types

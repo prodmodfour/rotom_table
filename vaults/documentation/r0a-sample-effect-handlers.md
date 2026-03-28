@@ -917,4 +917,3 @@ All 45 handlers are fully expressible with the function-based design. The 12 gap
 - [[effect-trigger-event-bus]] — trigger patterns validated by trait handlers
 - [[effect-handler-format]] — the TypeScript function format
 - [[game-state-interface]] — the state these handlers read and write
-- [[data-driven-rule-engine]] — the vision these handlers realize
