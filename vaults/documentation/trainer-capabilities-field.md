@@ -1,22 +1,9 @@
 # Trainer Traits Field
 
-`HumanCharacter.traits` — stores trainer-specific [[trait-definition|traits]] such as [[naturewalk|Naturewalk]].
+Trainers store [[trait-definition|traits]] such as [[naturewalk|Naturewalk]] on their entity. These traits are used by the VTT for movement and terrain interaction:
 
-## Data Flow
-
-Wired through serializers, the combatant service, and character APIs (POST `/api/characters`, PUT `/api/characters/:id`). See character api endpoints.
-
-## VTT Usage
-
-Parsed by combatant trait utilities:
-
-- `getCombatantNaturewalks` — Extract Naturewalk types.
-- `naturewalkBypassesTerrain` — Check terrain movement bypass.
-- `findNaturewalkImmuneStatuses` — Check status immunity from Naturewalk.
-
-## UI
-
-Editable in `gm/characters/[id].vue`. Displayed in character sheet components.
+- Extract Naturewalk types to determine terrain movement bypass
+- Check status immunity granted by Naturewalk
 
 ## See also
 

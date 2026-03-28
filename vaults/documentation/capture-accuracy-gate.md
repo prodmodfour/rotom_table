@@ -4,7 +4,7 @@ Poke Ball throws are AC 6 Status Attack Rolls using the full accuracy system per
 
 ## Calculation
 
-`rollAccuracyCheck(params?: CaptureAccuracyParams)` accepts thrower accuracy stage, target Speed Evasion, flanking penalty, and rough terrain penalty. Computes threshold inline as a single expression matching the `useMoveCalculation.ts` formula to avoid double clamping. Returns `{ roll, isNat1, isNat20, hits, threshold }`.
+The accuracy check accepts thrower accuracy stage, target Speed Evasion, flanking penalty, and rough terrain penalty. Computes the threshold inline and returns the roll, hit/miss, and threshold.
 
 ## Rules
 
@@ -15,11 +15,10 @@ Poke Ball throws are AC 6 Status Attack Rolls using the full accuracy system per
 
 ## Integration
 
-`CombatantCaptureSection.vue` computes accuracy params from encounter combatant data (trainer accuracy CS, target speedEvasion). Both `handleApproveCapture` (GM-side) and `attempt.post.ts` (server-side) enforce this gate. Player acknowledgment includes `accuracyHit: boolean` to distinguish misses from capture failures.
+The GM and server both enforce this gate. The player's capture acknowledgment distinguishes misses from capture failures.
 
 ## See also
 
 - [[evasion-and-accuracy-system]] — the shared accuracy threshold formula
 - [[poke-ball-system]]
 - [[capture-roll-mechanics]]
-- [[damage-flow-pipeline]]

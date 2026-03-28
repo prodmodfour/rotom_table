@@ -2,19 +2,15 @@ Serving controls which encounter is displayed on the group and player views. Onl
 
 ## Serve
 
-`POST /api/encounters/:id/serve` marks the encounter as served and updates the `GroupViewState` to display it. A WebSocket `serve_encounter` event broadcasts to all connected group and player clients so they load the encounter.
+Marking an encounter as served updates the group view state to display it. A WebSocket event broadcasts to all connected group and player clients so they load the encounter.
 
 ## Unserve
 
-`POST /api/encounters/:id/unserve` marks the encounter as no longer served and resets the `GroupViewState` to the lobby. A WebSocket `encounter_unserved` event notifies clients.
+Marking an encounter as unserved resets the group view state to the lobby. A WebSocket event notifies clients.
 
-## Get Served
+## Initial Load
 
-`GET /api/encounters/served` returns the currently served encounter or null. Accessible to GM, group, and player views. Used on initial page load to detect if an encounter is already being displayed.
-
-## Store Actions
-
-The encounter store exposes `serve`, `unserve`, and `loadServedEncounter` actions that call these endpoints and update local state.
+On page load, group and player views query for the currently served encounter (if any) to detect if an encounter is already being displayed.
 
 ## See also
 

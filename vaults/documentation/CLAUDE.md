@@ -13,7 +13,7 @@ The PTR vault tells you *what* the rules are. This vault tells you *how* they be
 
 ## Subfolders
 
-- `move-implementations/` — ~371 move implementation specs (one per PTR game move). Has its own CLAUDE.md.
+- `move-implementations/` — ~369 move implementation specs (one per PTR game move). Has its own CLAUDE.md.
 - `software-engineering/` — ~219 general SE reference notes (UML, design patterns, refactoring techniques, code smells, SOLID). Has its own CLAUDE.md.
 
 ## Routing
@@ -28,16 +28,16 @@ Notes in this directory are rotom_table-specific design decisions. They cluster 
 
 - `encounter-*` (~10) — encounter lifecycle state machine, dissolution, serving, schema normalization, event sourcing, budget, grid state
 - `player-*` (~3) — player identity, autonomy boundaries, grid tools
-- `pokemon-*` (~9) — HP formula, evolution, stat allocation, move learning, experience, loyalty, origin, center healing
+- `pokemon-*` (~8) — HP formula, stat allocation, move learning, experience, loyalty, origin, center healing
 - `combatant-*` (~2) — combatant-as-lens, card visibility rules
-- `trainer-*` (~6) — stat budget, skill definitions, derived stats, HP formula, capabilities field
-- `scene-*` (~4) — activation lifecycle, encounter conversion, group system
+- `trainer-*` (~5) — stat budget, skill definitions, derived stats, HP formula, capabilities field
+- `scene-*` (~3) — activation lifecycle, encounter conversion, group system
 - `capture-*` (~5) — rate formula, roll mechanics, accuracy gate, context toggles, difficulty labels
-- `status-*` (~4) — condition categories, registry, tick automation, capture bonus hierarchy
+- `status-*` (~6) — condition categories, registry, tick automation, capture bonus hierarchy, CS auto-apply, applyStatus convention
 - `combat-*` (~4) — stage system, maneuver catalog, event log schema, lens sub-interfaces
-- `vtt-*` / `grid-*` / `isometric-*` (~10) — VTT rendering, grid mode, interaction, projection, camera, measurement
+- `vtt-*` / `grid-*` / `isometric-*` / `elevation-*` / `fog-*` / `depth-*` / `path-*` / `measurement-*` / `movement-*` / `multi-cell-*` / `custom-token-*` / `size-*` / `one-distance-*` / `three-coordinate-*` (~19) — VTT rendering, grid mode, interaction, projection, camera, measurement, elevation, fog of war, pathfinding, movement atomicity, token footprint
 - `websocket-*` (~1) — real-time sync
-- `healing-*` / `rest-*` (~7) — healing mechanics, healing items, rest system, extended rest, thirty-minute rest, injury healing
+- `healing-*` / `rest-*` / `extended-rest` / `thirty-minute-rest` / `natural-injury-*` / `new-day-*` / `pokemon-center-*` (~10) — healing mechanics, healing items, rest system, extended rest, thirty-minute rest, injury healing, new day reset, Pokemon Center healing
 - Engine design (~22) — effect engine, entity model, game state interface, state delta model, field state interfaces, and related notes
 
 ## Starting nodes

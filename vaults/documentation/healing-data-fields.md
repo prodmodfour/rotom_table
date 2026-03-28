@@ -1,4 +1,4 @@
-The Prisma schema tracks healing state on both `HumanCharacter` and `Pokemon` models.
+Healing state tracked on both trainer and Pokemon entities.
 
 ## Shared fields (both models)
 

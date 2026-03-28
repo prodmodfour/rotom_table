@@ -1,6 +1,6 @@
 # Capture Context Toggles
 
-`CaptureContextToggles.vue` in `components/capture/` provides three GM checkboxes for ball condition flags that cannot be auto-detected:
+The capture panel provides three GM checkboxes for ball condition flags that cannot be auto-detected:
 
 | Toggle | Ball affected |
 |---|---|
@@ -8,7 +8,7 @@
 | Dark / low-light | Dusk Ball |
 | Underwater / underground | Dive Ball |
 
-Changes are immediately reflected in the [[poke-ball-system|ball modifier]] preview. Rendered inside `CapturePanel`.
+Changes are immediately reflected in the [[poke-ball-system|ball modifier]] preview.
 
 ## See also
 

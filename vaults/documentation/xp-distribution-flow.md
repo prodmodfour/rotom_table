@@ -2,23 +2,13 @@
 
 Post-combat XP calculation and distribution to Pokemon and trainers.
 
-## API
+## Flow
 
-- `POST /api/encounters/:id/xp-calculate` — preview XP breakdown + participating Pokemon (read-only).
-- `POST .../xp-distribute` — apply XP to Pokemon: updates experience, level, tutorPoints.
-- `POST .../trainer-xp-distribute` — batch-award trainer XP to multiple trainers. Sequential processing, encounter validation, auto-level at 10 XP, WebSocket broadcast on level change.
+1. **Preview** — read-only XP breakdown showing participating Pokemon and calculated XP per participant.
+2. **Pokemon distribution** — apply XP to Pokemon: updates experience, triggers level-up if thresholds are crossed, awards stat points per [[pokemon-stat-allocation]].
+3. **Trainer distribution** — batch-award trainer XP to multiple trainers. Auto-levels at 10 XP. WebSocket broadcast on level change.
 
-## Components
-
-`XpDistributionModal.vue` — post-combat XP allocation per player/Pokemon, includes trainer XP section with result display and partial failure handling.
-
-`TrainerXpSection.vue` — per-trainer XP input with significance-based suggestion, quick-set, level-up preview.
-
-`LevelUpNotification.vue` — aggregated level-up details shown after XP distribution.
-
-## Store
-
-`encounterXp` (see pinia store classification).
+The GM view provides a post-combat XP allocation modal per player/Pokemon, including a trainer XP section with significance-based suggestion and level-up preview.
 
 ## See also
 

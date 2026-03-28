@@ -2,19 +2,10 @@
 
 Trainer declaration phase in [[battle-modes|League Battle]] encounters.
 
-## API
+## Flow
 
-`POST /api/encounters/:id/declare` — record trainer declaration.
+During the declaration phase, each trainer declares their intended action in low-to-high speed order. Declarations are broadcast to all clients via WebSocket so the group view can display a summary of declared vs. pending trainers.
 
-## Components
-
-`DeclarationPanel.vue` — GM declaration form: action type select, description input, submit + next turn.
-
-`DeclarationSummary.vue` — declaration list display for Group View: collapsible round declarations with resolving/resolved state indicators.
-
-## WebSocket
-
-- `trainer_declared` — GM broadcasts after declaration.
-- `declaration_update` — updated declarations array to encounter room for Group View sync.
+The GM view provides a declaration form (action type, description) and controls for advancing to resolution. The group view displays a collapsible list of declarations per round with resolving/resolved state indicators.
 
 Part of the [[battle-modes|League Battle]] flow within [[turn-lifecycle]].

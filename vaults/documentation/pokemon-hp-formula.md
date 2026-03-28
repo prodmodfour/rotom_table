@@ -10,7 +10,7 @@ When a Pokemon levels up and was at full HP before the level increase, `currentH
 
 ## Recalculation Points
 
-- [[xp-distribution-flow|POST /api/encounters/:id/xp-distribute]] — on level-up from combat XP
+- [[xp-distribution-flow]] — on level-up from combat XP
 
 ## See also
 

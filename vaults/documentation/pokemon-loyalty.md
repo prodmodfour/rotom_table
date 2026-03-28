@@ -1,27 +1,24 @@
 # Pokemon Loyalty
 
-`Pokemon.loyalty` is an `Int @default(3)` field in the Prisma schema, implementing PTR loyalty ranks.
+Loyalty is tracked as an integer field on the Pokemon entity, implementing PTR loyalty ranks per [[loyalty-rank-names]].
 
 ## Ranks
 
 | Value | Rank |
 |---|---|
-| 0 | Hostile |
-| 1 | Resistant |
+| 0 | Defiant |
+| 1 | Distrustful |
 | 2 | Wary |
-| 3 | Neutral |
-| 4 | Friendly |
-| 5 | Loyal |
-| 6 | Devoted |
+| 3 | Fond |
 
 ## Starting values by origin
 
-Determined by [[pokemon-origin-enum|origin]]: `captured` and `wild` start at 2 (Wary). All others default to 3 (Neutral). Friend Ball captures override to 3 (Neutral) via the `loyalty_plus_one` [[poke-ball-system|post-capture effect]].
+Determined by [[pokemon-origin-enum|origin]] and disposition at capture per [[disposition-determines-starting-loyalty]]: captured wild Pokemon default to Loyalty 2 (Wary) at Neutral disposition, with friendlier catches starting higher and hostile catches starting lower. Friend Ball captures grant +1 loyalty via the [[poke-ball-system|post-capture effect]].
 
 ## Editing
 
-Editable via `PUT /api/pokemon/:id` (body.loyalty). GM can edit in the Pokemon sheet edit mode via a dropdown select.
+The GM can edit loyalty via the Pokemon detail view.
 
 ## Display
 
-Shown in `PokemonStatsTab.vue` with a PhHandshake icon and a color-coded rank name.
+Shown with a color-coded rank name.
