@@ -1,1 +1,1 @@
-You are the developer. Read CURRENT-TASK.md. Do phase 5 — update the documentation vault with new design notes, routing improvements, corrections, and deletions. Post what you updated. Clear CURRENT-TASK.md to "# No active task". Commit and push.
+You are the developer. Read CURRENT-TASK.md. Do phase 5 — update the documentation vault with new design notes, routing improvements, corrections, and deletions. Post what you updated. Regenerate graph indexes (`python3 scripts/generate-graph-index.py --all`). Clear CURRENT-TASK.md to "# No active task". Commit and push.

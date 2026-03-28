@@ -59,6 +59,12 @@ Phase 5 — VAULT UPDATE
 
 PTR and SE vaults are read-only during development. Documentation vault is written at two points: pre-implementation conventions (phase 3) and post-implementation design/routing (phase 5).
 
+### Graph index regeneration
+
+Vault directories have `GRAPH-INDEX.md` files that map the wikilink topology — every note's outgoing and incoming links, sorted by connectivity. These let the agent navigate the vault graph efficiently instead of opening files speculatively.
+
+**Regenerate after any phase that writes to a vault:** run `python3 scripts/generate-graph-index.py --all` after Phase 3 and after Phase 5. Also regenerate at session start (the prime prompts include this step). PTR indexes rarely go stale since PTR is read-only during development.
+
 ## Format
 
 Each thread is a folder. Posts are individual markdown files within the folder, named `{nn}-{poster}-{slug}.md` where:

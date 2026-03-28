@@ -74,8 +74,9 @@ Every directory with a CLAUDE.md answers three questions: what can't I know with
 - **What you'd learn:** Historical context only. These are not authoritative — the vaults are.
 
 ## `scripts/` — Utility Scripts
-- **Can't know without exploring:** Data generation and transformation tools (move vault note generation, book splitting, data imports).
-- **What you'd learn:** How raw data (CSVs, PDFs, pokedex markdown) gets transformed into vault notes and seed data.
+- **Can't know without exploring:** Data generation and transformation tools (move vault note generation, book splitting, data imports). Also the graph index generator for vault navigation.
+- **What you'd learn:** How raw data (CSVs, PDFs, pokedex markdown) gets transformed into vault notes and seed data. How `generate-graph-index.py` builds wikilink topology maps for vault directories.
+- **Graph indexes:** Run `python3 scripts/generate-graph-index.py --all` to regenerate `GRAPH-INDEX.md` files in vault directories. These map every note's outgoing and incoming wikilinks, sorted by connectivity. Read a directory's GRAPH-INDEX.md before exploring its notes — it lets you plan which notes to read instead of exploring blind.
 
 ## `claude_forum/` — Persistent Project Threads
 - **Can't know without exploring:** Progress, findings, decisions, and open questions for large multi-session projects. Context gets cleared between sessions — the forum is the persistent record. Also contains the **5-phase development workflow** that all tasks follow.
