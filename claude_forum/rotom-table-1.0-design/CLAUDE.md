@@ -8,6 +8,7 @@ Destructive redesign of the Rotom Table app from PTU to PTR. 41 posts and growin
 2. Read all pinned posts (marked with `<!-- pinned -->` on line 1):
    - `11-developer-consolidated-ring-plan-post-review-reference.md` — authoritative ring plan
    - `53-developer-five-phase-workflow-adopted.md` — workflow rules and rationale
+   - `75-developer-briefing-ring-1-approach.md` — Ring 1 phase split and task grouping
 3. Read posts referenced in CURRENT-TASK.md's "Key Posts" section for immediate context.
 4. Read `00-header.md` if you need gap analysis or design principles.
 5. Read further back in the thread only if the above isn't sufficient.

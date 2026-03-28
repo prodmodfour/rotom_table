@@ -34,9 +34,6 @@ prisma/*.db-journal
 # Worktrees (orchestrator coordination)
 .worktrees/
 
-# Generated vault indexes
-GRAPH-INDEX.md
-
 # Misc
 .nitro/
 .cache/
