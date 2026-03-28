@@ -26,7 +26,7 @@ The PTR vault tells you *what* the rules are. This vault tells you *how* they be
 
 Notes in this directory are rotom_table-specific design decisions. They cluster by prefix:
 
-- `encounter-*` (~7) — serving, budget, grid state, context interfaces, delta model, denormalized combatants, event sourcing alternatives
+- `encounter-*` (~7) — serving, budget, grid state, context interfaces, delta model, denormalized combatants, table entry, creation
 - `player-*` (~3) — player identity, autonomy boundaries, grid tools
 - `pokemon-*` (~8) — HP formula, stat allocation, move learning, experience, loyalty, origin, center healing
 - `combatant-*` (~2) — combatant-as-lens, card visibility rules
@@ -56,6 +56,7 @@ These high-connectivity notes branch into the major subsystems:
 - `hp-injury-system.md` — HP ticks, injury thresholds, faint/revival
 - `gm-delegates-authority-into-system.md` — the GM is the single writer; players request
 - `information-asymmetry-by-role.md` — why different views show different information
+
 ## Conventions
 
 These notes define rules for vault maintenance, established during the triage:
